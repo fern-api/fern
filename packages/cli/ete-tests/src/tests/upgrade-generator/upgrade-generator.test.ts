@@ -23,4 +23,30 @@ describe("fern generator upgrade", () => {
 
         expect(await getDirectoryContents(outputPath)).not.toBeNull();
     }, 60_000);
+
+    it("fern generator help commands", async () => {
+        // Create tmpdir and copy contents
+        const tmpDir = await tmp.dir();
+        const directory = AbsoluteFilePath.of(tmpDir.path);
+
+        await cp(FIXTURES_DIR, directory, { recursive: true });
+
+        expect(
+            (
+                await runFernCli(["generator", "--help"], {
+                    cwd: directory,
+                    reject: false
+                })
+            ).stdout
+        ).toMatchSnapshot();
+
+        expect(
+            (
+                await runFernCli(["generator", "upgrade", "--help"], {
+                    cwd: directory,
+                    reject: false
+                })
+            ).stdout
+        ).toMatchSnapshot();
+    }, 60_000);
 });

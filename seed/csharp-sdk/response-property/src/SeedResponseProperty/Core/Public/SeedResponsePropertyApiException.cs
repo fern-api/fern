@@ -9,10 +9,10 @@ public class SeedResponsePropertyApiException(string message, int statusCode, ob
     /// <summary>
     /// The error code of the response that triggered the exception.
     /// </summary>
-    public int StatusCode { get; } = statusCode;
+    public int StatusCode => statusCode;
 
     /// <summary>
     /// The body of the response that triggered the exception.
     /// </summary>
-    public object Body { get; } = body;
+    public object Body => body;
 }

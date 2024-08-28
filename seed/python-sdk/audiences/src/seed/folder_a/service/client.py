@@ -28,9 +28,10 @@ class ServiceClient:
         Examples
         --------
         from seed import SeedAudiences
+        from seed.environment import SeedAudiencesEnvironment
 
         client = SeedAudiences(
-            base_url="https://yourhost.com/path/to/api",
+            environment=SeedAudiencesEnvironment.ENVIRONMENT_A,
         )
         client.folder_a.service.get_direct_thread()
         """
@@ -73,9 +74,10 @@ class AsyncServiceClient:
         import asyncio
 
         from seed import AsyncSeedAudiences
+        from seed.environment import SeedAudiencesEnvironment
 
         client = AsyncSeedAudiences(
-            base_url="https://yourhost.com/path/to/api",
+            environment=SeedAudiencesEnvironment.ENVIRONMENT_A,
         )
 
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "../../../folder_c/common/types/foo"
+require_relative "../../../folder_c/common/types/folder_c_foo"
 require "ostruct"
 require "json"
 
@@ -8,7 +8,7 @@ module SeedAudiencesClient
   module FolderB
     class Common
       class Foo
-        # @return [SeedAudiencesClient::FolderC::Common::Foo]
+        # @return [SeedAudiencesClient::FolderC::Common::FolderCFoo]
         attr_reader :foo
         # @return [OpenStruct] Additional properties unmapped to the current class definition
         attr_reader :additional_properties
@@ -18,7 +18,7 @@ module SeedAudiencesClient
 
         OMIT = Object.new
 
-        # @param foo [SeedAudiencesClient::FolderC::Common::Foo]
+        # @param foo [SeedAudiencesClient::FolderC::Common::FolderCFoo]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [SeedAudiencesClient::FolderB::Common::Foo]
         def initialize(foo: OMIT, additional_properties: nil)
@@ -40,7 +40,7 @@ module SeedAudiencesClient
             foo = nil
           else
             foo = parsed_json["foo"].to_json
-            foo = SeedAudiencesClient::FolderC::Common::Foo.from_json(json_object: foo)
+            foo = SeedAudiencesClient::FolderC::Common::FolderCFoo.from_json(json_object: foo)
           end
           new(foo: foo, additional_properties: struct)
         end
@@ -59,7 +59,7 @@ module SeedAudiencesClient
         # @param obj [Object]
         # @return [Void]
         def self.validate_raw(obj:)
-          obj.foo.nil? || SeedAudiencesClient::FolderC::Common::Foo.validate_raw(obj: obj.foo)
+          obj.foo.nil? || SeedAudiencesClient::FolderC::Common::FolderCFoo.validate_raw(obj: obj.foo)
         end
       end
     end

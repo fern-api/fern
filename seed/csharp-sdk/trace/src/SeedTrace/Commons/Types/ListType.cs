@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedTrace.Core;
 
 #nullable enable
 
@@ -14,4 +15,9 @@ public record ListType
     /// </summary>
     [JsonPropertyName("isFixedLength")]
     public bool? IsFixedLength { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

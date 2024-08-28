@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedObject.Core;
 
 #nullable enable
 
@@ -11,4 +12,9 @@ public record Name
 
     [JsonPropertyName("value")]
     public required string Value { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

@@ -1,4 +1,3 @@
-using System;
 using SeedApi.Core;
 
 #nullable enable
@@ -11,11 +10,24 @@ public partial class SeedApiClient
 
     public SeedApiClient(ClientOptions? clientOptions = null)
     {
-        _client = new RawClient(
-            new Dictionary<string, string>() { { "X-Fern-Language", "C#" } },
-            new Dictionary<string, Func<string>>(),
-            clientOptions ?? new ClientOptions()
+        var defaultHeaders = new Headers(
+            new Dictionary<string, string>()
+            {
+                { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedApi" },
+                { "X-Fern-SDK-Version", Version.Current },
+                { "User-Agent", "Ferncircular-references/0.0.1" },
+            }
         );
+        clientOptions ??= new ClientOptions();
+        foreach (var header in defaultHeaders)
+        {
+            if (!clientOptions.Headers.ContainsKey(header.Key))
+            {
+                clientOptions.Headers[header.Key] = header.Value;
+            }
+        }
+        _client = new RawClient(clientOptions);
         A = new AClient(_client);
         Ast = new AstClient(_client);
     }

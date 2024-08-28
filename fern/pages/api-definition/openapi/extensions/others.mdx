@@ -310,91 +310,6 @@ paths:
   /users: ...
 ```
 
-## Audiences
-
-Audiences are a useful tool for segmenting your API for different consumers. You can configure your Fern Docs to publish documentation specific to an `Audience`. You can use [audiences in your Fern Definition](/learn/api-definition/fern/audiences), too.
-
-Common examples of audiences include:
-
-- Internal consumers (e.g., frontend developers who use the API)
-- Beta testers
-- Customers
-
-By default, if no audience is specified, it will be accessible to all consumers.
-
-### Audiences for Endpoints
-
-To mark an endpoint with a particular audience, add the `x-fern-audiences` extension to the relevant endpoint.
-
-In the example below, the `POST /users/sendEmail` endpoint is only available to internal consumers:
-
-```yaml title="openapi.yml" {4-5}
-paths:
-  /users/sendEmail:
-    post:
-      x-fern-audiences:
-        - internal
-      operationId: send_email
-      ...
-```
-
-### Audiences for Components
-
-Components can be marked for different audiences, as well.
-
-In this example, the `Email` type is available to both internal and beta customers, while the `to` property is available to beta customers only:
-
-```yaml title="openapi.yml" {13-17}
-components:
-  schemas:
-    Email:
-      title: Email
-      type: object
-      properties:
-        subject:
-          type: string
-        body:
-          type: string
-        to:
-          type: string
-          x-fern-audiences: <-- property audience
-            - beta
-      x-fern-audiences: <-- type audience
-        - internal
-        - beta
-```
-
-### Audiences for SDKs
-
-In `generators.yml`, you can apply audience filters so that only certain
-endpoints are passed to the generators.
-
-The following example configures the SDKs to filter for the `customers` audience:
-
-```yaml title="generators.yml" {3-4}
-groups:
-  sdks:
-    audiences:
-      - customers
-    generators:
-      - name: fernapi/fern-tyepscript-node-sdk
-        version: 0.8.8
-        ...
-```
-
-### Audiences for Docs
-
-If generating Fern Docs, update your `docs.yml` configuration to include your audiences.
-
-The following example shows how to configure your `docs.yml` to publish documentation for the `customers` audience:
-
-```yaml title="docs.yml" {3-4}
-navigation:
-  - api: API Reference
-    audiences:
-      - customers
-```
-
 ## Streaming
 
 The `x-fern-streaming` extension is used to specify that an endpoint's response is streamed.
@@ -557,11 +472,11 @@ shown in the third tab.
 
 ## Embedding extensions
 
-If instead of overlaying your extensions within an overrides file, as mentioned above. Certain frameworks that generate OpenAPI specs make it easy to embed extensions directly from code.
+If instead of overlaying your extensions within an overrides file, as mentioned above. Certain frameworks that generate OpenAPI Specifications make it easy to embed extensions directly from code.
 
 ### FastAPI
 
-Please view our page on [FastAPI](/learn/api-definition/openapi/frameworks/fastapi) for more information on how to extend your OpenAPI spec within FastAPI.
+Please view our page on [FastAPI](/learn/api-definition/openapi/frameworks/fastapi) for more information on how to extend your OpenAPI Specification within FastAPI.
 
 ## Request + response examples
 
@@ -647,7 +562,9 @@ paths:
 
 This renders as:
 
+<Frame caption="A deprecated endpoint">
 ![Screenshot of API Reference endpoint with tag showing deprecated](https://fern-image-hosting.s3.amazonaws.com/fern/x-fern-availability-example.png)
+</Frame>
 
 ### Request new extensions
 

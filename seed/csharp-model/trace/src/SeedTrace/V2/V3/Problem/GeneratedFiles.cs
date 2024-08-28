@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedTrace;
+using SeedTrace.Core;
 
 #nullable enable
 
@@ -17,4 +18,9 @@ public record GeneratedFiles
 
     [JsonPropertyName("other")]
     public Dictionary<Language, Files> Other { get; set; } = new Dictionary<Language, Files>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

@@ -6,4 +6,4 @@ imports:
 types:
   Foo:
     properties:
-      foo: optional<folderCCommons.Foo>
+      foo: optional<folderCCommons.FolderCFoo>

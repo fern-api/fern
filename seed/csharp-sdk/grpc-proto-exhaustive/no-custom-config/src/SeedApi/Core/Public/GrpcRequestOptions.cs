@@ -1,6 +1,7 @@
 using System;
 using System.Net.Http;
 using Grpc.Core;
+using SeedApi.Core;
 
 namespace SeedApi;
 
@@ -19,11 +20,6 @@ public partial class GrpcRequestOptions
     public TimeSpan? Timeout { get; init; }
 
     /// <summary>
-    /// Headers to be sent with this particular request.
-    /// </summary>
-    public Dictionary<string, string> Headers { get; init; } = new Dictionary<string, string>();
-
-    /// <summary>
     /// Options for write operations.
     /// </summary>
     public WriteOptions? WriteOptions { get; init; }
@@ -32,4 +28,9 @@ public partial class GrpcRequestOptions
     /// Client-side call credentials. Provide authorization with per-call granularity.
     /// </summary>
     public CallCredentials? CallCredentials { get; init; }
+
+    /// <summary>
+    /// Headers to be sent with this particular request.
+    /// </summary>
+    internal Headers Headers { get; init; } = new();
 }

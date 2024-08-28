@@ -1,7 +1,6 @@
 irVersion: v53
 publish:
   versionSubstitution: "$VERSION"
-  # TODO: Add build here
   command: 
     - pnpm --filter @fern-typescript/express-generator-cli dockerTagVersion "$VERSION"
     - docker push fernapi/fern-typescript-express:"$VERSION"

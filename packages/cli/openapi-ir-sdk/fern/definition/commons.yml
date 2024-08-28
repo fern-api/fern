@@ -117,6 +117,7 @@ types:
         type: optional<string>
         docs: Populated by `X-Server-Name`
       url: string
+      audiences: optional<list<string>>
 
   SdkGroupName:
     type: list<string>

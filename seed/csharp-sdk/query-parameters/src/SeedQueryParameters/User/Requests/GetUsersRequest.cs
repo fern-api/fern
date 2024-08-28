@@ -1,3 +1,7 @@
+using SeedQueryParameters.Core;
+
+#nullable enable
+
 namespace SeedQueryParameters;
 
 public record GetUsersRequest
@@ -29,4 +33,9 @@ public record GetUsersRequest
     public IEnumerable<User> ExcludeUser { get; set; } = new List<User>();
 
     public IEnumerable<string> Filter { get; set; } = new List<string>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

@@ -16,6 +16,49 @@ exports[`open api parser > hume > docs 1`] = `
             "auth": true,
             "display-name": "Get Job Details",
             "docs": "Get the request details and state of a given job.",
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "job_id": "job_id",
+                    "request": {
+                      "callback_url": "callback_url",
+                      "files": [
+                        {
+                          "md5sum": "md5sum",
+                        },
+                      ],
+                      "models": {
+                        "burst": {
+                          "key": "value",
+                        },
+                        "facemesh": {
+                          "key": "value",
+                        },
+                      },
+                      "notify": true,
+                      "transcription": {
+                        "language": "zh",
+                      },
+                      "urls": [
+                        "urls",
+                      ],
+                    },
+                    "state": {
+                      "created_timestamp_ms": 1000000,
+                      "ended_timestamp_ms": 1000000,
+                      "message": "state",
+                      "started_timestamp_ms": 1000000,
+                      "status": "FAILED",
+                    },
+                    "user_id": "user_id",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "pagination": undefined,
             "path": "/v0/batch/jobs/{id}",
@@ -64,7 +107,31 @@ exports[`open api parser > hume > docs 1`] = `
                 "id": "id",
               },
               "response": {
-                "body": [],
+                "body": [
+                  {
+                    "error": "error",
+                    "results": {
+                      "errors": [
+                        {
+                          "file": "file",
+                          "message": "message",
+                        },
+                      ],
+                      "predictions": [
+                        {
+                          "file": "file",
+                          "models": {},
+                        },
+                      ],
+                    },
+                    "source": {
+                      "content_type": "source",
+                      "filename": "source",
+                      "md5sum": "source",
+                      "type": "file",
+                    },
+                  },
+                ],
               },
             },
           ],
@@ -86,7 +153,31 @@ exports[`open api parser > hume > docs 1`] = `
           "examples": [
             {
               "response": {
-                "body": [],
+                "body": [
+                  {
+                    "job_id": "job_id",
+                    "request": {
+                      "callback_url": "callback_url",
+                      "files": [
+                        {
+                          "md5sum": "md5sum",
+                        },
+                      ],
+                      "notify": true,
+                      "urls": [
+                        "urls",
+                      ],
+                    },
+                    "state": {
+                      "created_timestamp_ms": 1000000,
+                      "ended_timestamp_ms": 1000000,
+                      "message": "state",
+                      "started_timestamp_ms": 1000000,
+                      "status": "FAILED",
+                    },
+                    "user_id": "user_id",
+                  },
+                ],
               },
             },
           ],
@@ -1277,6 +1368,49 @@ exports[`open api parser > hume > simple 1`] = `
             "auth": true,
             "display-name": "Get Job Details",
             "docs": "Get the request details and state of a given job.",
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "job_id": "job_id",
+                    "request": {
+                      "callback_url": "callback_url",
+                      "files": [
+                        {
+                          "md5sum": "md5sum",
+                        },
+                      ],
+                      "models": {
+                        "burst": {
+                          "key": "value",
+                        },
+                        "facemesh": {
+                          "key": "value",
+                        },
+                      },
+                      "notify": true,
+                      "transcription": {
+                        "language": "zh",
+                      },
+                      "urls": [
+                        "urls",
+                      ],
+                    },
+                    "state": {
+                      "created_timestamp_ms": 1000000,
+                      "ended_timestamp_ms": 1000000,
+                      "message": "state",
+                      "started_timestamp_ms": 1000000,
+                      "status": "FAILED",
+                    },
+                    "user_id": "user_id",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "pagination": undefined,
             "path": "/v0/batch/jobs/{id}",
@@ -1325,7 +1459,31 @@ exports[`open api parser > hume > simple 1`] = `
                 "id": "id",
               },
               "response": {
-                "body": [],
+                "body": [
+                  {
+                    "error": "error",
+                    "results": {
+                      "errors": [
+                        {
+                          "file": "file",
+                          "message": "message",
+                        },
+                      ],
+                      "predictions": [
+                        {
+                          "file": "file",
+                          "models": {},
+                        },
+                      ],
+                    },
+                    "source": {
+                      "content_type": "source",
+                      "filename": "source",
+                      "md5sum": "source",
+                      "type": "file",
+                    },
+                  },
+                ],
               },
             },
           ],
@@ -1347,7 +1505,31 @@ exports[`open api parser > hume > simple 1`] = `
           "examples": [
             {
               "response": {
-                "body": [],
+                "body": [
+                  {
+                    "job_id": "job_id",
+                    "request": {
+                      "callback_url": "callback_url",
+                      "files": [
+                        {
+                          "md5sum": "md5sum",
+                        },
+                      ],
+                      "notify": true,
+                      "urls": [
+                        "urls",
+                      ],
+                    },
+                    "state": {
+                      "created_timestamp_ms": 1000000,
+                      "ended_timestamp_ms": 1000000,
+                      "message": "state",
+                      "started_timestamp_ms": 1000000,
+                      "status": "FAILED",
+                    },
+                    "user_id": "user_id",
+                  },
+                ],
               },
             },
           ],

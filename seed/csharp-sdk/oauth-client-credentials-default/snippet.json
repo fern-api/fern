@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.getToken"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedOauthClientCredentialsDefault;\n\nvar client = new SeedOauthClientCredentialsDefaultClient();\nawait client.Auth.GetTokenAsync(\n    new GetTokenRequest\n    {\n        ClientId = \"string\",\n        ClientSecret = \"string\",\n        GrantType = \"client_credentials\",\n    }\n);\n"
+            }
+        }
+    ]
+}

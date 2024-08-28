@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedMixedCase.Core;
 
 #nullable enable
 
@@ -11,4 +12,9 @@ public record NestedUser
 
     [JsonPropertyName("NestedUser")]
     public required User NestedUser_ { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

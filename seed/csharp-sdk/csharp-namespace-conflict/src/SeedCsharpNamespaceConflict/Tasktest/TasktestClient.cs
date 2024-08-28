@@ -15,6 +15,11 @@ public partial class TasktestClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Tasktest.HelloAsync();
+    /// </code>
+    /// </example>
     public async System.Threading.Tasks.Task HelloAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

@@ -93,6 +93,46 @@
               "description": "OK",
               "body": "{\n    \"count\": 1\n}",
               "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/data",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "data"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"columns\": [\n        {\n            \"id\": \"id\",\n            \"values\": [\n                1.1\n            ]\n        }\n    ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": "OK",
+              "body": "{\n    \"count\": 1\n}",
+              "_postman_previewlanguage": "json"
             }
           ]
         },
@@ -133,6 +173,47 @@
             }
           },
           "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/data/delete",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "data",
+                    "delete"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": "OK",
+              "body": "{}",
+              "_postman_previewlanguage": "json"
+            },
             {
               "name": "Success",
               "status": "OK",
@@ -253,6 +334,47 @@
               "description": "OK",
               "body": "{\n    \"namespaces\": {\n        \"key\": {\n            \"count\": 1\n        }\n    },\n    \"dimension\": 1,\n    \"fullness\": 1.1,\n    \"totalCount\": 1\n}",
               "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/data/describe",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "data",
+                    "describe"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": "OK",
+              "body": "{\n    \"namespaces\": {\n        \"key\": {\n            \"count\": 1\n        }\n    },\n    \"dimension\": 1,\n    \"fullness\": 1.1,\n    \"totalCount\": 1\n}",
+              "_postman_previewlanguage": "json"
             }
           ]
         },
@@ -317,6 +439,50 @@
               "description": "OK",
               "body": "{\n    \"columns\": {\n        \"key\": {\n            \"id\": \"id\",\n            \"values\": [\n                1.1\n            ],\n            \"metadata\": {\n                \"key\": 1.1\n            },\n            \"indexedData\": {\n                \"indices\": [\n                    1\n                ],\n                \"values\": [\n                    1.1\n                ]\n            }\n        }\n    },\n    \"namespace\": \"namespace\",\n    \"usage\": {\n        \"units\": 1\n    }\n}",
               "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/data/fetch?ids=string&namespace=string",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "data",
+                    "fetch"
+                  ],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "description": null,
+                      "value": "string"
+                    },
+                    {
+                      "key": "namespace",
+                      "description": null,
+                      "value": "string"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": "OK",
+              "body": "{\n    \"columns\": {\n        \"key\": {\n            \"id\": \"id\",\n            \"values\": [\n                1.1\n            ],\n            \"metadata\": {\n                \"key\": 1.1\n            },\n            \"indexedData\": {\n                \"indices\": [\n                    1\n                ],\n                \"values\": [\n                    1.1\n                ]\n            }\n        }\n    },\n    \"namespace\": \"namespace\",\n    \"usage\": {\n        \"units\": 1\n    }\n}",
+              "_postman_previewlanguage": "json"
             }
           ]
         },
@@ -365,6 +531,60 @@
                     "list"
                   ],
                   "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": "OK",
+              "body": "{\n    \"columns\": [\n        {\n            \"id\": \"id\"\n        }\n    ],\n    \"pagination\": {\n        \"next\": \"next\"\n    },\n    \"namespace\": \"namespace\",\n    \"usage\": {\n        \"units\": 1\n    }\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/data/list?prefix=string&limit=1&paginationToken=string&namespace=string",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "data",
+                    "list"
+                  ],
+                  "query": [
+                    {
+                      "key": "prefix",
+                      "description": null,
+                      "value": "string"
+                    },
+                    {
+                      "key": "limit",
+                      "description": null,
+                      "value": "1"
+                    },
+                    {
+                      "key": "paginationToken",
+                      "description": null,
+                      "value": "string"
+                    },
+                    {
+                      "key": "namespace",
+                      "description": null,
+                      "value": "string"
+                    }
+                  ],
                   "variable": []
                 },
                 "header": [
@@ -461,6 +681,47 @@
               "description": "OK",
               "body": "{\n    \"results\": [\n        {\n            \"matches\": [\n                {\n                    \"id\": \"id\"\n                }\n            ],\n            \"namespace\": \"namespace\"\n        }\n    ],\n    \"matches\": [\n        {\n            \"id\": \"id\",\n            \"score\": 1.1,\n            \"values\": [\n                1.1\n            ],\n            \"metadata\": {\n                \"key\": 1.1\n            },\n            \"indexedData\": {\n                \"indices\": [\n                    1\n                ],\n                \"values\": [\n                    1.1\n                ]\n            }\n        }\n    ],\n    \"namespace\": \"namespace\",\n    \"usage\": {\n        \"units\": 1\n    }\n}",
               "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/data/query",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "data",
+                    "query"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"topK\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": "OK",
+              "body": "{\n    \"results\": [\n        {\n            \"matches\": [\n                {\n                    \"id\": \"id\"\n                }\n            ],\n            \"namespace\": \"namespace\"\n        }\n    ],\n    \"matches\": [\n        {\n            \"id\": \"id\",\n            \"score\": 1.1,\n            \"values\": [\n                1.1\n            ],\n            \"metadata\": {\n                \"key\": 1.1\n            },\n            \"indexedData\": {\n                \"indices\": [\n                    1\n                ],\n                \"values\": [\n                    1.1\n                ]\n            }\n        }\n    ],\n    \"namespace\": \"namespace\",\n    \"usage\": {\n        \"units\": 1\n    }\n}",
+              "_postman_previewlanguage": "json"
             }
           ]
         },
@@ -501,6 +762,47 @@
             }
           },
           "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/data/update",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "data",
+                    "update"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"id\": \"id\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": "OK",
+              "body": "{}",
+              "_postman_previewlanguage": "json"
+            },
             {
               "name": "Success",
               "status": "OK",

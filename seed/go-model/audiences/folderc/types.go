@@ -9,23 +9,23 @@ import (
 	uuid "github.com/google/uuid"
 )
 
-type Foo struct {
+type FolderCFoo struct {
 	BarProperty uuid.UUID `json:"bar_property" url:"bar_property"`
 
 	extraProperties map[string]interface{}
 }
 
-func (f *Foo) GetExtraProperties() map[string]interface{} {
+func (f *FolderCFoo) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
 }
 
-func (f *Foo) UnmarshalJSON(data []byte) error {
-	type unmarshaler Foo
+func (f *FolderCFoo) UnmarshalJSON(data []byte) error {
+	type unmarshaler FolderCFoo
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*f = Foo(value)
+	*f = FolderCFoo(value)
 
 	extraProperties, err := core.ExtractExtraProperties(data, *f)
 	if err != nil {
@@ -36,7 +36,7 @@ func (f *Foo) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (f *Foo) String() string {
+func (f *FolderCFoo) String() string {
 	if value, err := core.StringifyJSON(f); err == nil {
 		return value
 	}

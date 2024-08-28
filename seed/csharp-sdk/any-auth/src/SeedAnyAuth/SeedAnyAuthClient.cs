@@ -1,4 +1,3 @@
-using System;
 using SeedAnyAuth.Core;
 
 #nullable enable
@@ -23,16 +22,26 @@ public partial class SeedAnyAuthClient
             "MY_API_KEY",
             "Please pass in apiKey or set the environment variable MY_API_KEY."
         );
-        _client = new RawClient(
+        var defaultHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "Authorization", $"Bearer {token}" },
                 { "X-API-Key", apiKey },
                 { "X-Fern-Language", "C#" },
-            },
-            new Dictionary<string, Func<string>>(),
-            clientOptions ?? new ClientOptions()
+                { "X-Fern-SDK-Name", "SeedAnyAuth" },
+                { "X-Fern-SDK-Version", Version.Current },
+                { "User-Agent", "Fernany-auth/0.0.1" },
+            }
         );
+        clientOptions ??= new ClientOptions();
+        foreach (var header in defaultHeaders)
+        {
+            if (!clientOptions.Headers.ContainsKey(header.Key))
+            {
+                clientOptions.Headers[header.Key] = header.Value;
+            }
+        }
+        _client = new RawClient(clientOptions);
         Auth = new AuthClient(_client);
         User = new UserClient(_client);
     }

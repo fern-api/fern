@@ -30,12 +30,18 @@
           "query": [],
           "variable": []
         },
-        "header": [],
+        "header": [
+          {
+            "type": "text",
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
         "method": "POST",
         "auth": null,
         "body": {
           "mode": "raw",
-          "raw": "{\n    \"child\": \"example\",\n    \"parent\": \"Property from the parent\"\n}",
+          "raw": "{\n    \"child\": \"string\",\n    \"parent\": \"string\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -43,7 +49,49 @@
           }
         }
       },
-      "response": []
+      "response": [
+        {
+          "name": "Success",
+          "status": "OK",
+          "code": 200,
+          "originalRequest": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/extends/extended-inline-request-body",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "extends",
+                "extended-inline-request-body"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"child\": \"string\",\n    \"parent\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "description": null,
+          "body": "",
+          "_postman_previewlanguage": "json"
+        }
+      ]
     }
   ]
 }

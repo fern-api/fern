@@ -49,10 +49,15 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                     base64: (base64Example) => ts.factory.createStringLiteral(base64Example),
                     boolean: (booleanExample) => (booleanExample ? ts.factory.createTrue() : ts.factory.createFalse()),
                     uuid: (uuidExample) => ts.factory.createStringLiteral(uuidExample),
-                    datetime: (datetimeExample) =>
-                        ts.factory.createNewExpression(ts.factory.createIdentifier("Date"), undefined, [
-                            ts.factory.createStringLiteral(datetimeExample.toISOString())
-                        ]),
+                    datetime: (datetimeExample) => {
+                        if (context.includeSerdeLayer != null && datetimeExample.raw != null) {
+                            return ts.factory.createStringLiteral(datetimeExample.raw);
+                        } else {
+                            return ts.factory.createNewExpression(ts.factory.createIdentifier("Date"), undefined, [
+                                ts.factory.createStringLiteral(datetimeExample.datetime.toISOString())
+                            ]);
+                        }
+                    },
                     date: (dateExample) => ts.factory.createStringLiteral(dateExample),
                     _other: () => {
                         throw new Error("Unknown primitive example: " + primitiveExample.type);

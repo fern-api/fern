@@ -21,4 +21,9 @@ public record SendEnumInlinedRequest
     [JsonPropertyName("maybeOperandOrColor")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<Color, Operand>>))]
     public OneOf<Color, Operand>? MaybeOperandOrColor { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

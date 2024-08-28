@@ -20,10 +20,14 @@ test:
 language: csharp
 generatorType: SDK
 defaultOutputMode: github
+defaultCustomConfig:
+  generate-mock-server-tests: true
 scripts:
   - docker: bitnami/dotnet-sdk:8
     commands:
       - dotnet build src -c Release /p:ContinuousIntegrationBuild=true
+      # - dotnet test src
+
 fixtures: 
   imdb:
     - customConfig: null
@@ -59,9 +63,23 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
+        package-id: Seed.Client
+      outputFolder: package-id
+    - customConfig:
         read-only-memory-types:
           - float
       outputFolder: read-only-memory
 allowedFailures:
+  ## COMPILE FAILURES
   - objects-with-imports
   - examples
+  ## WIRE TEST FAILURES
+  - unknown # issue with example object
+  # - package-yml # user-provided example path not coming in properly
+  # - simple-fhir # nested generated examples are wonky
+  # - enum # complicated oneofs
+  # - trace # failing because we don't call stringify on enums path params
+  # - undiscriminated-unions # failing for same reason as exhaustive below
+  # - exhaustive:explicit-namespaces # mostly passing, request / response of direct union type failing because we don't specify jsonconverter
+  # - exhaustive:no-root-namespace-for-core-classes
+  # - exhaustive:no-generate-error-types

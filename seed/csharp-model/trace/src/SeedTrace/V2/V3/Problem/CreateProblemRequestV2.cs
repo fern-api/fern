@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedTrace;
+using SeedTrace.Core;
 
 #nullable enable
 
@@ -28,4 +29,9 @@ public record CreateProblemRequestV2
 
     [JsonPropertyName("isPublic")]
     public required bool IsPublic { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

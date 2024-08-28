@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedApi.Core;
 using Proto = Data.V1.Grpc;
 
 #nullable enable
@@ -12,6 +13,11 @@ public record IndexedData
 
     [JsonPropertyName("values")]
     public ReadOnlyMemory<float> Values { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 
     /// <summary>
     /// Maps the IndexedData type into its Protobuf-equivalent representation.

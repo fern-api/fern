@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.audiences.core.ObjectMappers;
+import com.seed.audiences.resources.folderc.common.types.FolderCFoo;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -20,19 +21,17 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Foo.Builder.class)
 public final class Foo {
-    private final Optional<com.seed.audiences.resources.folderc.common.types.Foo> foo;
+    private final Optional<FolderCFoo> foo;
 
     private final Map<String, Object> additionalProperties;
 
-    private Foo(
-            Optional<com.seed.audiences.resources.folderc.common.types.Foo> foo,
-            Map<String, Object> additionalProperties) {
+    private Foo(Optional<FolderCFoo> foo, Map<String, Object> additionalProperties) {
         this.foo = foo;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("foo")
-    public Optional<com.seed.audiences.resources.folderc.common.types.Foo> getFoo() {
+    public Optional<FolderCFoo> getFoo() {
         return foo;
     }
 
@@ -67,7 +66,7 @@ public final class Foo {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<com.seed.audiences.resources.folderc.common.types.Foo> foo = Optional.empty();
+        private Optional<FolderCFoo> foo = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -80,12 +79,12 @@ public final class Foo {
         }
 
         @JsonSetter(value = "foo", nulls = Nulls.SKIP)
-        public Builder foo(Optional<com.seed.audiences.resources.folderc.common.types.Foo> foo) {
+        public Builder foo(Optional<FolderCFoo> foo) {
             this.foo = foo;
             return this;
         }
 
-        public Builder foo(com.seed.audiences.resources.folderc.common.types.Foo foo) {
+        public Builder foo(FolderCFoo foo) {
             this.foo = Optional.ofNullable(foo);
             return this;
         }

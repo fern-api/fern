@@ -14,13 +14,13 @@ Availability can be:
 ## Endpoint 
 
 <CodeBlock title="pet.yml">
-```diff
+```yaml {6}
 service:
   base-path: /pet
   auth: true
   endpoints:
     add:
-+     availability: deprecated
+      availability: deprecated
       display-name: Add pet
       docs: Add a new Pet to the store
       method: POST
@@ -31,12 +31,15 @@ service:
 </CodeBlock>
 
 In Fern Docs, this will look like: 
+
+<Frame>
 ![Screenshot showing a deprecated tag next to an endpoint in API Reference docs](https://fern-image-hosting.s3.amazonaws.com/endpoint-deprecated.png)
+</Frame>
 
 ## Type
 
 <CodeBlock title="pet.yml">
-```diff
+```yaml {15}
   Pet:
     properties:
       id: 
@@ -51,7 +54,7 @@ In Fern Docs, this will look like:
         availability: generally-available
       category: 
         type: optional<Category>
-+       availability: pre-release
+        availability: pre-release
 
   Category:
     properties:
@@ -61,12 +64,15 @@ In Fern Docs, this will look like:
 </CodeBlock>
 
 In Fern Docs, this will look like: 
+
+<Frame>
 ![Screenshot showing a beta tag next to a type in API Reference docs](https://fern-image-hosting.s3.amazonaws.com/type-beta.png)
+</Frame>
 
 ## Property 
 
 <CodeBlock title="pet.yml">
-```diff
+```yaml {12}
   Pet:
     properties:
       id: 
@@ -78,10 +84,13 @@ In Fern Docs, this will look like:
       photoUrls: 
         type: list<string>
         docs: A list of publicly available URLs featuring the Pet
-+       availability: deprecated
+        availability: deprecated
       category: optional<Category>
 ```
 </CodeBlock>
 
 In Fern Docs, this will look like: 
+
+<Frame>
 ![Screenshot showing a deprecated tag next to a type's property in API Reference docs](https://fern-image-hosting.s3.amazonaws.com/property-deprecated.png)
+</Frame>

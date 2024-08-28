@@ -18,29 +18,29 @@ public class NodeTest
         var inputJson =
             @"
         {
-  ""name"": ""root"",
-  ""nodes"": [
-    {
-      ""name"": ""left""
-    },
-    {
-      ""name"": ""right""
-    }
-  ],
-  ""trees"": [
-    {
-      ""nodes"": [
-        {
-          ""name"": ""left""
-        },
-        {
-          ""name"": ""right""
+          ""name"": ""root"",
+          ""nodes"": [
+            {
+              ""name"": ""left""
+            },
+            {
+              ""name"": ""right""
+            }
+          ],
+          ""trees"": [
+            {
+              ""nodes"": [
+                {
+                  ""name"": ""left""
+                },
+                {
+                  ""name"": ""right""
+                }
+              ]
+            }
+          ]
         }
-      ]
-    }
-  ]
-}
-";
+        ";
 
         var serializerOptions = new JsonSerializerOptions
         {
@@ -60,9 +60,9 @@ public class NodeTest
         var inputJson =
             @"
         {
-  ""name"": ""left""
-}
-";
+          ""name"": ""left""
+        }
+        ";
 
         var serializerOptions = new JsonSerializerOptions
         {
@@ -82,9 +82,9 @@ public class NodeTest
         var inputJson =
             @"
         {
-  ""name"": ""right""
-}
-";
+          ""name"": ""right""
+        }
+        ";
 
         var serializerOptions = new JsonSerializerOptions
         {

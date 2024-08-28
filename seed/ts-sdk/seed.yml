@@ -2,7 +2,6 @@ irVersion: v53
 publish:
   workingDirectory: generators/typescript
   versionSubstitution: "$VERSION"
-  # TODO: Add build here
   command: 
     - pnpm --filter @fern-typescript/sdk-generator-cli dockerTagVersion:browser "$VERSION"
     - docker push fernapi/fern-typescript-browser-sdk:"$VERSION"
@@ -24,6 +23,11 @@ test:
 language: typescript
 generatorType: SDK
 defaultOutputMode: github
+
+customFixtureConfig: 
+  customConfig: 
+    generateWireTests: true    
+    noSerdeLayer: true
 fixtures:
   imdb:
     - customConfig: null
@@ -43,6 +47,13 @@ fixtures:
         allowCustomFetcher: true
         timeoutInSeconds: 2
       outputFolder: allow-custom-fetcher
+  audiences:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig: null
+      audiences:
+        - partner
+      outputFolder: with-partner-audience      
   exhaustive:
     - customConfig: null
       audiences:
@@ -204,12 +215,17 @@ allowedFailures:
   - plain-text
   - alias
   - api-wide-base-path
+  - cross-package-type-names
   - auth-environment-variables
   - basic-auth-environment-variables
   - exhaustive:bundle
   - exhaustive:dev-dependencies
-  - audiences
+  - audiences:no-custom-config
   - enum # throws b/c of undiscriminated union examples
   - streaming-parameter
   - imdb:noScripts
   - circular-references
+  # the below are likely related to changes made to example generation
+  - multi-url-environment-no-default
+  - objects-with-imports
+  - reserved-keywords

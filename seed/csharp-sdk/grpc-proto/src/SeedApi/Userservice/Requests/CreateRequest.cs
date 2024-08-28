@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedApi.Core;
 using Proto = User.V1;
 
 #nullable enable
@@ -22,6 +23,11 @@ public record CreateRequest
     [JsonPropertyName("metadata")]
     public Metadata? Metadata { get; set; }
 
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+
     /// <summary>
     /// Maps the CreateRequest type into its Protobuf-equivalent representation.
     /// </summary>
@@ -38,7 +44,7 @@ public record CreateRequest
         }
         if (Age != null)
         {
-            result.Age = Age ?? 0U;
+            result.Age = Age ?? 0;
         }
         if (Weight != null)
         {

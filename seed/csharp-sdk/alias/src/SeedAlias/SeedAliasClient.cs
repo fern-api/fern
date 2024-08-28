@@ -1,4 +1,3 @@
-using System;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,13 +13,31 @@ public partial class SeedAliasClient
 
     public SeedAliasClient(ClientOptions? clientOptions = null)
     {
-        _client = new RawClient(
-            new Dictionary<string, string>() { { "X-Fern-Language", "C#" } },
-            new Dictionary<string, Func<string>>(),
-            clientOptions ?? new ClientOptions()
+        var defaultHeaders = new Headers(
+            new Dictionary<string, string>()
+            {
+                { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedAlias" },
+                { "X-Fern-SDK-Version", Version.Current },
+                { "User-Agent", "Fernalias/0.0.1" },
+            }
         );
+        clientOptions ??= new ClientOptions();
+        foreach (var header in defaultHeaders)
+        {
+            if (!clientOptions.Headers.ContainsKey(header.Key))
+            {
+                clientOptions.Headers[header.Key] = header.Value;
+            }
+        }
+        _client = new RawClient(clientOptions);
     }
 
+    /// <example>
+    /// <code>
+    /// await client.GetAsync("type-kaljhv87");
+    /// </code>
+    /// </example>
     public async Task GetAsync(
         string typeId,
         RequestOptions? options = null,

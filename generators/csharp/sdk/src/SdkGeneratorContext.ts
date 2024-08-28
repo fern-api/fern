@@ -1,10 +1,13 @@
 import { AbstractCsharpGeneratorContext, AsIsFiles, csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath } from "@fern-api/fs-utils";
+import { GeneratorNotificationService } from "@fern-api/generator-commons";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import {
     DeclaredErrorName,
     FernFilepath,
     HttpEndpoint,
     HttpService,
+    IntermediateRepresentation,
     Name,
     ProtobufService,
     ServiceId,
@@ -13,6 +16,7 @@ import {
     TypeId
 } from "@fern-fern/ir-sdk/api";
 import { camelCase, upperFirst } from "lodash-es";
+import { EndpointSnippetsGenerator } from "./endpoint/snippets/EndpointSnippetsGenerator";
 import { GrpcClientInfo } from "./grpc/GrpcClientInfo";
 import { CLIENT_OPTIONS_CLASS_NAME } from "./options/ClientOptionsGenerator";
 import { REQUEST_OPTIONS_CLASS_NAME, REQUEST_OPTIONS_PARAMETER_NAME } from "./options/RequestOptionsGenerator";
@@ -20,9 +24,21 @@ import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 
 const TYPES_FOLDER_NAME = "Types";
 const EXCEPTIONS_FOLDER_NAME = "Exceptions";
+export const MOCK_SERVER_TEST_FOLDER = RelativeFilePath.of("Unit/MockServer");
 const CANCELLATION_TOKEN_PARAMETER_NAME = "cancellationToken";
 
 export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCustomConfigSchema> {
+    public readonly snippetGenerator: EndpointSnippetsGenerator;
+    public constructor(
+        public readonly ir: IntermediateRepresentation,
+        public readonly config: FernGeneratorExec.config.GeneratorConfig,
+        public readonly customConfig: SdkCustomConfigSchema,
+        public readonly generatorNotificationService: GeneratorNotificationService
+    ) {
+        super(ir, config, customConfig, generatorNotificationService);
+        this.snippetGenerator = new EndpointSnippetsGenerator({ context: this });
+    }
+
     /**
      * Returns the service with the given id
      * @param serviceId
@@ -78,19 +94,26 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
 
     public getCoreAsIsFiles(): string[] {
         const files = [
-            AsIsFiles.RawClient,
-            AsIsFiles.StringEnumSerializer,
-            AsIsFiles.OneOfSerializer,
             AsIsFiles.CollectionItemSerializer,
-            AsIsFiles.HttpMethodExtensions,
             AsIsFiles.Constants,
             AsIsFiles.DateTimeSerializer,
-            AsIsFiles.JsonConfiguration
+            AsIsFiles.Extensions,
+            AsIsFiles.Headers,
+            AsIsFiles.HeaderValue,
+            AsIsFiles.HttpMethodExtensions,
+            AsIsFiles.JsonConfiguration,
+            AsIsFiles.OneOfSerializer,
+            AsIsFiles.RawClient,
+            AsIsFiles.StringEnumSerializer
         ];
         if (this.hasGrpcEndpoints()) {
             files.push(AsIsFiles.RawGrpcClient);
         }
         return files;
+    }
+
+    public getAsIsTestUtils(): string[] {
+        return [];
     }
 
     public getPublicCoreAsIsFiles(): string[] {
@@ -143,6 +166,13 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return `${this.getComputedClientName()}Client`;
     }
 
+    public getRootClientClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: this.getRootClientClassName(),
+            namespace: this.getNamespace()
+        });
+    }
+
     public getBaseExceptionClassReference(): csharp.ClassReference {
         const maybeOverrideName = this.customConfig["base-exception-class-name"];
         return csharp.classReference({
@@ -170,6 +200,17 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return this.customConfig["client-class-name"] ?? this.getComputedClientName();
     }
 
+    public getHeadersClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: this.getHeadersClassName(),
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    public getHeadersClassName(): string {
+        return "Headers";
+    }
+
     public getRawClientClassName(): string {
         return "RawClient";
     }
@@ -188,6 +229,13 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     public getRawGrpcClientClassReference(): csharp.ClassReference {
         return csharp.classReference({
             name: this.getRawGrpcClientClassName(),
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    public getExtensionsClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "Extensions",
             namespace: this.getCoreNamespace()
         });
     }
@@ -262,6 +310,13 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return this.customConfig["root-namespace-for-core-classes"] ?? true
             ? this.getNamespace()
             : this.getCoreNamespace();
+    }
+
+    public getBaseMockServerTestClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "BaseMockServerTest",
+            namespace: this.getMockServerTestNamespace()
+        });
     }
 
     public getClientOptionsClassReference(): csharp.ClassReference {

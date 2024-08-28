@@ -1,0 +1,51 @@
+name: Publish Dev CLI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish-dev:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    env:
+      NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
+      AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+      AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
+      POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Print version
+        run: |
+          git_version="$(./scripts/git-version.sh)"
+          echo Publishing version: "${git_version}"
+
+      - name: Add version to dev package.json's
+        run: |
+          git_version="$(./scripts/git-version.sh)"
+
+          cd packages/cli/cli
+          mv package.json package.json.tmp
+          version_replace="s/0.0.0/${git_version}/"
+          cat package.json.tmp| sed "${version_replace}" > package.json
+          rm -rf package.json.tmp
+
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+
+      - name: Update pnpm lock with new versions
+        run: pnpm install
+
+      - name: Compile
+        run: pnpm --filter @fern-api/cli compile
+
+      - name: Publish fern-api-dev CLI
+        run: pnpm --filter @fern-api/cli publish:cli:dev --access restricted

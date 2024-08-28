@@ -99,6 +99,7 @@ exports[`open api parser > default-content > parse open api 1`] = `
   "securitySchemes": {},
   "servers": [
     {
+      "audiences": null,
       "description": null,
       "name": null,
       "url": "https://ai.com",

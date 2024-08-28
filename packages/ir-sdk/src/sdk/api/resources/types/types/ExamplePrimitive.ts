@@ -65,9 +65,8 @@ export declare namespace ExamplePrimitive {
         date: string;
     }
 
-    interface Datetime extends _Utils {
+    interface Datetime extends FernIr.ExampleDatetime, _Utils {
         type: "datetime";
-        datetime: Date;
     }
 
     interface Uuid extends _Utils {
@@ -99,7 +98,7 @@ export declare namespace ExamplePrimitive {
         boolean: (value: boolean) => _Result;
         string: (value: FernIr.EscapedString) => _Result;
         date: (value: string) => _Result;
-        datetime: (value: Date) => _Result;
+        datetime: (value: FernIr.ExampleDatetime) => _Result;
         uuid: (value: string) => _Result;
         base64: (value: string) => _Result;
         bigInteger: (value: string) => _Result;
@@ -225,9 +224,9 @@ export const ExamplePrimitive = {
         };
     },
 
-    datetime: (value: Date): FernIr.ExamplePrimitive.Datetime => {
+    datetime: (value: FernIr.ExampleDatetime): FernIr.ExamplePrimitive.Datetime => {
         return {
-            datetime: value,
+            ...value,
             type: "datetime",
             _visit: function <_Result>(
                 this: FernIr.ExamplePrimitive.Datetime,
@@ -298,7 +297,7 @@ export const ExamplePrimitive = {
             case "date":
                 return visitor.date(value.date);
             case "datetime":
-                return visitor.datetime(value.datetime);
+                return visitor.datetime(value);
             case "uuid":
                 return visitor.uuid(value.uuid);
             case "base64":

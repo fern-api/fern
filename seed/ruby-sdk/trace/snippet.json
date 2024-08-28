@@ -73,7 +73,7 @@
                 "identifierOverride": "endpoint_admin.storeTracedTestCase"
             },
             "snippet": {
-                "client": "require \"fern_trace\"\n\ntrace = SeedTraceClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedTraceClient::Environment::PROD,\n  token: \"YOUR_AUTH_TOKEN\"\n)\ntrace.admin.store_traced_test_case(\n  submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  test_case_id: \"string\",\n  result: { result: {  }, stdout: \"string\" },\n  trace_responses: [{ submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", line_number: 1, expression_location: {  }, stack: {  }, stdout: \"string\" }]\n)",
+                "client": "require \"fern_trace\"\n\ntrace = SeedTraceClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedTraceClient::Environment::PROD,\n  token: \"YOUR_AUTH_TOKEN\"\n)\ntrace.admin.store_traced_test_case(\n  submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  test_case_id: \"string\",\n  result: { result: { passed: true }, stdout: \"string\" },\n  trace_responses: [{ submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", line_number: 1, expression_location: { start: 1, offset: 1 }, stack: { num_stack_frames: 1, top_stack_frame: { method_name: \"string\", line_number: 1, scopes: [{ variables: { \"string\": {\"key\":\"value\"} } }] } }, stdout: \"string\" }]\n)",
                 "type": "ruby"
             }
         },
@@ -84,7 +84,7 @@
                 "identifierOverride": "endpoint_admin.storeTracedTestCaseV2"
             },
             "snippet": {
-                "client": "require \"fern_trace\"\n\ntrace = SeedTraceClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedTraceClient::Environment::PROD,\n  token: \"YOUR_AUTH_TOKEN\"\n)\ntrace.admin.store_traced_test_case_v_2(\n  submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  test_case_id: \"string\",\n  request: [{ submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", line_number: 1, file: {  }, expression_location: {  }, stack: {  }, stdout: \"string\" }]\n)",
+                "client": "require \"fern_trace\"\n\ntrace = SeedTraceClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedTraceClient::Environment::PROD,\n  token: \"YOUR_AUTH_TOKEN\"\n)\ntrace.admin.store_traced_test_case_v_2(\n  submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  test_case_id: \"string\",\n  request: [{ submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", line_number: 1, file: { filename: \"string\", directory: \"string\" }, expression_location: { start: 1, offset: 1 }, stack: { num_stack_frames: 1, top_stack_frame: { method_name: \"string\", line_number: 1, scopes: [{ variables: { \"string\": {\"key\":\"value\"} } }] } }, stdout: \"string\" }]\n)",
                 "type": "ruby"
             }
         },
@@ -95,7 +95,7 @@
                 "identifierOverride": "endpoint_admin.storeTracedWorkspace"
             },
             "snippet": {
-                "client": "require \"fern_trace\"\n\ntrace = SeedTraceClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedTraceClient::Environment::PROD,\n  token: \"YOUR_AUTH_TOKEN\"\n)\ntrace.admin.store_traced_workspace(\n  submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  workspace_run_details: { exception: {  }, stdout: \"string\" },\n  trace_responses: [{ submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", line_number: 1, expression_location: {  }, stack: {  }, stdout: \"string\" }]\n)",
+                "client": "require \"fern_trace\"\n\ntrace = SeedTraceClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedTraceClient::Environment::PROD,\n  token: \"YOUR_AUTH_TOKEN\"\n)\ntrace.admin.store_traced_workspace(\n  submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  workspace_run_details: { exception: { exception_type: \"string\", exception_message: \"string\", exception_stacktrace: \"string\" }, stdout: \"string\" },\n  trace_responses: [{ submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", line_number: 1, expression_location: { start: 1, offset: 1 }, stack: { num_stack_frames: 1, top_stack_frame: { method_name: \"string\", line_number: 1, scopes: [{ variables: { \"string\": {\"key\":\"value\"} } }] } }, stdout: \"string\" }]\n)",
                 "type": "ruby"
             }
         },
@@ -106,7 +106,7 @@
                 "identifierOverride": "endpoint_admin.storeTracedWorkspaceV2"
             },
             "snippet": {
-                "client": "require \"fern_trace\"\n\ntrace = SeedTraceClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedTraceClient::Environment::PROD,\n  token: \"YOUR_AUTH_TOKEN\"\n)\ntrace.admin.store_traced_workspace_v_2(submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", request: [{ submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", line_number: 1, file: {  }, expression_location: {  }, stack: {  }, stdout: \"string\" }])",
+                "client": "require \"fern_trace\"\n\ntrace = SeedTraceClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedTraceClient::Environment::PROD,\n  token: \"YOUR_AUTH_TOKEN\"\n)\ntrace.admin.store_traced_workspace_v_2(submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", request: [{ submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", line_number: 1, file: { filename: \"string\", directory: \"string\" }, expression_location: { start: 1, offset: 1 }, stack: { num_stack_frames: 1, top_stack_frame: { method_name: \"string\", line_number: 1, scopes: [{ variables: { \"string\": {\"key\":\"value\"} } }] } }, stdout: \"string\" }])",
                 "type": "ruby"
             }
         },
@@ -161,7 +161,7 @@
                 "identifierOverride": "endpoint_admin.storeTracedTestCase"
             },
             "snippet": {
-                "client": "require \"fern_trace\"\n\ntrace = SeedTraceClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedTraceClient::Environment::PROD,\n  token: \"YOUR_AUTH_TOKEN\"\n)\ntrace.admin.store_traced_test_case(\n  submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  test_case_id: \"string\",\n  result: { result: {  }, stdout: \"string\" },\n  trace_responses: [{ submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", line_number: 1, expression_location: {  }, stack: {  }, stdout: \"string\" }]\n)",
+                "client": "require \"fern_trace\"\n\ntrace = SeedTraceClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedTraceClient::Environment::PROD,\n  token: \"YOUR_AUTH_TOKEN\"\n)\ntrace.admin.store_traced_test_case(\n  submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  test_case_id: \"string\",\n  result: { result: { passed: true }, stdout: \"string\" },\n  trace_responses: [{ submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", line_number: 1, expression_location: { start: 1, offset: 1 }, stack: { num_stack_frames: 1, top_stack_frame: { method_name: \"string\", line_number: 1, scopes: [{ variables: { \"string\": {\"key\":\"value\"} } }] } }, stdout: \"string\" }]\n)",
                 "type": "ruby"
             }
         },
@@ -172,7 +172,7 @@
                 "identifierOverride": "endpoint_admin.storeTracedTestCaseV2"
             },
             "snippet": {
-                "client": "require \"fern_trace\"\n\ntrace = SeedTraceClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedTraceClient::Environment::PROD,\n  token: \"YOUR_AUTH_TOKEN\"\n)\ntrace.admin.store_traced_test_case_v_2(\n  submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  test_case_id: \"string\",\n  request: [{ submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", line_number: 1, file: {  }, expression_location: {  }, stack: {  }, stdout: \"string\" }]\n)",
+                "client": "require \"fern_trace\"\n\ntrace = SeedTraceClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedTraceClient::Environment::PROD,\n  token: \"YOUR_AUTH_TOKEN\"\n)\ntrace.admin.store_traced_test_case_v_2(\n  submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  test_case_id: \"string\",\n  request: [{ submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", line_number: 1, file: { filename: \"string\", directory: \"string\" }, expression_location: { start: 1, offset: 1 }, stack: { num_stack_frames: 1, top_stack_frame: { method_name: \"string\", line_number: 1, scopes: [{ variables: { \"string\": {\"key\":\"value\"} } }] } }, stdout: \"string\" }]\n)",
                 "type": "ruby"
             }
         },
@@ -183,7 +183,7 @@
                 "identifierOverride": "endpoint_admin.storeTracedWorkspace"
             },
             "snippet": {
-                "client": "require \"fern_trace\"\n\ntrace = SeedTraceClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedTraceClient::Environment::PROD,\n  token: \"YOUR_AUTH_TOKEN\"\n)\ntrace.admin.store_traced_workspace(\n  submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  workspace_run_details: { exception: {  }, stdout: \"string\" },\n  trace_responses: [{ submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", line_number: 1, expression_location: {  }, stack: {  }, stdout: \"string\" }]\n)",
+                "client": "require \"fern_trace\"\n\ntrace = SeedTraceClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedTraceClient::Environment::PROD,\n  token: \"YOUR_AUTH_TOKEN\"\n)\ntrace.admin.store_traced_workspace(\n  submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  workspace_run_details: { exception: { exception_type: \"string\", exception_message: \"string\", exception_stacktrace: \"string\" }, stdout: \"string\" },\n  trace_responses: [{ submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", line_number: 1, expression_location: { start: 1, offset: 1 }, stack: { num_stack_frames: 1, top_stack_frame: { method_name: \"string\", line_number: 1, scopes: [{ variables: { \"string\": {\"key\":\"value\"} } }] } }, stdout: \"string\" }]\n)",
                 "type": "ruby"
             }
         },
@@ -194,7 +194,7 @@
                 "identifierOverride": "endpoint_admin.storeTracedWorkspaceV2"
             },
             "snippet": {
-                "client": "require \"fern_trace\"\n\ntrace = SeedTraceClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedTraceClient::Environment::PROD,\n  token: \"YOUR_AUTH_TOKEN\"\n)\ntrace.admin.store_traced_workspace_v_2(submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", request: [{ submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", line_number: 1, file: {  }, expression_location: {  }, stack: {  }, stdout: \"string\" }])",
+                "client": "require \"fern_trace\"\n\ntrace = SeedTraceClient::Client.new(\n  base_url: \"https://api.example.com\",\n  environment: SeedTraceClient::Environment::PROD,\n  token: \"YOUR_AUTH_TOKEN\"\n)\ntrace.admin.store_traced_workspace_v_2(submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", request: [{ submission_id: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", line_number: 1, file: { filename: \"string\", directory: \"string\" }, expression_location: { start: 1, offset: 1 }, stack: { num_stack_frames: 1, top_stack_frame: { method_name: \"string\", line_number: 1, scopes: [{ variables: { \"string\": {\"key\":\"value\"} } }] } }, stdout: \"string\" }])",
                 "type": "ruby"
             }
         },

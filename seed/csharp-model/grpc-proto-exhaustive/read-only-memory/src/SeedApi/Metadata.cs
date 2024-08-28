@@ -1,3 +1,4 @@
+using SeedApi.Core;
 using Proto = Google.Protobuf.WellKnownTypes;
 
 #nullable enable
@@ -10,6 +11,11 @@ public sealed class Metadata : Dictionary<string, MetadataValue?>
 
     public Metadata(IEnumerable<KeyValuePair<string, MetadataValue?>> value)
         : base(value.ToDictionary(e => e.Key, e => e.Value)) { }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 
     internal Proto.Struct ToProto()
     {

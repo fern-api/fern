@@ -4,6 +4,10 @@
 package com.seed.audiences.core;
 
 public final class Environment {
+    public static final Environment ENVIRONMENT_A = new Environment("https://api.example.a.com");
+
+    public static final Environment ENVIRONMENT_B = new Environment("https://api.example.b.com");
+
     private final String url;
 
     private Environment(String url) {

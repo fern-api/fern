@@ -6,6 +6,7 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { BaseOptionsGenerator, BASE_URL_FIELD_NAME, BASE_URL_SUMMARY, OptionArgs } from "./BaseOptionsGenerator";
 
 export const CLIENT_OPTIONS_CLASS_NAME = "ClientOptions";
+export const GLOBAL_TEST_SETUP_NAME = "GlobalTestSetup";
 
 export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     private baseOptionsGenerator: BaseOptionsGenerator;
@@ -28,6 +29,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
         };
         class_.addField(this.getBaseUrlField());
         class_.addField(this.baseOptionsGenerator.getHttpClientField(optionArgs));
+        class_.addField(this.baseOptionsGenerator.getHttpHeadersField());
         class_.addField(this.baseOptionsGenerator.getMaxRetriesField(optionArgs));
         class_.addField(this.baseOptionsGenerator.getTimeoutField(optionArgs));
         if (this.context.hasGrpcEndpoints()) {
@@ -38,7 +40,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
             directory: this.context.getPublicCoreDirectory(),
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
-            namespace: this.context.getNamespace(),
+            namespace: this.context.getPublicCoreNamespace(),
             customConfig: this.context.customConfig
         });
     }

@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedTrace.Core;
 
 #nullable enable
 
@@ -11,4 +12,9 @@ public record GradedResponseV2
 
     [JsonPropertyName("testCases")]
     public object TestCases { get; set; } = new Dictionary<string, object?>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }
