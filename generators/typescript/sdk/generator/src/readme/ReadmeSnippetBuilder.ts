@@ -12,8 +12,8 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import { getTextOfTsNode, NpmPackage } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
-import { camelCase } from "lodash-es";
 import { code, Code } from "ts-poet";
+import { AbstractReadmeSnippetBuilder } from "@fern-api/generator-commons";
 
 interface EndpointWithFilepath {
     endpoint: HttpEndpoint;
@@ -25,7 +25,7 @@ interface EndpointWithRequest {
     requestWrapper: SdkRequestWrapper;
 }
 
-export class ReadmeSnippetBuilder {
+export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static ABORTING_REQUESTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ABORTING_REQUESTS";
     private static EXCEPTION_HANDLING_FEATURE_ID: FernGeneratorCli.FeatureId = "EXCEPTION_HANDLING";
     private static REQUEST_AND_RESPONSE_TYPES_FEATURE_ID: FernGeneratorCli.FeatureId = "REQUEST_AND_RESPONSE_TYPES";
@@ -47,10 +47,14 @@ export class ReadmeSnippetBuilder {
         context: SdkContext;
         endpointSnippets: FernGeneratorExec.Endpoint[];
     }) {
+        super({ endpointSnippets });
         this.context = context;
         this.endpoints = this.buildEndpoints();
         this.snippets = this.buildSnippets(endpointSnippets);
-        this.defaultEndpointId = this.getDefaultEndpointId(endpointSnippets);
+        this.defaultEndpointId =
+            this.context.ir.readmeConfig?.defaultEndpoint != null
+                ? this.context.ir.readmeConfig.defaultEndpoint
+                : this.getDefaultEndpointId();
         this.rootPackageName = this.getRootPackageName();
         this.rootClientConstructorName = this.getRootClientConstructorName();
         this.clientVariableName = this.getClientVariableName();
@@ -232,26 +236,6 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
         return snippet;
     }
 
-    private getDefaultEndpointId(endpointSnippets: FernGeneratorExec.Endpoint[]): EndpointId {
-        if (this.context.ir.readmeConfig?.defaultEndpoint != null) {
-            return this.context.ir.readmeConfig.defaultEndpoint;
-        }
-        // Prefer POST endpoints because they include better request structures
-        // in snippets.
-        let defaultEndpoint = endpointSnippets.find((endpoint) => endpoint.id.method === "POST");
-        if (defaultEndpoint == null) {
-            const firstEndpoint = endpointSnippets[0];
-            if (firstEndpoint == null) {
-                throw new Error("Internal error; no endpoint snippets were provided");
-            }
-            defaultEndpoint = firstEndpoint;
-        }
-        if (defaultEndpoint.id.identifierOverride == null) {
-            throw new Error("Internal error; all endpoints must define an endpoint id to generate README.md");
-        }
-        return defaultEndpoint.id.identifierOverride;
-    }
-
     private getEndpointWithRequest(): EndpointWithRequest | undefined {
         for (const endpointWithFilepath of Object.values(this.endpoints)) {
             if (endpointWithFilepath.endpoint.sdkRequest?.shape?.type === "wrapper") {
@@ -299,10 +283,6 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
         return `${this.getAccessFromRootClient(endpoint.fernFilepath)}.${this.getEndpointMethodName(
             endpoint.endpoint
         )}`;
-    }
-
-    private getFeatureKey(featureId: FeatureId): string {
-        return camelCase(featureId);
     }
 
     private getAccessFromRootClient(fernFilepath: FernFilepath): string {

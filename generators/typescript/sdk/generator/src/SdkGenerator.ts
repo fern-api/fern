@@ -56,9 +56,9 @@ import { SdkInlinedRequestBodyDeclarationReferencer } from "./declaration-refere
 import { TimeoutSdkErrorDeclarationReferencer } from "./declaration-referencers/TimeoutSdkErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "./declaration-referencers/TypeDeclarationReferencer";
 import { VersionDeclarationReferencer } from "./declaration-referencers/VersionDeclarationReferencer";
-import { ReadmeConfigBuilder } from "./generator-agent/ReadmeConfigBuilder";
-import { ReferenceConfigBuilder } from "./generator-agent/ReferenceConfigBuilder";
-import { TypeScriptGeneratorAgent } from "./generator-agent/TypeScriptGeneratorAgent";
+import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
+import { ReferenceConfigBuilder } from "@fern-api/generator-commons";
+import { TypeScriptGeneratorAgent } from "./TypeScriptGeneratorAgent";
 import { TemplateGenerator } from "./TemplateGenerator";
 import { JestTestGenerator } from "./test-generator/JestTestGenerator";
 import { VersionGenerator } from "./version/VersionGenerator";
@@ -123,8 +123,6 @@ export declare namespace SdkGenerator {
         organization: string;
         apiName: string;
         packageJson: Record<string, unknown> | undefined;
-        githubRepoUrl: string | undefined;
-        githubInstallationToken: string | undefined;
     }
 }
 
@@ -369,12 +367,9 @@ export class SdkGenerator {
         this.referenceConfigBuilder = new ReferenceConfigBuilder();
         this.generatorAgent = new TypeScriptGeneratorAgent({
             logger: this.context.logger,
-            referenceConfigBuilder: this.referenceConfigBuilder,
+            config: this.rawConfig,
             readmeConfigBuilder: new ReadmeConfigBuilder({
-                logger: this.context.logger,
-                endpointSnippets: this.endpointSnippets,
-                githubRepoUrl: this.config.githubRepoUrl,
-                githubInstallationToken: this.config.githubInstallationToken
+                endpointSnippets: this.endpointSnippets
             })
         });
 
@@ -736,7 +731,10 @@ export class SdkGenerator {
             filepath: this.generatorAgent.getExportedReadmeFilePath(),
             run: async ({ sourceFile, importsManager }) => {
                 const context = this.generateSdkContext({ sourceFile, importsManager });
-                const readmeContent = await this.generatorAgent.generateReadme(context);
+                const readmeContent = await this.generatorAgent.generateReadme({
+                    context,
+                    endpointSnippets: this.endpointSnippets
+                });
                 sourceFile.replaceWithText(readmeContent);
             }
         });
@@ -751,7 +749,7 @@ export class SdkGenerator {
             filepath: this.generatorAgent.getExportedReferenceFilePath(),
             run: async ({ sourceFile, importsManager }) => {
                 const context = this.generateSdkContext({ sourceFile, importsManager });
-                const referenceContent = await this.generatorAgent.generateReference(context);
+                const referenceContent = await this.generatorAgent.generateReference(this.referenceConfigBuilder);
                 sourceFile.replaceWithText(referenceContent);
             }
         });

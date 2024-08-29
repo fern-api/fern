@@ -17,6 +17,8 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import { camelCase, upperFirst } from "lodash-es";
 import { EndpointSnippetsGenerator } from "./endpoint/snippets/EndpointSnippetsGenerator";
+import { CsharpGeneratorAgent } from "./CsharpGeneratorAgent";
+import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
 import { GrpcClientInfo } from "./grpc/GrpcClientInfo";
 import { CLIENT_OPTIONS_CLASS_NAME } from "./options/ClientOptionsGenerator";
 import { REQUEST_OPTIONS_CLASS_NAME, REQUEST_OPTIONS_PARAMETER_NAME } from "./options/RequestOptionsGenerator";
@@ -29,6 +31,7 @@ const CANCELLATION_TOKEN_PARAMETER_NAME = "cancellationToken";
 
 export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCustomConfigSchema> {
     public readonly snippetGenerator: EndpointSnippetsGenerator;
+    public readonly generatorAgent: CsharpGeneratorAgent;
     public constructor(
         public readonly ir: IntermediateRepresentation,
         public readonly config: FernGeneratorExec.config.GeneratorConfig,
@@ -37,6 +40,11 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     ) {
         super(ir, config, customConfig, generatorNotificationService);
         this.snippetGenerator = new EndpointSnippetsGenerator({ context: this });
+        this.generatorAgent = new CsharpGeneratorAgent({
+            logger: this.logger,
+            config: this.config,
+            readmeConfigBuilder: new ReadmeConfigBuilder()
+        });
     }
 
     /**

@@ -1,35 +1,37 @@
 import { AbstractGeneratorAgent } from "@fern-api/generator-commons";
 import { Logger } from "@fern-api/logger";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
-import { ReadmeConfigBuilder } from "./ReadmeConfigBuilder";
-import { ReferenceConfigBuilder } from "./ReferenceConfigBuilder";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
 import { ExportedFilePath } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 
 export class TypeScriptGeneratorAgent extends AbstractGeneratorAgent<SdkContext> {
     private readmeConfigBuilder: ReadmeConfigBuilder;
-    private referenceConfigBuilder: ReferenceConfigBuilder;
 
     public constructor({
         logger,
-        readmeConfigBuilder,
-        referenceConfigBuilder
+        config,
+        readmeConfigBuilder
     }: {
         logger: Logger;
+        config: FernGeneratorExec.GeneratorConfig;
         readmeConfigBuilder: ReadmeConfigBuilder;
-        referenceConfigBuilder: ReferenceConfigBuilder;
     }) {
-        super(logger);
+        super({ logger, config });
         this.readmeConfigBuilder = readmeConfigBuilder;
-        this.referenceConfigBuilder = referenceConfigBuilder;
     }
 
-    public getReadmeConfig(context: SdkContext): FernGeneratorCli.ReadmeConfig {
-        return this.readmeConfigBuilder.build(context);
+    public getReadmeConfig(args: AbstractGeneratorAgent.ReadmeConfigArgs<SdkContext>): FernGeneratorCli.ReadmeConfig {
+        return this.readmeConfigBuilder.build({
+            context: args.context,
+            remote: args.remote,
+            featureConfig: args.featureConfig
+        });
     }
 
-    public getReferenceConfig(context: SdkContext): FernGeneratorCli.ReferenceConfig {
-        return this.referenceConfigBuilder.build(context);
+    public getLanguage(): FernGeneratorCli.Language {
+        return FernGeneratorCli.Language.Typescript;
     }
 
     public getExportedReadmeFilePath(): ExportedFilePath {
