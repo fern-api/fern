@@ -31,6 +31,9 @@ tabs:
     display-name: SDKs
     icon: fa-brands fa-codepen
     slug: sdks
+  servers:
+    display-name: Server Stubs
+    slug: servers
   cli-api:
     display-name: CLI & API Reference
     icon: fa-regular fa-code
@@ -421,14 +424,26 @@ navigation:
             path: ./pages/docs/components/endpoint-response-snippet.mdx
             icon: "turn-down"
             slug: response-snippet
-
       - section: Alternatives
         hidden: true
         contents: 
           - page: ReadMe
             slug: readme
             path: ./pages/docs/comparison/readme.mdx
-
+  - tab: servers
+    layout: 
+      - section: Introduction
+        contents:
+          - page: What is server code generation?
+            path: ./pages/servers/introduction.mdx
+      - section: Server Frameworks
+        contents:
+          - page: Express server
+            path: ./pages/servers/express.mdx
+          - page: FastAPI server
+            path: ./pages/servers/fastapi.mdx
+          - page: Spring server 
+            path: ./pages/servers/spring.mdx
   - tab: cli-api
     layout:
       - section: CLI Reference
