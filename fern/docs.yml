@@ -283,6 +283,9 @@ navigation:
           - page: Navigation
             icon: fa-regular fa-compass
             path: ./pages/docs/building-your-docs/navigation.mdx
+          - page: Links and Redirects
+            icon: fa-regular fa-link
+            path: ./pages/docs/building-your-docs/links-and-redirects.mdx
           - page: Hiding Content
             icon: fa-regular fa-eye-slash
             path: ./pages/docs/building-your-docs/hiding-content.mdx            
