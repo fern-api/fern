@@ -117,12 +117,16 @@ redirects:
     destination: "/new-folder/*"
 ```
 
-<ParamField path="source" type="string" required={false}>
+<ParamField path="source" type="string" required={true}>
   The path that you want to redirect from.
 </ParamField>
 
-<ParamField path="destination" type="string" required={false}>
+<ParamField path="destination" type="string" required={true}>
   The path that you want to redirect to.
+</ParamField>
+
+<ParamField path="permanent" type="boolean" required={false}>
+  Toggle between **permanent** and **temporary** redirect (default `true`). When true, the status code is 308. When false the status code is 307.
 </ParamField>
 
 ## NavBar Links Configuration
