@@ -15,6 +15,8 @@ export interface SingleEndpointSnippet {
 }
 
 export class EndpointSnippetsGenerator {
+    public static CLIENT_VARIABLE_NAME = "client";
+
     private readonly context: SdkGeneratorContext;
     private readonly grpcEndpointGenerator: GrpcEndpointGenerator;
     private readonly httpEndpointGenerator: HttpEndpointGenerator;
@@ -82,13 +84,13 @@ export class EndpointSnippetsGenerator {
                   example,
                   endpoint,
                   serviceId,
-                  clientVariableName: "client",
+                  clientVariableName: EndpointSnippetsGenerator.CLIENT_VARIABLE_NAME,
                   parseDatetimes: false
               })
             : this.httpEndpointGenerator.generateHttpEndpointSnippet({
                   example,
                   endpoint,
-                  clientVariableName: "client",
+                  clientVariableName: EndpointSnippetsGenerator.CLIENT_VARIABLE_NAME,
                   serviceId,
                   getResult: true,
                   parseDatetimes: false

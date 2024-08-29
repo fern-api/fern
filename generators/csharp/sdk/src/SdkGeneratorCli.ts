@@ -1,4 +1,9 @@
-import { AbstractCsharpGeneratorCli, TestFileGenerator, validateReadOnlyMemoryTypes } from "@fern-api/csharp-codegen";
+import {
+    AbstractCsharpGeneratorCli,
+    File,
+    TestFileGenerator,
+    validateReadOnlyMemoryTypes
+} from "@fern-api/csharp-codegen";
 import {
     generateModels,
     generateTests as generateModelTests,
@@ -25,6 +30,7 @@ import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
 import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator";
 import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 
 export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -194,7 +200,32 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
                 context.config.output.snippetFilepath,
                 JSON.stringify(await FernGeneratorExecSerializers.Snippets.jsonOrThrow(snippets), undefined, 4)
             );
+            try {
+                await this.generateReadme({
+                    context,
+                    endpointSnippets: snippets.endpoints
+                });
+            } catch (e) {
+                context.logger.warn("Failed to generate README.md, this is OK.");
+            }
         }
         await context.project.persist();
+    }
+
+    private async generateReadme({
+        context,
+        endpointSnippets
+    }: {
+        context: SdkGeneratorContext;
+        endpointSnippets: FernGeneratorExec.Endpoint[];
+    }): Promise<void> {
+        if (endpointSnippets.length === 0) {
+            context.logger.debug("No snippets were produced; skipping README.md generation.");
+            return;
+        }
+        const content = await context.generatorAgent.generateReadme({ context, endpointSnippets });
+        context.project.addRawFiles(
+            new File(context.generatorAgent.README_FILENAME, RelativeFilePath.of("."), content)
+        );
     }
 }

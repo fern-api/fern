@@ -8,6 +8,7 @@ ENV PATH="$PATH:/root/.dotnet/tools"
 ENV YARN_CACHE_FOLDER=/.yarn
 
 COPY generators/csharp/sdk/dist /dist
+COPY generators/csharp/sdk/features.yml /assets/features.yml
 
 # Copy over node contents to be able to run the compiled CLI
 COPY --from=node /usr/local/bin/node /usr/local/bin/
