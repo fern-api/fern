@@ -1,7 +1,9 @@
-import { AbstractGeneratorAgent } from "@fern-api/generator-commons";
+import { AbstractGeneratorAgent, ReferenceConfigBuilder } from "@fern-api/generator-commons";
 import { Logger } from "@fern-api/logger";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { HttpEndpoint, HttpService, ServiceId } from "@fern-fern/ir-sdk/api";
+import { EndpointSignatureInfo } from "./endpoint/EndpointSignatureInfo";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 
