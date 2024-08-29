@@ -10,10 +10,13 @@
  *   - source: "/old-path"
  *     destination: "/new-path"
  * ```
+ *
+ * Both source and destination paths support regex. See https://github.com/pillarjs/path-to-regexp
  */
 export interface RedirectConfig {
     /** The path that you want to redirect from, i.e. `/old-path` */
     source: string;
     /** The path that you want to redirect to, i.e. `/new-path` */
     destination: string;
+    permanent?: boolean;
 }

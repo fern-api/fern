@@ -12,11 +12,13 @@ export const RedirectConfig: core.serialization.ObjectSchema<
 > = core.serialization.object({
     source: core.serialization.string(),
     destination: core.serialization.string(),
+    permanent: core.serialization.boolean().optional(),
 });
 
 export declare namespace RedirectConfig {
     interface Raw {
         source: string;
         destination: string;
+        permanent?: boolean | null;
     }
 }
