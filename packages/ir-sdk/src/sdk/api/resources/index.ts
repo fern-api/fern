@@ -14,6 +14,8 @@ export * as ir from "./ir";
 export * from "./ir/types";
 export * as proto from "./proto";
 export * from "./proto/types";
+export * as publish from "./publish";
+export * from "./publish/types";
 export * as types from "./types";
 export * from "./types/types";
 export * as variables from "./variables";

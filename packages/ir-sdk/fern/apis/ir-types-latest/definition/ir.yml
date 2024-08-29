@@ -12,6 +12,8 @@ imports:
   variables: variables.yml
   webhooks: webhooks.yml
   websocket: websocket.yml
+  publish: publish.yml
+
 types:
   IntermediateRepresentation:
     docs: "Complete representation of the API schema"
@@ -57,6 +59,8 @@ types:
       serviceTypeReferenceInfo: ServiceTypeReferenceInfo
       readmeConfig: optional<ReadmeConfig>
       sourceConfig: optional<SourceConfig>
+      publishConfig: optional<publish.PublishingConfig>
+
   ReadmeConfig:
     docs: |
       The configuration used to generate a README.md file. If present, the generator
