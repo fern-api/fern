@@ -479,8 +479,8 @@ importers:
         specifier: workspace:*
         version: link:../commons
       '@fern-fern/ir-sdk':
-        specifier: ^53.7.0
-        version: 53.7.2
+        specifier: 53.9.0
+        version: 53.9.0
       '@fern-fern/postman-sdk':
         specifier: 0.0.46
         version: 0.0.46
@@ -6760,6 +6760,9 @@ packages:
 
   '@fern-fern/ir-sdk@53.8.0':
     resolution: {integrity: sha512-h5q0DuXyeCs61Nl0ueBYMtNhG5uiSKJqdqtgTON5RWjGH0aJAhGMfoRXoq5Sar4HLWHhbK/t/290O/iCJLE0hQ==}
+
+  '@fern-fern/ir-sdk@53.9.0':
+    resolution: {integrity: sha512-WAXXL+XVnDO4a3nfZRbRTr0+xz88jIYEZYTbJ7sYWLS7DLjmU780EFMMwO8ySmCdI0R2yRfeSY0qaGvuomXg6g==}
 
   '@fern-fern/ir-v1-model@0.0.2':
     resolution: {integrity: sha512-Rho6qXYfRoB1sAISFS4V7vttVFN0ypoaztmbfKKNFmSTNVOyLN++e2xNZ+Aw9ckE5ZZmfMXK9v4+dnFReWVzvA==}
@@ -13870,6 +13873,8 @@ snapshots:
   '@fern-fern/ir-sdk@53.7.2': {}
 
   '@fern-fern/ir-sdk@53.8.0': {}
+
+  '@fern-fern/ir-sdk@53.9.0': {}
 
   '@fern-fern/ir-v1-model@0.0.2': {}
 
