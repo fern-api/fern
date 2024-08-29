@@ -152,7 +152,7 @@ function getPublishConfig({
                 rubyGemsOverride: () => undefined,
                 postman: (value) => {
                     let collectionId = undefined;
-                    if (generatorInvocation.raw.output?.location === "postman") {
+                    if (generatorInvocation.raw?.output?.location === "postman") {
                         collectionId = generatorInvocation.raw.output?.["collection-id"];
                     }
                     return FernIr.PublishingConfig.direct({

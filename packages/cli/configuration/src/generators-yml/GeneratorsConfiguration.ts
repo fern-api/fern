@@ -75,7 +75,7 @@ export interface Reviewers {
 }
 
 export interface GeneratorInvocation {
-    raw: GeneratorInvocationSchema;
+    raw?: GeneratorInvocationSchema;
 
     name: string;
     irVersionOverride: string | undefined;
