@@ -3,6 +3,7 @@ import { Audiences, fernConfigJson, generatorsYml } from "@fern-api/configuratio
 import { createFdrService } from "@fern-api/core";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { FernIr } from "@fern-api/ir-sdk";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { InteractiveTaskContext } from "@fern-api/task-context";
 import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
@@ -99,7 +100,7 @@ export async function runRemoteGenerationForGenerator({
         version,
         intermediateRepresentation: {
             ...ir,
-            fdrApiDefinitionId
+            publishConfig: getPublishConfig({ generatorInvocation })
         },
         shouldLogS3Url,
         token,
@@ -129,6 +130,42 @@ export async function runRemoteGenerationForGenerator({
         taskHandler,
         taskId,
         context: interactiveTaskContext
+    });
+}
+
+function getPublishConfig({
+    generatorInvocation
+}: {
+    generatorInvocation: generatorsYml.GeneratorInvocation;
+}): FernIr.PublishingConfig | undefined {
+    return generatorInvocation.outputMode._visit({
+        downloadFiles: () => undefined,
+        github: () => undefined,
+        githubV2: () => undefined,
+        publish: () => undefined,
+        publishV2: (value) =>
+            value._visit({
+                mavenOverride: () => undefined,
+                pypiOverride: () => undefined,
+                nugetOverride: () => undefined,
+                npmOverride: () => undefined,
+                rubyGemsOverride: () => undefined,
+                postman: (value) => {
+                    let collectionId = undefined;
+                    if (generatorInvocation.raw?.output?.location === "postman") {
+                        collectionId = generatorInvocation.raw.output?.["collection-id"];
+                    }
+                    return FernIr.PublishingConfig.direct({
+                        target: FernIr.PublishTarget.postman({
+                            apiKey: value.apiKey,
+                            workspaceId: value.workspaceId,
+                            collectionId
+                        })
+                    });
+                },
+                _other: () => undefined
+            }),
+        _other: () => undefined
     });
 }
 

@@ -32,6 +32,7 @@ import { VariableDeclaration } from "../../variables/types/VariableDeclaration";
 import { ServiceTypeReferenceInfo } from "./ServiceTypeReferenceInfo";
 import { ReadmeConfig } from "./ReadmeConfig";
 import { SourceConfig } from "./SourceConfig";
+import { PublishingConfig } from "../../publish/types/PublishingConfig";
 import { Webhook } from "../../webhooks/types/Webhook";
 
 export const IntermediateRepresentation: core.serialization.ObjectSchema<
@@ -63,6 +64,7 @@ export const IntermediateRepresentation: core.serialization.ObjectSchema<
     serviceTypeReferenceInfo: ServiceTypeReferenceInfo,
     readmeConfig: ReadmeConfig.optional(),
     sourceConfig: SourceConfig.optional(),
+    publishConfig: PublishingConfig.optional(),
 });
 
 export declare namespace IntermediateRepresentation {
@@ -92,5 +94,6 @@ export declare namespace IntermediateRepresentation {
         serviceTypeReferenceInfo: ServiceTypeReferenceInfo.Raw;
         readmeConfig?: ReadmeConfig.Raw | null;
         sourceConfig?: SourceConfig.Raw | null;
+        publishConfig?: PublishingConfig.Raw | null;
     }
 }

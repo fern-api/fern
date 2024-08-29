@@ -316,6 +316,7 @@ async function convertGenerator({
     readme: ReadmeSchema | undefined;
 }): Promise<GeneratorInvocation> {
     return {
+        raw: generator,
         name: generator.name,
         version: generator.version,
         config: generator.config,

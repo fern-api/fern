@@ -1944,6 +1944,7 @@
     "websocketChannels": {},
     "readmeConfig": null,
     "sourceConfig": null,
+    "publishConfig": null,
     "subpackages": {},
     "rootPackage": {
         "fernFilepath": {
