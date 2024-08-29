@@ -148,9 +148,9 @@ async function publishCollection({
         apiKey: publishConfig.apiKey
     });
     const workspace = publishConfig.workspaceId != null ? publishConfig.workspaceId : undefined;
-    // eslint-disable-next-line no-console
 
     if (publishConfig.collectionId == null) {
+        // eslint-disable-next-line no-console
         console.log(`Workspace id is ${workspace}`);
         const getCollectionMetadataResponse = await postman.collection.getAllCollectionMetadata({
             workspace
