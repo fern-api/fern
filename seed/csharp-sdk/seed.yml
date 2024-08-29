@@ -43,7 +43,7 @@ fixtures:
             - GET /movie/{movieId}
             - method: POST
               path: /movie
-      outputFolder: examples-with-readme
+      outputFolder: examples:readme-config
   imdb:
     - customConfig: null
       outputFolder: no-custom-config
@@ -87,7 +87,8 @@ fixtures:
 allowedFailures:
   ## COMPILE FAILURES
   - objects-with-imports
-  - examples
+  - examples:no-custom-config
+  - examples:readme-config
   ## WIRE TEST FAILURES
   - unknown # issue with example object
   # - package-yml # user-provided example path not coming in properly
