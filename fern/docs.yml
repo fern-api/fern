@@ -292,6 +292,9 @@ navigation:
           - page: Custom Domain
             icon: fa-regular fa-globe-pointer
             path: ./pages/docs/building-your-docs/custom-domain.mdx
+          - page: Hiding Content
+            icon: fa-regular fa-eye-slash
+            path: ./pages/docs/building-your-docs/hiding-content.mdx
 
       - section: Writing Content
         slug: content
