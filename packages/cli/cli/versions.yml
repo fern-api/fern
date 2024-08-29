@@ -1,4 +1,11 @@
 - changelog_entry:
+  - summary: Enable specifying whether redirect in docs.yml is permanent or temporary.
+    type: feat
+  created_at: '2024-08-28'
+  ir_version: 53
+  version: 0.40.1
+
+- changelog_entry:
   - summary: Update the `fern generator upgrade` command to leverage the Generator registry API as opposed to Docker and dockerode.
     type: feat
   created_at: '2024-08-28'
