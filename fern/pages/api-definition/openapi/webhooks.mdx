@@ -8,7 +8,7 @@ THere are a couple different ways you can model Webhooks in OpenAPI.
 ## Use the `x-fern-webhook` extension
 
 Simply define a path in your OpenAPI, and add the extension `x-fern-webhook`. Fern will 
-read the `requestBody` and ignore the rest. 
+treat the `requestBody` as the webhook payload. 
 
 ```yaml openapi.yml
 paths: 
@@ -30,3 +30,8 @@ paths:
                 - amount
                 - currency 
 ```
+
+<Info> 
+The path that you choose when defining a webhook can be arbitrary. Since webhooks 
+can be sent to any server, Fern just ignores the path.
+</Info>
