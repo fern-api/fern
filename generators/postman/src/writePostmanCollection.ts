@@ -78,10 +78,10 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
             const outputMode = config.output.mode;
 
             const publishConfig = ir.publishConfig;
-            if (publishConfig!= null && publishConfig.target.type === "postman") {
-                if (publishConfig._visit({
+            if (publishConfig?.type == "direct" && publishConfig.target.type === "postman") {
+                publishConfig._visit({
                     _other: () => undefined,
-                    direct: () => {
+                    direct: async () => {
                         await publishCollection({
                             publishConfig: {
                                 apiKey: publishConfig.target.apiKey,
@@ -91,9 +91,8 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
                             collection: rawCollectionDefinition
                         });
                     },
-                    github: () => undefined,
-                }))
-
+                    github: () => undefined
+                });
             } else if (outputMode.type === "publish" && outputMode.publishTarget != null) {
                 if (outputMode.publishTarget.type !== "postman") {
                     // eslint-disable-next-line no-console
@@ -109,7 +108,7 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
                 await publishCollection({
                     publishConfig: {
                         apiKey: outputMode.publishTarget.apiKey,
-                        workspaceId: outputMode.publishTarget.workspaceId,
+                        workspaceId: outputMode.publishTarget.workspaceId
                     },
                     collection: rawCollectionDefinition
                 });
