@@ -56,9 +56,9 @@ import { SdkInlinedRequestBodyDeclarationReferencer } from "./declaration-refere
 import { TimeoutSdkErrorDeclarationReferencer } from "./declaration-referencers/TimeoutSdkErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "./declaration-referencers/TypeDeclarationReferencer";
 import { VersionDeclarationReferencer } from "./declaration-referencers/VersionDeclarationReferencer";
-import { ReadmeConfigBuilder } from "./generator-agent/ReadmeConfigBuilder";
+import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
 import { ReferenceConfigBuilder } from "@fern-api/generator-commons";
-import { TypeScriptGeneratorAgent } from "./generator-agent/TypeScriptGeneratorAgent";
+import { TypeScriptGeneratorAgent } from "./TypeScriptGeneratorAgent";
 import { TemplateGenerator } from "./TemplateGenerator";
 import { JestTestGenerator } from "./test-generator/JestTestGenerator";
 import { VersionGenerator } from "./version/VersionGenerator";
