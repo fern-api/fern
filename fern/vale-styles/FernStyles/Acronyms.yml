@@ -33,6 +33,8 @@ exceptions:
   - JSX
   - LESS
   - LLDB
+  - MD
+  - MDX
   - NET
   - NOTE
   - NVDA
