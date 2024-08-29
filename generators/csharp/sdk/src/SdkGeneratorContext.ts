@@ -17,8 +17,8 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import { camelCase, upperFirst } from "lodash-es";
 import { EndpointSnippetsGenerator } from "./endpoint/snippets/EndpointSnippetsGenerator";
-import { CsharpGeneratorAgent } from "./generator-agent/CsharpGeneratorAgent";
-import { ReadmeConfigBuilder } from "./generator-agent/ReadmeConfigBuilder";
+import { CsharpGeneratorAgent } from "./CsharpGeneratorAgent";
+import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
 import { GrpcClientInfo } from "./grpc/GrpcClientInfo";
 import { CLIENT_OPTIONS_CLASS_NAME } from "./options/ClientOptionsGenerator";
 import { REQUEST_OPTIONS_CLASS_NAME, REQUEST_OPTIONS_PARAMETER_NAME } from "./options/RequestOptionsGenerator";
