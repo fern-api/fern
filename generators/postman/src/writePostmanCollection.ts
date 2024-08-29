@@ -91,7 +91,9 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
                 await publishCollection({
                     publishConfig: {
                         apiKey: outputMode.publishTarget.apiKey,
-                        workspaceId: outputMode.publishTarget.workspaceId
+                        workspaceId: outputMode.publishTarget.workspaceId,
+                        // TODO: get collectionId from generators.yml
+                        collectionId: postmanGeneratorConfig?.publishing?.collectionId
                     },
                     collection: rawCollectionDefinition
                 });
@@ -147,30 +149,37 @@ async function publishCollection({
     });
     const workspace = publishConfig.workspaceId != null ? publishConfig.workspaceId : undefined;
     // eslint-disable-next-line no-console
-    console.log(`Workspace id is ${workspace}`);
-    const getCollectionMetadataResponse = await postman.collection.getAllCollectionMetadata({
-        workspace
-    });
-    const collectionsToUpdate = getCollectionMetadataResponse.collections.filter((collectionMetadata) => {
-        return collectionMetadata.name === collection.info.name;
-    });
-    if (collectionsToUpdate.length === 0) {
-        // eslint-disable-next-line no-console
-        console.log("Creating new postman collection!");
-        await postman.collection.createCollection({
-            workspace,
-            body: { collection }
+
+    if (publishConfig.collectionId == null) {
+        console.log(`Workspace id is ${workspace}`);
+        const getCollectionMetadataResponse = await postman.collection.getAllCollectionMetadata({
+            workspace
         });
+        const collectionsToUpdate = getCollectionMetadataResponse.collections.filter((collectionMetadata) => {
+            return collectionMetadata.name === collection.info.name;
+        });
+        if (collectionsToUpdate.length === 0) {
+            // eslint-disable-next-line no-console
+            console.log("Creating new postman collection!");
+            await postman.collection.createCollection({
+                workspace,
+                body: { collection }
+            });
+        } else {
+            await Promise.all(
+                collectionsToUpdate.map(async (collectionMetadata) => {
+                    // eslint-disable-next-line no-console
+                    console.log("Updating postman collection!");
+                    await postman.collection.updateCollection(collectionMetadata.uid, {
+                        collection
+                    });
+                })
+            );
+        }
     } else {
-        await Promise.all(
-            collectionsToUpdate.map(async (collectionMetadata) => {
-                // eslint-disable-next-line no-console
-                console.log("Updating postman collection!");
-                await postman.collection.updateCollection(collectionMetadata.uid, {
-                    collection
-                });
-            })
-        );
+        await postman.collection.updateCollection(publishConfig.collectionId, {
+            collection
+        });
     }
 }
 
