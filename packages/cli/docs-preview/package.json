@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@fern-api/docs-resolver": "workspace:*",
-    "@fern-api/fdr-sdk": "0.98.20-86eba53a1",
+    "@fern-api/fdr-sdk": "0.107.0-09e88f5f9",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/logger": "workspace:*",

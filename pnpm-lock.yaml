@@ -3348,8 +3348,8 @@ importers:
         specifier: workspace:*
         version: link:../docs-resolver
       '@fern-api/fdr-sdk':
-        specifier: 0.98.20-86eba53a1
-        version: 0.98.20-86eba53a1(typescript@4.6.4)
+        specifier: 0.107.0-09e88f5f9
+        version: 0.107.0-09e88f5f9(typescript@4.6.4)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -3448,8 +3448,8 @@ importers:
         specifier: workspace:*
         version: link:../docs-markdown-utils
       '@fern-api/fdr-sdk':
-        specifier: 0.98.20-86eba53a1
-        version: 0.98.20-86eba53a1(typescript@4.6.4)
+        specifier: 0.107.0-09e88f5f9
+        version: 0.107.0-09e88f5f9(typescript@4.6.4)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -6713,8 +6713,8 @@ packages:
   '@exodus/schemasafe@1.0.0':
     resolution: {integrity: sha512-2cyupPIZI69HQxEAPllLXBjQp4njDKkOjYRCYxvMZe3/LY9pp9fBM3Tb1wiFAdP6Emo4v3OEbCLGj6u73Q5KLw==}
 
-  '@fern-api/fdr-sdk@0.98.20-86eba53a1':
-    resolution: {integrity: sha512-gQsTxrmG69hE/W68e3RpS0Jiq+hD1OPwwEgPi7EjFHcUy0Ru9WlSDOGJ0Uv1WsS84AHAz84OrUs+KEQwUwDeyA==}
+  '@fern-api/fdr-sdk@0.107.0-09e88f5f9':
+    resolution: {integrity: sha512-9vVSuRIWgqRlJFvSbGCuOE3jbDIUGOWXkUA/ra9ELgDlqH0Uo5NZYC9AHcQze2wu5P5X5NOjQbwPNQp6B5Jy+g==}
 
   '@fern-api/venus-api-sdk@0.0.38':
     resolution: {integrity: sha512-1JjuctZwyPu4jN51bBqjIy+uCBPGa/ROcDfqN0UnGeVEW7NyztkGh/qOFwnN6K07VMMql1AIF4Zov+MVqTPwmw==}
@@ -13760,7 +13760,7 @@ snapshots:
 
   '@exodus/schemasafe@1.0.0': {}
 
-  '@fern-api/fdr-sdk@0.98.20-86eba53a1(typescript@4.6.4)':
+  '@fern-api/fdr-sdk@0.107.0-09e88f5f9(typescript@4.6.4)':
     dependencies:
       dayjs: 1.11.11
       fast-deep-equal: 3.1.3

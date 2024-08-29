@@ -933,6 +933,8 @@ types:
         - source: "/old-path"
           destination: "/new-path"
       ```
+
+      Both source and destination paths support regex. See https://github.com/pillarjs/path-to-regexp
     properties:
       source:
         type: string
@@ -940,6 +942,9 @@ types:
       destination:
         type: string
         docs: The path that you want to redirect to, i.e. `/new-path`
+      permanent:
+        type: optional<boolean>
+        # default: false
 
   IntegrationsConfig:
     properties:
