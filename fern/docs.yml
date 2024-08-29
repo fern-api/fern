@@ -52,38 +52,50 @@ navigation:
       - section: Introduction
         contents:
           - page: What is an API Definition?
+            icon: fa-regular fa-question-circle
             path: ./pages/api-definition/introduction/what-is-an-api-definition.mdx
           - page: What is the Fern Folder?
+            icon: fa-regular fa-folder
             path: ./pages/api-definition/introduction/what-is-the-fern-folder.mdx
       - section: OpenAPI Specification
         slug: openapi
         contents:
           - page: Overview
+            icon: fa-regular fa-brackets-curly
             path: ./pages/api-definition/openapi/openapi-overview.mdx
           - section: Extensions
+            icon: fa-regular fa-object-intersect
             slug: extensions
             contents: 
               - page: SDK Method Names
+                icon: fa-regular fa-display-code
                 path: ./pages/api-definition/openapi/extensions/method-names.mdx
                 slug: method-names
               - page: Parameter Names
+                icon: fa-regular fa-input-text
                 path: ./pages/api-definition/openapi/extensions/parameter-names.mdx
                 slug: parameter-names
               - page: Audiences
+                icon: fa-duotone fa-users
                 path: ./pages/api-definition/openapi/extensions/audiences.mdx
                 slug: audiences              
               - page: Other
+                icon: fa-regular fa-ellipsis-h
                 path: ./pages/api-definition/openapi/extensions/others.mdx
                 slug: others              
           - page: OpenAPI Examples
+            icon: fa-regular fa-square-terminal
             path: ./pages/api-definition/openapi/examples.mdx
           - page: OpenAPI Overrides
+            icon: fa-regular fa-shuffle
             path: ./pages/api-definition/openapi/overrides.mdx
             slug: examples
           - section: Server Frameworks
+            icon: fa-regular fa-server
             slug: frameworks
             contents:
               - page: FastAPI
+                icon: fa-regular fa-circle-bolt
                 path: ./pages/api-definition/openapi/server-frameworks/fastapi.mdx
                 slug: fastapi
           - page: Streaming and SSE
@@ -96,41 +108,59 @@ navigation:
         slug: fern
         contents:
           - page: Overview
+            icon: fa-regular fa-seedling
             path: ./pages/api-definition/fern-definition/overview.mdx
           - page: Types
+            icon: fa-regular fa-shapes
             path: ./pages/api-definition/fern-definition/types.mdx
           - page: Endpoints
+            icon: fa-regular fa-plug
             path: ./pages/api-definition/fern-definition/endpoints.mdx
           - page: Webhooks
+            icon: fa-regular fa-webhook
             path: ./pages/api-definition/fern-definition/webhooks.mdx
           - page: Errors
+            icon: fa-regular fa-exclamation-triangle
             path: ./pages/api-definition/fern-definition/errors.mdx
           - page: Imports
+            icon: fa-regular fa-download
             path: ./pages/api-definition/fern-definition/imports.mdx
           - page: Examples
+            icon: fa-regular fa-square-terminal
             path: ./pages/api-definition/fern-definition/examples.mdx
           - page: Audiences
+            icon: fa-duotone fa-users
             path: ./pages/api-definition/fern-definition/audiences.mdx
           - page: Availability
+            icon: fa-regular fa-clock-rotate-left
             path: ./pages/api-definition/fern-definition/availability.mdx
           - section: api.yml reference
+            icon: fa-regular fa-books
             slug: api-yml
             contents: 
               - page: Overview
+                icon: fa-regular fa-book
                 path: ./pages/api-definition/fern-definition/api-yml/overview.mdx
               - page: Authentication
+                icon: fa-regular fa-lock-keyhole
                 path: ./pages/api-definition/fern-definition/api-yml/auth.mdx
               - page: Environments
+                icon: fa-regular fa-circle-wifi
                 path: ./pages/api-definition/fern-definition/api-yml/environments.mdx
               - page: Global headers
+                icon: fa-regular fa-globe
                 path: ./pages/api-definition/fern-definition/api-yml/global-configuration.mdx
               - page: Errors
+                icon: fa-regular fa-exclamation-triangle
                 path: ./pages/api-definition/fern-definition/api-yml/errors.mdx
           - page: Packages
+            icon: fa-regular fa-box-open
             path: ./pages/api-definition/fern-definition/packages.mdx
           - page: Depending on other APIs
+            icon: fa-regular fa-link
             path: ./pages/api-definition/fern-definition/depending-on-other-apis.mdx
           - page: Export to OpenAPI
+            icon: fa-regular fa-file-export
             slug: export-openapi
             path: ./pages/api-definition/fern-definition/export-openapi.mdx
   - tab: sdks
