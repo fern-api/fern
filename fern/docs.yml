@@ -86,6 +86,9 @@ navigation:
               - page: FastAPI
                 path: ./pages/api-definition/openapi/server-frameworks/fastapi.mdx
                 slug: fastapi
+          - page: Streaming and SSE
+            path: ./pages/api-definition/openapi/streaming-server-sent-events.mdx
+            icon: fa-regular fa-signal-stream                
           - page: Webhooks
             path: ./pages/api-definition/openapi/webhooks.mdx
             icon: fa-regular fa-webhook                
