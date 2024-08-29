@@ -62,7 +62,21 @@ navigation:
         contents:
           - page: Overview
             icon: fa-regular fa-brackets-curly
-            path: ./pages/api-definition/openapi/openapi-overview.mdx
+            path: ./pages/api-definition/openapi/openapi-overview.mdx           
+          - page: OpenAPI Examples
+            icon: fa-regular fa-square-terminal
+            path: ./pages/api-definition/openapi/examples.mdx
+            slug: examples
+          - page: Audiences
+            icon: fa-duotone fa-users
+            path: ./pages/api-definition/openapi/extensions/audiences.mdx
+            slug: audiences                
+          - page: Streaming and SSE
+            path: ./pages/api-definition/openapi/streaming-server-sent-events.mdx
+            icon: fa-regular fa-signal-stream                
+          - page: Webhooks
+            path: ./pages/api-definition/openapi/webhooks.mdx
+            icon: fa-regular fa-webhook    
           - section: Extensions
             icon: fa-regular fa-object-intersect
             slug: extensions
@@ -74,36 +88,22 @@ navigation:
               - page: Parameter Names
                 icon: fa-regular fa-input-text
                 path: ./pages/api-definition/openapi/extensions/parameter-names.mdx
-                slug: parameter-names
-              - page: Audiences
-                icon: fa-duotone fa-users
-                path: ./pages/api-definition/openapi/extensions/audiences.mdx
-                slug: audiences              
+                slug: parameter-names          
               - page: Other
                 icon: fa-regular fa-ellipsis-h
                 path: ./pages/api-definition/openapi/extensions/others.mdx
-                slug: others              
-          - page: OpenAPI Examples
-            icon: fa-regular fa-square-terminal
-            path: ./pages/api-definition/openapi/examples.mdx
-          - page: OpenAPI Overrides
+                slug: others                   
+          - page: Overlay customizations 
             icon: fa-regular fa-shuffle
-            path: ./pages/api-definition/openapi/overrides.mdx
-            slug: examples
-          - section: Server Frameworks
+            path: ./pages/api-definition/openapi/overrides.mdx                    
+          - section: Integrate your Server Framework
             icon: fa-regular fa-server
             slug: frameworks
             contents:
               - page: FastAPI
                 icon: fa-regular fa-circle-bolt
                 path: ./pages/api-definition/openapi/server-frameworks/fastapi.mdx
-                slug: fastapi
-          - page: Streaming and SSE
-            path: ./pages/api-definition/openapi/streaming-server-sent-events.mdx
-            icon: fa-regular fa-signal-stream                
-          - page: Webhooks
-            path: ./pages/api-definition/openapi/webhooks.mdx
-            icon: fa-regular fa-webhook                
+                slug: fastapi            
       - section: Fern Definition
         slug: fern
         contents:
