@@ -48,8 +48,9 @@ determinism.
 
 The `generators.yml` file can include information about where your API specification is located, along with which generators you are using, where each package gets published, as well as configuration specific to each generator. 
 
-<CodeBlocks>
-```yaml title="generators.yml for Python + TypeScript SDKS"
+<AccordionGroup>
+<Accordion title="generators.yml for Python + TypeScript SDKs">
+```yaml
 groups:
   public:
     generators:
@@ -74,11 +75,14 @@ groups:
         config:
           namespaceExport: imdb
 ```
-```yaml title="generators.yml for locating an API definition"
+</Accordion>
+<Accordion title="generators.yml for locating an API definition">
+```yaml
 api: 
   path: ./api.yaml
 ```
-</CodeBlocks>
+</Accordion>
+</AccordionGroup>
 
 ## Multiple APIs
 
