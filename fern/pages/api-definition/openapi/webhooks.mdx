@@ -1,0 +1,32 @@
+---
+title: Define Webhooks in OpenAPI
+subtitle: Use the `x-fern-webhook` extension to define webhooks in your OpenAPI spec
+---
+
+THere are a couple different ways you can model Webhooks in OpenAPI. 
+
+## Use the `x-fern-webhook` extension
+
+Simply define a path in your OpenAPI, and add the extension `x-fern-webhook`. Fern will 
+read the `requestBody` and ignore the rest. 
+
+```yaml openapi.yml
+paths: 
+  /payment/updated/: 
+    post: 
+      summary: Payment Initiated
+      x-fern-webhook: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+                currency:
+                  $ref: '#/components/schemas/Currency'
+              required:
+                - amount
+                - currency 
+```
