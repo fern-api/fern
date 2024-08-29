@@ -5,22 +5,27 @@ import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import { readFile, writeFile } from "fs/promises";
 import path from "path";
-import * as semver from "semver";
 import YAML from "yaml";
 import { CliContext } from "../../cli-context/CliContext";
+import { Values } from "@fern-api/core-utils";
+import { FernRegistry } from "@fern-fern/generators-sdk";
 
 export async function loadAndUpdateGenerators({
     absolutePathToWorkspace,
     context,
     generatorFilter,
     groupFilter,
-    includeMajor
+    includeMajor,
+    channel,
+    cliVersion
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
     context: TaskContext;
     generatorFilter: string | undefined;
     groupFilter: string | undefined;
     includeMajor: boolean;
+    channel: FernRegistry.generators.ReleaseType | undefined;
+    cliVersion: string;
 }): Promise<string | undefined> {
     const filepath = generatorsYml.getPathToGeneratorsConfiguration({ absolutePathToWorkspace });
     if (!(await doesPathExist(filepath))) {
@@ -81,22 +86,24 @@ export async function loadAndUpdateGenerators({
             const generatorName = generator.get("name") as string;
             const normalizedGeneratorName = generatorsYml.getGeneratorNameOrThrow(generatorName, context);
 
-            const currentVersion = generator.get("version") as string;
+            const currentGeneratorVersion = generator.get("version") as string;
 
-            const latestVersion = await generatorsYml.getLatestGeneratorVersion(normalizedGeneratorName, context);
-            context.logger.debug(`${generatorName}, ${currentVersion}, ${latestVersion}`);
+            const latestVersion = await generatorsYml.getLatestGeneratorVersion({
+                generatorName: normalizedGeneratorName,
+                cliVersion,
+                currentGeneratorVersion,
+                channel,
+                includeMajor,
+                context
+            });
 
             if (latestVersion == null) {
                 continue;
             }
-
-            // check if the versions have the same major version, if not fail, if yes do the upgrade
-            const currentMajor = semver.major(currentVersion);
-            const latestMajor = semver.major(latestVersion);
-            if (currentMajor === latestMajor || includeMajor) {
-                generator.set("version", latestVersion);
-                context.logger.info(chalk.green(`${generatorName} has been upgraded to latest in group: ${groupName}`));
-            }
+            context.logger.debug(
+                chalk.green(`Upgrading ${generatorName} from ${currentGeneratorVersion} to ${latestVersion}`)
+            );
+            generator.set("version", latestVersion);
         }
     }
 
@@ -108,13 +115,15 @@ export async function upgradeGenerator({
     generator,
     group,
     project: { apiWorkspaces },
-    includeMajor
+    includeMajor,
+    channel
 }: {
     cliContext: CliContext;
     generator: string | undefined;
     group: string | undefined;
     project: Project;
     includeMajor: boolean;
+    channel: FernRegistry.generators.ReleaseType | undefined;
 }): Promise<void> {
     await Promise.all(
         apiWorkspaces.map(async (workspace) => {
@@ -139,7 +148,9 @@ export async function upgradeGenerator({
                     context,
                     generatorFilter: generator,
                     groupFilter: group,
-                    includeMajor
+                    includeMajor,
+                    channel,
+                    cliVersion: cliContext.environment.packageVersion
                 });
 
                 if (updatedConfiguration != null) {

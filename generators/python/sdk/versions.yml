@@ -1,4 +1,13 @@
 # For unreleased changes, use unreleased.yml
+- version: 3.10.7
+  ir_version: 53
+  changelog_entry:
+    - type: fix
+      summary: When not leveraging mock integration tests, still run pytest over everything, not a specific directory.
+
+
+# ===== Migrated versions =====
+
 # TODO: It'd be great if we generated YAML schemas so people had validation on these files
 - version: 3.10.6
   ir_version: 53

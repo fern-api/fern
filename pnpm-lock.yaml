@@ -3088,6 +3088,9 @@ importers:
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584
+      '@fern-fern/generators-sdk':
+        specifier: 0.105.0-79c5d1764
+        version: 0.105.0-79c5d1764
       '@types/get-port':
         specifier: ^4.2.0
         version: 4.2.0
@@ -3124,9 +3127,6 @@ importers:
       ora:
         specifier: ^7.0.1
         version: 7.0.1
-      semver:
-        specifier: ^7.6.2
-        version: 7.6.2
       tar:
         specifier: ^6.2.1
         version: 6.2.1
@@ -3167,9 +3167,6 @@ importers:
       '@types/node':
         specifier: ^18.7.18
         version: 18.7.18
-      '@types/semver':
-        specifier: ^7.5.8
-        version: 7.5.8
       '@types/tar':
         specifier: ^6.1.11
         version: 6.1.11
@@ -3224,9 +3221,9 @@ importers:
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584
-      dockerode:
-        specifier: ^4.0.2
-        version: 4.0.2
+      '@fern-fern/generators-sdk':
+        specifier: 0.0.5606
+        version: 0.0.5606
       find-up:
         specifier: ^6.3.0
         version: 6.3.0
@@ -3236,6 +3233,9 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
+      semver:
+        specifier: ^7.6.2
+        version: 7.6.2
       tinycolor2:
         specifier: ^1.6.0
         version: 1.6.0
@@ -3243,9 +3243,6 @@ importers:
         specifier: ^3.22.3
         version: 3.22.4
     devDependencies:
-      '@types/dockerode':
-        specifier: ^3.3.9
-        version: 3.3.9
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
@@ -3258,6 +3255,9 @@ importers:
       '@types/node':
         specifier: ^18.7.18
         version: 18.7.18
+      '@types/semver':
+        specifier: ^7.5.8
+        version: 7.5.8
       '@types/tinycolor2':
         specifier: ^1.4.6
         version: 1.4.6
@@ -6735,6 +6735,9 @@ packages:
 
   '@fern-fern/generator-exec-sdk@0.0.898':
     resolution: {integrity: sha512-VQYn32CkAd437deesaGk4LKikbVptxrWINAwUwiAUWOy77LelX1zWNKihjU2XDgIPv3VXK07aJwoPR5BDYD46Q==}
+
+  '@fern-fern/generators-sdk@0.0.5606':
+    resolution: {integrity: sha512-fdnwCrPkXfBlxFirzvS3YO3uVW0sq7VkzgRzxRkYDOFXstLE0Q+NvwTmOLKM9ZgEldRjg5rk52tt1L+rv/dUFQ==}
 
   '@fern-fern/generators-sdk@0.105.0-79c5d1764':
     resolution: {integrity: sha512-39wwxMQpgmViQhvCBtrT3Cn0Erxd18YiWztS/ieRiE9agS6QIjkEEAGd1t9RFXg9+xsrsmv35EYa19LIZ9F4rg==}
@@ -13826,6 +13829,17 @@ snapshots:
   '@fern-fern/generator-exec-sdk@0.0.898':
     dependencies:
       form-data: 4.0.0
+      node-fetch: 2.7.0
+      qs: 6.11.2
+      url-join: 4.0.1
+    transitivePeerDependencies:
+      - encoding
+
+  '@fern-fern/generators-sdk@0.0.5606':
+    dependencies:
+      form-data: 4.0.0
+      formdata-node: 6.0.3
+      js-base64: 3.7.2
       node-fetch: 2.7.0
       qs: 6.11.2
       url-join: 4.0.1

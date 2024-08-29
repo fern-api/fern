@@ -31,5 +31,6 @@ Options:
                    generator will be upgraded for all APIs.             [string]
   --include-major  Whether or not to include major versions within the upgrade.
                    Defaults to false, meaning major versions will be skipped.
-                                                      [boolean] [default: false]"
+                                                      [boolean] [default: false]
+  --channel                                                [choices: "GA", "RC"]"
 `;

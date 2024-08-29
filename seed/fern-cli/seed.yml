@@ -6,6 +6,7 @@ publishGa:
     - mv package.json package.json.tmp
     - version_replace="s/0.0.0/$VERSION/"
     - cat package.json.tmp| sed "${version_replace}" > package.json
+    - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
     - pnpm install
     - pnpm --filter @fern-api/cli compile
     - pnpm --filter @fern-api/cli publish:cli:prod --tag latest
@@ -17,6 +18,7 @@ publishRc:
     - mv package.json package.json.tmp
     - version_replace="s/0.0.0/$VERSION/"
     - cat package.json.tmp| sed "${version_replace}" > package.json
+    - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
     - pnpm install
     - pnpm --filter @fern-api/cli compile
     - pnpm --filter @fern-api/cli publish:cli:prod --tag prerelease

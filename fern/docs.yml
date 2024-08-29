@@ -86,6 +86,9 @@ navigation:
               - page: FastAPI
                 path: ./pages/api-definition/openapi/server-frameworks/fastapi.mdx
                 slug: fastapi
+          - page: Webhooks
+            path: ./pages/api-definition/openapi/webhooks.mdx
+            icon: fa-regular fa-webhook                
       - section: Fern Definition
         slug: fern
         contents:
