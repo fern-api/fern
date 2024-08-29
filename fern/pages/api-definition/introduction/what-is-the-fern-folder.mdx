@@ -46,12 +46,10 @@ determinism.
 
 ### `generators.yml`
 
-The `generators.yml` file includes information about which generators you are using, where each package gets published, 
-as well as configuration specific to each generator. 
+The `generators.yml` file can include information about where your API specification is located, along with which generators you are using, where each package gets published, as well as configuration specific to each generator. 
 
-Every `generators.yml` file contains groups of generators. In the example below, we have a group called `public` which 
-generates Python + TypeScript SDKs. 
-```yaml
+<CodeBlocks>
+```yaml title="generators.yml for Python + TypeScript SDKS"
 groups:
   public:
     generators:
@@ -76,11 +74,15 @@ groups:
         config:
           namespaceExport: imdb
 ```
+```yaml title="generators.yml for locating an API definition"
+api: 
+  path: ./api.yaml
+```
+</CodeBlocks>
 
 ## Multiple APIs
 
-The Fern folder is capable of housing multiple API definitions. Instead of placing your API definition 
-at the top-level, you can nest them within an `apis` folder. 
+The Fern folder is capable of housing multiple API definitions. Instead of placing your API definition at the top-level, you can nest them within an `apis` folder. Be sure to include a `generators.yml` file within each API folder that specifies the location of the API definition. 
 
 <Tabs>
 <Tab title="OpenAPI Definition">
