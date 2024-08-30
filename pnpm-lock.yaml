@@ -482,8 +482,8 @@ importers:
         specifier: 53.9.0
         version: 53.9.0
       '@fern-fern/postman-sdk':
-        specifier: 0.0.65
-        version: 0.0.65
+        specifier: 0.1.1
+        version: 0.1.1
       '@types/lodash':
         specifier: ^4.17.4
         version: 4.17.4
@@ -6923,8 +6923,8 @@ packages:
   '@fern-fern/legacy-docs-config@0.0.58':
     resolution: {integrity: sha512-uSGlM9UFgNsILEHxKRUm5Vi06nna9+XZTMm245o0pmLdrucHfoO9N558e6khDYtfBxPIJVGUf1C1Et04mKX0kg==}
 
-  '@fern-fern/postman-sdk@0.0.65':
-    resolution: {integrity: sha512-17BMpTv52FCfpW4jTgVIbA+e1wlUlitExlueouZ0NqHmahtQxDllDFOpg0WeIvTD6csAdmZ4iSODbw5xrOtZQQ==}
+  '@fern-fern/postman-sdk@0.1.1':
+    resolution: {integrity: sha512-wjeVDbw6xvsBe6I/uwZ1P0ZhzjpEAyzY9M0iQXEuZoYo5wsea3SeTCrqOub3jV0WDia0PFFacfpoV0U/sD7yIQ==}
 
   '@fern-fern/snippet-sdk@0.0.5526':
     resolution: {integrity: sha512-YHbU5X1EEtguvlD/77eudcHV1mWyUUbhGrJw0Vcu9JU264rvuq6pOHFR1r2F1L9pPsbAx0m02QdY6b1yxSga1g==}
@@ -13982,13 +13982,15 @@ snapshots:
 
   '@fern-fern/legacy-docs-config@0.0.58': {}
 
-  '@fern-fern/postman-sdk@0.0.65':
+  '@fern-fern/postman-sdk@0.1.1':
     dependencies:
-      '@types/url-join': 4.0.1
-      axios: 0.27.2
+      form-data: 4.0.0
+      formdata-node: 6.0.3
+      node-fetch: 2.7.0
+      qs: 6.11.2
       url-join: 4.0.1
     transitivePeerDependencies:
-      - debug
+      - encoding
 
   '@fern-fern/snippet-sdk@0.0.5526':
     dependencies:
