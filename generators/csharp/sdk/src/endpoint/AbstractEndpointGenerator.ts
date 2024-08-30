@@ -3,7 +3,9 @@ import { ExampleGenerator } from "@fern-api/fern-csharp-model";
 import { ExampleEndpointCall, ExampleRequestBody, HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { WrappedRequestGenerator } from "../wrapped-request/WrappedRequestGenerator";
+import { getEndpointRequest } from "./utils/getEndpointRequest";
 import { getEndpointReturnType } from "./utils/getEndpointReturnType";
+import { EndpointSignatureInfo } from "./EndpointSignatureInfo";
 
 export abstract class AbstractEndpointGenerator {
     private exampleGenerator: ExampleGenerator;
@@ -12,6 +14,60 @@ export abstract class AbstractEndpointGenerator {
     public constructor({ context }: { context: SdkGeneratorContext }) {
         this.context = context;
         this.exampleGenerator = new ExampleGenerator(context);
+    }
+
+    public getEndpointSignatureInfo({
+        serviceId,
+        endpoint
+    }: {
+        serviceId: ServiceId;
+        endpoint: HttpEndpoint;
+    }): EndpointSignatureInfo {
+        const { pathParameters, pathParameterReferences } = this.getAllPathParameters({ serviceId, endpoint });
+        const request = getEndpointRequest({ context: this.context, endpoint, serviceId });
+        const requestParameter =
+            request != null
+                ? csharp.parameter({ type: request.getParameterType(), name: request.getParameterName() })
+                : undefined;
+        return {
+            baseParameters: [...pathParameters, requestParameter].filter((p): p is csharp.Parameter => p != null),
+            pathParameters,
+            pathParameterReferences,
+            request,
+            requestParameter,
+            returnType: getEndpointReturnType({ context: this.context, endpoint })
+        };
+    }
+
+    private getAllPathParameters({
+        serviceId,
+        endpoint
+    }: {
+        serviceId: ServiceId;
+        endpoint: HttpEndpoint;
+    }): Pick<EndpointSignatureInfo, "pathParameters" | "pathParameterReferences"> {
+        const pathParameters: csharp.Parameter[] = [];
+        const service = this.context.getHttpServiceOrThrow(serviceId);
+        const pathParameterReferences: Record<string, string> = {};
+        for (const pathParam of [
+            ...this.context.ir.pathParameters,
+            ...service.pathParameters,
+            ...endpoint.pathParameters
+        ]) {
+            const parameterName = pathParam.name.camelCase.safeName;
+            pathParameterReferences[pathParam.name.originalName] = parameterName;
+            pathParameters.push(
+                csharp.parameter({
+                    docs: pathParam.docs,
+                    name: parameterName,
+                    type: this.context.csharpTypeMapper.convert({ reference: pathParam.valueType })
+                })
+            );
+        }
+        return {
+            pathParameters,
+            pathParameterReferences
+        };
     }
 
     protected generateEndpointSnippet({

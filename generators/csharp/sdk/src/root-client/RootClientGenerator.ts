@@ -11,10 +11,8 @@ import {
     Subpackage,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { EndpointGenerator } from "../endpoint/EndpointGenerator";
 import { RawClient } from "../endpoint/http/RawClient";
 import { GrpcClientInfo } from "../grpc/GrpcClientInfo";
-import { CLIENT_OPTIONS_CLASS_NAME } from "../options/ClientOptionsGenerator";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
@@ -50,16 +48,12 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
     private rawClient: RawClient;
     private serviceId: ServiceId | undefined;
     private grpcClientInfo: GrpcClientInfo | undefined;
-    private endpointGenerator: EndpointGenerator;
     constructor(context: SdkGeneratorContext) {
         super(context);
         this.rawClient = new RawClient(context);
         this.serviceId = this.context.ir.rootPackage.service;
         this.grpcClientInfo =
             this.serviceId != null ? this.context.getGrpcClientInfoForServiceId(this.serviceId) : undefined;
-        this.endpointGenerator = new EndpointGenerator({
-            context
-        });
     }
 
     protected getFilepath(): RelativeFilePath {
@@ -117,7 +111,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         if (rootServiceId != null) {
             const service = this.context.getHttpServiceOrThrow(rootServiceId);
             for (const endpoint of service.endpoints) {
-                const method = this.endpointGenerator.generate({
+                const method = this.context.endpointGenerator.generate({
                     serviceId: rootServiceId,
                     endpoint,
                     rawClientReference: CLIENT_MEMBER_NAME,

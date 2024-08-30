@@ -17,7 +17,6 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private readonly endpoints: Record<EndpointId, EndpointWithFilepath> = {};
     private readonly snippets: Record<EndpointId, string> = {};
     private readonly defaultEndpointId: EndpointId;
-    private readonly clientVariableName: string;
     private readonly requestOptionsName: string;
 
     constructor({
@@ -35,7 +34,6 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             this.context.ir.readmeConfig?.defaultEndpoint != null
                 ? this.context.ir.readmeConfig.defaultEndpoint
                 : this.getDefaultEndpointId();
-        this.clientVariableName = EndpointSnippetsGenerator.CLIENT_VARIABLE_NAME;
         this.requestOptionsName = this.context.getRequestOptionsClassReference().name;
     }
 
@@ -162,16 +160,9 @@ try {
     }
 
     private getMethodCall(endpoint: EndpointWithFilepath): string {
-        return `${this.getAccessFromRootClient(endpoint.fernFilepath)}.${this.context.getEndpointMethodName(
+        return `${this.context.getAccessFromRootClient(endpoint.fernFilepath)}.${this.context.getEndpointMethodName(
             endpoint.endpoint
         )}`;
-    }
-
-    private getAccessFromRootClient(fernFilepath: FernFilepath): string {
-        const clientAccessParts = fernFilepath.allParts.map((part) => part.pascalCase.safeName);
-        return clientAccessParts.length > 0
-            ? `${this.clientVariableName}.${clientAccessParts.join(".")}`
-            : this.clientVariableName;
     }
 
     private writeCode(s: string): string {
