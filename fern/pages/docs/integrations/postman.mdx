@@ -75,13 +75,29 @@ postman
 If you'd like Fern to publish the collection directly to Postman instead, you can modify your `generators.yml` configuration
 in the following way:
 
-```yaml title="generators.yml" {6-8}
+```yaml title="generators.yml" {6-9}
 generators:
   postman:
     generators:
       - name: fernapi/fern-postman
-        version: 0.0.45
+        version: 0.3.0
         output:
+          location: postman
           api-key: ${POSTMAN_API_KEY}
           workspace-id: 07e228e5-3f91-4223-8e27-bbfe4a81a601
+```
+
+If you'd like to publish to a particular collection, just specify the collection ID. 
+
+```yaml title="generators.yml" {10}
+generators:
+  postman:
+    generators:
+      - name: fernapi/fern-postman
+        version: 0.3.0
+        output:
+          location: postman
+          api-key: ${POSTMAN_API_KEY}
+          workspace-id: 07e228e5-3f91-4223-8e27-bbfe4a81a601
+          collection-id: 21510182-14b07230-46e2-431e-8153-d5c7d217b214
 ```

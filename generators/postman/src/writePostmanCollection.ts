@@ -76,7 +76,24 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
             );
 
             const outputMode = config.output.mode;
-            if (outputMode.type === "publish" && outputMode.publishTarget != null) {
+
+            const publishConfig = ir.publishConfig;
+            if (publishConfig?.type === "direct" && publishConfig.target.type === "postman") {
+                await publishConfig._visit({
+                    _other: () => undefined,
+                    direct: async () => {
+                        await publishCollection({
+                            publishConfig: {
+                                apiKey: publishConfig.target.apiKey,
+                                workspaceId: publishConfig.target.workspaceId,
+                                collectionId: publishConfig.target.collectionId
+                            },
+                            collection: rawCollectionDefinition
+                        });
+                    },
+                    github: () => undefined
+                });
+            } else if (outputMode.type === "publish" && outputMode.publishTarget != null) {
                 if (outputMode.publishTarget.type !== "postman") {
                     // eslint-disable-next-line no-console
                     console.log(`Received incorrect publish config (type is ${outputMode.type}`);
@@ -91,9 +108,7 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
                 await publishCollection({
                     publishConfig: {
                         apiKey: outputMode.publishTarget.apiKey,
-                        workspaceId: outputMode.publishTarget.workspaceId,
-                        // TODO: get collectionId from generators.yml
-                        collectionId: postmanGeneratorConfig?.publishing?.collectionId
+                        workspaceId: outputMode.publishTarget.workspaceId
                     },
                     collection: rawCollectionDefinition
                 });
