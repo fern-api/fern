@@ -6,6 +6,8 @@ on:
     branches:
       - main
     paths:
+      - "generators/csharp/model/versions.yml"
+      - "generators/csharp/sdk/versions.yml"
       - "generators/go/fiber/versions.yml"
       - "generators/go/model/versions.yml"
       - "generators/go/sdk/versions.yml"
@@ -22,8 +24,6 @@ on:
       # - "generators/java/spring/versions.yml"
       # - "generators/typescript/sdk/versions.yml"
       # - "generators/typescript/express/versions.yml"
-      # - "generators/csharp/sdk/versions.yml"
-      # - "generators/csharp/model/versions.yml"
   workflow_dispatch:
     inputs:
       version:
@@ -35,6 +35,8 @@ on:
         required: true
         type: choice
         options:
+          - csharp-model
+          - csharp-sdk
           - go-fiber
           - go-model
           - go-sdk
@@ -51,8 +53,6 @@ on:
           # - java-spring
           # - typescript-sdk
           # - typescript-express
-          # - csharp-sdk
-          # - csharp-model
 
 env:
   DOCKER_BUILDKIT: 1
@@ -68,6 +68,8 @@ jobs:
         id: filter
         with:
           filters: |
+            csharp-model: 'generators/csharp/model/versions.yml'
+            csharp-sdk: 'generators/csharp/sdk/versions.yml'
             go-fiber: "generators/go/fiber/versions.yml"
             go-model: "generators/go/model/versions.yml"
             go-sdk: "generators/go/sdk/versions.yml"
@@ -84,8 +86,6 @@ jobs:
           # spring: 'generators/java/spring/versions.yml'
           # ts-sdk: 'generators/typescript/sdk/versions.yml'
           # ts-express: 'generators/typescript/express/versions.yml'
-          # csharp-sdk: 'generators/csharp/sdk/versions.yml'
-          # csharp-model: 'generators/csharp/model/versions.yml'
 
   # Test, publish and register generators
   publish-changed-generators:
@@ -122,7 +122,11 @@ jobs:
         # the modified file once in the matrix, you have to access it at the filter (e.g. output.openapi_files)
         # So as a workaround, we are doing this switch statement to set the VERSIONS_FILE variable and use that to publish
         run: |
-          if [ ${{ matrix.generator }} = "go-fiber" ]; then
+          if [ ${{ matrix.generator }} = "csharp-model" ]; then
+              VERSIONS_FILE="generators/csharp/model/versions.yml"
+          elif [ ${{ matrix.generator }} = "csharp-sdk" ]; then
+              VERSIONS_FILE="generators/csharp/sdk/versions.yml"
+          elif [ ${{ matrix.generator }} = "go-fiber" ]; then
               VERSIONS_FILE="generators/go/fiber/versions.yml"
           elif [ ${{ matrix.generator }} = "go-model" ]; then
               VERSIONS_FILE="generators/go/model/versions.yml"

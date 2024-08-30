@@ -5,6 +5,8 @@ on:
     branches:
       - main
     paths:
+      - "generators/csharp/model/versions.yml"
+      - "generators/csharp/sdk/versions.yml"
       - "generators/go/fiber/versions.yml"
       - "generators/go/model/versions.yml"
       - "generators/go/sdk/versions.yml"
@@ -21,8 +23,6 @@ on:
       # - "generators/java/spring/versions.yml"
       # - "generators/typescript/sdk/versions.yml"
       # - "generators/typescript/express/versions.yml"
-      # - "generators/csharp/sdk/versions.yml"
-      # - "generators/csharp/model/versions.yml"
 
       # Cancel previous workflows on previous push
 concurrency:
@@ -40,6 +40,8 @@ jobs:
         id: filter
         with:
           filters: |
+            csharp-model: 'generators/csharp/model/versions.yml'
+            csharp-sdk: 'generators/csharp/sdk/versions.yml'
             go-fiber: "generators/go/fiber/versions.yml"
             go-model: "generators/go/model/versions.yml"
             go-sdk: "generators/go/sdk/versions.yml"
@@ -56,8 +58,6 @@ jobs:
           # spring: 'generators/java/spring/versions.yml'
           # ts-sdk: 'generators/typescript/sdk/versions.yml'
           # ts-express: 'generators/typescript/express/versions.yml'
-          # csharp-sdk: 'generators/csharp/sdk/versions.yml'
-          # csharp-model: 'generators/csharp/model/versions.yml'
 
   validate-cli:
     runs-on: ubuntu-latest
@@ -95,7 +95,11 @@ jobs:
 
       - name: Validate changelog
         run: |
-          if [ ${{ matrix.generator }} = "go-fiber" ]; then
+          if [ ${{ matrix.generator }} = "csharp-model" ]; then
+              VERSIONS_FILE="generators/csharp/model/versions.yml"
+          elif [ ${{ matrix.generator }} = "csharp-sdk" ]; then
+              VERSIONS_FILE="generators/csharp/sdk/versions.yml"
+          elif [ ${{ matrix.generator }} = "go-fiber" ]; then
               VERSIONS_FILE="generators/go/fiber/versions.yml"
           elif [ ${{ matrix.generator }} = "go-model" ]; then
               VERSIONS_FILE="generators/go/model/versions.yml"
