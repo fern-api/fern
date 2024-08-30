@@ -194,9 +194,15 @@ async function publishCollection({
             );
         }
     } else {
-        await postman.collection.updateCollection(publishConfig.collectionId, {
-            collection
-        });
+        await postman.collection.updateCollection(
+            publishConfig.collectionId,
+            {
+                collection
+            },
+            {
+                timeoutInSeconds: 180
+            }
+        );
     }
 }
 
