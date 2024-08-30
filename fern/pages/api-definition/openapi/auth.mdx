@@ -11,6 +11,19 @@ components:
     ...
 ```
 
+<Note>
+To apply a security scheme across all endpoints, reference the `securityScheme` within the `security` section of your OpenAPI Specification. 
+
+```yml title="openapi.yml" {3, 5-6}
+components: 
+  securitySchemes: 
+    AuthScheme:
+      ...
+security: 
+  - AuthScheme: []
+```
+</Note>
+
 ## Bearer Security Scheme
 
 Start by defining a `bearer` security scheme in your `openapi.yml`: 
