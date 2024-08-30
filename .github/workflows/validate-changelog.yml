@@ -5,9 +5,12 @@ on:
     branches:
       - main
     paths:
-      - "generators/python/sdk/versions.yml"
+      - "generators/go/fiber/versions.yml"
+      - "generators/go/model/versions.yml"
+      - "generators/go/sdk/versions.yml"
       - "generators/python/fastapi/versions.yml"
       - "generators/python/pydantic/versions.yml"
+      - "generators/python/sdk/versions.yml"
       - "generators/ruby/model/versions.yml"
       - "generators/ruby/sdk/versions.yml"
 
@@ -18,7 +21,6 @@ on:
       # - "generators/java/spring/versions.yml"
       # - "generators/typescript/sdk/versions.yml"
       # - "generators/typescript/express/versions.yml"
-      # - "generators/go/versions.yml"
       # - "generators/csharp/sdk/versions.yml"
       # - "generators/csharp/model/versions.yml"
 
@@ -38,9 +40,12 @@ jobs:
         id: filter
         with:
           filters: |
-            python-sdk: 'generators/python/sdk/versions.yml'
+            go-fiber: "generators/go/fiber/versions.yml"
+            go-model: "generators/go/model/versions.yml"
+            go-sdk: "generators/go/sdk/versions.yml"
             fastapi: "generators/python/fastapi/versions.yml"
             pydantic: "generators/python/pydantic/versions.yml"
+            python-sdk: 'generators/python/sdk/versions.yml'
             ruby-model: 'generators/ruby/model/versions.yml'
             ruby-sdk: 'generators/ruby/sdk/versions.yml'
 
@@ -51,9 +56,6 @@ jobs:
           # spring: 'generators/java/spring/versions.yml'
           # ts-sdk: 'generators/typescript/sdk/versions.yml'
           # ts-express: 'generators/typescript/express/versions.yml'
-          # go-sdk: 'generators/go/versions.yml'
-          # go-model: 'generators/go/versions.yml'
-          # go-fiber: 'generators/go/versions.yml'
           # csharp-sdk: 'generators/csharp/sdk/versions.yml'
           # csharp-model: 'generators/csharp/model/versions.yml'
 
@@ -93,12 +95,18 @@ jobs:
 
       - name: Validate changelog
         run: |
-          if [ ${{ matrix.generator }} = "python-sdk" ]; then
-              VERSIONS_FILE="generators/python/sdk/versions.yml"
+          if [ ${{ matrix.generator }} = "go-fiber" ]; then
+              VERSIONS_FILE="generators/go/fiber/versions.yml"
+          elif [ ${{ matrix.generator }} = "go-model" ]; then
+              VERSIONS_FILE="generators/go/model/versions.yml"
+          elif [ ${{ matrix.generator }} = "go-sdk" ]; then
+              VERSIONS_FILE="generators/go/sdk/versions.yml"
           elif [ ${{ matrix.generator }} = "fastapi" ]; then
               VERSIONS_FILE="generators/python/fastapi/versions.yml"
           elif [ ${{ matrix.generator }} = "pydantic" ]; then
               VERSIONS_FILE="generators/python/pydantic/versions.yml"
+          elif [ ${{ matrix.generator }} = "python-sdk" ]; then
+              VERSIONS_FILE="generators/python/sdk/versions.yml"
           elif [ ${{ matrix.generator }} = "ruby-model" ]; then
               VERSIONS_FILE="generators/ruby/model/versions.yml"
           elif [ ${{ matrix.generator }} = "ruby-sdk" ]; then
