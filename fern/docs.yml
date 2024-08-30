@@ -62,11 +62,14 @@ navigation:
         contents:
           - page: Overview
             icon: fa-regular fa-brackets-curly
-            path: ./pages/api-definition/openapi/openapi-overview.mdx           
-          - page: OpenAPI Examples
-            icon: fa-regular fa-square-terminal
-            path: ./pages/api-definition/openapi/examples.mdx
-            slug: examples
+            path: ./pages/api-definition/openapi/overview.mdx     
+          - page: Authentication
+            icon: fa-regular fa-lock-keyhole
+            path: ./pages/api-definition/openapi/auth.mdx                      
+          # - page: OpenAPI Examples
+          #   icon: fa-regular fa-square-terminal
+          #   path: ./pages/api-definition/openapi/examples.mdx
+          #   slug: examples
           - page: Audiences
             icon: fa-duotone fa-users
             path: ./pages/api-definition/openapi/extensions/audiences.mdx
@@ -110,6 +113,9 @@ navigation:
           - page: Overview
             icon: fa-regular fa-seedling
             path: ./pages/api-definition/fern-definition/overview.mdx
+          - page: Authentication
+            icon: fa-regular fa-lock-keyhole
+            path: ./pages/api-definition/fern-definition/auth.mdx                       
           - page: Types
             icon: fa-regular fa-shapes
             path: ./pages/api-definition/fern-definition/types.mdx
@@ -141,9 +147,6 @@ navigation:
               - page: Overview
                 icon: fa-regular fa-book
                 path: ./pages/api-definition/fern-definition/api-yml/overview.mdx
-              - page: Authentication
-                icon: fa-regular fa-lock-keyhole
-                path: ./pages/api-definition/fern-definition/api-yml/auth.mdx
               - page: Environments
                 icon: fa-regular fa-circle-wifi
                 path: ./pages/api-definition/fern-definition/api-yml/environments.mdx
