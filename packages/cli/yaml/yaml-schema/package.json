@@ -28,7 +28,6 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/configuration": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
     "zod": "^3.22.3"

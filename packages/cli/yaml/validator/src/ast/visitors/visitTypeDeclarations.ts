@@ -1,7 +1,5 @@
 import { noop, visitObject } from "@fern-api/core-utils";
-import { NodePath } from "../../NodePath";
-import { ExampleTypeSchema, TypeDeclarationSchema } from "../../schemas";
-import { visitRawTypeDeclaration } from "../../utils/visitRawTypeDeclaration";
+import { NodePath, RawSchemas, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
 import { DefinitionFileAstVisitor } from "../DefinitionFileAstVisitor";
 import { createDocsVisitor } from "./utils/createDocsVisitor";
 import { visitAllReferencesInExample } from "./utils/visitAllReferencesInExample";
@@ -12,7 +10,7 @@ export async function visitTypeDeclarations({
     visitor,
     nodePath
 }: {
-    typeDeclarations: Record<string, TypeDeclarationSchema> | undefined;
+    typeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema> | undefined;
     visitor: Partial<DefinitionFileAstVisitor>;
     nodePath: NodePath;
 }): Promise<void> {
@@ -33,7 +31,7 @@ export async function visitTypeDeclaration({
     nodePathForType
 }: {
     typeName: string;
-    declaration: TypeDeclarationSchema;
+    declaration: RawSchemas.TypeDeclarationSchema;
     visitor: Partial<DefinitionFileAstVisitor>;
     nodePathForType: NodePath;
 }): Promise<void> {
@@ -41,7 +39,7 @@ export async function visitTypeDeclaration({
 
     await visitor.typeDeclaration?.({ typeName: { isInlined: false, name: typeName }, declaration }, nodePathForType);
 
-    const visitExamples = async (examples: ExampleTypeSchema[] | undefined) => {
+    const visitExamples = async (examples: RawSchemas.ExampleTypeSchema[] | undefined) => {
         if (examples == null) {
             return;
         }

@@ -3,14 +3,12 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import {
-    DefinitionFileAstNodeTypes,
-    DefinitionFileSchema,
     GeneratorsYmlFileAstNodeTypes,
     PackageMarkerAstNodeTypes,
-    PackageMarkerFileSchema,
     RootApiFileAstNodeTypes,
-    RootApiFileSchema
-} from "@fern-api/yaml-schema";
+    DefinitionFileAstNodeTypes
+} from "./ast";
+import { DefinitionFileSchema, PackageMarkerFileSchema, RootApiFileSchema } from "@fern-api/yaml-schema";
 
 export interface Rule {
     name: string;

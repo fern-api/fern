@@ -1,12 +1,8 @@
-import { NodePath } from "../NodePath";
 import {
-    ErrorDiscriminationSchema,
-    HttpPathParameterSchema,
-    MultipleBaseUrlsEnvironmentSchema,
+    RawSchemas,
+    NodePath,
     RootApiFileSchema,
-    SingleBaseUrlEnvironmentSchema
-} from "../schemas";
-import { VariableDeclarationSchema } from "../schemas/VariableDeclarationSchema";
+} from "@fern-api/yaml-schema";
 
 export type RootApiFileAstVisitor<R = void | Promise<void>> = {
     [K in keyof RootApiFileAstNodeTypes]: RootApiFileAstNodeVisitor<K, R>;
@@ -17,15 +13,15 @@ export interface RootApiFileAstNodeTypes {
     defaultEnvironment: string | null | undefined;
     environment: {
         environmentId: string;
-        environment: string | SingleBaseUrlEnvironmentSchema | MultipleBaseUrlsEnvironmentSchema;
+        environment: string | RawSchemas.SingleBaseUrlEnvironmentSchema | RawSchemas.MultipleBaseUrlsEnvironmentSchema;
     };
-    errorDiscrimination: ErrorDiscriminationSchema | null | undefined;
+    errorDiscrimination: RawSchemas.ErrorDiscriminationSchema | null | undefined;
     errorReference: string;
     variableDeclaration: {
         variableId: string;
-        variable: VariableDeclarationSchema;
+        variable: RawSchemas.VariableDeclarationSchema;
     };
-    pathParameter: { pathParameterKey: string; pathParameter: HttpPathParameterSchema };
+    pathParameter: { pathParameterKey: string; pathParameter: RawSchemas.HttpPathParameterSchema };
     variableReference: string;
 }
 

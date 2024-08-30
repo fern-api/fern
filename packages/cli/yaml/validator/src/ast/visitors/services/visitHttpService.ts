@@ -1,11 +1,13 @@
 import { noop, visitObject } from "@fern-api/core-utils";
-import { RawSchemas, RootApiFileAstVisitor } from "../../..";
-import { NodePath } from "../../../NodePath";
-import { HttpEndpointSchema, HttpHeaderSchema, HttpPathParameterSchema, HttpServiceSchema } from "../../../schemas";
-import { isInlineRequestBody } from "../../../utils/isInlineRequestBody";
-import { visitExampleResponseSchema } from "../../../utils/visitExampleResponseSchema";
-import { isVariablePathParameter } from "../../../utils/visitRawPathParameter";
+import {
+    RawSchemas,
+    NodePath,
+    isInlineRequestBody,
+    isVariablePathParameter,
+    visitExampleResponseSchema
+} from "@fern-api/yaml-schema";
 import { DefinitionFileAstVisitor, TypeReferenceLocation } from "../../DefinitionFileAstVisitor";
+import { RootApiFileAstVisitor } from "../../RootApiFileAstVisitor";
 import { createDocsVisitor } from "../utils/createDocsVisitor";
 import { visitAllReferencesInExample } from "../utils/visitAllReferencesInExample";
 import { createTypeReferenceVisitor } from "../utils/visitTypeReference";
@@ -15,7 +17,7 @@ export async function visitHttpService({
     visitor,
     nodePath
 }: {
-    service: HttpServiceSchema;
+    service: RawSchemas.HttpServiceSchema;
     visitor: Partial<DefinitionFileAstVisitor>;
     nodePath: NodePath;
 }): Promise<void> {
@@ -64,8 +66,8 @@ async function visitEndpoint({
     nodePathForEndpoint
 }: {
     endpointId: string;
-    endpoint: HttpEndpointSchema;
-    service: HttpServiceSchema;
+    endpoint: RawSchemas.HttpEndpointSchema;
+    service: RawSchemas.HttpServiceSchema;
     visitor: Partial<DefinitionFileAstVisitor>;
     nodePathForEndpoint: NodePath;
 }) {
@@ -469,7 +471,7 @@ export async function visitPathParameters({
     visitor,
     nodePath
 }: {
-    pathParameters: Record<string, HttpPathParameterSchema> | undefined;
+    pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> | undefined;
     visitor: Partial<DefinitionFileAstVisitor> | Partial<RootApiFileAstVisitor>;
     nodePath: NodePath;
 }): Promise<void> {
@@ -520,7 +522,7 @@ async function visitHeaders({
     visitor,
     nodePath
 }: {
-    headers: Record<string, HttpHeaderSchema> | undefined;
+    headers: Record<string, RawSchemas.HttpHeaderSchema> | undefined;
     visitor: Partial<DefinitionFileAstVisitor>;
     nodePath: NodePath;
 }) {

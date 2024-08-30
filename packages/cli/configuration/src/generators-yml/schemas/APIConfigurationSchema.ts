@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { RawSchemas } from "@fern-api/yaml-schema";
 
 /**
  * @example
@@ -44,7 +45,7 @@ export const APIDefintionWithOverridesSchema = z.object({
     // and from behind an authed URL. Right now this is for a basic cURL to get the def.
     origin: z
         .optional(z.string())
-        .describe("The URL of the API definition origin, from which the file should be polled."),
+        .describe("The URL of the API definition origin, from which the file should be polled."),  
     overrides: z.optional(z.string()).describe("Path to the OpenAPI or AsyncAPI overrides"),
     audiences: z.optional(z.array(z.string())).describe("Audiences that you would like to filter to"),
     settings: z.optional(APIDefinitionSettingsSchema)

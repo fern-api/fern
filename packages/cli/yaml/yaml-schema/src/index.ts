@@ -1,27 +1,3 @@
-export {
-    TypeReferenceLocation,
-    type DefinitionFileAstNodeTypes,
-    type DefinitionFileAstNodeVisitor,
-    type DefinitionFileAstVisitor,
-    type TypeDeclarationName
-} from "./ast/DefinitionFileAstVisitor";
-export {
-    type GeneratorsYmlFileAstNodeTypes,
-    type GeneratorsYmlFileAstNodeVisitor
-} from "./ast/GeneratorsYmlAstVisitor";
-export {
-    type PackageMarkerAstNodeTypes,
-    type PackageMarkerAstNodeVisitor,
-    type PackageMarkerAstVisitor
-} from "./ast/PackageMarkerAstVisitor";
-export {
-    type RootApiFileAstNodeTypes,
-    type RootApiFileAstNodeVisitor,
-    type RootApiFileAstVisitor
-} from "./ast/RootApiFileAstVisitor";
-export { visitDefinitionFileYamlAst } from "./ast/visitDefinitionFileYamlAst";
-export { visitPackageMarkerYamlAst } from "./ast/visitPackageMarkerYamlAst";
-export { visitRootApiFileYamlAst } from "./ast/visitRootApiFileYamlAst";
 export { EXAMPLE_REFERENCE_PREFIX, YAML_SCHEMA_VERSION } from "./constants";
 export { type NodePath, type NodePathItem } from "./NodePath";
 export * as RawSchemas from "./schemas";
