@@ -13,8 +13,6 @@ on:
       - "generators/java/spring/VERSION"
       - "generators/typescript/sdk/VERSION"
       - "generators/typescript/express/VERSION"
-      - "generators/csharp/sdk/VERSION"
-      - "generators/csharp/model/VERSION"
   workflow_dispatch:
     inputs:
       generator:
@@ -29,8 +27,6 @@ on:
           - java-spring
           - typescript-sdk
           - typescript-express
-          - csharp-sdk
-          - csharp-model
 
 env:
   DOCKER_BUILDKIT: 1
@@ -46,8 +42,6 @@ jobs:
       spring: ${{ steps.filter.outputs.spring }}
       ts-sdk: ${{ steps.filter.outputs.ts-sdk }}
       ts-express: ${{ steps.filter.outputs.ts-express }}
-      csharp-sdk: ${{ steps.filter.outputs.csharp-sdk }}
-      csharp-model: ${{ steps.filter.outputs.csharp-model }}
     steps:
       - uses: actions/checkout@v2
       - uses: dorny/paths-filter@v2
@@ -61,8 +55,6 @@ jobs:
             spring: 'generators/java/spring/VERSION'
             ts-sdk: 'generators/typescript/sdk/VERSION'
             ts-express: 'generators/typescript/express/VERSION'
-            csharp-sdk: 'generators/csharp/sdk/VERSION'
-            csharp-model: 'generators/csharp/model/VERSION'
 
   openapi:
     runs-on: ubuntu-latest
@@ -453,111 +445,3 @@ jobs:
         run: |
           pnpm --filter @fern-typescript/sdk-generator-cli dockerTagVersion:node "$VERSION"
           docker push fernapi/fern-typescript-node-sdk:"$VERSION"
-
-  csharp-model:
-    runs-on: ubuntu-latest
-    needs: versions-changed
-    if: ${{ needs.versions-changed.outputs.csharp-model == 'true' || inputs.generator == 'csharp-model' }}
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Install
-        uses: ./.github/actions/install
-
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: fernapi
-          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
-
-      - name: Build CLI
-        working-directory: ./generators/csharp/model
-        run: pnpm dist:cli
-
-      - name: Print Version
-        if: ${{ inputs.generator != 'csharp-model' }}
-        run: |
-          projectVersion=$(cat generators/csharp/model/VERSION)
-          echo $projectVersion
-          echo "VERSION=$projectVersion" >> $GITHUB_ENV
-
-      - name: Print Version Dev
-        if: ${{ inputs.generator == 'ruby-model' }}
-        run: |
-          projectVersion=$(cat generators/csharp/model/VERSION)
-          commitNumber=$(git log --oneline | wc -l )
-          sha_short=$(git rev-parse --short HEAD)
-          echo $projectVersion-$commitNumber-$sha_short
-          echo "VERSION=$projectVersion-$commitNumber-$sha_short" >> $GITHUB_ENV
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          file: ./generators/csharp/model/Dockerfile
-          platforms: linux/amd64,linux/arm64
-          cache-from: type=gha
-          cache-to: type=gha,mode=min
-          push: true
-          labels: version=${{env.VERSION}}
-          tags: fernapi/fern-csharp-model:${{env.VERSION}}${{ (!contains(env.VERSION, '-rc') && ', fernapi/fern-csharp-model:latest') || '' }}
-
-  csharp-sdk:
-    runs-on: ubuntu-latest
-    needs: versions-changed
-    if: ${{ needs.versions-changed.outputs.csharp-sdk == 'true' || inputs.generator == 'csharp-sdk' }}
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Install
-        uses: ./.github/actions/install
-
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: fernapi
-          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
-
-      - name: Build CLI
-        working-directory: ./generators/csharp/sdk
-        run: pnpm dist:cli
-
-      - name: Print Version
-        if: ${{ inputs.generator != 'csharp-sdk' }}
-        run: |
-          projectVersion=$(cat generators/csharp/sdk/VERSION)
-          echo $projectVersion
-          echo "VERSION=$projectVersion" >> $GITHUB_ENV
-
-      - name: Print Version Dev
-        if: ${{ inputs.generator == 'csharp-sdk' }}
-        run: |
-          projectVersion=$(cat generators/csharp/sdk/VERSION)
-          commitNumber=$(git log --oneline | wc -l )
-          sha_short=$(git rev-parse --short HEAD)
-          echo $projectVersion-$commitNumber-$sha_short
-          echo "VERSION=$projectVersion-$commitNumber-$sha_short" >> $GITHUB_ENV
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          file: ./generators/csharp/sdk/Dockerfile
-          platforms: linux/amd64,linux/arm64
-          cache-from: type=gha
-          cache-to: type=gha,mode=min
-          push: true
-          labels: version=${{env.VERSION}}
-          tags: fernapi/fern-csharp-sdk:${{env.VERSION}}${{ (!contains(env.VERSION, '-rc') && ', fernapi/fern-csharp-sdk:latest') || '' }}

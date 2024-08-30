@@ -1,5 +1,6 @@
 
 irVersion: v53
+changelogLocation: ../../generators/csharp/sdk/versions.yml
 publish:
   preBuildCommands:
     - pnpm --filter @fern-api/fern-csharp-sdk dist:cli
