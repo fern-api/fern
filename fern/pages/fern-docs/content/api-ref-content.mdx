@@ -1,13 +1,13 @@
 ---
-title: Write markdown content in your API Reference
-description: Add markdown content to your API Reference including summary pages, asides, and content between endpoints.
+title: Write Markdown content in your API Reference
+description: Add Markdown content to your API Reference including summary pages, asides, and content between endpoints.
 ---
 
-Fern Docs allows you to write markdown content in your API Reference documentation. This feature is useful for providing additional context, examples, or explanations for your API endpoints. There are a few ways to accomplish this:
+Fern Docs allows you to write Markdown content in your API Reference documentation. This feature is useful for providing additional context, examples, or explanations for your API endpoints. There are a few ways to accomplish this:
 
 ## In OpenAPI
 
-If you're using OpenAPI to define your API, you can include markdown content in your OpenAPI Specification.
+If you're using OpenAPI to define your API, you can include Markdown content in your OpenAPI Specification.
 
 For example, you can include a [callout](/learn/docs/components/callouts#note-callouts) in the `description` field of an endpoint:
 
@@ -24,7 +24,7 @@ paths:
 
 ## In Fern Definition
 
-If you're using Fern's simpler API definition format, you can include markdown content in your API definition.
+If you're using Fern's simpler API definition format, you can include Markdown content in your API definition.
 
 For example, you can include a [callout](/learn/docs/components/callouts#note-callouts) in the `docs` field of an endpoint:
 
@@ -41,9 +41,9 @@ service:
 
 ## Adding a summary page
 
-You can also create a markdown page that provides an overview of your API Reference. This page can include general information about your API, such as authentication requirements, rate limits, or other important details.
+You can also create a Markdown page that provides an overview of your API Reference. This page can include general information about your API, such as authentication requirements, rate limits, or other important details.
 
-To add a summary page, create a markdown file in your `fern/` folder and link to it in your `docs.yml` file:
+To add a summary page, create a Markdown file in your `fern/` folder and link to it in your `docs.yml` file:
 
 ```yaml title="docs.yml"
 navigation:
@@ -53,13 +53,13 @@ navigation:
 
 By including the `summary` field, the `API Reference` section title will link to the `api-summary.mdx` page.
 
-## Adding markdown content between endpoints
+## Adding Markdown content between endpoints
 
-In addition to adding markdown content to individual endpoints, you can also include markdown content between endpoints in your API Reference. This content can provide context or explanations that apply to multiple endpoints.
+In addition to adding Markdown content to individual endpoints, you can also include Markdown content between endpoints in your API Reference. This content can provide context or explanations that apply to multiple endpoints.
 
 This feature requires you to use the `layout` field in your `docs.yml` file, which is described in the [Reorder your API Reference](/learn/docs/api-references/reorder-api-reference-pages) guide.
 
-To add markdown content between endpoints, create a markdown file in your `fern/` folder and link to it in your `docs.yml` file:
+To add Markdown content between endpoints, create a Markdown file in your `fern/` folder and link to it in your `docs.yml` file:
 
 ```yaml title="docs.yml"
 navigation:
@@ -82,7 +82,7 @@ navigation:
 
 ### Aside component
 
-When writing markdown content for your API Reference, the `<Aside>` component can be useful for providing additional information or context. For example, you can use the `<Aside>` component to explain how to authenticate with your API or provide examples of request and response payloads.
+When writing Markdown content for your API Reference, the `<Aside>` component can be useful for providing additional information or context. For example, you can use the `<Aside>` component to explain how to authenticate with your API or provide examples of request and response payloads.
 
 ````mdx title="pages/pet-crud.mdx"
 ---

@@ -8,7 +8,7 @@ subtitle: "Customize your documentation using the docs.yml file"
   the  raw [schema](https://github.com/fern-api/fern/blob/69e74d9c27dc031ec2e84e70b878c40e9e9678a5/packages/cli/configuration/fern/definition/docs.yml#L110-L153)
 </Note>
 
-## Top-Level Properties
+## Top-level properties
 
 Every Fern documentation website needs a `docs.yml` file with the core configuration settings. 
 
@@ -66,7 +66,7 @@ favicon: path/to/favicon.ico
   `layout` configuration [here](/learn/docs/getting-started/global-configuration#layout-configuration).
 </ParamField>
 
-## Colors Configuration 
+## Colors configuration 
 
 ```yaml docs.yml
 colors: 
@@ -86,7 +86,7 @@ colors:
   The configured background colors for light and dark mode. 
 </ParamField>
 
-## Logo Configuration
+## Logo configuration
 
 ```yaml docs.yml
 logo: 
@@ -107,7 +107,7 @@ logo:
   Path to the image for the light mode logo. You can exclude this if you don't have light mode enabled. SVG format is recommended.
 </ParamField>
 
-## Redirects Configuration
+## Redirects configuration
 
 ```yaml docs.yml
 redirects:
@@ -129,7 +129,7 @@ redirects:
   Toggle between **permanent** and **temporary** redirect (default `false`). When true, the status code is 308. When false the status code is 307.
 </ParamField>
 
-## NavBar Links Configuration
+## NavBar links configuration
 
 ```yaml docs.yml
 navbar-links:
@@ -158,7 +158,7 @@ navbar-links:
   Whether the button is rounded or square. 
 </ParamField>
 
-## Background Image Configuration
+## Background image configuration
 
 ```yaml docs.yml
 background-image: 
@@ -175,7 +175,7 @@ background-image:
 </ParamField>
 
 
-## Typography Configuration 
+## Typography configuration 
 
 ```yaml docs.yml {2-16}
 typography:
@@ -213,7 +213,7 @@ typography:
   Learn more about font configuration [here](/learn/docs/getting-started/global-configuration#font-configuration). 
 </ParamField>
 
-### Font Configuration
+### Font configuration
 
 <CodeGroup>
 ```yaml title="Basic" {3-4}
@@ -248,7 +248,7 @@ typography:
   A list of font files for particular weights. Each element in the list includes a `path`, `weight`, and `style` property.
 </ParamField>
 
-## Layout Configuration 
+## Layout configuration 
 
 ```yaml docs.yml
 layout:
@@ -271,7 +271,7 @@ layout:
 </ParamField>
 
 <ParamField path="layout.content-width" type="string" required={false}>
-  Sets the maximum width of the markdown article content. Defaults to `44rem` (`704px`). 
+  Sets the maximum width of the Markdown article content. Defaults to `44rem` (`704px`). 
   Valid options are `{number}rem` or `{number}px`. 
 </ParamField>
 
