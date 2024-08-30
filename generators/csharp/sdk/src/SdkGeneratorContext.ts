@@ -201,6 +201,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         });
     }
 
+    public getSubpackageForServiceId(serviceId: ServiceId): Subpackage | undefined {
+        return Object.values(this.ir.subpackages).find((subpackage) => subpackage.service === serviceId);
+    }
+
     private getComputedClientName(): string {
         return `${upperFirst(camelCase(this.config.organization))}${this.ir.apiName.pascalCase.unsafeName}`;
     }

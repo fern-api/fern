@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.Users.<a href="Users">ListWithCursorPaginationAsync</a>(ListUsersCursorPaginationRequest { ... }) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithCursorPaginationAsync</a>(ListUsersCursorPaginationRequest { ... }) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -22,7 +22,6 @@ await client.Users.ListWithCursorPaginationAsync(
         StartingAfter = "string",
     }
 );
-
 ```
 </dd>
 </dl>
@@ -49,7 +48,7 @@ await client.Users.ListWithCursorPaginationAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Users.<a href="Users">ListWithBodyCursorPaginationAsync</a>(ListUsersBodyCursorPaginationRequest { ... }) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithBodyCursorPaginationAsync</a>(ListUsersBodyCursorPaginationRequest { ... }) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -65,7 +64,6 @@ await client.Users.ListWithCursorPaginationAsync(
 await client.Users.ListWithBodyCursorPaginationAsync(
     new ListUsersBodyCursorPaginationRequest { Pagination = new WithCursor { Cursor = "string" } }
 );
-
 ```
 </dd>
 </dl>
@@ -92,7 +90,7 @@ await client.Users.ListWithBodyCursorPaginationAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Users.<a href="Users">ListWithOffsetPaginationAsync</a>(ListUsersOffsetPaginationRequest { ... }) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithOffsetPaginationAsync</a>(ListUsersOffsetPaginationRequest { ... }) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -114,7 +112,6 @@ await client.Users.ListWithOffsetPaginationAsync(
         StartingAfter = "string",
     }
 );
-
 ```
 </dd>
 </dl>
@@ -141,7 +138,7 @@ await client.Users.ListWithOffsetPaginationAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Users.<a href="Users">ListWithBodyOffsetPaginationAsync</a>(ListUsersBodyOffsetPaginationRequest { ... }) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithBodyOffsetPaginationAsync</a>(ListUsersBodyOffsetPaginationRequest { ... }) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -157,7 +154,6 @@ await client.Users.ListWithOffsetPaginationAsync(
 await client.Users.ListWithBodyOffsetPaginationAsync(
     new ListUsersBodyOffsetPaginationRequest { Pagination = new WithPage { Page = 1 } }
 );
-
 ```
 </dd>
 </dl>
@@ -184,7 +180,7 @@ await client.Users.ListWithBodyOffsetPaginationAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Users.<a href="Users">ListWithOffsetStepPaginationAsync</a>(ListUsersOffsetStepPaginationRequest { ... }) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithOffsetStepPaginationAsync</a>(ListUsersOffsetStepPaginationRequest { ... }) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -205,7 +201,6 @@ await client.Users.ListWithOffsetStepPaginationAsync(
         Order = Order.Asc,
     }
 );
-
 ```
 </dd>
 </dl>
@@ -232,7 +227,7 @@ await client.Users.ListWithOffsetStepPaginationAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Users.<a href="Users">ListWithOffsetPaginationHasNextPageAsync</a>(ListWithOffsetPaginationHasNextPageRequest { ... }) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithOffsetPaginationHasNextPageAsync</a>(ListWithOffsetPaginationHasNextPageRequest { ... }) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -253,7 +248,6 @@ await client.Users.ListWithOffsetPaginationHasNextPageAsync(
         Order = Order.Asc,
     }
 );
-
 ```
 </dd>
 </dl>
@@ -280,7 +274,7 @@ await client.Users.ListWithOffsetPaginationHasNextPageAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Users.<a href="Users">ListWithExtendedResultsAsync</a>(ListUsersExtendedRequest { ... }) -> ListUsersExtendedResponse</code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithExtendedResultsAsync</a>(ListUsersExtendedRequest { ... }) -> ListUsersExtendedResponse</code></summary>
 <dl>
 <dd>
 
@@ -296,7 +290,6 @@ await client.Users.ListWithOffsetPaginationHasNextPageAsync(
 await client.Users.ListWithExtendedResultsAsync(
     new ListUsersExtendedRequest { Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32" }
 );
-
 ```
 </dd>
 </dl>
@@ -323,7 +316,7 @@ await client.Users.ListWithExtendedResultsAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Users.<a href="Users">ListUsernamesAsync</a>(ListUsernamesRequest { ... }) -> UsernameCursor</code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListUsernamesAsync</a>(ListUsernamesRequest { ... }) -> UsernameCursor</code></summary>
 <dl>
 <dd>
 
@@ -337,7 +330,6 @@ await client.Users.ListWithExtendedResultsAsync(
 
 ```csharp
 await client.Users.ListUsernamesAsync(new ListUsernamesRequest { StartingAfter = "string" });
-
 ```
 </dd>
 </dl>
@@ -364,7 +356,7 @@ await client.Users.ListUsernamesAsync(new ListUsernamesRequest { StartingAfter =
 </dl>
 </details>
 
-<details><summary><code>client.Users.<a href="Users">ListWithGlobalConfigAsync</a>(ListWithGlobalConfigRequest { ... }) -> UsernameContainer</code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithGlobalConfigAsync</a>(ListWithGlobalConfigRequest { ... }) -> UsernameContainer</code></summary>
 <dl>
 <dd>
 
@@ -378,7 +370,6 @@ await client.Users.ListUsernamesAsync(new ListUsernamesRequest { StartingAfter =
 
 ```csharp
 await client.Users.ListWithGlobalConfigAsync(new ListWithGlobalConfigRequest { Offset = 1 });
-
 ```
 </dd>
 </dl>

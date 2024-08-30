@@ -1,6 +1,6 @@
 # Reference
 ## Headers
-<details><summary><code>client.Headers.<a href="Headers">SendAsync</a>(SendLiteralsInHeadersRequest { ... }) -> SendResponse</code></summary>
+<details><summary><code>client.Headers.<a href="/src/SeedLiteral/Headers/HeadersClient.cs">SendAsync</a>(SendLiteralsInHeadersRequest { ... }) -> SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -21,7 +21,6 @@ await client.Headers.SendAsync(
         Query = "What is the weather today",
     }
 );
-
 ```
 </dd>
 </dl>
@@ -49,7 +48,7 @@ await client.Headers.SendAsync(
 </details>
 
 ## Inlined
-<details><summary><code>client.Inlined.<a href="Inlined">SendAsync</a>(SendLiteralsInlinedRequest { ... }) -> SendResponse</code></summary>
+<details><summary><code>client.Inlined.<a href="/src/SeedLiteral/Inlined/InlinedClient.cs">SendAsync</a>(SendLiteralsInlinedRequest { ... }) -> SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -74,7 +73,6 @@ await client.Inlined.SendAsync(
         Query = "What is the weather today",
     }
 );
-
 ```
 </dd>
 </dl>
@@ -102,7 +100,7 @@ await client.Inlined.SendAsync(
 </details>
 
 ## Path
-<details><summary><code>client.Path.<a href="Path">SendAsync</a>(id) -> SendResponse</code></summary>
+<details><summary><code>client.Path.<a href="/src/SeedLiteral/Path/PathClient.cs">SendAsync</a>(id) -> SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -116,7 +114,6 @@ await client.Inlined.SendAsync(
 
 ```csharp
 await client.Path.SendAsync("123");
-
 ```
 </dd>
 </dl>
@@ -144,7 +141,7 @@ await client.Path.SendAsync("123");
 </details>
 
 ## Query
-<details><summary><code>client.Query.<a href="Query">SendAsync</a>(SendLiteralsInQueryRequest { ... }) -> SendResponse</code></summary>
+<details><summary><code>client.Query.<a href="/src/SeedLiteral/Query/QueryClient.cs">SendAsync</a>(SendLiteralsInQueryRequest { ... }) -> SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -165,7 +162,6 @@ await client.Query.SendAsync(
         Query = "What is the weather today",
     }
 );
-
 ```
 </dd>
 </dl>
@@ -193,7 +189,7 @@ await client.Query.SendAsync(
 </details>
 
 ## Reference
-<details><summary><code>client.Reference.<a href="Reference">SendAsync</a>(SendRequest { ... }) -> SendResponse</code></summary>
+<details><summary><code>client.Reference.<a href="/src/SeedLiteral/Reference/ReferenceClient.cs">SendAsync</a>(SendRequest { ... }) -> SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -215,7 +211,6 @@ await client.Reference.SendAsync(
         Query = "What is the weather today",
     }
 );
-
 ```
 </dd>
 </dl>

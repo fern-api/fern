@@ -1,6 +1,6 @@
 # Reference
 ## FolderA Service
-<details><summary><code>client.FolderA.Service.<a href="FolderA/Service">GetDirectThreadAsync</a>() -> FolderA.Response</code></summary>
+<details><summary><code>client.FolderA.Service.<a href="/src/SeedAudiences/FolderA/Service/ServiceClient.cs">GetDirectThreadAsync</a>() -> FolderA.Response</code></summary>
 <dl>
 <dd>
 
@@ -14,7 +14,6 @@
 
 ```csharp
 await client.FolderA.Service.GetDirectThreadAsync();
-
 ```
 </dd>
 </dl>
@@ -27,7 +26,7 @@ await client.FolderA.Service.GetDirectThreadAsync();
 </details>
 
 ## FolderD Service
-<details><summary><code>client.FolderD.Service.<a href="FolderD/Service">GetDirectThreadAsync</a>() -> FolderD.Response</code></summary>
+<details><summary><code>client.FolderD.Service.<a href="/src/SeedAudiences/FolderD/Service/ServiceClient.cs">GetDirectThreadAsync</a>() -> FolderD.Response</code></summary>
 <dl>
 <dd>
 
@@ -41,7 +40,6 @@ await client.FolderA.Service.GetDirectThreadAsync();
 
 ```csharp
 await client.FolderD.Service.GetDirectThreadAsync();
-
 ```
 </dd>
 </dl>
@@ -54,7 +52,7 @@ await client.FolderD.Service.GetDirectThreadAsync();
 </details>
 
 ## Foo
-<details><summary><code>client.Foo.<a href="Foo">FindAsync</a>(FindRequest { ... }) -> ImportingType</code></summary>
+<details><summary><code>client.Foo.<a href="/src/SeedAudiences/Foo/FooClient.cs">FindAsync</a>(FindRequest { ... }) -> ImportingType</code></summary>
 <dl>
 <dd>
 
@@ -75,7 +73,6 @@ await client.Foo.FindAsync(
         PrivateProperty = 1,
     }
 );
-
 ```
 </dd>
 </dl>

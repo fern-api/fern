@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="">CreateAsync</a>(CreateRequest { ... }) -> Type</code></summary>
+<details><summary><code>client.<a href="/src/SeedValidation/SeedValidationClient.cs">CreateAsync</a>(CreateRequest { ... }) -> Type</code></summary>
 <dl>
 <dd>
 
@@ -21,7 +21,6 @@ await client.CreateAsync(
         Shape = Shape.Square,
     }
 );
-
 ```
 </dd>
 </dl>
@@ -48,7 +47,7 @@ await client.CreateAsync(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="">GetAsync</a>(GetRequest { ... }) -> Type</code></summary>
+<details><summary><code>client.<a href="/src/SeedValidation/SeedValidationClient.cs">GetAsync</a>(GetRequest { ... }) -> Type</code></summary>
 <dl>
 <dd>
 
@@ -69,7 +68,6 @@ await client.GetAsync(
         Name = "string",
     }
 );
-
 ```
 </dd>
 </dl>

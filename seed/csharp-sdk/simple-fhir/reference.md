@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="">GetAccountAsync</a>(accountId) -> Account</code></summary>
+<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">GetAccountAsync</a>(accountId) -> Account</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,6 @@
 
 ```csharp
 await client.GetAccountAsync("string");
-
 ```
 </dd>
 </dl>

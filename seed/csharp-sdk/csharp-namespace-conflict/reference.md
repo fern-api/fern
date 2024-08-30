@@ -1,6 +1,6 @@
 # Reference
 ## Tasktest
-<details><summary><code>client.Tasktest.<a href="Tasktest">HelloAsync</a>()</code></summary>
+<details><summary><code>client.Tasktest.<a href="/src/SeedCsharpNamespaceConflict/Tasktest/TasktestClient.cs">HelloAsync</a>()</code></summary>
 <dl>
 <dd>
 
@@ -14,7 +14,6 @@
 
 ```csharp
 await client.Tasktest.HelloAsync();
-
 ```
 </dd>
 </dl>

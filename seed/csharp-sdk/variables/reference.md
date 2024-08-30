@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.<a href="Service">PostAsync</a>(endpointParam)</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedVariables/Service/ServiceClient.cs">PostAsync</a>(endpointParam)</code></summary>
 <dl>
 <dd>
 
@@ -14,7 +14,6 @@
 
 ```csharp
 await client.Service.PostAsync("string");
-
 ```
 </dd>
 </dl>

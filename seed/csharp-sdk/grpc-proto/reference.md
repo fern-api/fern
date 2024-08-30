@@ -1,6 +1,6 @@
 # Reference
 ## UserService
-<details><summary><code>client.Userservice.<a href="Userservice">CreateAsync</a>(CreateRequest { ... }) -> CreateResponse</code></summary>
+<details><summary><code>client.Userservice.<a href="/src/SeedApi/Userservice/UserserviceClient.cs">CreateAsync</a>(CreateRequest { ... }) -> CreateResponse</code></summary>
 <dl>
 <dd>
 
@@ -14,7 +14,6 @@
 
 ```csharp
 await client.Userservice.CreateAsync(new CreateRequest());
-
 ```
 </dd>
 </dl>

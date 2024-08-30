@@ -1,6 +1,6 @@
 # Reference
 ## Imdb
-<details><summary><code>client.Imdb.<a href="Imdb">CreateMovieAsync</a>(CreateMovieRequest { ... }) -> string</code></summary>
+<details><summary><code>client.Imdb.<a href="/src/SeedApi/Imdb/ImdbClient.cs">CreateMovieAsync</a>(CreateMovieRequest { ... }) -> string</code></summary>
 <dl>
 <dd>
 
@@ -28,7 +28,6 @@ Add a movie to the database
 
 ```csharp
 await client.Imdb.CreateMovieAsync(new CreateMovieRequest { Title = "string", Rating = 1.1 });
-
 ```
 </dd>
 </dl>
@@ -55,7 +54,7 @@ await client.Imdb.CreateMovieAsync(new CreateMovieRequest { Title = "string", Ra
 </dl>
 </details>
 
-<details><summary><code>client.Imdb.<a href="Imdb">GetMovieAsync</a>(movieId) -> Movie</code></summary>
+<details><summary><code>client.Imdb.<a href="/src/SeedApi/Imdb/ImdbClient.cs">GetMovieAsync</a>(movieId) -> Movie</code></summary>
 <dl>
 <dd>
 
@@ -69,7 +68,6 @@ await client.Imdb.CreateMovieAsync(new CreateMovieRequest { Title = "string", Ra
 
 ```csharp
 await client.Imdb.GetMovieAsync("string");
-
 ```
 </dd>
 </dl>

@@ -31,7 +31,7 @@ import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientG
 import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator";
 import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { getReferenceConfigBuilder } from "./reference/getReferenceConfigBuilder";
+import { buildReference } from "./reference/buildReference";
 
 export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -238,7 +238,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
     }
 
     private async generateReference({ context }: { context: SdkGeneratorContext }): Promise<void> {
-        const builder = getReferenceConfigBuilder({ context });
+        const builder = buildReference({ context });
         const content = await context.generatorAgent.generateReference(builder);
         context.project.addRawFiles(
             new File(context.generatorAgent.REFERENCE_FILENAME, RelativeFilePath.of("."), content)

@@ -1,6 +1,6 @@
 # Reference
 ## CustomAuth
-<details><summary><code>client.CustomAuth.<a href="CustomAuth">GetWithCustomAuthAsync</a>() -> bool</code></summary>
+<details><summary><code>client.CustomAuth.<a href="/src/SeedCustomAuth/CustomAuth/CustomAuthClient.cs">GetWithCustomAuthAsync</a>() -> bool</code></summary>
 <dl>
 <dd>
 
@@ -28,7 +28,6 @@ GET request with custom auth scheme
 
 ```csharp
 await client.CustomAuth.GetWithCustomAuthAsync();
-
 ```
 </dd>
 </dl>
@@ -40,7 +39,7 @@ await client.CustomAuth.GetWithCustomAuthAsync();
 </dl>
 </details>
 
-<details><summary><code>client.CustomAuth.<a href="CustomAuth">PostWithCustomAuthAsync</a>(object { ... }) -> bool</code></summary>
+<details><summary><code>client.CustomAuth.<a href="/src/SeedCustomAuth/CustomAuth/CustomAuthClient.cs">PostWithCustomAuthAsync</a>(object { ... }) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -70,7 +69,6 @@ POST request with custom auth scheme
 await client.CustomAuth.PostWithCustomAuthAsync(
     new Dictionary<object, object?>() { { "key", "value" } }
 );
-
 ```
 </dd>
 </dl>

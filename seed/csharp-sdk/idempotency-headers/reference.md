@@ -1,6 +1,6 @@
 # Reference
 ## Payment
-<details><summary><code>client.Payment.<a href="Payment">CreateAsync</a>(CreatePaymentRequest { ... }) -> string</code></summary>
+<details><summary><code>client.Payment.<a href="/src/SeedIdempotencyHeaders/Payment/PaymentClient.cs">CreateAsync</a>(CreatePaymentRequest { ... }) -> string</code></summary>
 <dl>
 <dd>
 
@@ -14,7 +14,6 @@
 
 ```csharp
 await client.Payment.CreateAsync(new CreatePaymentRequest { Amount = 1, Currency = Currency.Usd });
-
 ```
 </dd>
 </dl>
@@ -41,7 +40,7 @@ await client.Payment.CreateAsync(new CreatePaymentRequest { Amount = 1, Currency
 </dl>
 </details>
 
-<details><summary><code>client.Payment.<a href="Payment">DeleteAsync</a>(paymentId)</code></summary>
+<details><summary><code>client.Payment.<a href="/src/SeedIdempotencyHeaders/Payment/PaymentClient.cs">DeleteAsync</a>(paymentId)</code></summary>
 <dl>
 <dd>
 
@@ -55,7 +54,6 @@ await client.Payment.CreateAsync(new CreatePaymentRequest { Amount = 1, Currency
 
 ```csharp
 await client.Payment.DeleteAsync("string");
-
 ```
 </dd>
 </dl>

@@ -1,6 +1,6 @@
 # Reference
 ## PropertyBasedError
-<details><summary><code>client.PropertyBasedError.<a href="PropertyBasedError">ThrowErrorAsync</a>() -> string</code></summary>
+<details><summary><code>client.PropertyBasedError.<a href="/src/SeedErrorProperty/PropertyBasedError/PropertyBasedErrorClient.cs">ThrowErrorAsync</a>() -> string</code></summary>
 <dl>
 <dd>
 
@@ -28,7 +28,6 @@ GET request that always throws an error
 
 ```csharp
 await client.PropertyBasedError.ThrowErrorAsync();
-
 ```
 </dd>
 </dl>

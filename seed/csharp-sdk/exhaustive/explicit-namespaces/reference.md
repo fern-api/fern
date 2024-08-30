@@ -1,6 +1,6 @@
 # Reference
 ## Endpoints Container
-<details><summary><code>client.Endpoints.Container.<a href="Endpoints/Container">GetAndReturnListOfPrimitivesAsync</a>(IEnumerable<string> { ... }) -> IEnumerable<string></code></summary>
+<details><summary><code>client.Endpoints.Container.<a href="/src/SeedExhaustive/Endpoints/Container/ContainerClient.cs">GetAndReturnListOfPrimitivesAsync</a>(IEnumerable<string> { ... }) -> IEnumerable<string></code></summary>
 <dl>
 <dd>
 
@@ -14,7 +14,6 @@
 
 ```csharp
 await client.Endpoints.Container.GetAndReturnListOfPrimitivesAsync(new List<string>() { "string" });
-
 ```
 </dd>
 </dl>
@@ -41,15 +40,7 @@ await client.Endpoints.Container.GetAndReturnListOfPrimitivesAsync(new List<stri
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Container.<a href="Endpoints/Container">GetAndReturnListOfObjectsAsync</a>(using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    IEnumerable<ObjectWithRequiredField> { ... }) -> using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    IEnumerable<ObjectWithRequiredField></code></summary>
+<details><summary><code>client.Endpoints.Container.<a href="/src/SeedExhaustive/Endpoints/Container/ContainerClient.cs">GetAndReturnListOfObjectsAsync</a>(IEnumerable<ObjectWithRequiredField> { ... }) -> IEnumerable<ObjectWithRequiredField></code></summary>
 <dl>
 <dd>
 
@@ -65,7 +56,6 @@ await client.Endpoints.Container.GetAndReturnListOfPrimitivesAsync(new List<stri
 await client.Endpoints.Container.GetAndReturnListOfObjectsAsync(
     new List<ObjectWithRequiredField>() { new ObjectWithRequiredField { String = "string" } }
 );
-
 ```
 </dd>
 </dl>
@@ -80,11 +70,7 @@ await client.Endpoints.Container.GetAndReturnListOfObjectsAsync(
 <dl>
 <dd>
 
-**request:** `using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    IEnumerable<ObjectWithRequiredField>` 
+**request:** `IEnumerable<ObjectWithRequiredField>` 
     
 </dd>
 </dl>
@@ -96,7 +82,7 @@ await client.Endpoints.Container.GetAndReturnListOfObjectsAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Container.<a href="Endpoints/Container">GetAndReturnSetOfPrimitivesAsync</a>(HashSet<string> { ... }) -> HashSet<string></code></summary>
+<details><summary><code>client.Endpoints.Container.<a href="/src/SeedExhaustive/Endpoints/Container/ContainerClient.cs">GetAndReturnSetOfPrimitivesAsync</a>(HashSet<string> { ... }) -> HashSet<string></code></summary>
 <dl>
 <dd>
 
@@ -112,7 +98,6 @@ await client.Endpoints.Container.GetAndReturnListOfObjectsAsync(
 await client.Endpoints.Container.GetAndReturnSetOfPrimitivesAsync(
     new HashSet<string>() { "string" }
 );
-
 ```
 </dd>
 </dl>
@@ -139,15 +124,7 @@ await client.Endpoints.Container.GetAndReturnSetOfPrimitivesAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Container.<a href="Endpoints/Container">GetAndReturnSetOfObjectsAsync</a>(using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    HashSet<ObjectWithRequiredField> { ... }) -> using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    HashSet<ObjectWithRequiredField></code></summary>
+<details><summary><code>client.Endpoints.Container.<a href="/src/SeedExhaustive/Endpoints/Container/ContainerClient.cs">GetAndReturnSetOfObjectsAsync</a>(HashSet<ObjectWithRequiredField> { ... }) -> HashSet<ObjectWithRequiredField></code></summary>
 <dl>
 <dd>
 
@@ -163,7 +140,6 @@ await client.Endpoints.Container.GetAndReturnSetOfPrimitivesAsync(
 await client.Endpoints.Container.GetAndReturnSetOfObjectsAsync(
     new HashSet<ObjectWithRequiredField>() { new ObjectWithRequiredField { String = "string" } }
 );
-
 ```
 </dd>
 </dl>
@@ -178,11 +154,7 @@ await client.Endpoints.Container.GetAndReturnSetOfObjectsAsync(
 <dl>
 <dd>
 
-**request:** `using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    HashSet<ObjectWithRequiredField>` 
+**request:** `HashSet<ObjectWithRequiredField>` 
     
 </dd>
 </dl>
@@ -194,7 +166,7 @@ await client.Endpoints.Container.GetAndReturnSetOfObjectsAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Container.<a href="Endpoints/Container">GetAndReturnMapPrimToPrimAsync</a>(Dictionary<string, string> { ... }) -> Dictionary<string, string></code></summary>
+<details><summary><code>client.Endpoints.Container.<a href="/src/SeedExhaustive/Endpoints/Container/ContainerClient.cs">GetAndReturnMapPrimToPrimAsync</a>(Dictionary<string, string> { ... }) -> Dictionary<string, string></code></summary>
 <dl>
 <dd>
 
@@ -210,7 +182,6 @@ await client.Endpoints.Container.GetAndReturnSetOfObjectsAsync(
 await client.Endpoints.Container.GetAndReturnMapPrimToPrimAsync(
     new Dictionary<string, string>() { { "string", "string" } }
 );
-
 ```
 </dd>
 </dl>
@@ -237,15 +208,7 @@ await client.Endpoints.Container.GetAndReturnMapPrimToPrimAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Container.<a href="Endpoints/Container">GetAndReturnMapOfPrimToObjectAsync</a>(using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    Dictionary<string, ObjectWithRequiredField> { ... }) -> using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    Dictionary<string, ObjectWithRequiredField></code></summary>
+<details><summary><code>client.Endpoints.Container.<a href="/src/SeedExhaustive/Endpoints/Container/ContainerClient.cs">GetAndReturnMapOfPrimToObjectAsync</a>(Dictionary<string, ObjectWithRequiredField> { ... }) -> Dictionary<string, ObjectWithRequiredField></code></summary>
 <dl>
 <dd>
 
@@ -267,7 +230,6 @@ await client.Endpoints.Container.GetAndReturnMapOfPrimToObjectAsync(
         },
     }
 );
-
 ```
 </dd>
 </dl>
@@ -282,11 +244,7 @@ await client.Endpoints.Container.GetAndReturnMapOfPrimToObjectAsync(
 <dl>
 <dd>
 
-**request:** `using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    Dictionary<string, ObjectWithRequiredField>` 
+**request:** `Dictionary<string, ObjectWithRequiredField>` 
     
 </dd>
 </dl>
@@ -298,15 +256,7 @@ await client.Endpoints.Container.GetAndReturnMapOfPrimToObjectAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Container.<a href="Endpoints/Container">GetAndReturnOptionalAsync</a>(using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    ObjectWithRequiredField? { ... }) -> using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    ObjectWithRequiredField?</code></summary>
+<details><summary><code>client.Endpoints.Container.<a href="/src/SeedExhaustive/Endpoints/Container/ContainerClient.cs">GetAndReturnOptionalAsync</a>(ObjectWithRequiredField? { ... }) -> ObjectWithRequiredField?</code></summary>
 <dl>
 <dd>
 
@@ -322,7 +272,6 @@ await client.Endpoints.Container.GetAndReturnMapOfPrimToObjectAsync(
 await client.Endpoints.Container.GetAndReturnOptionalAsync(
     new ObjectWithRequiredField { String = "string" }
 );
-
 ```
 </dd>
 </dl>
@@ -337,11 +286,7 @@ await client.Endpoints.Container.GetAndReturnOptionalAsync(
 <dl>
 <dd>
 
-**request:** `using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    ObjectWithRequiredField?` 
+**request:** `ObjectWithRequiredField?` 
     
 </dd>
 </dl>
@@ -354,15 +299,7 @@ await client.Endpoints.Container.GetAndReturnOptionalAsync(
 </details>
 
 ## Endpoints Enum
-<details><summary><code>client.Endpoints.Enum.<a href="Endpoints/Enum">GetAndReturnEnumAsync</a>(using SeedExhaustive.Types.Enum;
-
-    #nullable enable
-    
-    WeatherReport { ... }) -> using SeedExhaustive.Types.Enum;
-
-    #nullable enable
-    
-    WeatherReport</code></summary>
+<details><summary><code>client.Endpoints.Enum.<a href="/src/SeedExhaustive/Endpoints/Enum/EnumClient.cs">GetAndReturnEnumAsync</a>(WeatherReport { ... }) -> WeatherReport</code></summary>
 <dl>
 <dd>
 
@@ -376,7 +313,6 @@ await client.Endpoints.Container.GetAndReturnOptionalAsync(
 
 ```csharp
 await client.Endpoints.Enum.GetAndReturnEnumAsync(WeatherReport.Sunny);
-
 ```
 </dd>
 </dl>
@@ -391,11 +327,7 @@ await client.Endpoints.Enum.GetAndReturnEnumAsync(WeatherReport.Sunny);
 <dl>
 <dd>
 
-**request:** `using SeedExhaustive.Types.Enum;
-
-    #nullable enable
-    
-    WeatherReport` 
+**request:** `WeatherReport` 
     
 </dd>
 </dl>
@@ -408,7 +340,7 @@ await client.Endpoints.Enum.GetAndReturnEnumAsync(WeatherReport.Sunny);
 </details>
 
 ## Endpoints HttpMethods
-<details><summary><code>client.Endpoints.HttpMethods.<a href="Endpoints/HttpMethods">TestGetAsync</a>(id) -> string</code></summary>
+<details><summary><code>client.Endpoints.HttpMethods.<a href="/src/SeedExhaustive/Endpoints/HttpMethods/HttpMethodsClient.cs">TestGetAsync</a>(id) -> string</code></summary>
 <dl>
 <dd>
 
@@ -422,7 +354,6 @@ await client.Endpoints.Enum.GetAndReturnEnumAsync(WeatherReport.Sunny);
 
 ```csharp
 await client.Endpoints.HttpMethods.TestGetAsync("string");
-
 ```
 </dd>
 </dl>
@@ -449,15 +380,7 @@ await client.Endpoints.HttpMethods.TestGetAsync("string");
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.HttpMethods.<a href="Endpoints/HttpMethods">TestPostAsync</a>(using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    ObjectWithRequiredField { ... }) -> using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    ObjectWithOptionalField</code></summary>
+<details><summary><code>client.Endpoints.HttpMethods.<a href="/src/SeedExhaustive/Endpoints/HttpMethods/HttpMethodsClient.cs">TestPostAsync</a>(ObjectWithRequiredField { ... }) -> ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -471,7 +394,6 @@ await client.Endpoints.HttpMethods.TestGetAsync("string");
 
 ```csharp
 await client.Endpoints.HttpMethods.TestPostAsync(new ObjectWithRequiredField { String = "string" });
-
 ```
 </dd>
 </dl>
@@ -486,11 +408,7 @@ await client.Endpoints.HttpMethods.TestPostAsync(new ObjectWithRequiredField { S
 <dl>
 <dd>
 
-**request:** `using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    ObjectWithRequiredField` 
+**request:** `ObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -502,15 +420,7 @@ await client.Endpoints.HttpMethods.TestPostAsync(new ObjectWithRequiredField { S
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.HttpMethods.<a href="Endpoints/HttpMethods">TestPutAsync</a>(id, using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    ObjectWithRequiredField { ... }) -> using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    ObjectWithOptionalField</code></summary>
+<details><summary><code>client.Endpoints.HttpMethods.<a href="/src/SeedExhaustive/Endpoints/HttpMethods/HttpMethodsClient.cs">TestPutAsync</a>(id, ObjectWithRequiredField { ... }) -> ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -527,7 +437,6 @@ await client.Endpoints.HttpMethods.TestPutAsync(
     "string",
     new ObjectWithRequiredField { String = "string" }
 );
-
 ```
 </dd>
 </dl>
@@ -550,11 +459,7 @@ await client.Endpoints.HttpMethods.TestPutAsync(
 <dl>
 <dd>
 
-**request:** `using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    ObjectWithRequiredField` 
+**request:** `ObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -566,15 +471,7 @@ await client.Endpoints.HttpMethods.TestPutAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.HttpMethods.<a href="Endpoints/HttpMethods">TestPatchAsync</a>(id, using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    ObjectWithOptionalField { ... }) -> using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    ObjectWithOptionalField</code></summary>
+<details><summary><code>client.Endpoints.HttpMethods.<a href="/src/SeedExhaustive/Endpoints/HttpMethods/HttpMethodsClient.cs">TestPatchAsync</a>(id, ObjectWithOptionalField { ... }) -> ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -606,7 +503,6 @@ await client.Endpoints.HttpMethods.TestPatchAsync(
         Bigint = "123456789123456789",
     }
 );
-
 ```
 </dd>
 </dl>
@@ -629,11 +525,7 @@ await client.Endpoints.HttpMethods.TestPatchAsync(
 <dl>
 <dd>
 
-**request:** `using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    ObjectWithOptionalField` 
+**request:** `ObjectWithOptionalField` 
     
 </dd>
 </dl>
@@ -645,7 +537,7 @@ await client.Endpoints.HttpMethods.TestPatchAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.HttpMethods.<a href="Endpoints/HttpMethods">TestDeleteAsync</a>(id) -> bool</code></summary>
+<details><summary><code>client.Endpoints.HttpMethods.<a href="/src/SeedExhaustive/Endpoints/HttpMethods/HttpMethodsClient.cs">TestDeleteAsync</a>(id) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -659,7 +551,6 @@ await client.Endpoints.HttpMethods.TestPatchAsync(
 
 ```csharp
 await client.Endpoints.HttpMethods.TestDeleteAsync("string");
-
 ```
 </dd>
 </dl>
@@ -687,15 +578,7 @@ await client.Endpoints.HttpMethods.TestDeleteAsync("string");
 </details>
 
 ## Endpoints Object
-<details><summary><code>client.Endpoints.Object.<a href="Endpoints/Object">GetAndReturnWithOptionalFieldAsync</a>(using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    ObjectWithOptionalField { ... }) -> using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    ObjectWithOptionalField</code></summary>
+<details><summary><code>client.Endpoints.Object.<a href="/src/SeedExhaustive/Endpoints/Object/ObjectClient.cs">GetAndReturnWithOptionalFieldAsync</a>(ObjectWithOptionalField { ... }) -> ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -726,7 +609,6 @@ await client.Endpoints.Object.GetAndReturnWithOptionalFieldAsync(
         Bigint = "123456789123456789",
     }
 );
-
 ```
 </dd>
 </dl>
@@ -741,11 +623,7 @@ await client.Endpoints.Object.GetAndReturnWithOptionalFieldAsync(
 <dl>
 <dd>
 
-**request:** `using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    ObjectWithOptionalField` 
+**request:** `ObjectWithOptionalField` 
     
 </dd>
 </dl>
@@ -757,15 +635,7 @@ await client.Endpoints.Object.GetAndReturnWithOptionalFieldAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Object.<a href="Endpoints/Object">GetAndReturnWithRequiredFieldAsync</a>(using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    ObjectWithRequiredField { ... }) -> using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    ObjectWithRequiredField</code></summary>
+<details><summary><code>client.Endpoints.Object.<a href="/src/SeedExhaustive/Endpoints/Object/ObjectClient.cs">GetAndReturnWithRequiredFieldAsync</a>(ObjectWithRequiredField { ... }) -> ObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -781,7 +651,6 @@ await client.Endpoints.Object.GetAndReturnWithOptionalFieldAsync(
 await client.Endpoints.Object.GetAndReturnWithRequiredFieldAsync(
     new ObjectWithRequiredField { String = "string" }
 );
-
 ```
 </dd>
 </dl>
@@ -796,11 +665,7 @@ await client.Endpoints.Object.GetAndReturnWithRequiredFieldAsync(
 <dl>
 <dd>
 
-**request:** `using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    ObjectWithRequiredField` 
+**request:** `ObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -812,15 +677,7 @@ await client.Endpoints.Object.GetAndReturnWithRequiredFieldAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Object.<a href="Endpoints/Object">GetAndReturnWithMapOfMapAsync</a>(using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    ObjectWithMapOfMap { ... }) -> using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    ObjectWithMapOfMap</code></summary>
+<details><summary><code>client.Endpoints.Object.<a href="/src/SeedExhaustive/Endpoints/Object/ObjectClient.cs">GetAndReturnWithMapOfMapAsync</a>(ObjectWithMapOfMap { ... }) -> ObjectWithMapOfMap</code></summary>
 <dl>
 <dd>
 
@@ -845,7 +702,6 @@ await client.Endpoints.Object.GetAndReturnWithMapOfMapAsync(
         },
     }
 );
-
 ```
 </dd>
 </dl>
@@ -860,11 +716,7 @@ await client.Endpoints.Object.GetAndReturnWithMapOfMapAsync(
 <dl>
 <dd>
 
-**request:** `using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    ObjectWithMapOfMap` 
+**request:** `ObjectWithMapOfMap` 
     
 </dd>
 </dl>
@@ -876,15 +728,7 @@ await client.Endpoints.Object.GetAndReturnWithMapOfMapAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Object.<a href="Endpoints/Object">GetAndReturnNestedWithOptionalFieldAsync</a>(using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    NestedObjectWithOptionalField { ... }) -> using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    NestedObjectWithOptionalField</code></summary>
+<details><summary><code>client.Endpoints.Object.<a href="/src/SeedExhaustive/Endpoints/Object/ObjectClient.cs">GetAndReturnNestedWithOptionalFieldAsync</a>(NestedObjectWithOptionalField { ... }) -> NestedObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -919,7 +763,6 @@ await client.Endpoints.Object.GetAndReturnNestedWithOptionalFieldAsync(
         },
     }
 );
-
 ```
 </dd>
 </dl>
@@ -934,11 +777,7 @@ await client.Endpoints.Object.GetAndReturnNestedWithOptionalFieldAsync(
 <dl>
 <dd>
 
-**request:** `using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    NestedObjectWithOptionalField` 
+**request:** `NestedObjectWithOptionalField` 
     
 </dd>
 </dl>
@@ -950,15 +789,7 @@ await client.Endpoints.Object.GetAndReturnNestedWithOptionalFieldAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Object.<a href="Endpoints/Object">GetAndReturnNestedWithRequiredFieldAsync</a>(string_, using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    NestedObjectWithRequiredField { ... }) -> using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    NestedObjectWithRequiredField</code></summary>
+<details><summary><code>client.Endpoints.Object.<a href="/src/SeedExhaustive/Endpoints/Object/ObjectClient.cs">GetAndReturnNestedWithRequiredFieldAsync</a>(string_, NestedObjectWithRequiredField { ... }) -> NestedObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -994,7 +825,6 @@ await client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsync(
         },
     }
 );
-
 ```
 </dd>
 </dl>
@@ -1017,11 +847,7 @@ await client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsync(
 <dl>
 <dd>
 
-**request:** `using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    NestedObjectWithRequiredField` 
+**request:** `NestedObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -1033,15 +859,7 @@ await client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Object.<a href="Endpoints/Object">GetAndReturnNestedWithRequiredFieldAsListAsync</a>(using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    IEnumerable<NestedObjectWithRequiredField> { ... }) -> using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    NestedObjectWithRequiredField</code></summary>
+<details><summary><code>client.Endpoints.Object.<a href="/src/SeedExhaustive/Endpoints/Object/ObjectClient.cs">GetAndReturnNestedWithRequiredFieldAsListAsync</a>(IEnumerable<NestedObjectWithRequiredField> { ... }) -> NestedObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -1079,7 +897,6 @@ await client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsListAsync(
         },
     }
 );
-
 ```
 </dd>
 </dl>
@@ -1094,11 +911,7 @@ await client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsListAsync(
 <dl>
 <dd>
 
-**request:** `using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    IEnumerable<NestedObjectWithRequiredField>` 
+**request:** `IEnumerable<NestedObjectWithRequiredField>` 
     
 </dd>
 </dl>
@@ -1111,7 +924,7 @@ await client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsListAsync(
 </details>
 
 ## Endpoints Params
-<details><summary><code>client.Endpoints.Params.<a href="Endpoints/Params">GetWithPathAsync</a>(param) -> string</code></summary>
+<details><summary><code>client.Endpoints.Params.<a href="/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs">GetWithPathAsync</a>(param) -> string</code></summary>
 <dl>
 <dd>
 
@@ -1139,7 +952,6 @@ GET with path param
 
 ```csharp
 await client.Endpoints.Params.GetWithPathAsync("string");
-
 ```
 </dd>
 </dl>
@@ -1166,11 +978,7 @@ await client.Endpoints.Params.GetWithPathAsync("string");
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Params.<a href="Endpoints/Params">GetWithQueryAsync</a>(using SeedExhaustive.Endpoints.Params;
-
-    #nullable enable
-    
-    GetWithQuery { ... })</code></summary>
+<details><summary><code>client.Endpoints.Params.<a href="/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs">GetWithQueryAsync</a>(GetWithQuery { ... })</code></summary>
 <dl>
 <dd>
 
@@ -1198,7 +1006,6 @@ GET with query param
 
 ```csharp
 await client.Endpoints.Params.GetWithQueryAsync(new GetWithQuery { Query = "string", Number = 1 });
-
 ```
 </dd>
 </dl>
@@ -1213,11 +1020,7 @@ await client.Endpoints.Params.GetWithQueryAsync(new GetWithQuery { Query = "stri
 <dl>
 <dd>
 
-**request:** `using SeedExhaustive.Endpoints.Params;
-
-    #nullable enable
-    
-    GetWithQuery` 
+**request:** `GetWithQuery` 
     
 </dd>
 </dl>
@@ -1229,11 +1032,7 @@ await client.Endpoints.Params.GetWithQueryAsync(new GetWithQuery { Query = "stri
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Params.<a href="Endpoints/Params">GetWithAllowMultipleQueryAsync</a>(using SeedExhaustive.Endpoints.Params;
-
-    #nullable enable
-    
-    GetWithMultipleQuery { ... })</code></summary>
+<details><summary><code>client.Endpoints.Params.<a href="/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs">GetWithAllowMultipleQueryAsync</a>(GetWithMultipleQuery { ... })</code></summary>
 <dl>
 <dd>
 
@@ -1263,7 +1062,6 @@ GET with multiple of same query param
 await client.Endpoints.Params.GetWithAllowMultipleQueryAsync(
     new GetWithMultipleQuery { Query = ["string"], Numer = [1] }
 );
-
 ```
 </dd>
 </dl>
@@ -1278,11 +1076,7 @@ await client.Endpoints.Params.GetWithAllowMultipleQueryAsync(
 <dl>
 <dd>
 
-**request:** `using SeedExhaustive.Endpoints.Params;
-
-    #nullable enable
-    
-    GetWithMultipleQuery` 
+**request:** `GetWithMultipleQuery` 
     
 </dd>
 </dl>
@@ -1294,11 +1088,7 @@ await client.Endpoints.Params.GetWithAllowMultipleQueryAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Params.<a href="Endpoints/Params">GetWithPathAndQueryAsync</a>(param, using SeedExhaustive.Endpoints.Params;
-
-    #nullable enable
-    
-    GetWithPathAndQuery { ... })</code></summary>
+<details><summary><code>client.Endpoints.Params.<a href="/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs">GetWithPathAndQueryAsync</a>(param, GetWithPathAndQuery { ... })</code></summary>
 <dl>
 <dd>
 
@@ -1329,7 +1119,6 @@ await client.Endpoints.Params.GetWithPathAndQueryAsync(
     "string",
     new GetWithPathAndQuery { Query = "string" }
 );
-
 ```
 </dd>
 </dl>
@@ -1352,11 +1141,7 @@ await client.Endpoints.Params.GetWithPathAndQueryAsync(
 <dl>
 <dd>
 
-**request:** `using SeedExhaustive.Endpoints.Params;
-
-    #nullable enable
-    
-    GetWithPathAndQuery` 
+**request:** `GetWithPathAndQuery` 
     
 </dd>
 </dl>
@@ -1368,7 +1153,7 @@ await client.Endpoints.Params.GetWithPathAndQueryAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Params.<a href="Endpoints/Params">ModifyWithPathAsync</a>(param, string { ... }) -> string</code></summary>
+<details><summary><code>client.Endpoints.Params.<a href="/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs">ModifyWithPathAsync</a>(param, string { ... }) -> string</code></summary>
 <dl>
 <dd>
 
@@ -1396,7 +1181,6 @@ PUT to update with path param
 
 ```csharp
 await client.Endpoints.Params.ModifyWithPathAsync("string", "string");
-
 ```
 </dd>
 </dl>
@@ -1432,7 +1216,7 @@ await client.Endpoints.Params.ModifyWithPathAsync("string", "string");
 </details>
 
 ## Endpoints Primitive
-<details><summary><code>client.Endpoints.Primitive.<a href="Endpoints/Primitive">GetAndReturnStringAsync</a>(string { ... }) -> string</code></summary>
+<details><summary><code>client.Endpoints.Primitive.<a href="/src/SeedExhaustive/Endpoints/Primitive/PrimitiveClient.cs">GetAndReturnStringAsync</a>(string { ... }) -> string</code></summary>
 <dl>
 <dd>
 
@@ -1446,7 +1230,6 @@ await client.Endpoints.Params.ModifyWithPathAsync("string", "string");
 
 ```csharp
 await client.Endpoints.Primitive.GetAndReturnStringAsync("string");
-
 ```
 </dd>
 </dl>
@@ -1473,7 +1256,7 @@ await client.Endpoints.Primitive.GetAndReturnStringAsync("string");
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Primitive.<a href="Endpoints/Primitive">GetAndReturnIntAsync</a>(int { ... }) -> int</code></summary>
+<details><summary><code>client.Endpoints.Primitive.<a href="/src/SeedExhaustive/Endpoints/Primitive/PrimitiveClient.cs">GetAndReturnIntAsync</a>(int { ... }) -> int</code></summary>
 <dl>
 <dd>
 
@@ -1487,7 +1270,6 @@ await client.Endpoints.Primitive.GetAndReturnStringAsync("string");
 
 ```csharp
 await client.Endpoints.Primitive.GetAndReturnIntAsync(1);
-
 ```
 </dd>
 </dl>
@@ -1514,7 +1296,7 @@ await client.Endpoints.Primitive.GetAndReturnIntAsync(1);
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Primitive.<a href="Endpoints/Primitive">GetAndReturnLongAsync</a>(long { ... }) -> long</code></summary>
+<details><summary><code>client.Endpoints.Primitive.<a href="/src/SeedExhaustive/Endpoints/Primitive/PrimitiveClient.cs">GetAndReturnLongAsync</a>(long { ... }) -> long</code></summary>
 <dl>
 <dd>
 
@@ -1528,7 +1310,6 @@ await client.Endpoints.Primitive.GetAndReturnIntAsync(1);
 
 ```csharp
 await client.Endpoints.Primitive.GetAndReturnLongAsync(1000000);
-
 ```
 </dd>
 </dl>
@@ -1555,7 +1336,7 @@ await client.Endpoints.Primitive.GetAndReturnLongAsync(1000000);
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Primitive.<a href="Endpoints/Primitive">GetAndReturnDoubleAsync</a>(double { ... }) -> double</code></summary>
+<details><summary><code>client.Endpoints.Primitive.<a href="/src/SeedExhaustive/Endpoints/Primitive/PrimitiveClient.cs">GetAndReturnDoubleAsync</a>(double { ... }) -> double</code></summary>
 <dl>
 <dd>
 
@@ -1569,7 +1350,6 @@ await client.Endpoints.Primitive.GetAndReturnLongAsync(1000000);
 
 ```csharp
 await client.Endpoints.Primitive.GetAndReturnDoubleAsync(1.1);
-
 ```
 </dd>
 </dl>
@@ -1596,7 +1376,7 @@ await client.Endpoints.Primitive.GetAndReturnDoubleAsync(1.1);
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Primitive.<a href="Endpoints/Primitive">GetAndReturnBoolAsync</a>(bool { ... }) -> bool</code></summary>
+<details><summary><code>client.Endpoints.Primitive.<a href="/src/SeedExhaustive/Endpoints/Primitive/PrimitiveClient.cs">GetAndReturnBoolAsync</a>(bool { ... }) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -1610,7 +1390,6 @@ await client.Endpoints.Primitive.GetAndReturnDoubleAsync(1.1);
 
 ```csharp
 await client.Endpoints.Primitive.GetAndReturnBoolAsync(true);
-
 ```
 </dd>
 </dl>
@@ -1637,7 +1416,7 @@ await client.Endpoints.Primitive.GetAndReturnBoolAsync(true);
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Primitive.<a href="Endpoints/Primitive">GetAndReturnDatetimeAsync</a>(DateTime { ... }) -> DateTime</code></summary>
+<details><summary><code>client.Endpoints.Primitive.<a href="/src/SeedExhaustive/Endpoints/Primitive/PrimitiveClient.cs">GetAndReturnDatetimeAsync</a>(DateTime { ... }) -> DateTime</code></summary>
 <dl>
 <dd>
 
@@ -1653,7 +1432,6 @@ await client.Endpoints.Primitive.GetAndReturnBoolAsync(true);
 await client.Endpoints.Primitive.GetAndReturnDatetimeAsync(
     new DateTime(2024, 01, 15, 09, 30, 00, 000)
 );
-
 ```
 </dd>
 </dl>
@@ -1680,7 +1458,7 @@ await client.Endpoints.Primitive.GetAndReturnDatetimeAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Primitive.<a href="Endpoints/Primitive">GetAndReturnDateAsync</a>(DateOnly { ... }) -> DateOnly</code></summary>
+<details><summary><code>client.Endpoints.Primitive.<a href="/src/SeedExhaustive/Endpoints/Primitive/PrimitiveClient.cs">GetAndReturnDateAsync</a>(DateOnly { ... }) -> DateOnly</code></summary>
 <dl>
 <dd>
 
@@ -1694,7 +1472,6 @@ await client.Endpoints.Primitive.GetAndReturnDatetimeAsync(
 
 ```csharp
 await client.Endpoints.Primitive.GetAndReturnDateAsync(new DateOnly(2023, 1, 15));
-
 ```
 </dd>
 </dl>
@@ -1721,7 +1498,7 @@ await client.Endpoints.Primitive.GetAndReturnDateAsync(new DateOnly(2023, 1, 15)
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Primitive.<a href="Endpoints/Primitive">GetAndReturnUuidAsync</a>(string { ... }) -> string</code></summary>
+<details><summary><code>client.Endpoints.Primitive.<a href="/src/SeedExhaustive/Endpoints/Primitive/PrimitiveClient.cs">GetAndReturnUuidAsync</a>(string { ... }) -> string</code></summary>
 <dl>
 <dd>
 
@@ -1735,7 +1512,6 @@ await client.Endpoints.Primitive.GetAndReturnDateAsync(new DateOnly(2023, 1, 15)
 
 ```csharp
 await client.Endpoints.Primitive.GetAndReturnUuidAsync("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
-
 ```
 </dd>
 </dl>
@@ -1762,7 +1538,7 @@ await client.Endpoints.Primitive.GetAndReturnUuidAsync("d5e9c84f-c2b2-4bf4-b4b0-
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Primitive.<a href="Endpoints/Primitive">GetAndReturnBase64Async</a>(string { ... }) -> string</code></summary>
+<details><summary><code>client.Endpoints.Primitive.<a href="/src/SeedExhaustive/Endpoints/Primitive/PrimitiveClient.cs">GetAndReturnBase64Async</a>(string { ... }) -> string</code></summary>
 <dl>
 <dd>
 
@@ -1776,7 +1552,6 @@ await client.Endpoints.Primitive.GetAndReturnUuidAsync("d5e9c84f-c2b2-4bf4-b4b0-
 
 ```csharp
 await client.Endpoints.Primitive.GetAndReturnBase64Async("SGVsbG8gd29ybGQh");
-
 ```
 </dd>
 </dl>
@@ -1804,7 +1579,7 @@ await client.Endpoints.Primitive.GetAndReturnBase64Async("SGVsbG8gd29ybGQh");
 </details>
 
 ## Endpoints Union
-<details><summary><code>client.Endpoints.Union.<a href="Endpoints/Union">GetAndReturnUnionAsync</a>(object { ... }) -> object</code></summary>
+<details><summary><code>client.Endpoints.Union.<a href="/src/SeedExhaustive/Endpoints/Union/UnionClient.cs">GetAndReturnUnionAsync</a>(object { ... }) -> object</code></summary>
 <dl>
 <dd>
 
@@ -1820,7 +1595,6 @@ await client.Endpoints.Primitive.GetAndReturnBase64Async("SGVsbG8gd29ybGQh");
 await client.Endpoints.Union.GetAndReturnUnionAsync(
     new Dog { Name = "string", LikesToWoof = true }
 );
-
 ```
 </dd>
 </dl>
@@ -1848,15 +1622,7 @@ await client.Endpoints.Union.GetAndReturnUnionAsync(
 </details>
 
 ## InlinedRequests
-<details><summary><code>client.InlinedRequests.<a href="InlinedRequests">PostWithObjectBodyandResponseAsync</a>(using SeedExhaustive.InlinedRequests;
-
-    #nullable enable
-    
-    PostWithObjectBody { ... }) -> using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    ObjectWithOptionalField</code></summary>
+<details><summary><code>client.InlinedRequests.<a href="/src/SeedExhaustive/InlinedRequests/InlinedRequestsClient.cs">PostWithObjectBodyandResponseAsync</a>(PostWithObjectBody { ... }) -> ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -1906,7 +1672,6 @@ await client.InlinedRequests.PostWithObjectBodyandResponseAsync(
         },
     }
 );
-
 ```
 </dd>
 </dl>
@@ -1921,11 +1686,7 @@ await client.InlinedRequests.PostWithObjectBodyandResponseAsync(
 <dl>
 <dd>
 
-**request:** `using SeedExhaustive.InlinedRequests;
-
-    #nullable enable
-    
-    PostWithObjectBody` 
+**request:** `PostWithObjectBody` 
     
 </dd>
 </dl>
@@ -1938,7 +1699,7 @@ await client.InlinedRequests.PostWithObjectBodyandResponseAsync(
 </details>
 
 ## NoAuth
-<details><summary><code>client.NoAuth.<a href="NoAuth">PostWithNoAuthAsync</a>(object { ... }) -> bool</code></summary>
+<details><summary><code>client.NoAuth.<a href="/src/SeedExhaustive/NoAuth/NoAuthClient.cs">PostWithNoAuthAsync</a>(object { ... }) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -1966,7 +1727,6 @@ POST request with no auth
 
 ```csharp
 await client.NoAuth.PostWithNoAuthAsync(new Dictionary<object, object?>() { { "key", "value" } });
-
 ```
 </dd>
 </dl>
@@ -1994,11 +1754,7 @@ await client.NoAuth.PostWithNoAuthAsync(new Dictionary<object, object?>() { { "k
 </details>
 
 ## NoReqBody
-<details><summary><code>client.NoReqBody.<a href="NoReqBody">GetWithNoRequestBodyAsync</a>() -> using SeedExhaustive.Types.Object;
-
-    #nullable enable
-    
-    ObjectWithOptionalField</code></summary>
+<details><summary><code>client.NoReqBody.<a href="/src/SeedExhaustive/NoReqBody/NoReqBodyClient.cs">GetWithNoRequestBodyAsync</a>() -> ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -2012,7 +1768,6 @@ await client.NoAuth.PostWithNoAuthAsync(new Dictionary<object, object?>() { { "k
 
 ```csharp
 await client.NoReqBody.GetWithNoRequestBodyAsync();
-
 ```
 </dd>
 </dl>
@@ -2024,7 +1779,7 @@ await client.NoReqBody.GetWithNoRequestBodyAsync();
 </dl>
 </details>
 
-<details><summary><code>client.NoReqBody.<a href="NoReqBody">PostWithNoRequestBodyAsync</a>() -> string</code></summary>
+<details><summary><code>client.NoReqBody.<a href="/src/SeedExhaustive/NoReqBody/NoReqBodyClient.cs">PostWithNoRequestBodyAsync</a>() -> string</code></summary>
 <dl>
 <dd>
 
@@ -2038,7 +1793,6 @@ await client.NoReqBody.GetWithNoRequestBodyAsync();
 
 ```csharp
 await client.NoReqBody.PostWithNoRequestBodyAsync();
-
 ```
 </dd>
 </dl>
@@ -2051,7 +1805,7 @@ await client.NoReqBody.PostWithNoRequestBodyAsync();
 </details>
 
 ## ReqWithHeaders
-<details><summary><code>client.ReqWithHeaders.<a href="ReqWithHeaders">GetWithCustomHeaderAsync</a>(ReqWithHeaders.ReqWithHeaders { ... })</code></summary>
+<details><summary><code>client.ReqWithHeaders.<a href="/src/SeedExhaustive/ReqWithHeaders/ReqWithHeadersClient.cs">GetWithCustomHeaderAsync</a>(ReqWithHeaders.ReqWithHeaders { ... })</code></summary>
 <dl>
 <dd>
 
@@ -2072,7 +1826,6 @@ await client.ReqWithHeaders.GetWithCustomHeaderAsync(
         Body = "string",
     }
 );
-
 ```
 </dd>
 </dl>

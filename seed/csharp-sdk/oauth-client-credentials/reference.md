@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.Auth.<a href="Auth">GetTokenWithClientCredentialsAsync</a>(GetTokenRequest { ... }) -> TokenResponse</code></summary>
+<details><summary><code>client.Auth.<a href="/src/SeedOauthClientCredentials/Auth/AuthClient.cs">GetTokenWithClientCredentialsAsync</a>(GetTokenRequest { ... }) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -23,7 +23,6 @@ await client.Auth.GetTokenWithClientCredentialsAsync(
         Scope = "string",
     }
 );
-
 ```
 </dd>
 </dl>
@@ -50,7 +49,7 @@ await client.Auth.GetTokenWithClientCredentialsAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Auth.<a href="Auth">RefreshTokenAsync</a>(RefreshTokenRequest { ... }) -> TokenResponse</code></summary>
+<details><summary><code>client.Auth.<a href="/src/SeedOauthClientCredentials/Auth/AuthClient.cs">RefreshTokenAsync</a>(RefreshTokenRequest { ... }) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -74,7 +73,6 @@ await client.Auth.RefreshTokenAsync(
         Scope = "string",
     }
 );
-
 ```
 </dd>
 </dl>

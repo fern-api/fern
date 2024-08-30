@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.User.<a href="User">CreateUserAsync</a>(CreateUserRequest { ... }) -> User</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedExtraProperties/User/UserClient.cs">CreateUserAsync</a>(CreateUserRequest { ... }) -> User</code></summary>
 <dl>
 <dd>
 
@@ -21,7 +21,6 @@ await client.User.CreateUserAsync(
         Name = "string",
     }
 );
-
 ```
 </dd>
 </dl>

@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.User.<a href="User">GetUserAsync</a>(userId) -> User</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedVersion/User/UserClient.cs">GetUserAsync</a>(userId) -> User</code></summary>
 <dl>
 <dd>
 
@@ -14,7 +14,6 @@
 
 ```csharp
 await client.User.GetUserAsync("string");
-
 ```
 </dd>
 </dl>

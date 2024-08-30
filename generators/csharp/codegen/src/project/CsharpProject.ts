@@ -45,6 +45,10 @@ export class CsharpProject {
         });
     }
 
+    public getProjectDirectory(): RelativeFilePath {
+        return this.filepaths.getProjectDirectory();
+    }
+
     public addRawFiles(file: File): void {
         this.rawFiles.push(file);
     }

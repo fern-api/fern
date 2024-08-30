@@ -1,14 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.Auth.<a href="Auth">GetTokenAsync</a>(using SeedOauthClientCredentials.Auth;
-
-    #nullable enable
-    
-    GetTokenRequest { ... }) -> using SeedOauthClientCredentials.Auth;
-
-    #nullable enable
-    
-    TokenResponse</code></summary>
+<details><summary><code>client.Auth.<a href="/src/SeedOauthClientCredentials/Auth/AuthClient.cs">GetTokenAsync</a>(GetTokenRequest { ... }) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -31,7 +23,6 @@ await client.Auth.GetTokenAsync(
         Scope = "string",
     }
 );
-
 ```
 </dd>
 </dl>
@@ -46,11 +37,7 @@ await client.Auth.GetTokenAsync(
 <dl>
 <dd>
 
-**request:** `using SeedOauthClientCredentials.Auth;
-
-    #nullable enable
-    
-    GetTokenRequest` 
+**request:** `GetTokenRequest` 
     
 </dd>
 </dl>

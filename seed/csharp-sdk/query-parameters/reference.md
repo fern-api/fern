@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.User.<a href="User">GetUsernameAsync</a>(GetUsersRequest { ... }) -> User</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedQueryParameters/User/UserClient.cs">GetUsernameAsync</a>(GetUsersRequest { ... }) -> User</code></summary>
 <dl>
 <dd>
 
@@ -62,7 +62,6 @@ await client.User.GetUsernameAsync(
         Filter = ["string"],
     }
 );
-
 ```
 </dd>
 </dl>

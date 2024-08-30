@@ -1,6 +1,6 @@
 # Reference
 ## Optional
-<details><summary><code>client.Optional.<a href="Optional">SendOptionalBodyAsync</a>(Dictionary<string, object?>? { ... }) -> string</code></summary>
+<details><summary><code>client.Optional.<a href="/src/SeedObjectsWithImports/Optional/OptionalClient.cs">SendOptionalBodyAsync</a>(Dictionary<string, object?>? { ... }) -> string</code></summary>
 <dl>
 <dd>
 
@@ -22,7 +22,6 @@ await client.Optional.SendOptionalBodyAsync(
         },
     }
 );
-
 ```
 </dd>
 </dl>

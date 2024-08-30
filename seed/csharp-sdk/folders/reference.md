@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="">FooAsync</a>()</code></summary>
+<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">FooAsync</a>()</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,6 @@
 
 ```csharp
 await client.FooAsync();
-
 ```
 </dd>
 </dl>
@@ -26,7 +25,7 @@ await client.FooAsync();
 </details>
 
 ## A B
-<details><summary><code>client.A.B.<a href="A/B">FooAsync</a>()</code></summary>
+<details><summary><code>client.A.B.<a href="/src/SeedApi/A/B/BClient.cs">FooAsync</a>()</code></summary>
 <dl>
 <dd>
 
@@ -40,7 +39,6 @@ await client.FooAsync();
 
 ```csharp
 await client.A.B.FooAsync();
-
 ```
 </dd>
 </dl>
@@ -53,7 +51,7 @@ await client.A.B.FooAsync();
 </details>
 
 ## A C
-<details><summary><code>client.A.C.<a href="A/C">FooAsync</a>()</code></summary>
+<details><summary><code>client.A.C.<a href="/src/SeedApi/A/C/CClient.cs">FooAsync</a>()</code></summary>
 <dl>
 <dd>
 
@@ -67,7 +65,6 @@ await client.A.B.FooAsync();
 
 ```csharp
 await client.A.C.FooAsync();
-
 ```
 </dd>
 </dl>
@@ -80,7 +77,7 @@ await client.A.C.FooAsync();
 </details>
 
 ## Folder
-<details><summary><code>client.Folder.<a href="Folder">FooAsync</a>()</code></summary>
+<details><summary><code>client.Folder.<a href="/src/SeedApi/Folder/FolderClient.cs">FooAsync</a>()</code></summary>
 <dl>
 <dd>
 
@@ -94,7 +91,6 @@ await client.A.C.FooAsync();
 
 ```csharp
 await client.Folder.FooAsync();
-
 ```
 </dd>
 </dl>
@@ -107,7 +103,7 @@ await client.Folder.FooAsync();
 </details>
 
 ## Folder Service
-<details><summary><code>client.Folder.Service.<a href="Folder/Service">EndpointAsync</a>()</code></summary>
+<details><summary><code>client.Folder.Service.<a href="/src/SeedApi/Folder/Service/ServiceClient.cs">EndpointAsync</a>()</code></summary>
 <dl>
 <dd>
 
@@ -121,7 +117,6 @@ await client.Folder.FooAsync();
 
 ```csharp
 await client.Folder.Service.EndpointAsync();
-
 ```
 </dd>
 </dl>
@@ -133,7 +128,7 @@ await client.Folder.Service.EndpointAsync();
 </dl>
 </details>
 
-<details><summary><code>client.Folder.Service.<a href="Folder/Service">UnknownRequestAsync</a>(object { ... })</code></summary>
+<details><summary><code>client.Folder.Service.<a href="/src/SeedApi/Folder/Service/ServiceClient.cs">UnknownRequestAsync</a>(object { ... })</code></summary>
 <dl>
 <dd>
 
@@ -149,7 +144,6 @@ await client.Folder.Service.EndpointAsync();
 await client.Folder.Service.UnknownRequestAsync(
     new Dictionary<object, object?>() { { "key", "value" } }
 );
-
 ```
 </dd>
 </dl>

@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.Auth.<a href="Auth">GetTokenAsync</a>(GetTokenRequest { ... }) -> TokenResponse</code></summary>
+<details><summary><code>client.Auth.<a href="/src/SeedOauthClientCredentialsDefault/Auth/AuthClient.cs">GetTokenAsync</a>(GetTokenRequest { ... }) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -21,7 +21,6 @@ await client.Auth.GetTokenAsync(
         GrantType = "client_credentials",
     }
 );
-
 ```
 </dd>
 </dl>

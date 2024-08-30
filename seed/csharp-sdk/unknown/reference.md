@@ -1,6 +1,6 @@
 # Reference
 ## Unknown
-<details><summary><code>client.Unknown.<a href="Unknown">PostAsync</a>(object { ... }) -> IEnumerable<object></code></summary>
+<details><summary><code>client.Unknown.<a href="/src/SeedUnknownAsAny/Unknown/UnknownClient.cs">PostAsync</a>(object { ... }) -> IEnumerable<object></code></summary>
 <dl>
 <dd>
 
@@ -14,7 +14,6 @@
 
 ```csharp
 await client.Unknown.PostAsync(new Dictionary<object, object?>() { { "key", "value" } });
-
 ```
 </dd>
 </dl>
@@ -41,7 +40,7 @@ await client.Unknown.PostAsync(new Dictionary<object, object?>() { { "key", "val
 </dl>
 </details>
 
-<details><summary><code>client.Unknown.<a href="Unknown">PostObjectAsync</a>(MyObject { ... }) -> IEnumerable<object></code></summary>
+<details><summary><code>client.Unknown.<a href="/src/SeedUnknownAsAny/Unknown/UnknownClient.cs">PostObjectAsync</a>(MyObject { ... }) -> IEnumerable<object></code></summary>
 <dl>
 <dd>
 
@@ -55,7 +54,6 @@ await client.Unknown.PostAsync(new Dictionary<object, object?>() { { "key", "val
 
 ```csharp
 await client.Unknown.PostObjectAsync(new MyObject());
-
 ```
 </dd>
 </dl>

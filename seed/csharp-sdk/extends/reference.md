@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="">ExtendedInlineRequestBodyAsync</a>(Inlined { ... })</code></summary>
+<details><summary><code>client.<a href="/src/SeedExtends/SeedExtendsClient.cs">ExtendedInlineRequestBodyAsync</a>(Inlined { ... })</code></summary>
 <dl>
 <dd>
 
@@ -20,7 +20,6 @@ await client.ExtendedInlineRequestBodyAsync(
         Docs = "string",
     }
 );
-
 ```
 </dd>
 </dl>

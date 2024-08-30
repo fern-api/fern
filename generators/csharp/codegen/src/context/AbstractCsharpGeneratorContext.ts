@@ -430,7 +430,8 @@ export abstract class AbstractCsharpGeneratorContext<
             allNamespaceSegments: this.getAllNamespaceSegments(),
             allTypeClassReferences: this.getAllTypeClassReferences(),
             rootNamespace: this.getNamespace(),
-            customConfig: this.customConfig
+            customConfig: this.customConfig,
+            skipImports: true
         });
     }
 

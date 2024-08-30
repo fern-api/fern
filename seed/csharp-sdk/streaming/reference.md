@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>client.Dummy.<a href="Dummy">GenerateStreamAsync</a>(GenerateStreamRequest { ... })</code></summary>
+<details><summary><code>client.Dummy.<a href="/src/SeedStreaming/Dummy/DummyClient.cs">GenerateStreamAsync</a>(GenerateStreamRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -14,7 +14,6 @@
 
 ```csharp
 await client.Dummy.GenerateStreamAsync(new GenerateStreamRequest { Stream = true, NumEvents = 1 });
-
 ```
 </dd>
 </dl>
@@ -41,7 +40,7 @@ await client.Dummy.GenerateStreamAsync(new GenerateStreamRequest { Stream = true
 </dl>
 </details>
 
-<details><summary><code>client.Dummy.<a href="Dummy">GenerateAsync</a>(Generateequest { ... }) -> StreamResponse</code></summary>
+<details><summary><code>client.Dummy.<a href="/src/SeedStreaming/Dummy/DummyClient.cs">GenerateAsync</a>(Generateequest { ... }) -> StreamResponse</code></summary>
 <dl>
 <dd>
 
@@ -55,7 +54,6 @@ await client.Dummy.GenerateStreamAsync(new GenerateStreamRequest { Stream = true
 
 ```csharp
 await client.Dummy.GenerateAsync(new Generateequest { Stream = false, NumEvents = 5 });
-
 ```
 </dd>
 </dl>

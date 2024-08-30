@@ -1,6 +1,6 @@
 # Reference
 ## Ec2
-<details><summary><code>client.Ec2.<a href="Ec2">BootInstanceAsync</a>(BootInstanceRequest { ... })</code></summary>
+<details><summary><code>client.Ec2.<a href="/src/SeedMultiUrlEnvironment/Ec2/Ec2Client.cs">BootInstanceAsync</a>(BootInstanceRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -14,7 +14,6 @@
 
 ```csharp
 await client.Ec2.BootInstanceAsync(new BootInstanceRequest { Size = "string" });
-
 ```
 </dd>
 </dl>
@@ -42,7 +41,7 @@ await client.Ec2.BootInstanceAsync(new BootInstanceRequest { Size = "string" });
 </details>
 
 ## S3
-<details><summary><code>client.S3.<a href="S3">GetPresignedUrlAsync</a>(GetPresignedUrlRequest { ... }) -> string</code></summary>
+<details><summary><code>client.S3.<a href="/src/SeedMultiUrlEnvironment/S3/S3Client.cs">GetPresignedUrlAsync</a>(GetPresignedUrlRequest { ... }) -> string</code></summary>
 <dl>
 <dd>
 
@@ -56,7 +55,6 @@ await client.Ec2.BootInstanceAsync(new BootInstanceRequest { Size = "string" });
 
 ```csharp
 await client.S3.GetPresignedUrlAsync(new GetPresignedUrlRequest { S3Key = "string" });
-
 ```
 </dd>
 </dl>

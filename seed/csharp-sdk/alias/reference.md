@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="">GetAsync</a>(typeId)</code></summary>
+<details><summary><code>client.<a href="/src/SeedAlias/SeedAliasClient.cs">GetAsync</a>(typeId)</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,6 @@
 
 ```csharp
 await client.GetAsync("type-kaljhv87");
-
 ```
 </dd>
 </dl>

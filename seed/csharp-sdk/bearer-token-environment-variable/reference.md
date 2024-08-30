@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.<a href="Service">GetWithBearerTokenAsync</a>() -> string</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedBearerTokenEnvironmentVariable/Service/ServiceClient.cs">GetWithBearerTokenAsync</a>() -> string</code></summary>
 <dl>
 <dd>
 
@@ -28,7 +28,6 @@ GET request with custom api key
 
 ```csharp
 await client.Service.GetWithBearerTokenAsync();
-
 ```
 </dd>
 </dl>

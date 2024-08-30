@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.<a href="Service">DownloadFileAsync</a>()</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedFileDownload/Service/ServiceClient.cs">DownloadFileAsync</a>()</code></summary>
 <dl>
 <dd>
 
@@ -14,7 +14,6 @@
 
 ```csharp
 await client.Service.DownloadFileAsync();
-
 ```
 </dd>
 </dl>

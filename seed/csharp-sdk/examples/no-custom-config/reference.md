@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="">EchoAsync</a>(string { ... }) -> string</code></summary>
+<details><summary><code>client.<a href="/src/SeedExamples/SeedExamplesClient.cs">EchoAsync</a>(string { ... }) -> string</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,6 @@
 
 ```csharp
 await client.EchoAsync("Hello world!\\n\\nwith\\n\\tnewlines");
-
 ```
 </dd>
 </dl>
@@ -41,7 +40,7 @@ await client.EchoAsync("Hello world!\\n\\nwith\\n\\tnewlines");
 </details>
 
 ## File Notification Service
-<details><summary><code>client.File.Notification.Service.<a href="File/Notification/Service">GetExceptionAsync</a>(notificationId) -> object</code></summary>
+<details><summary><code>client.File.Notification.Service.<a href="/src/SeedExamples/File/Notification/Service/ServiceClient.cs">GetExceptionAsync</a>(notificationId) -> object</code></summary>
 <dl>
 <dd>
 
@@ -55,7 +54,6 @@ await client.EchoAsync("Hello world!\\n\\nwith\\n\\tnewlines");
 
 ```csharp
 await client.File.Notification.Service.GetExceptionAsync("notification-hsy129x");
-
 ```
 </dd>
 </dl>
@@ -83,11 +81,7 @@ await client.File.Notification.Service.GetExceptionAsync("notification-hsy129x")
 </details>
 
 ## File Service
-<details><summary><code>client.File.Service.<a href="File/Service">GetFileAsync</a>(filename, using SeedExamples.File;
-
-    #nullable enable
-    
-    GetFileRequest { ... }) -> File</code></summary>
+<details><summary><code>client.File.Service.<a href="/src/SeedExamples/File/Service/ServiceClient.cs">GetFileAsync</a>(filename, GetFileRequest { ... }) -> File</code></summary>
 <dl>
 <dd>
 
@@ -118,7 +112,6 @@ await client.File.Service.GetFileAsync(
     "file.txt",
     new GetFileRequest { XFileApiVersion = "0.0.2" }
 );
-
 ```
 </dd>
 </dl>
@@ -141,11 +134,7 @@ await client.File.Service.GetFileAsync(
 <dl>
 <dd>
 
-**request:** `using SeedExamples.File;
-
-    #nullable enable
-    
-    GetFileRequest` 
+**request:** `GetFileRequest` 
     
 </dd>
 </dl>
@@ -158,7 +147,7 @@ await client.File.Service.GetFileAsync(
 </details>
 
 ## Health Service
-<details><summary><code>client.Health.Service.<a href="Health/Service">CheckAsync</a>(id)</code></summary>
+<details><summary><code>client.Health.Service.<a href="/src/SeedExamples/Health/Service/ServiceClient.cs">CheckAsync</a>(id)</code></summary>
 <dl>
 <dd>
 
@@ -186,7 +175,6 @@ This endpoint checks the health of a resource.
 
 ```csharp
 await client.Health.Service.CheckAsync("id-2sdx82h");
-
 ```
 </dd>
 </dl>
@@ -213,7 +201,7 @@ await client.Health.Service.CheckAsync("id-2sdx82h");
 </dl>
 </details>
 
-<details><summary><code>client.Health.Service.<a href="Health/Service">PingAsync</a>() -> bool</code></summary>
+<details><summary><code>client.Health.Service.<a href="/src/SeedExamples/Health/Service/ServiceClient.cs">PingAsync</a>() -> bool</code></summary>
 <dl>
 <dd>
 
@@ -241,7 +229,6 @@ This endpoint checks the health of the service.
 
 ```csharp
 await client.Health.Service.PingAsync();
-
 ```
 </dd>
 </dl>
@@ -254,7 +241,7 @@ await client.Health.Service.PingAsync();
 </details>
 
 ## Service
-<details><summary><code>client.Service.<a href="Service">GetMovieAsync</a>(movieId) -> Movie</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedExamples/Service/ServiceClient.cs">GetMovieAsync</a>(movieId) -> Movie</code></summary>
 <dl>
 <dd>
 
@@ -268,7 +255,6 @@ await client.Health.Service.PingAsync();
 
 ```csharp
 await client.Service.GetMovieAsync("movie-c06a4ad7");
-
 ```
 </dd>
 </dl>
@@ -295,7 +281,7 @@ await client.Service.GetMovieAsync("movie-c06a4ad7");
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="Service">CreateMovieAsync</a>(Movie { ... }) -> string</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedExamples/Service/ServiceClient.cs">CreateMovieAsync</a>(Movie { ... }) -> string</code></summary>
 <dl>
 <dd>
 
@@ -332,7 +318,6 @@ await client.Service.CreateMovieAsync(
         },
     }
 );
-
 ```
 </dd>
 </dl>
@@ -359,7 +344,7 @@ await client.Service.CreateMovieAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="Service">GetMetadataAsync</a>(GetMetadataRequest { ... }) -> object</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedExamples/Service/ServiceClient.cs">GetMetadataAsync</a>(GetMetadataRequest { ... }) -> object</code></summary>
 <dl>
 <dd>
 
@@ -380,7 +365,6 @@ await client.Service.GetMetadataAsync(
         XApiVersion = "0.0.1",
     }
 );
-
 ```
 </dd>
 </dl>
@@ -407,7 +391,7 @@ await client.Service.GetMetadataAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="Service">GetResponseAsync</a>() -> Response</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedExamples/Service/ServiceClient.cs">GetResponseAsync</a>() -> Response</code></summary>
 <dl>
 <dd>
 
@@ -421,7 +405,6 @@ await client.Service.GetMetadataAsync(
 
 ```csharp
 await client.Service.GetResponseAsync();
-
 ```
 </dd>
 </dl>

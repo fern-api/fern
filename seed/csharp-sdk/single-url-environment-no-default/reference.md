@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>client.Dummy.<a href="Dummy">GetDummyAsync</a>() -> string</code></summary>
+<details><summary><code>client.Dummy.<a href="/src/SeedSingleUrlEnvironmentNoDefault/Dummy/DummyClient.cs">GetDummyAsync</a>() -> string</code></summary>
 <dl>
 <dd>
 
@@ -14,7 +14,6 @@
 
 ```csharp
 await client.Dummy.GetDummyAsync();
-
 ```
 </dd>
 </dl>

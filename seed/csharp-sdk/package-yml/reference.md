@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="">EchoAsync</a>(id, EchoRequest { ... }) -> string</code></summary>
+<details><summary><code>client.<a href="/src/SeedPackageYml/SeedPackageYmlClient.cs">EchoAsync</a>(id, EchoRequest { ... }) -> string</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,6 @@
 
 ```csharp
 await client.EchoAsync("id-ksfd9c1", new EchoRequest { Name = "Hello world!", Size = 20 });
-
 ```
 </dd>
 </dl>
@@ -49,7 +48,7 @@ await client.EchoAsync("id-ksfd9c1", new EchoRequest { Name = "Hello world!", Si
 </details>
 
 ## Service
-<details><summary><code>client.Service.<a href="Service">NopAsync</a>(id, nestedId)</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedPackageYml/Service/ServiceClient.cs">NopAsync</a>(id, nestedId)</code></summary>
 <dl>
 <dd>
 
@@ -63,7 +62,6 @@ await client.EchoAsync("id-ksfd9c1", new EchoRequest { Name = "Hello world!", Si
 
 ```csharp
 await client.Service.NopAsync("id-a2ijs82", "id-219xca8");
-
 ```
 </dd>
 </dl>

@@ -1,6 +1,6 @@
 # Reference
 ## Package
-<details><summary><code>client.Package.<a href="Package">TestAsync</a>(TestRequest { ... })</code></summary>
+<details><summary><code>client.Package.<a href="/src/SeedNurseryApi/Package/PackageClient.cs">TestAsync</a>(TestRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -14,7 +14,6 @@
 
 ```csharp
 await client.Package.TestAsync(new TestRequest { For = "string" });
-
 ```
 </dd>
 </dl>

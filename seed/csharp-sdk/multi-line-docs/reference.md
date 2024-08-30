@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.User.<a href="User">GetUserAsync</a>(userId)</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedMultiLineDocs/User/UserClient.cs">GetUserAsync</a>(userId)</code></summary>
 <dl>
 <dd>
 
@@ -29,7 +29,6 @@ This endpoint is used to retrieve a user.
 
 ```csharp
 await client.User.GetUserAsync("string");
-
 ```
 </dd>
 </dl>
@@ -59,7 +58,7 @@ This ID is unique to each user.
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="User">CreateUserAsync</a>(CreateUserRequest { ... }) -> User</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedMultiLineDocs/User/UserClient.cs">CreateUserAsync</a>(CreateUserRequest { ... }) -> User</code></summary>
 <dl>
 <dd>
 
@@ -88,7 +87,6 @@ This endpoint is used to create a new user.
 
 ```csharp
 await client.User.CreateUserAsync(new CreateUserRequest { Name = "string", Age = 1 });
-
 ```
 </dd>
 </dl>

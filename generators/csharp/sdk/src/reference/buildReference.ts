@@ -4,8 +4,9 @@ import { HttpEndpoint, HttpService, ServiceId } from "@fern-fern/ir-sdk/api";
 import { EndpointSignatureInfo } from "../endpoint/EndpointSignatureInfo";
 import { SingleEndpointSnippet } from "../endpoint/snippets/EndpointSnippetsGenerator";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import path from "path";
 
-export function getReferenceConfigBuilder({ context }: { context: SdkGeneratorContext }): ReferenceConfigBuilder {
+export function buildReference({ context }: { context: SdkGeneratorContext }): ReferenceConfigBuilder {
     const builder = new ReferenceConfigBuilder();
     for (const [serviceId, service] of Object.entries(context.ir.services)) {
         const section = isRootServiceId({ context, serviceId })
@@ -42,19 +43,30 @@ function getEndpointReferencesForService({
             serviceId,
             endpoint
         });
-        result.push(getEndpointReference({ context, service, endpoint, endpointSignatureInfo, singleEndpointSnippet }));
+        result.push(
+            getEndpointReference({
+                context,
+                serviceId,
+                service,
+                endpoint,
+                endpointSignatureInfo,
+                singleEndpointSnippet
+            })
+        );
     }
     return result;
 }
 
 function getEndpointReference({
     context,
+    serviceId,
     service,
     endpoint,
     endpointSignatureInfo,
     singleEndpointSnippet
 }: {
     context: SdkGeneratorContext;
+    serviceId: ServiceId;
     service: HttpService;
     endpoint: HttpEndpoint;
     endpointSignatureInfo: EndpointSignatureInfo;
@@ -69,7 +81,7 @@ function getEndpointReference({
                 {
                     text: context.getEndpointMethodName(endpoint),
                     location: {
-                        path: context.getDirectoryForFernFilepath(service.name.fernFilepath)
+                        path: getServiceFilepath({ context, serviceId, service })
                     }
                 },
                 {
@@ -84,7 +96,7 @@ function getEndpointReference({
                     : undefined
         },
         description: endpoint.docs,
-        snippet: singleEndpointSnippet.endpointCall,
+        snippet: singleEndpointSnippet.endpointCall.trim(),
         parameters: endpointSignatureInfo.baseParameters.map((parameter) => {
             return {
                 name: parameter.name,
@@ -117,6 +129,30 @@ function getReferenceEndpointInvocationParameters({
         result += `${context.printType(endpointSignatureInfo.requestParameter.type)} { ... }`;
     }
     return `(${result})`;
+}
+
+function getServiceFilepath({
+    context,
+    serviceId,
+    service
+}: {
+    context: SdkGeneratorContext;
+    serviceId: ServiceId;
+    service: HttpService;
+}): string {
+    const subpackage = context.getSubpackageForServiceId(serviceId);
+    const clientClassReference = subpackage
+        ? context.getSubpackageClassReference(subpackage)
+        : context.getRootClientClassReference();
+
+    return (
+        "/" +
+        path.join(
+            context.project.getProjectDirectory(),
+            context.getDirectoryForFernFilepath(service.name.fernFilepath),
+            `${clientClassReference.name}.cs`
+        )
+    );
 }
 
 function isRootServiceId({ context, serviceId }: { context: SdkGeneratorContext; serviceId: ServiceId }): boolean {

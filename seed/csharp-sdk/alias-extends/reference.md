@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="">ExtendedInlineRequestBodyAsync</a>(InlinedChildRequest { ... })</code></summary>
+<details><summary><code>client.<a href="/src/SeedAliasExtends/SeedAliasExtendsClient.cs">ExtendedInlineRequestBodyAsync</a>(InlinedChildRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -15,7 +15,6 @@
 await client.ExtendedInlineRequestBodyAsync(
     new InlinedChildRequest { Child = "string", Parent = "string" }
 );
-
 ```
 </dd>
 </dl>

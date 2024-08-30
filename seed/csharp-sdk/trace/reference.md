@@ -1,6 +1,6 @@
 # Reference
 ## V2
-<details><summary><code>client.V2.<a href="V2">TestAsync</a>()</code></summary>
+<details><summary><code>client.V2.<a href="/src/SeedTrace/V2/V2Client.cs">TestAsync</a>()</code></summary>
 <dl>
 <dd>
 
@@ -14,7 +14,6 @@
 
 ```csharp
 await client.V2.TestAsync();
-
 ```
 </dd>
 </dl>
@@ -27,7 +26,7 @@ await client.V2.TestAsync();
 </details>
 
 ## Admin
-<details><summary><code>client.Admin.<a href="Admin">UpdateTestSubmissionStatusAsync</a>(submissionId, object { ... })</code></summary>
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">UpdateTestSubmissionStatusAsync</a>(submissionId, object { ... })</code></summary>
 <dl>
 <dd>
 
@@ -44,7 +43,6 @@ await client.Admin.UpdateTestSubmissionStatusAsync(
     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     "no-properties-union"
 );
-
 ```
 </dd>
 </dl>
@@ -79,7 +77,7 @@ await client.Admin.UpdateTestSubmissionStatusAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Admin.<a href="Admin">SendTestSubmissionUpdateAsync</a>(submissionId, TestSubmissionUpdate { ... })</code></summary>
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">SendTestSubmissionUpdateAsync</a>(submissionId, TestSubmissionUpdate { ... })</code></summary>
 <dl>
 <dd>
 
@@ -100,7 +98,6 @@ await client.Admin.SendTestSubmissionUpdateAsync(
         UpdateInfo = RunningSubmissionState.QueueingSubmission,
     }
 );
-
 ```
 </dd>
 </dl>
@@ -135,7 +132,7 @@ await client.Admin.SendTestSubmissionUpdateAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Admin.<a href="Admin">UpdateWorkspaceSubmissionStatusAsync</a>(submissionId, object { ... })</code></summary>
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">UpdateWorkspaceSubmissionStatusAsync</a>(submissionId, object { ... })</code></summary>
 <dl>
 <dd>
 
@@ -152,7 +149,6 @@ await client.Admin.UpdateWorkspaceSubmissionStatusAsync(
     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     "no-properties-union"
 );
-
 ```
 </dd>
 </dl>
@@ -187,7 +183,7 @@ await client.Admin.UpdateWorkspaceSubmissionStatusAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Admin.<a href="Admin">SendWorkspaceSubmissionUpdateAsync</a>(submissionId, WorkspaceSubmissionUpdate { ... })</code></summary>
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">SendWorkspaceSubmissionUpdateAsync</a>(submissionId, WorkspaceSubmissionUpdate { ... })</code></summary>
 <dl>
 <dd>
 
@@ -208,7 +204,6 @@ await client.Admin.SendWorkspaceSubmissionUpdateAsync(
         UpdateInfo = RunningSubmissionState.QueueingSubmission,
     }
 );
-
 ```
 </dd>
 </dl>
@@ -243,7 +238,7 @@ await client.Admin.SendWorkspaceSubmissionUpdateAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Admin.<a href="Admin">StoreTracedTestCaseAsync</a>(submissionId, testCaseId, StoreTracedTestCaseRequest { ... })</code></summary>
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">StoreTracedTestCaseAsync</a>(submissionId, testCaseId, StoreTracedTestCaseRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -306,7 +301,6 @@ await client.Admin.StoreTracedTestCaseAsync(
         },
     }
 );
-
 ```
 </dd>
 </dl>
@@ -349,7 +343,7 @@ await client.Admin.StoreTracedTestCaseAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Admin.<a href="Admin">StoreTracedTestCaseV2Async</a>(submissionId, testCaseId, IEnumerable<TraceResponseV2> { ... })</code></summary>
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">StoreTracedTestCaseV2Async</a>(submissionId, testCaseId, IEnumerable<TraceResponseV2> { ... })</code></summary>
 <dl>
 <dd>
 
@@ -400,7 +394,6 @@ await client.Admin.StoreTracedTestCaseV2Async(
         },
     }
 );
-
 ```
 </dd>
 </dl>
@@ -443,7 +436,7 @@ await client.Admin.StoreTracedTestCaseV2Async(
 </dl>
 </details>
 
-<details><summary><code>client.Admin.<a href="Admin">StoreTracedWorkspaceAsync</a>(submissionId, StoreTracedWorkspaceRequest { ... })</code></summary>
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">StoreTracedWorkspaceAsync</a>(submissionId, StoreTracedWorkspaceRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -511,7 +504,6 @@ await client.Admin.StoreTracedWorkspaceAsync(
         },
     }
 );
-
 ```
 </dd>
 </dl>
@@ -546,7 +538,7 @@ await client.Admin.StoreTracedWorkspaceAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Admin.<a href="Admin">StoreTracedWorkspaceV2Async</a>(submissionId, IEnumerable<TraceResponseV2> { ... })</code></summary>
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">StoreTracedWorkspaceV2Async</a>(submissionId, IEnumerable<TraceResponseV2> { ... })</code></summary>
 <dl>
 <dd>
 
@@ -596,7 +588,6 @@ await client.Admin.StoreTracedWorkspaceV2Async(
         },
     }
 );
-
 ```
 </dd>
 </dl>
@@ -632,7 +623,7 @@ await client.Admin.StoreTracedWorkspaceV2Async(
 </details>
 
 ## Homepage
-<details><summary><code>client.Homepage.<a href="Homepage">GetHomepageProblemsAsync</a>() -> IEnumerable<string></code></summary>
+<details><summary><code>client.Homepage.<a href="/src/SeedTrace/Homepage/HomepageClient.cs">GetHomepageProblemsAsync</a>() -> IEnumerable<string></code></summary>
 <dl>
 <dd>
 
@@ -646,7 +637,6 @@ await client.Admin.StoreTracedWorkspaceV2Async(
 
 ```csharp
 await client.Homepage.GetHomepageProblemsAsync();
-
 ```
 </dd>
 </dl>
@@ -658,7 +648,7 @@ await client.Homepage.GetHomepageProblemsAsync();
 </dl>
 </details>
 
-<details><summary><code>client.Homepage.<a href="Homepage">SetHomepageProblemsAsync</a>(IEnumerable<string> { ... })</code></summary>
+<details><summary><code>client.Homepage.<a href="/src/SeedTrace/Homepage/HomepageClient.cs">SetHomepageProblemsAsync</a>(IEnumerable<string> { ... })</code></summary>
 <dl>
 <dd>
 
@@ -672,7 +662,6 @@ await client.Homepage.GetHomepageProblemsAsync();
 
 ```csharp
 await client.Homepage.SetHomepageProblemsAsync(new List<string>() { "string" });
-
 ```
 </dd>
 </dl>
@@ -700,7 +689,7 @@ await client.Homepage.SetHomepageProblemsAsync(new List<string>() { "string" });
 </details>
 
 ## Migration
-<details><summary><code>client.Migration.<a href="Migration">GetAttemptedMigrationsAsync</a>(GetAttemptedMigrationsRequest { ... }) -> IEnumerable<Migration></code></summary>
+<details><summary><code>client.Migration.<a href="/src/SeedTrace/Migration/MigrationClient.cs">GetAttemptedMigrationsAsync</a>(GetAttemptedMigrationsRequest { ... }) -> IEnumerable<Migration></code></summary>
 <dl>
 <dd>
 
@@ -716,7 +705,6 @@ await client.Homepage.SetHomepageProblemsAsync(new List<string>() { "string" });
 await client.Migration.GetAttemptedMigrationsAsync(
     new GetAttemptedMigrationsRequest { AdminKeyHeader = "string" }
 );
-
 ```
 </dd>
 </dl>
@@ -744,7 +732,7 @@ await client.Migration.GetAttemptedMigrationsAsync(
 </details>
 
 ## Playlist
-<details><summary><code>client.Playlist.<a href="Playlist">CreatePlaylistAsync</a>(serviceParam, CreatePlaylistRequest { ... }) -> Playlist</code></summary>
+<details><summary><code>client.Playlist.<a href="/src/SeedTrace/Playlist/PlaylistClient.cs">CreatePlaylistAsync</a>(serviceParam, CreatePlaylistRequest { ... }) -> Playlist</code></summary>
 <dl>
 <dd>
 
@@ -784,7 +772,6 @@ await client.Playlist.CreatePlaylistAsync(
         },
     }
 );
-
 ```
 </dd>
 </dl>
@@ -819,7 +806,7 @@ await client.Playlist.CreatePlaylistAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Playlist.<a href="Playlist">GetPlaylistsAsync</a>(serviceParam, GetPlaylistsRequest { ... }) -> IEnumerable<Playlist></code></summary>
+<details><summary><code>client.Playlist.<a href="/src/SeedTrace/Playlist/PlaylistClient.cs">GetPlaylistsAsync</a>(serviceParam, GetPlaylistsRequest { ... }) -> IEnumerable<Playlist></code></summary>
 <dl>
 <dd>
 
@@ -857,7 +844,6 @@ await client.Playlist.GetPlaylistsAsync(
         MultipleField = ["string"],
     }
 );
-
 ```
 </dd>
 </dl>
@@ -892,7 +878,7 @@ await client.Playlist.GetPlaylistsAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Playlist.<a href="Playlist">GetPlaylistAsync</a>(serviceParam, playlistId) -> Playlist</code></summary>
+<details><summary><code>client.Playlist.<a href="/src/SeedTrace/Playlist/PlaylistClient.cs">GetPlaylistAsync</a>(serviceParam, playlistId) -> Playlist</code></summary>
 <dl>
 <dd>
 
@@ -920,7 +906,6 @@ Returns a playlist
 
 ```csharp
 await client.Playlist.GetPlaylistAsync(1, "string");
-
 ```
 </dd>
 </dl>
@@ -955,7 +940,7 @@ await client.Playlist.GetPlaylistAsync(1, "string");
 </dl>
 </details>
 
-<details><summary><code>client.Playlist.<a href="Playlist">UpdatePlaylistAsync</a>(serviceParam, playlistId, UpdatePlaylistRequest? { ... }) -> Playlist?</code></summary>
+<details><summary><code>client.Playlist.<a href="/src/SeedTrace/Playlist/PlaylistClient.cs">UpdatePlaylistAsync</a>(serviceParam, playlistId, UpdatePlaylistRequest? { ... }) -> Playlist?</code></summary>
 <dl>
 <dd>
 
@@ -991,7 +976,6 @@ await client.Playlist.UpdatePlaylistAsync(
         Problems = new List<string>() { "string" },
     }
 );
-
 ```
 </dd>
 </dl>
@@ -1034,7 +1018,7 @@ await client.Playlist.UpdatePlaylistAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Playlist.<a href="Playlist">DeletePlaylistAsync</a>(serviceParam, playlistId)</code></summary>
+<details><summary><code>client.Playlist.<a href="/src/SeedTrace/Playlist/PlaylistClient.cs">DeletePlaylistAsync</a>(serviceParam, playlistId)</code></summary>
 <dl>
 <dd>
 
@@ -1062,7 +1046,6 @@ Deletes a playlist
 
 ```csharp
 await client.Playlist.DeletePlaylistAsync(1, "string");
-
 ```
 </dd>
 </dl>
@@ -1098,7 +1081,7 @@ await client.Playlist.DeletePlaylistAsync(1, "string");
 </details>
 
 ## Problem
-<details><summary><code>client.Problem.<a href="Problem">CreateProblemAsync</a>(CreateProblemRequest { ... }) -> object</code></summary>
+<details><summary><code>client.Problem.<a href="/src/SeedTrace/Problem/ProblemClient.cs">CreateProblemAsync</a>(CreateProblemRequest { ... }) -> object</code></summary>
 <dl>
 <dd>
 
@@ -1164,7 +1147,6 @@ await client.Problem.CreateProblemAsync(
         MethodName = "string",
     }
 );
-
 ```
 </dd>
 </dl>
@@ -1191,7 +1173,7 @@ await client.Problem.CreateProblemAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Problem.<a href="Problem">UpdateProblemAsync</a>(problemId, CreateProblemRequest { ... }) -> UpdateProblemResponse</code></summary>
+<details><summary><code>client.Problem.<a href="/src/SeedTrace/Problem/ProblemClient.cs">UpdateProblemAsync</a>(problemId, CreateProblemRequest { ... }) -> UpdateProblemResponse</code></summary>
 <dl>
 <dd>
 
@@ -1258,7 +1240,6 @@ await client.Problem.UpdateProblemAsync(
         MethodName = "string",
     }
 );
-
 ```
 </dd>
 </dl>
@@ -1293,7 +1274,7 @@ await client.Problem.UpdateProblemAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Problem.<a href="Problem">DeleteProblemAsync</a>(problemId)</code></summary>
+<details><summary><code>client.Problem.<a href="/src/SeedTrace/Problem/ProblemClient.cs">DeleteProblemAsync</a>(problemId)</code></summary>
 <dl>
 <dd>
 
@@ -1321,7 +1302,6 @@ Soft deletes a problem
 
 ```csharp
 await client.Problem.DeleteProblemAsync("string");
-
 ```
 </dd>
 </dl>
@@ -1348,7 +1328,7 @@ await client.Problem.DeleteProblemAsync("string");
 </dl>
 </details>
 
-<details><summary><code>client.Problem.<a href="Problem">GetDefaultStarterFilesAsync</a>(GetDefaultStarterFilesRequest { ... }) -> GetDefaultStarterFilesResponse</code></summary>
+<details><summary><code>client.Problem.<a href="/src/SeedTrace/Problem/ProblemClient.cs">GetDefaultStarterFilesAsync</a>(GetDefaultStarterFilesRequest { ... }) -> GetDefaultStarterFilesResponse</code></summary>
 <dl>
 <dd>
 
@@ -1386,7 +1366,6 @@ await client.Problem.GetDefaultStarterFilesAsync(
         MethodName = "string",
     }
 );
-
 ```
 </dd>
 </dl>
@@ -1414,7 +1393,7 @@ await client.Problem.GetDefaultStarterFilesAsync(
 </details>
 
 ## Submission
-<details><summary><code>client.Submission.<a href="Submission">CreateExecutionSessionAsync</a>(language) -> ExecutionSessionResponse</code></summary>
+<details><summary><code>client.Submission.<a href="/src/SeedTrace/Submission/SubmissionClient.cs">CreateExecutionSessionAsync</a>(language) -> ExecutionSessionResponse</code></summary>
 <dl>
 <dd>
 
@@ -1442,7 +1421,6 @@ Returns sessionId and execution server URL for session. Spins up server.
 
 ```csharp
 await client.Submission.CreateExecutionSessionAsync(Language.Java);
-
 ```
 </dd>
 </dl>
@@ -1469,7 +1447,7 @@ await client.Submission.CreateExecutionSessionAsync(Language.Java);
 </dl>
 </details>
 
-<details><summary><code>client.Submission.<a href="Submission">GetExecutionSessionAsync</a>(sessionId) -> ExecutionSessionResponse?</code></summary>
+<details><summary><code>client.Submission.<a href="/src/SeedTrace/Submission/SubmissionClient.cs">GetExecutionSessionAsync</a>(sessionId) -> ExecutionSessionResponse?</code></summary>
 <dl>
 <dd>
 
@@ -1497,7 +1475,6 @@ Returns execution server URL for session. Returns empty if session isn't registe
 
 ```csharp
 await client.Submission.GetExecutionSessionAsync("string");
-
 ```
 </dd>
 </dl>
@@ -1524,7 +1501,7 @@ await client.Submission.GetExecutionSessionAsync("string");
 </dl>
 </details>
 
-<details><summary><code>client.Submission.<a href="Submission">StopExecutionSessionAsync</a>(sessionId)</code></summary>
+<details><summary><code>client.Submission.<a href="/src/SeedTrace/Submission/SubmissionClient.cs">StopExecutionSessionAsync</a>(sessionId)</code></summary>
 <dl>
 <dd>
 
@@ -1552,7 +1529,6 @@ Stops execution session.
 
 ```csharp
 await client.Submission.StopExecutionSessionAsync("string");
-
 ```
 </dd>
 </dl>
@@ -1579,7 +1555,7 @@ await client.Submission.StopExecutionSessionAsync("string");
 </dl>
 </details>
 
-<details><summary><code>client.Submission.<a href="Submission">GetExecutionSessionsStateAsync</a>() -> GetExecutionSessionStateResponse</code></summary>
+<details><summary><code>client.Submission.<a href="/src/SeedTrace/Submission/SubmissionClient.cs">GetExecutionSessionsStateAsync</a>() -> GetExecutionSessionStateResponse</code></summary>
 <dl>
 <dd>
 
@@ -1593,7 +1569,6 @@ await client.Submission.StopExecutionSessionAsync("string");
 
 ```csharp
 await client.Submission.GetExecutionSessionsStateAsync();
-
 ```
 </dd>
 </dl>
@@ -1606,7 +1581,7 @@ await client.Submission.GetExecutionSessionsStateAsync();
 </details>
 
 ## Sysprop
-<details><summary><code>client.Sysprop.<a href="Sysprop">SetNumWarmInstancesAsync</a>(language, numWarmInstances)</code></summary>
+<details><summary><code>client.Sysprop.<a href="/src/SeedTrace/Sysprop/SyspropClient.cs">SetNumWarmInstancesAsync</a>(language, numWarmInstances)</code></summary>
 <dl>
 <dd>
 
@@ -1620,7 +1595,6 @@ await client.Submission.GetExecutionSessionsStateAsync();
 
 ```csharp
 await client.Sysprop.SetNumWarmInstancesAsync(Language.Java, 1);
-
 ```
 </dd>
 </dl>
@@ -1655,7 +1629,7 @@ await client.Sysprop.SetNumWarmInstancesAsync(Language.Java, 1);
 </dl>
 </details>
 
-<details><summary><code>client.Sysprop.<a href="Sysprop">GetNumWarmInstancesAsync</a>() -> Dictionary<Language, int></code></summary>
+<details><summary><code>client.Sysprop.<a href="/src/SeedTrace/Sysprop/SyspropClient.cs">GetNumWarmInstancesAsync</a>() -> Dictionary<Language, int></code></summary>
 <dl>
 <dd>
 
@@ -1669,7 +1643,6 @@ await client.Sysprop.SetNumWarmInstancesAsync(Language.Java, 1);
 
 ```csharp
 await client.Sysprop.GetNumWarmInstancesAsync();
-
 ```
 </dd>
 </dl>
@@ -1682,7 +1655,7 @@ await client.Sysprop.GetNumWarmInstancesAsync();
 </details>
 
 ## V2 Problem
-<details><summary><code>client.V2.Problem.<a href="V2/Problem">GetLightweightProblemsAsync</a>() -> IEnumerable<V2.LightweightProblemInfoV2></code></summary>
+<details><summary><code>client.V2.Problem.<a href="/src/SeedTrace/V2/Problem/ProblemClient.cs">GetLightweightProblemsAsync</a>() -> IEnumerable<V2.LightweightProblemInfoV2></code></summary>
 <dl>
 <dd>
 
@@ -1710,7 +1683,6 @@ Returns lightweight versions of all problems
 
 ```csharp
 await client.V2.Problem.GetLightweightProblemsAsync();
-
 ```
 </dd>
 </dl>
@@ -1722,7 +1694,7 @@ await client.V2.Problem.GetLightweightProblemsAsync();
 </dl>
 </details>
 
-<details><summary><code>client.V2.Problem.<a href="V2/Problem">GetProblemsAsync</a>() -> IEnumerable<V2.ProblemInfoV2></code></summary>
+<details><summary><code>client.V2.Problem.<a href="/src/SeedTrace/V2/Problem/ProblemClient.cs">GetProblemsAsync</a>() -> IEnumerable<V2.ProblemInfoV2></code></summary>
 <dl>
 <dd>
 
@@ -1750,7 +1722,6 @@ Returns latest versions of all problems
 
 ```csharp
 await client.V2.Problem.GetProblemsAsync();
-
 ```
 </dd>
 </dl>
@@ -1762,7 +1733,7 @@ await client.V2.Problem.GetProblemsAsync();
 </dl>
 </details>
 
-<details><summary><code>client.V2.Problem.<a href="V2/Problem">GetLatestProblemAsync</a>(problemId) -> V2.ProblemInfoV2</code></summary>
+<details><summary><code>client.V2.Problem.<a href="/src/SeedTrace/V2/Problem/ProblemClient.cs">GetLatestProblemAsync</a>(problemId) -> V2.ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -1790,7 +1761,6 @@ Returns latest version of a problem
 
 ```csharp
 await client.V2.Problem.GetLatestProblemAsync("string");
-
 ```
 </dd>
 </dl>
@@ -1817,7 +1787,7 @@ await client.V2.Problem.GetLatestProblemAsync("string");
 </dl>
 </details>
 
-<details><summary><code>client.V2.Problem.<a href="V2/Problem">GetProblemVersionAsync</a>(problemId, problemVersion) -> V2.ProblemInfoV2</code></summary>
+<details><summary><code>client.V2.Problem.<a href="/src/SeedTrace/V2/Problem/ProblemClient.cs">GetProblemVersionAsync</a>(problemId, problemVersion) -> V2.ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -1845,7 +1815,6 @@ Returns requested version of a problem
 
 ```csharp
 await client.V2.Problem.GetProblemVersionAsync("string", 1);
-
 ```
 </dd>
 </dl>
@@ -1881,7 +1850,7 @@ await client.V2.Problem.GetProblemVersionAsync("string", 1);
 </details>
 
 ## V2 V3 Problem
-<details><summary><code>client.V2.V3.Problem.<a href="V2/V3/Problem">GetLightweightProblemsAsync</a>() -> IEnumerable<V2.V3.LightweightProblemInfoV2></code></summary>
+<details><summary><code>client.V2.V3.Problem.<a href="/src/SeedTrace/V2/V3/Problem/ProblemClient.cs">GetLightweightProblemsAsync</a>() -> IEnumerable<V2.V3.LightweightProblemInfoV2></code></summary>
 <dl>
 <dd>
 
@@ -1909,7 +1878,6 @@ Returns lightweight versions of all problems
 
 ```csharp
 await client.V2.V3.Problem.GetLightweightProblemsAsync();
-
 ```
 </dd>
 </dl>
@@ -1921,7 +1889,7 @@ await client.V2.V3.Problem.GetLightweightProblemsAsync();
 </dl>
 </details>
 
-<details><summary><code>client.V2.V3.Problem.<a href="V2/V3/Problem">GetProblemsAsync</a>() -> IEnumerable<V2.V3.ProblemInfoV2></code></summary>
+<details><summary><code>client.V2.V3.Problem.<a href="/src/SeedTrace/V2/V3/Problem/ProblemClient.cs">GetProblemsAsync</a>() -> IEnumerable<V2.V3.ProblemInfoV2></code></summary>
 <dl>
 <dd>
 
@@ -1949,7 +1917,6 @@ Returns latest versions of all problems
 
 ```csharp
 await client.V2.V3.Problem.GetProblemsAsync();
-
 ```
 </dd>
 </dl>
@@ -1961,7 +1928,7 @@ await client.V2.V3.Problem.GetProblemsAsync();
 </dl>
 </details>
 
-<details><summary><code>client.V2.V3.Problem.<a href="V2/V3/Problem">GetLatestProblemAsync</a>(problemId) -> V2.V3.ProblemInfoV2</code></summary>
+<details><summary><code>client.V2.V3.Problem.<a href="/src/SeedTrace/V2/V3/Problem/ProblemClient.cs">GetLatestProblemAsync</a>(problemId) -> V2.V3.ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -1989,7 +1956,6 @@ Returns latest version of a problem
 
 ```csharp
 await client.V2.V3.Problem.GetLatestProblemAsync("string");
-
 ```
 </dd>
 </dl>
@@ -2016,7 +1982,7 @@ await client.V2.V3.Problem.GetLatestProblemAsync("string");
 </dl>
 </details>
 
-<details><summary><code>client.V2.V3.Problem.<a href="V2/V3/Problem">GetProblemVersionAsync</a>(problemId, problemVersion) -> V2.V3.ProblemInfoV2</code></summary>
+<details><summary><code>client.V2.V3.Problem.<a href="/src/SeedTrace/V2/V3/Problem/ProblemClient.cs">GetProblemVersionAsync</a>(problemId, problemVersion) -> V2.V3.ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2044,7 +2010,6 @@ Returns requested version of a problem
 
 ```csharp
 await client.V2.V3.Problem.GetProblemVersionAsync("string", 1);
-
 ```
 </dd>
 </dl>

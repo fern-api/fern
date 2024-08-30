@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.Auth.<a href="Auth">GetTokenAsync</a>(GetTokenRequest { ... }) -> TokenResponse</code></summary>
+<details><summary><code>client.Auth.<a href="/src/SeedAnyAuth/Auth/AuthClient.cs">GetTokenAsync</a>(GetTokenRequest { ... }) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -23,7 +23,6 @@ await client.Auth.GetTokenAsync(
         Scope = "string",
     }
 );
-
 ```
 </dd>
 </dl>
@@ -51,7 +50,7 @@ await client.Auth.GetTokenAsync(
 </details>
 
 ## User
-<details><summary><code>client.User.<a href="User">GetAsync</a>() -> IEnumerable<User></code></summary>
+<details><summary><code>client.User.<a href="/src/SeedAnyAuth/User/UserClient.cs">GetAsync</a>() -> IEnumerable<User></code></summary>
 <dl>
 <dd>
 
@@ -65,7 +64,6 @@ await client.Auth.GetTokenAsync(
 
 ```csharp
 await client.User.GetAsync();
-
 ```
 </dd>
 </dl>
