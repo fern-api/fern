@@ -78,8 +78,8 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
             const outputMode = config.output.mode;
 
             const publishConfig = ir.publishConfig;
-            if (publishConfig?.type == "direct" && publishConfig.target.type === "postman") {
-                publishConfig._visit({
+            if (publishConfig?.type === "direct" && publishConfig.target.type === "postman") {
+                await publishConfig._visit({
                     _other: () => undefined,
                     direct: async () => {
                         await publishCollection({
