@@ -1,8 +1,4 @@
-import {
-    RawSchemas,
-    NodePath,
-    RootApiFileSchema,
-} from "@fern-api/yaml-schema";
+import { RawSchemas, NodePath, RootApiFileSchema } from "@fern-api/yaml-schema";
 
 export type RootApiFileAstVisitor<R = void | Promise<void>> = {
     [K in keyof RootApiFileAstNodeTypes]: RootApiFileAstNodeVisitor<K, R>;

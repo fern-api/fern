@@ -12,7 +12,11 @@ export interface DefinitionFileAstNodeTypes {
         typeName: TypeDeclarationName;
         declaration: RawSchemas.TypeDeclarationSchema;
     };
-    exampleType: { typeName: string; typeDeclaration: RawSchemas.TypeDeclarationSchema; example: RawSchemas.ExampleTypeSchema };
+    exampleType: {
+        typeName: string;
+        typeDeclaration: RawSchemas.TypeDeclarationSchema;
+        example: RawSchemas.ExampleTypeSchema;
+    };
     exampleTypeReference: string;
     typeReference: {
         typeReference: string;
@@ -22,7 +26,11 @@ export interface DefinitionFileAstNodeTypes {
     };
     typeName: string;
     httpService: RawSchemas.HttpServiceSchema;
-    httpEndpoint: { endpointId: string; endpoint: RawSchemas.HttpEndpointSchema; service: RawSchemas.HttpServiceSchema };
+    httpEndpoint: {
+        endpointId: string;
+        endpoint: RawSchemas.HttpEndpointSchema;
+        service: RawSchemas.HttpServiceSchema;
+    };
     serviceBaseUrl: string | undefined;
     endpointBaseUrl: { baseUrl: string | undefined; service: RawSchemas.HttpServiceSchema };
     streamCondition: { streamCondition: string | undefined; endpoint: RawSchemas.HttpEndpointSchema };

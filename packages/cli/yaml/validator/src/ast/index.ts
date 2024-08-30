@@ -5,10 +5,7 @@ export {
     type DefinitionFileAstVisitor,
     type TypeDeclarationName
 } from "./DefinitionFileAstVisitor";
-export {
-    type GeneratorsYmlFileAstNodeTypes,
-    type GeneratorsYmlFileAstNodeVisitor
-} from "./GeneratorsYmlAstVisitor";
+export { type GeneratorsYmlFileAstNodeTypes, type GeneratorsYmlFileAstNodeVisitor } from "./GeneratorsYmlAstVisitor";
 export {
     type PackageMarkerAstNodeTypes,
     type PackageMarkerAstNodeVisitor,

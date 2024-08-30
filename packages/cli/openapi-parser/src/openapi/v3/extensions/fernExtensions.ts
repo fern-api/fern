@@ -9,7 +9,7 @@ export const FernOpenAPIExtension = {
     REQUEST_NAME_V2: "x-fern-request-name",
     TYPE_NAME: "x-fern-type-name",
     BOOLEAN_LITERAL: "x-fern-boolean-literal",
-    
+
     SERVER_NAME_V1: "x-name",
     SERVER_NAME_V2: "x-fern-server-name",
 
