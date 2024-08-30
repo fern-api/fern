@@ -140,9 +140,9 @@ jobs:
               VERSIONS_FILE="generators/ruby/sdk/versions.yml"
           fi
 
-          git show HEAD~1:${VERSIONS_FILE} > tmp_${{ matrix.generator }}_previous_versions.yml || DOES_PREVIOUS_VERSIONS_EXIST=false
+          git show HEAD~1:${VERSIONS_FILE} > tmp_${{ matrix.generator }}_previous_versions.yml
 
-          if [ $DOES_PREVIOUS_VERSIONS_EXIST != false ]; then
+          if [ $? -eq 0 ]; then
             pnpm seed:local publish generator ${{ matrix.generator }} --changelog $VERSIONS_FILE --previous-changelog tmp_${{ matrix.generator }}_previous_versions.yml --log-level debug
           else
             echo "No previous versions found, skipping publish."
