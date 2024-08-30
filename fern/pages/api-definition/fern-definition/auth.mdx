@@ -113,7 +113,7 @@ client = new Client({
 
 ## Custom Header (e.g. API Key)
 
-You can also create your own authentication scheme with customizaed headers. 
+You can also create your own authentication scheme with customized headers. 
 
 ```yaml title="api.yml" {3-5}
 auth: ApiKeyAuthScheme
@@ -187,4 +187,4 @@ If the `expires-in` property is set, the generated OAuth token provider will aut
 Otherwise, it's assumed that the access token is valid indefinitely.
 
 With this, all of the OAuth logic happens automatically in the generated SDKs. As long as you configure these settings, your
-client will automatcally retrieve an access token and refresh it as needed.
+client will automatically retrieve an access token and refresh it as needed.
