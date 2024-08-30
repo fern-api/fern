@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.3.0] - 2024-08-29
 
+- Fix: Improve the error messages thrown by the postman generator. 
+
+## [0.3.0] - 2024-08-29
+
 - Feature: Support updating a postman collection by collection ID.
 
 ## [0.2.1] - 2024-08-21
