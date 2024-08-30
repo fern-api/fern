@@ -3,10 +3,8 @@ title: Authentication
 subtitle: Model auth schemes such as bearer, basic, custom headers, and oauth. 
 ---
 
-Configuring authentication schemes happens in the `auth-schemes` section of the `api.yml` file. 
+Configuring authentication schemes happens in the `api.yml` file. 
 
-<Tabs>
-<Tab title="File Directory">
 ```bash {5}
 fern/
 ├─ fern.config.json # root-level configuration
@@ -15,15 +13,14 @@ fern/
   ├─ api.yml  # API-level configuration
   └─ imdb.yml # endpoints, types, and errors
 ```
-</Tab>
-<Tab title="api.yml">
-```yaml api.yml
+
+To add an authentication scheme, specify the authentication method under the `auth-schemes` section. 
+
+```yaml api.yml {1-2}
 auth-schemes:
   AuthScheme:                     
     ...
 ```
-</Tab>
-</Tabs>
 
 <Note>
 To apply an authentication scheme across all endpoints, reference the `auth-scheme` within the `auth` section of your `api.yml` file. 
