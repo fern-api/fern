@@ -14,6 +14,24 @@ fern/
   └─ imdb.yml # endpoints, types, and errors
 ```
 
+To add an authentication scheme, specify the authentication method under the `auth-schemes` section. 
+
+```yaml api.yml {1-2}
+auth-schemes:
+  AuthScheme:                     
+    ...
+```
+
+<Note>
+To apply an authentication scheme across all endpoints, reference the `auth-scheme` within the `auth` section of your `api.yml` file. 
+```yaml api.yml {1}
+auth: AuthScheme                  
+auth-schemes:
+  AuthScheme:                     
+    ...
+```
+</Note>
+
 ## Bearer Authentication
 
 Start by defining a `Bearer` authentication scheme in `api.yml`: 
