@@ -78,11 +78,8 @@ class UniversalBaseModel(pydantic.BaseModel):
         smart_union = True
         allow_population_by_field_name = True
         json_encoders = {dt.datetime: serialize_datetime}
-
-    if IS_PYDANTIC_V2:
         # Allow fields begining with `model_` to be used in the model
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(protected_namespaces=())  # type: ignore # Pydantic v2
-
+        protected_namespaces = ()
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {
