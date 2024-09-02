@@ -1,4 +1,4 @@
-import { RawSchemas } from "@fern-api/yaml-schema";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { AudienceId } from "../filtered-ir/ids";
 
 export function getAudienceForEnvironment(

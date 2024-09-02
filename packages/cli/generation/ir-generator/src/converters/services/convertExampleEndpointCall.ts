@@ -17,7 +17,7 @@ import {
     parseRawFileType,
     RawSchemas,
     visitExampleResponseSchema
-} from "@fern-api/yaml-schema";
+} from "@fern-api/fern-definition-schema";
 import crypto from "crypto";
 import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";

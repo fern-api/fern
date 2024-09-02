@@ -9,7 +9,7 @@
     { "path": "../configuration" },
     { "path": "../login" },
     { "path": "../task-context" },
-    { "path": "../yaml/formatter" },
-    { "path": "../yaml/yaml-schema" }
+    { "path": "../fern-definition/formatter" },
+    { "path": "../fern-definition/schema" }
   ]
 }

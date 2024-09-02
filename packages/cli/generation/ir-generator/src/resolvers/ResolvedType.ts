@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { DeclaredTypeName, Literal as IrLiteral, PrimitiveType, TypeReference } from "@fern-api/ir-sdk";
-import { RawSchemas } from "@fern-api/yaml-schema";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { FernFileContext } from "../FernFileContext";
 
 export declare type ResolvedType =

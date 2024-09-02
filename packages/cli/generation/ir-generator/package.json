@@ -35,7 +35,7 @@
     "@fern-api/project-loader": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
-    "@fern-api/yaml-schema": "workspace:*",
+    "@fern-api/fern-definition-schema": "workspace:*",
     "lodash-es": "^4.17.21",
     "object-hash": "^3.0.0",
     "prettier": "^2.7.1",

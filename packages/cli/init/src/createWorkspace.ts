@@ -8,8 +8,8 @@ import {
 } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { formatDefinitionFile } from "@fern-api/yaml-formatter";
-import { RootApiFileSchema } from "@fern-api/yaml-schema";
+import { formatDefinitionFile } from "@fern-api/fern-definition-formatter";
+import { RootApiFileSchema } from "@fern-api/fern-definition-schema";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";

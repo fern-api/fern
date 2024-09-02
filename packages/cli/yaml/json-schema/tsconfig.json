@@ -1,6 +1,0 @@
-{
-  "extends": "../../../../shared/tsconfig.shared.json",
-  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src", "module": "CommonJS", "target": "es2015"},
-  "include": ["./src/**/*"],
-  "references": [{ "path": "../../../commons/fs-utils" }, { "path": "../yaml-schema" }]
-}

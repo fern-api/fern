@@ -1,6 +1,6 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { isRawAliasDefinition } from "@fern-api/yaml-schema";
+import { isRawAliasDefinition } from "@fern-api/fern-definition-schema";
 import { buildAuthSchemes } from "./buildAuthSchemes";
 import { buildChannel } from "./buildChannel";
 import { buildEnvironments } from "./buildEnvironments";

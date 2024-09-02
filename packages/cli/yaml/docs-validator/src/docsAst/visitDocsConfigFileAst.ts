@@ -2,7 +2,7 @@ import { docsYml } from "@fern-api/configuration";
 import { parseImagePaths, replaceReferencedCode, replaceReferencedMarkdown } from "@fern-api/docs-markdown-utils";
 import { AbsoluteFilePath, dirname, doesPathExist, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { NodePath } from "@fern-api/yaml-schema";
+import { NodePath } from "@fern-api/fern-definition-schema";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";

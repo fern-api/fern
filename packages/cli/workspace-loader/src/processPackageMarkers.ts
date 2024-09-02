@@ -2,7 +2,7 @@ import { dependenciesYml } from "@fern-api/configuration";
 import { entries, keys } from "@fern-api/core-utils";
 import { dirname, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { PackageMarkerFileSchema } from "@fern-api/yaml-schema";
+import { PackageMarkerFileSchema } from "@fern-api/fern-definition-schema";
 import { size } from "lodash-es";
 import { loadDependency } from "./loadDependency";
 import { ParsedFernFile } from "./types/FernFile";

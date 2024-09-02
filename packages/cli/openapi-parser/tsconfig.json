@@ -9,6 +9,6 @@
     { "path": "../logger" },
     { "path": "../openapi-ir-sdk" },
     { "path": "../task-context" },
-    { "path": "../yaml/yaml-schema" }
+    { "path": "../fern-definition/schema" }
   ]
 }
