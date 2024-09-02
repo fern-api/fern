@@ -54,9 +54,7 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
                 })
             );
             const _collectionDefinition = convertToPostmanCollection(ir);
-            const rawCollectionDefinition = await PostmanParsing.PostmanCollectionSchema.jsonOrThrow(
-                _collectionDefinition
-            );
+            const rawCollectionDefinition = PostmanParsing.PostmanCollectionSchema.jsonOrThrow(_collectionDefinition);
             // eslint-disable-next-line no-console
             console.log("Converted ir to postman collection");
 
