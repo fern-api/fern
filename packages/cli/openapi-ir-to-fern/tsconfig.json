@@ -11,6 +11,6 @@
     { "path": "../openapi-ir-sdk" },
     { "path": "../openapi-parser" },
     { "path": "../task-context" },
-    { "path": "../yaml/yaml-schema" }
+    { "path": "../fern-definition/schema" }
   ]
 }

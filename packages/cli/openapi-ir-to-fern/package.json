@@ -35,7 +35,7 @@
     "@fern-api/openapi-ir-sdk": "workspace:*",
     "@fern-api/openapi-parser": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-api/yaml-schema": "workspace:*",
+    "@fern-api/fern-definition-schema": "workspace:*",
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {

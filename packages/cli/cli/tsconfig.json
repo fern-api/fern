@@ -29,9 +29,9 @@
     { "path": "../task-context" },
     { "path": "../workspace-loader" },
     { "path": "../yaml/docs-validator" },
-    { "path": "../yaml/formatter" },
-    { "path": "../yaml/validator" },
+    { "path": "../fern-definition/formatter" },
+    { "path": "../fern-definition/validator" },
     { "path": "../yaml/yaml-migrations" },
-    { "path": "../yaml/yaml-schema" }
+    { "path": "../fern-definition/schema" }
   ]
 }

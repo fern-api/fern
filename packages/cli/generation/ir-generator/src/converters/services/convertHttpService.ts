@@ -12,7 +12,7 @@ import {
     TypeReference
 } from "@fern-api/ir-sdk";
 import { FernWorkspace } from "@fern-api/workspace-loader";
-import { isVariablePathParameter, RawSchemas } from "@fern-api/yaml-schema";
+import { isVariablePathParameter, RawSchemas } from "@fern-api/fern-definition-schema";
 import urlJoin from "url-join";
 import { FernFileContext } from "../../FernFileContext";
 import { IdGenerator } from "../../IdGenerator";

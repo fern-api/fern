@@ -1,5 +1,5 @@
 import { HttpMethod } from "@fern-api/openapi-ir-sdk";
-import { RawSchemas } from "@fern-api/yaml-schema";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 
 export function convertToHttpMethod(httpMethod: HttpMethod): RawSchemas.HttpMethodSchema {
     return HttpMethod._visit<RawSchemas.HttpMethodSchema>(httpMethod, {

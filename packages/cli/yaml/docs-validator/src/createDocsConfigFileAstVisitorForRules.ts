@@ -1,5 +1,5 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { NodePath } from "@fern-api/yaml-schema";
+import { NodePath } from "@fern-api/fern-definition-schema";
 import {
     DocsConfigFileAstNodeTypes,
     DocsConfigFileAstNodeVisitor,

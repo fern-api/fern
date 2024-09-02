@@ -1,5 +1,5 @@
 import { FernWorkspace, getDefinitionFile } from "@fern-api/workspace-loader";
-import { RawSchemas } from "@fern-api/yaml-schema";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { constructFernFileContext, FernFileContext } from "../FernFileContext";
 import { parseReferenceToTypeName } from "../utils/parseReferenceToTypeName";
 

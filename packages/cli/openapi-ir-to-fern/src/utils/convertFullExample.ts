@@ -6,7 +6,7 @@ import {
     LiteralExample,
     PrimitiveExample
 } from "@fern-api/openapi-ir-sdk";
-import { RawSchemas } from "@fern-api/yaml-schema";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 
 export function convertFullExample(fullExample: FullExample): RawSchemas.ExampleTypeReferenceSchema {
     switch (fullExample.type) {

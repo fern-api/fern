@@ -4,7 +4,7 @@ import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { convert, OpenApiConvertedFernDefinition } from "@fern-api/openapi-ir-to-fern";
 import { parse, ParseOpenAPIOptions } from "@fern-api/openapi-parser";
 import { TaskContext } from "@fern-api/task-context";
-import { isRawProtobufSourceSchema } from "@fern-api/yaml-schema";
+import { isRawProtobufSourceSchema } from "@fern-api/fern-definition-schema";
 import yaml from "js-yaml";
 import { mapValues as mapValuesLodash } from "lodash-es";
 import { v4 as uuidv4 } from "uuid";

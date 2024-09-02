@@ -4,7 +4,7 @@ import { assertNever, noop, visitObject } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { parseVersion } from "@fern-api/semver-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { RootApiFileSchema, YAML_SCHEMA_VERSION } from "@fern-api/yaml-schema";
+import { RootApiFileSchema, YAML_SCHEMA_VERSION } from "@fern-api/fern-definition-schema";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios from "axios";
 import { createWriteStream } from "fs";

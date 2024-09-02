@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { ObjectProperty } from "@fern-api/ir-sdk";
-import { isRawObjectDefinition, RawSchemas } from "@fern-api/yaml-schema";
+import { isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
 import { FernFileContext } from "../../FernFileContext";
 import { ResolvedType } from "../../resolvers/ResolvedType";
 import { TypeResolver } from "../../resolvers/TypeResolver";
