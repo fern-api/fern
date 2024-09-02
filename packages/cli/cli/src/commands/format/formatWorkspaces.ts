@@ -1,6 +1,6 @@
 import { Project } from "@fern-api/project-loader";
 import { OSSWorkspace } from "@fern-api/workspace-loader";
-import { formatWorkspace } from "@fern-api/yaml-formatter";
+import { formatWorkspace } from "@fern-api/fern-definition-formatter";
 import { CliContext } from "../../cli-context/CliContext";
 
 export async function formatWorkspaces({

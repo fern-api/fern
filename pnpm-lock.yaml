@@ -2814,6 +2814,9 @@ importers:
       '@fern-api/auth':
         specifier: workspace:*
         version: link:../auth
+      '@fern-api/cli-migrations':
+        specifier: workspace:*
+        version: link:../cli-migrations
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../configuration
@@ -2829,6 +2832,15 @@ importers:
       '@fern-api/docs-validator':
         specifier: workspace:*
         version: link:../yaml/docs-validator
+      '@fern-api/fern-definition-formatter':
+        specifier: workspace:*
+        version: link:../fern-definition/formatter
+      '@fern-api/fern-definition-schema':
+        specifier: workspace:*
+        version: link:../fern-definition/schema
+      '@fern-api/fern-definition-validator':
+        specifier: workspace:*
+        version: link:../fern-definition/validator
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -2886,24 +2898,12 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../task-context
-      '@fern-api/validator':
-        specifier: workspace:*
-        version: link:../yaml/validator
       '@fern-api/venus-api-sdk':
         specifier: 0.0.38
         version: 0.0.38
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../workspace-loader
-      '@fern-api/yaml-formatter':
-        specifier: workspace:*
-        version: link:../yaml/formatter
-      '@fern-api/yaml-migrations':
-        specifier: workspace:*
-        version: link:../yaml/yaml-migrations
-      '@fern-api/yaml-schema':
-        specifier: workspace:*
-        version: link:../yaml/yaml-schema
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584
@@ -3020,11 +3020,89 @@ importers:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
-  packages/cli/cli/dist/dev:
+  packages/cli/cli-migrations:
+    dependencies:
+      '@fern-api/configuration':
+        specifier: workspace:*
+        version: link:../configuration
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../commons/core-utils
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../commons/fs-utils
+      '@fern-api/semver-utils':
+        specifier: workspace:*
+        version: link:../semver-utils
+      '@fern-api/task-context':
+        specifier: workspace:*
+        version: link:../task-context
+      '@fern-fern/docs-config':
+        specifier: 0.0.80
+        version: 0.0.80
+      '@fern-fern/legacy-docs-config':
+        specifier: 0.0.58
+        version: 0.0.58
+      chalk:
+        specifier: ^5.3.0
+        version: 5.3.0
+      find-up:
+        specifier: ^6.3.0
+        version: 6.3.0
+      glob:
+        specifier: ^8.0.3
+        version: 8.1.0
+      glob-promise:
+        specifier: ^5.0.0
+        version: 5.0.1(glob@8.1.0)
+      inquirer:
+        specifier: ^9.2.23
+        version: 9.2.23
+      js-yaml:
+        specifier: ^4.1.0
+        version: 4.1.0
+      yaml:
+        specifier: 2.3.3
+        version: 2.3.3
+      zod:
+        specifier: ^3.22.3
+        version: 3.22.4
     devDependencies:
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
+      '@types/inquirer':
+        specifier: ^9.0.7
+        version: 9.0.7
+      '@types/jest':
+        specifier: ^29.5.12
+        version: 29.5.12
+      '@types/js-yaml':
+        specifier: ^4.0.8
+        version: 4.0.8
+      '@types/node':
+        specifier: ^18.7.18
+        version: 18.7.18
+      depcheck:
+        specifier: ^1.4.6
+        version: 1.4.6
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      organize-imports-cli:
+        specifier: ^0.10.0
+        version: 0.10.0
+      prettier:
+        specifier: ^2.7.1
+        version: 2.7.1
+      tmp-promise:
+        specifier: ^3.0.3
+        version: 3.0.3
+      typescript:
+        specifier: 4.6.4
+        version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  packages/cli/cli/dist/dev: {}
 
   packages/cli/cli/dist/prod:
     devDependencies:
@@ -3037,6 +3115,9 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../commons/core-utils
+      '@fern-api/fern-definition-schema':
+        specifier: workspace:*
+        version: link:../fern-definition/schema
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -3409,6 +3490,214 @@ importers:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
+  packages/cli/fern-definition/formatter:
+    dependencies:
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../commons/core-utils
+      '@fern-api/fern-definition-schema':
+        specifier: workspace:*
+        version: link:../schema
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../../commons/fs-utils
+      '@fern-api/task-context':
+        specifier: workspace:*
+        version: link:../../task-context
+      '@fern-api/workspace-loader':
+        specifier: workspace:*
+        version: link:../../workspace-loader
+      chalk:
+        specifier: ^5.3.0
+        version: 5.3.0
+    devDependencies:
+      '@types/jest':
+        specifier: ^29.5.12
+        version: 29.5.12
+      '@types/node':
+        specifier: ^18.7.18
+        version: 18.7.18
+      '@types/prettier':
+        specifier: ^2.7.1
+        version: 2.7.3
+      depcheck:
+        specifier: ^1.4.6
+        version: 1.4.6
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      globals:
+        specifier: link:@types/vitest/globals
+        version: link:@types/vitest/globals
+      organize-imports-cli:
+        specifier: ^0.10.0
+        version: 0.10.0
+      prettier:
+        specifier: ^2.7.1
+        version: 2.7.1
+      typescript:
+        specifier: 4.6.4
+        version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  packages/cli/fern-definition/json-schema:
+    dependencies:
+      '@fern-api/fern-definition-schema':
+        specifier: workspace:*
+        version: link:../schema
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../../commons/fs-utils
+      prettier:
+        specifier: ^2.7.1
+        version: 2.7.1
+      zod:
+        specifier: ^3.22.3
+        version: 3.22.4
+      zod-to-json-schema:
+        specifier: 3.14.1
+        version: 3.14.1(zod@3.22.4)
+    devDependencies:
+      '@types/jest':
+        specifier: ^29.5.12
+        version: 29.5.12
+      '@types/node':
+        specifier: ^18.7.18
+        version: 18.7.18
+      '@types/prettier':
+        specifier: ^2.7.1
+        version: 2.7.3
+      depcheck:
+        specifier: ^1.4.6
+        version: 1.4.6
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      organize-imports-cli:
+        specifier: ^0.10.0
+        version: 0.10.0
+      typescript:
+        specifier: 4.6.4
+        version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  packages/cli/fern-definition/schema:
+    dependencies:
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../commons/core-utils
+      '@fern-api/ir-sdk':
+        specifier: workspace:*
+        version: link:../../../ir-sdk
+      zod:
+        specifier: ^3.22.3
+        version: 3.22.4
+    devDependencies:
+      '@types/jest':
+        specifier: ^29.5.12
+        version: 29.5.12
+      '@types/node':
+        specifier: ^18.7.18
+        version: 18.7.18
+      depcheck:
+        specifier: ^1.4.6
+        version: 1.4.6
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      globals:
+        specifier: link:@types/vitest/globals
+        version: link:@types/vitest/globals
+      organize-imports-cli:
+        specifier: ^0.10.0
+        version: 0.10.0
+      prettier:
+        specifier: ^2.7.1
+        version: 2.7.1
+      typescript:
+        specifier: 4.6.4
+        version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  packages/cli/fern-definition/validator:
+    dependencies:
+      '@fern-api/configuration':
+        specifier: workspace:*
+        version: link:../../configuration
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../commons/core-utils
+      '@fern-api/fern-definition-schema':
+        specifier: workspace:*
+        version: link:../schema
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../../commons/fs-utils
+      '@fern-api/ir-generator':
+        specifier: workspace:*
+        version: link:../../generation/ir-generator
+      '@fern-api/ir-sdk':
+        specifier: workspace:*
+        version: link:../../../ir-sdk
+      '@fern-api/logger':
+        specifier: workspace:*
+        version: link:../../logger
+      '@fern-api/task-context':
+        specifier: workspace:*
+        version: link:../../task-context
+      '@fern-api/workspace-loader':
+        specifier: workspace:*
+        version: link:../../workspace-loader
+      chalk:
+        specifier: ^5.3.0
+        version: 5.3.0
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
+      strip-ansi:
+        specifier: ^7.1.0
+        version: 7.1.0
+      terminal-link:
+        specifier: ^3.0.0
+        version: 3.0.0
+    devDependencies:
+      '@types/jest':
+        specifier: ^29.5.12
+        version: 29.5.12
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
+      '@types/node':
+        specifier: ^18.7.18
+        version: 18.7.18
+      depcheck:
+        specifier: ^1.4.6
+        version: 1.4.6
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      globals:
+        specifier: link:@types/vitest/globals
+        version: link:@types/vitest/globals
+      organize-imports-cli:
+        specifier: ^0.10.0
+        version: 0.10.0
+      prettier:
+        specifier: ^2.7.1
+        version: 2.7.1
+      typescript:
+        specifier: 4.6.4
+        version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
   packages/cli/generation/ir-generator:
     dependencies:
       '@fern-api/configuration':
@@ -3417,6 +3706,9 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../commons/core-utils
+      '@fern-api/fern-definition-schema':
+        specifier: workspace:*
+        version: link:../../fern-definition/schema
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../commons/fs-utils
@@ -3432,9 +3724,6 @@ importers:
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../../workspace-loader
-      '@fern-api/yaml-schema':
-        specifier: workspace:*
-        version: link:../../yaml/yaml-schema
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -3959,6 +4248,12 @@ importers:
       '@fern-api/core':
         specifier: workspace:*
         version: link:../../core
+      '@fern-api/fern-definition-formatter':
+        specifier: workspace:*
+        version: link:../fern-definition/formatter
+      '@fern-api/fern-definition-schema':
+        specifier: workspace:*
+        version: link:../fern-definition/schema
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -3968,12 +4263,6 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../task-context
-      '@fern-api/yaml-formatter':
-        specifier: workspace:*
-        version: link:../yaml/formatter
-      '@fern-api/yaml-schema':
-        specifier: workspace:*
-        version: link:../yaml/yaml-schema
       axios:
         specifier: ^0.28.0
         version: 0.28.0
@@ -4221,6 +4510,9 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../commons/core-utils
+      '@fern-api/fern-definition-schema':
+        specifier: workspace:*
+        version: link:../fern-definition/schema
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -4236,9 +4528,6 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../task-context
-      '@fern-api/yaml-schema':
-        specifier: workspace:*
-        version: link:../yaml/yaml-schema
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -4279,6 +4568,9 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../commons/core-utils
+      '@fern-api/fern-definition-schema':
+        specifier: workspace:*
+        version: link:../fern-definition/schema
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -4291,9 +4583,6 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../task-context
-      '@fern-api/yaml-schema':
-        specifier: workspace:*
-        version: link:../yaml/yaml-schema
       '@redocly/openapi-core':
         specifier: ^1.4.1
         version: 1.4.1
@@ -4579,6 +4868,9 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../commons/core-utils
+      '@fern-api/fern-definition-schema':
+        specifier: workspace:*
+        version: link:../fern-definition/schema
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -4600,9 +4892,6 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../task-context
-      '@fern-api/yaml-schema':
-        specifier: workspace:*
-        version: link:../yaml/yaml-schema
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584
@@ -4688,6 +4977,9 @@ importers:
       '@fern-api/docs-markdown-utils':
         specifier: workspace:*
         version: link:../../docs-markdown-utils
+      '@fern-api/fern-definition-schema':
+        specifier: workspace:*
+        version: link:../../fern-definition/schema
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../commons/fs-utils
@@ -4703,9 +4995,6 @@ importers:
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../../workspace-loader
-      '@fern-api/yaml-schema':
-        specifier: workspace:*
-        version: link:../yaml-schema
       '@types/tinycolor2':
         specifier: ^1.4.6
         version: 1.4.6
@@ -4746,299 +5035,6 @@ importers:
       '@types/js-yaml':
         specifier: ^4.0.8
         version: 4.0.8
-      '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
-      depcheck:
-        specifier: ^1.4.6
-        version: 1.4.6
-      eslint:
-        specifier: ^8.56.0
-        version: 8.56.0
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
-      prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
-      typescript:
-        specifier: 4.6.4
-        version: 4.6.4
-      vitest:
-        specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
-
-  packages/cli/yaml/formatter:
-    dependencies:
-      '@fern-api/core-utils':
-        specifier: workspace:*
-        version: link:../../../commons/core-utils
-      '@fern-api/fs-utils':
-        specifier: workspace:*
-        version: link:../../../commons/fs-utils
-      '@fern-api/task-context':
-        specifier: workspace:*
-        version: link:../../task-context
-      '@fern-api/workspace-loader':
-        specifier: workspace:*
-        version: link:../../workspace-loader
-      '@fern-api/yaml-schema':
-        specifier: workspace:*
-        version: link:../yaml-schema
-      chalk:
-        specifier: ^5.3.0
-        version: 5.3.0
-    devDependencies:
-      '@types/jest':
-        specifier: ^29.5.12
-        version: 29.5.12
-      '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
-      '@types/prettier':
-        specifier: ^2.7.1
-        version: 2.7.3
-      depcheck:
-        specifier: ^1.4.6
-        version: 1.4.6
-      eslint:
-        specifier: ^8.56.0
-        version: 8.56.0
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
-      prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
-      typescript:
-        specifier: 4.6.4
-        version: 4.6.4
-      vitest:
-        specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
-
-  packages/cli/yaml/json-schema:
-    dependencies:
-      '@fern-api/fs-utils':
-        specifier: workspace:*
-        version: link:../../../commons/fs-utils
-      '@fern-api/yaml-schema':
-        specifier: workspace:*
-        version: link:../yaml-schema
-      prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
-      zod:
-        specifier: ^3.22.3
-        version: 3.22.4
-      zod-to-json-schema:
-        specifier: 3.14.1
-        version: 3.14.1(zod@3.22.4)
-    devDependencies:
-      '@types/jest':
-        specifier: ^29.5.12
-        version: 29.5.12
-      '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
-      '@types/prettier':
-        specifier: ^2.7.1
-        version: 2.7.3
-      depcheck:
-        specifier: ^1.4.6
-        version: 1.4.6
-      eslint:
-        specifier: ^8.56.0
-        version: 8.56.0
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
-      typescript:
-        specifier: 4.6.4
-        version: 4.6.4
-      vitest:
-        specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
-
-  packages/cli/yaml/validator:
-    dependencies:
-      '@fern-api/configuration':
-        specifier: workspace:*
-        version: link:../../configuration
-      '@fern-api/core-utils':
-        specifier: workspace:*
-        version: link:../../../commons/core-utils
-      '@fern-api/fs-utils':
-        specifier: workspace:*
-        version: link:../../../commons/fs-utils
-      '@fern-api/ir-generator':
-        specifier: workspace:*
-        version: link:../../generation/ir-generator
-      '@fern-api/ir-sdk':
-        specifier: workspace:*
-        version: link:../../../ir-sdk
-      '@fern-api/logger':
-        specifier: workspace:*
-        version: link:../../logger
-      '@fern-api/task-context':
-        specifier: workspace:*
-        version: link:../../task-context
-      '@fern-api/workspace-loader':
-        specifier: workspace:*
-        version: link:../../workspace-loader
-      '@fern-api/yaml-schema':
-        specifier: workspace:*
-        version: link:../yaml-schema
-      chalk:
-        specifier: ^5.3.0
-        version: 5.3.0
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
-      strip-ansi:
-        specifier: ^7.1.0
-        version: 7.1.0
-      terminal-link:
-        specifier: ^3.0.0
-        version: 3.0.0
-    devDependencies:
-      '@types/jest':
-        specifier: ^29.5.12
-        version: 29.5.12
-      '@types/lodash-es':
-        specifier: ^4.17.12
-        version: 4.17.12
-      '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
-      depcheck:
-        specifier: ^1.4.6
-        version: 1.4.6
-      eslint:
-        specifier: ^8.56.0
-        version: 8.56.0
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
-      prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
-      typescript:
-        specifier: 4.6.4
-        version: 4.6.4
-      vitest:
-        specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
-
-  packages/cli/yaml/yaml-migrations:
-    dependencies:
-      '@fern-api/configuration':
-        specifier: workspace:*
-        version: link:../../configuration
-      '@fern-api/core-utils':
-        specifier: workspace:*
-        version: link:../../../commons/core-utils
-      '@fern-api/fs-utils':
-        specifier: workspace:*
-        version: link:../../../commons/fs-utils
-      '@fern-api/semver-utils':
-        specifier: workspace:*
-        version: link:../../semver-utils
-      '@fern-api/task-context':
-        specifier: workspace:*
-        version: link:../../task-context
-      '@fern-fern/docs-config':
-        specifier: 0.0.80
-        version: 0.0.80
-      '@fern-fern/legacy-docs-config':
-        specifier: 0.0.58
-        version: 0.0.58
-      chalk:
-        specifier: ^5.3.0
-        version: 5.3.0
-      find-up:
-        specifier: ^6.3.0
-        version: 6.3.0
-      glob:
-        specifier: ^8.0.3
-        version: 8.1.0
-      glob-promise:
-        specifier: ^5.0.0
-        version: 5.0.1(glob@8.1.0)
-      inquirer:
-        specifier: ^9.2.23
-        version: 9.2.23
-      js-yaml:
-        specifier: ^4.1.0
-        version: 4.1.0
-      yaml:
-        specifier: 2.3.3
-        version: 2.3.3
-      zod:
-        specifier: ^3.22.3
-        version: 3.22.4
-    devDependencies:
-      '@types/inquirer':
-        specifier: ^9.0.7
-        version: 9.0.7
-      '@types/jest':
-        specifier: ^29.5.12
-        version: 29.5.12
-      '@types/js-yaml':
-        specifier: ^4.0.8
-        version: 4.0.8
-      '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
-      depcheck:
-        specifier: ^1.4.6
-        version: 1.4.6
-      eslint:
-        specifier: ^8.56.0
-        version: 8.56.0
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
-      prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
-      tmp-promise:
-        specifier: ^3.0.3
-        version: 3.0.3
-      typescript:
-        specifier: 4.6.4
-        version: 4.6.4
-      vitest:
-        specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
-
-  packages/cli/yaml/yaml-schema:
-    dependencies:
-      '@fern-api/configuration':
-        specifier: workspace:*
-        version: link:../../configuration
-      '@fern-api/core-utils':
-        specifier: workspace:*
-        version: link:../../../commons/core-utils
-      '@fern-api/ir-sdk':
-        specifier: workspace:*
-        version: link:../../../ir-sdk
-      zod:
-        specifier: ^3.22.3
-        version: 3.22.4
-    devDependencies:
-      '@types/jest':
-        specifier: ^29.5.12
-        version: 29.5.12
       '@types/node':
         specifier: ^18.7.18
         version: 18.7.18
@@ -5287,12 +5283,12 @@ importers:
 
   packages/scripts:
     dependencies:
+      '@fern-api/fern-definition-json-schema':
+        specifier: workspace:*
+        version: link:../cli/fern-definition/json-schema
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../commons/fs-utils
-      '@fern-api/json-schema':
-        specifier: workspace:*
-        version: link:../cli/yaml/json-schema
       chalk:
         specifier: ^5.3.0
         version: 5.3.0

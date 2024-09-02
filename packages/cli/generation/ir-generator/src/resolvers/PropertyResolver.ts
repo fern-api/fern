@@ -1,5 +1,5 @@
 import { Name, ObjectProperty, RequestProperty, RequestPropertyValue, ResponseProperty } from "@fern-api/ir-sdk";
-import { isInlineRequestBody, RawSchemas } from "@fern-api/yaml-schema";
+import { isInlineRequestBody, RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     getNestedObjectPropertyFromObjectSchema,
     getNestedObjectPropertyFromResolvedType,

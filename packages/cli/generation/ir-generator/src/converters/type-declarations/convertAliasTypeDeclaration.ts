@@ -6,7 +6,7 @@ import {
     isRawObjectDefinition,
     isRawUndiscriminatedUnionDefinition,
     RawSchemas
-} from "@fern-api/yaml-schema";
+} from "@fern-api/fern-definition-schema";
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { getGenericDetails } from "../../utils/getGenericDetails";

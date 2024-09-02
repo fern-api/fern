@@ -17,7 +17,7 @@ import {
     Schema,
     StringSchema
 } from "@fern-api/openapi-ir-sdk";
-import { RawSchemas } from "@fern-api/yaml-schema";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { camelCase } from "lodash-es";
 import {
     buildEnumTypeDeclaration,

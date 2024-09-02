@@ -17,7 +17,7 @@ import {
     Webhook,
     WebhookPayload
 } from "@fern-api/ir-sdk";
-import { isInlineRequestBody, RawSchemas } from "@fern-api/yaml-schema";
+import { isInlineRequestBody, RawSchemas } from "@fern-api/fern-definition-schema";
 import { isReferencedWebhookPayloadSchema } from "../converters/convertWebhookGroup";
 import { FernFileContext } from "../FernFileContext";
 import { IdGenerator } from "../IdGenerator";

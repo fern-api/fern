@@ -1,7 +1,7 @@
 import { FERN_PACKAGE_MARKER_FILENAME, ROOT_API_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, dirname, relative, RelativeFilePath } from "@fern-api/fs-utils";
 import { OpenApiIntermediateRepresentation, Source } from "@fern-api/openapi-ir-sdk";
-import { RawSchemas, RootApiFileSchema, visitRawEnvironmentDeclaration } from "@fern-api/yaml-schema";
+import { RawSchemas, RootApiFileSchema, visitRawEnvironmentDeclaration } from "@fern-api/fern-definition-schema";
 import { camelCase, isEqual } from "lodash-es";
 import path, { basename, extname } from "path";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema";

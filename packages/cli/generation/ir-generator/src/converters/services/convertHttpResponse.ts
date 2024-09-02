@@ -6,7 +6,7 @@ import {
     NonStreamHttpResponseBody,
     StreamingResponse
 } from "@fern-api/ir-sdk";
-import { isRawTextType, parseRawFileType, parseRawTextType, RawSchemas } from "@fern-api/yaml-schema";
+import { isRawTextType, parseRawFileType, parseRawTextType, RawSchemas } from "@fern-api/fern-definition-schema";
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { getObjectPropertyFromResolvedType } from "./getObjectPropertyFromResolvedType";

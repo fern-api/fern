@@ -1,4 +1,4 @@
-import { RawSchemas } from "@fern-api/yaml-schema";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 
 export function getDocs(field: RawSchemas.WithDocsSchema | string): string | undefined {
     if (typeof field === "string") {

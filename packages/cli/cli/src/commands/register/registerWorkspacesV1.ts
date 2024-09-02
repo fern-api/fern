@@ -2,7 +2,7 @@ import { createOrganizationIfDoesNotExist, FernToken } from "@fern-api/auth";
 import { createFiddleService } from "@fern-api/core";
 import { Project } from "@fern-api/project-loader";
 import { OSSWorkspace } from "@fern-api/workspace-loader";
-import { YAML_SCHEMA_VERSION } from "@fern-api/yaml-schema";
+import { YAML_SCHEMA_VERSION } from "@fern-api/fern-definition-schema";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios from "axios";
 import { readFile } from "fs/promises";
