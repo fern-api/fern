@@ -59,7 +59,7 @@ it.skip("fhir", async () => {
     });
 }, 200_000);
 
-it("test definitions", async () => {
+describe("test definitions", async () => {
     const TEST_DEFINITIONS_DIR = path.join(__dirname, "../../../../../../test-definitions");
     const apiWorkspaces = await loadApis({
         fernDirectory: join(AbsoluteFilePath.of(TEST_DEFINITIONS_DIR), RelativeFilePath.of("fern")),
@@ -72,15 +72,17 @@ it("test definitions", async () => {
 
     await Promise.all(
         apiWorkspaces.map(async (workspace) => {
-            await generateAndSnapshotIR({
-                absolutePathToIr: AbsoluteFilePath.of(path.join(__dirname, "test-definitions")),
-                workspace,
-                audiences: { type: "all" },
-                workspaceName: workspace.workspaceName ?? ""
+            it(`${workspace.workspaceName}`, async () => {
+                await generateAndSnapshotIR({
+                    absolutePathToIr: AbsoluteFilePath.of(path.join(__dirname, "test-definitions")),
+                    workspace,
+                    audiences: { type: "all" },
+                    workspaceName: workspace.workspaceName ?? ""
+                });
             });
         })
     );
-}, 200_000);
+});
 
 it("test definitions openapi", async () => {
     const TEST_DEFINITIONS_DIR = path.join(__dirname, "../../../../../../test-definitions-openapi");

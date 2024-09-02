@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, relative } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, relative, RelativeFilePath } from "@fern-api/fs-utils";
 import { OpenApiIntermediateRepresentation, Source as OpenApiIrSource } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
@@ -32,16 +32,19 @@ export type Source = AsyncAPISource | OpenAPISource | ProtobufSource;
 
 export interface AsyncAPISource {
     type: "asyncapi";
+    relativePathToDependency?: RelativeFilePath;
     file: AbsoluteFilePath;
 }
 
 export interface OpenAPISource {
     type: "openapi";
+    relativePathToDependency?: RelativeFilePath;
     file: AbsoluteFilePath;
 }
 
 export interface ProtobufSource {
     type: "protobuf";
+    relativePathToDependency?: RelativeFilePath;
     file: AbsoluteFilePath;
 }
 
@@ -89,9 +92,13 @@ export async function parse({
         groups: {}
     };
 
+    console.log("specs", JSON.stringify(specs, undefined, 2));
     for (const spec of specs) {
         const contents = (await readFile(spec.absoluteFilepath)).toString();
-        const sourceRelativePath = relative(absoluteFilePathToWorkspace, spec.source.file);
+        let sourceRelativePath = relative(absoluteFilePathToWorkspace, spec.source.file);
+        if (spec.source.relativePathToDependency != null) {
+            sourceRelativePath = join(spec.source.relativePathToDependency, sourceRelativePath);
+        }
         const source =
             spec.source.type === "protobuf"
                 ? OpenApiIrSource.protobuf({ file: sourceRelativePath })
