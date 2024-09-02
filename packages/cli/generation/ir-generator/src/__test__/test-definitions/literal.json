@@ -8065,6 +8065,7 @@
     "websocketChannels": {},
     "readmeConfig": null,
     "sourceConfig": null,
+    "publishConfig": null,
     "subpackages": {
         "subpackage_headers": {
             "name": {

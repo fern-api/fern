@@ -1920,6 +1920,7 @@
     "websocketChannels": {},
     "readmeConfig": null,
     "sourceConfig": null,
+    "publishConfig": null,
     "subpackages": {
         "subpackage_completions": {
             "name": {

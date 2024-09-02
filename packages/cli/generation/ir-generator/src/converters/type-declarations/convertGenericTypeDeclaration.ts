@@ -1,6 +1,6 @@
 import { Type } from "@fern-api/ir-sdk";
-import { isRawObjectDefinition, RawSchemas } from "@fern-api/yaml-schema";
 import { FernFileContext } from "../../FernFileContext";
+import { RawSchemas, isRawObjectDefinition } from "@fern-api/fern-definition-schema";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { getGenericDetails } from "../../utils/getGenericDetails";
 import { parseTypeName } from "../../utils/parseTypeName";
