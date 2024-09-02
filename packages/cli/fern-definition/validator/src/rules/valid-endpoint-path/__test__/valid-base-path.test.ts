@@ -16,13 +16,7 @@ describe("valid-endpoint-path", () => {
 
         const expectedViolations: ValidationViolation[] = [
             {
-                message: 'Path cannot be /. Use "" instead.',
-                nodePath: ["service", "endpoints", "slash"],
-                relativeFilepath: RelativeFilePath.of("a.yml"),
-                severity: "error"
-            },
-            {
-                message: "Path must be the empty string, or start with a slash.",
+                message: "Path must start with a slash.",
                 nodePath: ["service", "endpoints", "noLeadingSlash"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
                 severity: "error"
