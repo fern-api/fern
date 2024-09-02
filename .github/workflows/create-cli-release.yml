@@ -27,6 +27,9 @@ jobs:
           ref: main
           fetch-depth: 2
 
+      - name: Install
+        uses: ./.github/actions/install
+
       - name: Get version from file
         id: get_version
         run: |
