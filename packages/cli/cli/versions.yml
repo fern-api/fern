@@ -1,4 +1,11 @@
 - changelog_entry:
+  - summary: Update filters within `generator upgrade` to appropriately take into account generator group name.
+    type: fix
+  created_at: '2024-09-02'
+  ir_version: 53
+  version: 0.40.3
+
+- changelog_entry:
   - summary: Release IR v53.9.0 which includes a publishing configuration.
     type: internal
   created_at: '2024-08-28'
