@@ -73,7 +73,7 @@
     "@fern-api/yaml-migrations": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",
     "@fern-fern/generators-sdk": "0.105.0-79c5d1764",
-    "@fern-fern/fiddle-sdk": "0.0.584",
+    "@fern-fern/fiddle-sdk": "0.0.591",
     "@types/get-port": "^4.2.0",
     "ansi-escapes": "^5.0.0",
     "axios": "^0.28.0",
