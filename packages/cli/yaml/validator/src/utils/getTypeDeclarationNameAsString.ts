@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { TypeDeclarationName } from "@fern-api/yaml-schema";
+import { TypeDeclarationName } from "../ast";
 
 export function getTypeDeclarationNameAsString(typeName: TypeDeclarationName): string {
     if (!typeName.isInlined) {

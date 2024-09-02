@@ -5,10 +5,9 @@ import {
     isRawTextType,
     parseRawBytesType,
     parseRawFileType,
-    recursivelyVisitRawTypeReference,
-    TypeReferenceLocation,
-    visitDefinitionFileYamlAst
+    recursivelyVisitRawTypeReference
 } from "@fern-api/yaml-schema";
+import { visitDefinitionFileYamlAst, TypeReferenceLocation } from "../../ast";
 import chalk from "chalk";
 import { mapValues } from "lodash-es";
 import { Rule, RuleViolation } from "../../Rule";

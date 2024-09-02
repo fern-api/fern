@@ -3043,6 +3043,9 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../task-context
+      '@fern-api/yaml-schema':
+        specifier: workspace:*
+        version: link:../yaml/yaml-schema
       '@fern-fern/fdr-cjs-sdk':
         specifier: 0.1.0
         version: 0.1.0
@@ -5023,9 +5026,6 @@ importers:
 
   packages/cli/yaml/yaml-schema:
     dependencies:
-      '@fern-api/configuration':
-        specifier: workspace:*
-        version: link:../../configuration
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../commons/core-utils
