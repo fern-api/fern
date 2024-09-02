@@ -70,7 +70,7 @@
     "@fern-api/venus-api-sdk": "0.0.38",
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-api/fern-definition-formatter": "workspace:*",
-    "@fern-api/yaml-migrations": "workspace:*",
+    "@fern-api/cli-migrations": "workspace:*",
     "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-fern/generators-sdk": "0.105.0-79c5d1764",
     "@fern-fern/fiddle-sdk": "0.0.584",

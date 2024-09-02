@@ -1,7 +1,7 @@
 import { fernConfigJson, FERN_DIRECTORY, getFernDirectory } from "@fern-api/configuration";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { isVersionAhead } from "@fern-api/semver-utils";
-import { runMigrations } from "@fern-api/yaml-migrations";
+import { runMigrations } from "@fern-api/cli-migrations";
 import chalk from "chalk";
 import { writeFile } from "fs/promises";
 import produce from "immer";

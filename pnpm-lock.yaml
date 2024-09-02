@@ -2814,6 +2814,9 @@ importers:
       '@fern-api/auth':
         specifier: workspace:*
         version: link:../auth
+      '@fern-api/cli-migrations':
+        specifier: workspace:*
+        version: link:../cli-migrations
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../configuration
@@ -2901,9 +2904,6 @@ importers:
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../workspace-loader
-      '@fern-api/yaml-migrations':
-        specifier: workspace:*
-        version: link:../yaml/yaml-migrations
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584
@@ -3013,6 +3013,88 @@ importers:
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
+      typescript:
+        specifier: 4.6.4
+        version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  packages/cli/cli-migrations:
+    dependencies:
+      '@fern-api/configuration':
+        specifier: workspace:*
+        version: link:../configuration
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../commons/core-utils
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../commons/fs-utils
+      '@fern-api/semver-utils':
+        specifier: workspace:*
+        version: link:../semver-utils
+      '@fern-api/task-context':
+        specifier: workspace:*
+        version: link:../task-context
+      '@fern-fern/docs-config':
+        specifier: 0.0.80
+        version: 0.0.80
+      '@fern-fern/legacy-docs-config':
+        specifier: 0.0.58
+        version: 0.0.58
+      chalk:
+        specifier: ^5.3.0
+        version: 5.3.0
+      find-up:
+        specifier: ^6.3.0
+        version: 6.3.0
+      glob:
+        specifier: ^8.0.3
+        version: 8.1.0
+      glob-promise:
+        specifier: ^5.0.0
+        version: 5.0.1(glob@8.1.0)
+      inquirer:
+        specifier: ^9.2.23
+        version: 9.2.23
+      js-yaml:
+        specifier: ^4.1.0
+        version: 4.1.0
+      yaml:
+        specifier: 2.3.3
+        version: 2.3.3
+      zod:
+        specifier: ^3.22.3
+        version: 3.22.4
+    devDependencies:
+      '@types/inquirer':
+        specifier: ^9.0.7
+        version: 9.0.7
+      '@types/jest':
+        specifier: ^29.5.12
+        version: 29.5.12
+      '@types/js-yaml':
+        specifier: ^4.0.8
+        version: 4.0.8
+      '@types/node':
+        specifier: ^18.7.18
+        version: 18.7.18
+      depcheck:
+        specifier: ^1.4.6
+        version: 1.4.6
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      organize-imports-cli:
+        specifier: ^0.10.0
+        version: 0.10.0
+      prettier:
+        specifier: ^2.7.1
+        version: 2.7.1
+      tmp-promise:
+        specifier: ^3.0.3
+        version: 3.0.3
       typescript:
         specifier: 4.6.4
         version: 4.6.4
@@ -4971,88 +5053,6 @@ importers:
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      typescript:
-        specifier: 4.6.4
-        version: 4.6.4
-      vitest:
-        specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
-
-  packages/cli/yaml/yaml-migrations:
-    dependencies:
-      '@fern-api/configuration':
-        specifier: workspace:*
-        version: link:../../configuration
-      '@fern-api/core-utils':
-        specifier: workspace:*
-        version: link:../../../commons/core-utils
-      '@fern-api/fs-utils':
-        specifier: workspace:*
-        version: link:../../../commons/fs-utils
-      '@fern-api/semver-utils':
-        specifier: workspace:*
-        version: link:../../semver-utils
-      '@fern-api/task-context':
-        specifier: workspace:*
-        version: link:../../task-context
-      '@fern-fern/docs-config':
-        specifier: 0.0.80
-        version: 0.0.80
-      '@fern-fern/legacy-docs-config':
-        specifier: 0.0.58
-        version: 0.0.58
-      chalk:
-        specifier: ^5.3.0
-        version: 5.3.0
-      find-up:
-        specifier: ^6.3.0
-        version: 6.3.0
-      glob:
-        specifier: ^8.0.3
-        version: 8.1.0
-      glob-promise:
-        specifier: ^5.0.0
-        version: 5.0.1(glob@8.1.0)
-      inquirer:
-        specifier: ^9.2.23
-        version: 9.2.23
-      js-yaml:
-        specifier: ^4.1.0
-        version: 4.1.0
-      yaml:
-        specifier: 2.3.3
-        version: 2.3.3
-      zod:
-        specifier: ^3.22.3
-        version: 3.22.4
-    devDependencies:
-      '@types/inquirer':
-        specifier: ^9.0.7
-        version: 9.0.7
-      '@types/jest':
-        specifier: ^29.5.12
-        version: 29.5.12
-      '@types/js-yaml':
-        specifier: ^4.0.8
-        version: 4.0.8
-      '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
-      depcheck:
-        specifier: ^1.4.6
-        version: 1.4.6
-      eslint:
-        specifier: ^8.56.0
-        version: 8.56.0
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
-      prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
-      tmp-promise:
-        specifier: ^3.0.3
-        version: 3.0.3
       typescript:
         specifier: 4.6.4
         version: 4.6.4
