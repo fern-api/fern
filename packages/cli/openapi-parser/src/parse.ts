@@ -92,7 +92,6 @@ export async function parse({
         groups: {}
     };
 
-    console.log("specs", JSON.stringify(specs, undefined, 2));
     for (const spec of specs) {
         const contents = (await readFile(spec.absoluteFilepath)).toString();
         let sourceRelativePath = relative(absoluteFilePathToWorkspace, spec.source.file);
