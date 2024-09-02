@@ -115,7 +115,7 @@ export function getReferencedTypesFromRawDeclaration({
                     file
                 });
 
-                if (maybeDeclaration.typeName.match(/(\w+)<([\w,\s]+)>/) != null) {
+                if (getGenericDetails(maybeDeclaration.typeName)?.isGeneric) {
                     continue;
                 }
 

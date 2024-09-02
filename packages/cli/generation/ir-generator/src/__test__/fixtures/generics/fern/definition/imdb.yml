@@ -70,15 +70,13 @@ types:
     properties:
       value: T
       other-value: Movie
-
-  GenericTest2<T>:
-    properties:
-      value: T
-      other-value-2: string
   
   GenericApplication:
     type: GenericTest<CreateMovieRequest>
     docs: This is a generic application type
+
+  Sample:
+    type: GenericTest<Movie>
 
   VanillaAlias:
     properties:

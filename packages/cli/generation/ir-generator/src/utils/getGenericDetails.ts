@@ -2,11 +2,13 @@ export function getGenericDetails(name: string): { isGeneric: true; name?: strin
     const genericMatch = name.match(/(\w+)<([\w,\s]+)>/);
 
     if (genericMatch?.[0] != null) {
-        return {
-            isGeneric: true,
-            name: genericMatch[1],
-            arguments: genericMatch[2]?.split(",").map((arg) => arg.trim())
-        };
+        if (!genericMatch[1] || !new Set(["optional", "set", "list", "map", "literal"]).has(genericMatch[1]?.trim())) {
+            return {
+                isGeneric: true,
+                name: genericMatch[1]?.trim(),
+                arguments: genericMatch[2]?.split(",").map((arg) => arg.trim())
+            };
+        }
     }
 
     return;
