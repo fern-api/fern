@@ -1,5 +1,5 @@
 import { noop, visitObject } from "@fern-api/core-utils";
-import { PackageMarkerFileSchema } from "../schemas";
+import { PackageMarkerFileSchema } from "@fern-api/yaml-schema";
 import { PackageMarkerAstVisitor } from "./PackageMarkerAstVisitor";
 
 export async function visitPackageMarkerYamlAst(

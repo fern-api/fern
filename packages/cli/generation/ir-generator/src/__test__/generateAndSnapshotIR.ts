@@ -60,7 +60,7 @@ export async function generateAndSnapshotIR({
         context
     });
 
-    const intermediateRepresentationJson = await IrSerialization.IntermediateRepresentation.jsonOrThrow(
+    const intermediateRepresentationJson = IrSerialization.IntermediateRepresentation.jsonOrThrow(
         intermediateRepresentation,
         {
             unrecognizedObjectKeys: "strip"

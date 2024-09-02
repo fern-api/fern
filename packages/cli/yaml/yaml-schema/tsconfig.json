@@ -4,7 +4,6 @@
   "include": ["./src/**/*"],
   "references": [
     { "path": "../../../commons/core-utils" },
-    { "path": "../../../ir-sdk" },
-    { "path": "../../configuration" }
+    { "path": "../../../ir-sdk" }
   ]
 }

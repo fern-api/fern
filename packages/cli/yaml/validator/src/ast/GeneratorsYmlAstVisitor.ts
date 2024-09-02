@@ -1,5 +1,5 @@
 import { generatorsYml } from "@fern-api/configuration";
-import { NodePath } from "../NodePath";
+import { NodePath } from "@fern-api/yaml-schema";
 
 export type GeneratorsYmlFileAstVisitor<R = void | Promise<void>> = {
     [K in keyof GeneratorsYmlFileAstNodeTypes]: GeneratorsYmlFileAstNodeVisitor<K, R>;

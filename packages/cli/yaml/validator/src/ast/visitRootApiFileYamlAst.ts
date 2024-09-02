@@ -1,5 +1,5 @@
 import { noop, visitObject } from "@fern-api/core-utils";
-import { RootApiFileSchema } from "../schemas";
+import { RootApiFileSchema } from "@fern-api/yaml-schema";
 import { RootApiFileAstVisitor } from "./RootApiFileAstVisitor";
 import { visitPathParameters } from "./visitors/services/visitHttpService";
 
