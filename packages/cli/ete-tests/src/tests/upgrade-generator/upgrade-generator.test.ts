@@ -40,6 +40,27 @@ describe("fern generator upgrade", () => {
         expect(javaVersion.stdout).toEqual("0.0.1");
     }, 60_000);
 
+    it("fern generator upgrade with filters", async () => {
+        // Create tmpdir and copy contents
+        const tmpDir = await tmp.dir();
+        const directory = AbsoluteFilePath.of(tmpDir.path);
+
+        await cp(FIXTURES_DIR, directory, { recursive: true });
+
+        await runFernCli(["generator", "upgrade", "--group", "python-sdk", "--generator", "fernapi/fern-python-sdk"], {
+            cwd: directory
+        });
+
+        const pythonVersion = await runFernCli(
+            ["generator", "get", "--group", "python-sdk", "--generator", "fernapi/fern-python-sdk", "--version"],
+            {
+                cwd: directory
+            }
+        );
+
+        expect(pythonVersion.stdout).not.toEqual("0.0.0");
+    }, 60_000);
+
     it("fern generator help commands", async () => {
         // Create tmpdir and copy contents
         const tmpDir = await tmp.dir();
