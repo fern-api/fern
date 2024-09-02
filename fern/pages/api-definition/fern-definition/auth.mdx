@@ -14,7 +14,25 @@ fern/
   └─ imdb.yml # endpoints, types, and errors
 ```
 
-## Bearer Authentication
+To add an authentication scheme, specify the authentication method under the `auth-schemes` section. 
+
+```yaml api.yml {1-2}
+auth-schemes:
+  AuthScheme:                     
+    ...
+```
+
+<Note>
+To apply an authentication scheme across all endpoints, reference the `auth-scheme` within the `auth` section of your `api.yml` file. 
+```yaml api.yml {1}
+auth: AuthScheme                  
+auth-schemes:
+  AuthScheme:                     
+    ...
+```
+</Note>
+
+## Bearer authentication
 
 Start by defining a `Bearer` authentication scheme in `api.yml`: 
 
@@ -60,7 +78,7 @@ client = new Client({
 })
 ```
 
-## Basic Authentication
+## Basic authentication
 
 Start by defining a `Basic` authentication scheme in `api.yml`: 
 
@@ -111,9 +129,9 @@ client = new Client({
 })
 ```
 
-## Custom Header (e.g. API Key)
+## Custom header (e.g. API key)
 
-You can also create your own authentication scheme with customizaed headers. 
+You can also create your own authentication scheme with customized headers. 
 
 ```yaml title="api.yml" {3-5}
 auth: ApiKeyAuthScheme
@@ -158,7 +176,7 @@ client = new Client({
 })
 ```
 
-## OAuth Client Credentials
+## OAuth client credentials
 
 If your API uses OAuth, you can specify an oauth scheme. Note that you'll need to define a token retrieval endpoint. 
 
@@ -187,4 +205,4 @@ If the `expires-in` property is set, the generated OAuth token provider will aut
 Otherwise, it's assumed that the access token is valid indefinitely.
 
 With this, all of the OAuth logic happens automatically in the generated SDKs. As long as you configure these settings, your
-client will automatcally retrieve an access token and refresh it as needed.
+client will automatically retrieve an access token and refresh it as needed.

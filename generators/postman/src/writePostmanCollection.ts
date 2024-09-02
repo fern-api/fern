@@ -24,19 +24,17 @@ export const getCollectionOutputFilename = (postmanGeneratorConfig?: PostmanGene
 };
 
 export async function writePostmanCollection(pathToConfig: string): Promise<void> {
-    try {
-        const config = await parseGeneratorConfig(pathToConfig);
+    const config = await parseGeneratorConfig(pathToConfig);
 
+    const generatorLoggingClient = new GeneratorNotificationService(config.environment);
+    // eslint-disable-next-line no-console
+    console.log("Initialized generator logging client");
+
+    try {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const postmanGeneratorConfig = config.customConfig as any as PostmanGeneratorConfigSchema;
-        // eslint-disable-next-line no-console
-        console.log("Validated custom config");
 
         const collectionOutputFilename = getCollectionOutputFilename(postmanGeneratorConfig);
-
-        const generatorLoggingClient = new GeneratorNotificationService(config.environment);
-        // eslint-disable-next-line no-console
-        console.log("Initialized generator logging client");
 
         try {
             await generatorLoggingClient.sendUpdate(
@@ -56,9 +54,7 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
                 })
             );
             const _collectionDefinition = convertToPostmanCollection(ir);
-            const rawCollectionDefinition = await PostmanParsing.PostmanCollectionSchema.jsonOrThrow(
-                _collectionDefinition
-            );
+            const rawCollectionDefinition = PostmanParsing.PostmanCollectionSchema.jsonOrThrow(_collectionDefinition);
             // eslint-disable-next-line no-console
             console.log("Converted ir to postman collection");
 
@@ -133,19 +129,23 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
 
             await generatorLoggingClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful({})));
         } catch (e) {
-            // eslint-disable-next-line no-console
-            console.log("Encountered error", e);
             await generatorLoggingClient.sendUpdate(
                 GeneratorUpdate.exitStatusUpdate(
                     ExitStatusUpdate.error({
-                        message: e instanceof Error ? e.message : "Encountered error"
+                        message: e instanceof Error ? `${e.name}: ${e.message}\n${e.stack}` : "Encountered error"
                     })
                 )
             );
         }
     } catch (e) {
         // eslint-disable-next-line no-console
-        console.log("Encountered error", e);
+        await generatorLoggingClient.sendUpdate(
+            GeneratorUpdate.exitStatusUpdate(
+                ExitStatusUpdate.error({
+                    message: e instanceof Error ? `${e.name}: ${e.message}\n${e.stack}` : "Encountered error"
+                })
+            )
+        );
         throw e;
     }
 }
@@ -192,9 +192,15 @@ async function publishCollection({
             );
         }
     } else {
-        await postman.collection.updateCollection(publishConfig.collectionId, {
-            collection
-        });
+        await postman.collection.updateCollection(
+            publishConfig.collectionId,
+            {
+                collection
+            },
+            {
+                timeoutInSeconds: 180
+            }
+        );
     }
 }
 

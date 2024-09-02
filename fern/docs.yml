@@ -96,7 +96,7 @@ navigation:
                 icon: fa-regular fa-ellipsis-h
                 path: ./pages/api-definition/openapi/extensions/others.mdx
                 slug: others                   
-          - page: Overlay customizations 
+          - page: Overlay Customizations 
             icon: fa-regular fa-shuffle
             path: ./pages/api-definition/openapi/overrides.mdx                    
           - section: Integrate your Server Framework
@@ -140,7 +140,7 @@ navigation:
           - page: Availability
             icon: fa-regular fa-clock-rotate-left
             path: ./pages/api-definition/fern-definition/availability.mdx
-          - section: api.yml reference
+          - section: api.yml Reference
             icon: fa-regular fa-books
             slug: api-yml
             contents: 
@@ -150,7 +150,7 @@ navigation:
               - page: Environments
                 icon: fa-regular fa-circle-wifi
                 path: ./pages/api-definition/fern-definition/api-yml/environments.mdx
-              - page: Global headers
+              - page: Global Headers
                 icon: fa-regular fa-globe
                 path: ./pages/api-definition/fern-definition/api-yml/global-configuration.mdx
               - page: Errors
@@ -159,7 +159,7 @@ navigation:
           - page: Packages
             icon: fa-regular fa-box-open
             path: ./pages/api-definition/fern-definition/packages.mdx
-          - page: Depending on other APIs
+          - page: Depending on Other APIs
             icon: fa-regular fa-link
             path: ./pages/api-definition/fern-definition/depending-on-other-apis.mdx
           - page: Export to OpenAPI
@@ -176,56 +176,56 @@ navigation:
             path: ./pages/sdks/introduction/configuration.mdx            
       - section: Getting Started
         contents:
-          - page: Generate your first SDK
+          - page: Generate your First SDK
             path: ./pages/sdks/getting-started/generate-your-first-sdk.mdx
-          - page: Publish a public-facing SDK
+          - page: Publish a Public-Facing SDK
             path: ./pages/sdks/publish-sdk/publish-your-sdk.mdx
             hidden: true
       - section: Features
         contents:
-          - page: Strongly typed
+          - page: Strongly Typed
             path: ./pages/sdks/features/strongly-typed.mdx
-          - page: Idiomatic method names
+          - page: Idiomatic Method Names
             path: ./pages/sdks/features/idiomatic-method-names.mdx
-          - page: Schema validation
+          - page: Schema Validation
             path: ./pages/sdks/features/schema-validation.mdx
-          - page: Discriminated unions
+          - page: Discriminated Unions
             path: ./pages/sdks/features/discriminated-unions.mdx
-          - page: Multipart form data
+          - page: Multipart Form Data
             path: ./pages/sdks/features/multipart-form-data.mdx
-          - page: Forward compatibility
+          - page: Forward Compatibility
             path: ./pages/sdks/features/forward-compatibility.mdx
-          - page: Registry publishing
+          - page: Registry Publishing
             path: ./pages/sdks/features/publish-to-registries.mdx
             icon: fa-regular fa-pro
           - page: Auto-Pagination
             path: ./pages/sdks/features/auto-pagination.mdx
             icon: fa-regular fa-pro
-          - page: OAuth token refresh
+          - page: OAuth Token Refresh
             path: ./pages/sdks/features/oauth.mdx
             icon: fa-regular fa-pro
-          - page: Retries with backoff
+          - page: Retries with Backoff
             path: ./pages/sdks/features/retries-with-backoff.mdx
             icon: fa-regular fa-pro
-          - page: Webhook signature verification
+          - page: Webhook Signature Verification
             path: ./pages/sdks/features/webhook-signature-verification.mdx
             icon: fa-regular fa-pro
-          - page: Idempotency headers
+          - page: Idempotency Headers
             path: ./pages/sdks/features/idempotency-headers.mdx
             icon: fa-regular fa-pro
-          - page: Server-Sent events
+          - page: Server-Sent Events
             path: ./pages/sdks/features/server-sent-events.mdx
             icon: fa-regular fa-pro
-          - page: Integration tests
+          - page: Integration Tests
             path: ./pages/sdks/features/integration-tests.mdx
             icon: fa-regular fa-pro
           - page: Code Snippets
             path: ./pages/sdks/features/code-snippets.mdx
             icon: fa-regular fa-pro
-          - page: Augment with custom code
+          - page: Augment with Custom Code
             path: ./pages/sdks/features/augment-with-custom-code.mdx
             icon: fa-regular fa-pro
-          - page: Merging multiple APIs
+          - page: Merging Multiple APIs
             path: ./pages/sdks/features/merging-multiple-apis.mdx
             icon: fa-regular fa-pro
           - page: WebSockets
@@ -371,7 +371,7 @@ navigation:
           - page: Frontmatter
             icon: fa-regular fa-sliders
             path: ./pages/fern-docs/content/front-matter.mdx
-          - page: Reusable snippets
+          - page: Reusable Snippets
             icon: fa-regular fa-recycle
             path: ./pages/fern-docs/content/reusable-snippets.mdx
           - page: Changelog
@@ -384,16 +384,16 @@ navigation:
             icon: fa-regular fa-gear-code
             path: ./pages/fern-docs/content/generate-api-ref.mdx
             slug: generate-api-ref
-          - page: SDK snippets
+          - page: SDK Snippets
             icon: fa-regular fa-message-code
             path: ./pages/fern-docs/config/sdk-snippets.mdx
-          - page: Endpoint errors
+          - page: Endpoint Errors
             icon: fa-regular fa-exclamation-triangle
             path: ./pages/fern-docs/config/endpoint-errors.mdx
-          - page: Customize API Reference layout
+          - page: Customize API Reference Layout
             icon: fa-regular fa-arrow-up-arrow-down
             path: ./pages/fern-docs/content/customize-api-ref.mdx
-          - page: Write markdown in API Reference
+          - page: Write Markdown in API Reference
             icon: fa-regular fa-pencil
             path: ./pages/fern-docs/content/api-ref-content.mdx
       

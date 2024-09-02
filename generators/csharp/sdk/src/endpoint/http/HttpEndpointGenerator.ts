@@ -36,20 +36,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         rawClientReference: string;
         rawClient: RawClient;
     }): csharp.Method {
-        const { parameters: nonEndpointParameters, pathParameterReferences } = this.getNonEndpointParameters({
-            endpoint,
-            serviceId
-        });
-        const parameters = [...nonEndpointParameters];
-        const request = getEndpointRequest({ context: this.context, endpoint, serviceId });
-        if (request != null) {
-            parameters.push(
-                csharp.parameter({
-                    type: request.getParameterType(),
-                    name: request.getParameterName()
-                })
-            );
-        }
+        const endpointSignatureInfo = this.getEndpointSignatureInfo({ serviceId, endpoint });
+        const parameters = [...endpointSignatureInfo.baseParameters];
         parameters.push(
             csharp.parameter({
                 type: csharp.Type.optional(csharp.Type.reference(this.context.getRequestOptionsClassReference())),
@@ -75,15 +63,15 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             summary: endpoint.docs,
             return_,
             body: csharp.codeblock((writer) => {
-                const queryParameterCodeBlock = request?.getQueryParameterCodeBlock();
+                const queryParameterCodeBlock = endpointSignatureInfo.request?.getQueryParameterCodeBlock();
                 if (queryParameterCodeBlock != null) {
                     queryParameterCodeBlock.code.write(writer);
                 }
-                const headerParameterCodeBlock = request?.getHeaderParameterCodeBlock();
+                const headerParameterCodeBlock = endpointSignatureInfo.request?.getHeaderParameterCodeBlock();
                 if (headerParameterCodeBlock != null) {
                     headerParameterCodeBlock.code.write(writer);
                 }
-                const requestBodyCodeBlock = request?.getRequestBodyCodeBlock();
+                const requestBodyCodeBlock = endpointSignatureInfo.request?.getRequestBodyCodeBlock();
                 if (requestBodyCodeBlock?.code != null) {
                     writer.writeNode(requestBodyCodeBlock.code);
                 }
@@ -91,11 +79,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 writer.writeNodeStatement(
                     rawClient.makeRequest({
                         baseUrl: this.getBaseURLForEndpoint({ endpoint }),
-                        requestType: request?.getRequestType(),
+                        requestType: endpointSignatureInfo.request?.getRequestType(),
                         clientReference: rawClientReference,
                         endpoint,
                         bodyReference: requestBodyCodeBlock?.requestBodyReference,
-                        pathParameterReferences,
+                        pathParameterReferences: endpointSignatureInfo.pathParameterReferences,
                         headerBagReference: headerParameterCodeBlock?.headerParameterBagReference,
                         queryBagReference: queryParameterCodeBlock?.queryParameterBagReference
                     })

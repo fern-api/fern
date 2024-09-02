@@ -117,7 +117,9 @@ async function buildAndPushDockerImage(
             await loggingExeca(context.logger, "docker", ["buildx", ...standardBuildOptions], {
                 doNotPipeOutput: false
             });
+            return;
         }
+        throw e;
     }
 }
 

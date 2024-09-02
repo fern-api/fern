@@ -21,6 +21,7 @@ import {
     ONE_OF_SERIALIZER_CLASS_NAME,
     STRING_ENUM_SERIALIZER_CLASS_NAME
 } from "../AsIs";
+import { Type } from "../ast";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
 import { CsharpProject } from "../project";
 import { Namespace } from "../project/CSharpFile";
@@ -417,6 +418,20 @@ export abstract class AbstractCsharpGeneratorContext<
             base64: () => csharp.codeblock('""'),
             bigInteger: () => csharp.codeblock('""'),
             _other: () => csharp.codeblock("null")
+        });
+    }
+
+    /**
+     * Prints the Type in a simple string format.
+     */
+    public printType(type: Type): string {
+        return type.toString({
+            namespace: this.getNamespace(),
+            allNamespaceSegments: this.getAllNamespaceSegments(),
+            allTypeClassReferences: this.getAllTypeClassReferences(),
+            rootNamespace: this.getNamespace(),
+            customConfig: this.customConfig,
+            skipImports: true
         });
     }
 

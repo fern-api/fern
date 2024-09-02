@@ -9,6 +9,8 @@ import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { CoreClassReference } from "./CoreClassReference";
 import { PrimitiveTypeV1 } from "@fern-fern/ir-sdk/api";
+import { BaseCsharpCustomConfigSchema } from "../custom-config";
+import { Namespace } from "../project/CSharpFile";
 
 type InternalType =
     | Integer
@@ -337,6 +339,10 @@ export class Type extends AstNode {
             return (this.internalType as Optional).value;
         }
         return undefined;
+    }
+
+    public isOptional(): boolean {
+        return this.internalType.type === "optional";
     }
 
     /* Static factory methods for creating a Type */

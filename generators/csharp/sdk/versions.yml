@@ -1,0 +1,524 @@
+- version: 1.7.0
+  created_at: '2024-08-29'
+  changelog_entry:
+    - type: feat
+      summary: Add support for generated `reference.md` files.
+  ir_version: 53
+- version: 1.6.0
+  created_at: '2024-08-29'
+  changelog_entry:
+    - type: feat
+      summary: Add support for generated `README.md` files.
+  ir_version: 53
+- version: 1.5.0
+  created_at: '2024-08-28'
+  changelog_entry:
+    - type: feat
+      summary: Add support for service-level headers.
+    - type: feat
+      summary: >-
+        Generate `snippet.json` file containing usage snippets for each
+        endpoint.
+    - type: feat
+      summary: >-
+        Apply the timeout configured on the `ClientOptions` and `RequestOptions`
+        type.
+    - type: feat
+      summary: >-
+        Add exponential backoff retrier, which acts upon `MaxRetries`
+        configuration option specified on the `ClientOptions` and
+        `RequestOptions`.
+    - type: feat
+      summary: Generate the `RawClientTests.cs` file which includes retry logic tests.
+    - type: internal
+      summary: >-
+        Refactor the `RawClient` with additional helper methods so that it's
+        easier to follow.
+    - type: fix
+      summary: >-
+        Fix a bug where `OneOf` used directly as request or response types fail
+        serialization.
+  ir_version: 53
+- version: 1.4.0
+  created_at: '2024-08-26'
+  changelog_entry:
+    - type: internal
+      summary: >-
+        Generate a `Version` class which is used to reference the current
+        version.
+  ir_version: 53
+- version: 1.3.0
+  created_at: '2024-08-22'
+  changelog_entry:
+    - type: internal
+      summary: No changes.
+  ir_version: 53
+- version: 1.3.0-rc2
+  created_at: '2024-08-22'
+  changelog_entry:
+    - type: internal
+      summary: Fix warnings in generated `RawClient`.
+    - type: internal
+      summary: Use a simpler primitive instantiation for the various number types.
+  ir_version: 53
+- version: 1.3.0-rc1
+  created_at: '2024-08-22'
+  changelog_entry:
+    - type: feat
+      summary: Generate the `ToString` method to write the JSON format of an object.
+    - type: feat
+      summary: Generate snippets as example documentation.
+  ir_version: 53
+- version: 1.3.0-rc0
+  created_at: '2024-08-22'
+  changelog_entry:
+    - type: feat
+      summary: Add support for sending the `User-Agent` header.
+    - type: internal
+      summary: >-
+        The `RawClient` now supports HTTP headers within the `ClientOptions` and
+        `RequestOptions` types.
+    - type: feat
+      summary: >-
+        Add support for the `package-id` configuration, which is used to control
+        the name of the package in NuGet.
+    - type: feat
+      summary: >-
+        Add support for mock server tests with `generate-mock-server-tests`
+        configuration option.
+    - type: internal
+      summary: Omit `null` property values in requests.
+    - type: fix
+      summary: >-
+        Fix a bug where request bodies are not sent for wrapped requests that
+        include headers or query params.
+    - type: fix
+      summary: >-
+        Fix a bug where enums, dates, and datetimes are sometimes not serialized
+        properly as query parameters and headers.
+    - type: feat
+      summary: Add support for `read-only-memory-types` configuration.
+    - type: feat
+      summary: >-
+        Add the `CancellationToken` parameter as the last parameter to every
+        endpoint method.
+    - type: feat
+      summary: Add support for gRPC/Protobuf endpoints.
+  ir_version: 53
+- version: 1.2.1
+  created_at: '2024-08-12'
+  changelog_entry:
+    - type: feat
+      summary: >-
+        Add support for Protobuf file dependencies to generate gRPC client
+        stubs.
+    - type: fix
+      summary: Fix potential namespace and type conflicts.
+  ir_version: 53
+- version: 1.1.0
+  created_at: '2024-08-11'
+  changelog_entry:
+    - type: fix
+      summary: Error strings are correctly mapped to an appropriate exception.
+  ir_version: 53
+- version: 1.0.0
+  created_at: '2024-08-11'
+  changelog_entry:
+    - type: break
+      summary: >-
+        The C# SDK is now on major version 1.0.0. To preserve compatibility with
+        pre-1.0.0, set all of {root-namespace-for-core-classes,
+        pascal-case-environments, simplify-object-dictionaries} to `false`.
+    - type: internal
+      summary: Core classes that are exposed publicly are now in the root namespace.
+    - type: internal
+      summary: >-
+        Types that were previously generated as `Dictionary<string, object?>`
+        are now just `object`.
+    - type: internal
+      summary: Environment names are pascal-cased.
+    - type: feat
+      summary: >-
+        Generating specific error types can now be turned off with the
+        `generate-error-types` configuration.
+  ir_version: 53
+- version: 0.12.0
+  created_at: '2024-08-10'
+  changelog_entry:
+    - type: feat
+      summary: >-
+        Get better Unit Testing JSON comparison results by using
+        `FluentAssertions`.
+  ir_version: 53
+- version: 0.11.0
+  created_at: '2024-08-09'
+  changelog_entry:
+    - type: internal
+      summary: Mark internal files `internal`.
+    - type: feat
+      summary: Make all client classes `Partial`.
+    - type: internal
+      summary: Don't override `toString` on Exceptions.
+  ir_version: 53
+- version: 0.10.0
+  created_at: '2024-08-07'
+  changelog_entry:
+    - type: fix
+      summary: >-
+        Fix a bug where conflicting class names and namespaces cause compile to
+        fail.
+  ir_version: 53
+- version: 0.9.0
+  created_at: '2024-08-01'
+  changelog_entry:
+    - type: feat
+      summary: >-
+        Add the `base-api-exception-class-name` and `base-exception-class-name`
+        generator configuration. These control the class names of the generated
+        `ApiException` and `Exception` class names.
+  ir_version: 53
+- version: 0.8.0
+  created_at: '2024-07-31'
+  changelog_entry:
+    - type: feat
+      summary: Support text response types.
+    - type: feat
+      summary: Support inheritance for inlined request bodies.
+  ir_version: 53
+- version: 0.7.0
+  created_at: '2024-07-31'
+  changelog_entry:
+    - type: feat
+      summary: Generate Exception types for all errors defined in the IR.
+  ir_version: 53
+- version: 0.6.0
+  created_at: '2024-07-31'
+  changelog_entry:
+    - type: feat
+      summary: >-
+        Add support for `RequestOptions` allowing request-specific option
+        overrides.
+  ir_version: 53
+- version: 0.5.0
+  created_at: '2024-07-30'
+  changelog_entry:
+    - type: feat
+      summary: Add support for `uint`, `ulong`, and `float` types.
+    - type: internal
+      summary: Bump to IRv53.
+  ir_version: 53
+- version: 0.4.0
+  created_at: '2024-07-30'
+  changelog_entry:
+    - type: feat
+      summary: Add support for `allow-multiple` query parameters.
+    - type: feat
+      summary: >-
+        Generate `map<string, unknown>` types as `Dictionary<string, object?>`
+        to support explicit `null` values.
+  ir_version: 51
+- version: 0.3.4
+  created_at: '2024-07-30'
+  changelog_entry:
+    - type: internal
+      summary: >-
+        Make datetime deserialization more lenient and include milliseconds in
+        serialization.
+  ir_version: 51
+- version: 0.3.3
+  created_at: '2024-07-30'
+  changelog_entry:
+    - type: internal
+      summary: >-
+        Generate types with `set` accessors instead of `init` to improve object
+        construction flexibility.
+  ir_version: 51
+- version: 0.3.2
+  created_at: '2024-07-29'
+  changelog_entry:
+    - type: feat
+      summary: >-
+        The C# generator now supports configuration to match namespaces to file
+        paths.
+  ir_version: 51
+- version: 0.3.1
+  created_at: '2024-07-25'
+  changelog_entry:
+    - type: internal
+      summary: Add header suppliers to `RawClient` constructor parameters.
+  ir_version: 51
+- version: 0.3.0
+  created_at: '2024-07-25'
+  changelog_entry:
+    - type: break
+      summary: Convert all usages of `Guid` to `string` to avoid casing issues.
+  ir_version: 51
+- version: 0.2.1
+  created_at: '2024-07-25'
+  changelog_entry:
+    - type: fix
+      summary: Fix MultURL environment classes compilation issue.
+  ir_version: 51
+- version: 0.2.0
+  created_at: '2024-07-25'
+  changelog_entry:
+    - type: break
+      summary: Rename `Environments.cs` to `{OrgName}Environment`.
+    - type: feat
+      summary: Generate classes for environments with different endpoint URLs.
+  ir_version: 51
+- version: 0.1.4
+  created_at: '2024-07-23'
+  changelog_entry:
+    - type: internal
+      summary: More improvements to datetime serialization.
+  ir_version: 51
+- version: 0.1.3
+  created_at: '2024-07-22'
+  changelog_entry:
+    - type: fix
+      summary: Fixed a bug with serializing datetimes.
+    - type: internal
+      summary: >-
+        Stop generating empty serialization unit test files when there are no
+        examples.
+  ir_version: 51
+- version: 0.1.2
+  created_at: '2024-07-17'
+  changelog_entry:
+    - type: chore
+      summary: Bump IR to 51.
+    - type: feat
+      summary: >-
+        Generate serialization unit tests for models and add a GH workflow to
+        run them.
+  ir_version: 51
+- version: 0.1.1
+  created_at: '2024-07-10'
+  changelog_entry:
+    - type: internal
+      summary: >-
+        Enable generating unions with up to 32 types by adding the
+        OneOf.Extended package.
+    - type: fix
+      summary: Handle double optional fields properly with a single `?`.
+  ir_version: 33
+- version: 0.1.0
+  created_at: '2024-07-09'
+  changelog_entry:
+    - type: feat
+      summary: Add targets for .NET Standard 2.0 and .NET Framework 4.6.2.
+    - type: fix
+      summary: Avoid duplicate key errors in `StringEnumSerializer`.
+    - type: fix
+      summary: Fix bugs with root client requests causing generation failures.
+    - type: fix
+      summary: Correctly handle environment values and literal header names.
+    - type: internal
+      summary: Improve constructor parameters and other minor fixes.
+  ir_version: 33
+- version: 0.0.35
+  created_at: '2024-07-02'
+  changelog_entry:
+    - type: fix
+      summary: Ensure base client requests are generated correctly.
+  ir_version: 33
+- version: 0.0.34
+  created_at: '2024-07-02'
+  changelog_entry:
+    - type: fix
+      summary: Implement base client methods instead of leaving them empty.
+  ir_version: 33
+- version: 0.0.33
+  created_at: '2024-06-21'
+  changelog_entry:
+    - type: feat
+      summary: >-
+        Add support for specifying extra dependencies in the C# generator
+        configuration.
+  ir_version: 33
+- version: 0.0.32
+  created_at: '2024-06-21'
+  changelog_entry:
+    - type: fix
+      summary: Ensure enum values are JSON serialized before being sent to the server.
+  ir_version: 33
+- version: 0.0.31
+  created_at: '2024-06-21'
+  changelog_entry:
+    - type: fix
+      summary: Ensure the HTTP client joins endpoint path with the base URL safely.
+  ir_version: 33
+- version: 0.0.30
+  created_at: '2024-06-20'
+  changelog_entry:
+    - type: fix
+      summary: >-
+        The SDK now supports making requests with a Content-Type of
+        `application/octet-stream` for byte data.
+    - type: fix
+      summary: >-
+        The SDK now safely handles API-wide path parameters, including their
+        proper joining in `RawClient.cs`.
+  ir_version: 33
+- version: 0.0.29
+  created_at: '2024-06-20'
+  changelog_entry:
+    - type: fix
+      summary: >-
+        The generated SDK now correctly respects service base paths, which were
+        previously omitted.
+  ir_version: 33
+- version: 0.0.28
+  created_at: '2024-06-19'
+  changelog_entry:
+    - type: fix
+      summary: >-
+        Query and header parameters with optional datetimes are now encoded in
+        ISO 8601 format before making requests.
+  ir_version: 33
+- version: 0.0.25
+  created_at: '2024-06-20'
+  changelog_entry:
+    - type: feat
+      summary: Discriminated unions are now generated as object.
+    - type: feat
+      summary: >-
+        Header parameters are no longer required in the constructor, eliminating
+        the need for users to provide redundant information.
+  ir_version: 33
+- version: 0.0.24
+  created_at: '2024-06-19'
+  changelog_entry:
+    - type: fix
+      summary: >-
+        Query and header parameters are now ISO 8601 encoded before making
+        requests.
+  ir_version: 33
+- version: 0.0.23
+  created_at: '2024-06-07'
+  changelog_entry:
+    - type: feat
+      summary: >-
+        The SDK is now compatible exclusively with .NET 6. This change reflects
+        significant code adjustments needed for .NET 4+ compatibility.
+  ir_version: 33
+- version: 0.0.22
+  created_at: '2024-06-07'
+  changelog_entry:
+    - type: feat
+      summary: The SDK now includes support for .NET 4.
+  ir_version: 33
+- version: 0.0.21
+  created_at: '2024-05-31'
+  changelog_entry:
+    - type: fix
+      summary: Array and list fields are now generated as `IEnumerable`.
+  ir_version: 33
+- version: 0.0.20
+  created_at: '2024-05-29'
+  changelog_entry:
+    - type: internal
+      summary: Enum serializers are now added directly to enum declarations.
+    - type: internal
+      summary: OneOf serializers are now added as a core class.
+  ir_version: 33
+- version: 0.0.19
+  created_at: '2024-05-29'
+  changelog_entry:
+    - type: fix
+      summary: Enum serializers now handle reading and writing enum string values.
+    - type: fix
+      summary: >-
+        Non-success status code errors are now thrown with the stringified
+        response body.
+  ir_version: 33
+- version: 0.0.18
+  created_at: '2024-05-28'
+  changelog_entry:
+    - type: internal
+      summary: Generated GitHub workflows now run on dotnet-version 8.x.
+  ir_version: 33
+- version: 0.0.17
+  created_at: '2024-05-28'
+  changelog_entry:
+    - type: feat
+      summary: Enabled nullable on all C# files.
+    - type: feat
+      summary: Made project compatible with .NET 6, .NET 7, and .NET 8.
+  ir_version: 33
+- version: 0.0.16
+  created_at: '2024-05-23'
+  changelog_entry:
+    - type: fix
+      summary: Miscellaneous fixes.
+      fixed:
+        - .csproj indentation
+        - Setting X-Fern-SDK-Name to the top-level namespace
+        - Passing through serializer options when serializing JSON messages
+  ir_version: 33
+- version: 0.0.15
+  created_at: '2024-05-23'
+  changelog_entry:
+    - type: fix
+      summary: Inlined requests that are strictly bodies are JSON serializable.
+  ir_version: 33
+- version: 0.0.14
+  created_at: '2024-05-23'
+  changelog_entry:
+    - type: feat
+      summary: The SDK now includes a `JsonEnumMemberStringEnumConverter`.
+  ir_version: 33
+- version: 0.0.13
+  created_at: '2024-05-22'
+  changelog_entry:
+    - type: feat
+      summary: >-
+        If a LICENSE is specified, the generator now packages the license in the
+        .csproj file.
+  ir_version: 33
+- version: 0.0.12
+  created_at: '2024-05-22'
+  changelog_entry:
+    - type: feat
+      summary: >-
+        The C# generator now generates an `Environments.cs` file containing URLs
+        for different environments.
+  ir_version: 33
+- version: 0.0.11
+  created_at: '2024-05-20'
+  changelog_entry:
+    - type: feat
+      summary: >-
+        The C# generator now generates a proper `.csproj` file with version,
+        GitHub URL, and a reference to the SDK README.
+  ir_version: 33
+- version: 0.0.10
+  created_at: '2024-05-15'
+  changelog_entry:
+    - type: feat
+      summary: >-
+        The generated SDK now publishes GitHub Actions to build and publish the
+        generated package to NuGet.
+  ir_version: 33
+- version: 0.0.9
+  created_at: '2024-05-10'
+  changelog_entry:
+    - type: fix
+      summary: >-
+        When an inlined request body is entirely made up of request body
+        properties, the entire request can now be serialized as the request
+        body.
+  ir_version: 33
+- version: 0.0.8
+  created_at: '2024-05-10'
+  changelog_entry:
+    - type: fix
+      summary: Several bug fixes.
+      added:
+        - Support for arbitrary nested clients
+        - Query parameter serialization
+      changed:
+        - Property naming for async methods
+        - Properly formatted solution files
+  ir_version: 33

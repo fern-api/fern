@@ -1,4 +1,5 @@
 irVersion: v40
+changelogLocation: ../../generators/go/model/versions.yml
 publish:
   workingDirectory: generators/go
   preBuildCommands:

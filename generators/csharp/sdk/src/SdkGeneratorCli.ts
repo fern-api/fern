@@ -31,6 +31,7 @@ import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientG
 import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator";
 import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
 import { RelativeFilePath } from "@fern-api/fs-utils";
+import { buildReference } from "./reference/buildReference";
 
 export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -200,6 +201,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
                 context.config.output.snippetFilepath,
                 JSON.stringify(await FernGeneratorExecSerializers.Snippets.jsonOrThrow(snippets), undefined, 4)
             );
+
             try {
                 await this.generateReadme({
                     context,
@@ -207,6 +209,12 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
                 });
             } catch (e) {
                 context.logger.warn("Failed to generate README.md, this is OK.");
+            }
+
+            try {
+                await this.generateReference({ context });
+            } catch (e) {
+                context.logger.warn("Failed to generate reference.md, this is OK.");
             }
         }
         await context.project.persist();
@@ -226,6 +234,14 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
         const content = await context.generatorAgent.generateReadme({ context, endpointSnippets });
         context.project.addRawFiles(
             new File(context.generatorAgent.README_FILENAME, RelativeFilePath.of("."), content)
+        );
+    }
+
+    private async generateReference({ context }: { context: SdkGeneratorContext }): Promise<void> {
+        const builder = buildReference({ context });
+        const content = await context.generatorAgent.generateReference(builder);
+        context.project.addRawFiles(
+            new File(context.generatorAgent.REFERENCE_FILENAME, RelativeFilePath.of("."), content)
         );
     }
 }

@@ -50,7 +50,9 @@ export async function loadAndUpdateGenerators({
     context.logger.debug(`Groups found: ${generatorGroups.toString()}`);
 
     for (const groupBlock of generatorGroups.items) {
-        const groupName = groupBlock.key;
+        // The typing appears to be off in this lib, but BLOCK.key.value is meant to always be available
+        // https://eemeli.org/yaml/#creating-nodes
+        const groupName = (groupBlock.key as any).value as string;
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-arguments
         const group = groupBlock.value as YAML.YAMLMap<string, YAML.YAMLSeq<YAML.YAMLMap<unknown, unknown>>>;
         if (!YAML.isMap(group)) {
@@ -60,7 +62,8 @@ export async function loadAndUpdateGenerators({
             continue;
         }
 
-        if (groupFilter != null && group.get("name") !== groupName) {
+        if (groupFilter != null && groupFilter !== groupName) {
+            context.logger.debug(`Skipping group ${groupName} as it does not match the filter: ${groupFilter}`);
             continue;
         }
 
@@ -79,11 +82,15 @@ export async function loadAndUpdateGenerators({
                     `Expected generator in group ${groupName} to be a map in ${path.relative(process.cwd(), filepath)}`
                 );
             }
-            if (generatorFilter != null && generator.get("name") !== generatorFilter) {
+            const generatorName = generator.get("name") as string;
+
+            if (generatorFilter != null && generatorName !== generatorFilter) {
+                context.logger.debug(
+                    `Skipping generator ${generatorName} as it does not match the filter: ${generatorFilter}`
+                );
                 continue;
             }
 
-            const generatorName = generator.get("name") as string;
             const normalizedGeneratorName = generatorsYml.getGeneratorNameOrThrow(generatorName, context);
 
             const currentGeneratorVersion = generator.get("version") as string;

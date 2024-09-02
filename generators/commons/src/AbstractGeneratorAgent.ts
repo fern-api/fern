@@ -58,7 +58,7 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
      * Generates the reference.md content using the given builder.
      */
     public async generateReference(builder: ReferenceConfigBuilder): Promise<string> {
-        const referenceConfig = this.getReferenceConfig(builder);
+        const referenceConfig = builder.build(this.getLanguage());
         return this.cli.generateReference({ referenceConfig });
     }
 
@@ -99,9 +99,5 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
             return path.join(__dirname, "../../features.yml");
         }
         return DOCKER_FEATURES_CONFIG_PATH;
-    }
-
-    private getReferenceConfig(builder: ReferenceConfigBuilder): FernGeneratorCli.ReferenceConfig {
-        return builder.build(this.getLanguage());
     }
 }

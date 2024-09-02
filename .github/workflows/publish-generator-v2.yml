@@ -6,9 +6,14 @@ on:
     branches:
       - main
     paths:
-      - "generators/python/sdk/versions.yml"
+      - "generators/csharp/model/versions.yml"
+      - "generators/csharp/sdk/versions.yml"
+      - "generators/go/fiber/versions.yml"
+      - "generators/go/model/versions.yml"
+      - "generators/go/sdk/versions.yml"
       - "generators/python/fastapi/versions.yml"
       - "generators/python/pydantic/versions.yml"
+      - "generators/python/sdk/versions.yml"
       - "generators/ruby/model/versions.yml"
       - "generators/ruby/sdk/versions.yml"
 
@@ -19,9 +24,6 @@ on:
       # - "generators/java/spring/versions.yml"
       # - "generators/typescript/sdk/versions.yml"
       # - "generators/typescript/express/versions.yml"
-      # - "generators/go/versions.yml"
-      # - "generators/csharp/sdk/versions.yml"
-      # - "generators/csharp/model/versions.yml"
   workflow_dispatch:
     inputs:
       version:
@@ -33,11 +35,16 @@ on:
         required: true
         type: choice
         options:
-          - python-sdk
+          - csharp-model
+          - csharp-sdk
+          - go-fiber
+          - go-model
+          - go-sdk
           - fastapi
           - pydantic
-          - ruby-sdk
+          - python-sdk
           - ruby-model
+          - ruby-sdk
 
           # - openapi
           # - postman
@@ -46,11 +53,6 @@ on:
           # - java-spring
           # - typescript-sdk
           # - typescript-express
-          # - go-fiber
-          # - go-model
-          # - go-sdk
-          # - csharp-sdk
-          # - csharp-model
 
 env:
   DOCKER_BUILDKIT: 1
@@ -66,9 +68,14 @@ jobs:
         id: filter
         with:
           filters: |
-            python-sdk: 'generators/python/sdk/versions.yml'
+            csharp-model: 'generators/csharp/model/versions.yml'
+            csharp-sdk: 'generators/csharp/sdk/versions.yml'
+            go-fiber: "generators/go/fiber/versions.yml"
+            go-model: "generators/go/model/versions.yml"
+            go-sdk: "generators/go/sdk/versions.yml"
             fastapi: "generators/python/fastapi/versions.yml"
             pydantic: "generators/python/pydantic/versions.yml"
+            python-sdk: 'generators/python/sdk/versions.yml'
             ruby-model: 'generators/ruby/model/versions.yml'
             ruby-sdk: 'generators/ruby/sdk/versions.yml'
 
@@ -79,11 +86,6 @@ jobs:
           # spring: 'generators/java/spring/versions.yml'
           # ts-sdk: 'generators/typescript/sdk/versions.yml'
           # ts-express: 'generators/typescript/express/versions.yml'
-          # go-sdk: 'generators/go/versions.yml'
-          # go-model: 'generators/go/versions.yml'
-          # go-fiber: 'generators/go/versions.yml'
-          # csharp-sdk: 'generators/csharp/sdk/versions.yml'
-          # csharp-model: 'generators/csharp/model/versions.yml'
 
   # Test, publish and register generators
   publish-changed-generators:
@@ -120,21 +122,31 @@ jobs:
         # the modified file once in the matrix, you have to access it at the filter (e.g. output.openapi_files)
         # So as a workaround, we are doing this switch statement to set the VERSIONS_FILE variable and use that to publish
         run: |
-          if [ ${{ matrix.generator }} = "python-sdk" ]; then
-              VERSIONS_FILE="generators/python/sdk/versions.yml"
+          if [ ${{ matrix.generator }} = "csharp-model" ]; then
+              VERSIONS_FILE="generators/csharp/model/versions.yml"
+          elif [ ${{ matrix.generator }} = "csharp-sdk" ]; then
+              VERSIONS_FILE="generators/csharp/sdk/versions.yml"
+          elif [ ${{ matrix.generator }} = "go-fiber" ]; then
+              VERSIONS_FILE="generators/go/fiber/versions.yml"
+          elif [ ${{ matrix.generator }} = "go-model" ]; then
+              VERSIONS_FILE="generators/go/model/versions.yml"
+          elif [ ${{ matrix.generator }} = "go-sdk" ]; then
+              VERSIONS_FILE="generators/go/sdk/versions.yml"
           elif [ ${{ matrix.generator }} = "fastapi" ]; then
               VERSIONS_FILE="generators/python/fastapi/versions.yml"
           elif [ ${{ matrix.generator }} = "pydantic" ]; then
               VERSIONS_FILE="generators/python/pydantic/versions.yml"
+          elif [ ${{ matrix.generator }} = "python-sdk" ]; then
+              VERSIONS_FILE="generators/python/sdk/versions.yml"
           elif [ ${{ matrix.generator }} = "ruby-model" ]; then
               VERSIONS_FILE="generators/ruby/model/versions.yml"
           elif [ ${{ matrix.generator }} = "ruby-sdk" ]; then
               VERSIONS_FILE="generators/ruby/sdk/versions.yml"
           fi
 
-          git show HEAD~1:${VERSIONS_FILE} > tmp_${{ matrix.generator }}_previous_versions.yml || DOES_PREVIOUS_VERSIONS_EXIST=false
+          git show HEAD~1:${VERSIONS_FILE} > tmp_${{ matrix.generator }}_previous_versions.yml
 
-          if [ $DOES_PREVIOUS_VERSIONS_EXIST != false ]; then
+          if [ $? -eq 0 ]; then
             pnpm seed:local publish generator ${{ matrix.generator }} --changelog $VERSIONS_FILE --previous-changelog tmp_${{ matrix.generator }}_previous_versions.yml --log-level debug
           else
             echo "No previous versions found, skipping publish."
