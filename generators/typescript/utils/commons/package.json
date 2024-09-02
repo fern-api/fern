@@ -38,7 +38,7 @@
     "esutils": "^2.0.3",
     "glob": "^8.0.3",
     "glob-promise": "^5.0.0",
-    "immer": "^9.0.15",
+    "immer": "^10.1.1",
     "js-yaml": "^4.1.0",
     "lodash-es": "^4.17.21",
     "tmp-promise": "^3.0.3",
