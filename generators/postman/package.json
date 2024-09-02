@@ -40,7 +40,7 @@
     "@fern-api/generator-commons": "workspace:*",
     "@fern-fern/ir-sdk": "53.9.0",
     "@fern-fern/postman-sdk": "0.1.1",
-    "@types/lodash": "^4.17.4",
+    "@types/lodash": "^4.17.7",
     "endent": "^2.1.0",
     "lodash": "^4.17.21",
     "zod": "^3.22.3"
