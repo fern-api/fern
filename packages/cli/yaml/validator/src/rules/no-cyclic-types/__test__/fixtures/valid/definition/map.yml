@@ -1,0 +1,7 @@
+types:
+  Node:
+    properties:
+      foo: map<Node, string>
+  AlsoNode:
+    properties:
+      bar: map<string, AlsoNode>

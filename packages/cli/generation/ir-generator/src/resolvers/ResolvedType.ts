@@ -79,6 +79,42 @@ export declare namespace ResolvedContainerType {
     }
 }
 
+export function isNamedType(type: ResolvedType): type is ResolvedType.Named {
+    return type._type === "named";
+}
+
+export function isContainerType(type: ResolvedType): type is ResolvedType.Container {
+    return type._type === "container";
+}
+
+export function isPrimitiveType(type: ResolvedType): type is ResolvedType.Primitive {
+    return type._type === "primitive";
+}
+
+export function isUnknownType(type: ResolvedType): type is ResolvedType.Unknown {
+    return type._type === "unknown";
+}
+
+export function isMapType(type: ResolvedContainerType): type is ResolvedContainerType.Map {
+    return type._type === "map";
+}
+
+export function isListType(type: ResolvedContainerType): type is ResolvedContainerType.List {
+    return type._type === "list";
+}
+
+export function isOptionalType(type: ResolvedContainerType): type is ResolvedContainerType.Optional {
+    return type._type === "optional";
+}
+
+export function isSetType(type: ResolvedContainerType): type is ResolvedContainerType.Set {
+    return type._type === "set";
+}
+
+export function isLiteralType(type: ResolvedContainerType): type is ResolvedContainerType.Literal {
+    return type._type === "literal";
+}
+
 export interface ObjectPathItem {
     file: RelativeFilePath;
     typeName: string;

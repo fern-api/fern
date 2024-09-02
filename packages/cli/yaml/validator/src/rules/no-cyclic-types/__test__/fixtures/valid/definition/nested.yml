@@ -1,0 +1,10 @@
+types:
+  Animal:
+    discriminated: false
+    union:
+      - set<Animal>
+      - Dog
+      - string
+  Dog:
+    properties:
+      name: string
