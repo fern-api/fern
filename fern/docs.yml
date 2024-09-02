@@ -301,6 +301,9 @@ navigation:
           - page: Custom Domain
             icon: fa-regular fa-globe-pointer
             path: ./pages/docs/building-your-docs/custom-domain.mdx
+          - page: Collect feedback
+            icon: fa-regular fa-comment
+            path: ./pages/docs/building-your-docs/user-feedback.mdx
 
       - section: Writing Content
         slug: content
