@@ -8,7 +8,15 @@ import { getGeneratorMetadata } from "./commands/generator-metadata/getGenerator
 import { getOrganziation } from "./commands/organization/getOrganization";
 import { upgradeGenerator } from "./commands/upgrade/upgradeGenerator";
 
-export function addGetOrganizationCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext): void {
+export function addGetOrganizationCommand({
+    cli,
+    cliContext,
+    onRun
+}: {
+    cli: Argv<GlobalCliOptions>;
+    cliContext: CliContext;
+    onRun: () => void;
+}): void {
     cli.command(
         "organization",
         // Hides the command from the help message
@@ -34,11 +42,20 @@ export function addGetOrganizationCommand(cli: Argv<GlobalCliOptions>, cliContex
                 context: cliContext,
                 outputLocation: argv.output
             });
+            onRun();
         }
     );
 }
 
-export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: CliContext): void {
+export function addGeneratorCommands({
+    cli,
+    cliContext,
+    onRun
+}: {
+    cli: Argv<GlobalCliOptions>;
+    cliContext: CliContext;
+    onRun: () => void;
+}): void {
     cli.command("generator", "Operate on the generators within your Fern configuration", (yargs) => {
         yargs
             .command(
@@ -96,6 +113,7 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                         cliContext,
                         outputLocation: argv.output
                     });
+                    onRun();
                 }
             )
             .command(
@@ -150,6 +168,7 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                         includeMajor: argv.includeMajor,
                         channel: argv.channel
                     });
+                    onRun();
                 }
             )
             .command(
@@ -203,10 +222,12 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                         cliContext.failAndThrow(
                             `Generator ${argv.generator}, in group ${argv.group}${maybeApiFilter} was not found.`
                         );
+                        return;
                     }
                     if (argv.version) {
                         process.stdout.write(generator.version);
                     }
+                    onRun();
                 }
             );
     });

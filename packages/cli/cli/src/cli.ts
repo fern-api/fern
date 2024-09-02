@@ -157,8 +157,20 @@ async function tryRunCli(cliContext: CliContext) {
     });
 
     // CLI V2 Sanctioned Commands
-    addGetOrganizationCommand(cli, cliContext);
-    addGeneratorCommands(cli, cliContext);
+    addGetOrganizationCommand({
+        cli,
+        cliContext,
+        onRun: () => {
+            cliContext.suppressUpgradeMessage();
+        }
+    });
+    addGeneratorCommands({
+        cli,
+        cliContext,
+        onRun: () => {
+            cliContext.suppressUpgradeMessage();
+        }
+    });
 
     cli.middleware(async (argv) => {
         cliContext.setLogLevel(argv["log-level"]);
