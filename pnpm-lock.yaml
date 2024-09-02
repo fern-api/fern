@@ -295,7 +295,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -371,7 +371,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -432,7 +432,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -493,7 +493,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -649,7 +649,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -716,7 +716,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -759,7 +759,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -3000,7 +3000,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -3019,18 +3019,6 @@ importers:
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
-
-  packages/cli/cli/dist/dev:
-    devDependencies:
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
-
-  packages/cli/cli/dist/prod:
-    devDependencies:
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
 
   packages/cli/configuration:
     dependencies:
@@ -3053,8 +3041,8 @@ importers:
         specifier: 0.0.5606
         version: 0.0.5606
       find-up:
-        specifier: ^6.3.0
-        version: 6.3.0
+        specifier: ^7.0.0
+        version: 7.0.0
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
@@ -4966,8 +4954,8 @@ importers:
         specifier: ^5.3.0
         version: 5.3.0
       find-up:
-        specifier: ^6.3.0
-        version: 6.3.0
+        specifier: ^7.0.0
+        version: 7.0.0
       glob:
         specifier: ^8.0.3
         version: 8.1.0
@@ -5403,8 +5391,8 @@ importers:
         specifier: ^2.12.0
         version: 2.12.0
       find-up:
-        specifier: ^6.3.0
-        version: 6.3.0
+        specifier: ^7.0.0
+        version: 7.0.0
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
@@ -5450,7 +5438,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -8469,8 +8457,8 @@ packages:
     resolution: {integrity: sha512-V0hjH4dGPh9Ao5p0MoRY6BVqtwCjhz6vI5LT8AJ55H+4g9/4vbHx1I54fS0XuclLhDHArPQCiMjDxjaL8fPxhw==}
     engines: {node: '>=0.12'}
 
-  env-cmd@https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b:
-    resolution: {tarball: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b}
+  env-cmd@git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b:
+    resolution: {commit: 8f35b71651f6a78710308ff38ab30896ea72ee8b, repo: git@github.com:toddbluhm/env-cmd.git, type: git}
     version: 10.1.0
     engines: {node: '>=8.0.0'}
     hasBin: true
@@ -8978,9 +8966,9 @@ packages:
     resolution: {integrity: sha512-78/PXT1wlLLDgTzDs7sjq9hzz0vXD+zn+7wypEe4fXQxCmdmqfGsEPQxmiCSQI3ajFV91bVSsvNtrJRiW6nGng==}
     engines: {node: '>=10'}
 
-  find-up@6.3.0:
-    resolution: {integrity: sha512-v2ZsoEuVHYy8ZIlYqwPe/39Cy+cFDzp4dXPaxNvkEuouymu+2Jbz0PxpKarJHYJTmv2HWT3O382qY8l4jMWthw==}
-    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+  find-up@7.0.0:
+    resolution: {integrity: sha512-YyZM99iHrqLKjmt4LJDj58KI+fYyufRLBSYcqycxf//KpBk9FoewoGX0450m9nB44qrZnovzC2oeP5hUibxc/g==}
+    engines: {node: '>=18'}
 
   findup-sync@5.0.0:
     resolution: {integrity: sha512-MzwXju70AuyflbgeOhzvQWAvvQdo1XL0A9bVvlXsYcFEBM87WR4OakL4OfZq+QRmr+duJubio+UtNQCPsVESzQ==}
@@ -9974,8 +9962,8 @@ packages:
     resolution: {integrity: sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw==}
     engines: {node: '>=10'}
 
-  locate-path@7.1.1:
-    resolution: {integrity: sha512-vJXaRMJgRVD3+cUZs3Mncj2mxpt5mP0EmNOsxRSZRMlbqjvxzDEOIUWXGmavo0ZC9+tNZCBLQ66reA11nbpHZg==}
+  locate-path@7.2.0:
+    resolution: {integrity: sha512-gvVijfZvn7R+2qyPX8mAuKcFGDf6Nc61GdvGafQsHL0sBIxfKzA+usWn4GFC/bk+QdwPUD4kWFJLhElipq+0VA==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
   lodash-es@4.17.21:
@@ -12076,6 +12064,10 @@ packages:
   unicode-property-aliases-ecmascript@2.0.0:
     resolution: {integrity: sha512-5Zfuy9q/DFr4tfO7ZPeVXb1aPoeQSdeFMLpYuFebehDAhbuevLs5yxSZmIFN1tP5F9Wl4IpJrYojg85/zgyZHQ==}
     engines: {node: '>=4'}
+
+  unicorn-magic@0.1.0:
+    resolution: {integrity: sha512-lRfVq8fE8gz6QMBuDM6a+LO3IAzTi05H6gCVaUpir2E1Rwpo4ZUog45KpNXKC/Mn3Yb9UDuHumeFTo9iV/D9FQ==}
+    engines: {node: '>=18'}
 
   unified@11.0.5:
     resolution: {integrity: sha512-xKvGhPWw3k84Qjh8bI3ZeJjqnyadK+GEFtazSfZv/rKeTkTjOJho6mFqh2SM96iIcZokxiOpg78GazTSg8+KHA==}
@@ -14264,7 +14256,7 @@ snapshots:
 
   '@types/find-up@4.0.0':
     dependencies:
-      find-up: 6.3.0
+      find-up: 7.0.0
 
   '@types/fs-extra@11.0.1':
     dependencies:
@@ -15883,7 +15875,7 @@ snapshots:
 
   entities@4.5.0: {}
 
-  env-cmd@https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b:
+  env-cmd@git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b:
     dependencies:
       commander: 5.1.0
       cross-spawn: 7.0.3
@@ -16579,10 +16571,11 @@ snapshots:
       locate-path: 6.0.0
       path-exists: 4.0.0
 
-  find-up@6.3.0:
+  find-up@7.0.0:
     dependencies:
-      locate-path: 7.1.1
+      locate-path: 7.2.0
       path-exists: 5.0.0
+      unicorn-magic: 0.1.0
 
   findup-sync@5.0.0:
     dependencies:
@@ -17828,7 +17821,7 @@ snapshots:
     dependencies:
       p-locate: 5.0.0
 
-  locate-path@7.1.1:
+  locate-path@7.2.0:
     dependencies:
       p-locate: 6.0.0
 
@@ -20339,6 +20332,8 @@ snapshots:
   unicode-match-property-value-ecmascript@2.1.0: {}
 
   unicode-property-aliases-ecmascript@2.0.0: {}
+
+  unicorn-magic@0.1.0: {}
 
   unified@11.0.5:
     dependencies:
