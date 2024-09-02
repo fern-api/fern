@@ -1,5 +1,5 @@
 - changelog_entry:
-  - summary: Update filters within `generator upgrade` to appropriately take into account generator group name.
+  - summary: `fern generator upgrade` respects  the `--group` flag and only upgrades generators within a particular group.
     type: fix
   created_at: '2024-09-02'
   ir_version: 53
