@@ -1,5 +1,5 @@
 {
-  "name": "@fern-api/yaml-migrations",
+  "name": "@fern-api/cli-migrations",
   "version": "0.0.0",
   "repository": {
     "type": "git",
