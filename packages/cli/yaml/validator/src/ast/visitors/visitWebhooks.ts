@@ -1,8 +1,5 @@
 import { noop, visitObject } from "@fern-api/core-utils";
-import { NodePath } from "../../NodePath";
-import { HttpHeaderSchema, WebhookPayloadSchema } from "../../schemas";
-import { WebhookReferencedPayloadSchema } from "../../schemas/WebhookReferencedPayloadSchema";
-import { WebhookSchema } from "../../schemas/WebhookSchema";
+import { NodePath, RawSchemas } from "@fern-api/yaml-schema";
 import { DefinitionFileAstVisitor, TypeReferenceLocation } from "../DefinitionFileAstVisitor";
 import { createDocsVisitor } from "./utils/createDocsVisitor";
 import { createTypeReferenceVisitor } from "./utils/visitTypeReference";
@@ -12,7 +9,7 @@ export async function visitWebhooks({
     visitor,
     nodePathForWebhook
 }: {
-    webhook: WebhookSchema;
+    webhook: RawSchemas.WebhookSchema;
     visitor: Partial<DefinitionFileAstVisitor>;
     nodePathForWebhook: NodePath;
 }): Promise<void> {
@@ -106,7 +103,7 @@ async function visitHeaders({
     visitor,
     nodePath
 }: {
-    headers: Record<string, HttpHeaderSchema> | undefined;
+    headers: Record<string, RawSchemas.HttpHeaderSchema> | undefined;
     visitor: Partial<DefinitionFileAstVisitor>;
     nodePath: NodePath;
 }) {
@@ -145,10 +142,10 @@ async function visitHeaders({
 }
 
 export function isRawDiscriminatedUnionDefinition(
-    payload: WebhookPayloadSchema
-): payload is WebhookReferencedPayloadSchema {
+    payload: RawSchemas.WebhookPayloadSchema
+): payload is RawSchemas.WebhookReferencedPayloadSchema {
     return (
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        (payload as WebhookReferencedPayloadSchema).type != null
+        (payload as RawSchemas.WebhookReferencedPayloadSchema).type != null
     );
 }

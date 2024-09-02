@@ -1,6 +1,5 @@
 import { noop, visitObject } from "@fern-api/core-utils";
-import { NodePath } from "../../NodePath";
-import { ErrorDeclarationSchema } from "../../schemas";
+import { NodePath, RawSchemas } from "@fern-api/yaml-schema";
 import { DefinitionFileAstVisitor } from "../DefinitionFileAstVisitor";
 import { createDocsVisitor } from "./utils/createDocsVisitor";
 import { createTypeReferenceVisitor } from "./utils/visitTypeReference";
@@ -11,7 +10,7 @@ export async function visitErrorDeclarations({
     visitor,
     nodePath
 }: {
-    errorDeclarations: Record<string, ErrorDeclarationSchema> | undefined;
+    errorDeclarations: Record<string, RawSchemas.ErrorDeclarationSchema> | undefined;
     visitor: Partial<DefinitionFileAstVisitor>;
     nodePath: NodePath;
 }): Promise<void> {
@@ -32,7 +31,7 @@ async function visitErrorDeclaration({
     nodePathForError
 }: {
     errorName: string;
-    declaration: ErrorDeclarationSchema;
+    declaration: RawSchemas.ErrorDeclarationSchema;
     visitor: Partial<DefinitionFileAstVisitor>;
     nodePathForError: NodePath;
 }) {

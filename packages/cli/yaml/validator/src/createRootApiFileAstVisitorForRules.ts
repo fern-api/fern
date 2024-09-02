@@ -1,11 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import {
-    NodePath,
-    RootApiFileAstNodeTypes,
-    RootApiFileAstNodeVisitor,
-    RootApiFileAstVisitor,
-    RootApiFileSchema
-} from "@fern-api/yaml-schema";
+import { NodePath, RootApiFileSchema } from "@fern-api/yaml-schema";
+import { RootApiFileAstNodeTypes, RootApiFileAstNodeVisitor, RootApiFileAstVisitor } from "./ast";
 import { RuleVisitors } from "./Rule";
 import { ValidationViolation } from "./ValidationViolation";
 

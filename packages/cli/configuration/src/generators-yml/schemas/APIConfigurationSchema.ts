@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { RawSchemas } from "@fern-api/yaml-schema";
 
 /**
  * @example
