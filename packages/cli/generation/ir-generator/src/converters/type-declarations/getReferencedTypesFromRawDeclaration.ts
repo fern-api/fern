@@ -3,6 +3,7 @@ import { RawSchemas, recursivelyVisitRawTypeReference, visitRawTypeDeclaration }
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { parseTypeName } from "../../utils/parseTypeName";
+import { getGenericDetails } from "../../utils/getGenericDetails";
 
 interface SeenTypeNames {
     addTypeName: (typeName: DeclaredTypeName) => void;
@@ -22,7 +23,12 @@ export function getReferencedTypesFromRawDeclaration({
 }): DeclaredTypeName[] {
     const rawTypeReferences = visitRawTypeDeclaration<string[]>(typeDeclaration, {
         alias: (aliasDeclaration) => {
-            return [typeof aliasDeclaration === "string" ? aliasDeclaration : aliasDeclaration.type];
+            const aliasStr = typeof aliasDeclaration === "string" ? aliasDeclaration : aliasDeclaration.type;
+            const maybeGenericDetails = getGenericDetails(aliasStr);
+            if (maybeGenericDetails && maybeGenericDetails.isGeneric) {
+                return maybeGenericDetails.arguments ?? [];
+            }
+            return [aliasStr];
         },
         object: (objectDeclaration) => {
             const types: string[] = [];
@@ -104,6 +110,10 @@ export function getReferencedTypesFromRawDeclaration({
                     referenceToNamedType: rawName,
                     file
                 });
+
+                if (maybeDeclaration.typeName.match(/(\w+)<([\w,\s]+)>/) != null) {
+                    continue;
+                }
 
                 referencedTypes.push(
                     ...getReferencedTypesFromRawDeclaration({

@@ -1046,7 +1046,6 @@
     "websocketChannels": {},
     "readmeConfig": null,
     "sourceConfig": null,
-    "publishConfig": null,
     "subpackages": {
         "subpackage_payment": {
             "name": {

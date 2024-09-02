@@ -4366,7 +4366,6 @@
     "websocketChannels": {},
     "readmeConfig": null,
     "sourceConfig": null,
-    "publishConfig": null,
     "subpackages": {
         "subpackage_commons": {
             "name": {

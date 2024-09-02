@@ -48,6 +48,7 @@ import { TypeResolverImpl } from "./resolvers/TypeResolver";
 import { VariableResolverImpl } from "./resolvers/VariableResolver";
 import { convertToFernFilepath } from "./utils/convertToFernFilepath";
 import { getAudienceForEnvironment } from "./utils/getEnvironmentsByAudience";
+import { getGenericDetails } from "./utils/getGenericDetails";
 import { parseErrorName } from "./utils/parseErrorName";
 
 export async function generateIntermediateRepresentation({
@@ -193,6 +194,10 @@ export async function generateIntermediateRepresentation({
                 }
 
                 for (const [typeName, typeDeclaration] of Object.entries(types)) {
+                    if (getGenericDetails(typeName)?.isGeneric) {
+                        continue;
+                    }
+
                     const convertedTypeDeclarationWithFilepaths = await convertTypeDeclaration({
                         typeName,
                         typeDeclaration,

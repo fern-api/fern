@@ -14,6 +14,7 @@ import { convertAliasTypeDeclaration } from "./convertAliasTypeDeclaration";
 import { convertDiscriminatedUnionTypeDeclaration } from "./convertDiscriminatedUnionTypeDeclaration";
 import { convertEnumTypeDeclaration } from "./convertEnumTypeDeclaration";
 import { convertTypeExample } from "./convertExampleType";
+import { convertGenericTypeDeclaration } from "./convertGenericTypeDeclaration";
 import { convertObjectTypeDeclaration } from "./convertObjectTypeDeclaration";
 import { convertUndiscriminatedUnionTypeDeclaration } from "./convertUndiscriminatedUnionTypeDeclaration";
 import { getReferencedTypesFromRawDeclaration } from "./getReferencedTypesFromRawDeclaration";
@@ -46,6 +47,7 @@ export async function convertTypeDeclaration({
         typeName,
         file
     });
+
     const referencedTypes = getReferencedTypesFromRawDeclaration({ typeDeclaration, file, typeResolver });
 
     let propertiesByAudience: Record<AudienceId, Set<string>> = {};

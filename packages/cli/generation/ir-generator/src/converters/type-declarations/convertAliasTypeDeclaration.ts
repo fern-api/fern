@@ -9,8 +9,10 @@ import {
 } from "@fern-api/yaml-schema";
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
+import { getGenericDetails } from "../../utils/getGenericDetails";
+import { convertGenericTypeDeclaration } from "./convertGenericTypeDeclaration";
 
-export function convertAliasTypeDeclaration({
+export async function convertAliasTypeDeclaration({
     alias,
     file,
     typeResolver
@@ -18,8 +20,11 @@ export function convertAliasTypeDeclaration({
     alias: string | RawSchemas.AliasSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
-}): Type {
+}): Promise<Type> {
     const aliasOfStr = typeof alias === "string" ? alias : alias.type;
+    if (getGenericDetails(aliasOfStr)?.isGeneric) {
+        return await convertGenericTypeDeclaration({ generic: aliasOfStr, file, typeResolver });
+    }
     return Type.alias({
         aliasOf: file.parseTypeReference(alias),
         resolvedType: constructResolvedTypeReference({ aliasOf: aliasOfStr, file, typeResolver })

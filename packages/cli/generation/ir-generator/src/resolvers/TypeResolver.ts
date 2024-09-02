@@ -4,6 +4,7 @@ import { isRawAliasDefinition, RawSchemas, recursivelyVisitRawTypeReference } fr
 import { constructFernFileContext, FernFileContext } from "../FernFileContext";
 import { parseInlineType } from "../utils/parseInlineType";
 import { parseReferenceToTypeName } from "../utils/parseReferenceToTypeName";
+import { getGenericDetails } from "../utils/getGenericDetails";
 import { ObjectPathItem, ResolvedType } from "./ResolvedType";
 
 export interface TypeResolver {
@@ -75,7 +76,28 @@ export class TypeResolverImpl implements TypeResolver {
         }
 
         const declaration = definitionFile.types?.[parsedReference.typeName];
+
         if (declaration == null) {
+            const maybeGeneric = getGenericDetails(parsedReference.typeName);
+            if (maybeGeneric && maybeGeneric.isGeneric) {
+                for (const type of Object.keys(definitionFile.types ?? {}) ?? []) {
+                    if (maybeGeneric.name && type.startsWith(maybeGeneric.name) && type.endsWith(">")) {
+                        const genericDeclaration = definitionFile.types?.[type];
+                        return genericDeclaration != null
+                            ? {
+                                  typeName: type,
+                                  declaration: genericDeclaration,
+                                  file: constructFernFileContext({
+                                      relativeFilepath: parsedReference.relativeFilepath,
+                                      definitionFile,
+                                      casingsGenerator: file.casingsGenerator,
+                                      rootApiFile: this.workspace.definition.rootApiFile.contents
+                                  })
+                              }
+                            : undefined;
+                    }
+                }
+            }
             return undefined;
         }
 
