@@ -143,7 +143,7 @@ async function validateLocalDependencyAndGetDefinition({
     const definition = await loadDependencyWorkspaceResult.workspace.getDefinition(
         {
             context,
-            modifySourceFilepath: (original: string): string => path.join(dependency.path, original)
+            relativePathToDependency: RelativeFilePath.of(dependency.path)
         },
         settings
     );

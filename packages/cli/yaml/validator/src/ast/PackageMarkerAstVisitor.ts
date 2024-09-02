@@ -1,4 +1,4 @@
-import { NodePath } from "../NodePath";
+import { NodePath } from "@fern-api/yaml-schema";
 
 export type PackageMarkerAstVisitor<R = void | Promise<void>> = {
     [K in keyof PackageMarkerAstNodeTypes]: PackageMarkerAstNodeVisitor<K, R>;

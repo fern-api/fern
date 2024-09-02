@@ -1,5 +1,6 @@
 import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/workspace-loader";
-import { RawSchemas, visitDefinitionFileYamlAst } from "@fern-api/yaml-schema";
+import { RawSchemas } from "@fern-api/yaml-schema";
+import { visitDefinitionFileYamlAst } from "../../ast";
 import { noop } from "lodash-es";
 import { Rule, RuleViolation } from "../../Rule";
 

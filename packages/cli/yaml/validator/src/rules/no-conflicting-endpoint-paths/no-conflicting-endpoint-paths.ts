@@ -1,5 +1,5 @@
 import { visitAllDefinitionFiles } from "@fern-api/workspace-loader";
-import { visitDefinitionFileYamlAst } from "@fern-api/yaml-schema";
+import { visitDefinitionFileYamlAst } from "../../ast";
 import chalk from "chalk";
 import { Rule } from "../../Rule";
 import { EndpointPathRegistry } from "./EndpointPathRegistry";

@@ -2,20 +2,14 @@ import { ROOT_API_FILENAME } from "@fern-api/configuration";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "@fern-api/workspace-loader";
-import {
-    DefinitionFileSchema,
-    PackageMarkerFileSchema,
-    RootApiFileSchema,
-    visitDefinitionFileYamlAst,
-    visitPackageMarkerYamlAst,
-    visitRootApiFileYamlAst
-} from "@fern-api/yaml-schema";
+import { DefinitionFileSchema, PackageMarkerFileSchema, RootApiFileSchema } from "@fern-api/yaml-schema";
 import { createDefinitionFileAstVisitorForRules } from "./createDefinitionFileAstVisitorForRules";
 import { createPackageMarkerAstVisitorForRules } from "./createPackageMarkerAstVisitorForRules";
 import { createRootApiFileAstVisitorForRules } from "./createRootApiFileAstVisitorForRules";
 import { getAllEnabledRules } from "./getAllRules";
 import { Rule, RuleVisitors } from "./Rule";
 import { ValidationViolation } from "./ValidationViolation";
+import { visitRootApiFileYamlAst, visitPackageMarkerYamlAst, visitDefinitionFileYamlAst } from "./ast";
 
 export async function validateFernWorkspace(workspace: FernWorkspace, logger: Logger): Promise<ValidationViolation[]> {
     return runRulesOnWorkspace({ workspace, rules: getAllEnabledRules(), logger });

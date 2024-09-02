@@ -1,6 +1,5 @@
 import { isPlainObject } from "@fern-api/core-utils";
-import { EXAMPLE_REFERENCE_PREFIX } from "../../../constants";
-import { NodePath } from "../../../NodePath";
+import { NodePath, EXAMPLE_REFERENCE_PREFIX } from "@fern-api/yaml-schema";
 import { DefinitionFileAstVisitor } from "../../DefinitionFileAstVisitor";
 
 export async function visitAllReferencesInExample({

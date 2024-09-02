@@ -1,4 +1,4 @@
-import { NodePath } from "../../NodePath";
+import { NodePath } from "@fern-api/yaml-schema";
 import { DefinitionFileAstVisitor } from "../DefinitionFileAstVisitor";
 
 export async function visitImports({
