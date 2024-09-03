@@ -94,7 +94,7 @@ async function getDefaultGeneratorsConfiguration({
             `Failed to get latest version for ${defaultGeneratorName} that is compatible with CLI ${cliVersion}, falling back to preset version ${version}`
         );
     }
-    return {
+    const config: generatorsYml.GeneratorsConfigurationSchema = {
         "default-group": DEFAULT_GROUP_NAME,
         groups: {
             [DEFAULT_GROUP_NAME]: {
@@ -108,6 +108,10 @@ async function getDefaultGeneratorsConfiguration({
             }
         }
     };
+    if (apiConfiguration != null) {
+        config.api = apiConfiguration;
+    }
+    return config;
 }
 
 async function writeGeneratorsConfiguration({
