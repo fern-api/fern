@@ -205,9 +205,8 @@ MyUnion:
 
 ### Generics
 
-Fern supports shallow generic objects, to minimize code duplication. Note, 
-as of now, generics only can be instantiated as type aliases. You can define a 
-generic for reuse like so:
+Fern supports shallow generic objects, to minimize code duplication. You can 
+define a generic for reuse like so:
 
 ```yaml
 MyGenericType<T, U>:
@@ -217,7 +216,7 @@ MyGenericType<T, U>:
     baz: string
 ```
 
-Now, you can instantiate generic types like:
+Now, you can instantiate generic types as a type alias:
 
 ```yaml
 MyGenericAppliedType:
