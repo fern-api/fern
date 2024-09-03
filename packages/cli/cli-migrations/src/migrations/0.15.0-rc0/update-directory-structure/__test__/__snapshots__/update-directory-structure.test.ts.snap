@@ -3,19 +3,14 @@
 exports[`update-directory-structure > multiple-apis 1`] = `
 [
   {
-    "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-G0w8e9wo8R3U/fern",
     "contents": [
       {
-        "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-G0w8e9wo8R3U/fern/apis",
         "contents": [
           {
-            "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-G0w8e9wo8R3U/fern/apis/api",
             "contents": [
               {
-                "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-G0w8e9wo8R3U/fern/apis/api/definition",
                 "contents": [
                   {
-                    "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-G0w8e9wo8R3U/fern/apis/api/definition/api.yml",
                     "contents": "name: api
 error-discrimination:
   strategy: status-code
@@ -24,7 +19,6 @@ error-discrimination:
                     "type": "file",
                   },
                   {
-                    "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-G0w8e9wo8R3U/fern/apis/api/definition/imdb.yml",
                     "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 service:
@@ -94,7 +88,6 @@ errors:
                 "type": "directory",
               },
               {
-                "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-G0w8e9wo8R3U/fern/apis/api/generators.yml",
                 "contents": "default-group: local
 groups:
   local:
@@ -113,10 +106,8 @@ groups:
             "type": "directory",
           },
           {
-            "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-G0w8e9wo8R3U/fern/apis/api1",
             "contents": [
               {
-                "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-G0w8e9wo8R3U/fern/apis/api1/generators.yml",
                 "contents": "default-group: local
 groups:
   local:
@@ -131,10 +122,8 @@ groups:
                 "type": "file",
               },
               {
-                "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-G0w8e9wo8R3U/fern/apis/api1/openapi",
                 "contents": [
                   {
-                    "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-G0w8e9wo8R3U/fern/apis/api1/openapi/openapi.yml",
                     "contents": "|
   openapi: "3.0.0"
   info:
@@ -266,7 +255,6 @@ groups:
         "type": "directory",
       },
       {
-        "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-G0w8e9wo8R3U/fern/fern.config.json",
         "contents": "{
     "organization": "dsinghvi",
     "version": "0.14.3"
@@ -284,19 +272,14 @@ groups:
 exports[`update-directory-structure > multiple-apis-with-docs 1`] = `
 [
   {
-    "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-yiYETfZpSy5X/fern",
     "contents": [
       {
-        "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-yiYETfZpSy5X/fern/apis",
         "contents": [
           {
-            "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-yiYETfZpSy5X/fern/apis/api",
             "contents": [
               {
-                "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-yiYETfZpSy5X/fern/apis/api/definition",
                 "contents": [
                   {
-                    "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-yiYETfZpSy5X/fern/apis/api/definition/api.yml",
                     "contents": "name: api
 error-discrimination:
   strategy: status-code
@@ -305,7 +288,6 @@ error-discrimination:
                     "type": "file",
                   },
                   {
-                    "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-yiYETfZpSy5X/fern/apis/api/definition/imdb.yml",
                     "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 service:
@@ -375,7 +357,6 @@ errors:
                 "type": "directory",
               },
               {
-                "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-yiYETfZpSy5X/fern/apis/api/generators.yml",
                 "contents": "default-group: local
 groups:
   local:
@@ -394,13 +375,10 @@ groups:
             "type": "directory",
           },
           {
-            "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-yiYETfZpSy5X/fern/apis/api1",
             "contents": [
               {
-                "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-yiYETfZpSy5X/fern/apis/api1/definition",
                 "contents": [
                   {
-                    "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-yiYETfZpSy5X/fern/apis/api1/definition/api.yml",
                     "contents": "name: api
 error-discrimination:
   strategy: status-code
@@ -409,7 +387,6 @@ error-discrimination:
                     "type": "file",
                   },
                   {
-                    "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-yiYETfZpSy5X/fern/apis/api1/definition/imdb.yml",
                     "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 service:
@@ -479,7 +456,6 @@ errors:
                 "type": "directory",
               },
               {
-                "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-yiYETfZpSy5X/fern/apis/api1/generators.yml",
                 "contents": "default-group: local
 groups:
   local:
@@ -502,7 +478,6 @@ groups:
         "type": "directory",
       },
       {
-        "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-yiYETfZpSy5X/fern/docs.yml",
         "contents": "title: dsinghvi
 navigation:
   - api: API Reference
@@ -518,7 +493,6 @@ instances:
         "type": "file",
       },
       {
-        "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-yiYETfZpSy5X/fern/fern.config.json",
         "contents": "{
     "organization": "dsinghvi",
     "version": "0.14.3"
@@ -536,13 +510,10 @@ instances:
 exports[`update-directory-structure > single-api 1`] = `
 [
   {
-    "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-969xDADqM619/fern",
     "contents": [
       {
-        "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-969xDADqM619/fern/definition",
         "contents": [
           {
-            "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-969xDADqM619/fern/definition/api.yml",
             "contents": "name: api
 error-discrimination:
   strategy: status-code
@@ -551,7 +522,6 @@ error-discrimination:
             "type": "file",
           },
           {
-            "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-969xDADqM619/fern/definition/imdb.yml",
             "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 service:
@@ -621,7 +591,6 @@ errors:
         "type": "directory",
       },
       {
-        "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-969xDADqM619/fern/fern.config.json",
         "contents": "{
     "organization": "dsinghvi",
     "version": "0.14.3"
@@ -630,7 +599,6 @@ errors:
         "type": "file",
       },
       {
-        "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-969xDADqM619/fern/generators.yml",
         "contents": "default-group: local
 groups:
   local:
@@ -654,13 +622,10 @@ groups:
 exports[`update-directory-structure > single-api-with-docs 1`] = `
 [
   {
-    "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-mG0TAuKYMdEw/fern",
     "contents": [
       {
-        "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-mG0TAuKYMdEw/fern/definition",
         "contents": [
           {
-            "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-mG0TAuKYMdEw/fern/definition/api.yml",
             "contents": "name: api
 error-discrimination:
   strategy: status-code
@@ -669,7 +634,6 @@ error-discrimination:
             "type": "file",
           },
           {
-            "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-mG0TAuKYMdEw/fern/definition/imdb.yml",
             "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 service:
@@ -739,7 +703,6 @@ errors:
         "type": "directory",
       },
       {
-        "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-mG0TAuKYMdEw/fern/docs.yml",
         "contents": "title: dsinghvi
 navigation:
   - api: API Reference
@@ -754,7 +717,6 @@ instances:
         "type": "file",
       },
       {
-        "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-mG0TAuKYMdEw/fern/fern.config.json",
         "contents": "{
     "organization": "dsinghvi",
     "version": "0.14.3"
@@ -763,7 +725,6 @@ instances:
         "type": "file",
       },
       {
-        "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-62171-mG0TAuKYMdEw/fern/generators.yml",
         "contents": "default-group: local
 groups:
   local:

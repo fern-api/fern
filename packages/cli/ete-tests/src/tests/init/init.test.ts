@@ -1,5 +1,12 @@
 import { APIS_DIRECTORY, FERN_DIRECTORY } from "@fern-api/configuration";
-import { AbsoluteFilePath, doesPathExist, getDirectoryContents, getDirectoryContentsForSnapshot, join, RelativeFilePath } from "@fern-api/fs-utils";
+import {
+    AbsoluteFilePath,
+    doesPathExist,
+    getDirectoryContents,
+    getDirectoryContentsForSnapshot,
+    join,
+    RelativeFilePath
+} from "@fern-api/fs-utils";
 import { runFernCli } from "../../utils/runFernCli";
 import { init } from "./init";
 
@@ -12,7 +19,7 @@ describe("fern init", () => {
             cwd: pathOfDirectory
         });
         expect(
-            await getDirectoryContents(join(pathOfDirectory, RelativeFilePath.of(FERN_DIRECTORY)))
+            await getDirectoryContentsForSnapshot(join(pathOfDirectory, RelativeFilePath.of(FERN_DIRECTORY)))
         ).toMatchSnapshot();
     }, 60_000);
 

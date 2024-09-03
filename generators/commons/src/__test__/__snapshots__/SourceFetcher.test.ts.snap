@@ -3,13 +3,10 @@
 exports[`fetch proto.zip 1`] = `
 [
   {
-    "absolutePath": "/Users/dsinghvi/Git/fern/generators/commons/src/__test__/fixtures/google",
     "contents": [
       {
-        "absolutePath": "/Users/dsinghvi/Git/fern/generators/commons/src/__test__/fixtures/google/api",
         "contents": [
           {
-            "absolutePath": "/Users/dsinghvi/Git/fern/generators/commons/src/__test__/fixtures/google/api/annotations.proto",
             "contents": "// Copyright 2015 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -45,7 +42,6 @@ extend google.protobuf.MethodOptions {
             "type": "file",
           },
           {
-            "absolutePath": "/Users/dsinghvi/Git/fern/generators/commons/src/__test__/fixtures/google/api/field_behavior.proto",
             "contents": "// Copyright 2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -154,7 +150,6 @@ enum FieldBehavior {
             "type": "file",
           },
           {
-            "absolutePath": "/Users/dsinghvi/Git/fern/generators/commons/src/__test__/fixtures/google/api/http.proto",
             "contents": "// Copyright 2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -546,13 +541,10 @@ message CustomHttpPattern {
     "type": "directory",
   },
   {
-    "absolutePath": "/Users/dsinghvi/Git/fern/generators/commons/src/__test__/fixtures/user",
     "contents": [
       {
-        "absolutePath": "/Users/dsinghvi/Git/fern/generators/commons/src/__test__/fixtures/user/v1",
         "contents": [
           {
-            "absolutePath": "/Users/dsinghvi/Git/fern/generators/commons/src/__test__/fixtures/user/v1/user.proto",
             "contents": "syntax = "proto3";
 
 package user.v1;
