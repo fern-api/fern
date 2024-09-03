@@ -13,6 +13,7 @@ import yaml from "js-yaml";
 import YAML from "yaml";
 import { Migration } from "../../../types/Migration";
 import { writeFile } from "fs/promises";
+import chalk from "chalk";
 
 export const migration: Migration = {
     name: "require-generators-yml",
@@ -44,7 +45,7 @@ export const migration: Migration = {
                 }
                 const absoluteFilepathToWorkspace = join(
                     absolutePathToFernDirectory,
-                    RelativeFilePath.of("fern"),
+                    RelativeFilePath.of("apis"),
                     RelativeFilePath.of(workspace.name)
                 );
                 await addApiConfigurationToSingleWorkspace({
@@ -78,8 +79,12 @@ async function addApiConfigurationToSingleWorkspace({
 
     if (existingGeneratorsYml == null) {
         if (openapiDirectory != null && openapiDirectory.contents[0] != null) {
+            const absolutePathToGeneratorsYml = join(
+                absoluteFilepathToWorkspace,
+                RelativeFilePath.of("generators.yml")
+            );
             await writeFile(
-                join(absoluteFilepathToWorkspace, RelativeFilePath.of("generators.yml")),
+                absolutePathToGeneratorsYml,
                 yaml.dump({
                     api: {
                         path: join(
@@ -90,6 +95,7 @@ async function addApiConfigurationToSingleWorkspace({
                     }
                 })
             );
+            context.logger.info(chalk.green(`Wrote ${absolutePathToGeneratorsYml}`));
         }
     } else {
         const generatorsYmlContents = yaml.load(existingGeneratorsYml.contents);
@@ -107,6 +113,7 @@ async function addApiConfigurationToSingleWorkspace({
                 )
             });
             await writeFile(existingGeneratorsYml.absolutePath, parsedDocument.toString());
+            context.logger.info(chalk.green(`Updated ${existingGeneratorsYml.absolutePath}`));
         }
     }
 }

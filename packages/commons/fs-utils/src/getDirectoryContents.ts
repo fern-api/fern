@@ -65,3 +65,36 @@ export async function getDirectoryContents(
 
     return contents.sort((a, b) => (a.name < b.name ? -1 : 1));
 }
+
+export type SnapshotFileOrDirectory = SnapshotFile | SnapshotDirectory;
+
+export interface SnapshotFile {
+    type: "file";
+    name: string;
+    contents: string;
+}
+
+export interface SnapshotDirectory {
+    type: "directory";
+    name: string;
+    contents: SnapshotFileOrDirectory[];
+}
+
+export async function getDirectoryContentsForSnapshot(
+    absolutePath: AbsoluteFilePath,
+    options: getDirectoryContents.Options = {}
+): Promise<SnapshotFileOrDirectory[]> {
+    const contents = await getDirectoryContents(absolutePath, options);
+    const removeAbsolutePath = (fileOrDir: FileOrDirectory): SnapshotFileOrDirectory => {
+        if (fileOrDir.type === "file") {
+            return { type: "file", name: fileOrDir.name, contents: fileOrDir.contents };
+        } else {
+            return {
+                type: "directory",
+                name: fileOrDir.name,
+                contents: fileOrDir.contents.map((item) => removeAbsolutePath(item))
+            };
+        }
+    };
+    return contents.map((item) => removeAbsolutePath(item));
+}
