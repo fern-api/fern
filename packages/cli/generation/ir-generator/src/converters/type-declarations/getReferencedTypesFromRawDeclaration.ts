@@ -2,7 +2,8 @@ import { DeclaredTypeName } from "@fern-api/ir-sdk";
 import {
     RawSchemas,
     recursivelyVisitRawTypeReference,
-    visitRawTypeDeclaration
+    visitRawTypeDeclaration,
+    isRawObjectDefinition
 } from "@fern-api/fern-definition-schema";
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
@@ -12,6 +13,23 @@ import { getGenericDetails } from "../../utils/getGenericDetails";
 interface SeenTypeNames {
     addTypeName: (typeName: DeclaredTypeName) => void;
     hasTypeNameBeenSeen: (typeName: DeclaredTypeName) => boolean;
+}
+
+function getObjectRawTypeReferences(objectDeclaration: RawSchemas.ObjectSchema): string[] {
+    const types: string[] = [];
+    if (objectDeclaration.extends != null) {
+        const extendsArr =
+            typeof objectDeclaration.extends === "string" ? [objectDeclaration.extends] : objectDeclaration.extends;
+        types.push(...extendsArr);
+    }
+    if (objectDeclaration.properties != null) {
+        types.push(
+            ...Object.values(objectDeclaration.properties).map((property) =>
+                typeof property === "string" ? property : property.type
+            )
+        );
+    }
+    return types;
 }
 
 export function getReferencedTypesFromRawDeclaration({
@@ -30,45 +48,29 @@ export function getReferencedTypesFromRawDeclaration({
             const aliasTypeReference = typeof aliasDeclaration === "string" ? aliasDeclaration : aliasDeclaration.type;
             const maybeGenericDetails = getGenericDetails(aliasTypeReference);
             if (maybeGenericDetails && maybeGenericDetails.isGeneric) {
+                const rawTypeReferences = new Set<string>(maybeGenericDetails.arguments ?? []);
                 const resolvedBaseGeneric = typeResolver.getDeclarationOfNamedTypeOrThrow({
                     referenceToNamedType: aliasTypeReference,
                     file
                 });
                 const resolvedBaseGenericArguments = getGenericDetails(resolvedBaseGeneric.typeName)?.arguments;
+                if (isRawObjectDefinition(resolvedBaseGeneric.declaration)) {
+                    const underlyingObjectRawTypeReferences = getObjectRawTypeReferences(
+                        resolvedBaseGeneric.declaration
+                    );
 
-                resolvedBaseGenericArguments?.forEach((genericArgument) =>
-                    seenTypeNames.addTypeName(parseTypeName({ typeName: genericArgument, file }))
-                );
+                    if (resolvedBaseGenericArguments) {
+                        underlyingObjectRawTypeReferences
+                            .filter((typeReference) => !resolvedBaseGenericArguments.includes(typeReference))
+                            .forEach((type) => rawTypeReferences.add(type));
+                    }
+                }
 
-                const underlyingObjectRawTypeReferences = getReferencedTypesFromRawDeclaration({
-                    typeDeclaration: resolvedBaseGeneric.declaration,
-                    file,
-                    typeResolver,
-                    seenTypeNames
-                }).map((typeName) => typeName.name.originalName);
-
-                return underlyingObjectRawTypeReferences.concat(maybeGenericDetails.arguments ?? []);
+                return Array.from(rawTypeReferences);
             }
             return [aliasTypeReference];
         },
-        object: (objectDeclaration) => {
-            const types: string[] = [];
-            if (objectDeclaration.extends != null) {
-                const extendsArr =
-                    typeof objectDeclaration.extends === "string"
-                        ? [objectDeclaration.extends]
-                        : objectDeclaration.extends;
-                types.push(...extendsArr);
-            }
-            if (objectDeclaration.properties != null) {
-                types.push(
-                    ...Object.values(objectDeclaration.properties).map((property) =>
-                        typeof property === "string" ? property : property.type
-                    )
-                );
-            }
-            return types;
-        },
+        object: (objectDeclaration) => getObjectRawTypeReferences(objectDeclaration),
         discriminatedUnion: (unionDeclaration) => {
             const types: string[] = [];
             if (unionDeclaration["base-properties"] != null) {

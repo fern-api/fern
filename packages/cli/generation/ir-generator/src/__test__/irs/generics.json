@@ -1272,7 +1272,11 @@
                 "extendedProperties": []
             },
             "referencedTypes": [
-                "type_imdb:CreateMovieRequest"
+                "type_imdb:CreateMovieRequest",
+                "type_imdb:Movie",
+                "type_imdb:MovieId",
+                "type_imdb:Cast",
+                "type_imdb:Name"
             ],
             "encoding": {
                 "json": {},
@@ -1546,7 +1550,12 @@
                 "extra-properties": false,
                 "extendedProperties": []
             },
-            "referencedTypes": [],
+            "referencedTypes": [
+                "type_imdb:Movie",
+                "type_imdb:MovieId",
+                "type_imdb:Cast",
+                "type_imdb:Name"
+            ],
             "encoding": {
                 "json": {},
                 "proto": null

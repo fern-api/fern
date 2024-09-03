@@ -23,6 +23,7 @@ export interface DefinitionFileAstNodeTypes {
         _default?: unknown;
         validation?: RawSchemas.ValidationSchema;
         location?: TypeReferenceLocation;
+        nodePath?: NodePath;
     };
     typeName: string;
     httpService: RawSchemas.HttpServiceSchema;
