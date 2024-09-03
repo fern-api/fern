@@ -41,8 +41,26 @@ describe("valid-generic", () => {
             {
                 severity: "error",
                 relativeFilepath: "1.yml",
-                nodePath: ["types", "GenericUsedType<T>"],
-                message: "Generic declarations are only supported with aliases."
+                nodePath: ["types", "GenericUsedTypeAlias<T>"],
+                message: "Generic declarations are only supported with objects."
+            },
+            {
+                severity: "error",
+                relativeFilepath: "1.yml",
+                nodePath: ["types", "GenericUsedTypeEnum<T>"],
+                message: "Generic declarations are only supported with objects."
+            },
+            {
+                severity: "error",
+                relativeFilepath: "1.yml",
+                nodePath: ["types", "GenericUsedTypeUndiscriminatedUnion<T>"],
+                message: "Generic declarations are only supported with objects."
+            },
+            {
+                severity: "error",
+                relativeFilepath: "1.yml",
+                nodePath: ["types", "GenericUsedDiscriminatedUnion<T>"],
+                message: "Generic declarations are only supported with objects."
             }
         ]);
     });

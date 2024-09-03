@@ -25,3 +25,23 @@ types:
     properties:
       foo: T
       bar: list<string>
+
+  GenericUsedTypeAlias<T>:
+    type: T
+
+  GenericUsedTypeEnum<T>:
+    enum:
+      - T
+      - bar
+  
+  GenericUsedTypeUndiscriminatedUnion<T>:
+    union:
+      - T
+      - bar
+    discriminated: false
+
+  GenericUsedDiscriminatedUnion<T>:
+    union:
+      foo: T
+      bar: string
+

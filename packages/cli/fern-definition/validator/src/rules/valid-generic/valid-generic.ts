@@ -74,13 +74,13 @@ export const ValidGenericRule: Rule = {
                             if (
                                 !visitRawTypeDeclaration(declaration, {
                                     alias: () => {
-                                        return true;
+                                        return false;
                                     },
                                     enum: () => {
                                         return false;
                                     },
                                     object: () => {
-                                        return false;
+                                        return true;
                                     },
                                     discriminatedUnion: () => {
                                         return false;
@@ -92,7 +92,7 @@ export const ValidGenericRule: Rule = {
                             ) {
                                 errors.push({
                                     severity: "error",
-                                    message: "Generic declarations are only supported with aliases."
+                                    message: "Generic declarations are only supported with objects."
                                 });
                             }
                         }
