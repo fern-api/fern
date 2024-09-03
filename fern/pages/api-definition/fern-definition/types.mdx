@@ -223,7 +223,16 @@ MyGenericAppliedType:
   type: MyGenericType<SomeOtherType, number>
 ```
 
-You can now freely use this type as if it were any other type!
+You can now freely use this type as if it were any other type! The output
+type will resolve to:
+
+```yaml
+MyGenericAppliedType:
+  properties:
+    foo: SomeOtherType,
+    bar: number,
+    baz: string
+```
 
 ### Documenting types
 
