@@ -51,11 +51,13 @@ export const ValidGenericRule: Rule = {
                             const alias = typeof aliasValue === "string" ? aliasValue : aliasValue.type;
                             const maybeGeneric = getGenericDetails(alias);
                             if (maybeGeneric && maybeGeneric.isGeneric && maybeGeneric.name && maybeGeneric.arguments) {
-                                if (genericArgumentCounts[maybeGeneric.name] !== maybeGeneric.arguments.length) {
+                                const [maybeTypeName, typeName, ..._rest] = maybeGeneric.name.split(".");
+                                const key = typeName ?? maybeTypeName;
+                                if (key && genericArgumentCounts[key] !== maybeGeneric.arguments.length) {
                                     errors.push({
                                         severity: "error",
-                                        message: `Generic "${maybeGeneric.name}" expects ${
-                                            genericArgumentCounts[maybeGeneric.name] ?? 0
+                                        message: `Generic "${key}" expects ${
+                                            genericArgumentCounts[key] ?? 0
                                         } arguments but was instantiated with ${
                                             maybeGeneric.arguments.length
                                         } arguments.`

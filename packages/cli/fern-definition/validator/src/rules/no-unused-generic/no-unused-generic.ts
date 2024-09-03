@@ -19,8 +19,11 @@ export const NoUnusedGenericRule: Rule = {
                                 typeof alias === "string" ? alias : alias.type
                             );
                             if (maybeGenericDeclaration?.isGeneric && maybeGenericDeclaration.name) {
-                                const [_imports, typeName, ..._rest] = maybeGenericDeclaration.name.split(".");
-                                instantiations.add(typeName);
+                                const [maybeTypeName, typeName, ..._rest] = maybeGenericDeclaration.name.split(".");
+                                const key = typeName ?? maybeTypeName;
+                                if (key) {
+                                    instantiations.add(key);
+                                }
                             }
                         },
                         enum: () => {},
