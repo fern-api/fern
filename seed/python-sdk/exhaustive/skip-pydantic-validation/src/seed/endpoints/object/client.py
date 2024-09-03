@@ -12,6 +12,7 @@ from ...core.api_error import ApiError
 from ...types.object.types.object_with_required_field import ObjectWithRequiredField
 from ...types.object.types.object_with_map_of_map import ObjectWithMapOfMap
 from ...types.object.types.nested_object_with_optional_field import NestedObjectWithOptionalField
+from ...core.serialization import convert_and_respect_annotation_metadata
 from ...types.object.types.nested_object_with_required_field import NestedObjectWithRequiredField
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.client_wrapper import AsyncClientWrapper
@@ -310,7 +311,9 @@ class ObjectClient:
             method="POST",
             json={
                 "string": string,
-                "NestedObject": nested_object,
+                "NestedObject": convert_and_respect_annotation_metadata(
+                    object_=nested_object, annotation=ObjectWithOptionalField
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -396,7 +399,9 @@ class ObjectClient:
             method="POST",
             json={
                 "string": string,
-                "NestedObject": nested_object,
+                "NestedObject": convert_and_respect_annotation_metadata(
+                    object_=nested_object, annotation=ObjectWithOptionalField
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -480,7 +485,9 @@ class ObjectClient:
         _response = self._client_wrapper.httpx_client.request(
             "object/get-and-return-nested-with-required-field-list",
             method="POST",
-            json=request,
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=typing.Sequence[NestedObjectWithRequiredField]
+            ),
             request_options=request_options,
             omit=OMIT,
         )
@@ -819,7 +826,9 @@ class AsyncObjectClient:
             method="POST",
             json={
                 "string": string,
-                "NestedObject": nested_object,
+                "NestedObject": convert_and_respect_annotation_metadata(
+                    object_=nested_object, annotation=ObjectWithOptionalField
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -912,7 +921,9 @@ class AsyncObjectClient:
             method="POST",
             json={
                 "string": string,
-                "NestedObject": nested_object,
+                "NestedObject": convert_and_respect_annotation_metadata(
+                    object_=nested_object, annotation=ObjectWithOptionalField
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -1003,7 +1014,9 @@ class AsyncObjectClient:
         _response = await self._client_wrapper.httpx_client.request(
             "object/get-and-return-nested-with-required-field-list",
             method="POST",
-            json=request,
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=typing.Sequence[NestedObjectWithRequiredField]
+            ),
             request_options=request_options,
             omit=OMIT,
         )

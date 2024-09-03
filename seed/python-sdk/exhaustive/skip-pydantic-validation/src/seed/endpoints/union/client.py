@@ -4,6 +4,7 @@ import typing
 from ...core.client_wrapper import SyncClientWrapper
 from ...types.union.types.animal import Animal
 from ...core.request_options import RequestOptions
+from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
@@ -51,7 +52,7 @@ class UnionClient:
         _response = self._client_wrapper.httpx_client.request(
             "union",
             method="POST",
-            json=request,
+            json=convert_and_respect_annotation_metadata(object_=request, annotation=Animal),
             request_options=request_options,
             omit=OMIT,
         )
@@ -116,7 +117,7 @@ class AsyncUnionClient:
         _response = await self._client_wrapper.httpx_client.request(
             "union",
             method="POST",
-            json=request,
+            json=convert_and_respect_annotation_metadata(object_=request, annotation=Animal),
             request_options=request_options,
             omit=OMIT,
         )

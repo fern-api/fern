@@ -3,6 +3,7 @@ from typing import List, Optional, Set, Tuple
 
 from fern_python.codegen import AST, ExportStrategy, Filepath, Project
 from fern_python.external_dependencies.pydantic import PYDANTIC_CORE_DEPENDENCY
+from fern_python.generators.pydantic_model.field_metadata import FieldMetadata
 from fern_python.source_file_factory import SourceFileFactory
 
 
@@ -142,6 +143,17 @@ class CoreUtilities:
                 "UniversalRootModel",
             },
         )
+
+        self._copy_file_to_project(
+            project=project,
+            relative_filepath_on_disk="serialization.py",
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="serialization"),
+            ),
+            exports={"FieldMetadata", "convert_and_respect_annotation_metadata"},
+        )
+
         project.add_dependency(PYDANTIC_CORE_DEPENDENCY)
         self._copy_security_to_project(project=project)
         self._copy_exceptions_to_project(project=project)
@@ -308,3 +320,13 @@ class CoreUtilities:
             args=[AST.Expression(expression=f'"{field_name}"')],
             kwargs=[("pre", AST.Expression(expression="True" if pre else "False"))],
         )
+
+    def get_field_metadata(self) -> FieldMetadata:
+        field_metadata_reference = AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "serialization"), named_import="FieldMetadata"
+            ),
+        )
+
+        return FieldMetadata(reference=field_metadata_reference)

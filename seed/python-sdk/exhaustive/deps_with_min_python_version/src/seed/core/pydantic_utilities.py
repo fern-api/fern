@@ -75,13 +75,16 @@ def to_jsonable_with_fallback(
 
 
 class UniversalBaseModel(pydantic.BaseModel):
-    class Config:
-        populate_by_name = True
-        smart_union = True
-        allow_population_by_field_name = True
-        json_encoders = {dt.datetime: serialize_datetime}
-        # Allow fields begining with `model_` to be used in the model
-        protected_namespaces = ()
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            protected_namespaces=(),
+            json_encoders={dt.datetime: serialize_datetime},
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            smart_union = True
+            json_encoders = {dt.datetime: serialize_datetime}
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {

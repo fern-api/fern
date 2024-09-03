@@ -2,15 +2,17 @@
 
 from __future__ import annotations
 from .....core.pydantic_utilities import UniversalBaseModel
+import typing_extensions
 import typing
-import pydantic
+from .....core.serialization import FieldMetadata
 from .....core.pydantic_utilities import IS_PYDANTIC_V2
+import pydantic
 
 
 class Animal_Dog(UniversalBaseModel):
-    animal: typing.Literal["dog"] = "dog"
-    name: str
-    likes_to_woof: bool = pydantic.Field(alias="likesToWoof")
+    animal: typing_extensions.Annotated[typing.Literal["dog"], FieldMetadata(alias="animal")] = "dog"
+    name: typing_extensions.Annotated[str, FieldMetadata(alias="name")]
+    likes_to_woof: typing_extensions.Annotated[bool, FieldMetadata(alias="likesToWoof")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
@@ -21,9 +23,9 @@ class Animal_Dog(UniversalBaseModel):
 
 
 class Animal_Cat(UniversalBaseModel):
-    animal: typing.Literal["cat"] = "cat"
-    name: str
-    likes_to_meow: bool = pydantic.Field(alias="likesToMeow")
+    animal: typing_extensions.Annotated[typing.Literal["cat"], FieldMetadata(alias="animal")] = "cat"
+    name: typing_extensions.Annotated[str, FieldMetadata(alias="name")]
+    likes_to_meow: typing_extensions.Annotated[bool, FieldMetadata(alias="likesToMeow")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
