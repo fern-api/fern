@@ -147,6 +147,8 @@ groups:
         output:
           location: local-file-system
           path: ../sdks/typescript
+api:
+  path: openapi/petstore-openapi.yml
 ",
         "name": "generators.yml",
         "type": "file",

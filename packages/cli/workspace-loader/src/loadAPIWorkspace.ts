@@ -1,6 +1,7 @@
 import { ASYNCAPI_DIRECTORY, DEFINITION_DIRECTORY, generatorsYml, OPENAPI_DIRECTORY } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
+import { loadAPIChangelog } from "./loadAPIChangelog";
 import { getValidAbsolutePathToAsyncAPIFromFolder } from "./loadAsyncAPIFile";
 import { getValidAbsolutePathToOpenAPIFromFolder } from "./loadOpenAPIFile";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
@@ -133,16 +134,10 @@ export async function loadAPIWorkspace({
         context
     });
 
-    const changelog = undefined;
-    // try {
-    //     changelog = await loadAPIChangelog({ absolutePathToWorkspace });
-    // } catch (err) {}
-
-    const absolutePathToOpenAPIFolder = join(absolutePathToWorkspace, RelativeFilePath.of(OPENAPI_DIRECTORY));
-    const openApiDirectoryExists = await doesPathExist(absolutePathToOpenAPIFolder);
-
-    const absolutePathToAsyncAPIFolder = join(absolutePathToWorkspace, RelativeFilePath.of(ASYNCAPI_DIRECTORY));
-    const asyncApiDirectoryExists = await doesPathExist(absolutePathToAsyncAPIFolder);
+    let changelog = undefined;
+    try {
+        changelog = await loadAPIChangelog({ absolutePathToWorkspace });
+    } catch (err) {}
 
     if (
         generatorsConfiguration?.api != null &&
@@ -188,58 +183,6 @@ export async function loadAPIWorkspace({
         };
     }
 
-    if (openApiDirectoryExists) {
-        const absolutePathToAsyncAPI = asyncApiDirectoryExists
-            ? await getValidAbsolutePathToAsyncAPIFromFolder(context, absolutePathToAsyncAPIFolder)
-            : undefined;
-        const absolutePathToOpenAPI = await getValidAbsolutePathToOpenAPIFromFolder(
-            context,
-            absolutePathToOpenAPIFolder
-        );
-        const specs: Spec[] = [];
-        if (absolutePathToOpenAPI != null) {
-            specs.push({
-                type: "openapi",
-                absoluteFilepath: absolutePathToOpenAPI,
-                absoluteFilepathToOverrides: undefined,
-                source: {
-                    type: "openapi",
-                    file: absolutePathToOpenAPI
-                }
-            });
-        }
-        if (absolutePathToAsyncAPI != null) {
-            specs.push({
-                type: "openapi",
-                absoluteFilepath: absolutePathToAsyncAPI,
-                absoluteFilepathToOverrides: undefined,
-                source: {
-                    type: "asyncapi",
-                    file: absolutePathToAsyncAPI
-                }
-            });
-        }
-        if (absolutePathToOpenAPI != null && absolutePathToAsyncAPI != null) {
-            return {
-                didSucceed: false,
-                failures: {
-                    [RelativeFilePath.of("openapi/openapi.yml")]: {
-                        type: WorkspaceLoaderFailureType.FILE_MISSING
-                    }
-                }
-            };
-        }
-        return {
-            didSucceed: true,
-            workspace: new OSSWorkspace({
-                specs,
-                workspaceName,
-                absoluteFilepath: absolutePathToWorkspace,
-                generatorsConfiguration,
-                changelog
-            })
-        };
-    }
     if (await doesPathExist(join(absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY)))) {
         const fernWorkspace = new LazyFernWorkspace({
             absoluteFilepath: absolutePathToWorkspace,
