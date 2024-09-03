@@ -1,6 +1,7 @@
 - changelog_entry:
   - summary: |
-      Fix an issue where some environment variables were not substituted before generating the IR.
+      Fix an issue where some postman environment variables (e.g. API key) were not substituted
+      when running fern generate.
     type: fix
   created_at: '2024-09-03'
   ir_version: 53
