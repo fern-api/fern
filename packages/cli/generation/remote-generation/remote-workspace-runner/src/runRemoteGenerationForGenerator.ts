@@ -13,6 +13,7 @@ import { createAndStartJob } from "./createAndStartJob";
 import { pollJobAndReportStatus } from "./pollJobAndReportStatus";
 import { RemoteTaskHandler } from "./RemoteTaskHandler";
 import { SourceUploader } from "./SourceUploader";
+import { replaceEnvVariables } from "@fern-api/core-utils";
 
 export async function runRemoteGenerationForGenerator({
     projectConfig,
@@ -91,10 +92,28 @@ export async function runRemoteGenerationForGenerator({
         ir.sourceConfig = sourceConfig;
     }
 
+    /** Sugar to substitute templated env vars in a standard way */
+    const isPreview = absolutePathToPreview != null;
+    const substituteEnvVars = <T>(stringOrObject: T) =>
+        replaceEnvVariables(
+            stringOrObject,
+            { onError: (e) => interactiveTaskContext.failAndThrow(e) },
+            { substituteAsEmpty: isPreview }
+        );
+
+    const generatorConfig: FernFiddle.GeneratorConfigV2 = {
+        id: generatorInvocation.name,
+        version: generatorInvocation.version,
+        outputMode: generatorInvocation.outputMode,
+        customConfig: generatorInvocation.config,
+        publishMetadata: generatorInvocation.publishMetadata
+    };
+
     const job = await createAndStartJob({
         projectConfig,
         workspace,
         organization,
+        generatorConfig: substituteEnvVars(generatorConfig),
         generatorInvocation,
         context: interactiveTaskContext,
         version,
@@ -104,7 +123,7 @@ export async function runRemoteGenerationForGenerator({
         },
         shouldLogS3Url,
         token,
-        whitelabel,
+        whitelabel: whitelabel != null ? substituteEnvVars(whitelabel) : undefined,
         irVersionOverride,
         absolutePathToPreview
     });
