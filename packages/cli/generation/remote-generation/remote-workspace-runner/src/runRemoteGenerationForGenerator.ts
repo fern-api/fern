@@ -101,25 +101,18 @@ export async function runRemoteGenerationForGenerator({
             { substituteAsEmpty: isPreview }
         );
 
-    const generatorConfig: FernFiddle.GeneratorConfigV2 = {
-        id: generatorInvocation.name,
-        version: generatorInvocation.version,
-        outputMode: generatorInvocation.outputMode,
-        customConfig: generatorInvocation.config,
-        publishMetadata: generatorInvocation.publishMetadata
-    };
+    const generatorInvocationWithEnvVarSubstitutions = substituteEnvVars(generatorInvocation);
 
     const job = await createAndStartJob({
         projectConfig,
         workspace,
         organization,
-        generatorConfig: substituteEnvVars(generatorConfig),
-        generatorInvocation,
+        generatorInvocation: generatorInvocationWithEnvVarSubstitutions,
         context: interactiveTaskContext,
         version,
         intermediateRepresentation: {
             ...ir,
-            publishConfig: getPublishConfig({ generatorInvocation })
+            publishConfig: getPublishConfig({ generatorInvocation: generatorInvocationWithEnvVarSubstitutions })
         },
         shouldLogS3Url,
         token,

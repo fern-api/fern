@@ -32,7 +32,6 @@ export async function createAndStartJob({
     workspace,
     organization,
     intermediateRepresentation,
-    generatorConfig,
     generatorInvocation,
     version,
     context,
@@ -46,7 +45,6 @@ export async function createAndStartJob({
     workspace: FernWorkspace;
     organization: string;
     intermediateRepresentation: IntermediateRepresentation;
-    generatorConfig: FernFiddle.GeneratorConfigV2;
     generatorInvocation: generatorsYml.GeneratorInvocation;
     version: string | undefined;
     context: TaskContext;
@@ -60,7 +58,6 @@ export async function createAndStartJob({
         projectConfig,
         workspace,
         organization,
-        generatorConfig,
         generatorInvocation,
         version,
         context,
@@ -77,7 +74,6 @@ async function createJob({
     projectConfig,
     workspace,
     organization,
-    generatorConfig,
     generatorInvocation,
     version,
     context,
@@ -89,7 +85,6 @@ async function createJob({
     projectConfig: fernConfigJson.ProjectConfig;
     workspace: FernWorkspace;
     organization: string;
-    generatorConfig: FernFiddle.GeneratorConfigV2;
     generatorInvocation: generatorsYml.GeneratorInvocation;
     version: string | undefined;
     context: TaskContext;
@@ -99,6 +94,14 @@ async function createJob({
     absolutePathToPreview: AbsoluteFilePath | undefined;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const remoteGenerationService = createFiddleService({ token: token.value });
+
+    const generatorConfig: FernFiddle.GeneratorConfigV2 = {
+        id: generatorInvocation.name,
+        version: generatorInvocation.version,
+        outputMode: generatorInvocation.outputMode,
+        customConfig: generatorInvocation.config,
+        publishMetadata: generatorInvocation.publishMetadata
+    };
 
     let fernDefinitionMetadata: FernFiddle.remoteGen.FernDefinitionMetadata | undefined;
     // Only write definition if output mode is github
