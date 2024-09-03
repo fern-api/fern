@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, getDirectoryContents } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, getDirectoryContents, getDirectoryContentsForSnapshot } from "@fern-api/fs-utils";
 import { cp } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
@@ -20,6 +20,6 @@ describe("fern api update", () => {
             cwd: directory
         });
 
-        expect(await getDirectoryContents(outputPath)).toMatchSnapshot();
+        expect(await getDirectoryContentsForSnapshot(outputPath)).toMatchSnapshot();
     }, 60_000);
 });

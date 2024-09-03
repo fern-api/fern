@@ -508,3 +508,7 @@ js:
  - url: https://guidebar-backend-727ab3a68ba9.herokuapp.com/install/buildwithfern_com
  - ./js/koala.js
  - ./js/rbtob.js
+
+analytics:
+  posthog:
+    api-key: ${POSTHOG_API_KEY}

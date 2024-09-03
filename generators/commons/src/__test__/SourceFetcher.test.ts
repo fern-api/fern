@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, getDirectoryContents } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, getDirectoryContents, getDirectoryContentsForSnapshot } from "@fern-api/fs-utils";
 import path from "path";
 import { AbstractGeneratorContext } from "../AbstractGeneratorContext";
 import { SourceFetcher } from "../SourceFetcher";
@@ -31,5 +31,5 @@ it("fetch proto.zip", async () => {
         "google/api/http.proto",
         "user/v1/user.proto"
     ]);
-    expect(await getDirectoryContents(FIXTURES)).toMatchSnapshot();
+    expect(await getDirectoryContentsForSnapshot(FIXTURES)).toMatchSnapshot();
 }, 100_000);
