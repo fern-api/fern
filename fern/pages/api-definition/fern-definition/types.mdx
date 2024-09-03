@@ -203,6 +203,29 @@ MyUnion:
     - integer
 ```
 
+### Generics
+
+Fern supports shallow generic objects, to minimize code duplication. Note, 
+as of now, generics only can be instantiated as type aliases. You can define a 
+generic for reuse like so:
+
+```yaml
+MyGenericType<T, U>:
+  properties:
+    foo: T,
+    bar: U,
+    baz: string
+```
+
+Now, you can instantiate generic types like:
+
+```yaml
+MyGenericAppliedType:
+  type: MyGenericType<SomeOtherType, number>
+```
+
+You can now freely use this type as if it were any other type!
+
 ### Documenting types
 
 You can add documentation for types. These docs are passed into the compiler,
