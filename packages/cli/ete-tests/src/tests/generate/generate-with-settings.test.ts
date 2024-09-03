@@ -1,4 +1,10 @@
-import { AbsoluteFilePath, getDirectoryContents, getDirectoryContentsForSnapshot, join, RelativeFilePath } from "@fern-api/fs-utils";
+import {
+    AbsoluteFilePath,
+    getDirectoryContents,
+    getDirectoryContentsForSnapshot,
+    join,
+    RelativeFilePath
+} from "@fern-api/fs-utils";
 import { cp } from "fs/promises";
 import tmp from "tmp-promise";
 import { runFernCli } from "../../utils/runFernCli";
