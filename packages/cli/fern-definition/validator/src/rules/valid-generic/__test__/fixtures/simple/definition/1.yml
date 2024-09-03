@@ -1,0 +1,27 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  GenericApplicationObject:
+    properties:
+      foo: GenericUsedType<string>
+
+  GenericApplicationDiscriminatedUnion: 
+    union:
+      foo: GenericUsedType<string>
+      bar: string
+
+  GenericApplicationEnum:
+    enum:
+      - GenericUsedType<string>
+      - bar
+
+  GenericApplicationUndiscriminatedUnion:
+    union:
+      - GenericUsedType<string>
+      - string
+    discriminated: false
+
+  GenericUsedType<T>:
+    properties:
+      foo: T
+      bar: list<string>

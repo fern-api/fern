@@ -1,26 +1,25 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { visitAllDefinitionFiles } from "@fern-api/workspace-loader";
 import { visitDefinitionFileYamlAst } from "../../ast";
 import { Rule, RuleViolation } from "../../Rule";
 import { visitRawTypeDeclaration } from "@fern-api/fern-definition-schema";
+import { getGenericDetails } from "../../utils/getGenericDetails";
 
 export const NoUnusedGenericRule: Rule = {
     name: "no-unused-generic",
     create: async ({ workspace }) => {
         const instantiations = new Set();
 
-        await visitAllDefinitionFiles(workspace, async (relativeFilepath, file) => {
+        await visitAllDefinitionFiles(workspace, async (_, file) => {
             await visitDefinitionFileYamlAst(file, {
                 typeDeclaration: (type) => {
                     visitRawTypeDeclaration(type.declaration, {
                         alias: (alias) => {
-                            const maybeGenericDeclaration = typeof alias === "string" ? alias : alias.type;
-                            const genericMatches = maybeGenericDeclaration.match(/(\w+)<([\w,\s]+)>/);
-                            if (
-                                genericMatches &&
-                                genericMatches[1] &&
-                                !new Set(["literal", "map", "optional", "set", "list"]).has(genericMatches[1])
-                            ) {
-                                instantiations.add(genericMatches[1]);
+                            const maybeGenericDeclaration = getGenericDetails(
+                                typeof alias === "string" ? alias : alias.type
+                            );
+                            if (maybeGenericDeclaration?.isGeneric) {
+                                instantiations.add(maybeGenericDeclaration.name);
                             }
                         },
                         enum: () => {},
@@ -35,7 +34,7 @@ export const NoUnusedGenericRule: Rule = {
         return {
             definitionFile: {
                 typeName: (name): RuleViolation[] => {
-                    const maybeGenericDeclaration = name.match(/(\w+)<([\w,\s]+)>/);
+                    const maybeGenericDeclaration = name.match(/([\w.]+)<([\w,\s]+)>/);
                     if (maybeGenericDeclaration?.[0] == null) {
                         return [];
                     }

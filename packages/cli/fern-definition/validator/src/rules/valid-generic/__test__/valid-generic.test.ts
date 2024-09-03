@@ -1,0 +1,49 @@
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { ValidGenericRule } from "../valid-generic";
+
+describe("valid-generic", () => {
+    it("simple", async () => {
+        const violations = await getViolationsForRule({
+            rule: ValidGenericRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("simple")
+            )
+        });
+
+        expect(violations).toEqual([
+            {
+                severity: "error",
+                relativeFilepath: "1.yml",
+                nodePath: ["types", "GenericApplicationObject"],
+                message: 'Generic values in object properties are not supported: "foo: GenericUsedType<string>".'
+            },
+            {
+                severity: "error",
+                relativeFilepath: "1.yml",
+                nodePath: ["types", "GenericApplicationDiscriminatedUnion"],
+                message: 'Generic values in discriminated unions are not supported: "foo: GenericUsedType<string>".'
+            },
+            {
+                severity: "error",
+                relativeFilepath: "1.yml",
+                nodePath: ["types", "GenericApplicationEnum"],
+                message: 'Generic values in enums are not supported: "GenericUsedType<string>".'
+            },
+            {
+                severity: "error",
+                relativeFilepath: "1.yml",
+                nodePath: ["types", "GenericApplicationUndiscriminatedUnion"],
+                message: 'Generic values in unions are not supported: "GenericUsedType<string>".'
+            },
+            {
+                severity: "error",
+                relativeFilepath: "1.yml",
+                nodePath: ["types", "GenericUsedType<T>"],
+                message: "Generic declarations are only supported with aliases."
+            }
+        ]);
+    });
+});
