@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+imports:
+  two: ./2.yml
+types:
+  GenericApplication:
+    type: two.GenericUsedType<string>
+
+  AnotherGenericUnusedType<T>:
+    properties:
+      foo: T
+      bar: list<string>
