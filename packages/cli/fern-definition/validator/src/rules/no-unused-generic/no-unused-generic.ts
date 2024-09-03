@@ -35,12 +35,12 @@ export const NoUnusedGenericRule: Rule = {
         return {
             definitionFile: {
                 typeName: (name): RuleViolation[] => {
-                    const maybeGenericDeclaration = name.match(/([\w.]+)<([\w,\s]+)>/);
-                    if (maybeGenericDeclaration?.[0] == null) {
+                    const maybeGenericDeclaration = getGenericDetails(name);
+                    if (maybeGenericDeclaration == null) {
                         return [];
                     }
 
-                    return maybeGenericDeclaration?.[1] && instantiations.has(maybeGenericDeclaration?.[1])
+                    return maybeGenericDeclaration.name && instantiations.has(maybeGenericDeclaration.name)
                         ? []
                         : [
                               {
