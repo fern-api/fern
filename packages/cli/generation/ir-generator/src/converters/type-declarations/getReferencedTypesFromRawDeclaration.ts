@@ -27,12 +27,29 @@ export function getReferencedTypesFromRawDeclaration({
 }): DeclaredTypeName[] {
     const rawTypeReferences = visitRawTypeDeclaration<string[]>(typeDeclaration, {
         alias: (aliasDeclaration) => {
-            const aliasStr = typeof aliasDeclaration === "string" ? aliasDeclaration : aliasDeclaration.type;
-            const maybeGenericDetails = getGenericDetails(aliasStr);
+            const aliasTypeReference = typeof aliasDeclaration === "string" ? aliasDeclaration : aliasDeclaration.type;
+            const maybeGenericDetails = getGenericDetails(aliasTypeReference);
             if (maybeGenericDetails && maybeGenericDetails.isGeneric) {
-                return maybeGenericDetails.arguments ?? [];
+                const resolvedBaseGeneric = typeResolver.getDeclarationOfNamedTypeOrThrow({
+                    referenceToNamedType: aliasTypeReference,
+                    file
+                });
+                const resolvedBaseGenericArguments = getGenericDetails(resolvedBaseGeneric.typeName)?.arguments;
+
+                resolvedBaseGenericArguments?.forEach((genericArgument) =>
+                    seenTypeNames.addTypeName(parseTypeName({ typeName: genericArgument, file }))
+                );
+
+                const underlyingObjectRawTypeReferences = getReferencedTypesFromRawDeclaration({
+                    typeDeclaration: resolvedBaseGeneric.declaration,
+                    file,
+                    typeResolver,
+                    seenTypeNames
+                }).map((typeName) => typeName.name.originalName);
+
+                return underlyingObjectRawTypeReferences.concat(maybeGenericDetails.arguments ?? []);
             }
-            return [aliasStr];
+            return [aliasTypeReference];
         },
         object: (objectDeclaration) => {
             const types: string[] = [];

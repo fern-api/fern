@@ -1546,12 +1546,7 @@
                 "extra-properties": false,
                 "extendedProperties": []
             },
-            "referencedTypes": [
-                "type_imdb:Movie",
-                "type_imdb:MovieId",
-                "type_imdb:Cast",
-                "type_imdb:Name"
-            ],
+            "referencedTypes": [],
             "encoding": {
                 "json": {},
                 "proto": null
