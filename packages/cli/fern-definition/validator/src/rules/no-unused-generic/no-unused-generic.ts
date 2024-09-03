@@ -1,12 +1,7 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
-import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/workspace-loader";
+import { visitAllDefinitionFiles } from "@fern-api/workspace-loader";
 import { visitDefinitionFileYamlAst } from "../../ast";
-import path from "path";
 import { Rule, RuleViolation } from "../../Rule";
 import { visitRawTypeDeclaration } from "@fern-api/fern-definition-schema";
-
-type RelativeDirectoryPath = string;
-type DeclaredName = string;
 
 export const NoUnusedGenericRule: Rule = {
     name: "no-unused-generic",
@@ -28,13 +23,9 @@ export const NoUnusedGenericRule: Rule = {
                                 instantiations.add(genericMatches[1]);
                             }
                         },
-                        // eslint-disable-next-line @typescript-eslint/no-empty-function
                         enum: () => {},
-                        // eslint-disable-next-line @typescript-eslint/no-empty-function
                         object: () => {},
-                        // eslint-disable-next-line @typescript-eslint/no-empty-function
                         discriminatedUnion: () => {},
-                        // eslint-disable-next-line @typescript-eslint/no-empty-function
                         undiscriminatedUnion: () => {}
                     });
                 }
