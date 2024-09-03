@@ -498,8 +498,6 @@ class EndpointFunctionGenerator:
             def get_httpx_request(
                 is_streaming: bool, response_code_writer: EndpointResponseCodeWriter
             ) -> AST.Expression:
-                # TODO: convert
-                #   4. request body
                 return HttpX.make_request(
                     is_streaming=is_streaming,
                     is_async=is_async,

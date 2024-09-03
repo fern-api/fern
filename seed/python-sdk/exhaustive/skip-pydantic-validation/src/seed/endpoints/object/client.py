@@ -312,7 +312,7 @@ class ObjectClient:
             json={
                 "string": string,
                 "NestedObject": convert_and_respect_annotation_metadata(
-                    object_=nested_object, annotation=ObjectWithOptionalField
+                    object_=nested_object, annotation=ObjectWithOptionalField, direction="write"
                 ),
             },
             request_options=request_options,
@@ -400,7 +400,7 @@ class ObjectClient:
             json={
                 "string": string,
                 "NestedObject": convert_and_respect_annotation_metadata(
-                    object_=nested_object, annotation=ObjectWithOptionalField
+                    object_=nested_object, annotation=ObjectWithOptionalField, direction="write"
                 ),
             },
             request_options=request_options,
@@ -486,7 +486,7 @@ class ObjectClient:
             "object/get-and-return-nested-with-required-field-list",
             method="POST",
             json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=typing.Sequence[NestedObjectWithRequiredField]
+                object_=request, annotation=typing.Sequence[NestedObjectWithRequiredField], direction="write"
             ),
             request_options=request_options,
             omit=OMIT,
@@ -827,7 +827,7 @@ class AsyncObjectClient:
             json={
                 "string": string,
                 "NestedObject": convert_and_respect_annotation_metadata(
-                    object_=nested_object, annotation=ObjectWithOptionalField
+                    object_=nested_object, annotation=ObjectWithOptionalField, direction="write"
                 ),
             },
             request_options=request_options,
@@ -922,7 +922,7 @@ class AsyncObjectClient:
             json={
                 "string": string,
                 "NestedObject": convert_and_respect_annotation_metadata(
-                    object_=nested_object, annotation=ObjectWithOptionalField
+                    object_=nested_object, annotation=ObjectWithOptionalField, direction="write"
                 ),
             },
             request_options=request_options,
@@ -1015,7 +1015,7 @@ class AsyncObjectClient:
             "object/get-and-return-nested-with-required-field-list",
             method="POST",
             json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=typing.Sequence[NestedObjectWithRequiredField]
+                object_=request, annotation=typing.Sequence[NestedObjectWithRequiredField], direction="write"
             ),
             request_options=request_options,
             omit=OMIT,

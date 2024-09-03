@@ -105,7 +105,7 @@ class ContainerClient:
             "container/list-of-objects",
             method="POST",
             json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=typing.Sequence[ObjectWithRequiredField]
+                object_=request, annotation=typing.Sequence[ObjectWithRequiredField], direction="write"
             ),
             request_options=request_options,
             omit=OMIT,
@@ -211,7 +211,7 @@ class ContainerClient:
             "container/set-of-objects",
             method="POST",
             json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=typing.Sequence[ObjectWithRequiredField]
+                object_=request, annotation=typing.Sequence[ObjectWithRequiredField], direction="write"
             ),
             request_options=request_options,
             omit=OMIT,
@@ -317,7 +317,7 @@ class ContainerClient:
             "container/map-prim-to-object",
             method="POST",
             json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=typing.Dict[str, ObjectWithRequiredField]
+                object_=request, annotation=typing.Dict[str, ObjectWithRequiredField], direction="write"
             ),
             request_options=request_options,
             omit=OMIT,
@@ -372,7 +372,9 @@ class ContainerClient:
         _response = self._client_wrapper.httpx_client.request(
             "container/opt-objects",
             method="POST",
-            json=convert_and_respect_annotation_metadata(object_=request, annotation=ObjectWithRequiredField),
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=ObjectWithRequiredField, direction="write"
+            ),
             request_options=request_options,
             omit=OMIT,
         )
@@ -498,7 +500,7 @@ class AsyncContainerClient:
             "container/list-of-objects",
             method="POST",
             json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=typing.Sequence[ObjectWithRequiredField]
+                object_=request, annotation=typing.Sequence[ObjectWithRequiredField], direction="write"
             ),
             request_options=request_options,
             omit=OMIT,
@@ -620,7 +622,7 @@ class AsyncContainerClient:
             "container/set-of-objects",
             method="POST",
             json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=typing.Sequence[ObjectWithRequiredField]
+                object_=request, annotation=typing.Sequence[ObjectWithRequiredField], direction="write"
             ),
             request_options=request_options,
             omit=OMIT,
@@ -742,7 +744,7 @@ class AsyncContainerClient:
             "container/map-prim-to-object",
             method="POST",
             json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=typing.Dict[str, ObjectWithRequiredField]
+                object_=request, annotation=typing.Dict[str, ObjectWithRequiredField], direction="write"
             ),
             request_options=request_options,
             omit=OMIT,
@@ -805,7 +807,9 @@ class AsyncContainerClient:
         _response = await self._client_wrapper.httpx_client.request(
             "container/opt-objects",
             method="POST",
-            json=convert_and_respect_annotation_metadata(object_=request, annotation=ObjectWithRequiredField),
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=ObjectWithRequiredField, direction="write"
+            ),
             request_options=request_options,
             omit=OMIT,
         )

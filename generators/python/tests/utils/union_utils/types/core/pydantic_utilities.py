@@ -10,6 +10,7 @@ import typing_extensions
 import pydantic
 
 from .datetime_utils import serialize_datetime
+from .serialization import convert_and_respect_annotation_metadata
 
 IS_PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
 
@@ -56,11 +57,14 @@ Model = typing.TypeVar("Model", bound=pydantic.BaseModel)
 
 
 def parse_obj_as(type_: typing.Type[T], object_: typing.Any) -> T:
+    dealiased_object = convert_and_respect_annotation_metadata(
+        object_=object_, annotation=type_, direction="read"
+    )
     if IS_PYDANTIC_V2:
         adapter = pydantic.TypeAdapter(type_)  # type: ignore # Pydantic v2
-        return adapter.validate_python(object_)
+        return adapter.validate_python(dealiased_object)
     else:
-        return pydantic.parse_obj_as(type_, object_)
+        return pydantic.parse_obj_as(type_, dealiased_object)
 
 
 def to_jsonable_with_fallback(
@@ -81,6 +85,7 @@ class UniversalBaseModel(pydantic.BaseModel):
             json_encoders={dt.datetime: serialize_datetime},
         )  # type: ignore # Pydantic v2
     else:
+
         class Config:
             smart_union = True
             json_encoders = {dt.datetime: serialize_datetime}

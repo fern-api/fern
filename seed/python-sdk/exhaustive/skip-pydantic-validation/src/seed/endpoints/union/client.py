@@ -52,7 +52,7 @@ class UnionClient:
         _response = self._client_wrapper.httpx_client.request(
             "union",
             method="POST",
-            json=convert_and_respect_annotation_metadata(object_=request, annotation=Animal),
+            json=convert_and_respect_annotation_metadata(object_=request, annotation=Animal, direction="write"),
             request_options=request_options,
             omit=OMIT,
         )
@@ -117,7 +117,7 @@ class AsyncUnionClient:
         _response = await self._client_wrapper.httpx_client.request(
             "union",
             method="POST",
-            json=convert_and_respect_annotation_metadata(object_=request, annotation=Animal),
+            json=convert_and_respect_annotation_metadata(object_=request, annotation=Animal, direction="write"),
             request_options=request_options,
             omit=OMIT,
         )

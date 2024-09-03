@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 from ...core.pydantic_utilities import UniversalBaseModel
+import typing_extensions
 from .resource_status import ResourceStatus
+from ...core.serialization import FieldMetadata
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
 import pydantic
@@ -21,7 +23,7 @@ class Base(UniversalBaseModel):
     )
     """
 
-    status: ResourceStatus
+    status: typing_extensions.Annotated[ResourceStatus, FieldMetadata(alias="status")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -46,10 +48,10 @@ class Resource_User(Base):
     )
     """
 
-    resource_type: typing.Literal["user"] = "user"
-    user_name: str = pydantic.Field(alias="userName")
-    metadata_tags: typing.List[str]
-    extra_properties: typing.Dict[str, str] = pydantic.Field(alias="EXTRA_PROPERTIES")
+    resource_type: typing_extensions.Annotated[typing.Literal["user"], FieldMetadata(alias="resource_type")] = "user"
+    user_name: typing_extensions.Annotated[str, FieldMetadata(alias="userName")]
+    metadata_tags: typing_extensions.Annotated[typing.List[str], FieldMetadata(alias="metadata_tags")]
+    extra_properties: typing_extensions.Annotated[typing.Dict[str, str], FieldMetadata(alias="EXTRA_PROPERTIES")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -74,8 +76,10 @@ class Resource_Organization(Base):
     )
     """
 
-    resource_type: typing.Literal["Organization"] = "Organization"
-    name: str
+    resource_type: typing_extensions.Annotated[typing.Literal["Organization"], FieldMetadata(alias="resource_type")] = (
+        "Organization"
+    )
+    name: typing_extensions.Annotated[str, FieldMetadata(alias="name")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

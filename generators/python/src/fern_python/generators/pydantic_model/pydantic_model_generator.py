@@ -6,7 +6,7 @@ from fern.generator_exec.config import GeneratorConfig
 from fern_python.cli.abstract_generator import AbstractGenerator
 from fern_python.codegen import Project
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
-from fern_python.generators.pydantic_model.typeddict import FernTypedDict
+from fern_python.generators.pydantic_model.model_utilities import can_be_fern_model
 from fern_python.snippet import SnippetRegistry, SnippetWriter
 
 from ..context import PydanticGeneratorContext, PydanticGeneratorContextImpl
@@ -110,7 +110,7 @@ class PydanticModelGenerator(AbstractGenerator):
             )
 
     def _should_generate_typedict(self, context: PydanticGeneratorContext, type_: ir_types.Type) -> bool:
-        return context.use_typeddict_requests and FernTypedDict.can_be_typeddict(type_, context.ir.types)
+        return context.use_typeddict_requests and can_be_fern_model(type_, context.ir.types)
 
     def _generate_type(
         self,

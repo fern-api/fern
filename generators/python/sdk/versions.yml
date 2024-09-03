@@ -1,5 +1,5 @@
 # For unreleased changes, use unreleased.yml
-- version: 3.11.0
+- version: 3.11.0-rc0
   ir_version: 53
   changelog_entry:
     - type: chore
