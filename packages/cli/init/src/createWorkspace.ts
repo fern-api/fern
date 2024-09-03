@@ -52,22 +52,30 @@ export async function createOpenAPIWorkspace({
     if (!(await doesPathExist(directoryOfWorkspace))) {
         await mkdir(directoryOfWorkspace);
     }
+    const openAPIfilename = path.basename(openAPIFilePath);
     await writeGeneratorsConfiguration({
         filepath: join(directoryOfWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)),
         cliVersion,
-        context
+        context,
+        apiConfiguration: {
+            path: join(RelativeFilePath.of(OPENAPI_DIRECTORY), RelativeFilePath.of(openAPIfilename))
+        }
     });
     const openapiDirectory = join(directoryOfWorkspace, RelativeFilePath.of(OPENAPI_DIRECTORY));
     await mkdir(openapiDirectory);
     const openAPIContents = await readFile(openAPIFilePath);
-    const openAPIfilename = path.basename(openAPIFilePath);
     await writeFile(join(openapiDirectory, RelativeFilePath.of(openAPIfilename)), openAPIContents);
 }
 
-async function getDefaultGeneratorsConfiguration(
-    cliVersion: string,
-    context: TaskContext
-): Promise<generatorsYml.GeneratorsConfigurationSchema> {
+async function getDefaultGeneratorsConfiguration({
+    cliVersion,
+    context,
+    apiConfiguration
+}: {
+    cliVersion: string;
+    context: TaskContext;
+    apiConfiguration?: generatorsYml.APIConfigurationSchema;
+}): Promise<generatorsYml.GeneratorsConfigurationSchema> {
     const defaultGeneratorName = "fernapi/fern-typescript-node-sdk";
     const fallbackInvocation = generatorsYml.GENERATOR_INVOCATIONS[defaultGeneratorName];
 
@@ -86,7 +94,7 @@ async function getDefaultGeneratorsConfiguration(
             `Failed to get latest version for ${defaultGeneratorName} that is compatible with CLI ${cliVersion}, falling back to preset version ${version}`
         );
     }
-    return {
+    const config: generatorsYml.GeneratorsConfigurationSchema = {
         "default-group": DEFAULT_GROUP_NAME,
         groups: {
             [DEFAULT_GROUP_NAME]: {
@@ -100,18 +108,27 @@ async function getDefaultGeneratorsConfiguration(
             }
         }
     };
+    if (apiConfiguration != null) {
+        config.api = apiConfiguration;
+    }
+    return config;
 }
 
 async function writeGeneratorsConfiguration({
     filepath,
     cliVersion,
-    context
+    context,
+    apiConfiguration
 }: {
     filepath: AbsoluteFilePath;
     cliVersion: string;
     context: TaskContext;
+    apiConfiguration?: generatorsYml.APIConfigurationSchema;
 }): Promise<void> {
-    await writeFile(filepath, yaml.dump(await getDefaultGeneratorsConfiguration(cliVersion, context)));
+    await writeFile(
+        filepath,
+        yaml.dump(await getDefaultGeneratorsConfiguration({ cliVersion, context, apiConfiguration }))
+    );
 }
 
 const ROOT_API: RootApiFileSchema = {

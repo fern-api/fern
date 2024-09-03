@@ -3104,11 +3104,7 @@ importers:
 
   packages/cli/cli/dist/dev: {}
 
-  packages/cli/cli/dist/prod:
-    devDependencies:
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
+  packages/cli/cli/dist/prod: {}
 
   packages/cli/configuration:
     dependencies:
