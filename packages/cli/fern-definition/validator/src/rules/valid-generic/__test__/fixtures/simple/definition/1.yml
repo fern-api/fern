@@ -45,3 +45,17 @@ types:
       foo: T
       bar: string
 
+  GenericWrongNumberOfArguments<T, U, V, W, X, Y>:
+    properties:
+      foo: T
+      bar: U
+      baz: V
+      qux: W
+      quux: X
+      corge: Y
+  
+  GenericWrongNumberOfArgumentsApplied:
+    type: GenericWrongNumberOfArguments<string, string>
+
+  GenericWrongNumberOfArgumentsNoArgumentsApplied:
+    type: GenericWrongNumberOfArguments

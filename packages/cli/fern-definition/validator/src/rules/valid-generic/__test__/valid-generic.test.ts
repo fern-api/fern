@@ -61,6 +61,19 @@ describe("valid-generic", () => {
                 relativeFilepath: "1.yml",
                 nodePath: ["types", "GenericUsedDiscriminatedUnion<T>"],
                 message: "Generic declarations are only supported with objects."
+            },
+            {
+                severity: "error",
+                relativeFilepath: "1.yml",
+                nodePath: ["types", "GenericWrongNumberOfArgumentsApplied"],
+                message:
+                    'Generic "GenericWrongNumberOfArguments" expects 6 arguments but was instantiated with 2 arguments.'
+            },
+            {
+                severity: "error",
+                relativeFilepath: "1.yml",
+                nodePath: ["types", "GenericWrongNumberOfArgumentsNoArgumentsApplied"],
+                message: "Generic value is supplied, but no arguments are defined."
             }
         ]);
     });
