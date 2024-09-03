@@ -1,5 +1,5 @@
 import { APIS_DIRECTORY, FERN_DIRECTORY } from "@fern-api/configuration";
-import { AbsoluteFilePath, doesPathExist, getDirectoryContents, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist, getDirectoryContents, getDirectoryContentsForSnapshot, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { runFernCli } from "../../utils/runFernCli";
 import { init } from "./init";
 
@@ -43,7 +43,7 @@ describe("fern init", () => {
             RelativeFilePath.of("petstore-openapi.yml")
         );
         const pathOfDirectory = await init({ openApiArg: openApiPath });
-        expect(await getDirectoryContents(pathOfDirectory)).toMatchSnapshot();
+        expect(await getDirectoryContentsForSnapshot(pathOfDirectory)).toMatchSnapshot();
     }, 60_000);
 
     it("init docs", async () => {
@@ -53,6 +53,6 @@ describe("fern init", () => {
             cwd: pathOfDirectory
         });
 
-        expect(await getDirectoryContents(pathOfDirectory)).toMatchSnapshot();
+        expect(await getDirectoryContentsForSnapshot(pathOfDirectory)).toMatchSnapshot();
     }, 60_000);
 });

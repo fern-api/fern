@@ -285,8 +285,10 @@ components:
 exports[`fern init > no existing fern directory 1`] = `
 [
   {
+    "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-69172-QneMpMf2ceeL/fern/definition",
     "contents": [
       {
+        "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-69172-QneMpMf2ceeL/fern/definition/api.yml",
         "contents": "name: api
 error-discrimination:
   strategy: status-code
@@ -295,6 +297,7 @@ error-discrimination:
         "type": "file",
       },
       {
+        "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-69172-QneMpMf2ceeL/fern/definition/imdb.yml",
         "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 service:
@@ -364,6 +367,7 @@ errors:
     "type": "directory",
   },
   {
+    "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-69172-QneMpMf2ceeL/fern/fern.config.json",
     "contents": "{
     "organization": "fern",
     "version": "0.0.0"
@@ -372,6 +376,7 @@ errors:
     "type": "file",
   },
   {
+    "absolutePath": "/var/folders/w1/7f9rr7hn4tj00dt00x_46q540000gn/T/tmp-69172-QneMpMf2ceeL/fern/generators.yml",
     "contents": "default-group: local
 groups:
   local:

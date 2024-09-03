@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, getDirectoryContents, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, getDirectoryContents, getDirectoryContentsForSnapshot, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { cp } from "fs/promises";
 import tmp from "tmp-promise";
@@ -27,7 +27,7 @@ describe("update-directory-structure", () => {
             // eslint-disable-next-line no-console
             console.log(`Migrated fixture ${fixture} at path ${tmpDir.path}`);
 
-            expect(await getDirectoryContents(AbsoluteFilePath.of(tmpDir.path))).toMatchSnapshot();
+            expect(await getDirectoryContentsForSnapshot(AbsoluteFilePath.of(tmpDir.path))).toMatchSnapshot();
         });
     }
 
