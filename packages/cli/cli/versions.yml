@@ -1,5 +1,22 @@
 - changelog_entry:
   - summary: | 
+      Every fern folder that is using OpenAPI must configure an explicit location to the 
+      OpenAPI spec. The location can be configured in your `generators.yml`: 
+
+      ```yml
+      api: 
+        path: path/to/openapi.yml
+      ```
+      
+      If you run **fern upgrade**, the CLI will automatically run a migration for you to 
+      ensure that you are compliant! 
+    type: break
+  created_at: '2024-09-02'
+  ir_version: 53
+  version: 0.41.0-rc0
+
+- changelog_entry:
+  - summary: | 
       `fern check` allows the service base-path to be a slash. For example, the following 
       would be valid: 
 
