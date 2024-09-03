@@ -8,7 +8,6 @@ import {
     ROOT_API_FILENAME
 } from "@fern-api/configuration";
 import { createFiddleService, getFiddleOrigin } from "@fern-api/core";
-import { replaceEnvVariables } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
 import {
     migrateIntermediateRepresentationForGenerator,
@@ -94,7 +93,8 @@ async function createJob({
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
-    const isPreview = absolutePathToPreview != null;
+    const remoteGenerationService = createFiddleService({ token: token.value });
+
     const generatorConfig: FernFiddle.GeneratorConfigV2 = {
         id: generatorInvocation.name,
         version: generatorInvocation.version,
@@ -102,19 +102,6 @@ async function createJob({
         customConfig: generatorInvocation.config,
         publishMetadata: generatorInvocation.publishMetadata
     };
-
-    /** Sugar to substitute templated env vars in a standard way */
-    const substituteEnvVars = <T>(stringOrObject: T) =>
-        replaceEnvVariables(
-            stringOrObject,
-            { onError: (e) => context.failAndThrow(e) },
-            { substituteAsEmpty: isPreview }
-        );
-
-    const generatorConfigsWithEnvVarSubstitutions = substituteEnvVars(generatorConfig);
-    const whitelabelWithEnvVarSubstiutions = whitelabel != null ? substituteEnvVars(whitelabel) : undefined;
-
-    const remoteGenerationService = createFiddleService({ token: token.value });
 
     let fernDefinitionMetadata: FernFiddle.remoteGen.FernDefinitionMetadata | undefined;
     // Only write definition if output mode is github
@@ -214,14 +201,14 @@ async function createJob({
         apiName: workspace.definition.rootApiFile.contents.name,
         version,
         organizationName: organization,
-        generators: [generatorConfigsWithEnvVarSubstitutions],
+        generators: [generatorConfig],
         uploadToS3: shouldUploadToS3({
             outputMode: generatorInvocation.outputMode,
             generatorInvocation,
             absolutePathToPreview,
             shouldLogS3Url
         }),
-        whitelabel: whitelabelWithEnvVarSubstiutions,
+        whitelabel,
         fernDefinitionMetadata,
         preview: absolutePathToPreview != null
     });
