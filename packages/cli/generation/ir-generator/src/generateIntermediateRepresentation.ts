@@ -48,7 +48,7 @@ import { TypeResolverImpl } from "./resolvers/TypeResolver";
 import { VariableResolverImpl } from "./resolvers/VariableResolver";
 import { convertToFernFilepath } from "./utils/convertToFernFilepath";
 import { getAudienceForEnvironment } from "./utils/getEnvironmentsByAudience";
-import { isGeneric } from "./utils/isGeneric";
+import { isGeneric } from "@fern-api/fern-definition-schema";
 import { parseErrorName } from "./utils/parseErrorName";
 
 export async function generateIntermediateRepresentation({
@@ -194,6 +194,9 @@ export async function generateIntermediateRepresentation({
                 }
 
                 for (const [typeName, typeDeclaration] of Object.entries(types)) {
+                    // Generic type declarations are syntatic sugar for
+                    // fern definition users, but not actually meant to be in the
+                    // generated SDKs
                     if (isGeneric(typeName)) {
                         continue;
                     }

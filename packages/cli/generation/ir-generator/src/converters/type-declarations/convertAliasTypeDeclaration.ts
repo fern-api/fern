@@ -5,11 +5,12 @@ import {
     isRawEnumDefinition,
     isRawObjectDefinition,
     isRawUndiscriminatedUnionDefinition,
-    RawSchemas
+    RawSchemas,
+    parseGeneric,
+    isGeneric
 } from "@fern-api/fern-definition-schema";
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
-import { getGenericDetails } from "../../utils/getGenericDetails";
 import { convertGenericTypeDeclaration } from "./convertGenericTypeDeclaration";
 
 export async function convertAliasTypeDeclaration({
@@ -22,7 +23,7 @@ export async function convertAliasTypeDeclaration({
     typeResolver: TypeResolver;
 }): Promise<Type> {
     const aliasOfStr = typeof alias === "string" ? alias : alias.type;
-    if (getGenericDetails(aliasOfStr)?.isGeneric) {
+    if (isGeneric(aliasOfStr)) {
         return await convertGenericTypeDeclaration({ generic: aliasOfStr, file, typeResolver });
     }
     return Type.alias({

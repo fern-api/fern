@@ -2,8 +2,7 @@
 import { visitAllDefinitionFiles } from "@fern-api/workspace-loader";
 import { visitDefinitionFileYamlAst } from "../../ast";
 import { Rule, RuleViolation } from "../../Rule";
-import { visitRawTypeDeclaration } from "@fern-api/fern-definition-schema";
-import { getGenericDetails } from "../../utils/getGenericDetails";
+import { visitRawTypeDeclaration, parseGeneric } from "@fern-api/fern-definition-schema";
 
 export const NoUnusedGenericRule: Rule = {
     name: "no-unused-generic",
@@ -15,10 +14,10 @@ export const NoUnusedGenericRule: Rule = {
                 typeDeclaration: (type) => {
                     visitRawTypeDeclaration(type.declaration, {
                         alias: (alias) => {
-                            const maybeGenericDeclaration = getGenericDetails(
+                            const maybeGenericDeclaration = parseGeneric(
                                 typeof alias === "string" ? alias : alias.type
                             );
-                            if (maybeGenericDeclaration?.isGeneric && maybeGenericDeclaration.name) {
+                            if (maybeGenericDeclaration != null && maybeGenericDeclaration.name) {
                                 const [maybeTypeName, typeName, ..._rest] = maybeGenericDeclaration.name.split(".");
                                 const key = typeName ?? maybeTypeName;
                                 if (key) {
@@ -38,7 +37,7 @@ export const NoUnusedGenericRule: Rule = {
         return {
             definitionFile: {
                 typeName: (name): RuleViolation[] => {
-                    const maybeGenericDeclaration = getGenericDetails(name);
+                    const maybeGenericDeclaration = parseGeneric(name);
                     if (maybeGenericDeclaration == null) {
                         return [];
                     }

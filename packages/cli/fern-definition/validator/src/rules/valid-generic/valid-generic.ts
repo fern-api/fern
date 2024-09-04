@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { Rule, RuleViolation } from "../../Rule";
-import { getGenericDetails } from "../../utils/getGenericDetails";
-import { NodePath, visitRawTypeDeclaration, visitRawTypeReference } from "@fern-api/fern-definition-schema";
-import { isGeneric } from "../../utils/isGeneric";
+import { NodePath, visitRawTypeDeclaration, isGeneric, parseGeneric } from "@fern-api/fern-definition-schema";
 import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/workspace-loader";
 import { visitDefinitionFileYamlAst } from "../../ast";
 
@@ -30,8 +28,8 @@ export const ValidGenericRule: Rule = {
                     const errors: RuleViolation[] = [];
 
                     if (!typeName.isInlined) {
-                        const maybeGeneric = getGenericDetails(typeName.name);
-                        if (maybeGeneric?.isGeneric) {
+                        const maybeGeneric = parseGeneric(typeName.name);
+                        if (maybeGeneric != null) {
                             if (
                                 !visitRawTypeDeclaration(declaration, {
                                     alias: () => {
@@ -62,8 +60,8 @@ export const ValidGenericRule: Rule = {
                     visitRawTypeDeclaration(declaration, {
                         alias: (aliasValue) => {
                             const alias = typeof aliasValue === "string" ? aliasValue : aliasValue.type;
-                            const maybeGeneric = getGenericDetails(alias);
-                            if (maybeGeneric && maybeGeneric.isGeneric && maybeGeneric.name && maybeGeneric.arguments) {
+                            const maybeGeneric = parseGeneric(alias);
+                            if (maybeGeneric != null) {
                                 const [maybeTypeName, typeName, ..._rest] = maybeGeneric.name.split(".");
                                 const key = typeName ?? maybeTypeName;
                                 if (
@@ -198,8 +196,8 @@ async function getGenericArgumentCounts(workspace: FernWorkspace): Promise<Recor
         await visitDefinitionFileYamlAst(file, {
             typeDeclaration: ({ typeName, declaration }) => {
                 if (!typeName.isInlined) {
-                    const maybeGeneric = getGenericDetails(typeName.name);
-                    if (maybeGeneric?.isGeneric) {
+                    const maybeGeneric = parseGeneric(typeName.name);
+                    if (maybeGeneric != null) {
                         visitRawTypeDeclaration(declaration, {
                             alias: () => {},
                             enum: () => {},
