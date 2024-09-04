@@ -413,6 +413,55 @@ public partial class UsersClient
 
     /// <example>
     /// <code>
+    /// await client.Users.ListWithExtendedResultsAndOptionalDataAsync(
+    ///     new ListUsersExtendedRequestForOptionalData { Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32" }
+    /// );
+    /// </code>
+    /// </example>
+    public async Task<ListUsersExtendedOptionalListResponse> ListWithExtendedResultsAndOptionalDataAsync(
+        ListUsersExtendedRequestForOptionalData request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _query = new Dictionary<string, object>();
+        if (request.Cursor != null)
+        {
+            _query["cursor"] = request.Cursor.ToString();
+        }
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = "/users",
+                Query = _query,
+                Options = options,
+            },
+            cancellationToken
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            try
+            {
+                return JsonUtils.Deserialize<ListUsersExtendedOptionalListResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedPaginationException("Failed to deserialize response", e);
+            }
+        }
+
+        throw new SeedPaginationApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
+    }
+
+    /// <example>
+    /// <code>
     /// await client.Users.ListUsernamesAsync(new ListUsernamesRequest { StartingAfter = "string" });
     /// </code>
     /// </example>

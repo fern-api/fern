@@ -368,6 +368,65 @@ func (c *Client) ListWithExtendedResults(
 	return pager.GetPage(ctx, request.Cursor)
 }
 
+func (c *Client) ListWithExtendedResultsAndOptionalData(
+	ctx context.Context,
+	request *fern.ListUsersExtendedRequestForOptionalData,
+	opts ...option.RequestOption,
+) (*core.Page[*fern.User], error) {
+	options := core.NewRequestOptions(opts...)
+
+	baseURL := ""
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
+	endpointURL := baseURL + "/users"
+
+	queryParams, err := core.QueryValues(request)
+	if err != nil {
+		return nil, err
+	}
+
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+
+	prepareCall := func(pageRequest *core.PageRequest[*uuid.UUID]) *core.CallParams {
+		if pageRequest.Cursor != nil {
+			queryParams.Set("cursor", fmt.Sprintf("%v", *pageRequest.Cursor))
+		}
+		nextURL := endpointURL
+		if len(queryParams) > 0 {
+			nextURL += "?" + queryParams.Encode()
+		}
+		return &core.CallParams{
+			URL:         nextURL,
+			Method:      http.MethodGet,
+			MaxAttempts: options.MaxAttempts,
+			Headers:     headers,
+			Client:      options.HTTPClient,
+			Response:    pageRequest.Response,
+		}
+	}
+	readPageResponse := func(response *fern.ListUsersExtendedOptionalListResponse) *core.PageResponse[*uuid.UUID, *fern.User] {
+		next := response.Next
+		var results []*fern.User
+		if response.Data != nil {
+			results = response.Data.Users
+		}
+		return &core.PageResponse[*uuid.UUID, *fern.User]{
+			Next:    next,
+			Results: results,
+		}
+	}
+	pager := core.NewCursorPager(
+		c.caller,
+		prepareCall,
+		readPageResponse,
+	)
+	return pager.GetPage(ctx, request.Cursor)
+}
+
 func (c *Client) ListUsernames(
 	ctx context.Context,
 	request *fern.ListUsernamesRequest,

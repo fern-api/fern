@@ -24,6 +24,15 @@ types:
       data: UserListContainer
       next: optional<uuid>
 
+  UserOptionalListContainer: 
+    properties: 
+      users: optional<list<User>>
+
+  UserOptionalListPage:
+    properties:
+      data: UserOptionalListContainer
+      next: optional<uuid>
+
   UsernameContainer:
     properties:
       results: list<string>
@@ -31,6 +40,14 @@ types:
   ListUsersExtendedResponse: 
     extends:
       - UserPage
+    properties:
+      total_count: 
+        type: integer
+        docs: The totall number of /users
+
+  ListUsersExtendedOptionalListResponse: 
+    extends:
+      - UserOptionalListPage
     properties:
       total_count: 
         type: integer
@@ -211,6 +228,19 @@ service:
         query-parameters:
           cursor: optional<uuid>
       response: ListUsersExtendedResponse
+
+    listWithExtendedResultsAndOptionalData:
+      pagination: 
+        cursor: $request.cursor
+        next_cursor: $response.next
+        results: $response.data.users
+      method: GET
+      path: ""
+      request:
+        name: ListUsersExtendedRequestForOptionalData
+        query-parameters:
+          cursor: optional<uuid>
+      response: ListUsersExtendedOptionalListResponse
 
     listUsernames:
       pagination: 

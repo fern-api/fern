@@ -15,9 +15,9 @@ module SeedApiClient
         return nil if struct.nil?
 
         return struct&.transform_values do |value|
-                 value = value.to_json
-                 SeedApiClient::MetadataValue.from_json(json_object: value)
-               end
+          value = value.to_json
+          SeedApiClient::MetadataValue.from_json(json_object: value)
+        end
       rescue StandardError
         # noop
       end
