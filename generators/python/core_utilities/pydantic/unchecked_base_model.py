@@ -10,7 +10,7 @@ from pydantic_core import PydanticUndefined
 
 import pydantic
 
-from seed.core.serialization import get_field_to_alias_mapping
+from .serialization import get_field_to_alias_mapping
 
 from .pydantic_utilities import (
     IS_PYDANTIC_V2,
