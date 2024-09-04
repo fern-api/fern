@@ -23,6 +23,7 @@ import { NoUndefinedExampleReferenceRule } from "./rules/no-undefined-example-re
 import { NoUndefinedPathParametersRule } from "./rules/no-undefined-path-parameters";
 import { NoUndefinedTypeReferenceRule } from "./rules/no-undefined-type-reference";
 import { NoUndefinedVariableReferenceRule } from "./rules/no-undefined-variable-reference";
+import { NoUnusedGenericRule } from "./rules/no-unused-generic";
 import { OnlyObjectExtensionsRule } from "./rules/only-object-extensions";
 import { ValidBasePathRule } from "./rules/valid-base-path";
 import { ValidDefaultEnvironmentRule } from "./rules/valid-default-environment";
@@ -31,6 +32,7 @@ import { ValidExampleEndpointCallRule } from "./rules/valid-example-endpoint-cal
 import { ValidExampleErrorRule } from "./rules/valid-example-error";
 import { ValidExampleTypeRule } from "./rules/valid-example-type";
 import { ValidFieldNamesRule } from "./rules/valid-field-names";
+import { ValidGenericRule } from "./rules/valid-generic";
 import { ValidNavigationRule } from "./rules/valid-navigation";
 import { ValidOauthRule } from "./rules/valid-oauth";
 import { ValidPaginationRule } from "./rules/valid-pagination";
@@ -81,7 +83,9 @@ export function getAllRules(): Rule[] {
         ValidExampleErrorRule,
         ValidTypeReferenceWithDefaultAndValidationRule,
         ValidStreamConditionRule,
-        ValidVersionRule
+        ValidVersionRule,
+        NoUnusedGenericRule,
+        ValidGenericRule
     ];
 }
 

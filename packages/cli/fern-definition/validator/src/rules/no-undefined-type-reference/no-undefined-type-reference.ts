@@ -3,9 +3,11 @@ import { parseReferenceToTypeName } from "@fern-api/ir-generator";
 import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/workspace-loader";
 import {
     isRawTextType,
+    NodePath,
     parseRawBytesType,
     parseRawFileType,
-    recursivelyVisitRawTypeReference
+    recursivelyVisitRawTypeReference,
+    parseGeneric
 } from "@fern-api/fern-definition-schema";
 import { visitDefinitionFileYamlAst, TypeReferenceLocation } from "../../ast";
 import chalk from "chalk";
@@ -27,13 +29,38 @@ export const NoUndefinedTypeReferenceRule: Rule = {
             if (typesForFilepath == null) {
                 return false;
             }
+            const maybeGeneric = parseGeneric(reference.parsed.typeName);
+            if (maybeGeneric != null) {
+                return maybeGeneric.name ? typesForFilepath.has(maybeGeneric.name) : false;
+            }
             return typesForFilepath.has(reference.parsed.typeName);
+        }
+
+        function checkGenericType(reference: ReferenceToTypeName, nodePath?: NodePath) {
+            if (nodePath != null) {
+                const mutableNodePath = [...nodePath];
+                while (mutableNodePath.length > 0) {
+                    const nodePathItem = mutableNodePath.pop();
+                    const maybeGeneric = nodePathItem
+                        ? typeof nodePathItem === "string"
+                            ? parseGeneric(nodePathItem)
+                            : parseGeneric(nodePathItem.key)
+                        : undefined;
+                    if (maybeGeneric != null) {
+                        return (
+                            reference.parsed?.typeName && maybeGeneric.arguments?.includes(reference.parsed?.typeName)
+                        );
+                    }
+                }
+            }
+            return false;
         }
 
         return {
             definitionFile: {
-                typeReference: ({ typeReference, location }, { relativeFilepath, contents }) => {
+                typeReference: ({ typeReference, location, nodePath }, { relativeFilepath, contents }) => {
                     const parsedRawFileType = parseRawFileType(typeReference);
+
                     if (parsedRawFileType != null) {
                         if (location === TypeReferenceLocation.InlinedRequestProperty) {
                             return [];
@@ -98,7 +125,7 @@ export const NoUndefinedTypeReferenceRule: Rule = {
                                 severity: "error",
                                 message: "The text type can only be used as a response-stream or response."
                             });
-                        } else if (!doesTypeExist(namedType)) {
+                        } else if (!doesTypeExist(namedType) && !checkGenericType(namedType, nodePath)) {
                             violations.push({
                                 severity: "error",
                                 message: `Type ${chalk.bold(
@@ -124,6 +151,12 @@ async function getTypesByFilepath(workspace: FernWorkspace) {
         await visitDefinitionFileYamlAst(file, {
             typeDeclaration: ({ typeName }) => {
                 if (!typeName.isInlined) {
+                    const maybeGenericDeclaration = parseGeneric(typeName.name);
+                    if (maybeGenericDeclaration != null) {
+                        if (maybeGenericDeclaration.name) {
+                            typesForFile.add(maybeGenericDeclaration.name);
+                        }
+                    }
                     typesForFile.add(typeName.name);
                 }
             }
