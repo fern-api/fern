@@ -15,6 +15,17 @@
             "id": {
                 "path": "/users",
                 "method": "GET",
+                "identifier_override": "endpoint_users.listWithExtendedResultsAndOptionalData"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/pagination/fern\"\n\tfernclient \"github.com/pagination/fern/client\"\n\toption \"github.com/pagination/fern/option\"\n\tuuid \"github.com/google/uuid\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Users.ListWithExtendedResultsAndOptionalData(\n\tcontext.TODO(),\n\t\u0026fern.ListUsersExtendedRequest{\n\t\tCursor: fern.UUID(\n\t\t\tuuid.MustParse(\n\t\t\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t\t\t),\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
                 "identifier_override": "endpoint_users.listUsernames"
             },
             "snippet": {

@@ -4,6 +4,7 @@ from . import users
 from .users import (
     ListUsersBodyCursorPaginationRequest,
     ListUsersBodyOffsetPaginationRequest,
+    ListUsersExtendedOptionalListResponse,
     ListUsersExtendedResponse,
     ListUsersPaginationResponse,
     NextPage,
@@ -11,6 +12,8 @@ from .users import (
     Page,
     User,
     UserListContainer,
+    UserOptionalListContainer,
+    UserOptionalListPage,
     UserPage,
     UsernameContainer,
     WithCursor,
@@ -20,6 +23,7 @@ from .users import (
 __all__ = [
     "ListUsersBodyCursorPaginationRequest",
     "ListUsersBodyOffsetPaginationRequest",
+    "ListUsersExtendedOptionalListResponse",
     "ListUsersExtendedResponse",
     "ListUsersPaginationResponse",
     "NextPage",
@@ -27,6 +31,8 @@ __all__ = [
     "Page",
     "User",
     "UserListContainer",
+    "UserOptionalListContainer",
+    "UserOptionalListPage",
     "UserPage",
     "UsernameContainer",
     "WithCursor",

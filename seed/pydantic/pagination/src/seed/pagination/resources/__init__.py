@@ -2,6 +2,7 @@
 
 from . import users
 from .users import (
+    ListUsersExtendedOptionalListResponse,
     ListUsersExtendedResponse,
     ListUsersPaginationResponse,
     NextPage,
@@ -9,6 +10,8 @@ from .users import (
     Page,
     User,
     UserListContainer,
+    UserOptionalListContainer,
+    UserOptionalListPage,
     UserPage,
     UsernameContainer,
     WithCursor,
@@ -16,6 +19,7 @@ from .users import (
 )
 
 __all__ = [
+    "ListUsersExtendedOptionalListResponse",
     "ListUsersExtendedResponse",
     "ListUsersPaginationResponse",
     "NextPage",
@@ -23,6 +27,8 @@ __all__ = [
     "Page",
     "User",
     "UserListContainer",
+    "UserOptionalListContainer",
+    "UserOptionalListPage",
     "UserPage",
     "UsernameContainer",
     "WithCursor",

@@ -221,6 +221,89 @@ func (u *UserListContainer) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+type UserOptionalListContainer struct {
+	Users []*User `json:"users,omitempty" url:"users,omitempty"`
+
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (u *UserOptionalListContainer) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
+}
+
+func (u *UserOptionalListContainer) UnmarshalJSON(data []byte) error {
+	type unmarshaler UserOptionalListContainer
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UserOptionalListContainer(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+
+	u._rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UserOptionalListContainer) String() string {
+	if len(u._rawJSON) > 0 {
+		if value, err := core.StringifyJSON(u._rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := core.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+type UserOptionalListPage struct {
+	Data *UserOptionalListContainer `json:"data,omitempty" url:"data,omitempty"`
+	Next *uuid.UUID                 `json:"next,omitempty" url:"next,omitempty"`
+
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (u *UserOptionalListPage) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
+}
+
+func (u *UserOptionalListPage) UnmarshalJSON(data []byte) error {
+	type unmarshaler UserOptionalListPage
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UserOptionalListPage(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+
+	u._rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UserOptionalListPage) String() string {
+	if len(u._rawJSON) > 0 {
+		if value, err := core.StringifyJSON(u._rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := core.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
 type UserPage struct {
 	Data *UserListContainer `json:"data,omitempty" url:"data,omitempty"`
 	Next *uuid.UUID         `json:"next,omitempty" url:"next,omitempty"`

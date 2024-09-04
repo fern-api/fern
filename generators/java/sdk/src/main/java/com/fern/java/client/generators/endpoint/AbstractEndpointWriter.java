@@ -84,6 +84,7 @@ import com.squareup.javapoet.TypeName;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -1004,6 +1005,21 @@ public abstract class AbstractEndpointWriter {
         public GetSnippetOutput visitContainer(com.fern.ir.model.types.ContainerType container) {
             if (propertyPath.isEmpty() && !container.isOptional()) {
                 addPreviousIfPresent();
+                if (currentOptional || previousWasOptional) {
+                    String emptyCollectionString;
+                    if (container.isList()) {
+                        emptyCollectionString = "List";
+                    } else if (container.isSet()) {
+                        emptyCollectionString = "Set";
+                    } else if (container.isMap()) {
+                        emptyCollectionString = "Map";
+                    } else {
+                        throw new RuntimeException("Unexpected container type");
+                    }
+                    codeBlocks.add(
+                        CodeBlock.builder().add(".orElse($T.empty$L())", Collections.class, emptyCollectionString)
+                            .build());
+                }
                 return new GetSnippetOutput(typeReference, codeBlocks);
             }
             com.fern.ir.model.types.TypeReference ref = container
