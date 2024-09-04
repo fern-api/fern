@@ -2,18 +2,20 @@
 
 from .core.pydantic_utilities import UniversalBaseModel
 import typing
-import pydantic
+import typing_extensions
+from .core.serialization import FieldMetadata
 from .metadata import Metadata
 from .indexed_data import IndexedData
 from .core.pydantic_utilities import IS_PYDANTIC_V2
+import pydantic
 
 
 class QueryColumn(UniversalBaseModel):
     values: typing.List[float]
-    top_k: typing.Optional[int] = pydantic.Field(alias="topK", default=None)
+    top_k: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="topK")] = None
     namespace: typing.Optional[str] = None
     filter: typing.Optional[Metadata] = None
-    indexed_data: typing.Optional[IndexedData] = pydantic.Field(alias="indexedData", default=None)
+    indexed_data: typing_extensions.Annotated[typing.Optional[IndexedData], FieldMetadata(alias="indexedData")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

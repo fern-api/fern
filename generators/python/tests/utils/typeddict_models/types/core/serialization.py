@@ -158,10 +158,12 @@ def _convert_mapping(
         #
         # So this is effectively saying if we're in write mode, and we don't have a type, or if we're in read mode and we don't have an alias
         # then we can just pass the value through as is
-        if (direction != "read" and type_ is None) or (
-            direction == "read" and key not in aliases_to_field_names
-        ):
+        if type_ is None:
             converted_object[key] = value
+        elif direction == "read" and key not in aliases_to_field_names:
+            converted_object[key] = convert_and_respect_annotation_metadata(
+                object_=value, annotation=type_, direction=direction
+            )
         else:
             converted_object[
                 _alias_key(key, type_, direction, aliases_to_field_names)

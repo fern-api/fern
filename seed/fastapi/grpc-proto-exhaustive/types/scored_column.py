@@ -3,9 +3,11 @@
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
 from .metadata import Metadata
+import typing_extensions
 from .indexed_data import IndexedData
-import pydantic
+from ..core.serialization import FieldMetadata
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
+import pydantic
 
 
 class ScoredColumn(UniversalBaseModel):
@@ -13,9 +15,9 @@ class ScoredColumn(UniversalBaseModel):
     score: typing.Optional[float] = None
     values: typing.Optional[typing.List[float]] = None
     metadata: typing.Optional[Metadata] = None
-    indexed_data: typing.Optional[IndexedData] = pydantic.Field(
-        alias="indexedData", default=None
-    )
+    indexed_data: typing_extensions.Annotated[
+        typing.Optional[IndexedData], FieldMetadata(alias="indexedData")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(

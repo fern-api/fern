@@ -5,7 +5,8 @@ from .generic_create_problem_error import GenericCreateProblemError
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.pydantic_utilities import UniversalRootModel
 import typing
-import pydantic
+import typing_extensions
+from ....core.serialization import FieldMetadata
 from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
@@ -61,9 +62,9 @@ class CreateProblemError(UniversalRootModel):
 
 class _CreateProblemError:
     class Generic(GenericCreateProblemError):
-        error_type: typing.Literal["generic"] = pydantic.Field(
-            alias="_type", default="generic"
-        )
+        error_type: typing_extensions.Annotated[
+            typing.Literal["generic"], FieldMetadata(alias="_type")
+        ] = "generic"
 
 
 update_forward_refs(CreateProblemError)

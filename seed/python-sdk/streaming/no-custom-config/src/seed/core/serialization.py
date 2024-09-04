@@ -156,8 +156,12 @@ def _convert_mapping(
         #
         # So this is effectively saying if we're in write mode, and we don't have a type, or if we're in read mode and we don't have an alias
         # then we can just pass the value through as is
-        if (direction != "read" and type_ is None) or (direction == "read" and key not in aliases_to_field_names):
+        if type_ is None:
             converted_object[key] = value
+        elif direction == "read" and key not in aliases_to_field_names:
+            converted_object[key] = convert_and_respect_annotation_metadata(
+                object_=value, annotation=type_, direction=direction
+            )
         else:
             converted_object[_alias_key(key, type_, direction, aliases_to_field_names)] = (
                 convert_and_respect_annotation_metadata(object_=value, annotation=type_, direction=direction)
@@ -204,7 +208,9 @@ def get_field_to_alias_mapping(type_: typing.Any) -> typing.Dict[str, str]:
     return _get_field_to_alias_name(annotations)
 
 
-def _get_alias_to_field_name(field_to_hint: typing.Dict[str, typing.Any]) -> typing.Dict[str, str]:
+def _get_alias_to_field_name(
+    field_to_hint: typing.Dict[str, typing.Any],
+) -> typing.Dict[str, str]:
     aliases = {}
     for field, hint in field_to_hint.items():
         maybe_alias = _get_alias_from_type(hint)
@@ -213,7 +219,9 @@ def _get_alias_to_field_name(field_to_hint: typing.Dict[str, typing.Any]) -> typ
     return aliases
 
 
-def _get_field_to_alias_name(field_to_hint: typing.Dict[str, typing.Any]) -> typing.Dict[str, str]:
+def _get_field_to_alias_name(
+    field_to_hint: typing.Dict[str, typing.Any],
+) -> typing.Dict[str, str]:
     aliases = {}
     for field, hint in field_to_hint.items():
         maybe_alias = _get_alias_from_type(hint)

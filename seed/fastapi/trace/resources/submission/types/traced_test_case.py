@@ -2,14 +2,18 @@
 
 from ....core.pydantic_utilities import UniversalBaseModel
 from .test_case_result_with_stdout import TestCaseResultWithStdout
-import pydantic
+import typing_extensions
+from ....core.serialization import FieldMetadata
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
+import pydantic
 
 
 class TracedTestCase(UniversalBaseModel):
     result: TestCaseResultWithStdout
-    trace_responses_size: int = pydantic.Field(alias="traceResponsesSize")
+    trace_responses_size: typing_extensions.Annotated[
+        int, FieldMetadata(alias="traceResponsesSize")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
