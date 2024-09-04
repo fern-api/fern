@@ -230,7 +230,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
 
         // types
         TypesGenerator typesGenerator =
-                new TypesGenerator(context, context.getCustomConfig().enablePublicConstructors());
+                new TypesGenerator(context);
         Result generatedTypes = typesGenerator.generateFiles();
         generatedTypes.getTypes().values().forEach(this::addGeneratedFile);
         generatedTypes.getInterfaces().values().forEach(this::addGeneratedFile);

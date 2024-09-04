@@ -24,7 +24,7 @@ public final class GetWithQuery {
 
     private final Map<String, Object> additionalProperties;
 
-    private GetWithQuery(String query, int number, Map<String, Object> additionalProperties) {
+    public GetWithQuery(String query, int number, Map<String, Object> additionalProperties) {
         this.query = query;
         this.number = number;
         this.additionalProperties = additionalProperties;

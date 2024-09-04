@@ -22,7 +22,7 @@ public final class GetWithPathAndQuery {
 
     private final Map<String, Object> additionalProperties;
 
-    private GetWithPathAndQuery(String query, Map<String, Object> additionalProperties) {
+    public GetWithPathAndQuery(String query, Map<String, Object> additionalProperties) {
         this.query = query;
         this.additionalProperties = additionalProperties;
     }

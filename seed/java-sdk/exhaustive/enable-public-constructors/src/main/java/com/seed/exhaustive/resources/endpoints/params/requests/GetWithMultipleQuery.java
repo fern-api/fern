@@ -24,7 +24,7 @@ public final class GetWithMultipleQuery {
 
     private final Map<String, Object> additionalProperties;
 
-    private GetWithMultipleQuery(String query, int numer, Map<String, Object> additionalProperties) {
+    public GetWithMultipleQuery(String query, int numer, Map<String, Object> additionalProperties) {
         this.query = query;
         this.numer = numer;
         this.additionalProperties = additionalProperties;

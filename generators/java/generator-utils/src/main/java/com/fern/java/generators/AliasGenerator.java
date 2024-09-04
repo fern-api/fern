@@ -1,7 +1,5 @@
 package com.fern.java.generators;
 
-import static java.util.TimeZone.LONG;
-
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fern.ir.model.types.AliasTypeDeclaration;
 import com.fern.ir.model.types.PrimitiveType;
@@ -25,16 +23,13 @@ public final class AliasGenerator extends AbstractFileGenerator {
     private static final String VALUE_FIELD_NAME = "value";
     private static final String OF_METHOD_NAME = "of";
     private final AliasTypeDeclaration aliasTypeDeclaration;
-    private final boolean publicConstructorsEnabled;
 
     public AliasGenerator(
             ClassName className,
             AbstractGeneratorContext<?, ?> generatorContext,
-            AliasTypeDeclaration aliasTypeDeclaration,
-            boolean publicConstructorsEnabled) {
+            AliasTypeDeclaration aliasTypeDeclaration) {
         super(className, generatorContext);
         this.aliasTypeDeclaration = aliasTypeDeclaration;
-        this.publicConstructorsEnabled = publicConstructorsEnabled;
     }
 
     @Override
@@ -71,7 +66,7 @@ public final class AliasGenerator extends AbstractFileGenerator {
 
     private MethodSpec getConstructor(TypeName aliasTypeName) {
         return MethodSpec.constructorBuilder()
-                .addModifiers(publicConstructorsEnabled ? Modifier.PUBLIC : Modifier.PRIVATE)
+                .addModifiers(this.generatorContext.getCustomConfig().enablePublicConstructors() ? Modifier.PUBLIC : Modifier.PRIVATE)
                 .addParameter(aliasTypeName, VALUE_FIELD_NAME)
                 .addStatement("this.value = value")
                 .build();

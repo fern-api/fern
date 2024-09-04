@@ -35,13 +35,11 @@ public final class TypesGenerator {
     private final Map<TypeId, TypeDeclaration> typeDeclarations;
     private final Map<ErrorId, ErrorDeclaration> errorDeclarations;
     private final AbstractGeneratorContext<?, ?> generatorContext;
-    private final boolean publicConstructorEnabled;
 
-    public TypesGenerator(AbstractGeneratorContext<?, ?> generatorContext, boolean publicConstructorEnabled) {
+    public TypesGenerator(AbstractGeneratorContext<?, ?> generatorContext) {
         this.errorDeclarations = generatorContext.getIr().getErrors();
         this.typeDeclarations = generatorContext.getTypeDeclarations();
         this.generatorContext = generatorContext;
-        this.publicConstructorEnabled = publicConstructorEnabled;
     }
 
     public Result generateFiles() {
@@ -57,8 +55,8 @@ public final class TypesGenerator {
                                     typeDeclaration.getName(),
                                     className,
                                     generatedInterfaces,
-                                    false,
-                                    publicConstructorEnabled));
+                                    false
+                            ));
                     return maybeGeneratedJavaFile;
                 })
                 .filter(Optional::isPresent)
