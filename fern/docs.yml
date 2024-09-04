@@ -301,7 +301,7 @@ navigation:
           - page: Custom Domain
             icon: fa-regular fa-globe-pointer
             path: ./pages/docs/building-your-docs/custom-domain.mdx
-          - page: Collect feedback
+          - page: Edit this page and user feedback
             icon: fa-regular fa-comment
             path: ./pages/docs/building-your-docs/user-feedback.mdx
 
