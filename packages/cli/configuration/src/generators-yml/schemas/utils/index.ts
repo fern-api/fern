@@ -1,1 +1,3 @@
 export { isApiConfigurationV2Schema } from "./isApiConfigurationV2Schema";
+export { isAsyncAPISchema } from "./isAsyncAPISpecSchema";
+export { isOpenAPISchema } from "./isOpenAPISpecSchema";

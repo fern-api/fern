@@ -17,7 +17,7 @@ import { APIConfigurationSchemaInternal } from "./schemas/APIConfigurationSchema
 import { GeneratorGroupSchema } from "./schemas/GeneratorGroupSchema";
 import { GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
 import { GeneratorOutputSchema } from "./schemas/GeneratorOutputSchema";
-import { isApiConfigurationV2Schema } from "./schemas/utils";
+import { isApiConfigurationV2Schema, isOpenAPISchema } from "./schemas/utils";
 import {
     API_ORIGIN_LOCATION_KEY,
     API_SETTINGS_KEY,
@@ -250,7 +250,7 @@ async function parseAPIConfiguration(
             ...apiConfiguration,
             definitions: apiConfiguration.specs
                 .map((spec): APIDefinitionLocation | undefined => {
-                    if (spec.openapi != null) {
+                    if (isOpenAPISchema(spec)) {
                         return {
                             schema: {
                                 type: "oss",
