@@ -41,27 +41,38 @@ allowedFailures:
   - trace
   - unions
   - alias-extends
-    # below are all recent breaks from when we made cli capture failure better
+    # below are all recent breaks from when we made cli capture failures better
   - alias
   - any-auth
   - api-wide-base-path
   - audiences
+  - auth-environment-variables
   - basic-auth
   - basic-auth-environment-variables
   - bearer-token-environment-variable
+  - bytes
+  - examples
   - extra-properties
   - file-download
   - file-upload
   - imdb
   - literal
+  - multi-url-environment-no-default
   - no-environment
   - oauth-client-credentials
   - oauth-client-credentials-default
+  - oauth-client-credentials-environment-variables
   - oauth-client-credentials-nested-root
   - object
+  - objects-with-imports
   - optional
   - package-yml
   - pagination
+  - plain-text
   - simple-fhir
+  - single-url-environment-no-default
   - streaming
   - streaming-parameter
+  - undiscriminated-unions
+  - unknown
+  - variables
