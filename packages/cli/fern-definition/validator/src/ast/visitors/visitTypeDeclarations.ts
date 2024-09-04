@@ -37,7 +37,10 @@ export async function visitTypeDeclaration({
 }): Promise<void> {
     const visitTypeReference = createTypeReferenceVisitor(visitor);
 
-    await visitor.typeDeclaration?.({ typeName: { isInlined: false, name: typeName }, declaration }, nodePathForType);
+    await visitor.typeDeclaration?.(
+        { typeName: { isInlined: false, name: typeName }, declaration, nodePath: nodePathForType },
+        nodePathForType
+    );
 
     const visitExamples = async (examples: RawSchemas.ExampleTypeSchema[] | undefined) => {
         if (examples == null) {

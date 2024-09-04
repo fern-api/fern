@@ -3,7 +3,9 @@
 from ...core.pydantic_utilities import UniversalBaseModel
 import typing
 import pydantic
+import typing_extensions
 from .trace_response_v_2 import TraceResponseV2
+from ...core.serialization import FieldMetadata
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -14,7 +16,7 @@ class TraceResponsesPageV2(UniversalBaseModel):
     The offset is the id of the next trace response to load.
     """
 
-    trace_responses: typing.List[TraceResponseV2] = pydantic.Field(alias="traceResponses")
+    trace_responses: typing_extensions.Annotated[typing.List[TraceResponseV2], FieldMetadata(alias="traceResponses")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -14,7 +14,8 @@ export function createTypeReferenceVisitor(
                 typeReference,
                 _default,
                 validation,
-                location
+                location,
+                nodePath
             },
             nodePath
         );

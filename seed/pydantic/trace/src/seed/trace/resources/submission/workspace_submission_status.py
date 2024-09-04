@@ -7,7 +7,9 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 from .error_info import ErrorInfo
 from .running_submission_state import RunningSubmissionState
+import typing_extensions
 from .exception_v_2 import ExceptionV2
+from ...core.serialization import FieldMetadata
 from .exception_info import ExceptionInfo
 
 
@@ -34,7 +36,7 @@ class WorkspaceSubmissionStatus_Running(UniversalBaseModel):
 
 class WorkspaceSubmissionStatus_Ran(UniversalBaseModel):
     type: typing.Literal["ran"] = "ran"
-    exception_v_2: typing.Optional[ExceptionV2] = pydantic.Field(alias="exceptionV2", default=None)
+    exception_v_2: typing_extensions.Annotated[typing.Optional[ExceptionV2], FieldMetadata(alias="exceptionV2")] = None
     exception: typing.Optional[ExceptionInfo] = None
     stdout: str
 
@@ -48,7 +50,7 @@ class WorkspaceSubmissionStatus_Ran(UniversalBaseModel):
 
 class WorkspaceSubmissionStatus_Traced(UniversalBaseModel):
     type: typing.Literal["traced"] = "traced"
-    exception_v_2: typing.Optional[ExceptionV2] = pydantic.Field(alias="exceptionV2", default=None)
+    exception_v_2: typing_extensions.Annotated[typing.Optional[ExceptionV2], FieldMetadata(alias="exceptionV2")] = None
     exception: typing.Optional[ExceptionInfo] = None
     stdout: str
 

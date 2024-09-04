@@ -19,14 +19,17 @@ from .pydantic_utilities import (
 )
 from .route_args import route_args
 from .security import BearerToken
+from .serialization import FieldMetadata, convert_and_respect_annotation_metadata
 
 __all__ = [
     "BearerToken",
     "FernHTTPException",
+    "FieldMetadata",
     "IS_PYDANTIC_V2",
     "UnauthorizedException",
     "UniversalBaseModel",
     "UniversalRootModel",
+    "convert_and_respect_annotation_metadata",
     "default_exception_handler",
     "fern_http_exception_handler",
     "http_exception_handler",

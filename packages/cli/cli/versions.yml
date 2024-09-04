@@ -1,5 +1,14 @@
 - changelog_entry:
   - summary: |
+      Adds generic object declarations to the fern definition. Now we can define generics and
+      use them in alias declarations to minimize code duplication.
+    type: feat
+  created_at: '2024-09-04'
+  ir_version: 53
+  version: 0.41.0
+
+- changelog_entry:
+  - summary: |
       Fix an issue where some postman environment variables (e.g. API key) were not substituted
       when running fern generate.
     type: fix

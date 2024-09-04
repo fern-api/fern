@@ -5,6 +5,7 @@ from ..core.client_wrapper import SyncClientWrapper
 from ..types.metadata import Metadata
 from ..core.request_options import RequestOptions
 from ..types.create_response import CreateResponse
+from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
@@ -66,7 +67,9 @@ class UserserviceClient:
                 "email": email,
                 "age": age,
                 "weight": weight,
-                "metadata": metadata,
+                "metadata": convert_and_respect_annotation_metadata(
+                    object_=metadata, annotation=Metadata, direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -146,7 +149,9 @@ class AsyncUserserviceClient:
                 "email": email,
                 "age": age,
                 "weight": weight,
-                "metadata": metadata,
+                "metadata": convert_and_respect_annotation_metadata(
+                    object_=metadata, annotation=Metadata, direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,

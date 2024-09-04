@@ -12,6 +12,7 @@ from fern_python.codegen.local_class_reference import LocalClassReference
 from fern_python.external_dependencies.typing_extensions import (
     TYPING_EXTENSIONS_DEPENDENCY,
 )
+from fern_python.generators.pydantic_model.model_utilities import can_be_fern_model
 from fern_python.snippet.snippet_writer import SnippetWriter
 
 from ..context import PydanticGeneratorContext
@@ -243,52 +244,7 @@ class FernTypedDict:
         )
 
     @classmethod
-    def can_tr_be_typeddict(
-        cls, tr: ir_types.TypeReference, types: Dict[ir_types.TypeId, ir_types.TypeDeclaration]
-    ) -> bool:
-        return tr.visit(
-            named=lambda nt: FernTypedDict.can_be_typeddict(types[nt.type_id].shape, types),
-            container=lambda ct: ct.visit(
-                list_=lambda list_tr: FernTypedDict.can_tr_be_typeddict(list_tr, types),
-                map_=lambda mt: FernTypedDict.can_tr_be_typeddict(mt.key_type, types)
-                or FernTypedDict.can_tr_be_typeddict(mt.value_type, types),
-                optional=lambda optional_tr: FernTypedDict.can_tr_be_typeddict(optional_tr, types),
-                set_=lambda set_tr: FernTypedDict.can_tr_be_typeddict(set_tr, types),
-                literal=lambda _: False,
-            ),
-            primitive=lambda _: False,
-            unknown=lambda: False,
-        )
-
-    @classmethod
-    def can_be_typeddict(cls, type_: ir_types.Type, types: Dict[ir_types.TypeId, ir_types.TypeDeclaration]) -> bool:
-        return type_.visit(
-            alias=lambda atd: atd.resolved_type.visit(
-                named=lambda nt: nt.shape.visit(
-                    enum=lambda: False,
-                    object=lambda: True,
-                    union=lambda: True,
-                    undiscriminated_union=lambda: True,
-                ),
-                container=lambda ct: ct.visit(
-                    list_=lambda list_tr: FernTypedDict.can_tr_be_typeddict(list_tr, types),
-                    map_=lambda mt: FernTypedDict.can_tr_be_typeddict(mt.key_type, types)
-                    or FernTypedDict.can_tr_be_typeddict(mt.value_type, types),
-                    optional=lambda optional_tr: FernTypedDict.can_tr_be_typeddict(optional_tr, types),
-                    set_=lambda set_tr: FernTypedDict.can_tr_be_typeddict(set_tr, types),
-                    literal=lambda _: False,
-                ),
-                primitive=lambda _: False,
-                unknown=lambda: False,
-            ),
-            enum=lambda _: False,
-            object=lambda _: True,
-            union=lambda _: True,
-            undiscriminated_union=lambda _: True,
-        )
-
-    @classmethod
     def can_type_id_be_typeddict(
         cls, type_id: ir_types.TypeId, types: Dict[ir_types.TypeId, ir_types.TypeDeclaration]
     ) -> bool:
-        return cls.can_be_typeddict(types[type_id].shape, types)
+        return can_be_fern_model(types[type_id].shape, types)

@@ -3,15 +3,17 @@
 from __future__ import annotations
 from ...core.pydantic_utilities import UniversalBaseModel
 from .foo import Foo
+import typing_extensions
 import typing
-import pydantic
+from ...core.serialization import FieldMetadata
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
+import pydantic
 from .bar import Bar
 
 
 class FooUnionWithDiscriminant(UniversalBaseModel):
     foo: Foo
-    type: typing.Literal["foo"] = pydantic.Field(alias="_type", default="foo")
+    type: typing_extensions.Annotated[typing.Literal["foo"], FieldMetadata(alias="_type")] = "foo"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
@@ -24,7 +26,7 @@ class FooUnionWithDiscriminant(UniversalBaseModel):
 
 class BarUnionWithDiscriminant(UniversalBaseModel):
     bar: Bar
-    type: typing.Literal["bar"] = pydantic.Field(alias="_type", default="bar")
+    type: typing_extensions.Annotated[typing.Literal["bar"], FieldMetadata(alias="_type")] = "bar"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2

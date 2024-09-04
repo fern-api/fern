@@ -202,6 +202,46 @@ MyUnion:
     - string
     - integer
 ```
+ 
+### Generics
+
+Fern supports shallow generic objects, to minimize code duplication. You can 
+define a generic for reuse like so:
+
+```yaml
+MySpecialMapItem<Key, Value>:
+  properties:
+    key: Key, 
+    value: Value,
+    diagnostics: string
+```
+
+Now, you can instantiate generic types as a type alias:
+
+```yaml
+StringIntegerMapItem:
+  type: Response<string, number>
+
+StringStringMapItem:
+  type: Response<string, string>
+```
+
+You can now freely use this type as if it were any other type! Note, generated
+code will not use generics. The above example will be generated in typescript as:
+
+```typescript
+type StringIntegerMapI = {
+  key: string,
+  value: number,
+  diagnostics: string
+}   
+
+type StringResponse = {
+  input: string,
+  output: string,
+  diagnostics: string
+}
+```
 
 ### Documenting types
 

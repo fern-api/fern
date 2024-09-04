@@ -2,7 +2,10 @@ import { DeclaredTypeName } from "@fern-api/ir-sdk";
 import {
     RawSchemas,
     recursivelyVisitRawTypeReference,
-    visitRawTypeDeclaration
+    visitRawTypeDeclaration,
+    isRawObjectDefinition,
+    parseGeneric,
+    isGeneric
 } from "@fern-api/fern-definition-schema";
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
@@ -11,6 +14,23 @@ import { parseTypeName } from "../../utils/parseTypeName";
 interface SeenTypeNames {
     addTypeName: (typeName: DeclaredTypeName) => void;
     hasTypeNameBeenSeen: (typeName: DeclaredTypeName) => boolean;
+}
+
+function getObjectRawTypeReferences(objectDeclaration: RawSchemas.ObjectSchema): string[] {
+    const types: string[] = [];
+    if (objectDeclaration.extends != null) {
+        const extendsArr =
+            typeof objectDeclaration.extends === "string" ? [objectDeclaration.extends] : objectDeclaration.extends;
+        types.push(...extendsArr);
+    }
+    if (objectDeclaration.properties != null) {
+        types.push(
+            ...Object.values(objectDeclaration.properties).map((property) =>
+                typeof property === "string" ? property : property.type
+            )
+        );
+    }
+    return types;
 }
 
 export function getReferencedTypesFromRawDeclaration({
@@ -26,26 +46,32 @@ export function getReferencedTypesFromRawDeclaration({
 }): DeclaredTypeName[] {
     const rawTypeReferences = visitRawTypeDeclaration<string[]>(typeDeclaration, {
         alias: (aliasDeclaration) => {
-            return [typeof aliasDeclaration === "string" ? aliasDeclaration : aliasDeclaration.type];
-        },
-        object: (objectDeclaration) => {
-            const types: string[] = [];
-            if (objectDeclaration.extends != null) {
-                const extendsArr =
-                    typeof objectDeclaration.extends === "string"
-                        ? [objectDeclaration.extends]
-                        : objectDeclaration.extends;
-                types.push(...extendsArr);
+            const aliasTypeReference = typeof aliasDeclaration === "string" ? aliasDeclaration : aliasDeclaration.type;
+            const parsedGeneric = parseGeneric(aliasTypeReference);
+            if (parsedGeneric != null) {
+                const rawTypeReferences = new Set<string>(parsedGeneric.arguments ?? []);
+                const resolvedBaseGeneric = typeResolver.getDeclarationOfNamedTypeOrThrow({
+                    referenceToNamedType: aliasTypeReference,
+                    file
+                });
+                const resolvedBaseGenericArguments = parseGeneric(resolvedBaseGeneric.typeName)?.arguments;
+                if (isRawObjectDefinition(resolvedBaseGeneric.declaration)) {
+                    const underlyingObjectRawTypeReferences = getObjectRawTypeReferences(
+                        resolvedBaseGeneric.declaration
+                    );
+
+                    if (resolvedBaseGenericArguments) {
+                        underlyingObjectRawTypeReferences
+                            .filter((typeReference) => !resolvedBaseGenericArguments.includes(typeReference))
+                            .forEach((type) => rawTypeReferences.add(type));
+                    }
+                }
+
+                return Array.from(rawTypeReferences);
             }
-            if (objectDeclaration.properties != null) {
-                types.push(
-                    ...Object.values(objectDeclaration.properties).map((property) =>
-                        typeof property === "string" ? property : property.type
-                    )
-                );
-            }
-            return types;
+            return [aliasTypeReference];
         },
+        object: (objectDeclaration) => getObjectRawTypeReferences(objectDeclaration),
         discriminatedUnion: (unionDeclaration) => {
             const types: string[] = [];
             if (unionDeclaration["base-properties"] != null) {
@@ -108,6 +134,10 @@ export function getReferencedTypesFromRawDeclaration({
                     referenceToNamedType: rawName,
                     file
                 });
+
+                if (isGeneric(maybeDeclaration.typeName)) {
+                    continue;
+                }
 
                 referencedTypes.push(
                     ...getReferencedTypesFromRawDeclaration({

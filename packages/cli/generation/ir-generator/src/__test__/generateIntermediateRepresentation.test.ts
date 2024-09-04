@@ -111,3 +111,13 @@ it("test definitions openapi", async () => {
         })
     );
 }, 200_000);
+
+it("generics", async () => {
+    const GENERICS_DIR = path.join(__dirname, "fixtures/generics/fern");
+    await generateAndSnapshotIRFromPath({
+        absolutePathToIr: AbsoluteFilePath.of(IR_DIR),
+        absolutePathToWorkspace: AbsoluteFilePath.of(GENERICS_DIR),
+        audiences: { type: "all" },
+        workspaceName: "generics"
+    });
+}, 200_000);

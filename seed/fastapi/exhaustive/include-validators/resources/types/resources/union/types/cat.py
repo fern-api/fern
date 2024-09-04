@@ -2,21 +2,24 @@
 
 from __future__ import annotations
 from ......core.pydantic_utilities import UniversalBaseModel
-import pydantic
-import typing
 import typing_extensions
+from ......core.serialization import FieldMetadata
+import typing
 from ......core.pydantic_utilities import universal_root_validator
 from ......core.pydantic_utilities import universal_field_validator
 from ......core.pydantic_utilities import IS_PYDANTIC_V2
+import pydantic
 
 
 class Cat(UniversalBaseModel):
     name: str
-    likes_to_meow: bool = pydantic.Field(alias="likesToMeow")
+    likes_to_meow: typing_extensions.Annotated[bool, FieldMetadata(alias="likesToMeow")]
 
     class Partial(typing.TypedDict):
         name: typing_extensions.NotRequired[str]
-        likes_to_meow: typing_extensions.NotRequired[bool]
+        likes_to_meow: typing_extensions.NotRequired[
+            typing_extensions.Annotated[bool, FieldMetadata(alias="likesToMeow")]
+        ]
 
     class Validators:
         """
@@ -31,7 +34,7 @@ class Cat(UniversalBaseModel):
                 ...
 
             @Cat.Validators.field("likes_to_meow")
-            def validate_likes_to_meow(likes_to_meow: bool, values: Cat.Partial) -> bool:
+            def validate_likes_to_meow(likes_to_meow: typing_extensions.Annotated[bool, FieldMetadata(alias="likesToMeow")], values: Cat.Partial) -> typing_extensions.Annotated[bool, FieldMetadata(alias="likesToMeow")]:
                 ...
         """
 
@@ -148,7 +151,15 @@ class Cat(UniversalBaseModel):
             ) -> typing.Any: ...
 
         class LikesToMeowValidator(typing.Protocol):
-            def __call__(self, __v: bool, __values: Cat.Partial) -> bool: ...
+            def __call__(
+                self,
+                __v: typing_extensions.Annotated[
+                    bool, FieldMetadata(alias="likesToMeow")
+                ],
+                __values: Cat.Partial,
+            ) -> typing_extensions.Annotated[
+                bool, FieldMetadata(alias="likesToMeow")
+            ]: ...
 
         class _PreRootValidator(typing.Protocol):
             def __call__(self, __values: typing.Any) -> typing.Any: ...
@@ -181,13 +192,21 @@ class Cat(UniversalBaseModel):
         return v
 
     @universal_field_validator("likes_to_meow", pre=True)
-    def _pre_validate_likes_to_meow(cls, v: bool, values: Cat.Partial) -> bool:
+    def _pre_validate_likes_to_meow(
+        cls,
+        v: typing_extensions.Annotated[bool, FieldMetadata(alias="likesToMeow")],
+        values: Cat.Partial,
+    ) -> typing_extensions.Annotated[bool, FieldMetadata(alias="likesToMeow")]:
         for validator in Cat.Validators._likes_to_meow_pre_validators:
             v = validator(v, values)
         return v
 
     @universal_field_validator("likes_to_meow", pre=False)
-    def _post_validate_likes_to_meow(cls, v: bool, values: Cat.Partial) -> bool:
+    def _post_validate_likes_to_meow(
+        cls,
+        v: typing_extensions.Annotated[bool, FieldMetadata(alias="likesToMeow")],
+        values: Cat.Partial,
+    ) -> typing_extensions.Annotated[bool, FieldMetadata(alias="likesToMeow")]:
         for validator in Cat.Validators._likes_to_meow_post_validators:
             v = validator(v, values)
         return v

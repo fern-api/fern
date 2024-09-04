@@ -263,7 +263,9 @@ class CoreUtilities:
             )
 
     def convert_and_respect_annotation_metadata(
-        self, object_: AST.Expression, annotation: AST.TypeHint
+        self,
+        object_: AST.Expression,
+        annotation: AST.TypeHint,
     ) -> AST.Expression:
         return AST.Expression(
             AST.FunctionInvocation(
@@ -277,6 +279,7 @@ class CoreUtilities:
                 kwargs=[
                     ("object_", object_),
                     ("annotation", AST.Expression(annotation)),
+                    ("direction", AST.Expression(expression=f'"write"')),
                 ],
             )
         )

@@ -5,6 +5,7 @@ from ..core.client_wrapper import SyncClientWrapper
 from ..types.column import Column
 from ..core.request_options import RequestOptions
 from ..types.upload_response import UploadResponse
+from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
@@ -13,7 +14,6 @@ from ..types.delete_response import DeleteResponse
 from ..types.describe_response import DescribeResponse
 from ..types.fetch_response import FetchResponse
 from ..types.list_response import ListResponse
-from ..core.jsonable_encoder import jsonable_encoder
 from ..types.query_column import QueryColumn
 from ..types.indexed_data import IndexedData
 from ..types.query_response import QueryResponse
@@ -70,7 +70,9 @@ class DataserviceClient:
             "data",
             method="POST",
             json={
-                "columns": columns,
+                "columns": convert_and_respect_annotation_metadata(
+                    object_=columns, annotation=typing.Sequence[Column], direction="write"
+                ),
                 "namespace": namespace,
             },
             request_options=request_options,
@@ -134,7 +136,9 @@ class DataserviceClient:
                 "ids": ids,
                 "deleteAll": delete_all,
                 "namespace": namespace,
-                "filter": filter,
+                "filter": convert_and_respect_annotation_metadata(
+                    object_=filter, annotation=Metadata, direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -182,7 +186,9 @@ class DataserviceClient:
             "data/describe",
             method="POST",
             json={
-                "filter": filter,
+                "filter": convert_and_respect_annotation_metadata(
+                    object_=filter, annotation=Metadata, direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -297,7 +303,7 @@ class DataserviceClient:
             method="GET",
             params={
                 "prefix": prefix,
-                "limit": jsonable_encoder(limit),
+                "limit": convert_and_respect_annotation_metadata(object_=limit, annotation=int, direction="write"),
                 "paginationToken": pagination_token,
                 "namespace": namespace,
             },
@@ -377,13 +383,19 @@ class DataserviceClient:
             json={
                 "namespace": namespace,
                 "topK": top_k,
-                "filter": filter,
+                "filter": convert_and_respect_annotation_metadata(
+                    object_=filter, annotation=Metadata, direction="write"
+                ),
                 "includeValues": include_values,
                 "includeMetadata": include_metadata,
-                "queries": queries,
+                "queries": convert_and_respect_annotation_metadata(
+                    object_=queries, annotation=typing.Sequence[QueryColumn], direction="write"
+                ),
                 "column": column,
                 "id": id,
-                "indexedData": indexed_data,
+                "indexedData": convert_and_respect_annotation_metadata(
+                    object_=indexed_data, annotation=IndexedData, direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -450,9 +462,13 @@ class DataserviceClient:
             json={
                 "id": id,
                 "values": values,
-                "setMetadata": set_metadata,
+                "setMetadata": convert_and_respect_annotation_metadata(
+                    object_=set_metadata, annotation=Metadata, direction="write"
+                ),
                 "namespace": namespace,
-                "indexedData": indexed_data,
+                "indexedData": convert_and_respect_annotation_metadata(
+                    object_=indexed_data, annotation=IndexedData, direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -526,7 +542,9 @@ class AsyncDataserviceClient:
             "data",
             method="POST",
             json={
-                "columns": columns,
+                "columns": convert_and_respect_annotation_metadata(
+                    object_=columns, annotation=typing.Sequence[Column], direction="write"
+                ),
                 "namespace": namespace,
             },
             request_options=request_options,
@@ -598,7 +616,9 @@ class AsyncDataserviceClient:
                 "ids": ids,
                 "deleteAll": delete_all,
                 "namespace": namespace,
-                "filter": filter,
+                "filter": convert_and_respect_annotation_metadata(
+                    object_=filter, annotation=Metadata, direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -654,7 +674,9 @@ class AsyncDataserviceClient:
             "data/describe",
             method="POST",
             json={
-                "filter": filter,
+                "filter": convert_and_respect_annotation_metadata(
+                    object_=filter, annotation=Metadata, direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -785,7 +807,7 @@ class AsyncDataserviceClient:
             method="GET",
             params={
                 "prefix": prefix,
-                "limit": jsonable_encoder(limit),
+                "limit": convert_and_respect_annotation_metadata(object_=limit, annotation=int, direction="write"),
                 "paginationToken": pagination_token,
                 "namespace": namespace,
             },
@@ -873,13 +895,19 @@ class AsyncDataserviceClient:
             json={
                 "namespace": namespace,
                 "topK": top_k,
-                "filter": filter,
+                "filter": convert_and_respect_annotation_metadata(
+                    object_=filter, annotation=Metadata, direction="write"
+                ),
                 "includeValues": include_values,
                 "includeMetadata": include_metadata,
-                "queries": queries,
+                "queries": convert_and_respect_annotation_metadata(
+                    object_=queries, annotation=typing.Sequence[QueryColumn], direction="write"
+                ),
                 "column": column,
                 "id": id,
-                "indexedData": indexed_data,
+                "indexedData": convert_and_respect_annotation_metadata(
+                    object_=indexed_data, annotation=IndexedData, direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -954,9 +982,13 @@ class AsyncDataserviceClient:
             json={
                 "id": id,
                 "values": values,
-                "setMetadata": set_metadata,
+                "setMetadata": convert_and_respect_annotation_metadata(
+                    object_=set_metadata, annotation=Metadata, direction="write"
+                ),
                 "namespace": namespace,
-                "indexedData": indexed_data,
+                "indexedData": convert_and_respect_annotation_metadata(
+                    object_=indexed_data, annotation=IndexedData, direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,

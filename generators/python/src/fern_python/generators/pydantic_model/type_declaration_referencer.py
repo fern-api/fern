@@ -4,7 +4,7 @@ import fern.ir.resources as ir_types
 
 from fern_python.codegen import ExportStrategy, Filepath
 from fern_python.declaration_referencer import AbstractDeclarationReferencer
-from fern_python.generators.pydantic_model.typeddict import FernTypedDict
+from fern_python.generators.pydantic_model.model_utilities import can_be_fern_model
 
 
 class TypeDeclarationReferencer(AbstractDeclarationReferencer[ir_types.DeclaredTypeName]):
@@ -59,4 +59,4 @@ class TypeDeclarationReferencer(AbstractDeclarationReferencer[ir_types.DeclaredT
         if not self._use_typeddict_requests or not as_request:
             return False
         type_ = self._types[name.type_id]
-        return FernTypedDict.can_be_typeddict(type_=type_.shape, types=self._types)
+        return can_be_fern_model(type_=type_.shape, types=self._types)

@@ -200,6 +200,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                     universal_field_validator=self._context.core_utilities.universal_field_validator,
                     universal_root_validator=self._context.core_utilities.universal_root_validator,
                     update_forward_ref_function_reference=self._context.core_utilities.get_update_forward_refs(),
+                    field_metadata_getter=lambda: self._context.core_utilities.get_field_metadata(),
                 ) as internal_pydantic_model_for_single_union_type:
                     internal_single_union_type = internal_pydantic_model_for_single_union_type.to_reference()
                     internal_single_union_types.append(internal_single_union_type)

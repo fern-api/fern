@@ -2,14 +2,18 @@
 
 from ....core.pydantic_utilities import UniversalBaseModel
 import typing
-import pydantic
+import typing_extensions
+from ....core.serialization import FieldMetadata
 from ....types.metadata import Metadata
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
+import pydantic
 
 
 class DeleteRequest(UniversalBaseModel):
     ids: typing.Optional[typing.List[str]] = None
-    delete_all: typing.Optional[bool] = pydantic.Field(alias="deleteAll", default=None)
+    delete_all: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="deleteAll")
+    ] = None
     namespace: typing.Optional[str] = None
     filter: typing.Optional[Metadata] = None
 

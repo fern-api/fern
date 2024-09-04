@@ -2,13 +2,15 @@
 
 from __future__ import annotations
 from ...core.pydantic_utilities import UniversalBaseModel
+import typing_extensions
 import typing
-import pydantic
+from ...core.serialization import FieldMetadata
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
+import pydantic
 
 
 class CreateProblemError_Generic(UniversalBaseModel):
-    error_type: typing.Literal["generic"] = pydantic.Field(alias="_type", default="generic")
+    error_type: typing_extensions.Annotated[typing.Literal["generic"], FieldMetadata(alias="_type")] = "generic"
     message: str
     type: str
     stacktrace: str

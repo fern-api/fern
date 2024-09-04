@@ -18,7 +18,9 @@ def test_convert_and_respect_annotation_metadata() -> None:
         "literal": "lit_one",
         "any": "any",
     }
-    converted = convert_and_respect_annotation_metadata(object_=data, annotation=ObjectWithOptionalFieldParams)
+    converted = convert_and_respect_annotation_metadata(
+        object_=data, annotation=ObjectWithOptionalFieldParams, direction="write"
+    )
     assert converted == {"string": "string", "long": 12345, "bool": True, "literal": "lit_one", "any": "any"}
 
 
@@ -27,7 +29,9 @@ def test_convert_and_respect_annotation_metadata_in_list() -> None:
         {"string": "string", "long_": 12345, "bool_": True, "literal": "lit_one", "any": "any"},
         {"string": "another string", "long_": 67890, "list_": [], "literal": "lit_one", "any": "any"},
     ]
-    converted = convert_and_respect_annotation_metadata(object_=data, annotation=List[ObjectWithOptionalFieldParams])
+    converted = convert_and_respect_annotation_metadata(
+        object_=data, annotation=List[ObjectWithOptionalFieldParams], direction="write"
+    )
 
     assert converted == [
         {"string": "string", "long": 12345, "bool": True, "literal": "lit_one", "any": "any"},
@@ -43,7 +47,9 @@ def test_convert_and_respect_annotation_metadata_in_nested_object() -> None:
         "literal": "lit_one",
         "any": "any",
     }
-    converted = convert_and_respect_annotation_metadata(object_=data, annotation=ObjectWithOptionalFieldParams)
+    converted = convert_and_respect_annotation_metadata(
+        object_=data, annotation=ObjectWithOptionalFieldParams, direction="write"
+    )
 
     assert converted == {
         "string": "string",
@@ -55,12 +61,12 @@ def test_convert_and_respect_annotation_metadata_in_nested_object() -> None:
 
 
 def test_convert_and_respect_annotation_metadata_in_union() -> None:
-    converted = convert_and_respect_annotation_metadata(object_=UNION_TEST, annotation=ShapeParams)
+    converted = convert_and_respect_annotation_metadata(object_=UNION_TEST, annotation=ShapeParams, direction="write")
 
     assert converted == UNION_TEST_CONVERTED
 
 
 def test_convert_and_respect_annotation_metadata_with_empty_object() -> None:
     data: Any = {}
-    converted = convert_and_respect_annotation_metadata(object_=data, annotation=ShapeParams)
+    converted = convert_and_respect_annotation_metadata(object_=data, annotation=ShapeParams, direction="write")
     assert converted == data

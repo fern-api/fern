@@ -2,14 +2,18 @@
 
 from ....core.pydantic_utilities import UniversalBaseModel
 import typing
+import typing_extensions
 from .object_with_optional_field import ObjectWithOptionalField
-import pydantic
+from ....core.serialization import FieldMetadata
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
+import pydantic
 
 
 class NestedObjectWithOptionalField(UniversalBaseModel):
     string: typing.Optional[str] = None
-    nested_object: typing.Optional[ObjectWithOptionalField] = pydantic.Field(alias="NestedObject", default=None)
+    nested_object: typing_extensions.Annotated[
+        typing.Optional[ObjectWithOptionalField], FieldMetadata(alias="NestedObject")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
