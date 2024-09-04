@@ -1,22 +1,13 @@
 ---
-title: Generate SDK snippets
-description: Generate SDK snippets in TypeScript, Python, Go, Ruby, and other languages from examples in your API definition that automatically populate in Fern Docs.
+title: Display SDK snippets
+description: Enable SDK code examples in TypeScript, Python, Go, and more from the request and response examples documented in your API definition. Once enabled, Fern Docs will automatically populate the snippets within your API Reference.
 ---
 
-Fern allows you to add SDK code snippets to your documentation. This is useful for showing how to use your SDK in different languages. By default, Fern will generate cURL snippets. By following the steps below, you can add code snippets for other languages.
+If you use Fern's SDK Generator, you can automatically show SDK code snippets in your API Reference. SDK languages appear in a drop-down. By default, cURL snippets will be displayed to users.
 
 <Frame>
 ![SDK code snippet selector](https://fern-image-hosting.s3.amazonaws.com/sdk-code-snippets.png)
 </Frame>
-
-<Callout intent='info'>
-  SDK snippets automatically populated in your Fern Docs is a paid feature included
-  in the [SDK Starter plan](https://buildwithfern.com/pricing).
-</Callout>
-
-## Language support
-
-TypeScript, Python, Go, and Ruby are the SDK code snippet languages supported today. Our development work is driven by customer requests, so please request support for another language by [opening an issue](https://github.com/fern-api/fern/issues/new/choose).
 
 ## Configuring SDK Snippets
 
@@ -60,6 +51,11 @@ groups:
 ```
 </CodeBlock>
 
+<Callout intent='info'>
+  SDK snippets automatically populated in your Fern Docs is a paid feature included
+  in the [SDK Starter plan](https://buildwithfern.com/pricing).
+</Callout>
+
 ### Add the package name to your docs configuration
 
 <CodeBlock title="docs.yml">
@@ -73,6 +69,10 @@ navigation:
       go: https://github.com/your-organization/your-repository # <--- needs the https://github.com/ prefix
 ```
 </CodeBlock>
+
+## Language support
+
+TypeScript, Python, Go, and Ruby are the supported SDK code snippet languages. Our development work is driven by customer requests, so please request support for another language by [opening an issue](https://github.com/fern-api/fern/issues/new/choose).
 
 ## Access via API
 
