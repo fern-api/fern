@@ -6,4 +6,4 @@ export const RawContainerType = {
     literal: "literal"
 } as const;
 
-export const RawContanerTypes: Set<string> = new Set(Object.values(RawContainerType));
+export const RawContainerTypes = new Set<string>(Object.values(RawContainerType));
