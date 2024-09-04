@@ -55,12 +55,7 @@ export class OpenApiIrConverterContext {
     /**
      * Returns the default server URL. This URL should only be set for multi-url cases.
      */
-    public getOrThrowDefaultServerName(): string {
-        if (this.defaultServerName == null) {
-            return this.taskContext.failAndThrow(
-                "Please provide a server URL in the servers block or add a server to every operation"
-            );
-        }
+    public getDefaultServerName(): string | undefined {
         return this.defaultServerName;
     }
 

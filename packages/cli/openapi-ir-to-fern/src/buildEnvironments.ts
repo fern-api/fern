@@ -23,7 +23,7 @@ function extractUrlsFromEnvironmentSchema(
 export function buildEnvironments(context: OpenApiIrConverterContext): void {
     if (context.environmentOverrides != null) {
         for (const [environment, environmentDeclaration] of Object.entries(
-            context.environmentOverrides["environments"] ?? {}
+            context.environmentOverrides.environments ?? {}
         )) {
             context.builder.addEnvironment({
                 name: environment,
