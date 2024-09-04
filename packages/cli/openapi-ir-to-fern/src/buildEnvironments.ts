@@ -36,6 +36,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
         if (context.environmentOverrides["default-url"] != null) {
             context.builder.setDefaultUrl(context.environmentOverrides["default-url"]);
         }
+        return;
     }
 
     const topLevelServersWithName: Record<string, RawSchemas.EnvironmentSchema> = {};

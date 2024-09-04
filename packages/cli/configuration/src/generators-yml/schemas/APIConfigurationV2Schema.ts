@@ -19,8 +19,6 @@ export type AsyncAPISchema = z.infer<typeof OpenAPISpecSchema>;
 
 export const SpecSchema = z.union([OpenAPISpecSchema, AsyncAPISchema]);
 
-export const APIConfigurationV2Schema = z.strictObject({
-    "default-environment": z.optional(z.string().or(z.null())),
-    environments: z.optional(z.record(z.string(), RawSchemas.EnvironmentSchema)),
+export const APIConfigurationV2Schema = RawSchemas.WithEnvironmentsSchema.extend({
     specs: z.array(SpecSchema)
 });
