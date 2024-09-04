@@ -2,16 +2,16 @@
 
 from __future__ import annotations
 from ...core.unchecked_base_model import UncheckedBaseModel
-import typing_extensions
-from ...core.serialization import FieldMetadata
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
 import pydantic
+import typing_extensions
+from ...core.serialization import FieldMetadata
 from ...core.unchecked_base_model import UnionMetadata
 
 
 class Base(UncheckedBaseModel):
-    id: typing_extensions.Annotated[str, FieldMetadata(alias="id")]
+    id: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(

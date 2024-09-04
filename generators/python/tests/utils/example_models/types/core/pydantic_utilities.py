@@ -127,9 +127,13 @@ class UniversalBaseModel(pydantic.BaseModel):
         }
 
         if IS_PYDANTIC_V2:
-            return super().model_dump(**kwargs_with_defaults_exclude_unset)  # type: ignore # Pydantic v2
+            dict_dump = super().model_dump(**kwargs_with_defaults_exclude_unset)  # type: ignore # Pydantic v2
         else:
-            return super().dict(**kwargs_with_defaults_exclude_unset)
+            dict_dump = super().dict(**kwargs_with_defaults_exclude_unset)
+
+        return convert_and_respect_annotation_metadata(
+            object_=dict_dump, annotation=self.__class__, direction="write"
+        )
 
 
 if IS_PYDANTIC_V2:

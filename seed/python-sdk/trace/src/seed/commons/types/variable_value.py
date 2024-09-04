@@ -5,6 +5,8 @@ from ...core.pydantic_utilities import UniversalBaseModel
 import typing
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+import typing_extensions
+from ...core.serialization import FieldMetadata
 from .node_id import NodeId
 from .binary_tree_node_value import BinaryTreeNodeValue
 from .singly_linked_list_node_value import SinglyLinkedListNodeValue
@@ -79,7 +81,7 @@ class VariableValue_CharValue(UniversalBaseModel):
 
 class VariableValue_MapValue(UniversalBaseModel):
     type: typing.Literal["mapValue"] = "mapValue"
-    key_value_pairs: typing.List["KeyValuePair"] = pydantic.Field(alias="keyValuePairs")
+    key_value_pairs: typing_extensions.Annotated[typing.List["KeyValuePair"], FieldMetadata(alias="keyValuePairs")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

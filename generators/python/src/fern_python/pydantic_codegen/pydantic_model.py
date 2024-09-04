@@ -123,7 +123,7 @@ class PydanticModel:
             version=self._version,
         )
 
-        if is_aliased is not None:
+        if is_aliased:
             field_metadata = self._field_metadata_getter().get_instance()
             field_metadata.add_alias(field.json_field_name)
 

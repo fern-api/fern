@@ -3,15 +3,17 @@
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
 from .namespace_summary import NamespaceSummary
-import pydantic
+import typing_extensions
+from ..core.serialization import FieldMetadata
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
+import pydantic
 
 
 class DescribeResponse(UniversalBaseModel):
     namespaces: typing.Optional[typing.Dict[str, NamespaceSummary]] = None
     dimension: typing.Optional[int] = None
     fullness: typing.Optional[float] = None
-    total_count: typing.Optional[int] = pydantic.Field(alias="totalCount", default=None)
+    total_count: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="totalCount")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

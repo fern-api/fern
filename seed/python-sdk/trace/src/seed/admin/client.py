@@ -6,6 +6,7 @@ from ..submission.types.submission_id import SubmissionId
 from ..submission.types.test_submission_status import TestSubmissionStatus
 from ..core.request_options import RequestOptions
 from ..core.jsonable_encoder import jsonable_encoder
+from ..core.serialization import convert_and_respect_annotation_metadata
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 import datetime as dt
@@ -67,9 +68,11 @@ class AdminClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"admin/store-test-submission-status/{jsonable_encoder(submission_id)}",
+            f"admin/store-test-submission-status/{jsonable_encoder(convert_and_respect_annotation_metadata(object_=submission_id, annotation=SubmissionId, direction="write"))}",
             method="POST",
-            json=request,
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=TestSubmissionStatus, direction="write"
+            ),
             request_options=request_options,
             omit=OMIT,
         )
@@ -128,11 +131,13 @@ class AdminClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"admin/store-test-submission-status-v2/{jsonable_encoder(submission_id)}",
+            f"admin/store-test-submission-status-v2/{jsonable_encoder(convert_and_respect_annotation_metadata(object_=submission_id, annotation=SubmissionId, direction="write"))}",
             method="POST",
             json={
                 "updateTime": update_time,
-                "updateInfo": update_info,
+                "updateInfo": convert_and_respect_annotation_metadata(
+                    object_=update_info, annotation=TestSubmissionUpdateInfo, direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -185,9 +190,11 @@ class AdminClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"admin/store-workspace-submission-status/{jsonable_encoder(submission_id)}",
+            f"admin/store-workspace-submission-status/{jsonable_encoder(convert_and_respect_annotation_metadata(object_=submission_id, annotation=SubmissionId, direction="write"))}",
             method="POST",
-            json=request,
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=WorkspaceSubmissionStatus, direction="write"
+            ),
             request_options=request_options,
             omit=OMIT,
         )
@@ -248,11 +255,13 @@ class AdminClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"admin/store-workspace-submission-status-v2/{jsonable_encoder(submission_id)}",
+            f"admin/store-workspace-submission-status-v2/{jsonable_encoder(convert_and_respect_annotation_metadata(object_=submission_id, annotation=SubmissionId, direction="write"))}",
             method="POST",
             json={
                 "updateTime": update_time,
-                "updateInfo": update_info,
+                "updateInfo": convert_and_respect_annotation_metadata(
+                    object_=update_info, annotation=WorkspaceSubmissionUpdateInfo, direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -360,11 +369,15 @@ class AdminClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"admin/store-test-trace/submission/{jsonable_encoder(submission_id)}/testCase/{jsonable_encoder(test_case_id)}",
+            f"admin/store-test-trace/submission/{jsonable_encoder(convert_and_respect_annotation_metadata(object_=submission_id, annotation=SubmissionId, direction="write"))}/testCase/{jsonable_encoder(test_case_id)}",
             method="POST",
             json={
-                "result": result,
-                "traceResponses": trace_responses,
+                "result": convert_and_respect_annotation_metadata(
+                    object_=result, annotation=TestCaseResultWithStdout, direction="write"
+                ),
+                "traceResponses": convert_and_respect_annotation_metadata(
+                    object_=trace_responses, annotation=typing.Sequence[TraceResponse], direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -458,9 +471,11 @@ class AdminClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"admin/store-test-trace-v2/submission/{jsonable_encoder(submission_id)}/testCase/{jsonable_encoder(test_case_id)}",
+            f"admin/store-test-trace-v2/submission/{jsonable_encoder(convert_and_respect_annotation_metadata(object_=submission_id, annotation=SubmissionId, direction="write"))}/testCase/{jsonable_encoder(test_case_id)}",
             method="POST",
-            json=request,
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=typing.Sequence[TraceResponseV2], direction="write"
+            ),
             request_options=request_options,
             omit=OMIT,
         )
@@ -563,11 +578,15 @@ class AdminClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"admin/store-workspace-trace/submission/{jsonable_encoder(submission_id)}",
+            f"admin/store-workspace-trace/submission/{jsonable_encoder(convert_and_respect_annotation_metadata(object_=submission_id, annotation=SubmissionId, direction="write"))}",
             method="POST",
             json={
-                "workspaceRunDetails": workspace_run_details,
-                "traceResponses": trace_responses,
+                "workspaceRunDetails": convert_and_respect_annotation_metadata(
+                    object_=workspace_run_details, annotation=WorkspaceRunDetails, direction="write"
+                ),
+                "traceResponses": convert_and_respect_annotation_metadata(
+                    object_=trace_responses, annotation=typing.Sequence[TraceResponse], direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -657,9 +676,11 @@ class AdminClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"admin/store-workspace-trace-v2/submission/{jsonable_encoder(submission_id)}",
+            f"admin/store-workspace-trace-v2/submission/{jsonable_encoder(convert_and_respect_annotation_metadata(object_=submission_id, annotation=SubmissionId, direction="write"))}",
             method="POST",
-            json=request,
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=typing.Sequence[TraceResponseV2], direction="write"
+            ),
             request_options=request_options,
             omit=OMIT,
         )
@@ -723,9 +744,11 @@ class AsyncAdminClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"admin/store-test-submission-status/{jsonable_encoder(submission_id)}",
+            f"admin/store-test-submission-status/{jsonable_encoder(convert_and_respect_annotation_metadata(object_=submission_id, annotation=SubmissionId, direction="write"))}",
             method="POST",
-            json=request,
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=TestSubmissionStatus, direction="write"
+            ),
             request_options=request_options,
             omit=OMIT,
         )
@@ -793,11 +816,13 @@ class AsyncAdminClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"admin/store-test-submission-status-v2/{jsonable_encoder(submission_id)}",
+            f"admin/store-test-submission-status-v2/{jsonable_encoder(convert_and_respect_annotation_metadata(object_=submission_id, annotation=SubmissionId, direction="write"))}",
             method="POST",
             json={
                 "updateTime": update_time,
-                "updateInfo": update_info,
+                "updateInfo": convert_and_respect_annotation_metadata(
+                    object_=update_info, annotation=TestSubmissionUpdateInfo, direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -857,9 +882,11 @@ class AsyncAdminClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"admin/store-workspace-submission-status/{jsonable_encoder(submission_id)}",
+            f"admin/store-workspace-submission-status/{jsonable_encoder(convert_and_respect_annotation_metadata(object_=submission_id, annotation=SubmissionId, direction="write"))}",
             method="POST",
-            json=request,
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=WorkspaceSubmissionStatus, direction="write"
+            ),
             request_options=request_options,
             omit=OMIT,
         )
@@ -927,11 +954,13 @@ class AsyncAdminClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"admin/store-workspace-submission-status-v2/{jsonable_encoder(submission_id)}",
+            f"admin/store-workspace-submission-status-v2/{jsonable_encoder(convert_and_respect_annotation_metadata(object_=submission_id, annotation=SubmissionId, direction="write"))}",
             method="POST",
             json={
                 "updateTime": update_time,
-                "updateInfo": update_info,
+                "updateInfo": convert_and_respect_annotation_metadata(
+                    object_=update_info, annotation=WorkspaceSubmissionUpdateInfo, direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -1046,11 +1075,15 @@ class AsyncAdminClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"admin/store-test-trace/submission/{jsonable_encoder(submission_id)}/testCase/{jsonable_encoder(test_case_id)}",
+            f"admin/store-test-trace/submission/{jsonable_encoder(convert_and_respect_annotation_metadata(object_=submission_id, annotation=SubmissionId, direction="write"))}/testCase/{jsonable_encoder(test_case_id)}",
             method="POST",
             json={
-                "result": result,
-                "traceResponses": trace_responses,
+                "result": convert_and_respect_annotation_metadata(
+                    object_=result, annotation=TestCaseResultWithStdout, direction="write"
+                ),
+                "traceResponses": convert_and_respect_annotation_metadata(
+                    object_=trace_responses, annotation=typing.Sequence[TraceResponse], direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -1151,9 +1184,11 @@ class AsyncAdminClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"admin/store-test-trace-v2/submission/{jsonable_encoder(submission_id)}/testCase/{jsonable_encoder(test_case_id)}",
+            f"admin/store-test-trace-v2/submission/{jsonable_encoder(convert_and_respect_annotation_metadata(object_=submission_id, annotation=SubmissionId, direction="write"))}/testCase/{jsonable_encoder(test_case_id)}",
             method="POST",
-            json=request,
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=typing.Sequence[TraceResponseV2], direction="write"
+            ),
             request_options=request_options,
             omit=OMIT,
         )
@@ -1263,11 +1298,15 @@ class AsyncAdminClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"admin/store-workspace-trace/submission/{jsonable_encoder(submission_id)}",
+            f"admin/store-workspace-trace/submission/{jsonable_encoder(convert_and_respect_annotation_metadata(object_=submission_id, annotation=SubmissionId, direction="write"))}",
             method="POST",
             json={
-                "workspaceRunDetails": workspace_run_details,
-                "traceResponses": trace_responses,
+                "workspaceRunDetails": convert_and_respect_annotation_metadata(
+                    object_=workspace_run_details, annotation=WorkspaceRunDetails, direction="write"
+                ),
+                "traceResponses": convert_and_respect_annotation_metadata(
+                    object_=trace_responses, annotation=typing.Sequence[TraceResponse], direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -1364,9 +1403,11 @@ class AsyncAdminClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"admin/store-workspace-trace-v2/submission/{jsonable_encoder(submission_id)}",
+            f"admin/store-workspace-trace-v2/submission/{jsonable_encoder(convert_and_respect_annotation_metadata(object_=submission_id, annotation=SubmissionId, direction="write"))}",
             method="POST",
-            json=request,
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=typing.Sequence[TraceResponseV2], direction="write"
+            ),
             request_options=request_options,
             omit=OMIT,
         )

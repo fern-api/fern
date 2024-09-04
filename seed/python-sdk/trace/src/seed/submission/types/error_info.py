@@ -5,7 +5,9 @@ from ...core.pydantic_utilities import UniversalBaseModel
 import typing
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+import typing_extensions
 from .exception_info import ExceptionInfo
+from ...core.serialization import FieldMetadata
 
 
 class ErrorInfo_CompileError(UniversalBaseModel):
@@ -38,7 +40,7 @@ class ErrorInfo_RuntimeError(UniversalBaseModel):
 
 class ErrorInfo_InternalError(UniversalBaseModel):
     type: typing.Literal["internalError"] = "internalError"
-    exception_info: ExceptionInfo = pydantic.Field(alias="exceptionInfo")
+    exception_info: typing_extensions.Annotated[ExceptionInfo, FieldMetadata(alias="exceptionInfo")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

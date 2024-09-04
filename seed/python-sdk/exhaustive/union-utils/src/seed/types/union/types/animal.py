@@ -8,7 +8,6 @@ from ....core.pydantic_utilities import UniversalRootModel
 import typing
 import typing_extensions
 import pydantic
-from ....core.serialization import FieldMetadata
 from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
@@ -66,7 +65,7 @@ class Animal(UniversalRootModel):
 
 class _Animal:
     class Dog(types_union_types_dog_Dog):
-        animal: typing_extensions.Annotated[typing.Literal["dog"], FieldMetadata(alias="animal")] = "dog"
+        animal: typing.Literal["dog"] = "dog"
 
         if IS_PYDANTIC_V2:
             model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
@@ -77,7 +76,7 @@ class _Animal:
                 smart_union = True
 
     class Cat(types_union_types_cat_Cat):
-        animal: typing_extensions.Annotated[typing.Literal["cat"], FieldMetadata(alias="animal")] = "cat"
+        animal: typing.Literal["cat"] = "cat"
 
         if IS_PYDANTIC_V2:
             model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2

@@ -9,7 +9,6 @@ import typing
 import typing_extensions
 from ...core.unchecked_base_model import UnionMetadata
 import pydantic
-from ...core.serialization import FieldMetadata
 from ...core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
@@ -101,14 +100,10 @@ class Shape(UniversalRootModel):
 
 class _Shape:
     class Circle(resources_types_circle_Circle):
-        type: typing_extensions.Annotated[
-            typing.Literal["circle"], FieldMetadata(alias="type")
-        ] = "circle"
+        type: typing.Literal["circle"] = "circle"
 
     class Square(resources_types_square_Square):
-        type: typing_extensions.Annotated[
-            typing.Literal["square"], FieldMetadata(alias="type")
-        ] = "square"
+        type: typing.Literal["square"] = "square"
 
 
 update_forward_refs(Shape)

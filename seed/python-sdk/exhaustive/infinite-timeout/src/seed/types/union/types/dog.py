@@ -9,7 +9,7 @@ import pydantic
 
 
 class Dog(UniversalBaseModel):
-    name: typing_extensions.Annotated[str, FieldMetadata(alias="name")]
+    name: str
     likes_to_woof: typing_extensions.Annotated[bool, FieldMetadata(alias="likesToWoof")]
 
     if IS_PYDANTIC_V2:

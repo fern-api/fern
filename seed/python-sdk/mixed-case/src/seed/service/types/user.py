@@ -22,7 +22,7 @@ class User(UniversalBaseModel):
     """
 
     user_name: typing_extensions.Annotated[str, FieldMetadata(alias="userName")]
-    metadata_tags: typing_extensions.Annotated[typing.List[str], FieldMetadata(alias="metadata_tags")]
+    metadata_tags: typing.List[str]
     extra_properties: typing_extensions.Annotated[typing.Dict[str, str], FieldMetadata(alias="EXTRA_PROPERTIES")]
 
     if IS_PYDANTIC_V2:

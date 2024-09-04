@@ -2,16 +2,15 @@
 
 from __future__ import annotations
 from ...core.unchecked_base_model import UncheckedBaseModel
-import typing_extensions
-from ...core.serialization import FieldMetadata
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
 import pydantic
+import typing_extensions
 from ...core.unchecked_base_model import UnionMetadata
 
 
 class Base(UncheckedBaseModel):
-    id: typing_extensions.Annotated[str, FieldMetadata(alias="id")]
+    id: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
@@ -24,10 +23,8 @@ class Base(UncheckedBaseModel):
 
 
 class Shape_Circle(Base):
-    type: typing_extensions.Annotated[
-        typing.Literal["circle"], FieldMetadata(alias="type")
-    ] = "circle"
-    radius: typing_extensions.Annotated[float, FieldMetadata(alias="radius")]
+    type: typing.Literal["circle"] = "circle"
+    radius: float
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
@@ -40,10 +37,8 @@ class Shape_Circle(Base):
 
 
 class Shape_Square(Base):
-    type: typing_extensions.Annotated[
-        typing.Literal["square"], FieldMetadata(alias="type")
-    ] = "square"
-    length: typing_extensions.Annotated[float, FieldMetadata(alias="length")]
+    type: typing.Literal["square"] = "square"
+    length: float
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(

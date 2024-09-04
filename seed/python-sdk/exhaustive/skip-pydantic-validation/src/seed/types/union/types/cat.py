@@ -9,7 +9,7 @@ import pydantic
 
 
 class Cat(UncheckedBaseModel):
-    name: typing_extensions.Annotated[str, FieldMetadata(alias="name")]
+    name: str
     likes_to_meow: typing_extensions.Annotated[bool, FieldMetadata(alias="likesToMeow")]
 
     if IS_PYDANTIC_V2:

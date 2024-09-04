@@ -2,15 +2,15 @@
 
 from ....core.pydantic_utilities import UniversalBaseModel
 import typing_extensions
-from ....core.serialization import FieldMetadata
 from .object_with_optional_field import ObjectWithOptionalField
+from ....core.serialization import FieldMetadata
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
 import pydantic
 
 
 class NestedObjectWithRequiredField(UniversalBaseModel):
-    string: typing_extensions.Annotated[str, FieldMetadata(alias="string")]
+    string: str
     nested_object: typing_extensions.Annotated[ObjectWithOptionalField, FieldMetadata(alias="NestedObject")]
 
     if IS_PYDANTIC_V2:

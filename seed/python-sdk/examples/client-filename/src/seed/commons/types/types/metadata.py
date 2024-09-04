@@ -2,8 +2,10 @@
 
 from ....core.pydantic_utilities import UniversalBaseModel
 import typing
-import pydantic
+import typing_extensions
+from ....core.serialization import FieldMetadata
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
+import pydantic
 
 
 class Metadata(UniversalBaseModel):
@@ -21,7 +23,7 @@ class Metadata(UniversalBaseModel):
 
     id: str
     data: typing.Optional[typing.Dict[str, str]] = None
-    json_string: typing.Optional[str] = pydantic.Field(alias="jsonString", default=None)
+    json_string: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="jsonString")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

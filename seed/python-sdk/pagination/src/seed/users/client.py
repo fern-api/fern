@@ -11,9 +11,9 @@ from ..core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from .types.with_cursor import WithCursor
+from ..core.serialization import convert_and_respect_annotation_metadata
 from .types.with_page import WithPage
 import uuid
-from ..core.jsonable_encoder import jsonable_encoder
 from .types.list_users_extended_response import ListUsersExtendedResponse
 from ..types.username_cursor import UsernameCursor
 from .types.username_container import UsernameContainer
@@ -160,7 +160,9 @@ class UsersClient:
             "users",
             method="POST",
             json={
-                "pagination": pagination,
+                "pagination": convert_and_respect_annotation_metadata(
+                    object_=pagination, annotation=WithCursor, direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -320,7 +322,9 @@ class UsersClient:
             "users",
             method="POST",
             json={
-                "pagination": pagination,
+                "pagination": convert_and_respect_annotation_metadata(
+                    object_=pagination, annotation=WithPage, direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -548,7 +552,9 @@ class UsersClient:
             "users",
             method="GET",
             params={
-                "cursor": jsonable_encoder(cursor),
+                "cursor": convert_and_respect_annotation_metadata(
+                    object_=cursor, annotation=uuid.UUID, direction="write"
+                ),
             },
             request_options=request_options,
         )
@@ -860,7 +866,9 @@ class AsyncUsersClient:
             "users",
             method="POST",
             json={
-                "pagination": pagination,
+                "pagination": convert_and_respect_annotation_metadata(
+                    object_=pagination, annotation=WithCursor, direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -1036,7 +1044,9 @@ class AsyncUsersClient:
             "users",
             method="POST",
             json={
-                "pagination": pagination,
+                "pagination": convert_and_respect_annotation_metadata(
+                    object_=pagination, annotation=WithPage, direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -1287,7 +1297,9 @@ class AsyncUsersClient:
             "users",
             method="GET",
             params={
-                "cursor": jsonable_encoder(cursor),
+                "cursor": convert_and_respect_annotation_metadata(
+                    object_=cursor, annotation=uuid.UUID, direction="write"
+                ),
             },
             request_options=request_options,
         )

@@ -4,6 +4,7 @@ import typing
 from ..core.client_wrapper import SyncClientWrapper
 from .types.my_union import MyUnion
 from ..core.request_options import RequestOptions
+from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
@@ -44,7 +45,7 @@ class UnionClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             method="POST",
-            json=request,
+            json=convert_and_respect_annotation_metadata(object_=request, annotation=MyUnion, direction="write"),
             request_options=request_options,
             omit=OMIT,
         )
@@ -140,7 +141,7 @@ class AsyncUnionClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             method="POST",
-            json=request,
+            json=convert_and_respect_annotation_metadata(object_=request, annotation=MyUnion, direction="write"),
             request_options=request_options,
             omit=OMIT,
         )
