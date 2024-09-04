@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
-import { isRawProtobufSourceSchema, RawSchemas } from "@fern-api/yaml-schema";
+import { isRawProtobufSourceSchema, RawSchemas } from "@fern-api/fern-definition-schema";
 import { FernFileContext } from "../FernFileContext";
 import { ProtobufParser } from "../parsers/ProtobufParser";
 import { ResolvedSource } from "./ResolvedSource";

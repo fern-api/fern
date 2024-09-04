@@ -1,6 +1,6 @@
 import { docsYml, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-import { DefinitionFileSchema, PackageMarkerFileSchema, RootApiFileSchema } from "@fern-api/yaml-schema";
+import { DefinitionFileSchema, PackageMarkerFileSchema, RootApiFileSchema } from "@fern-api/fern-definition-schema";
 import { processPackageMarkers } from "../processPackageMarkers";
 import { FernWorkspace, LazyFernWorkspace } from "../workspaces/FernWorkspace";
 import { OSSWorkspace } from "../workspaces/OSSWorkspace";
@@ -46,16 +46,19 @@ export type Source = AsyncAPISource | OpenAPISource | ProtobufSource;
 
 export interface AsyncAPISource {
     type: "asyncapi";
+    relativePathToDependency?: RelativeFilePath;
     file: AbsoluteFilePath;
 }
 
 export interface OpenAPISource {
     type: "openapi";
+    relativePathToDependency?: RelativeFilePath;
     file: AbsoluteFilePath;
 }
 
 export interface ProtobufSource {
     type: "protobuf";
+    relativePathToDependency?: RelativeFilePath;
     root: AbsoluteFilePath;
     file: AbsoluteFilePath;
 }

@@ -5,7 +5,12 @@ import {
     HttpRequestBodyReference,
     InlinedRequestBodyProperty
 } from "@fern-api/ir-sdk";
-import { isInlineRequestBody, parseBytesRequest, parseFileUploadRequest, RawSchemas } from "@fern-api/yaml-schema";
+import {
+    isInlineRequestBody,
+    parseBytesRequest,
+    parseFileUploadRequest,
+    RawSchemas
+} from "@fern-api/fern-definition-schema";
 import { FernFileContext } from "../../FernFileContext";
 import { parseTypeName } from "../../utils/parseTypeName";
 import { getExtensionsAsList, getPropertyName } from "../type-declarations/convertObjectTypeDeclaration";

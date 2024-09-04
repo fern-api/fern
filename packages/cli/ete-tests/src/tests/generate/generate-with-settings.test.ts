@@ -1,4 +1,10 @@
-import { AbsoluteFilePath, getDirectoryContents, join, RelativeFilePath } from "@fern-api/fs-utils";
+import {
+    AbsoluteFilePath,
+    getDirectoryContents,
+    getDirectoryContentsForSnapshot,
+    join,
+    RelativeFilePath
+} from "@fern-api/fs-utils";
 import { cp } from "fs/promises";
 import tmp from "tmp-promise";
 import { runFernCli } from "../../utils/runFernCli";
@@ -16,7 +22,9 @@ describe("fern generate with settings", () => {
             cwd: directory
         });
 
-        expect(await getDirectoryContents(join(directory, RelativeFilePath.of("sdks/python")))).toMatchSnapshot();
+        expect(
+            await getDirectoryContentsForSnapshot(join(directory, RelativeFilePath.of("sdks/python")))
+        ).toMatchSnapshot();
     }, 180_000);
 
     it("dependencies-based api", async () => {
@@ -30,6 +38,8 @@ describe("fern generate with settings", () => {
             cwd: directory
         });
 
-        expect(await getDirectoryContents(join(directory, RelativeFilePath.of("sdks/python")))).toMatchSnapshot();
+        expect(
+            await getDirectoryContentsForSnapshot(join(directory, RelativeFilePath.of("sdks/python")))
+        ).toMatchSnapshot();
     }, 180_000);
 });

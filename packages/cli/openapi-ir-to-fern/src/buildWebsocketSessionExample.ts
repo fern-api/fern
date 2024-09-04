@@ -7,7 +7,7 @@ import {
     PrimitiveExample,
     WebsocketSessionExample
 } from "@fern-api/openapi-ir-sdk";
-import { RawSchemas } from "@fern-api/yaml-schema";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 
 export function buildWebsocketSessionExample({

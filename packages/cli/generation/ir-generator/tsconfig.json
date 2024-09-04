@@ -10,6 +10,6 @@
     { "path": "../../project-loader" },
     { "path": "../../task-context" },
     { "path": "../../workspace-loader" },
-    { "path": "../../yaml/yaml-schema" }
+    { "path": "../../fern-definition/schema" }
   ]
 }

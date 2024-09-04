@@ -289,6 +289,9 @@ navigation:
           - page: Links and Redirects
             icon: fa-regular fa-link
             path: ./pages/docs/building-your-docs/links-and-redirects.mdx
+          - page: Customizing Slugs
+            icon: fa-regular fa-input-text
+            path: ./pages/docs/building-your-docs/customizing-slugs.mdx
           - page: Hiding Content
             icon: fa-regular fa-eye-slash
             path: ./pages/docs/building-your-docs/hiding-content.mdx            
@@ -508,3 +511,7 @@ js:
  - url: https://guidebar-backend-727ab3a68ba9.herokuapp.com/install/buildwithfern_com
  - ./js/koala.js
  - ./js/rbtob.js
+
+analytics:
+  posthog:
+    api-key: ${POSTHOG_API_KEY}

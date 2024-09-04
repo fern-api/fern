@@ -1,4 +1,4 @@
-import { RawSchemas } from "@fern-api/yaml-schema";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { getRequestPropertyComponents, getResponsePropertyComponents } from "./services/convertProperty";
 
 const DEFAULT_TOKEN_ENDPOINT: Omit<TokenEndpoint, "endpoint"> = {

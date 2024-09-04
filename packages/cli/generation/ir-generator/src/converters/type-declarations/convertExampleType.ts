@@ -17,7 +17,7 @@ import {
     RawSchemas,
     visitRawTypeDeclaration,
     visitRawTypeReference
-} from "@fern-api/yaml-schema";
+} from "@fern-api/fern-definition-schema";
 import { validateTypeReferenceExample } from "../../examples/validateTypeReferenceExample";
 import { FernFileContext } from "../../FernFileContext";
 import { IdGenerator } from "../../IdGenerator";

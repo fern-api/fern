@@ -1,5 +1,5 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { DefinitionFileSchema } from "@fern-api/yaml-schema";
+import { DefinitionFileSchema } from "@fern-api/fern-definition-schema";
 import { ParsedFernFile } from "../types/FernFile";
 import { FernDefinition } from "../types/Workspace";
 import { getAllNamedDefinitionFiles } from "./getAllNamedDefinitionFiles";

@@ -1,6 +1,6 @@
 import { Encoding, ExampleType, FernFilepath, Source, Type, TypeDeclaration } from "@fern-api/ir-sdk";
 import { FernWorkspace } from "@fern-api/workspace-loader";
-import { isRawObjectDefinition, RawSchemas, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
+import { isRawObjectDefinition, RawSchemas, visitRawTypeDeclaration } from "@fern-api/fern-definition-schema";
 import { FernFileContext } from "../../FernFileContext";
 import { AudienceId } from "../../filtered-ir/ids";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";

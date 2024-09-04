@@ -1,6 +1,6 @@
 import { isPlainObject } from "@fern-api/core-utils";
 import { FernWorkspace, getDefinitionFile } from "@fern-api/workspace-loader";
-import { RawSchemas } from "@fern-api/yaml-schema";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { keyBy } from "lodash-es";
 import { constructFernFileContext, FernFileContext } from "../FernFileContext";
 import { ExampleResolver } from "../resolvers/ExampleResolver";
