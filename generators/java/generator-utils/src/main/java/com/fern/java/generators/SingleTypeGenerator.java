@@ -42,8 +42,7 @@ public final class SingleTypeGenerator implements Type.Visitor<Optional<Generate
     @Override
     public Optional<GeneratedJavaFile> visitAlias(AliasTypeDeclaration value) {
         if (generatorContext.getCustomConfig().wrappedAliases() || fromErrorDeclaration) {
-            AliasGenerator aliasGenerator =
-                    new AliasGenerator(className, generatorContext, value);
+            AliasGenerator aliasGenerator = new AliasGenerator(className, generatorContext, value);
             return Optional.of(aliasGenerator.generateFile());
         }
         return Optional.empty();
@@ -67,8 +66,7 @@ public final class SingleTypeGenerator implements Type.Visitor<Optional<Generate
                 extendedInterfaces,
                 generatorContext,
                 allGeneratedInterfaces,
-                className
-        );
+                className);
         GeneratedObject generatedObject = objectGenerator.generateFile();
         return Optional.of(GeneratedJavaFile.builder()
                 .className(generatedObject.getClassName())

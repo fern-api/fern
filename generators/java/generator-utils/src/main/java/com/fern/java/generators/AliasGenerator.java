@@ -66,7 +66,10 @@ public final class AliasGenerator extends AbstractFileGenerator {
 
     private MethodSpec getConstructor(TypeName aliasTypeName) {
         return MethodSpec.constructorBuilder()
-                .addModifiers(this.generatorContext.getCustomConfig().enablePublicConstructors() ? Modifier.PUBLIC : Modifier.PRIVATE)
+                .addModifiers(
+                        this.generatorContext.getCustomConfig().enablePublicConstructors()
+                                ? Modifier.PUBLIC
+                                : Modifier.PRIVATE)
                 .addParameter(aliasTypeName, VALUE_FIELD_NAME)
                 .addStatement("this.value = value")
                 .build();
