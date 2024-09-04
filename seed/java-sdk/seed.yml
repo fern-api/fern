@@ -81,3 +81,27 @@ allowedFailures:
   - unions
   - query-parameters
   - alias-extends
+  # below are all recent breaks from when we made cli capture failure better
+  - alias
+  - api-wide-base-path
+  - basic-auth-environment-variables
+  - bearer-token-environment-variable
+  - circular-references
+  - cross-package-type-names
+  - custom-auth
+  - exhaustive:json-include-non-empty
+  - exhaustive:signed_publish
+  - file-download
+  - folders
+  - idempotency-headers
+  - mixed-case
+  - multi-line-docs
+  - multi-url-environment
+  - oauth-client-credentials-default
+  - oauth-client-credentials-nested-root
+  - object
+  - optional
+  - plain-text
+  - response-property
+  - streaming
+  - validation

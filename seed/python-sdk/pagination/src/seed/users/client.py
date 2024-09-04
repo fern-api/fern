@@ -623,7 +623,9 @@ class UsersClient:
             "users",
             method="GET",
             params={
-                "cursor": jsonable_encoder(cursor),
+                "cursor": convert_and_respect_annotation_metadata(
+                    object_=cursor, annotation=uuid.UUID, direction="write"
+                ),
             },
             request_options=request_options,
         )
@@ -1443,7 +1445,9 @@ class AsyncUsersClient:
             "users",
             method="GET",
             params={
-                "cursor": jsonable_encoder(cursor),
+                "cursor": convert_and_respect_annotation_metadata(
+                    object_=cursor, annotation=uuid.UUID, direction="write"
+                ),
             },
             request_options=request_options,
         )
