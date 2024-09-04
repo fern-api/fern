@@ -1016,8 +1016,8 @@ public abstract class AbstractEndpointWriter {
                     } else {
                         throw new RuntimeException("Unexpected container type");
                     }
-                    codeBlocks.add(
-                        CodeBlock.builder().add(".orElse($T.empty$L())", Collections.class, emptyCollectionString)
+                    codeBlocks.add(CodeBlock.builder()
+                            .add(".orElse($T.empty$L())", Collections.class, emptyCollectionString)
                             .build());
                 }
                 return new GetSnippetOutput(typeReference, codeBlocks);
