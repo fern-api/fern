@@ -1,7 +1,20 @@
 - changelog_entry:
   - summary: |
       Adds generic object declarations to the fern definition. Now we can define generics and
-      use them in alias declarations to minimize code duplication.
+      use them in alias declarations to minimize code duplication:
+
+      ```yml
+      types:
+        GenericTest<T>:
+          properties:
+            value: T
+            other-value: string
+        
+        GenericApplication:
+          type: GenericTest<string>
+      ```
+
+      More information can be found here: https://buildwithfern.com/learn/api-definition/fern/types#generics.
     type: feat
   created_at: '2024-09-04'
   ir_version: 53
