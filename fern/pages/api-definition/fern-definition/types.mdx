@@ -218,7 +218,7 @@ MySpecialMapItem<Key, Value>:
 
 Now, you can instantiate generic types as a type alias:
 
-```yaml
+```yaml 
 StringIntegerMapItem:
   type: Response<string, number>
 
@@ -230,15 +230,15 @@ You can now freely use this type as if it were any other type! Note, generated
 code will not use generics. The above example will be generated in typescript as:
 
 ```typescript
-type StringIntegerMapI = {
+type StringIntegerMapItem = {
   key: string,
   value: number,
   diagnostics: string
 }   
 
-type StringResponse = {
-  input: string,
-  output: string,
+type StringStringMapItem = {
+  key: string,
+  value: string,
   diagnostics: string
 }
 ```
