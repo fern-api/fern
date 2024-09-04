@@ -209,20 +209,20 @@ Fern supports shallow generic objects, to minimize code duplication. You can
 define a generic for reuse like so:
 
 ```yaml
-Response<Input, Output>:
+MySpecialMapItem<Key, Value>:
   properties:
-    input: Input,
-    output: Output
+    key: Key, 
+    value: Value,
     diagnostics: string
 ```
 
 Now, you can instantiate generic types as a type alias:
 
 ```yaml
-IntegerResponse:
+StringIntegerMapItem:
   type: Response<string, number>
 
-StringResponse:
+StringStringMapItem:
   type: Response<string, string>
 ```
 
@@ -230,15 +230,13 @@ You can now freely use this type as if it were any other type! Note, generated
 code will not use generics. The above example will be generated in typescript as:
 
 ```typescript
-type IntegerResponse = {
-
-  input: string,
-  output: number,
+type StringIntegerMapI = {
+  key: string,
+  value: number,
   diagnostics: string
 }   
 
 type StringResponse = {
-  type: "string",
   input: string,
   output: string,
   diagnostics: string
