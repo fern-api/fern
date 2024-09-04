@@ -109,7 +109,7 @@ export const APIConfigurationSchemaInternal = z.union([
 
 export type APIConfigurationSchemaInternal = z.infer<typeof APIConfigurationSchemaInternal>;
 
-export type APIConfigurationV2Schema = z.infer<typeof APIConfigurationV2Schema>
+export type APIConfigurationV2Schema = z.infer<typeof APIConfigurationV2Schema>;
 
 /**
  * Allow for namespacing of the API and it's contents, the name on the record will be applied throughout the API.
@@ -130,8 +130,7 @@ export type APIConfigurationV2Schema = z.infer<typeof APIConfigurationV2Schema>
 export const APIConfigurationSchema = z.union([
     APIConfigurationSchemaInternal,
     z.strictObject({ namespaces: z.record(APIConfigurationSchemaInternal) }),
-    APIConfigurationV2Schema,
+    APIConfigurationV2Schema
 ]);
 
 export type APIConfigurationSchema = z.infer<typeof APIConfigurationSchema>;
-
