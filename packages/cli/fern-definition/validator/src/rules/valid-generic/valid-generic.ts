@@ -173,10 +173,10 @@ export const ValidGenericRule: Rule = {
                                     errors.push({
                                         severity: "error",
                                         message: `Cannot reference generic ${typeReference} from ${
-                                            propertyBasedTypeDeclaration === "object"
-                                                ? propertyBasedTypeDeclaration
-                                                : "union"
-                                        } property ${key}`
+                                            propertyBasedTypeDeclaration.toLowerCase().includes("union")
+                                                ? "union"
+                                                : propertyBasedTypeDeclaration
+                                        }`
                                     });
                                 }
                             }

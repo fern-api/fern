@@ -18,13 +18,13 @@ describe("valid-generic", () => {
                 severity: "error",
                 relativeFilepath: "1.yml",
                 nodePath: ["types", "GenericApplicationObject", "properties", "foo"],
-                message: "Cannot reference generic GenericUsedType<string> from object property foo"
+                message: "Cannot reference generic GenericUsedType<string> from object"
             },
             {
                 severity: "error",
                 relativeFilepath: "1.yml",
                 nodePath: ["types", "GenericApplicationDiscriminatedUnion", "union", "foo"],
-                message: "Cannot reference generic GenericUsedType<string> from union property foo"
+                message: "Cannot reference generic GenericUsedType<string> from union"
             },
             {
                 severity: "error",
