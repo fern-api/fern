@@ -17,63 +17,62 @@ describe("valid-generic", () => {
             {
                 severity: "error",
                 relativeFilepath: "1.yml",
-                nodePath: ["types", "GenericApplicationObject"],
-                message: 'Generic values in object properties are not supported: "foo: GenericUsedType<string>".'
+                nodePath: ["types", "GenericApplicationObject", "properties", "foo"],
+                message: "Cannot reference generic GenericUsedType<string> from object property foo"
             },
             {
                 severity: "error",
                 relativeFilepath: "1.yml",
-                nodePath: ["types", "GenericApplicationDiscriminatedUnion"],
-                message: 'Generic values in discriminated unions are not supported: "foo: GenericUsedType<string>".'
+                nodePath: ["types", "GenericApplicationDiscriminatedUnion", "union", "foo"],
+                message: "Cannot reference generic GenericUsedType<string> from union property foo"
             },
             {
                 severity: "error",
                 relativeFilepath: "1.yml",
                 nodePath: ["types", "GenericApplicationEnum"],
-                message: 'Generic values in enums are not supported: "GenericUsedType<string>".'
+                message: "Cannot reference generic GenericUsedType<string> from enum"
             },
             {
                 severity: "error",
                 relativeFilepath: "1.yml",
                 nodePath: ["types", "GenericApplicationUndiscriminatedUnion"],
-                message: 'Generic values in unions are not supported: "GenericUsedType<string>".'
+                message: "Cannot reference generic GenericUsedType<string> from union"
             },
             {
                 severity: "error",
                 relativeFilepath: "1.yml",
                 nodePath: ["types", "GenericUsedTypeAlias<T>"],
-                message: "Generic declarations are only supported with objects."
+                message: "Generics are only supported for object declarations"
             },
             {
                 severity: "error",
                 relativeFilepath: "1.yml",
                 nodePath: ["types", "GenericUsedTypeEnum<T>"],
-                message: "Generic declarations are only supported with objects."
+                message: "Generics are only supported for object declarations"
             },
             {
                 severity: "error",
                 relativeFilepath: "1.yml",
                 nodePath: ["types", "GenericUsedTypeUndiscriminatedUnion<T>"],
-                message: "Generic declarations are only supported with objects."
+                message: "Generics are only supported for object declarations"
             },
             {
                 severity: "error",
                 relativeFilepath: "1.yml",
                 nodePath: ["types", "GenericUsedDiscriminatedUnion<T>"],
-                message: "Generic declarations are only supported with objects."
+                message: "Generics are only supported for object declarations"
             },
             {
                 severity: "error",
                 relativeFilepath: "1.yml",
                 nodePath: ["types", "GenericWrongNumberOfArgumentsApplied"],
-                message:
-                    'Generic "GenericWrongNumberOfArguments" expects 6 arguments but was instantiated with 2 arguments.'
+                message: "Generic GenericWrongNumberOfArguments expects 6 arguments, but received 2 <string,string>"
             },
             {
                 severity: "error",
                 relativeFilepath: "1.yml",
                 nodePath: ["types", "GenericWrongNumberOfArgumentsNoArgumentsApplied"],
-                message: "Generic value is supplied, but no arguments are defined."
+                message: "Generic GenericWrongNumberOfArguments expects 6 arguments, but received none"
             }
         ]);
     });

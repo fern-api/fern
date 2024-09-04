@@ -11,6 +11,7 @@ export interface DefinitionFileAstNodeTypes {
     typeDeclaration: {
         typeName: TypeDeclarationName;
         declaration: RawSchemas.TypeDeclarationSchema;
+        nodePath?: NodePath;
     };
     exampleType: {
         typeName: string;

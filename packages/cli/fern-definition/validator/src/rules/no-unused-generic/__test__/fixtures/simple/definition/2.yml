@@ -1,32 +1,3 @@
-service:
-  auth: true
-  base-path: /
-  endpoints:
-    get:
-      path: ""
-      method: GET
-      request:
-        name: InlinedRequest
-        body:
-          properties:
-            foo: string
-    updateV1:
-      path: ""
-      method: POST
-      request:
-        name: UpdateRequest
-        body:
-          properties:
-            foo: string
-    updateV2:
-      path: /v2
-      method: POST
-      request:
-        name: UpdateRequest
-        body:
-          properties:
-            foo: string
-
 types:
   GenericUsedType<T>:
     properties:

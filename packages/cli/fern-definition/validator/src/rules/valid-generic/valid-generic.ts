@@ -1,19 +1,32 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { Rule, RuleViolation } from "../../Rule";
 import { getGenericDetails } from "../../utils/getGenericDetails";
-import { visitRawTypeDeclaration } from "@fern-api/fern-definition-schema";
+import { NodePath, visitRawTypeDeclaration, visitRawTypeReference } from "@fern-api/fern-definition-schema";
 import { isGeneric } from "../../utils/isGeneric";
 import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/workspace-loader";
 import { visitDefinitionFileYamlAst } from "../../ast";
+
+type GenericDeclaration = string;
+type PropertyBasedTypeDeclaration = "object" | "discriminatedUnion";
 
 export const ValidGenericRule: Rule = {
     name: "valid-generic",
     create: async ({ workspace }) => {
         const genericArgumentCounts = await getGenericArgumentCounts(workspace);
+        const propertyBasedErrors: Record<
+            PropertyBasedTypeDeclaration,
+            {
+                key: string;
+                nodePath: NodePath;
+            }[]
+        > = {
+            object: [],
+            discriminatedUnion: []
+        };
 
         return {
             definitionFile: {
-                typeDeclaration: ({ typeName, declaration }): RuleViolation[] => {
+                typeDeclaration: ({ typeName, declaration, nodePath }): RuleViolation[] => {
                     const errors: RuleViolation[] = [];
 
                     if (!typeName.isInlined) {
@@ -40,7 +53,7 @@ export const ValidGenericRule: Rule = {
                             ) {
                                 errors.push({
                                     severity: "error",
-                                    message: "Generic declarations are only supported with objects."
+                                    message: "Generics are only supported for object declarations"
                                 });
                             }
                         }
@@ -53,21 +66,25 @@ export const ValidGenericRule: Rule = {
                             if (maybeGeneric && maybeGeneric.isGeneric && maybeGeneric.name && maybeGeneric.arguments) {
                                 const [maybeTypeName, typeName, ..._rest] = maybeGeneric.name.split(".");
                                 const key = typeName ?? maybeTypeName;
-                                if (key && genericArgumentCounts[key] !== maybeGeneric.arguments.length) {
+                                if (
+                                    key &&
+                                    key in genericArgumentCounts &&
+                                    genericArgumentCounts[key] !== maybeGeneric.arguments.length
+                                ) {
                                     errors.push({
                                         severity: "error",
-                                        message: `Generic "${key}" expects ${
-                                            genericArgumentCounts[key] ?? 0
-                                        } arguments but was instantiated with ${
+                                        message: `Generic ${key} expects ${
+                                            genericArgumentCounts[key]
+                                        } arguments, but received ${
                                             maybeGeneric.arguments.length
-                                        } arguments.`
+                                        } <${maybeGeneric.arguments.join(",")}>`
                                     });
                                 }
                             } else {
-                                if (Object.hasOwn(genericArgumentCounts, alias)) {
+                                if (alias in genericArgumentCounts) {
                                     errors.push({
                                         severity: "error",
-                                        message: "Generic value is supplied, but no arguments are defined."
+                                        message: `Generic ${alias} expects ${genericArgumentCounts[alias]} arguments, but received none`
                                     });
                                 }
                             }
@@ -75,24 +92,30 @@ export const ValidGenericRule: Rule = {
                         enum: (enumValue) => {
                             if (typeof enumValue !== "string") {
                                 enumValue.enum.forEach((value) => {
-                                    if (isGeneric(typeof value === "string" ? value : value.value)) {
+                                    const enumValue = typeof value === "string" ? value : value.value;
+                                    if (isGeneric(enumValue)) {
                                         errors.push({
                                             severity: "error",
-                                            message: `Generic values in enums are not supported: "${
-                                                typeof value === "string" ? value : value.name
-                                            }".`
+                                            message: `Cannot reference generic ${enumValue} from enum`
                                         });
                                     }
                                 });
                             }
                         },
                         object: (objectValue) => {
-                            Object.entries(objectValue?.properties ?? {}).forEach(([propertyKey, propertyValue]) => {
-                                if (isGeneric(typeof propertyValue === "string" ? propertyValue : propertyValue.type)) {
-                                    errors.push({
-                                        severity: "error",
-                                        message: `Generic values in object properties are not supported: "${propertyKey}: ${propertyValue}".`
-                                    });
+                            Object.entries(objectValue?.properties ?? {}).forEach(([key, value]) => {
+                                if (isGeneric(typeof value === "string" ? value : value.type)) {
+                                    if (nodePath) {
+                                        (propertyBasedErrors.object ??= []).push({
+                                            key,
+                                            nodePath
+                                        });
+                                    } else {
+                                        errors.push({
+                                            severity: "error",
+                                            message: `Cannot reference generic ${value} from object property ${key}`
+                                        });
+                                    }
                                 }
                             });
                         },
@@ -104,28 +127,63 @@ export const ValidGenericRule: Rule = {
                                         : typeof value.type === "string"
                                         ? value.type
                                         : undefined;
+
                                 if (discriminatedUnionValue && isGeneric(discriminatedUnionValue)) {
-                                    errors.push({
-                                        severity: "error",
-                                        message: `Generic values in discriminated unions are not supported: "${key}: ${value}".`
-                                    });
+                                    if (nodePath) {
+                                        (propertyBasedErrors.discriminatedUnion ??= []).push({
+                                            key,
+                                            nodePath
+                                        });
+                                    } else {
+                                        errors.push({
+                                            severity: "error",
+                                            message: `Cannot reference generic ${value} from union property ${key}`
+                                        });
+                                    }
                                 }
                             });
                         },
                         undiscriminatedUnion: (undiscriminatedUnionValue) => {
                             undiscriminatedUnionValue.union.forEach((value) => {
-                                if (isGeneric(typeof value === "string" ? value : value.type)) {
+                                const discriminatedUnionValue = typeof value === "string" ? value : value.type;
+                                if (isGeneric(discriminatedUnionValue)) {
                                     errors.push({
                                         severity: "error",
-                                        message: `Generic values in unions are not supported: "${
-                                            typeof value === "string" ? value : value.type
-                                        }".`
+                                        message: `Cannot reference generic ${discriminatedUnionValue} from union`
                                     });
                                 }
                             });
                         }
                     });
 
+                    return errors;
+                },
+                typeReference: ({ typeReference, nodePath }): RuleViolation[] => {
+                    const errors: RuleViolation[] = [];
+                    if (nodePath) {
+                        for (const propertyBasedTypeDeclaration of Object.keys(
+                            propertyBasedErrors
+                        ) as PropertyBasedTypeDeclaration[]) {
+                            for (const { key, nodePath: propertyNodePath } of propertyBasedErrors[
+                                propertyBasedTypeDeclaration
+                            ]) {
+                                if (
+                                    propertyNodePath.length > 0 &&
+                                    nodePath.join(",").startsWith(propertyNodePath.join(",")) &&
+                                    nodePath.includes(key)
+                                ) {
+                                    errors.push({
+                                        severity: "error",
+                                        message: `Cannot reference generic ${typeReference} from ${
+                                            propertyBasedTypeDeclaration === "object"
+                                                ? propertyBasedTypeDeclaration
+                                                : "union"
+                                        } property ${key}`
+                                    });
+                                }
+                            }
+                        }
+                    }
                     return errors;
                 }
             }
@@ -134,7 +192,7 @@ export const ValidGenericRule: Rule = {
 };
 
 async function getGenericArgumentCounts(workspace: FernWorkspace): Promise<Record<string, number>> {
-    const genericArgumentCounts: Record<string, number> = {};
+    const genericArgumentCounts: Record<GenericDeclaration, number> = {};
 
     await visitAllDefinitionFiles(workspace, async (relativeFilepath, file) => {
         await visitDefinitionFileYamlAst(file, {
