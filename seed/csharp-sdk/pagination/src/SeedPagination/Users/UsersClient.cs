@@ -414,12 +414,12 @@ public partial class UsersClient
     /// <example>
     /// <code>
     /// await client.Users.ListWithExtendedResultsAndOptionalDataAsync(
-    ///     new ListUsersExtendedRequestForOptionalData { Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32" }
+    ///     new ListUsersExtendedRequest { Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32" }
     /// );
     /// </code>
     /// </example>
     public async Task<ListUsersExtendedOptionalListResponse> ListWithExtendedResultsAndOptionalDataAsync(
-        ListUsersExtendedRequestForOptionalData request,
+        ListUsersExtendedRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

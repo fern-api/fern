@@ -316,7 +316,7 @@ await client.Users.ListWithExtendedResultsAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithExtendedResultsAndOptionalDataAsync</a>(ListUsersExtendedRequestForOptionalData { ... }) -> ListUsersExtendedOptionalListResponse</code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithExtendedResultsAndOptionalDataAsync</a>(ListUsersExtendedRequest { ... }) -> ListUsersExtendedOptionalListResponse</code></summary>
 <dl>
 <dd>
 
@@ -330,7 +330,7 @@ await client.Users.ListWithExtendedResultsAsync(
 
 ```csharp
 await client.Users.ListWithExtendedResultsAndOptionalDataAsync(
-    new ListUsersExtendedRequestForOptionalData { Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32" }
+    new ListUsersExtendedRequest { Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32" }
 );
 ```
 </dd>
@@ -346,7 +346,7 @@ await client.Users.ListWithExtendedResultsAndOptionalDataAsync(
 <dl>
 <dd>
 
-**request:** `ListUsersExtendedRequestForOptionalData` 
+**request:** `ListUsersExtendedRequest` 
     
 </dd>
 </dl>

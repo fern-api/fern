@@ -237,7 +237,7 @@ service:
       method: GET
       path: ""
       request:
-        name: ListUsersExtendedRequestForOptionalData
+        name: ListUsersExtendedRequest
         query-parameters:
           cursor: optional<uuid>
       response: ListUsersExtendedOptionalListResponse
