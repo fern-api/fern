@@ -66,6 +66,32 @@ favicon: path/to/favicon.ico
   `layout` configuration [here](/learn/docs/getting-started/global-configuration#layout-configuration).
 </ParamField>
 
+## Instances configuration
+```yaml docs.yml
+instances: 
+  - url: plantstore.docs.buildwithfern.com
+    custom-domain: docs.plantstore.com
+    edit-this-page: 
+      github: 
+        owner: fern
+        repo: plant-store-docs
+        branch: main
+```
+
+<ParamField path="instances.url" type="string" required={true}>
+  The URL where your Fern documentation is deployed. Must contain the suffix `docs.buildwithfern.com`
+</ParamField>
+
+<ParamField path="instances.custom-domain" type="string or list of strings" required={false}>
+  The custom domain where your documentation is hosted. Learn more about setting up a custom domain [here](/learn/docs/building-your-docs/custom-domain). 
+</ParamField>
+
+<ParamField path="instances.edit-this-page" type="object" required={false}>
+  If `edit-this-page` is set, Fern will add an "Edit this page" link to the bottom of each page that links to the given public GitHub repository. 
+  
+  Learn more about the `edit-this-page` object [here](#edit-this-page-configuration). 
+</ParamField>
+
 ## Colors configuration 
 
 ```yaml docs.yml
@@ -303,3 +329,42 @@ layout:
   and a 1px border will separate the sidebar from the content.
 </ParamField>
 
+## Edit this page configuration
+```yaml docs.yml
+edit-this-page: 
+  github: 
+    owner: fern
+    repo: plant-store-docs
+    branch: main
+```
+
+<ParamField path="edit-this-page.github" type="object" required={false}>
+  Set the GitHub repository and branch where you would like users to suggest edits. 
+  
+  Learn more about the GitHub configuration [here](#github-configuration).
+</ParamField>
+
+## GitHub configuration
+```yaml docs.yml
+edit-this-page: 
+  github: 
+    owner: fern
+    repo: plant-store-docs
+    branch: main
+```
+
+<Warning>
+Be sure the repository is set to **public** visibility. 
+</Warning>
+
+<ParamField path="github.owner" type="string" required={true}>
+  The owner of the GitHub repository where you host your documentation.  
+</ParamField>
+
+<ParamField path="github.repo" type="string" required={true}>
+  The name of the GitHub repository where you host your documentation.  
+</ParamField>
+
+<ParamField path="github.branch" type="string" required={true}>
+  The branch of the repository you would like the GitHub editor to open a PR to. Default is `main`. 
+</ParamField>
