@@ -1,4 +1,13 @@
 - changelog_entry:
+  - summary: |
+      Fix an issue where some postman environment variables (e.g. API key) were not substituted
+      when running fern generate.
+    type: fix
+  created_at: '2024-09-03'
+  ir_version: 53
+  version: 0.41.0-rc1
+
+- changelog_entry:
   - summary: | 
       Every fern folder that is using OpenAPI must configure an explicit location to the 
       OpenAPI spec. The location can be configured in your `generators.yml`: 
