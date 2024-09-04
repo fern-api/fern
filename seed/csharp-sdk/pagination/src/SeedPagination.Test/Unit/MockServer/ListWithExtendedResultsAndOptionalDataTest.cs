@@ -46,7 +46,10 @@ public class ListWithExtendedResultsAndOptionalDataTest : BaseMockServerTest
             );
 
         var response = await Client.Users.ListWithExtendedResultsAndOptionalDataAsync(
-            new ListUsersExtendedRequest { Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32" },
+            new ListUsersExtendedRequestForOptionalData
+            {
+                Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            },
             RequestOptions
         );
         JToken

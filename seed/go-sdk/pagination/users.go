@@ -42,7 +42,7 @@ type ListUsersExtendedRequest struct {
 	Cursor *uuid.UUID `json:"-" url:"cursor,omitempty"`
 }
 
-type ListUsersExtendedRequest struct {
+type ListUsersExtendedRequestForOptionalData struct {
 	Cursor *uuid.UUID `json:"-" url:"cursor,omitempty"`
 }
 

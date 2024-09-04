@@ -128,24 +128,6 @@ service:
                 in order to fetch the next page of results.
       response: ListUsersPaginationResponse
 
-    # listWithBodyCursorPaginationAndOptionalData:
-    #   pagination: 
-    #     cursor: $request.pagination.cursor
-    #     next_cursor: $response.page.next.starting_after
-    #     results: $response.data
-    #   method: POST
-    #   path: ""
-    #   request: 
-    #     name: ListUsersBodyCursorPaginationRequest
-    #     body: 
-    #       properties:
-    #         pagination: 
-    #           type: optional<WithCursor>
-    #           docs: | 
-    #             The object that contains the cursor used for pagination
-    #             in order to fetch the next page of results.
-    #   response: ListUsersPaginationResponseOptionalData
-
     listWithOffsetPagination:
       pagination: 
         offset: $request.page

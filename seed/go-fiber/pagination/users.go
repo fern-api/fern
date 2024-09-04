@@ -42,7 +42,7 @@ type ListUsersExtendedRequest struct {
 	Cursor *uuid.UUID `query:"cursor"`
 }
 
-type ListUsersExtendedRequest struct {
+type ListUsersExtendedRequestForOptionalData struct {
 	Cursor *uuid.UUID `query:"cursor"`
 }
 

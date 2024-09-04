@@ -370,7 +370,7 @@ func (c *Client) ListWithExtendedResults(
 
 func (c *Client) ListWithExtendedResultsAndOptionalData(
 	ctx context.Context,
-	request *fern.ListUsersExtendedRequest,
+	request *fern.ListUsersExtendedRequestForOptionalData,
 	opts ...option.RequestOption,
 ) (*core.Page[*fern.User], error) {
 	options := core.NewRequestOptions(opts...)

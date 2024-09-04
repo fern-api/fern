@@ -16,6 +16,7 @@ import com.seed.pagination.resources.users.requests.ListUsersBodyCursorPaginatio
 import com.seed.pagination.resources.users.requests.ListUsersBodyOffsetPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersCursorPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersExtendedRequest;
+import com.seed.pagination.resources.users.requests.ListUsersExtendedRequestForOptionalData;
 import com.seed.pagination.resources.users.requests.ListUsersOffsetPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListWithGlobalConfigRequest;
@@ -414,15 +415,16 @@ public class UsersClient {
 
     public SyncPagingIterable<User> listWithExtendedResultsAndOptionalData() {
         return listWithExtendedResultsAndOptionalData(
-                ListUsersExtendedRequest.builder().build());
+                ListUsersExtendedRequestForOptionalData.builder().build());
     }
 
-    public SyncPagingIterable<User> listWithExtendedResultsAndOptionalData(ListUsersExtendedRequest request) {
+    public SyncPagingIterable<User> listWithExtendedResultsAndOptionalData(
+            ListUsersExtendedRequestForOptionalData request) {
         return listWithExtendedResultsAndOptionalData(request, null);
     }
 
     public SyncPagingIterable<User> listWithExtendedResultsAndOptionalData(
-            ListUsersExtendedRequest request, RequestOptions requestOptions) {
+            ListUsersExtendedRequestForOptionalData request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("users");
@@ -445,7 +447,7 @@ public class UsersClient {
                 ListUsersExtendedOptionalListResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
                         responseBody.string(), ListUsersExtendedOptionalListResponse.class);
                 Optional<UUID> startingAfter = parsedResponse.getNext();
-                ListUsersExtendedRequest nextRequest = ListUsersExtendedRequest.builder()
+                ListUsersExtendedRequestForOptionalData nextRequest = ListUsersExtendedRequestForOptionalData.builder()
                         .from(request)
                         .cursor(startingAfter)
                         .build();
