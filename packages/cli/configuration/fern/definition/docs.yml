@@ -135,7 +135,7 @@ types:
       metadata: optional<MetadataConfig>
       redirects: optional<list<RedirectConfig>>
 
-      # please note: some of the following options represent files provided by the user, which require validation. if someone adds another file record to the spec, please ensure that file is visited in packages/cli/yaml/yaml-schema/src/docsAst/visitDocsConfigFileAst.ts
+      # please note: some of the following options represent files provided by the user, which require validation. if someone adds another file record to the spec, please ensure that file is visited in packages/cli/yaml/docs-validator/src/docsAst/visitDocsConfigFileAst.ts
 
       # branding
       logo: optional<LogoConfiguration>
