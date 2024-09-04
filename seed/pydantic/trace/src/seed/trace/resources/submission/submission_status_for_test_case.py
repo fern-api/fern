@@ -8,6 +8,8 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 from .test_case_grade import TestCaseGrade
 from .test_case_result_with_stdout import TestCaseResultWithStdout
+import typing_extensions
+from ...core.serialization import FieldMetadata
 
 
 class SubmissionStatusForTestCase_Graded(UniversalBaseModel):
@@ -31,7 +33,7 @@ class SubmissionStatusForTestCase_GradedV2(UniversalBaseModel):
 class SubmissionStatusForTestCase_Traced(UniversalBaseModel):
     type: typing.Literal["traced"] = "traced"
     result: TestCaseResultWithStdout
-    trace_responses_size: int = pydantic.Field(alias="traceResponsesSize")
+    trace_responses_size: typing_extensions.Annotated[int, FieldMetadata(alias="traceResponsesSize")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -2,15 +2,19 @@
 
 from ....core.pydantic_utilities import UniversalBaseModel
 from ...submission.types.test_case_result_with_stdout import TestCaseResultWithStdout
+import typing_extensions
 import typing
 from ...submission.types.trace_response import TraceResponse
-import pydantic
+from ....core.serialization import FieldMetadata
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
+import pydantic
 
 
 class StoreTracedTestCaseRequest(UniversalBaseModel):
     result: TestCaseResultWithStdout
-    trace_responses: typing.List[TraceResponse] = pydantic.Field(alias="traceResponses")
+    trace_responses: typing_extensions.Annotated[
+        typing.List[TraceResponse], FieldMetadata(alias="traceResponses")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(

@@ -10,6 +10,7 @@ import typing_extensions
 import pydantic
 
 from .datetime_utils import serialize_datetime
+from .serialization import convert_and_respect_annotation_metadata
 
 IS_PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
 
@@ -56,11 +57,12 @@ Model = typing.TypeVar("Model", bound=pydantic.BaseModel)
 
 
 def parse_obj_as(type_: typing.Type[T], object_: typing.Any) -> T:
+    dealiased_object = convert_and_respect_annotation_metadata(object_=object_, annotation=type_, direction="read")
     if IS_PYDANTIC_V2:
         adapter = pydantic.TypeAdapter(type_)  # type: ignore # Pydantic v2
-        return adapter.validate_python(object_)
+        return adapter.validate_python(dealiased_object)
     else:
-        return pydantic.parse_obj_as(type_, object_)
+        return pydantic.parse_obj_as(type_, dealiased_object)
 
 
 def to_jsonable_with_fallback(
@@ -75,13 +77,16 @@ def to_jsonable_with_fallback(
 
 
 class UniversalBaseModel(pydantic.BaseModel):
-    class Config:
-        populate_by_name = True
-        smart_union = True
-        allow_population_by_field_name = True
-        json_encoders = {dt.datetime: serialize_datetime}
-        # Allow fields begining with `model_` to be used in the model
-        protected_namespaces = ()
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            protected_namespaces=(),
+            json_encoders={dt.datetime: serialize_datetime},
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            smart_union = True
+            json_encoders = {dt.datetime: serialize_datetime}
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {
@@ -120,9 +125,11 @@ class UniversalBaseModel(pydantic.BaseModel):
         }
 
         if IS_PYDANTIC_V2:
-            return super().model_dump(**kwargs_with_defaults_exclude_unset)  # type: ignore # Pydantic v2
+            dict_dump = super().model_dump(**kwargs_with_defaults_exclude_unset)  # type: ignore # Pydantic v2
         else:
-            return super().dict(**kwargs_with_defaults_exclude_unset)
+            dict_dump = super().dict(**kwargs_with_defaults_exclude_unset)
+
+        return convert_and_respect_annotation_metadata(object_=dict_dump, annotation=self.__class__, direction="write")
 
 
 if IS_PYDANTIC_V2:

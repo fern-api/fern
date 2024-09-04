@@ -10,6 +10,7 @@ from ..commons.types.variable_type import VariableType
 from ..commons.types.test_case_with_expected_result import TestCaseWithExpectedResult
 from ..core.request_options import RequestOptions
 from .types.create_problem_response import CreateProblemResponse
+from ..core.serialization import convert_and_respect_annotation_metadata
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.pydantic_utilities import parse_obj_as
@@ -129,11 +130,21 @@ class ProblemClient:
             method="POST",
             json={
                 "problemName": problem_name,
-                "problemDescription": problem_description,
-                "files": files,
-                "inputParams": input_params,
-                "outputType": output_type,
-                "testcases": testcases,
+                "problemDescription": convert_and_respect_annotation_metadata(
+                    object_=problem_description, annotation=ProblemDescription, direction="write"
+                ),
+                "files": convert_and_respect_annotation_metadata(
+                    object_=files, annotation=typing.Dict[Language, ProblemFiles], direction="write"
+                ),
+                "inputParams": convert_and_respect_annotation_metadata(
+                    object_=input_params, annotation=typing.Sequence[VariableTypeAndName], direction="write"
+                ),
+                "outputType": convert_and_respect_annotation_metadata(
+                    object_=output_type, annotation=VariableType, direction="write"
+                ),
+                "testcases": convert_and_respect_annotation_metadata(
+                    object_=testcases, annotation=typing.Sequence[TestCaseWithExpectedResult], direction="write"
+                ),
                 "methodName": method_name,
             },
             request_options=request_options,
@@ -259,11 +270,21 @@ class ProblemClient:
             method="POST",
             json={
                 "problemName": problem_name,
-                "problemDescription": problem_description,
-                "files": files,
-                "inputParams": input_params,
-                "outputType": output_type,
-                "testcases": testcases,
+                "problemDescription": convert_and_respect_annotation_metadata(
+                    object_=problem_description, annotation=ProblemDescription, direction="write"
+                ),
+                "files": convert_and_respect_annotation_metadata(
+                    object_=files, annotation=typing.Dict[Language, ProblemFiles], direction="write"
+                ),
+                "inputParams": convert_and_respect_annotation_metadata(
+                    object_=input_params, annotation=typing.Sequence[VariableTypeAndName], direction="write"
+                ),
+                "outputType": convert_and_respect_annotation_metadata(
+                    object_=output_type, annotation=VariableType, direction="write"
+                ),
+                "testcases": convert_and_respect_annotation_metadata(
+                    object_=testcases, annotation=typing.Sequence[TestCaseWithExpectedResult], direction="write"
+                ),
                 "methodName": method_name,
             },
             request_options=request_options,
@@ -381,8 +402,12 @@ class ProblemClient:
             "problem-crud/default-starter-files",
             method="POST",
             json={
-                "inputParams": input_params,
-                "outputType": output_type,
+                "inputParams": convert_and_respect_annotation_metadata(
+                    object_=input_params, annotation=typing.Sequence[VariableTypeAndName], direction="write"
+                ),
+                "outputType": convert_and_respect_annotation_metadata(
+                    object_=output_type, annotation=VariableType, direction="write"
+                ),
                 "methodName": method_name,
             },
             request_options=request_options,
@@ -517,11 +542,21 @@ class AsyncProblemClient:
             method="POST",
             json={
                 "problemName": problem_name,
-                "problemDescription": problem_description,
-                "files": files,
-                "inputParams": input_params,
-                "outputType": output_type,
-                "testcases": testcases,
+                "problemDescription": convert_and_respect_annotation_metadata(
+                    object_=problem_description, annotation=ProblemDescription, direction="write"
+                ),
+                "files": convert_and_respect_annotation_metadata(
+                    object_=files, annotation=typing.Dict[Language, ProblemFiles], direction="write"
+                ),
+                "inputParams": convert_and_respect_annotation_metadata(
+                    object_=input_params, annotation=typing.Sequence[VariableTypeAndName], direction="write"
+                ),
+                "outputType": convert_and_respect_annotation_metadata(
+                    object_=output_type, annotation=VariableType, direction="write"
+                ),
+                "testcases": convert_and_respect_annotation_metadata(
+                    object_=testcases, annotation=typing.Sequence[TestCaseWithExpectedResult], direction="write"
+                ),
                 "methodName": method_name,
             },
             request_options=request_options,
@@ -655,11 +690,21 @@ class AsyncProblemClient:
             method="POST",
             json={
                 "problemName": problem_name,
-                "problemDescription": problem_description,
-                "files": files,
-                "inputParams": input_params,
-                "outputType": output_type,
-                "testcases": testcases,
+                "problemDescription": convert_and_respect_annotation_metadata(
+                    object_=problem_description, annotation=ProblemDescription, direction="write"
+                ),
+                "files": convert_and_respect_annotation_metadata(
+                    object_=files, annotation=typing.Dict[Language, ProblemFiles], direction="write"
+                ),
+                "inputParams": convert_and_respect_annotation_metadata(
+                    object_=input_params, annotation=typing.Sequence[VariableTypeAndName], direction="write"
+                ),
+                "outputType": convert_and_respect_annotation_metadata(
+                    object_=output_type, annotation=VariableType, direction="write"
+                ),
+                "testcases": convert_and_respect_annotation_metadata(
+                    object_=testcases, annotation=typing.Sequence[TestCaseWithExpectedResult], direction="write"
+                ),
                 "methodName": method_name,
             },
             request_options=request_options,
@@ -795,8 +840,12 @@ class AsyncProblemClient:
             "problem-crud/default-starter-files",
             method="POST",
             json={
-                "inputParams": input_params,
-                "outputType": output_type,
+                "inputParams": convert_and_respect_annotation_metadata(
+                    object_=input_params, annotation=typing.Sequence[VariableTypeAndName], direction="write"
+                ),
+                "outputType": convert_and_respect_annotation_metadata(
+                    object_=output_type, annotation=VariableType, direction="write"
+                ),
                 "methodName": method_name,
             },
             request_options=request_options,

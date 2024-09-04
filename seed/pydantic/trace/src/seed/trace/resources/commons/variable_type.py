@@ -5,6 +5,8 @@ from ...core.pydantic_utilities import UniversalBaseModel
 import typing
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+import typing_extensions
+from ...core.serialization import FieldMetadata
 from ...core.pydantic_utilities import update_forward_refs
 
 
@@ -65,8 +67,8 @@ class VariableType_CharType(UniversalBaseModel):
 
 class VariableType_ListType(UniversalBaseModel):
     type: typing.Literal["listType"] = "listType"
-    value_type: "VariableType" = pydantic.Field(alias="valueType")
-    is_fixed_length: typing.Optional[bool] = pydantic.Field(alias="isFixedLength", default=None)
+    value_type: typing_extensions.Annotated["VariableType", FieldMetadata(alias="valueType")]
+    is_fixed_length: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="isFixedLength")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
@@ -78,8 +80,8 @@ class VariableType_ListType(UniversalBaseModel):
 
 class VariableType_MapType(UniversalBaseModel):
     type: typing.Literal["mapType"] = "mapType"
-    key_type: "VariableType" = pydantic.Field(alias="keyType")
-    value_type: "VariableType" = pydantic.Field(alias="valueType")
+    key_type: typing_extensions.Annotated["VariableType", FieldMetadata(alias="keyType")]
+    value_type: typing_extensions.Annotated["VariableType", FieldMetadata(alias="valueType")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

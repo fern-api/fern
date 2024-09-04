@@ -3,24 +3,28 @@
 from __future__ import annotations
 from ......core.pydantic_utilities import UniversalBaseModel
 import typing
-from .object_with_optional_field import ObjectWithOptionalField
-import pydantic
 import typing_extensions
+from .object_with_optional_field import ObjectWithOptionalField
+from ......core.serialization import FieldMetadata
 from ......core.pydantic_utilities import universal_root_validator
 from ......core.pydantic_utilities import universal_field_validator
 from ......core.pydantic_utilities import IS_PYDANTIC_V2
+import pydantic
 
 
 class NestedObjectWithOptionalField(UniversalBaseModel):
     string: typing.Optional[str] = None
-    nested_object: typing.Optional[ObjectWithOptionalField] = pydantic.Field(
-        alias="NestedObject", default=None
-    )
+    nested_object: typing_extensions.Annotated[
+        typing.Optional[ObjectWithOptionalField], FieldMetadata(alias="NestedObject")
+    ] = None
 
     class Partial(typing.TypedDict):
         string: typing_extensions.NotRequired[typing.Optional[str]]
         nested_object: typing_extensions.NotRequired[
-            typing.Optional[ObjectWithOptionalField]
+            typing_extensions.Annotated[
+                typing.Optional[ObjectWithOptionalField],
+                FieldMetadata(alias="NestedObject"),
+            ]
         ]
 
     class Validators:
@@ -36,7 +40,7 @@ class NestedObjectWithOptionalField(UniversalBaseModel):
                 ...
 
             @NestedObjectWithOptionalField.Validators.field("nested_object")
-            def validate_nested_object(nested_object: typing.Optional[ObjectWithOptionalField], values: NestedObjectWithOptionalField.Partial) -> typing.Optional[ObjectWithOptionalField]:
+            def validate_nested_object(nested_object: typing_extensions.Annotated[typing.Optional[ObjectWithOptionalField], FieldMetadata(alias="NestedObject")], values: NestedObjectWithOptionalField.Partial) -> typing_extensions.Annotated[typing.Optional[ObjectWithOptionalField], FieldMetadata(alias="NestedObject")]:
                 ...
         """
 
@@ -166,9 +170,15 @@ class NestedObjectWithOptionalField(UniversalBaseModel):
         class NestedObjectValidator(typing.Protocol):
             def __call__(
                 self,
-                __v: typing.Optional[ObjectWithOptionalField],
+                __v: typing_extensions.Annotated[
+                    typing.Optional[ObjectWithOptionalField],
+                    FieldMetadata(alias="NestedObject"),
+                ],
                 __values: NestedObjectWithOptionalField.Partial,
-            ) -> typing.Optional[ObjectWithOptionalField]: ...
+            ) -> typing_extensions.Annotated[
+                typing.Optional[ObjectWithOptionalField],
+                FieldMetadata(alias="NestedObject"),
+            ]: ...
 
         class _PreRootValidator(typing.Protocol):
             def __call__(self, __values: typing.Any) -> typing.Any: ...
@@ -217,9 +227,14 @@ class NestedObjectWithOptionalField(UniversalBaseModel):
     @universal_field_validator("nested_object", pre=True)
     def _pre_validate_nested_object(
         cls,
-        v: typing.Optional[ObjectWithOptionalField],
+        v: typing_extensions.Annotated[
+            typing.Optional[ObjectWithOptionalField],
+            FieldMetadata(alias="NestedObject"),
+        ],
         values: NestedObjectWithOptionalField.Partial,
-    ) -> typing.Optional[ObjectWithOptionalField]:
+    ) -> typing_extensions.Annotated[
+        typing.Optional[ObjectWithOptionalField], FieldMetadata(alias="NestedObject")
+    ]:
         for (
             validator
         ) in NestedObjectWithOptionalField.Validators._nested_object_pre_validators:
@@ -229,9 +244,14 @@ class NestedObjectWithOptionalField(UniversalBaseModel):
     @universal_field_validator("nested_object", pre=False)
     def _post_validate_nested_object(
         cls,
-        v: typing.Optional[ObjectWithOptionalField],
+        v: typing_extensions.Annotated[
+            typing.Optional[ObjectWithOptionalField],
+            FieldMetadata(alias="NestedObject"),
+        ],
         values: NestedObjectWithOptionalField.Partial,
-    ) -> typing.Optional[ObjectWithOptionalField]:
+    ) -> typing_extensions.Annotated[
+        typing.Optional[ObjectWithOptionalField], FieldMetadata(alias="NestedObject")
+    ]:
         for (
             validator
         ) in NestedObjectWithOptionalField.Validators._nested_object_post_validators:

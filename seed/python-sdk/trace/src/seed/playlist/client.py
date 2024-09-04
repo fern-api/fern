@@ -16,6 +16,7 @@ from .errors.playlist_id_not_found_error import PlaylistIdNotFoundError
 from .types.playlist_id_not_found_error_body import PlaylistIdNotFoundErrorBody
 from .errors.unauthorized_error import UnauthorizedError
 from .types.update_playlist_request import UpdatePlaylistRequest
+from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -300,7 +301,9 @@ class PlaylistClient:
         _response = self._client_wrapper.httpx_client.request(
             f"v2/playlist/{jsonable_encoder(service_param)}/{jsonable_encoder(playlist_id)}",
             method="PUT",
-            json=request,
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=UpdatePlaylistRequest, direction="write"
+            ),
             request_options=request_options,
             omit=OMIT,
         )
@@ -684,7 +687,9 @@ class AsyncPlaylistClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"v2/playlist/{jsonable_encoder(service_param)}/{jsonable_encoder(playlist_id)}",
             method="PUT",
-            json=request,
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=UpdatePlaylistRequest, direction="write"
+            ),
             request_options=request_options,
             omit=OMIT,
         )

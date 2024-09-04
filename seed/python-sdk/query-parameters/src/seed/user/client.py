@@ -7,7 +7,7 @@ from .types.user import User
 import typing
 from .types.nested_user import NestedUser
 from ..core.request_options import RequestOptions
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.datetime_utils import serialize_datetime
 from ..core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
@@ -137,18 +137,20 @@ class UserClient:
             method="GET",
             params={
                 "limit": limit,
-                "id": jsonable_encoder(id),
+                "id": convert_and_respect_annotation_metadata(object_=id, annotation=uuid.UUID, direction="write"),
                 "date": str(date),
                 "deadline": serialize_datetime(deadline),
-                "bytes": jsonable_encoder(bytes),
-                "user": jsonable_encoder(user),
-                "userList": jsonable_encoder(user_list),
+                "bytes": convert_and_respect_annotation_metadata(object_=bytes, annotation=str, direction="write"),
+                "user": user,
+                "userList": user_list,
                 "optionalDeadline": serialize_datetime(optional_deadline) if optional_deadline is not None else None,
-                "keyValue": jsonable_encoder(key_value),
+                "keyValue": convert_and_respect_annotation_metadata(
+                    object_=key_value, annotation=typing.Dict[str, str], direction="write"
+                ),
                 "optionalString": optional_string,
-                "nestedUser": jsonable_encoder(nested_user),
-                "optionalUser": jsonable_encoder(optional_user),
-                "excludeUser": jsonable_encoder(exclude_user),
+                "nestedUser": nested_user,
+                "optionalUser": optional_user,
+                "excludeUser": exclude_user,
                 "filter": filter,
             },
             request_options=request_options,
@@ -297,18 +299,20 @@ class AsyncUserClient:
             method="GET",
             params={
                 "limit": limit,
-                "id": jsonable_encoder(id),
+                "id": convert_and_respect_annotation_metadata(object_=id, annotation=uuid.UUID, direction="write"),
                 "date": str(date),
                 "deadline": serialize_datetime(deadline),
-                "bytes": jsonable_encoder(bytes),
-                "user": jsonable_encoder(user),
-                "userList": jsonable_encoder(user_list),
+                "bytes": convert_and_respect_annotation_metadata(object_=bytes, annotation=str, direction="write"),
+                "user": user,
+                "userList": user_list,
                 "optionalDeadline": serialize_datetime(optional_deadline) if optional_deadline is not None else None,
-                "keyValue": jsonable_encoder(key_value),
+                "keyValue": convert_and_respect_annotation_metadata(
+                    object_=key_value, annotation=typing.Dict[str, str], direction="write"
+                ),
                 "optionalString": optional_string,
-                "nestedUser": jsonable_encoder(nested_user),
-                "optionalUser": jsonable_encoder(optional_user),
-                "excludeUser": jsonable_encoder(exclude_user),
+                "nestedUser": nested_user,
+                "optionalUser": optional_user,
+                "excludeUser": exclude_user,
                 "filter": filter,
             },
             request_options=request_options,

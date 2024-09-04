@@ -3,6 +3,8 @@
 from ....core.unchecked_base_model import UncheckedBaseModel
 import typing
 import pydantic
+import typing_extensions
+from ....core.serialization import FieldMetadata
 import datetime as dt
 import uuid
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
@@ -15,16 +17,16 @@ class ObjectWithOptionalField(UncheckedBaseModel):
     """
 
     integer: typing.Optional[int] = None
-    long_: typing.Optional[int] = pydantic.Field(alias="long", default=None)
+    long_: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="long")] = None
     double: typing.Optional[float] = None
-    bool_: typing.Optional[bool] = pydantic.Field(alias="bool", default=None)
+    bool_: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="bool")] = None
     datetime: typing.Optional[dt.datetime] = None
     date: typing.Optional[dt.date] = None
-    uuid_: typing.Optional[uuid.UUID] = pydantic.Field(alias="uuid", default=None)
-    base_64: typing.Optional[str] = pydantic.Field(alias="base64", default=None)
-    list_: typing.Optional[typing.List[str]] = pydantic.Field(alias="list", default=None)
-    set_: typing.Optional[typing.Set[str]] = pydantic.Field(alias="set", default=None)
-    map_: typing.Optional[typing.Dict[int, str]] = pydantic.Field(alias="map", default=None)
+    uuid_: typing_extensions.Annotated[typing.Optional[uuid.UUID], FieldMetadata(alias="uuid")] = None
+    base_64: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="base64")] = None
+    list_: typing_extensions.Annotated[typing.Optional[typing.List[str]], FieldMetadata(alias="list")] = None
+    set_: typing_extensions.Annotated[typing.Optional[typing.Set[str]], FieldMetadata(alias="set")] = None
+    map_: typing_extensions.Annotated[typing.Optional[typing.Dict[int, str]], FieldMetadata(alias="map")] = None
     bigint: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
