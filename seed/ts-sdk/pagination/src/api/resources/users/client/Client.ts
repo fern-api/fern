@@ -620,6 +620,84 @@ export class Users {
     }
 
     /**
+     * @param {SeedPagination.ListUsersExtendedRequestForOptionalData} request
+     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listWithExtendedResultsAndOptionalData({
+     *         cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+     *     })
+     */
+    public async listWithExtendedResultsAndOptionalData(
+        request: SeedPagination.ListUsersExtendedRequestForOptionalData = {},
+        requestOptions?: Users.RequestOptions
+    ): Promise<core.Page<SeedPagination.User>> {
+        const list = async (
+            request: SeedPagination.ListUsersExtendedRequestForOptionalData
+        ): Promise<SeedPagination.ListUsersExtendedOptionalListResponse> => {
+            const { cursor } = request;
+            const _queryParams: Record<string, string | string[] | object | object[]> = {};
+            if (cursor != null) {
+                _queryParams["cursor"] = cursor;
+            }
+            const _response = await core.fetcher({
+                url: urlJoin(await core.Supplier.get(this._options.environment), "/users"),
+                method: "GET",
+                headers: {
+                    Authorization: await this._getAuthorizationHeader(),
+                    "X-Fern-Language": "JavaScript",
+                    "X-Fern-SDK-Name": "@fern/pagination",
+                    "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/pagination/0.0.1",
+                    "X-Fern-Runtime": core.RUNTIME.type,
+                    "X-Fern-Runtime-Version": core.RUNTIME.version,
+                },
+                contentType: "application/json",
+                queryParameters: _queryParams,
+                requestType: "json",
+                timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+                maxRetries: requestOptions?.maxRetries,
+                abortSignal: requestOptions?.abortSignal,
+            });
+            if (_response.ok) {
+                return serializers.ListUsersExtendedOptionalListResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                });
+            }
+            if (_response.error.reason === "status-code") {
+                throw new errors.SeedPaginationError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.body,
+                });
+            }
+            switch (_response.error.reason) {
+                case "non-json":
+                    throw new errors.SeedPaginationError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.rawBody,
+                    });
+                case "timeout":
+                    throw new errors.SeedPaginationTimeoutError();
+                case "unknown":
+                    throw new errors.SeedPaginationError({
+                        message: _response.error.errorMessage,
+                    });
+            }
+        };
+        return new core.Pageable<SeedPagination.ListUsersExtendedOptionalListResponse, SeedPagination.User>({
+            response: await list(request),
+            hasNextPage: (response) => response?.next != null,
+            getItems: (response) => response?.data?.users ?? [],
+            loadPage: (response) => {
+                return list(core.setObjectProperty(request, "cursor", response?.next));
+            },
+        });
+    }
+
+    /**
      * @param {SeedPagination.ListUsernamesRequest} request
      * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
      *

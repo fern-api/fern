@@ -15,6 +15,7 @@ from ..core.serialization import convert_and_respect_annotation_metadata
 from .types.with_page import WithPage
 import uuid
 from .types.list_users_extended_response import ListUsersExtendedResponse
+from .types.list_users_extended_optional_list_response import ListUsersExtendedOptionalListResponse
 from ..types.username_cursor import UsernameCursor
 from .types.username_container import UsernameContainer
 from ..core.client_wrapper import AsyncClientWrapper
@@ -570,6 +571,76 @@ class UsersClient:
                 _parsed_next = _parsed_response.next
                 _has_next = _parsed_next is not None and _parsed_next != ""
                 _get_next = lambda: self.list_with_extended_results(
+                    cursor=_parsed_next,
+                    request_options=request_options,
+                )
+                _items = []
+                if _parsed_response.data is not None:
+                    _items = _parsed_response.data.users
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def list_with_extended_results_and_optional_data(
+        self, *, cursor: typing.Optional[uuid.UUID] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> SyncPager[User]:
+        """
+        Parameters
+        ----------
+        cursor : typing.Optional[uuid.UUID]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SyncPager[User]
+
+        Examples
+        --------
+        import uuid
+
+        from seed import SeedPagination
+
+        client = SeedPagination(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.users.list_with_extended_results_and_optional_data(
+            cursor=uuid.UUID(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+        )
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "users",
+            method="GET",
+            params={
+                "cursor": convert_and_respect_annotation_metadata(
+                    object_=cursor, annotation=uuid.UUID, direction="write"
+                ),
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = typing.cast(
+                    ListUsersExtendedOptionalListResponse,
+                    parse_obj_as(
+                        type_=ListUsersExtendedOptionalListResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                _parsed_next = _parsed_response.next
+                _has_next = _parsed_next is not None and _parsed_next != ""
+                _get_next = lambda: self.list_with_extended_results_and_optional_data(
                     cursor=_parsed_next,
                     request_options=request_options,
                 )
@@ -1315,6 +1386,83 @@ class AsyncUsersClient:
                 _parsed_next = _parsed_response.next
                 _has_next = _parsed_next is not None and _parsed_next != ""
                 _get_next = lambda: self.list_with_extended_results(
+                    cursor=_parsed_next,
+                    request_options=request_options,
+                )
+                _items = []
+                if _parsed_response.data is not None:
+                    _items = _parsed_response.data.users
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def list_with_extended_results_and_optional_data(
+        self, *, cursor: typing.Optional[uuid.UUID] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncPager[User]:
+        """
+        Parameters
+        ----------
+        cursor : typing.Optional[uuid.UUID]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncPager[User]
+
+        Examples
+        --------
+        import asyncio
+        import uuid
+
+        from seed import AsyncSeedPagination
+
+        client = AsyncSeedPagination(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            response = await client.users.list_with_extended_results_and_optional_data(
+                cursor=uuid.UUID(
+                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                ),
+            )
+            async for item in response:
+                yield item
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "users",
+            method="GET",
+            params={
+                "cursor": convert_and_respect_annotation_metadata(
+                    object_=cursor, annotation=uuid.UUID, direction="write"
+                ),
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = typing.cast(
+                    ListUsersExtendedOptionalListResponse,
+                    parse_obj_as(
+                        type_=ListUsersExtendedOptionalListResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                _parsed_next = _parsed_response.next
+                _has_next = _parsed_next is not None and _parsed_next != ""
+                _get_next = lambda: self.list_with_extended_results_and_optional_data(
                     cursor=_parsed_next,
                     request_options=request_options,
                 )

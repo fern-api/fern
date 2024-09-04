@@ -19092,6 +19092,61 @@ paginated endpoint.",
           "errorsV2": [],
           "examples": [],
           "headers": [],
+          "id": "listWithExtendedResultsAndOptionalData",
+          "method": "GET",
+          "name": "List With Extended Results And Optional Data",
+          "originalEndpointId": "endpoint_users.listWithExtendedResultsAndOptionalData",
+          "path": {
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/users",
+              },
+              {
+                "type": "literal",
+                "value": "",
+              },
+            ],
+            "pathParameters": [],
+          },
+          "queryParameters": [
+            {
+              "availability": undefined,
+              "description": undefined,
+              "key": "cursor",
+              "type": {
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "uuid",
+                  },
+                },
+                "type": "optional",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "statusCode": undefined,
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_users:ListUsersExtendedOptionalListResponse",
+              },
+            },
+          },
+        },
+        {
+          "auth": false,
+          "availability": undefined,
+          "defaultEnvironment": undefined,
+          "description": undefined,
+          "environments": undefined,
+          "errors": undefined,
+          "errorsV2": [],
+          "examples": [],
+          "headers": [],
           "id": "listUsernames",
           "method": "GET",
           "name": "List Usernames",
@@ -19211,8 +19266,11 @@ the next page of results.",
         "type_users:WithCursor",
         "type_users:UserListContainer",
         "type_users:UserPage",
+        "type_users:UserOptionalListContainer",
+        "type_users:UserOptionalListPage",
         "type_users:UsernameContainer",
         "type_users:ListUsersExtendedResponse",
+        "type_users:ListUsersExtendedOptionalListResponse",
         "type_users:ListUsersPaginationResponse",
         "type_users:Page",
         "type_users:NextPage",
@@ -19284,6 +19342,33 @@ the next page of results.",
                 },
               },
               "type": "list",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "type_users:ListUsersExtendedOptionalListResponse": {
+      "availability": undefined,
+      "description": undefined,
+      "name": "ListUsersExtendedOptionalListResponse",
+      "shape": {
+        "extends": [
+          "type_users:UserOptionalListPage",
+        ],
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "The totall number of /users",
+            "key": "total_count",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maximum": undefined,
+                "minimum": undefined,
+                "type": "integer",
+              },
             },
           },
         ],
@@ -19563,6 +19648,66 @@ the next page of results.",
                 "value": "type_users:User",
               },
               "type": "list",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "type_users:UserOptionalListContainer": {
+      "availability": undefined,
+      "description": undefined,
+      "name": "UserOptionalListContainer",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "users",
+            "valueType": {
+              "itemType": {
+                "itemType": {
+                  "type": "id",
+                  "value": "type_users:User",
+                },
+                "type": "list",
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "type_users:UserOptionalListPage": {
+      "availability": undefined,
+      "description": undefined,
+      "name": "UserOptionalListPage",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "data",
+            "valueType": {
+              "type": "id",
+              "value": "type_users:UserOptionalListContainer",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "next",
+            "valueType": {
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "uuid",
+                },
+              },
+              "type": "optional",
             },
           },
         ],

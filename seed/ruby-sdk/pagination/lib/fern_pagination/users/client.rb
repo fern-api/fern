@@ -6,6 +6,7 @@ require_relative "types/list_users_pagination_response"
 require_relative "types/with_cursor"
 require_relative "types/with_page"
 require_relative "types/list_users_extended_response"
+require_relative "types/list_users_extended_optional_list_response"
 require_relative "../types/username_cursor"
 require_relative "types/username_container"
 require "async"
@@ -247,6 +248,30 @@ module SeedPaginationClient
         req.url "#{@request_client.get_url(request_options: request_options)}/users"
       end
       SeedPaginationClient::Users::ListUsersExtendedResponse.from_json(json_object: response.body)
+    end
+
+    # @param cursor [String]
+    # @param request_options [SeedPaginationClient::RequestOptions]
+    # @return [SeedPaginationClient::Users::ListUsersExtendedOptionalListResponse]
+    # @example
+    #  pagination = SeedPaginationClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+    #  pagination.users.list_with_extended_results_and_optional_data(cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
+    def list_with_extended_results_and_optional_data(cursor: nil, request_options: nil)
+      response = @request_client.conn.get do |req|
+        req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+        req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        req.params = { **(request_options&.additional_query_parameters || {}), "cursor": cursor }.compact
+        unless request_options.nil? || request_options&.additional_body_parameters.nil?
+          req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+        end
+        req.url "#{@request_client.get_url(request_options: request_options)}/users"
+      end
+      SeedPaginationClient::Users::ListUsersExtendedOptionalListResponse.from_json(json_object: response.body)
     end
 
     # @param starting_after [String] The cursor used for pagination in order to fetch
@@ -551,6 +576,32 @@ module SeedPaginationClient
           req.url "#{@request_client.get_url(request_options: request_options)}/users"
         end
         SeedPaginationClient::Users::ListUsersExtendedResponse.from_json(json_object: response.body)
+      end
+    end
+
+    # @param cursor [String]
+    # @param request_options [SeedPaginationClient::RequestOptions]
+    # @return [SeedPaginationClient::Users::ListUsersExtendedOptionalListResponse]
+    # @example
+    #  pagination = SeedPaginationClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+    #  pagination.users.list_with_extended_results_and_optional_data(cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
+    def list_with_extended_results_and_optional_data(cursor: nil, request_options: nil)
+      Async do
+        response = @request_client.conn.get do |req|
+          req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+          req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          req.params = { **(request_options&.additional_query_parameters || {}), "cursor": cursor }.compact
+          unless request_options.nil? || request_options&.additional_body_parameters.nil?
+            req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+          end
+          req.url "#{@request_client.get_url(request_options: request_options)}/users"
+        end
+        SeedPaginationClient::Users::ListUsersExtendedOptionalListResponse.from_json(json_object: response.body)
       end
     end
 

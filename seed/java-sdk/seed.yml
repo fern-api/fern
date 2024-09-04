@@ -76,7 +76,6 @@ scripts:
 allowedFailures:
   - alias-extends
   - enum
-  - extends
   - examples
   - exhaustive:signed_publish
   - exhaustive:local-files
@@ -84,5 +83,3 @@ allowedFailures:
   - query-parameters
   - trace
   - unions
-  - query-parameters
-  - alias-extends
