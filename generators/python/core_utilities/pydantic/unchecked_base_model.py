@@ -35,9 +35,7 @@ Model = typing.TypeVar("Model", bound=pydantic.BaseModel)
 
 class UncheckedBaseModel(UniversalBaseModel):
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -220,7 +218,14 @@ def construct_type(*, type_: typing.Type[typing.Any], object_: typing.Any) -> ty
     if (
         object_ is not None
         and not is_literal_type(type_)
-        and (inspect.isclass(base_type) and issubclass(base_type, pydantic.BaseModel))
+        and (
+            (inspect.isclass(base_type) and issubclass(base_type, pydantic.BaseModel))
+            or (
+                is_annotated
+                and inspect.isclass(maybe_annotation_members[0])
+                and issubclass(maybe_annotation_members[0], pydantic.BaseModel)
+            )
+        )
     ):
         if IS_PYDANTIC_V2:
             return type_.model_construct(**object_)
