@@ -1,8 +1,7 @@
 import { Type } from "@fern-api/ir-sdk";
 import { FernFileContext } from "../../FernFileContext";
-import { RawSchemas, isRawObjectDefinition } from "@fern-api/fern-definition-schema";
+import { RawSchemas, isRawObjectDefinition, parseGeneric } from "@fern-api/fern-definition-schema";
 import { TypeResolver } from "../../resolvers/TypeResolver";
-import { getGenericDetails } from "../../utils/getGenericDetails";
 import { parseTypeName } from "../../utils/parseTypeName";
 import { getExtensionsAsList, getObjectPropertiesFromRawObjectSchema } from "./convertObjectTypeDeclaration";
 
@@ -17,8 +16,8 @@ export async function convertGenericTypeDeclaration({
 }): Promise<Type> {
     const genericInstantiation = typeof generic === "string" ? generic : generic.type;
 
-    const maybeGeneric = getGenericDetails(genericInstantiation);
-    if (!maybeGeneric?.isGeneric) {
+    const maybeGeneric = parseGeneric(genericInstantiation);
+    if (maybeGeneric == null) {
         throw new Error(`Invalid generic type definition: ${genericInstantiation}`);
     }
 
@@ -28,7 +27,7 @@ export async function convertGenericTypeDeclaration({
     });
 
     if (maybeGeneric.arguments && isRawObjectDefinition(resolvedBaseGeneric.declaration)) {
-        const genericArgumentDefinitions = getGenericDetails(resolvedBaseGeneric.typeName)?.arguments ?? [];
+        const genericArgumentDefinitions = parseGeneric(resolvedBaseGeneric.typeName)?.arguments ?? [];
 
         const newProperties = Object.entries(resolvedBaseGeneric.declaration.properties ?? {}).map(([key, value]) => {
             let maybeReplacedValue = value;

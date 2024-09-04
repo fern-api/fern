@@ -3,12 +3,13 @@ import {
     RawSchemas,
     recursivelyVisitRawTypeReference,
     visitRawTypeDeclaration,
-    isRawObjectDefinition
+    isRawObjectDefinition,
+    parseGeneric,
+    isGeneric
 } from "@fern-api/fern-definition-schema";
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { parseTypeName } from "../../utils/parseTypeName";
-import { getGenericDetails } from "../../utils/getGenericDetails";
 
 interface SeenTypeNames {
     addTypeName: (typeName: DeclaredTypeName) => void;
@@ -46,14 +47,14 @@ export function getReferencedTypesFromRawDeclaration({
     const rawTypeReferences = visitRawTypeDeclaration<string[]>(typeDeclaration, {
         alias: (aliasDeclaration) => {
             const aliasTypeReference = typeof aliasDeclaration === "string" ? aliasDeclaration : aliasDeclaration.type;
-            const maybeGenericDetails = getGenericDetails(aliasTypeReference);
-            if (maybeGenericDetails && maybeGenericDetails.isGeneric) {
-                const rawTypeReferences = new Set<string>(maybeGenericDetails.arguments ?? []);
+            const parsedGeneric = parseGeneric(aliasTypeReference);
+            if (parsedGeneric != null) {
+                const rawTypeReferences = new Set<string>(parsedGeneric.arguments ?? []);
                 const resolvedBaseGeneric = typeResolver.getDeclarationOfNamedTypeOrThrow({
                     referenceToNamedType: aliasTypeReference,
                     file
                 });
-                const resolvedBaseGenericArguments = getGenericDetails(resolvedBaseGeneric.typeName)?.arguments;
+                const resolvedBaseGenericArguments = parseGeneric(resolvedBaseGeneric.typeName)?.arguments;
                 if (isRawObjectDefinition(resolvedBaseGeneric.declaration)) {
                     const underlyingObjectRawTypeReferences = getObjectRawTypeReferences(
                         resolvedBaseGeneric.declaration
@@ -134,7 +135,7 @@ export function getReferencedTypesFromRawDeclaration({
                     file
                 });
 
-                if (getGenericDetails(maybeDeclaration.typeName)?.isGeneric) {
+                if (isGeneric(maybeDeclaration.typeName)) {
                     continue;
                 }
 

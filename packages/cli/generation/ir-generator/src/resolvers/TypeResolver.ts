@@ -1,10 +1,14 @@
 import { ContainerType, TypeReference } from "@fern-api/ir-sdk";
 import { FernWorkspace, getDefinitionFile } from "@fern-api/workspace-loader";
-import { isRawAliasDefinition, RawSchemas, recursivelyVisitRawTypeReference } from "@fern-api/fern-definition-schema";
+import {
+    isRawAliasDefinition,
+    RawSchemas,
+    recursivelyVisitRawTypeReference,
+    parseGeneric
+} from "@fern-api/fern-definition-schema";
 import { constructFernFileContext, FernFileContext } from "../FernFileContext";
 import { parseInlineType } from "../utils/parseInlineType";
 import { parseReferenceToTypeName } from "../utils/parseReferenceToTypeName";
-import { getGenericDetails } from "../utils/getGenericDetails";
 import { ObjectPathItem, ResolvedType } from "./ResolvedType";
 
 export interface TypeResolver {
@@ -78,10 +82,10 @@ export class TypeResolverImpl implements TypeResolver {
         const declaration = definitionFile.types?.[parsedReference.typeName];
 
         if (declaration == null) {
-            const maybeGeneric = getGenericDetails(parsedReference.typeName);
-            if (maybeGeneric && maybeGeneric.isGeneric) {
+            const parsedGeneric = parseGeneric(parsedReference.typeName);
+            if (parsedGeneric != null) {
                 for (const type of Object.keys(definitionFile.types ?? {}) ?? []) {
-                    if (maybeGeneric.name && type.startsWith(maybeGeneric.name) && type.endsWith(">")) {
+                    if (parsedGeneric.name && type.startsWith(parsedGeneric.name) && type.endsWith(">")) {
                         const genericDeclaration = definitionFile.types?.[type];
                         return genericDeclaration != null
                             ? {
