@@ -510,7 +510,8 @@ layout:
 js:
  - url: https://guidebar-backend-727ab3a68ba9.herokuapp.com/install/buildwithfern_com
  - ./js/koala.js
- - ./js/rbtob.js
+ - ./js/rb2b.js
+ - ./js/hubspot-web-chat.js
 
 analytics:
   posthog:
