@@ -209,29 +209,41 @@ Fern supports shallow generic objects, to minimize code duplication. You can
 define a generic for reuse like so:
 
 ```yaml
-MyGenericType<T, U>:
+Response<Type, Input, Output>:
   properties:
-    foo: T,
-    bar: U,
-    baz: string
+    type: Type,
+    input: Input,
+    output: Output
+    diagnostics: string
 ```
 
 Now, you can instantiate generic types as a type alias:
 
 ```yaml
-MyGenericAppliedType:
-  type: MyGenericType<SomeOtherType, number>
+IntegerResponse:
+  type: Response<literal<"integer">, string, number>
+
+StringResponse:
+  type: Response<literal<"string">, string, string>
 ```
 
-You can now freely use this type as if it were any other type! The output
-type will resolve to:
+You can now freely use this type as if it were any other type! Note, generated
+code will not use generics. The above example will be generated in typescript as:
 
-```yaml
-MyGenericAppliedType:
-  properties:
-    foo: SomeOtherType,
-    bar: number,
-    baz: string
+```typescript
+type IntegerResponse = {
+  type: "integer",
+  input: string,
+  output: number,
+  diagnostics: string
+}   
+
+type S = {
+  type: "rectangle",
+  input: string,
+  output: string,
+  diagnostics: string
+}
 ```
 
 ### Documenting types
