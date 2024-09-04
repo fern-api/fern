@@ -63,7 +63,8 @@ public final class Cli extends AbstractGeneratorCli<CustomConfig, DownloadFilesC
         this.addGeneratedFile(dateTimeDeserializerGenerator.generateFile());
 
         // types
-        TypesGenerator typesGenerator = new TypesGenerator(context, false);
+        TypesGenerator typesGenerator =
+                new TypesGenerator(context, context.getCustomConfig().enablePublicConstructors());
         Result generatedTypes = typesGenerator.generateFiles();
         generatedTypes.getTypes().values().forEach(this::addGeneratedFile);
         generatedTypes.getInterfaces().values().forEach(this::addGeneratedFile);
