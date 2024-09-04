@@ -157,9 +157,9 @@ def _convert_mapping(
         if (direction != "read" and type_ is None) or (direction == "read" and key not in aliases_to_field_names):
             converted_object[key] = value
         else:
-            converted_object[_alias_key(key, type_, direction, aliases_to_field_names)] = (
-                convert_and_respect_annotation_metadata(object_=value, annotation=type_, direction=direction)
-            )
+            converted_object[
+                _alias_key(key, type_, direction, aliases_to_field_names)
+            ] = convert_and_respect_annotation_metadata(object_=value, annotation=type_, direction=direction)
     return converted_object
 
 
@@ -191,13 +191,16 @@ def _remove_annotations(type_: typing.Any) -> typing.Any:
 
     return type_
 
+
 def get_alias_to_field_mapping(type_: typing.Any) -> typing.Dict[str, str]:
     annotations = typing_extensions.get_type_hints(type_, include_extras=True)
     return _get_alias_to_field_name(annotations)
 
+
 def get_field_to_alias_mapping(type_: typing.Any) -> typing.Dict[str, str]:
     annotations = typing_extensions.get_type_hints(type_, include_extras=True)
     return _get_field_to_alias_name(annotations)
+
 
 def _get_alias_to_field_name(field_to_hint: typing.Dict[str, typing.Any]) -> typing.Dict[str, str]:
     aliases = {}
@@ -207,6 +210,7 @@ def _get_alias_to_field_name(field_to_hint: typing.Dict[str, typing.Any]) -> typ
             aliases[maybe_alias] = field
     return aliases
 
+
 def _get_field_to_alias_name(field_to_hint: typing.Dict[str, typing.Any]) -> typing.Dict[str, str]:
     aliases = {}
     for field, hint in field_to_hint.items():
@@ -214,6 +218,7 @@ def _get_field_to_alias_name(field_to_hint: typing.Dict[str, typing.Any]) -> typ
         if maybe_alias is not None:
             aliases[field] = maybe_alias
     return aliases
+
 
 def _get_alias_from_type(type_: typing.Any) -> typing.Optional[str]:
     maybe_annotated_type = _get_annotation(type_)

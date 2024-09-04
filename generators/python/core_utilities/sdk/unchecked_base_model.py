@@ -10,8 +10,6 @@ from pydantic_core import PydanticUndefined
 
 import pydantic
 
-from .serialization import get_field_to_alias_mapping
-
 from .pydantic_utilities import (
     IS_PYDANTIC_V2,
     ModelField,
@@ -24,6 +22,7 @@ from .pydantic_utilities import (
     parse_datetime,
     parse_obj_as,
 )
+from .serialization import get_field_to_alias_mapping
 
 
 class UnionMetadata:
