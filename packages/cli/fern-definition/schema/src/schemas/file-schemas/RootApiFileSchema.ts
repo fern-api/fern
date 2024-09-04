@@ -9,16 +9,21 @@ import { PaginationSchema } from "../PaginationSchema";
 import { VariableDeclarationSchema } from "../VariableDeclarationSchema";
 import { VersionDeclarationSchema } from "../VersionDeclarationSchema";
 
-export const RootApiFileSchema = z.strictObject({
+export const WithEnvironmentsSchema = z.strictObject({
+    "default-url": z.optional(z.string()),
+    "default-environment": z.optional(z.string().or(z.null())),
+    environments: z.optional(z.record(z.string(), EnvironmentSchema)),
+});
+
+export type WithEnvironmentsSchema = z.infer<typeof WithEnvironmentsSchema>
+
+export const RootApiFileSchema = WithEnvironmentsSchema.extend({
     name: z.string(), // TODO: should this be migrated to id?
     "display-name": z.optional(z.string()),
     imports: z.optional(z.record(z.string())),
     auth: z.optional(ApiAuthSchema),
-    "auth-schemes": z.optional(z.record(AuthSchemeDeclarationSchema)),
+    "auth-schemes": z.optional(z.record(AuthSchemeDeclarationSchema)),    
     headers: z.optional(z.record(z.string(), HttpHeaderSchema)),
-    "default-url": z.optional(z.string()),
-    "default-environment": z.optional(z.string().or(z.null())),
-    environments: z.optional(z.record(z.string(), EnvironmentSchema)),
     "error-discrimination": z.optional(ErrorDiscriminationSchema),
     audiences: z.optional(z.array(z.string())),
     docs: z.optional(z.string()),

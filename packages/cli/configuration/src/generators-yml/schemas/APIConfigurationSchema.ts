@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { APIConfigurationV2Schema } from "./APIConfigurationV2Schema";
 
 /**
  * @example
@@ -108,6 +109,8 @@ export const APIConfigurationSchemaInternal = z.union([
 
 export type APIConfigurationSchemaInternal = z.infer<typeof APIConfigurationSchemaInternal>;
 
+export type APIConfigurationV2Schema = z.infer<typeof APIConfigurationV2Schema>
+
 /**
  * Allow for namespacing of the API and it's contents, the name on the record will be applied throughout the API.
  * Note we nest the namespaced config under a `namespaces` key to disambiguate from the top-level keys from the APIConfigurationSchemaInternal (proto, settings, etc.)
@@ -126,7 +129,9 @@ export type APIConfigurationSchemaInternal = z.infer<typeof APIConfigurationSche
  */
 export const APIConfigurationSchema = z.union([
     APIConfigurationSchemaInternal,
-    z.strictObject({ namespaces: z.record(APIConfigurationSchemaInternal) })
+    z.strictObject({ namespaces: z.record(APIConfigurationSchemaInternal) }),
+    APIConfigurationV2Schema,
 ]);
 
 export type APIConfigurationSchema = z.infer<typeof APIConfigurationSchema>;
+

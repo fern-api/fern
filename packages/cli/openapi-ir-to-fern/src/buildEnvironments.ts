@@ -21,6 +21,23 @@ function extractUrlsFromEnvironmentSchema(
 }
 
 export function buildEnvironments(context: OpenApiIrConverterContext): void {
+    if (context.environmentOverrides != null) {
+        for (const [environment, environmentDeclaration] of Object.entries(
+            context.environmentOverrides["environments"] ?? {}
+        )) {
+            context.builder.addEnvironment({
+                name: environment,
+                schema: environmentDeclaration
+            });
+        }
+        if (context.environmentOverrides["default-environment"] != null) {
+            context.builder.setDefaultEnvironment(context.environmentOverrides["default-environment"]);
+        }
+        if (context.environmentOverrides["default-url"] != null) {
+            context.builder.setDefaultUrl(context.environmentOverrides["default-url"]);
+        }
+    }
+
     const topLevelServersWithName: Record<string, RawSchemas.EnvironmentSchema> = {};
     const topLevelSkippedServers = [];
     for (const server of context.ir.servers) {
@@ -41,6 +58,9 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
     const endpointLevelSkippedServers = [];
     for (const endpoint of context.ir.endpoints) {
         for (const server of endpoint.server) {
+            if (server.url == null) {
+                continue;
+            }
             const environmentSchema = server.audiences
                 ? {
                       url: server.url,

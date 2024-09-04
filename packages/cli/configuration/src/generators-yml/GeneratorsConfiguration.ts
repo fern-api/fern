@@ -1,4 +1,5 @@
 import { Values } from "@fern-api/core-utils";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { Audiences } from "../commons";
@@ -20,12 +21,12 @@ export interface GeneratorsConfiguration {
 
 export type APIDefinition = SingleNamespaceAPIDefinition | MultiNamespaceAPIDefinition;
 
-export interface SingleNamespaceAPIDefinition {
+export interface SingleNamespaceAPIDefinition extends RawSchemas.WithEnvironmentsSchema {
     type: "singleNamespace";
     definitions: APIDefinitionLocation[];
 }
 
-export interface MultiNamespaceAPIDefinition {
+export interface MultiNamespaceAPIDefinition extends RawSchemas.WithEnvironmentsSchema {
     type: "multiNamespace";
     definitions: Record<string, APIDefinitionLocation[]>;
 }

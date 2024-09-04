@@ -104,6 +104,7 @@ export function convertHttpOperation({
 
     const availability = getFernAvailability(operation);
     const examples = getExamplesFromExtension(operationContext, operation, context);
+    const serverName = getExtension<string>(operation, FernOpenAPIExtension.SERVER_NAME_V2);
     return {
         summary: operation.summary,
         internal: getExtension<boolean>(operation, OpenAPIExtension.INTERNAL),
@@ -123,7 +124,10 @@ export function convertHttpOperation({
         request: convertedRequest,
         response: convertedResponse.value,
         errors: convertedResponse.errors,
-        server: (operation.servers ?? []).map((server) => convertServer(server)),
+        server:
+            serverName != null
+                ? [{ name: serverName, url: undefined, audiences: undefined }]
+                : (operation.servers ?? []).map((server) => convertServer(server)),
         description: operation.description,
         authed: isEndpointAuthed(operation, document),
         availability,

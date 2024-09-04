@@ -1,3 +1,4 @@
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { Logger } from "@fern-api/logger";
 import { OpenApiIntermediateRepresentation, Schema, SchemaId } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
@@ -18,6 +19,8 @@ export interface OpenApiIrConverterContextOpts {
      * the IR. This is primarily used for generating SDKs, but disabled for docs as it allows the documentation
      */
     detectGlobalHeaders: boolean;
+
+    environmentOverrides?: RawSchemas.WithEnvironmentsSchema;
 }
 
 export class OpenApiIrConverterContext {
@@ -25,6 +28,7 @@ export class OpenApiIrConverterContext {
     public taskContext: TaskContext;
     public ir: OpenApiIntermediateRepresentation;
     public builder: FernDefinitionBuilder;
+    public environmentOverrides: RawSchemas.WithEnvironmentsSchema | undefined;
     public detectGlobalHeaders: boolean;
     private defaultServerName: string | undefined = undefined;
 
@@ -32,13 +36,15 @@ export class OpenApiIrConverterContext {
         taskContext,
         ir,
         enableUniqueErrorsPerEndpoint,
-        detectGlobalHeaders
+        detectGlobalHeaders,
+        environmentOverrides
     }: OpenApiIrConverterContextOpts) {
         this.logger = taskContext.logger;
         this.taskContext = taskContext;
         this.ir = ir;
         this.builder = new FernDefinitionBuilderImpl(ir, false, enableUniqueErrorsPerEndpoint);
         this.detectGlobalHeaders = detectGlobalHeaders;
+        this.environmentOverrides = environmentOverrides;
     }
 
     public getSchema(id: SchemaId): Schema | undefined {

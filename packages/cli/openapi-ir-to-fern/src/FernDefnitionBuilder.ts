@@ -25,6 +25,8 @@ export interface FernDefinitionBuilder {
 
     setDefaultEnvironment(name: string): void;
 
+    setDefaultUrl(name: string): void;
+
     setBasePath(basePath: string): void;
 
     setApiVersion(apiVersionScheme: unknown): void;
@@ -151,6 +153,10 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
 
     public setDefaultEnvironment(name: string): void {
         this.rootApiFile["default-environment"] = name;
+    }
+
+    public setDefaultUrl(name: string): void {
+        this.rootApiFile["default-url"] = name;
     }
 
     public setBasePath(basePath: string): void {
