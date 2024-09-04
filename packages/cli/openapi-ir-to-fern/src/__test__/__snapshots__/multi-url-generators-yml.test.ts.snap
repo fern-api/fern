@@ -124,7 +124,6 @@ exports[`multi-url-generators-yml > multi-url-generators-yml > docs 1`] = `
             "docs": "Successful response",
             "type": "User",
           },
-          "url": undefined,
         },
       },
       "source": {
@@ -287,7 +286,6 @@ exports[`multi-url-generators-yml > multi-url-generators-yml > simple 1`] = `
             "docs": "Successful response",
             "type": "User",
           },
-          "url": undefined,
         },
       },
       "source": {
