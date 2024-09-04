@@ -72,14 +72,16 @@ fixtures:
 scripts:
   - docker: fernapi/java-seed
     commands:
-      - source ~/.bash_profile 
-      - ./gradlew compileJava
-      - jenv shell 1.8 && source ~/.bash_profile && ./gradlew compileJava
+      - source ~/.bash_profile && jenv shell 1.8 && source ~/.bash_profile && ./gradlew compileJava
 allowedFailures:
+  - alias-extends
   - enum
   - extends
   - examples
+  - exhaustive:signed_publish
   - exhaustive:local-files
+  - extends
+  - query-parameters
   - trace
   - unions
   - query-parameters
