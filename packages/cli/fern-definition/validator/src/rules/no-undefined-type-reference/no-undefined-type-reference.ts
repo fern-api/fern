@@ -6,13 +6,13 @@ import {
     NodePath,
     parseRawBytesType,
     parseRawFileType,
-    recursivelyVisitRawTypeReference
+    recursivelyVisitRawTypeReference,
+    parseGeneric
 } from "@fern-api/fern-definition-schema";
 import { visitDefinitionFileYamlAst, TypeReferenceLocation } from "../../ast";
 import chalk from "chalk";
 import { mapValues } from "lodash-es";
 import { Rule, RuleViolation } from "../../Rule";
-import { getGenericDetails } from "../../utils/getGenericDetails";
 
 type TypeName = string;
 
@@ -29,8 +29,8 @@ export const NoUndefinedTypeReferenceRule: Rule = {
             if (typesForFilepath == null) {
                 return false;
             }
-            const maybeGeneric = getGenericDetails(reference.parsed.typeName);
-            if (maybeGeneric?.isGeneric) {
+            const maybeGeneric = parseGeneric(reference.parsed.typeName);
+            if (maybeGeneric != null) {
                 return maybeGeneric.name ? typesForFilepath.has(maybeGeneric.name) : false;
             }
             return typesForFilepath.has(reference.parsed.typeName);
@@ -43,10 +43,10 @@ export const NoUndefinedTypeReferenceRule: Rule = {
                     const nodePathItem = mutableNodePath.pop();
                     const maybeGeneric = nodePathItem
                         ? typeof nodePathItem === "string"
-                            ? getGenericDetails(nodePathItem)
-                            : getGenericDetails(nodePathItem.key)
+                            ? parseGeneric(nodePathItem)
+                            : parseGeneric(nodePathItem.key)
                         : undefined;
-                    if (maybeGeneric?.isGeneric) {
+                    if (maybeGeneric != null) {
                         return (
                             reference.parsed?.typeName && maybeGeneric.arguments?.includes(reference.parsed?.typeName)
                         );
@@ -151,8 +151,8 @@ async function getTypesByFilepath(workspace: FernWorkspace) {
         await visitDefinitionFileYamlAst(file, {
             typeDeclaration: ({ typeName }) => {
                 if (!typeName.isInlined) {
-                    const maybeGenericDeclaration = getGenericDetails(typeName.name);
-                    if (maybeGenericDeclaration?.isGeneric) {
+                    const maybeGenericDeclaration = parseGeneric(typeName.name);
+                    if (maybeGenericDeclaration != null) {
                         if (maybeGenericDeclaration.name) {
                             typesForFile.add(maybeGenericDeclaration.name);
                         }
