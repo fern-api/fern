@@ -5,6 +5,7 @@ from ..commons.types.language import Language
 import typing
 from ..core.request_options import RequestOptions
 from .types.execution_session_response import ExecutionSessionResponse
+from ..core.jsonable_encoder import jsonable_encoder
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.pydantic_utilities import parse_obj_as
@@ -46,7 +47,7 @@ class SubmissionClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"sessions/create-session/{language}",
+            f"sessions/create-session/{jsonable_encoder(language)}",
             method="POST",
             request_options=request_options,
         )
@@ -94,7 +95,7 @@ class SubmissionClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"sessions/{session_id}",
+            f"sessions/{jsonable_encoder(session_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -142,7 +143,7 @@ class SubmissionClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"sessions/stop/{session_id}",
+            f"sessions/stop/{jsonable_encoder(session_id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -239,7 +240,7 @@ class AsyncSubmissionClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"sessions/create-session/{language}",
+            f"sessions/create-session/{jsonable_encoder(language)}",
             method="POST",
             request_options=request_options,
         )
@@ -295,7 +296,7 @@ class AsyncSubmissionClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"sessions/{session_id}",
+            f"sessions/{jsonable_encoder(session_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -351,7 +352,7 @@ class AsyncSubmissionClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"sessions/stop/{session_id}",
+            f"sessions/stop/{jsonable_encoder(session_id)}",
             method="DELETE",
             request_options=request_options,
         )

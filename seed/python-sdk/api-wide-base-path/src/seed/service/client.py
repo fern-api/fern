@@ -3,6 +3,7 @@
 from ..core.client_wrapper import SyncClientWrapper
 import typing
 from ..core.request_options import RequestOptions
+from ..core.jsonable_encoder import jsonable_encoder
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper
@@ -54,7 +55,7 @@ class ServiceClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"test/{path_param}/{service_param}/{endpoint_param}/{resource_param}",
+            f"test/{jsonable_encoder(path_param)}/{jsonable_encoder(service_param)}/{jsonable_encoder(endpoint_param)}/{jsonable_encoder(resource_param)}",
             method="POST",
             request_options=request_options,
         )
@@ -121,7 +122,7 @@ class AsyncServiceClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"test/{path_param}/{service_param}/{endpoint_param}/{resource_param}",
+            f"test/{jsonable_encoder(path_param)}/{jsonable_encoder(service_param)}/{jsonable_encoder(endpoint_param)}/{jsonable_encoder(resource_param)}",
             method="POST",
             request_options=request_options,
         )

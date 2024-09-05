@@ -855,25 +855,28 @@ class EndpointFunctionGenerator:
                     writer.write_node(AST.Expression(f"{possible_path_part_literal}"))
                 else:
                     parameter = AST.Expression(
-                        self._get_path_parameter_from_name(
-                            endpoint=endpoint,
-                            path_parameter_name=part.path_parameter,
-                        )
-                    )
-                    writer.write("{")
-                    if self._context.custom_config.pydantic_config.use_pydantic_field_aliases:
-                        writer.write_node(
-                            self._context.core_utilities.jsonable_encoder(
-                                self.convert_and_respect_annotation_metadata_raw(
-                                    context=self._context,
-                                    object_=parameter,
-                                    type_reference=parameter_obj.value_type,
+                                    self._get_path_parameter_from_name(
+                                        endpoint=endpoint,
+                                        path_parameter_name=part.path_parameter,
+                                    )
                                 )
+                    if self._context.custom_config.pydantic_config.use_pydantic_field_aliases:
+                            parameter = self.convert_and_respect_annotation_metadata_raw(
+                                context=self._context,
+                                object_=parameter,
+                                type_reference=parameter_obj.value_type,
+                            )
+
+                    writer.write("{")
+                    writer.write_node(
+                        self._context.core_utilities.jsonable_encoder(
+                            self.convert_and_respect_annotation_metadata_raw(
+                                context=self._context,
+                                object_=parameter,
+                                type_reference=parameter_obj.value_type,
                             )
                         )
-                    else:
-                        writer.write_node(parameter)
-
+                    )
                     writer.write("}")
                 writer.write(part.tail)
             writer.write('"')

@@ -8,6 +8,7 @@ import uuid
 from ..core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
+from ..core.jsonable_encoder import jsonable_encoder
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -112,7 +113,7 @@ class PaymentClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"payment/{payment_id}",
+            f"payment/{jsonable_encoder(payment_id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -239,7 +240,7 @@ class AsyncPaymentClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"payment/{payment_id}",
+            f"payment/{jsonable_encoder(payment_id)}",
             method="DELETE",
             request_options=request_options,
         )

@@ -8,6 +8,7 @@ from ..core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from .types.movie import Movie
+from ..core.jsonable_encoder import jsonable_encoder
 from .errors.movie_does_not_exist_error import MovieDoesNotExistError
 from ..core.client_wrapper import AsyncClientWrapper
 
@@ -101,7 +102,7 @@ class ImdbClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"movies/{movie_id}",
+            f"movies/{jsonable_encoder(movie_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -232,7 +233,7 @@ class AsyncImdbClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"movies/{movie_id}",
+            f"movies/{jsonable_encoder(movie_id)}",
             method="GET",
             request_options=request_options,
         )

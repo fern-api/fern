@@ -3,6 +3,7 @@
 import typing
 from ..core.client_wrapper import SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..core.jsonable_encoder import jsonable_encoder
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from .types.user import User
@@ -47,7 +48,7 @@ class UserClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"users/{user_id}",
+            f"users/{jsonable_encoder(user_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -164,7 +165,7 @@ class AsyncUserClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"users/{user_id}",
+            f"users/{jsonable_encoder(user_id)}",
             method="GET",
             request_options=request_options,
         )

@@ -5,6 +5,7 @@ from .types.user_id import UserId
 import typing
 from ..core.request_options import RequestOptions
 from .types.user import User
+from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
@@ -40,7 +41,7 @@ class UserClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"users/{user_id}",
+            f"users/{jsonable_encoder(user_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -96,7 +97,7 @@ class AsyncUserClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"users/{user_id}",
+            f"users/{jsonable_encoder(user_id)}",
             method="GET",
             request_options=request_options,
         )

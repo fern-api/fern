@@ -5,6 +5,7 @@ import httpx
 from .core.client_wrapper import SyncClientWrapper
 from .types.type_id import TypeId
 from .core.request_options import RequestOptions
+from .core.jsonable_encoder import jsonable_encoder
 from json.decoder import JSONDecodeError
 from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper
@@ -81,7 +82,7 @@ class SeedAlias:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"{type_id}",
+            f"{jsonable_encoder(type_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -173,7 +174,7 @@ class AsyncSeedAlias:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"{type_id}",
+            f"{jsonable_encoder(type_id)}",
             method="GET",
             request_options=request_options,
         )

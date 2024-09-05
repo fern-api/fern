@@ -5,6 +5,7 @@ from ..core.client_wrapper import SyncClientWrapper
 from ..submission.types.submission_id import SubmissionId
 from ..submission.types.test_submission_status import TestSubmissionStatus
 from ..core.request_options import RequestOptions
+from ..core.jsonable_encoder import jsonable_encoder
 from ..core.serialization import convert_and_respect_annotation_metadata
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
@@ -67,7 +68,7 @@ class AdminClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"admin/store-test-submission-status/{submission_id}",
+            f"admin/store-test-submission-status/{jsonable_encoder(submission_id)}",
             method="POST",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=TestSubmissionStatus, direction="write"
@@ -130,7 +131,7 @@ class AdminClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"admin/store-test-submission-status-v2/{submission_id}",
+            f"admin/store-test-submission-status-v2/{jsonable_encoder(submission_id)}",
             method="POST",
             json={
                 "updateTime": update_time,
@@ -189,7 +190,7 @@ class AdminClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"admin/store-workspace-submission-status/{submission_id}",
+            f"admin/store-workspace-submission-status/{jsonable_encoder(submission_id)}",
             method="POST",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=WorkspaceSubmissionStatus, direction="write"
@@ -254,7 +255,7 @@ class AdminClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"admin/store-workspace-submission-status-v2/{submission_id}",
+            f"admin/store-workspace-submission-status-v2/{jsonable_encoder(submission_id)}",
             method="POST",
             json={
                 "updateTime": update_time,
@@ -368,7 +369,7 @@ class AdminClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"admin/store-test-trace/submission/{submission_id}/testCase/{test_case_id}",
+            f"admin/store-test-trace/submission/{jsonable_encoder(submission_id)}/testCase/{jsonable_encoder(test_case_id)}",
             method="POST",
             json={
                 "result": convert_and_respect_annotation_metadata(
@@ -470,7 +471,7 @@ class AdminClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"admin/store-test-trace-v2/submission/{submission_id}/testCase/{test_case_id}",
+            f"admin/store-test-trace-v2/submission/{jsonable_encoder(submission_id)}/testCase/{jsonable_encoder(test_case_id)}",
             method="POST",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=typing.Sequence[TraceResponseV2], direction="write"
@@ -577,7 +578,7 @@ class AdminClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"admin/store-workspace-trace/submission/{submission_id}",
+            f"admin/store-workspace-trace/submission/{jsonable_encoder(submission_id)}",
             method="POST",
             json={
                 "workspaceRunDetails": convert_and_respect_annotation_metadata(
@@ -675,7 +676,7 @@ class AdminClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"admin/store-workspace-trace-v2/submission/{submission_id}",
+            f"admin/store-workspace-trace-v2/submission/{jsonable_encoder(submission_id)}",
             method="POST",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=typing.Sequence[TraceResponseV2], direction="write"
@@ -743,7 +744,7 @@ class AsyncAdminClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"admin/store-test-submission-status/{submission_id}",
+            f"admin/store-test-submission-status/{jsonable_encoder(submission_id)}",
             method="POST",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=TestSubmissionStatus, direction="write"
@@ -815,7 +816,7 @@ class AsyncAdminClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"admin/store-test-submission-status-v2/{submission_id}",
+            f"admin/store-test-submission-status-v2/{jsonable_encoder(submission_id)}",
             method="POST",
             json={
                 "updateTime": update_time,
@@ -881,7 +882,7 @@ class AsyncAdminClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"admin/store-workspace-submission-status/{submission_id}",
+            f"admin/store-workspace-submission-status/{jsonable_encoder(submission_id)}",
             method="POST",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=WorkspaceSubmissionStatus, direction="write"
@@ -953,7 +954,7 @@ class AsyncAdminClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"admin/store-workspace-submission-status-v2/{submission_id}",
+            f"admin/store-workspace-submission-status-v2/{jsonable_encoder(submission_id)}",
             method="POST",
             json={
                 "updateTime": update_time,
@@ -1074,7 +1075,7 @@ class AsyncAdminClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"admin/store-test-trace/submission/{submission_id}/testCase/{test_case_id}",
+            f"admin/store-test-trace/submission/{jsonable_encoder(submission_id)}/testCase/{jsonable_encoder(test_case_id)}",
             method="POST",
             json={
                 "result": convert_and_respect_annotation_metadata(
@@ -1183,7 +1184,7 @@ class AsyncAdminClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"admin/store-test-trace-v2/submission/{submission_id}/testCase/{test_case_id}",
+            f"admin/store-test-trace-v2/submission/{jsonable_encoder(submission_id)}/testCase/{jsonable_encoder(test_case_id)}",
             method="POST",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=typing.Sequence[TraceResponseV2], direction="write"
@@ -1297,7 +1298,7 @@ class AsyncAdminClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"admin/store-workspace-trace/submission/{submission_id}",
+            f"admin/store-workspace-trace/submission/{jsonable_encoder(submission_id)}",
             method="POST",
             json={
                 "workspaceRunDetails": convert_and_respect_annotation_metadata(
@@ -1402,7 +1403,7 @@ class AsyncAdminClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"admin/store-workspace-trace-v2/submission/{submission_id}",
+            f"admin/store-workspace-trace-v2/submission/{jsonable_encoder(submission_id)}",
             method="POST",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=typing.Sequence[TraceResponseV2], direction="write"

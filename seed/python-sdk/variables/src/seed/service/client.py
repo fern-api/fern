@@ -3,6 +3,7 @@
 from ..core.client_wrapper import SyncClientWrapper
 import typing
 from ..core.request_options import RequestOptions
+from ..core.jsonable_encoder import jsonable_encoder
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper
@@ -37,7 +38,7 @@ class ServiceClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"{endpoint_param}",
+            f"{jsonable_encoder(endpoint_param)}",
             method="POST",
             request_options=request_options,
         )
@@ -87,7 +88,7 @@ class AsyncServiceClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"{endpoint_param}",
+            f"{jsonable_encoder(endpoint_param)}",
             method="POST",
             request_options=request_options,
         )
