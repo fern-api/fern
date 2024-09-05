@@ -25,7 +25,8 @@ import * as SeedExamples from "../../../index";
  *                 "rottenTomatoes": 97,
  *                 "imdb": 7.6
  *             }
- *         }
+ *         },
+ *         revenue: 1000000
  *     }
  */
 export interface Movie {
@@ -39,4 +40,5 @@ export interface Movie {
     tag: SeedExamples.commons.Tag;
     book?: string;
     metadata: Record<string, unknown>;
+    revenue: number;
 }

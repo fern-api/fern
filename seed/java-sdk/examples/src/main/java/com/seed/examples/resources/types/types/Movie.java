@@ -37,6 +37,8 @@ public final class Movie implements IMovie {
 
     private final Map<String, Object> metadata;
 
+    private final long revenue;
+
     private final Map<String, Object> additionalProperties;
 
     private Movie(
@@ -48,6 +50,7 @@ public final class Movie implements IMovie {
             String tag,
             Optional<String> book,
             Map<String, Object> metadata,
+            long revenue,
             Map<String, Object> additionalProperties) {
         this.id = id;
         this.prequel = prequel;
@@ -57,6 +60,7 @@ public final class Movie implements IMovie {
         this.tag = tag;
         this.book = book;
         this.metadata = metadata;
+        this.revenue = revenue;
         this.additionalProperties = additionalProperties;
     }
 
@@ -117,6 +121,12 @@ public final class Movie implements IMovie {
         return metadata;
     }
 
+    @JsonProperty("revenue")
+    @java.lang.Override
+    public long getRevenue() {
+        return revenue;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -136,13 +146,22 @@ public final class Movie implements IMovie {
                 && rating == other.rating
                 && tag.equals(other.tag)
                 && book.equals(other.book)
-                && metadata.equals(other.metadata);
+                && metadata.equals(other.metadata)
+                && revenue == other.revenue;
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.id, this.prequel, this.title, this.from, this.rating, this.tag, this.book, this.metadata);
+                this.id,
+                this.prequel,
+                this.title,
+                this.from,
+                this.rating,
+                this.tag,
+                this.book,
+                this.metadata,
+                this.revenue);
     }
 
     @java.lang.Override
@@ -173,7 +192,11 @@ public final class Movie implements IMovie {
     }
 
     public interface TagStage {
-        _FinalStage tag(String tag);
+        RevenueStage tag(String tag);
+    }
+
+    public interface RevenueStage {
+        _FinalStage revenue(long revenue);
     }
 
     public interface _FinalStage {
@@ -195,7 +218,8 @@ public final class Movie implements IMovie {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements IdStage, TitleStage, FromStage, RatingStage, TagStage, _FinalStage {
+    public static final class Builder
+            implements IdStage, TitleStage, FromStage, RatingStage, TagStage, RevenueStage, _FinalStage {
         private String id;
 
         private String title;
@@ -205,6 +229,8 @@ public final class Movie implements IMovie {
         private double rating;
 
         private String tag;
+
+        private long revenue;
 
         private Map<String, Object> metadata = new LinkedHashMap<>();
 
@@ -227,6 +253,7 @@ public final class Movie implements IMovie {
             tag(other.getTag());
             book(other.getBook());
             metadata(other.getMetadata());
+            revenue(other.getRevenue());
             return this;
         }
 
@@ -264,8 +291,15 @@ public final class Movie implements IMovie {
 
         @java.lang.Override
         @JsonSetter("tag")
-        public _FinalStage tag(String tag) {
+        public RevenueStage tag(String tag) {
             this.tag = tag;
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("revenue")
+        public _FinalStage revenue(long revenue) {
+            this.revenue = revenue;
             return this;
         }
 
@@ -317,7 +351,7 @@ public final class Movie implements IMovie {
 
         @java.lang.Override
         public Movie build() {
-            return new Movie(id, prequel, title, from, rating, tag, book, metadata, additionalProperties);
+            return new Movie(id, prequel, title, from, rating, tag, book, metadata, revenue, additionalProperties);
         }
     }
 }

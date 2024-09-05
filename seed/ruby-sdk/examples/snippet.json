@@ -194,7 +194,7 @@
                 "identifierOverride": "endpoint_service.createMovie"
             },
             "snippet": {
-                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.service.create_movie(request: { id: \"movie-c06a4ad7\", prequel: \"movie-cv9b914f\", title: \"The Boy and the Heron\", from: \"Hayao Miyazaki\", rating: 8, type: \"movie\", tag: \"tag-wf9as23d\", metadata: { \"actors\": [\"Christian Bale\",\"Florence Pugh\",\"Willem Dafoe\"], \"releaseDate\": \"2023-12-08\", \"ratings\": {\"rottenTomatoes\":97,\"imdb\":7.6} } })",
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.service.create_movie(request: { id: \"movie-c06a4ad7\", prequel: \"movie-cv9b914f\", title: \"The Boy and the Heron\", from: \"Hayao Miyazaki\", rating: 8, type: \"movie\", tag: \"tag-wf9as23d\", metadata: { \"actors\": [\"Christian Bale\",\"Florence Pugh\",\"Willem Dafoe\"], \"releaseDate\": \"2023-12-08\", \"ratings\": {\"rottenTomatoes\":97,\"imdb\":7.6} }, revenue: 1000000 })",
                 "type": "ruby"
             }
         },
@@ -238,7 +238,7 @@
                 "identifierOverride": "endpoint_service.createMovie"
             },
             "snippet": {
-                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.service.create_movie(request: { id: \"movie-c06a4ad7\", prequel: \"movie-cv9b914f\", title: \"The Boy and the Heron\", from: \"Hayao Miyazaki\", rating: 8, type: \"movie\", tag: \"tag-wf9as23d\", metadata: { \"actors\": [\"Christian Bale\",\"Florence Pugh\",\"Willem Dafoe\"], \"releaseDate\": \"2023-12-08\", \"ratings\": {\"rottenTomatoes\":97,\"imdb\":7.6} } })",
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.service.create_movie(request: { id: \"movie-c06a4ad7\", prequel: \"movie-cv9b914f\", title: \"The Boy and the Heron\", from: \"Hayao Miyazaki\", rating: 8, type: \"movie\", tag: \"tag-wf9as23d\", metadata: { \"actors\": [\"Christian Bale\",\"Florence Pugh\",\"Willem Dafoe\"], \"releaseDate\": \"2023-12-08\", \"ratings\": {\"rottenTomatoes\":97,\"imdb\":7.6} }, revenue: 1000000 })",
                 "type": "ruby"
             }
         },
