@@ -13,6 +13,7 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
@@ -55,7 +56,7 @@ public final class GetPresignedUrlRequest {
   }
 
   public interface S3KeyStage {
-    _FinalStage s3Key(String s3Key);
+    _FinalStage s3Key(@NotNull String s3Key);
 
     Builder from(GetPresignedUrlRequest other);
   }
@@ -81,8 +82,8 @@ public final class GetPresignedUrlRequest {
 
     @java.lang.Override
     @JsonSetter("s3Key")
-    public _FinalStage s3Key(String s3Key) {
-      this.s3Key = s3Key;
+    public _FinalStage s3Key(@NotNull String s3Key) {
+      this.s3Key = Objects.requireNonNull(s3Key, "s3Key must not be null");
       return this;
     }
 

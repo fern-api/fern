@@ -17,6 +17,7 @@ import java.lang.String;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 import types.IndexedData;
 import types.Metadata;
 
@@ -94,7 +95,7 @@ public final class UpdateRequest {
   }
 
   public interface IdStage {
-    _FinalStage id(String id);
+    _FinalStage id(@NotNull String id);
 
     Builder from(UpdateRequest other);
   }
@@ -148,8 +149,8 @@ public final class UpdateRequest {
 
     @java.lang.Override
     @JsonSetter("id")
-    public _FinalStage id(String id) {
-      this.id = id;
+    public _FinalStage id(@NotNull String id) {
+      this.id = Objects.requireNonNull(id, "id must not be null");
       return this;
     }
 

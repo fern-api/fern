@@ -13,6 +13,7 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
@@ -55,7 +56,7 @@ public final class GetGeneratedTestCaseTemplateFileRequest {
   }
 
   public interface TemplateStage {
-    _FinalStage template(TestCaseTemplate template);
+    _FinalStage template(@NotNull TestCaseTemplate template);
 
     Builder from(GetGeneratedTestCaseTemplateFileRequest other);
   }
@@ -81,8 +82,8 @@ public final class GetGeneratedTestCaseTemplateFileRequest {
 
     @java.lang.Override
     @JsonSetter("template")
-    public _FinalStage template(TestCaseTemplate template) {
-      this.template = template;
+    public _FinalStage template(@NotNull TestCaseTemplate template) {
+      this.template = Objects.requireNonNull(template, "template must not be null");
       return this;
     }
 

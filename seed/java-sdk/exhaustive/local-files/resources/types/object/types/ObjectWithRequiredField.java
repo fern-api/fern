@@ -17,6 +17,7 @@ import java.lang.String;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
@@ -67,7 +68,7 @@ public final class ObjectWithRequiredField {
   }
 
   public interface StringStage {
-    _FinalStage string(String string);
+    _FinalStage string(@NotNull String string);
 
     Builder from(ObjectWithRequiredField other);
   }
@@ -96,8 +97,8 @@ public final class ObjectWithRequiredField {
 
     @java.lang.Override
     @JsonSetter("string")
-    public _FinalStage string(String string) {
-      this.string = string;
+    public _FinalStage string(@NotNull String string) {
+      this.string = Objects.requireNonNull(string, "string must not be null");
       return this;
     }
 

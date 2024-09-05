@@ -14,6 +14,7 @@ import com.seed.trace.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GradedTestCaseUpdate.Builder.class)
@@ -70,13 +71,13 @@ public final class GradedTestCaseUpdate {
     }
 
     public interface TestCaseIdStage {
-        GradeStage testCaseId(String testCaseId);
+        GradeStage testCaseId(@NotNull String testCaseId);
 
         Builder from(GradedTestCaseUpdate other);
     }
 
     public interface GradeStage {
-        _FinalStage grade(TestCaseGrade grade);
+        _FinalStage grade(@NotNull TestCaseGrade grade);
     }
 
     public interface _FinalStage {
@@ -103,15 +104,15 @@ public final class GradedTestCaseUpdate {
 
         @java.lang.Override
         @JsonSetter("testCaseId")
-        public GradeStage testCaseId(String testCaseId) {
-            this.testCaseId = testCaseId;
+        public GradeStage testCaseId(@NotNull String testCaseId) {
+            this.testCaseId = Objects.requireNonNull(testCaseId, "testCaseId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("grade")
-        public _FinalStage grade(TestCaseGrade grade) {
-            this.grade = grade;
+        public _FinalStage grade(@NotNull TestCaseGrade grade) {
+            this.grade = Objects.requireNonNull(grade, "grade must not be null");
             return this;
         }
 

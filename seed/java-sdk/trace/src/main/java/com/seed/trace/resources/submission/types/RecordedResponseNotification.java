@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = RecordedResponseNotification.Builder.class)
@@ -87,7 +88,7 @@ public final class RecordedResponseNotification {
     }
 
     public interface SubmissionIdStage {
-        TraceResponsesSizeStage submissionId(UUID submissionId);
+        TraceResponsesSizeStage submissionId(@NotNull UUID submissionId);
 
         Builder from(RecordedResponseNotification other);
     }
@@ -127,8 +128,8 @@ public final class RecordedResponseNotification {
 
         @java.lang.Override
         @JsonSetter("submissionId")
-        public TraceResponsesSizeStage submissionId(UUID submissionId) {
-            this.submissionId = submissionId;
+        public TraceResponsesSizeStage submissionId(@NotNull UUID submissionId) {
+            this.submissionId = Objects.requireNonNull(submissionId, "submissionId must not be null");
             return this;
         }
 

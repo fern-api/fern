@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.api.core.ObjectMappers;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = RootType.Builder.class)
@@ -51,7 +52,7 @@ public final class RootType implements IRootType {
     }
 
     public interface SStage {
-        _FinalStage s(String s);
+        _FinalStage s(@NotNull String s);
 
         Builder from(RootType other);
     }
@@ -74,8 +75,8 @@ public final class RootType implements IRootType {
 
         @java.lang.Override
         @JsonSetter("s")
-        public _FinalStage s(String s) {
-            this.s = s;
+        public _FinalStage s(@NotNull String s) {
+            this.s = Objects.requireNonNull(s, "s must not be null");
             return this;
         }
 

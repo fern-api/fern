@@ -16,6 +16,7 @@ import java.lang.String;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 import resources.commons.types.FileInfo;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -67,7 +68,7 @@ public final class WorkspaceFiles {
   }
 
   public interface MainFileStage {
-    _FinalStage mainFile(FileInfo mainFile);
+    _FinalStage mainFile(@NotNull FileInfo mainFile);
 
     Builder from(WorkspaceFiles other);
   }
@@ -102,8 +103,8 @@ public final class WorkspaceFiles {
 
     @java.lang.Override
     @JsonSetter("mainFile")
-    public _FinalStage mainFile(FileInfo mainFile) {
-      this.mainFile = mainFile;
+    public _FinalStage mainFile(@NotNull FileInfo mainFile) {
+      this.mainFile = Objects.requireNonNull(mainFile, "mainFile must not be null");
       return this;
     }
 

@@ -14,6 +14,7 @@ import com.seed.multiUrlEnvironmentNoDefault.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = BootInstanceRequest.Builder.class)
@@ -62,7 +63,7 @@ public final class BootInstanceRequest {
     }
 
     public interface SizeStage {
-        _FinalStage size(String size);
+        _FinalStage size(@NotNull String size);
 
         Builder from(BootInstanceRequest other);
     }
@@ -88,8 +89,8 @@ public final class BootInstanceRequest {
 
         @java.lang.Override
         @JsonSetter("size")
-        public _FinalStage size(String size) {
-            this.size = size;
+        public _FinalStage size(@NotNull String size) {
+            this.size = Objects.requireNonNull(size, "size must not be null");
             return this;
         }
 

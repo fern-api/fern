@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Foo.Builder.class)
@@ -63,7 +64,7 @@ public final class Foo {
     }
 
     public interface BarPropertyStage {
-        _FinalStage barProperty(UUID barProperty);
+        _FinalStage barProperty(@NotNull UUID barProperty);
 
         Builder from(Foo other);
     }
@@ -89,8 +90,8 @@ public final class Foo {
 
         @java.lang.Override
         @JsonSetter("bar_property")
-        public _FinalStage barProperty(UUID barProperty) {
-            this.barProperty = barProperty;
+        public _FinalStage barProperty(@NotNull UUID barProperty) {
+            this.barProperty = Objects.requireNonNull(barProperty, "barProperty must not be null");
             return this;
         }
 

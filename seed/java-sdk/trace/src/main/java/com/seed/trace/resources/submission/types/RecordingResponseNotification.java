@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = RecordingResponseNotification.Builder.class)
@@ -108,7 +109,7 @@ public final class RecordingResponseNotification {
     }
 
     public interface SubmissionIdStage {
-        LineNumberStage submissionId(UUID submissionId);
+        LineNumberStage submissionId(@NotNull UUID submissionId);
 
         Builder from(RecordingResponseNotification other);
     }
@@ -118,7 +119,7 @@ public final class RecordingResponseNotification {
     }
 
     public interface LightweightStackInfoStage {
-        _FinalStage lightweightStackInfo(LightweightStackframeInformation lightweightStackInfo);
+        _FinalStage lightweightStackInfo(@NotNull LightweightStackframeInformation lightweightStackInfo);
     }
 
     public interface _FinalStage {
@@ -163,8 +164,8 @@ public final class RecordingResponseNotification {
 
         @java.lang.Override
         @JsonSetter("submissionId")
-        public LineNumberStage submissionId(UUID submissionId) {
-            this.submissionId = submissionId;
+        public LineNumberStage submissionId(@NotNull UUID submissionId) {
+            this.submissionId = Objects.requireNonNull(submissionId, "submissionId must not be null");
             return this;
         }
 
@@ -177,8 +178,9 @@ public final class RecordingResponseNotification {
 
         @java.lang.Override
         @JsonSetter("lightweightStackInfo")
-        public _FinalStage lightweightStackInfo(LightweightStackframeInformation lightweightStackInfo) {
-            this.lightweightStackInfo = lightweightStackInfo;
+        public _FinalStage lightweightStackInfo(@NotNull LightweightStackframeInformation lightweightStackInfo) {
+            this.lightweightStackInfo =
+                    Objects.requireNonNull(lightweightStackInfo, "lightweightStackInfo must not be null");
             return this;
         }
 

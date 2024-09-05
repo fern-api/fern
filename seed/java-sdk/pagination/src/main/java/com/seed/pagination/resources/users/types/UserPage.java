@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = UserPage.Builder.class)
@@ -75,7 +76,7 @@ public final class UserPage implements IUserPage {
     }
 
     public interface DataStage {
-        _FinalStage data(UserListContainer data);
+        _FinalStage data(@NotNull UserListContainer data);
 
         Builder from(UserPage other);
     }
@@ -108,8 +109,8 @@ public final class UserPage implements IUserPage {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(UserListContainer data) {
-            this.data = data;
+        public _FinalStage data(@NotNull UserListContainer data) {
+            this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }
 

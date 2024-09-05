@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.pagination.core.ObjectMappers;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = UsernameCursor.Builder.class)
@@ -50,7 +51,7 @@ public final class UsernameCursor {
     }
 
     public interface CursorStage {
-        _FinalStage cursor(UsernamePage cursor);
+        _FinalStage cursor(@NotNull UsernamePage cursor);
 
         Builder from(UsernameCursor other);
     }
@@ -73,8 +74,8 @@ public final class UsernameCursor {
 
         @java.lang.Override
         @JsonSetter("cursor")
-        public _FinalStage cursor(UsernamePage cursor) {
-            this.cursor = cursor;
+        public _FinalStage cursor(@NotNull UsernamePage cursor) {
+            this.cursor = Objects.requireNonNull(cursor, "cursor must not be null");
             return this;
         }
 

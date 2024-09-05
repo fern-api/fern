@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.examples.core.ObjectMappers;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Identifier.Builder.class)
@@ -66,17 +67,17 @@ public final class Identifier {
     }
 
     public interface TypeStage {
-        ValueStage type(Type type);
+        ValueStage type(@NotNull Type type);
 
         Builder from(Identifier other);
     }
 
     public interface ValueStage {
-        LabelStage value(String value);
+        LabelStage value(@NotNull String value);
     }
 
     public interface LabelStage {
-        _FinalStage label(String label);
+        _FinalStage label(@NotNull String label);
     }
 
     public interface _FinalStage {
@@ -103,22 +104,22 @@ public final class Identifier {
 
         @java.lang.Override
         @JsonSetter("type")
-        public ValueStage type(Type type) {
-            this.type = type;
+        public ValueStage type(@NotNull Type type) {
+            this.type = Objects.requireNonNull(type, "type must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("value")
-        public LabelStage value(String value) {
-            this.value = value;
+        public LabelStage value(@NotNull String value) {
+            this.value = Objects.requireNonNull(value, "value must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("label")
-        public _FinalStage label(String label) {
-            this.label = label;
+        public _FinalStage label(@NotNull String label) {
+            this.label = Objects.requireNonNull(label, "label must not be null");
             return this;
         }
 

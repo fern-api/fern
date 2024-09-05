@@ -13,6 +13,7 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
@@ -69,7 +70,7 @@ public final class NextPage {
   }
 
   public interface StartingAfterStage {
-    _FinalStage startingAfter(String startingAfter);
+    _FinalStage startingAfter(@NotNull String startingAfter);
   }
 
   public interface _FinalStage {
@@ -103,8 +104,8 @@ public final class NextPage {
 
     @java.lang.Override
     @JsonSetter("starting_after")
-    public _FinalStage startingAfter(String startingAfter) {
-      this.startingAfter = startingAfter;
+    public _FinalStage startingAfter(@NotNull String startingAfter) {
+      this.startingAfter = Objects.requireNonNull(startingAfter, "startingAfter must not be null");
       return this;
     }
 

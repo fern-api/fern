@@ -16,6 +16,7 @@ import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
@@ -84,13 +85,13 @@ public final class SendRequest {
   }
 
   public interface QueryStage {
-    ContextStage query(String query);
+    ContextStage query(@NotNull String query);
 
     Builder from(SendRequest other);
   }
 
   public interface ContextStage {
-    _FinalStage context(SomeLiteral context);
+    _FinalStage context(@NotNull SomeLiteral context);
   }
 
   public interface _FinalStage {
@@ -124,15 +125,15 @@ public final class SendRequest {
 
     @java.lang.Override
     @JsonSetter("query")
-    public ContextStage query(String query) {
-      this.query = query;
+    public ContextStage query(@NotNull String query) {
+      this.query = Objects.requireNonNull(query, "query must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("context")
-    public _FinalStage context(SomeLiteral context) {
-      this.context = context;
+    public _FinalStage context(@NotNull SomeLiteral context) {
+      this.context = Objects.requireNonNull(context, "context must not be null");
       return this;
     }
 

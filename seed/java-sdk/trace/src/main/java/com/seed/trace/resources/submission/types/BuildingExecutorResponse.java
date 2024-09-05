@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = BuildingExecutorResponse.Builder.class)
@@ -72,13 +73,13 @@ public final class BuildingExecutorResponse {
     }
 
     public interface SubmissionIdStage {
-        StatusStage submissionId(UUID submissionId);
+        StatusStage submissionId(@NotNull UUID submissionId);
 
         Builder from(BuildingExecutorResponse other);
     }
 
     public interface StatusStage {
-        _FinalStage status(ExecutionSessionStatus status);
+        _FinalStage status(@NotNull ExecutionSessionStatus status);
     }
 
     public interface _FinalStage {
@@ -105,15 +106,15 @@ public final class BuildingExecutorResponse {
 
         @java.lang.Override
         @JsonSetter("submissionId")
-        public StatusStage submissionId(UUID submissionId) {
-            this.submissionId = submissionId;
+        public StatusStage submissionId(@NotNull UUID submissionId) {
+            this.submissionId = Objects.requireNonNull(submissionId, "submissionId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("status")
-        public _FinalStage status(ExecutionSessionStatus status) {
-            this.status = status;
+        public _FinalStage status(@NotNull ExecutionSessionStatus status) {
+            this.status = Objects.requireNonNull(status, "status must not be null");
             return this;
         }
 

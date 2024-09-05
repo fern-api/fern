@@ -14,6 +14,7 @@ import com.seed.trace.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SinglyLinkedListNodeAndListValue.Builder.class)
@@ -71,13 +72,13 @@ public final class SinglyLinkedListNodeAndListValue {
     }
 
     public interface NodeIdStage {
-        FullListStage nodeId(String nodeId);
+        FullListStage nodeId(@NotNull String nodeId);
 
         Builder from(SinglyLinkedListNodeAndListValue other);
     }
 
     public interface FullListStage {
-        _FinalStage fullList(SinglyLinkedListValue fullList);
+        _FinalStage fullList(@NotNull SinglyLinkedListValue fullList);
     }
 
     public interface _FinalStage {
@@ -104,15 +105,15 @@ public final class SinglyLinkedListNodeAndListValue {
 
         @java.lang.Override
         @JsonSetter("nodeId")
-        public FullListStage nodeId(String nodeId) {
-            this.nodeId = nodeId;
+        public FullListStage nodeId(@NotNull String nodeId) {
+            this.nodeId = Objects.requireNonNull(nodeId, "nodeId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("fullList")
-        public _FinalStage fullList(SinglyLinkedListValue fullList) {
-            this.fullList = fullList;
+        public _FinalStage fullList(@NotNull SinglyLinkedListValue fullList) {
+            this.fullList = Objects.requireNonNull(fullList, "fullList must not be null");
             return this;
         }
 

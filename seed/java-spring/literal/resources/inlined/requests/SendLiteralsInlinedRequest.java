@@ -17,6 +17,7 @@ import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 import resources.inlined.types.SomeAliasedLiteral;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -104,13 +105,13 @@ public final class SendLiteralsInlinedRequest {
   }
 
   public interface QueryStage {
-    AliasedContextStage query(String query);
+    AliasedContextStage query(@NotNull String query);
 
     Builder from(SendLiteralsInlinedRequest other);
   }
 
   public interface AliasedContextStage {
-    _FinalStage aliasedContext(SomeAliasedLiteral aliasedContext);
+    _FinalStage aliasedContext(@NotNull SomeAliasedLiteral aliasedContext);
   }
 
   public interface _FinalStage {
@@ -158,15 +159,15 @@ public final class SendLiteralsInlinedRequest {
 
     @java.lang.Override
     @JsonSetter("query")
-    public AliasedContextStage query(String query) {
-      this.query = query;
+    public AliasedContextStage query(@NotNull String query) {
+      this.query = Objects.requireNonNull(query, "query must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("aliasedContext")
-    public _FinalStage aliasedContext(SomeAliasedLiteral aliasedContext) {
-      this.aliasedContext = aliasedContext;
+    public _FinalStage aliasedContext(@NotNull SomeAliasedLiteral aliasedContext) {
+      this.aliasedContext = Objects.requireNonNull(aliasedContext, "aliasedContext must not be null");
       return this;
     }
 

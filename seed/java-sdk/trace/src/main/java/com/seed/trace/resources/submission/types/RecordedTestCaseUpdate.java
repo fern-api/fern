@@ -14,6 +14,7 @@ import com.seed.trace.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = RecordedTestCaseUpdate.Builder.class)
@@ -71,7 +72,7 @@ public final class RecordedTestCaseUpdate {
     }
 
     public interface TestCaseIdStage {
-        TraceResponsesSizeStage testCaseId(String testCaseId);
+        TraceResponsesSizeStage testCaseId(@NotNull String testCaseId);
 
         Builder from(RecordedTestCaseUpdate other);
     }
@@ -104,8 +105,8 @@ public final class RecordedTestCaseUpdate {
 
         @java.lang.Override
         @JsonSetter("testCaseId")
-        public TraceResponsesSizeStage testCaseId(String testCaseId) {
-            this.testCaseId = testCaseId;
+        public TraceResponsesSizeStage testCaseId(@NotNull String testCaseId) {
+            this.testCaseId = Objects.requireNonNull(testCaseId, "testCaseId must not be null");
             return this;
         }
 

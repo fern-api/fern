@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GetUsersRequest.Builder.class)
@@ -223,35 +224,35 @@ public final class GetUsersRequest {
     }
 
     public interface IdStage {
-        DateStage id(UUID id);
+        DateStage id(@NotNull UUID id);
     }
 
     public interface DateStage {
-        DeadlineStage date(String date);
+        DeadlineStage date(@NotNull String date);
     }
 
     public interface DeadlineStage {
-        BytesStage deadline(OffsetDateTime deadline);
+        BytesStage deadline(@NotNull OffsetDateTime deadline);
     }
 
     public interface BytesStage {
-        UserStage bytes(byte[] bytes);
+        UserStage bytes(@NotNull byte[] bytes);
     }
 
     public interface UserStage {
-        NestedUserStage user(User user);
+        NestedUserStage user(@NotNull User user);
     }
 
     public interface NestedUserStage {
-        ExcludeUserStage nestedUser(NestedUser nestedUser);
+        ExcludeUserStage nestedUser(@NotNull NestedUser nestedUser);
     }
 
     public interface ExcludeUserStage {
-        FilterStage excludeUser(User excludeUser);
+        FilterStage excludeUser(@NotNull User excludeUser);
     }
 
     public interface FilterStage {
-        _FinalStage filter(String filter);
+        _FinalStage filter(@NotNull String filter);
     }
 
     public interface _FinalStage {
@@ -355,57 +356,57 @@ public final class GetUsersRequest {
 
         @java.lang.Override
         @JsonSetter("id")
-        public DateStage id(UUID id) {
-            this.id = id;
+        public DateStage id(@NotNull UUID id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("date")
-        public DeadlineStage date(String date) {
-            this.date = date;
+        public DeadlineStage date(@NotNull String date) {
+            this.date = Objects.requireNonNull(date, "date must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("deadline")
-        public BytesStage deadline(OffsetDateTime deadline) {
-            this.deadline = deadline;
+        public BytesStage deadline(@NotNull OffsetDateTime deadline) {
+            this.deadline = Objects.requireNonNull(deadline, "deadline must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("bytes")
-        public UserStage bytes(byte[] bytes) {
-            this.bytes = bytes;
+        public UserStage bytes(@NotNull byte[] bytes) {
+            this.bytes = Objects.requireNonNull(bytes, "bytes must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("user")
-        public NestedUserStage user(User user) {
-            this.user = user;
+        public NestedUserStage user(@NotNull User user) {
+            this.user = Objects.requireNonNull(user, "user must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("nestedUser")
-        public ExcludeUserStage nestedUser(NestedUser nestedUser) {
-            this.nestedUser = nestedUser;
+        public ExcludeUserStage nestedUser(@NotNull NestedUser nestedUser) {
+            this.nestedUser = Objects.requireNonNull(nestedUser, "nestedUser must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("excludeUser")
-        public FilterStage excludeUser(User excludeUser) {
-            this.excludeUser = excludeUser;
+        public FilterStage excludeUser(@NotNull User excludeUser) {
+            this.excludeUser = Objects.requireNonNull(excludeUser, "excludeUser must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("filter")
-        public _FinalStage filter(String filter) {
-            this.filter = filter;
+        public _FinalStage filter(@NotNull String filter) {
+            this.filter = Objects.requireNonNull(filter, "filter must not be null");
             return this;
         }
 

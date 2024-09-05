@@ -17,6 +17,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 import resources.commons.types.VariableValue;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -85,13 +86,13 @@ public final class TestCaseV2 {
   }
 
   public interface MetadataStage {
-    ImplementationStage metadata(TestCaseMetadata metadata);
+    ImplementationStage metadata(@NotNull TestCaseMetadata metadata);
 
     Builder from(TestCaseV2 other);
   }
 
   public interface ImplementationStage {
-    _FinalStage implementation(TestCaseImplementationReference implementation);
+    _FinalStage implementation(@NotNull TestCaseImplementationReference implementation);
   }
 
   public interface _FinalStage {
@@ -134,15 +135,15 @@ public final class TestCaseV2 {
 
     @java.lang.Override
     @JsonSetter("metadata")
-    public ImplementationStage metadata(TestCaseMetadata metadata) {
-      this.metadata = metadata;
+    public ImplementationStage metadata(@NotNull TestCaseMetadata metadata) {
+      this.metadata = Objects.requireNonNull(metadata, "metadata must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("implementation")
-    public _FinalStage implementation(TestCaseImplementationReference implementation) {
-      this.implementation = implementation;
+    public _FinalStage implementation(@NotNull TestCaseImplementationReference implementation) {
+      this.implementation = Objects.requireNonNull(implementation, "implementation must not be null");
       return this;
     }
 

@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.responseProperty.core.ObjectMappers;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = WithDocs.Builder.class)
@@ -51,7 +52,7 @@ public final class WithDocs implements IWithDocs {
     }
 
     public interface DocsStage {
-        _FinalStage docs(String docs);
+        _FinalStage docs(@NotNull String docs);
 
         Builder from(WithDocs other);
     }
@@ -74,8 +75,8 @@ public final class WithDocs implements IWithDocs {
 
         @java.lang.Override
         @JsonSetter("docs")
-        public _FinalStage docs(String docs) {
-            this.docs = docs;
+        public _FinalStage docs(@NotNull String docs) {
+            this.docs = Objects.requireNonNull(docs, "docs must not be null");
             return this;
         }
 

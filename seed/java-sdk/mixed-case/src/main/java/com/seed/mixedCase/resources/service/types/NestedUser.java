@@ -14,6 +14,7 @@ import com.seed.mixedCase.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = NestedUser.Builder.class)
@@ -70,13 +71,13 @@ public final class NestedUser {
     }
 
     public interface NameStage {
-        NestedUserStage name(String name);
+        NestedUserStage name(@NotNull String name);
 
         Builder from(NestedUser other);
     }
 
     public interface NestedUserStage {
-        _FinalStage nestedUser(User nestedUser);
+        _FinalStage nestedUser(@NotNull User nestedUser);
     }
 
     public interface _FinalStage {
@@ -103,15 +104,15 @@ public final class NestedUser {
 
         @java.lang.Override
         @JsonSetter("Name")
-        public NestedUserStage name(String name) {
-            this.name = name;
+        public NestedUserStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("NestedUser")
-        public _FinalStage nestedUser(User nestedUser) {
-            this.nestedUser = nestedUser;
+        public _FinalStage nestedUser(@NotNull User nestedUser) {
+            this.nestedUser = Objects.requireNonNull(nestedUser, "nestedUser must not be null");
             return this;
         }
 

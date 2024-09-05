@@ -14,6 +14,7 @@ import com.seed.literal.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SendLiteralsInQueryRequest.Builder.class)
@@ -72,7 +73,7 @@ public final class SendLiteralsInQueryRequest {
     }
 
     public interface QueryStage {
-        _FinalStage query(String query);
+        _FinalStage query(@NotNull String query);
 
         Builder from(SendLiteralsInQueryRequest other);
     }
@@ -98,8 +99,8 @@ public final class SendLiteralsInQueryRequest {
 
         @java.lang.Override
         @JsonSetter("query")
-        public _FinalStage query(String query) {
-            this.query = query;
+        public _FinalStage query(@NotNull String query) {
+            this.query = Objects.requireNonNull(query, "query must not be null");
             return this;
         }
 

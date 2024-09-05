@@ -17,6 +17,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 import resources.commons.types.types.Tag;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -134,17 +135,17 @@ public final class Movie implements IMovie {
   }
 
   public interface IdStage {
-    TitleStage id(MovieId id);
+    TitleStage id(@NotNull MovieId id);
 
     Builder from(Movie other);
   }
 
   public interface TitleStage {
-    FromStage title(String title);
+    FromStage title(@NotNull String title);
   }
 
   public interface FromStage {
-    RatingStage from(String from);
+    RatingStage from(@NotNull String from);
   }
 
   public interface RatingStage {
@@ -152,7 +153,7 @@ public final class Movie implements IMovie {
   }
 
   public interface TagStage {
-    _FinalStage tag(Tag tag);
+    _FinalStage tag(@NotNull Tag tag);
   }
 
   public interface _FinalStage {
@@ -211,22 +212,22 @@ public final class Movie implements IMovie {
 
     @java.lang.Override
     @JsonSetter("id")
-    public TitleStage id(MovieId id) {
-      this.id = id;
+    public TitleStage id(@NotNull MovieId id) {
+      this.id = Objects.requireNonNull(id, "id must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("title")
-    public FromStage title(String title) {
-      this.title = title;
+    public FromStage title(@NotNull String title) {
+      this.title = Objects.requireNonNull(title, "title must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("from")
-    public RatingStage from(String from) {
-      this.from = from;
+    public RatingStage from(@NotNull String from) {
+      this.from = Objects.requireNonNull(from, "from must not be null");
       return this;
     }
 
@@ -243,8 +244,8 @@ public final class Movie implements IMovie {
 
     @java.lang.Override
     @JsonSetter("tag")
-    public _FinalStage tag(Tag tag) {
-      this.tag = tag;
+    public _FinalStage tag(@NotNull Tag tag) {
+      this.tag = Objects.requireNonNull(tag, "tag must not be null");
       return this;
     }
 

@@ -13,6 +13,7 @@ import com.seed.api.core.ObjectMappers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Script.Builder.class)
@@ -88,17 +89,17 @@ public final class Script implements IBaseResource {
     }
 
     public interface IdStage {
-        MemoStage id(String id);
+        MemoStage id(@NotNull String id);
 
         Builder from(Script other);
     }
 
     public interface MemoStage {
-        NameStage memo(Memo memo);
+        NameStage memo(@NotNull Memo memo);
     }
 
     public interface NameStage {
-        _FinalStage name(String name);
+        _FinalStage name(@NotNull String name);
     }
 
     public interface _FinalStage {
@@ -134,22 +135,22 @@ public final class Script implements IBaseResource {
 
         @java.lang.Override
         @JsonSetter("id")
-        public MemoStage id(String id) {
-            this.id = id;
+        public MemoStage id(@NotNull String id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("memo")
-        public NameStage memo(Memo memo) {
-            this.memo = memo;
+        public NameStage memo(@NotNull Memo memo) {
+            this.memo = Objects.requireNonNull(memo, "memo must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
-        public _FinalStage name(String name) {
-            this.name = name;
+        public _FinalStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 

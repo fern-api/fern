@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.oauthClientCredentialsDefault.core.ObjectMappers;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TokenResponse.Builder.class)
@@ -58,7 +59,7 @@ public final class TokenResponse {
     }
 
     public interface AccessTokenStage {
-        ExpiresInStage accessToken(String accessToken);
+        ExpiresInStage accessToken(@NotNull String accessToken);
 
         Builder from(TokenResponse other);
     }
@@ -88,8 +89,8 @@ public final class TokenResponse {
 
         @java.lang.Override
         @JsonSetter("access_token")
-        public ExpiresInStage accessToken(String accessToken) {
-            this.accessToken = accessToken;
+        public ExpiresInStage accessToken(@NotNull String accessToken) {
+            this.accessToken = Objects.requireNonNull(accessToken, "accessToken must not be null");
             return this;
         }
 

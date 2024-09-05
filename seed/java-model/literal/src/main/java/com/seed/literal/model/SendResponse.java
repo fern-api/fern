@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.literal.core.ObjectMappers;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SendResponse.Builder.class)
@@ -63,7 +64,7 @@ public final class SendResponse {
     }
 
     public interface MessageStage {
-        StatusStage message(String message);
+        StatusStage message(@NotNull String message);
 
         Builder from(SendResponse other);
     }
@@ -93,8 +94,8 @@ public final class SendResponse {
 
         @java.lang.Override
         @JsonSetter("message")
-        public StatusStage message(String message) {
-            this.message = message;
+        public StatusStage message(@NotNull String message) {
+            this.message = Objects.requireNonNull(message, "message must not be null");
             return this;
         }
 

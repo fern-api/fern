@@ -18,6 +18,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 import resources.commons.types.Language;
 import resources.commons.types.ProblemId;
 import resources.commons.types.TestCaseWithExpectedResult;
@@ -140,17 +141,17 @@ public final class ProblemInfo {
   }
 
   public interface ProblemIdStage {
-    ProblemDescriptionStage problemId(ProblemId problemId);
+    ProblemDescriptionStage problemId(@NotNull ProblemId problemId);
 
     Builder from(ProblemInfo other);
   }
 
   public interface ProblemDescriptionStage {
-    ProblemNameStage problemDescription(ProblemDescription problemDescription);
+    ProblemNameStage problemDescription(@NotNull ProblemDescription problemDescription);
   }
 
   public interface ProblemNameStage {
-    ProblemVersionStage problemName(String problemName);
+    ProblemVersionStage problemName(@NotNull String problemName);
   }
 
   public interface ProblemVersionStage {
@@ -158,11 +159,11 @@ public final class ProblemInfo {
   }
 
   public interface OutputTypeStage {
-    MethodNameStage outputType(VariableType outputType);
+    MethodNameStage outputType(@NotNull VariableType outputType);
   }
 
   public interface MethodNameStage {
-    SupportsCustomTestCasesStage methodName(String methodName);
+    SupportsCustomTestCasesStage methodName(@NotNull String methodName);
   }
 
   public interface SupportsCustomTestCasesStage {
@@ -235,22 +236,22 @@ public final class ProblemInfo {
 
     @java.lang.Override
     @JsonSetter("problemId")
-    public ProblemDescriptionStage problemId(ProblemId problemId) {
-      this.problemId = problemId;
+    public ProblemDescriptionStage problemId(@NotNull ProblemId problemId) {
+      this.problemId = Objects.requireNonNull(problemId, "problemId must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("problemDescription")
-    public ProblemNameStage problemDescription(ProblemDescription problemDescription) {
-      this.problemDescription = problemDescription;
+    public ProblemNameStage problemDescription(@NotNull ProblemDescription problemDescription) {
+      this.problemDescription = Objects.requireNonNull(problemDescription, "problemDescription must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("problemName")
-    public ProblemVersionStage problemName(String problemName) {
-      this.problemName = problemName;
+    public ProblemVersionStage problemName(@NotNull String problemName) {
+      this.problemName = Objects.requireNonNull(problemName, "problemName must not be null");
       return this;
     }
 
@@ -263,15 +264,15 @@ public final class ProblemInfo {
 
     @java.lang.Override
     @JsonSetter("outputType")
-    public MethodNameStage outputType(VariableType outputType) {
-      this.outputType = outputType;
+    public MethodNameStage outputType(@NotNull VariableType outputType) {
+      this.outputType = Objects.requireNonNull(outputType, "outputType must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("methodName")
-    public SupportsCustomTestCasesStage methodName(String methodName) {
-      this.methodName = methodName;
+    public SupportsCustomTestCasesStage methodName(@NotNull String methodName) {
+      this.methodName = Objects.requireNonNull(methodName, "methodName must not be null");
       return this;
     }
 

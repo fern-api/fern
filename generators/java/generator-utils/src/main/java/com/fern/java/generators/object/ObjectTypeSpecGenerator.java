@@ -31,6 +31,7 @@ public final class ObjectTypeSpecGenerator {
     private final boolean isSerialized;
     private final boolean publicConstructorsEnabled;
     private final boolean supportAdditionalProperties;
+    private final boolean disableRequiredPropertyBuilderChecks;
 
     public ObjectTypeSpecGenerator(
             ClassName objectClassName,
@@ -40,7 +41,8 @@ public final class ObjectTypeSpecGenerator {
             boolean isSerialized,
             boolean publicConstructorsEnabled,
             boolean supportAdditionalProperties,
-            ICustomConfig.JsonInclude jsonInclude) {
+            ICustomConfig.JsonInclude jsonInclude,
+            Boolean disableRequiredPropertyBuilderChecks) {
         this.objectClassName = objectClassName;
         this.generatedObjectMapperClassName = generatedObjectMapperClassName;
         this.interfaces = interfaces;
@@ -52,6 +54,7 @@ public final class ObjectTypeSpecGenerator {
         this.isSerialized = isSerialized;
         this.publicConstructorsEnabled = publicConstructorsEnabled;
         this.supportAdditionalProperties = supportAdditionalProperties;
+        this.disableRequiredPropertyBuilderChecks = disableRequiredPropertyBuilderChecks;
     }
 
     public TypeSpec generate() {
@@ -191,8 +194,12 @@ public final class ObjectTypeSpecGenerator {
     }
 
     private Optional<ObjectBuilder> generateBuilder() {
-        BuilderGenerator builderGenerator =
-                new BuilderGenerator(objectClassName, allEnrichedProperties, isSerialized, supportAdditionalProperties);
+        BuilderGenerator builderGenerator = new BuilderGenerator(
+                objectClassName,
+                allEnrichedProperties,
+                isSerialized,
+                supportAdditionalProperties,
+                disableRequiredPropertyBuilderChecks);
         return builderGenerator.generate();
     }
 }

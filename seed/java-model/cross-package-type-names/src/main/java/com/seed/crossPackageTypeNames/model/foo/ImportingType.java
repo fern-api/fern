@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.crossPackageTypeNames.core.ObjectMappers;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ImportingType.Builder.class)
@@ -50,7 +51,7 @@ public final class ImportingType {
     }
 
     public interface ImportedStage {
-        _FinalStage imported(String imported);
+        _FinalStage imported(@NotNull String imported);
 
         Builder from(ImportingType other);
     }
@@ -73,8 +74,8 @@ public final class ImportingType {
 
         @java.lang.Override
         @JsonSetter("imported")
-        public _FinalStage imported(String imported) {
-            this.imported = imported;
+        public _FinalStage imported(@NotNull String imported) {
+            this.imported = Objects.requireNonNull(imported, "imported must not be null");
             return this;
         }
 

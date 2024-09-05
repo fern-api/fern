@@ -13,6 +13,7 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
@@ -79,17 +80,17 @@ public final class FileInfoV2 {
   }
 
   public interface FilenameStage {
-    DirectoryStage filename(String filename);
+    DirectoryStage filename(@NotNull String filename);
 
     Builder from(FileInfoV2 other);
   }
 
   public interface DirectoryStage {
-    ContentsStage directory(String directory);
+    ContentsStage directory(@NotNull String directory);
   }
 
   public interface ContentsStage {
-    EditableStage contents(String contents);
+    EditableStage contents(@NotNull String contents);
   }
 
   public interface EditableStage {
@@ -126,22 +127,22 @@ public final class FileInfoV2 {
 
     @java.lang.Override
     @JsonSetter("filename")
-    public DirectoryStage filename(String filename) {
-      this.filename = filename;
+    public DirectoryStage filename(@NotNull String filename) {
+      this.filename = Objects.requireNonNull(filename, "filename must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("directory")
-    public ContentsStage directory(String directory) {
-      this.directory = directory;
+    public ContentsStage directory(@NotNull String directory) {
+      this.directory = Objects.requireNonNull(directory, "directory must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("contents")
-    public EditableStage contents(String contents) {
-      this.contents = contents;
+    public EditableStage contents(@NotNull String contents) {
+      this.contents = Objects.requireNonNull(contents, "contents must not be null");
       return this;
     }
 

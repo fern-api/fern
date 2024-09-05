@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0] - 2024-09-05
+
+- Break: The Spring generator is now on major version 1. To take this upgrade without any breaks, please add the below
+  configuration to your `generators.yml` file:
+  ```yaml
+  generators:
+    - name: fernapi/fern-java-spring
+      config:
+        disable-required-property-builder-checks: true
+  ```
+- Improvement: Generated builder methods now enforce non-null checks for required fields, ensuring that all required 
+fields are properly validated during object construction:
+  ```java
+  @java.lang.Override
+  @JsonSetter("name")
+  public NameStage name(@NotNull String name) {
+      this.name = Objects.requireNonNull(name, "name must not be null");
+      return this;
+  }
+  ```
+
 ## [0.9.2] - 2024-07-23
 
 * Improvement: Generated builder methods for optional fields can now accept null directly.

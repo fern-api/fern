@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SendLiteralsInlinedRequest.Builder.class)
@@ -116,13 +117,13 @@ public final class SendLiteralsInlinedRequest {
     }
 
     public interface QueryStage {
-        AliasedContextStage query(String query);
+        AliasedContextStage query(@NotNull String query);
 
         Builder from(SendLiteralsInlinedRequest other);
     }
 
     public interface AliasedContextStage {
-        _FinalStage aliasedContext(String aliasedContext);
+        _FinalStage aliasedContext(@NotNull String aliasedContext);
     }
 
     public interface _FinalStage {
@@ -170,15 +171,15 @@ public final class SendLiteralsInlinedRequest {
 
         @java.lang.Override
         @JsonSetter("query")
-        public AliasedContextStage query(String query) {
-            this.query = query;
+        public AliasedContextStage query(@NotNull String query) {
+            this.query = Objects.requireNonNull(query, "query must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("aliasedContext")
-        public _FinalStage aliasedContext(String aliasedContext) {
-            this.aliasedContext = aliasedContext;
+        public _FinalStage aliasedContext(@NotNull String aliasedContext) {
+            this.aliasedContext = Objects.requireNonNull(aliasedContext, "aliasedContext must not be null");
             return this;
         }
 

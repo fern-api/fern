@@ -13,6 +13,7 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
@@ -71,17 +72,17 @@ public final class ExceptionInfo {
   }
 
   public interface ExceptionTypeStage {
-    ExceptionMessageStage exceptionType(String exceptionType);
+    ExceptionMessageStage exceptionType(@NotNull String exceptionType);
 
     Builder from(ExceptionInfo other);
   }
 
   public interface ExceptionMessageStage {
-    ExceptionStacktraceStage exceptionMessage(String exceptionMessage);
+    ExceptionStacktraceStage exceptionMessage(@NotNull String exceptionMessage);
   }
 
   public interface ExceptionStacktraceStage {
-    _FinalStage exceptionStacktrace(String exceptionStacktrace);
+    _FinalStage exceptionStacktrace(@NotNull String exceptionStacktrace);
   }
 
   public interface _FinalStage {
@@ -111,22 +112,22 @@ public final class ExceptionInfo {
 
     @java.lang.Override
     @JsonSetter("exceptionType")
-    public ExceptionMessageStage exceptionType(String exceptionType) {
-      this.exceptionType = exceptionType;
+    public ExceptionMessageStage exceptionType(@NotNull String exceptionType) {
+      this.exceptionType = Objects.requireNonNull(exceptionType, "exceptionType must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("exceptionMessage")
-    public ExceptionStacktraceStage exceptionMessage(String exceptionMessage) {
-      this.exceptionMessage = exceptionMessage;
+    public ExceptionStacktraceStage exceptionMessage(@NotNull String exceptionMessage) {
+      this.exceptionMessage = Objects.requireNonNull(exceptionMessage, "exceptionMessage must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("exceptionStacktrace")
-    public _FinalStage exceptionStacktrace(String exceptionStacktrace) {
-      this.exceptionStacktrace = exceptionStacktrace;
+    public _FinalStage exceptionStacktrace(@NotNull String exceptionStacktrace) {
+      this.exceptionStacktrace = Objects.requireNonNull(exceptionStacktrace, "exceptionStacktrace must not be null");
       return this;
     }
 

@@ -16,6 +16,7 @@ import java.lang.String;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 import resources.commons.types.ProblemId;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -70,7 +71,7 @@ public final class UpdatePlaylistRequest {
   }
 
   public interface NameStage {
-    _FinalStage name(String name);
+    _FinalStage name(@NotNull String name);
 
     Builder from(UpdatePlaylistRequest other);
   }
@@ -105,8 +106,8 @@ public final class UpdatePlaylistRequest {
 
     @java.lang.Override
     @JsonSetter("name")
-    public _FinalStage name(String name) {
-      this.name = name;
+    public _FinalStage name(@NotNull String name) {
+      this.name = Objects.requireNonNull(name, "name must not be null");
       return this;
     }
 

@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ExecutionSessionResponse.Builder.class)
@@ -97,17 +98,17 @@ public final class ExecutionSessionResponse {
     }
 
     public interface SessionIdStage {
-        LanguageStage sessionId(String sessionId);
+        LanguageStage sessionId(@NotNull String sessionId);
 
         Builder from(ExecutionSessionResponse other);
     }
 
     public interface LanguageStage {
-        StatusStage language(Language language);
+        StatusStage language(@NotNull Language language);
     }
 
     public interface StatusStage {
-        _FinalStage status(ExecutionSessionStatus status);
+        _FinalStage status(@NotNull ExecutionSessionStatus status);
     }
 
     public interface _FinalStage {
@@ -144,22 +145,22 @@ public final class ExecutionSessionResponse {
 
         @java.lang.Override
         @JsonSetter("sessionId")
-        public LanguageStage sessionId(String sessionId) {
-            this.sessionId = sessionId;
+        public LanguageStage sessionId(@NotNull String sessionId) {
+            this.sessionId = Objects.requireNonNull(sessionId, "sessionId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("language")
-        public StatusStage language(Language language) {
-            this.language = language;
+        public StatusStage language(@NotNull Language language) {
+            this.language = Objects.requireNonNull(language, "language must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("status")
-        public _FinalStage status(ExecutionSessionStatus status) {
-            this.status = status;
+        public _FinalStage status(@NotNull ExecutionSessionStatus status) {
+            this.status = Objects.requireNonNull(status, "status must not be null");
             return this;
         }
 

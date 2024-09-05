@@ -12,6 +12,7 @@ import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
+import com.squareup.javapoet.ParameterSpec.Builder;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
@@ -22,6 +23,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -46,17 +48,20 @@ public final class BuilderGenerator {
 
     private final boolean isSerialized;
     private final boolean supportAdditionalProperties;
+    private final boolean disableRequiredPropertyBuilderChecks;
 
     public BuilderGenerator(
             ClassName objectClassName,
             List<EnrichedObjectProperty> objectPropertyWithFields,
             boolean isSerialized,
-            boolean supportAdditionalProperties) {
+            boolean supportAdditionalProperties,
+            boolean disableRequiredPropertyBuilderChecks) {
         this.objectClassName = objectClassName;
         this.objectPropertyWithFields = objectPropertyWithFields.stream()
                 .map(BuilderGenerator::maybeGetEnrichedObjectPropertyWithField)
                 .flatMap(Optional::stream)
                 .collect(Collectors.toList());
+        this.disableRequiredPropertyBuilderChecks = disableRequiredPropertyBuilderChecks;
         buildMethodArguments.addAll(this.objectPropertyWithFields.stream()
                 .map(enrichedObjectProperty -> enrichedObjectProperty.fieldSpec.name)
                 .collect(Collectors.toList()));
@@ -251,10 +256,21 @@ public final class BuilderGenerator {
     private MethodSpec getRequiredFieldSetterWithImpl(
             EnrichedObjectPropertyWithField enrichedObjectProperty, ClassName returnClass) {
         MethodSpec.Builder methodBuilder = getRequiredFieldSetter(enrichedObjectProperty, returnClass)
-                .addAnnotation(ClassName.get("", "java.lang.Override"))
-                .addStatement(
-                        "this.$L = $L", enrichedObjectProperty.fieldSpec.name, enrichedObjectProperty.fieldSpec.name)
-                .addStatement("return this");
+                .addAnnotation(ClassName.get("", "java.lang.Override"));
+        if (enrichedObjectProperty.enrichedObjectProperty.poetTypeName().isPrimitive()
+                || disableRequiredPropertyBuilderChecks) {
+            methodBuilder.addStatement(
+                    "this.$L = $L", enrichedObjectProperty.fieldSpec.name, enrichedObjectProperty.fieldSpec.name);
+        } else {
+            methodBuilder.addStatement(
+                    "this.$L = $T.requireNonNull($L, \"$L must not be null\")",
+                    enrichedObjectProperty.fieldSpec.name,
+                    Objects.class,
+                    enrichedObjectProperty.fieldSpec.name,
+                    enrichedObjectProperty.fieldSpec.name);
+        }
+        methodBuilder.addStatement("return this");
+
         if (enrichedObjectProperty.enrichedObjectProperty.docs().isPresent()) {
             methodBuilder.addJavadoc(JavaDocUtils.render(
                     enrichedObjectProperty.enrichedObjectProperty.docs().get()));
@@ -276,14 +292,15 @@ public final class BuilderGenerator {
 
     private MethodSpec.Builder getRequiredFieldSetter(
             EnrichedObjectPropertyWithField enrichedObjectProperty, ClassName returnClass) {
-        MethodSpec.Builder setterBuilder = MethodSpec.methodBuilder(enrichedObjectProperty.fieldSpec.name)
+        Builder parameterSpecBuilder = ParameterSpec.builder(
+                enrichedObjectProperty.enrichedObjectProperty.poetTypeName(), enrichedObjectProperty.fieldSpec.name);
+        if (!enrichedObjectProperty.enrichedObjectProperty.poetTypeName().isPrimitive()) {
+            parameterSpecBuilder.addAnnotation(ClassName.get("org.jetbrains.annotations", "NotNull"));
+        }
+        return MethodSpec.methodBuilder(enrichedObjectProperty.fieldSpec.name)
                 .addModifiers(Modifier.PUBLIC)
                 .returns(returnClass)
-                .addParameter(ParameterSpec.builder(
-                                enrichedObjectProperty.enrichedObjectProperty.poetTypeName(),
-                                enrichedObjectProperty.fieldSpec.name)
-                        .build());
-        return setterBuilder;
+                .addParameter(parameterSpecBuilder.build());
     }
 
     private MethodSpec.Builder getFromSetter() {

@@ -13,6 +13,7 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
@@ -63,13 +64,13 @@ public final class DoublyLinkedListNodeAndListValue {
   }
 
   public interface NodeIdStage {
-    FullListStage nodeId(NodeId nodeId);
+    FullListStage nodeId(@NotNull NodeId nodeId);
 
     Builder from(DoublyLinkedListNodeAndListValue other);
   }
 
   public interface FullListStage {
-    _FinalStage fullList(DoublyLinkedListValue fullList);
+    _FinalStage fullList(@NotNull DoublyLinkedListValue fullList);
   }
 
   public interface _FinalStage {
@@ -96,15 +97,15 @@ public final class DoublyLinkedListNodeAndListValue {
 
     @java.lang.Override
     @JsonSetter("nodeId")
-    public FullListStage nodeId(NodeId nodeId) {
-      this.nodeId = nodeId;
+    public FullListStage nodeId(@NotNull NodeId nodeId) {
+      this.nodeId = Objects.requireNonNull(nodeId, "nodeId must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("fullList")
-    public _FinalStage fullList(DoublyLinkedListValue fullList) {
-      this.fullList = fullList;
+    public _FinalStage fullList(@NotNull DoublyLinkedListValue fullList) {
+      this.fullList = Objects.requireNonNull(fullList, "fullList must not be null");
       return this;
     }
 
