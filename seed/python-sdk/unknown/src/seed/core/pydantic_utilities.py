@@ -111,19 +111,25 @@ class UniversalBaseModel(pydantic.BaseModel):
         # that we have less control over, and this is less intrusive than custom serializers for now.
         if IS_PYDANTIC_V2:
             kwargs_with_defaults_exclude_unset: typing.Any = {
+                **kwargs,
                 "by_alias": True,
                 "exclude_unset": True,
-                **kwargs,
+                "exclude_none": False,
             }
             kwargs_with_defaults_exclude_none: typing.Any = {
+                **kwargs,
                 "by_alias": True,
                 "exclude_none": True,
-                **kwargs,
+                "exclude_unset": False,
             }
             dict_dump = deep_union_pydantic_dicts(
                 super().model_dump(**kwargs_with_defaults_exclude_unset),  # type: ignore # Pydantic v2
                 super().model_dump(**kwargs_with_defaults_exclude_none),  # type: ignore # Pydantic v2
             )
+
+            print("dict_dump", dict_dump)
+            print("kwargs_with_defaults_exclude_unset", super().model_dump(**kwargs_with_defaults_exclude_unset))
+            print("kwargs_with_defaults_exclude_none", super().model_dump(**kwargs_with_defaults_exclude_none))
         else:
             _fields_set = self.__fields_set__
 

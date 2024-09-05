@@ -106,34 +106,73 @@ class UniversalBaseModel(pydantic.BaseModel):
         Override the default dict method to `exclude_unset` by default. This function patches
         `exclude_unset` to work include fields within non-None default values.
         """
-        _fields_set = self.__fields_set__
-
-        fields = _get_model_fields(self.__class__)
-        for name, field in fields.items():
-            if name not in _fields_set:
-                default = _get_field_default(field)
-
-                # If the default values are non-null act like they've been set
-                # This effectively allows exclude_unset to work like exclude_none where
-                # the latter passes through intentionally set none values.
-                if default != None:
-                    _fields_set.add(name)
-
-        kwargs_with_defaults_exclude_unset: typing.Any = {
-            "by_alias": True,
-            "exclude_unset": True,
-            "include": _fields_set,
-            **kwargs,
-        }
-
+        # Note: the logic here is multi-plexed given the levers exposed in Pydantic V1 vs V2
+        # Pydantic V1's .dict can be extremely slow, so we do not want to call it twice.
+        #
+        # We'd ideally do the same for Pydantic V2, but it shells out to a library to serialize models
+        # that we have less control over, and this is less intrusive than custom serializers for now.
         if IS_PYDANTIC_V2:
-            dict_dump = super().model_dump(**kwargs_with_defaults_exclude_unset)  # type: ignore # Pydantic v2
+            kwargs_with_defaults_exclude_unset: typing.Any = {
+                **kwargs,
+                "by_alias": True,
+                "exclude_unset": True,
+                "exclude_none": False,
+            }
+            kwargs_with_defaults_exclude_none: typing.Any = {
+                **kwargs,
+                "by_alias": True,
+                "exclude_none": True,
+                "exclude_unset": False,
+            }
+            dict_dump = deep_union_pydantic_dicts(
+                super().model_dump(**kwargs_with_defaults_exclude_unset),  # type: ignore # Pydantic v2
+                super().model_dump(**kwargs_with_defaults_exclude_none),  # type: ignore # Pydantic v2
+            )
+
+            print("dict_dump", dict_dump)
+            print("kwargs_with_defaults_exclude_unset", super().model_dump(**kwargs_with_defaults_exclude_unset))
+            print("kwargs_with_defaults_exclude_none", super().model_dump(**kwargs_with_defaults_exclude_none))
         else:
-            dict_dump = super().dict(**kwargs_with_defaults_exclude_unset)
+            _fields_set = self.__fields_set__
+
+            fields = _get_model_fields(self.__class__)
+            for name, field in fields.items():
+                if name not in _fields_set:
+                    default = _get_field_default(field)
+
+                    # If the default values are non-null act like they've been set
+                    # This effectively allows exclude_unset to work like exclude_none where
+                    # the latter passes through intentionally set none values.
+                    if default != None:
+                        _fields_set.add(name)
+
+            kwargs_with_defaults_exclude_unset_include_fields: typing.Any = {
+                "by_alias": True,
+                "exclude_unset": True,
+                "include": _fields_set,
+                **kwargs,
+            }
+
+            dict_dump = super().dict(
+                **kwargs_with_defaults_exclude_unset_include_fields
+            )
 
         return convert_and_respect_annotation_metadata(
             object_=dict_dump, annotation=self.__class__, direction="write"
         )
+
+
+def deep_union_pydantic_dicts(
+    source: typing.Dict[str, typing.Any], destination: typing.Dict[str, typing.Any]
+) -> typing.Dict[str, typing.Any]:
+    for key, value in source.items():
+        if isinstance(value, dict):
+            node = destination.setdefault(key, {})
+            deep_union_pydantic_dicts(value, node)
+        else:
+            destination[key] = value
+
+    return destination
 
 
 if IS_PYDANTIC_V2:

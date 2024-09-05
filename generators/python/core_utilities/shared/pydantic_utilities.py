@@ -55,7 +55,9 @@ Model = typing.TypeVar("Model", bound=pydantic.BaseModel)
 
 
 def parse_obj_as(type_: typing.Type[T], object_: typing.Any) -> T:
-    dealiased_object = convert_and_respect_annotation_metadata(object_=object_, annotation=type_, direction="read")
+    dealiased_object = convert_and_respect_annotation_metadata(
+        object_=object_, annotation=type_, direction="read"
+    )
     if IS_PYDANTIC_V2:
         adapter = pydantic.TypeAdapter(type_)  # type: ignore # Pydantic v2
         return adapter.validate_python(dealiased_object)
@@ -109,19 +111,25 @@ class UniversalBaseModel(pydantic.BaseModel):
         # that we have less control over, and this is less intrusive than custom serializers for now.
         if IS_PYDANTIC_V2:
             kwargs_with_defaults_exclude_unset: typing.Any = {
+                **kwargs,
                 "by_alias": True,
                 "exclude_unset": True,
-                **kwargs,
+                "exclude_none": False,
             }
             kwargs_with_defaults_exclude_none: typing.Any = {
+                **kwargs,
                 "by_alias": True,
                 "exclude_none": True,
-                **kwargs,
+                "exclude_unset": False,
             }
             dict_dump = deep_union_pydantic_dicts(
                 super().model_dump(**kwargs_with_defaults_exclude_unset),  # type: ignore # Pydantic v2
                 super().model_dump(**kwargs_with_defaults_exclude_none),  # type: ignore # Pydantic v2
             )
+
+            print("dict_dump", dict_dump)
+            print("kwargs_with_defaults_exclude_unset", super().model_dump(**kwargs_with_defaults_exclude_unset))
+            print("kwargs_with_defaults_exclude_none", super().model_dump(**kwargs_with_defaults_exclude_none))
         else:
             _fields_set = self.__fields_set__
 
@@ -143,9 +151,13 @@ class UniversalBaseModel(pydantic.BaseModel):
                 **kwargs,
             }
 
-            dict_dump = super().dict(**kwargs_with_defaults_exclude_unset_include_fields)
+            dict_dump = super().dict(
+                **kwargs_with_defaults_exclude_unset_include_fields
+            )
 
-        return convert_and_respect_annotation_metadata(object_=dict_dump, annotation=self.__class__, direction="write")
+        return convert_and_respect_annotation_metadata(
+            object_=dict_dump, annotation=self.__class__, direction="write"
+        )
 
 
 def deep_union_pydantic_dicts(
@@ -208,12 +220,14 @@ def universal_root_validator(
     return decorator
 
 
-def universal_field_validator(field_name: str, pre: bool = False) -> typing.Callable[[AnyCallable], AnyCallable]:
+def universal_field_validator(
+    field_name: str, pre: bool = False
+) -> typing.Callable[[AnyCallable], AnyCallable]:
     def decorator(func: AnyCallable) -> AnyCallable:
         if IS_PYDANTIC_V2:
-            return pydantic.field_validator(field_name, mode="before" if pre else "after")(
-                func
-            )  # type: ignore # Pydantic v2
+            return pydantic.field_validator(
+                field_name, mode="before" if pre else "after"
+            )(func)  # type: ignore # Pydantic v2
         else:
             return pydantic.validator(field_name, pre=pre)(func)  # type: ignore # Pydantic v1
 
