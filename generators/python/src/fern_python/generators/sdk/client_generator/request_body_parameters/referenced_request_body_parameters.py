@@ -168,9 +168,9 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
             request_param_tr = self._request_body.request_body_type
 
             if (
-                (self._context.custom_config.pydantic_config.use_typeddict_requests or not self._context.custom_config.pydantic_config.use_pydantic_field_aliases)
-                and can_tr_be_fern_model(request_param_tr, self._context.get_types())
-            ):
+                self._context.custom_config.pydantic_config.use_typeddict_requests
+                or not self._context.custom_config.pydantic_config.use_pydantic_field_aliases
+            ) and can_tr_be_fern_model(request_param_tr, self._context.get_types()):
                 # We don't need any optional wrappings for the coercion here.
                 unwrapped_tr = self._context.unwrap_optional_type_reference(request_param_tr)
                 type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(

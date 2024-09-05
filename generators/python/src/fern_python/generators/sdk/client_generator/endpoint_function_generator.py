@@ -855,17 +855,17 @@ class EndpointFunctionGenerator:
                     writer.write_node(AST.Expression(f"{possible_path_part_literal}"))
                 else:
                     parameter = AST.Expression(
-                                    self._get_path_parameter_from_name(
-                                        endpoint=endpoint,
-                                        path_parameter_name=part.path_parameter,
-                                    )
-                                )
+                        self._get_path_parameter_from_name(
+                            endpoint=endpoint,
+                            path_parameter_name=part.path_parameter,
+                        )
+                    )
                     if self._context.custom_config.pydantic_config.use_pydantic_field_aliases:
-                            parameter = self.convert_and_respect_annotation_metadata_raw(
-                                context=self._context,
-                                object_=parameter,
-                                type_reference=parameter_obj.value_type,
-                            )
+                        parameter = self.convert_and_respect_annotation_metadata_raw(
+                            context=self._context,
+                            object_=parameter,
+                            type_reference=parameter_obj.value_type,
+                        )
 
                     writer.write("{")
                     writer.write_node(
@@ -1361,7 +1361,10 @@ class EndpointFunctionGenerator:
             or self._is_date(type_reference, allow_optional=True)
             or self._is_httpx_primitive_data(type_reference, allow_optional=True)
             or not can_tr_be_fern_model(type_reference, context.get_types())
-            or (not context.custom_config.pydantic_config.use_typeddict_requests and context.custom_config.pydantic_config.use_pydantic_field_aliases)
+            or (
+                not context.custom_config.pydantic_config.use_typeddict_requests
+                and context.custom_config.pydantic_config.use_pydantic_field_aliases
+            )
         ):
             return object_
 

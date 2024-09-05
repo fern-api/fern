@@ -34,7 +34,10 @@ def get_json_body_for_inlined_request(
                     writer.write(f'"{property.raw_name}": ')
                     if (
                         property.raw_type is not None
-                        and (context.custom_config.pydantic_config.use_typeddict_requests or not context.custom_config.pydantic_config.use_pydantic_field_aliases)
+                        and (
+                            context.custom_config.pydantic_config.use_typeddict_requests
+                            or not context.custom_config.pydantic_config.use_pydantic_field_aliases
+                        )
                         and can_tr_be_fern_model(property.raw_type, context.get_types())
                     ):
                         # We don't need any optional wrappings for the coercion here.
