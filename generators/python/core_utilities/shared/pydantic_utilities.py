@@ -55,9 +55,7 @@ Model = typing.TypeVar("Model", bound=pydantic.BaseModel)
 
 
 def parse_obj_as(type_: typing.Type[T], object_: typing.Any) -> T:
-    dealiased_object = convert_and_respect_annotation_metadata(
-        object_=object_, annotation=type_, direction="read"
-    )
+    dealiased_object = convert_and_respect_annotation_metadata(object_=object_, annotation=type_, direction="read")
     if IS_PYDANTIC_V2:
         adapter = pydantic.TypeAdapter(type_)  # type: ignore # Pydantic v2
         return adapter.validate_python(dealiased_object)
@@ -151,13 +149,9 @@ class UniversalBaseModel(pydantic.BaseModel):
                 **kwargs,
             }
 
-            dict_dump = super().dict(
-                **kwargs_with_defaults_exclude_unset_include_fields
-            )
+            dict_dump = super().dict(**kwargs_with_defaults_exclude_unset_include_fields)
 
-        return convert_and_respect_annotation_metadata(
-            object_=dict_dump, annotation=self.__class__, direction="write"
-        )
+        return convert_and_respect_annotation_metadata(object_=dict_dump, annotation=self.__class__, direction="write")
 
 
 def deep_union_pydantic_dicts(
@@ -220,14 +214,12 @@ def universal_root_validator(
     return decorator
 
 
-def universal_field_validator(
-    field_name: str, pre: bool = False
-) -> typing.Callable[[AnyCallable], AnyCallable]:
+def universal_field_validator(field_name: str, pre: bool = False) -> typing.Callable[[AnyCallable], AnyCallable]:
     def decorator(func: AnyCallable) -> AnyCallable:
         if IS_PYDANTIC_V2:
-            return pydantic.field_validator(
-                field_name, mode="before" if pre else "after"
-            )(func)  # type: ignore # Pydantic v2
+            return pydantic.field_validator(field_name, mode="before" if pre else "after")(
+                func
+            )  # type: ignore # Pydantic v2
         else:
             return pydantic.validator(field_name, pre=pre)(func)  # type: ignore # Pydantic v1
 
