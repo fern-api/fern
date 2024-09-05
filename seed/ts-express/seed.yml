@@ -23,6 +23,12 @@ defaultOutputMode: local_files
 defaultCustomConfig: 
   outputSourceFiles: true
 fixtures:
+  ts-express-casing:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        noSerdeLayer: true
+      outputFolder: no-serde-layer
   trace:
     - customConfig: null
       outputFolder: no-custom-config
