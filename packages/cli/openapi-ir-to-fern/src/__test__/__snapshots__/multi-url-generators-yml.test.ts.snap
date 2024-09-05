@@ -157,11 +157,10 @@ exports[`multi-url-generators-yml > multi-url-generators-yml > docs 1`] = `
     },
   },
   "rootApiFile": {
-    "default-environment": "Default",
+    "default-environment": "Production",
     "default-url": "user",
     "display-name": "User and Token API",
     "environments": {
-      "Default": "https://a.com",
       "Production": {
         "urls": {
           "auth": "http://auth.com",
@@ -319,11 +318,10 @@ exports[`multi-url-generators-yml > multi-url-generators-yml > simple 1`] = `
     },
   },
   "rootApiFile": {
-    "default-environment": "Default",
+    "default-environment": "Production",
     "default-url": "user",
     "display-name": "User and Token API",
     "environments": {
-      "Default": "https://a.com",
       "Production": {
         "urls": {
           "auth": "http://auth.com",
