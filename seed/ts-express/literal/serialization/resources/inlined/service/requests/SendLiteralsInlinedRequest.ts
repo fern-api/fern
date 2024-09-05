@@ -17,6 +17,7 @@ export const SendLiteralsInlinedRequest: core.serialization.Schema<
     stream: core.serialization.booleanLiteral(false),
     aliasedContext: core.serialization.lazy(() => serializers.SomeAliasedLiteral),
     maybeContext: core.serialization.lazy(() => serializers.SomeAliasedLiteral).optional(),
+    objectWithLiteral: core.serialization.lazyObject(() => serializers.ATopLevelLiteral),
 });
 
 export declare namespace SendLiteralsInlinedRequest {
@@ -28,5 +29,6 @@ export declare namespace SendLiteralsInlinedRequest {
         stream: false;
         aliasedContext: serializers.SomeAliasedLiteral.Raw;
         maybeContext?: serializers.SomeAliasedLiteral.Raw | null;
+        objectWithLiteral: serializers.ATopLevelLiteral.Raw;
     }
 }

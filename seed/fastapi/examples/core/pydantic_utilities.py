@@ -140,14 +140,16 @@ class UniversalBaseModel(pydantic.BaseModel):
                     if default != None:
                         _fields_set.add(name)
 
-            kwargs_with_defaults_exclude_unset: typing.Any = {
+            kwargs_with_defaults_exclude_unset_include_fields: typing.Any = {
                 "by_alias": True,
                 "exclude_unset": True,
                 "include": _fields_set,
                 **kwargs,
             }
 
-            dict_dump = super().dict(**kwargs_with_defaults_exclude_unset)
+            dict_dump = super().dict(
+                **kwargs_with_defaults_exclude_unset_include_fields
+            )
 
         return convert_and_respect_annotation_metadata(
             object_=dict_dump, annotation=self.__class__, direction="write"
