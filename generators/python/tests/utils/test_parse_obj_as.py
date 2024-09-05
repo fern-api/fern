@@ -1,11 +1,11 @@
 from typing import List, Any
 
-from .typeddict_models.types.core.pydantic_utilities import parse_obj_as
+from .unaliased_models.types.core.pydantic_utilities import parse_obj_as
 
-from .typeddict_models.types import ShapeParams, ObjectWithOptionalField, Shape_Circle
+from .unaliased_models.types import ObjectWithOptionalField, Shape_Circle
 
 
-UNION_TEST: ShapeParams = {"radius_measurement": 1.0, "shape_type": "circle", "id": "1"}
+UNION_TEST = {"radius_measurement": 1.0, "shape_type": "circle", "id": "1"}
 UNION_TEST_CONVERTED = {
     "shapeType": "circle",
     "radiusMeasurement": 1.0,

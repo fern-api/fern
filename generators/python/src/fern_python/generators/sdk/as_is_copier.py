@@ -31,15 +31,15 @@ def copy_to_project(*, project: Project) -> None:
             from_="tests/utils/test_query_encoding.py",
             to="tests/utils/test_query_encoding",
             replacements={
-                "core_utilities.sdk.query_encoder": f"{project._relative_path_to_project}.core.query_encoder",
+                "core_utilities.shared.query_encoder": f"{project._relative_path_to_project}.core.query_encoder",
             },
         ),
         AsIsFile(
             from_="tests/utils/test_http_client.py",
             to="tests/utils/test_http_client",
             replacements={
-                "core_utilities.sdk.request_options": f"{project._relative_path_to_project}.core.request_options",
-                "core_utilities.sdk.http_client": f"{project._relative_path_to_project}.core.http_client",
+                "core_utilities.shared.request_options": f"{project._relative_path_to_project}.core.request_options",
+                "core_utilities.shared.http_client": f"{project._relative_path_to_project}.core.http_client",
             },
         ),
         AsIsFile(
