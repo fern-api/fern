@@ -13,6 +13,7 @@ export declare namespace TestConvertOpenAPI {
     interface Options {
         asyncApiFilename?: string;
         environmentOverrides?: RawSchemas.WithEnvironmentsSchema;
+        authOverrides?: RawSchemas.WithAuthSchema
     }
 }
 
@@ -56,6 +57,7 @@ export function testConvertOpenAPI(fixtureName: string, filename: string, opts: 
             });
             const fernDefinition = convert({
                 environmentOverrides: opts.environmentOverrides,
+                authOverrides: opts.authOverrides,
                 ir: openApiIr,
                 taskContext: mockTaskContext,
                 enableUniqueErrorsPerEndpoint: false,
@@ -100,6 +102,7 @@ export function testConvertOpenAPI(fixtureName: string, filename: string, opts: 
             });
             const fernDefinition = convert({
                 environmentOverrides: opts.environmentOverrides,
+                authOverrides: opts.authOverrides,
                 ir: openApiIr,
                 taskContext: mockTaskContext,
                 enableUniqueErrorsPerEndpoint: true,

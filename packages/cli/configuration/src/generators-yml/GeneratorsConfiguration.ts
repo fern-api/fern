@@ -21,12 +21,12 @@ export interface GeneratorsConfiguration {
 
 export type APIDefinition = SingleNamespaceAPIDefinition | MultiNamespaceAPIDefinition;
 
-export interface SingleNamespaceAPIDefinition extends RawSchemas.WithEnvironmentsSchema {
+export interface SingleNamespaceAPIDefinition extends RawSchemas.WithEnvironmentsSchema, RawSchemas.WithAuthSchema {
     type: "singleNamespace";
     definitions: APIDefinitionLocation[];
 }
 
-export interface MultiNamespaceAPIDefinition extends RawSchemas.WithEnvironmentsSchema {
+export interface MultiNamespaceAPIDefinition extends RawSchemas.WithEnvironmentsSchema, RawSchemas.WithAuthSchema {
     type: "multiNamespace";
     definitions: Record<string, APIDefinitionLocation[]>;
 }
