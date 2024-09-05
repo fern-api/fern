@@ -101,7 +101,7 @@ public final class Cli extends AbstractGeneratorCli<SpringCustomConfig, SpringDo
         maybeAuth.ifPresent(this::addGeneratedFile);
 
         // types
-        TypesGenerator typesGenerator = new TypesGenerator(context, springCustomConfig.enablePublicConstructors());
+        TypesGenerator typesGenerator = new TypesGenerator(context);
         Result generatedTypes = typesGenerator.generateFiles();
         generatedTypes.getTypes().values().forEach(this::addGeneratedFile);
         generatedTypes.getInterfaces().values().forEach(this::addGeneratedFile);
