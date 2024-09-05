@@ -104,6 +104,7 @@ class FernHTTPExceptionGenerator:
             universal_root_validator=self._context.core_utilities.universal_root_validator,
             update_forward_ref_function_reference=self._context.core_utilities.get_update_forward_refs(),
             field_metadata_getter=lambda: self._context.core_utilities.get_field_metadata(),
+            use_pydantic_field_aliases=self._custom_config.pydantic_config.use_pydantic_field_aliases,
         ) as body_pydantic_model:
             body_pydantic_model.add_field(
                 PydanticField(

@@ -374,6 +374,7 @@ await client.service.createMovie({
             imdb: 7.6,
         },
     },
+    revenue: 1000000,
 });
 ```
 

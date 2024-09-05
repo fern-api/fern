@@ -40,6 +40,9 @@ public record ExtendedMovie
     [JsonPropertyName("metadata")]
     public object Metadata { get; set; } = new Dictionary<string, object?>();
 
+    [JsonPropertyName("revenue")]
+    public required long Revenue { get; set; }
+
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

@@ -478,6 +478,7 @@ type ExtendedMovie struct {
 	Tag      commons.Tag            `json:"tag" url:"tag"`
 	Book     *string                `json:"book,omitempty" url:"book,omitempty"`
 	Metadata map[string]interface{} `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Revenue  int64                  `json:"revenue" url:"revenue"`
 	Cast     []string               `json:"cast,omitempty" url:"cast,omitempty"`
 	type_    string
 
@@ -803,6 +804,7 @@ type Movie struct {
 	Tag      commons.Tag            `json:"tag" url:"tag"`
 	Book     *string                `json:"book,omitempty" url:"book,omitempty"`
 	Metadata map[string]interface{} `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Revenue  int64                  `json:"revenue" url:"revenue"`
 	type_    string
 
 	extraProperties map[string]interface{}

@@ -32,7 +32,14 @@ def get_json_body_for_inlined_request(
                     writer.write_line(f'"{property.raw_name}": {possible_literal_value},')
                 else:
                     writer.write(f'"{property.raw_name}": ')
-                    if property.raw_type is not None:
+                    if (
+                        property.raw_type is not None
+                        and (
+                            context.custom_config.pydantic_config.use_typeddict_requests
+                            or not context.custom_config.pydantic_config.use_pydantic_field_aliases
+                        )
+                        and can_tr_be_fern_model(property.raw_type, context.get_types())
+                    ):
                         # We don't need any optional wrappings for the coercion here.
                         unwrapped_tr = context.unwrap_optional_type_reference(property.raw_type)
                         type_hint = context.pydantic_generator_context.get_type_hint_for_type_reference(

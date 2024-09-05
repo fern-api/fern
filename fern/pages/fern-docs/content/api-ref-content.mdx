@@ -9,7 +9,7 @@ Fern Docs allows you to write Markdown content in your API Reference documentati
 
 If you're using OpenAPI to define your API, you can include Markdown content in your OpenAPI Specification.
 
-For example, you can include a [callout](/learn/docs/components/callouts#note-callouts) in the `description` field of an endpoint:
+For example, you can include a [callout](/learn/docs/content/components/callouts#note-callouts) in the `description` field of an endpoint:
 
 ```yaml title="api/openapi.yml"
 paths:
@@ -26,7 +26,7 @@ paths:
 
 If you're using Fern's simpler API definition format, you can include Markdown content in your API definition.
 
-For example, you can include a [callout](/learn/docs/components/callouts#note-callouts) in the `docs` field of an endpoint:
+For example, you can include a [callout](/learn/docs/content/components/callouts#note-callouts) in the `docs` field of an endpoint:
 
 ```yaml title="api/service.yml"
 service:
@@ -57,7 +57,7 @@ By including the `summary` field, the `API Reference` section title will link to
 
 In addition to adding Markdown content to individual endpoints, you can also include Markdown content between endpoints in your API Reference. This content can provide context or explanations that apply to multiple endpoints.
 
-This feature requires you to use the `layout` field in your `docs.yml` file, which is described in the [Reorder your API Reference](/learn/docs/api-references/reorder-api-reference-pages) guide.
+This feature requires you to use the `layout` field in your `docs.yml` file, which is described in the [Customize your API Reference](/learn/docs/api-references/customize-api-reference-layout) guide.
 
 To add Markdown content between endpoints, create a Markdown file in your `fern/` folder and link to it in your `docs.yml` file:
 

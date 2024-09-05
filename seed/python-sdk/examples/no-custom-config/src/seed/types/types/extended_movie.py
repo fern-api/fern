@@ -24,6 +24,7 @@ class ExtendedMovie(Movie):
             "releaseDate": "2023-12-08",
             "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
         },
+        revenue=1000000,
     )
     """
 

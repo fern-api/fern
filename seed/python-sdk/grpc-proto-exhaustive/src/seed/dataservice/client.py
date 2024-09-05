@@ -303,7 +303,7 @@ class DataserviceClient:
             method="GET",
             params={
                 "prefix": prefix,
-                "limit": convert_and_respect_annotation_metadata(object_=limit, annotation=int, direction="write"),
+                "limit": limit,
                 "paginationToken": pagination_token,
                 "namespace": namespace,
             },
@@ -807,7 +807,7 @@ class AsyncDataserviceClient:
             method="GET",
             params={
                 "prefix": prefix,
-                "limit": convert_and_respect_annotation_metadata(object_=limit, annotation=int, direction="write"),
+                "limit": limit,
                 "paginationToken": pagination_token,
                 "namespace": namespace,
             },

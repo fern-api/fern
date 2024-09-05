@@ -1,8 +1,8 @@
 .PHONY: build
 build:
-	docker build -f ./docker/Dockerfile.model -t fernapi/fern-go-model .
-	docker build -f ./docker/Dockerfile.sdk -t fernapi/fern-go-sdk .
-	docker build -f ./docker/Dockerfile.fiber -t fernapi/fern-go-fiber .
+	docker build -f ./model/Dockerfile -t fernapi/fern-go-model .
+	docker build -f ./sdk/Dockerfile -t fernapi/fern-go-sdk .
+	docker build -f ./fiber/Dockerfile -t fernapi/fern-go-fiber .
 	docker tag fernapi/fern-go-sdk fernapi/fern-go-sdk:0.0.0
 
 .PHONY: generate

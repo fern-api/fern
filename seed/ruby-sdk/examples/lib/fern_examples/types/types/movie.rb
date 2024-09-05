@@ -24,6 +24,8 @@ module SeedExamplesClient
       attr_reader :book
       # @return [Hash{String => Object}]
       attr_reader :metadata
+      # @return [Long]
+      attr_reader :revenue
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
       # @return [Object]
@@ -41,9 +43,10 @@ module SeedExamplesClient
       # @param tag [String]
       # @param book [String]
       # @param metadata [Hash{String => Object}]
+      # @param revenue [Long]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedExamplesClient::Types::Movie]
-      def initialize(id:, title:, from:, rating:, type:, tag:, metadata:, prequel: OMIT, book: OMIT,
+      def initialize(id:, title:, from:, rating:, type:, tag:, metadata:, revenue:, prequel: OMIT, book: OMIT,
                      additional_properties: nil)
         @id = id
         @prequel = prequel if prequel != OMIT
@@ -54,6 +57,7 @@ module SeedExamplesClient
         @tag = tag
         @book = book if book != OMIT
         @metadata = metadata
+        @revenue = revenue
         @additional_properties = additional_properties
         @_field_set = {
           "id": id,
@@ -64,7 +68,8 @@ module SeedExamplesClient
           "type": type,
           "tag": tag,
           "book": book,
-          "metadata": metadata
+          "metadata": metadata,
+          "revenue": revenue
         }.reject do |_k, v|
           v == OMIT
         end
@@ -86,6 +91,7 @@ module SeedExamplesClient
         tag = parsed_json["tag"]
         book = parsed_json["book"]
         metadata = parsed_json["metadata"]
+        revenue = parsed_json["revenue"]
         new(
           id: id,
           prequel: prequel,
@@ -96,6 +102,7 @@ module SeedExamplesClient
           tag: tag,
           book: book,
           metadata: metadata,
+          revenue: revenue,
           additional_properties: struct
         )
       end
@@ -123,6 +130,7 @@ module SeedExamplesClient
         obj.tag.is_a?(String) != false || raise("Passed value for field obj.tag is not the expected type, validation failed.")
         obj.book&.is_a?(String) != false || raise("Passed value for field obj.book is not the expected type, validation failed.")
         obj.metadata.is_a?(Hash) != false || raise("Passed value for field obj.metadata is not the expected type, validation failed.")
+        obj.revenue.is_a?(Long) != false || raise("Passed value for field obj.revenue is not the expected type, validation failed.")
       end
     end
   end

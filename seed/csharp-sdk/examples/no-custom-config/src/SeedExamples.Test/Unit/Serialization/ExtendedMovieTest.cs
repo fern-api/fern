@@ -37,7 +37,8 @@ public class ExtendedMovieTest
               ""rottenTomatoes"": 97,
               ""imdb"": 7.6
             }
-          }
+          },
+          ""revenue"": 1000000
         }
         ";
 

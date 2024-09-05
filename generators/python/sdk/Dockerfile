@@ -19,6 +19,7 @@ ENV HTTPX_LOG_LEVEL=trace
 COPY pyproject.toml ./pyproject.toml
 COPY poetry.lock ./poetry.lock
 COPY ./core_utilities/sdk /assets/core_utilities
+COPY ./core_utilities/shared /assets/core_utilities
 COPY ./sdk/features.yml /assets/features.yml
 COPY ./tests /assets/tests
 
