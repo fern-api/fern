@@ -24,12 +24,7 @@ import org.immutables.value.Value;
 @Value.Immutable
 @StagedBuilderImmutablesStyle
 @JsonDeserialize(as = ImmutableSpringDownloadFilesCustomConfig.class)
-public interface SpringDownloadFilesCustomConfig extends DownloadFilesCustomConfig {
-
-    @Override
-    default Boolean wrappedAliases() {
-        return true;
-    }
+public interface SpringDownloadFilesCustomConfig extends DownloadFilesCustomConfig, SpringCustomConfig {
 
     static ImmutableSpringDownloadFilesCustomConfig.Builder builder() {
         return ImmutableSpringDownloadFilesCustomConfig.builder();

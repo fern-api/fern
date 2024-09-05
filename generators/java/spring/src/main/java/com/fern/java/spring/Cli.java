@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public final class Cli extends AbstractGeneratorCli<SpringCustomConfig, SpringDownloadFilesCustomConfig> {
+public final class Cli extends AbstractGeneratorCli<SpringCustomConfig, SpringCustomConfig> {
 
     private static final Logger log = LoggerFactory.getLogger(Cli.class);
 
@@ -44,13 +44,10 @@ public final class Cli extends AbstractGeneratorCli<SpringCustomConfig, SpringDo
             DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir,
-            SpringDownloadFilesCustomConfig customConfig) {
+            SpringCustomConfig customConfig) {
         SpringGeneratorContext context = new SpringGeneratorContext(
                 ir,
                 generatorConfig,
-                SpringCustomConfig.builder()
-                        .wrappedAliases(customConfig.wrappedAliases())
-                        .build(),
                 customConfig,
                 new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes());
         generateClient(context, ir);

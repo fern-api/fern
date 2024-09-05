@@ -17,12 +17,6 @@ public interface DownloadFilesCustomConfig {
         return false;
     }
 
-    @Value.Default
-    @JsonProperty("wrapped-aliases")
-    default Boolean wrappedAliases() {
-        return false;
-    }
-
     @JsonProperty("package-prefix")
     Optional<String> packagePrefix();
 
