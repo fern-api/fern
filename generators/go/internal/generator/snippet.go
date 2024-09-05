@@ -463,7 +463,7 @@ func (s *SnippetWriter) getSnippetForPrimitive(
 		}
 	case "long":
 		return &ast.BasicLit{
-			Value: strconv.FormatInt(exampleTypeReference.Long, 64),
+			Value: strconv.FormatInt(exampleTypeReference.Long, 10),
 		}
 	case "datetime":
 		return &ast.CallExpr{

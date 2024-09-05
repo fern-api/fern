@@ -20,6 +20,7 @@ async def test_get_movie(client: SeedExhaustive, async_client: AsyncSeedExhausti
             "releaseDate": "2023-12-08",
             "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
         },
+        "revenue": 1000000,
     }
     expected_types: typing.Any = {
         "id": None,
@@ -30,6 +31,7 @@ async def test_get_movie(client: SeedExhaustive, async_client: AsyncSeedExhausti
         "type": None,
         "tag": None,
         "metadata": ("dict", {0: (None, None), 1: (None, None), 2: (None, None)}),
+        "revenue": None,
     }
     response = client.service.get_movie(movie_id="movie-c06a4ad7")
     validate_response(response, expected_response, expected_types)
@@ -53,6 +55,7 @@ async def test_create_movie(client: SeedExhaustive, async_client: AsyncSeedExhau
             "releaseDate": "2023-12-08",
             "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
         },
+        revenue=1000000,
     )
     validate_response(response, expected_response, expected_types)
 
@@ -68,6 +71,7 @@ async def test_create_movie(client: SeedExhaustive, async_client: AsyncSeedExhau
             "releaseDate": "2023-12-08",
             "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
         },
+        revenue=1000000,
     )
     validate_response(async_response, expected_response, expected_types)
 

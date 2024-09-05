@@ -115,7 +115,8 @@ export class Service {
      *                 "rottenTomatoes": 97,
      *                 "imdb": 7.6
      *             }
-     *         }
+     *         },
+     *         revenue: 1000000
      *     })
      */
     public async createMovie(

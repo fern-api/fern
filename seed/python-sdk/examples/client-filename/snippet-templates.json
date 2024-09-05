@@ -871,6 +871,22 @@
                             },
                             "type": "dict"
                         }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "revenue=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "BODY",
+                                    "path": "revenue",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
                     }
                 ],
                 "inputDelimiter": ",\n\t",
@@ -1063,6 +1079,22 @@
                                     "path": "metadata"
                                 },
                                 "type": "dict"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "revenue=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "BODY",
+                                        "path": "revenue",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
                             }
                         }
                     ],

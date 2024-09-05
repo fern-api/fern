@@ -76,6 +76,7 @@ class ServiceClient:
         rating: float,
         tag: Tag,
         metadata: typing.Dict[str, typing.Optional[typing.Any]],
+        revenue: int,
         prequel: typing.Optional[MovieId] = OMIT,
         book: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -95,6 +96,8 @@ class ServiceClient:
         tag : Tag
 
         metadata : typing.Dict[str, typing.Optional[typing.Any]]
+
+        revenue : int
 
         prequel : typing.Optional[MovieId]
 
@@ -128,6 +131,7 @@ class ServiceClient:
                 "releaseDate": "2023-12-08",
                 "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
             },
+            revenue=1000000,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -142,6 +146,7 @@ class ServiceClient:
                 "tag": tag,
                 "book": book,
                 "metadata": metadata,
+                "revenue": revenue,
                 "type": "movie",
             },
             request_options=request_options,
@@ -334,6 +339,7 @@ class AsyncServiceClient:
         rating: float,
         tag: Tag,
         metadata: typing.Dict[str, typing.Optional[typing.Any]],
+        revenue: int,
         prequel: typing.Optional[MovieId] = OMIT,
         book: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -353,6 +359,8 @@ class AsyncServiceClient:
         tag : Tag
 
         metadata : typing.Dict[str, typing.Optional[typing.Any]]
+
+        revenue : int
 
         prequel : typing.Optional[MovieId]
 
@@ -391,6 +399,7 @@ class AsyncServiceClient:
                     "releaseDate": "2023-12-08",
                     "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
                 },
+                revenue=1000000,
             )
 
 
@@ -408,6 +417,7 @@ class AsyncServiceClient:
                 "tag": tag,
                 "book": book,
                 "metadata": metadata,
+                "revenue": revenue,
                 "type": "movie",
             },
             request_options=request_options,
