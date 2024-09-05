@@ -104,7 +104,7 @@ class UniversalBaseModel(pydantic.BaseModel):
         """
         # Note: the logic here is multi-plexed given the levers exposed in Pydantic V1 vs V2
         # Pydantic V1's .dict can be extremely slow, so we do not want to call it twice.
-        # 
+        #
         # We'd ideally do the same for Pydantic V2, but it shells out to a library to serialize models
         # that we have less control over, and this is less intrusive than custom serializers for now.
         if IS_PYDANTIC_V2:
@@ -147,6 +147,7 @@ class UniversalBaseModel(pydantic.BaseModel):
 
         return convert_and_respect_annotation_metadata(object_=dict_dump, annotation=self.__class__, direction="write")
 
+
 def deep_union_pydantic_dicts(
     source: typing.Dict[str, typing.Any], destination: typing.Dict[str, typing.Any]
 ) -> typing.Dict[str, typing.Any]:
@@ -158,6 +159,7 @@ def deep_union_pydantic_dicts(
             destination[key] = value
 
     return destination
+
 
 if IS_PYDANTIC_V2:
 
