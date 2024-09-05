@@ -13,7 +13,7 @@ export declare namespace TestConvertOpenAPI {
     interface Options {
         asyncApiFilename?: string;
         environmentOverrides?: RawSchemas.WithEnvironmentsSchema;
-        authOverrides?: RawSchemas.WithAuthSchema
+        authOverrides?: RawSchemas.WithAuthSchema;
     }
 }
 
