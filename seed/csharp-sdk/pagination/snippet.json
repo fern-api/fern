@@ -90,6 +90,18 @@
             "id": {
                 "path": "/users",
                 "method": "GET",
+                "identifier_override": "endpoint_users.listWithExtendedResultsAndOptionalData"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nawait client.Users.ListWithExtendedResultsAndOptionalDataAsync(\n    new ListUsersExtendedRequestForOptionalData { Cursor = \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\" }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "GET",
                 "identifier_override": "endpoint_users.listUsernames"
             },
             "snippet": {

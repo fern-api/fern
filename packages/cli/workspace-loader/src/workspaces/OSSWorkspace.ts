@@ -83,6 +83,9 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
         // file paths with the inputted namespace, however given auth and other shared settings I think we have to
         // resolve to the IR first, and namespace there.
         const definition = convert({
+            environmentOverrides: {
+                ...this.generatorsConfiguration?.api
+            },
             taskContext: context,
             ir: openApiIr,
             enableUniqueErrorsPerEndpoint: settings?.enableUniqueErrorsPerEndpoint ?? false,

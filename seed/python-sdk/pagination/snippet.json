@@ -97,6 +97,19 @@
             "id": {
                 "path": "/users",
                 "method": "GET",
+                "identifier_override": "endpoint_users.listWithExtendedResultsAndOptionalData"
+            },
+            "snippet": {
+                "sync_client": "import uuid\n\nfrom seed import SeedPagination\n\nclient = SeedPagination(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nresponse = client.users.list_with_extended_results_and_optional_data(\n    cursor=uuid.UUID(\n        \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    ),\n)\nfor item in response:\n    yield item\n# alternatively, you can paginate page-by-page\nfor page in response.iter_pages():\n    yield page\n",
+                "async_client": "import asyncio\nimport uuid\n\nfrom seed import AsyncSeedPagination\n\nclient = AsyncSeedPagination(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    response = await client.users.list_with_extended_results_and_optional_data(\n        cursor=uuid.UUID(\n            \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        ),\n    )\n    async for item in response:\n        yield item\n    # alternatively, you can paginate page-by-page\n    async for page in response.iter_pages():\n        yield page\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/users",
+                "method": "GET",
                 "identifier_override": "endpoint_users.listUsernames"
             },
             "snippet": {

@@ -15,7 +15,7 @@ import { Request } from "./Request";
 import { Response } from "./Response";
 import { StatusCode } from "../../commons/types/StatusCode";
 import { HttpError } from "./HttpError";
-import { Server } from "../../commons/types/Server";
+import { HttpEndpointServer } from "./HttpEndpointServer";
 import { EndpointExample } from "./EndpointExample";
 import { Pagination } from "./Pagination";
 import { WithDescription } from "../../commons/types/WithDescription";
@@ -43,7 +43,7 @@ export const Endpoint: core.serialization.ObjectSchema<serializers.Endpoint.Raw,
             request: Request.optional(),
             response: Response.optional(),
             errors: core.serialization.record(StatusCode, HttpError),
-            server: core.serialization.list(Server),
+            server: core.serialization.list(HttpEndpointServer),
             examples: core.serialization.list(EndpointExample),
             pagination: Pagination.optional(),
         })
@@ -71,7 +71,7 @@ export declare namespace Endpoint {
         request?: Request.Raw | null;
         response?: Response.Raw | null;
         errors: Record<StatusCode.Raw, HttpError.Raw>;
-        server: Server.Raw[];
+        server: HttpEndpointServer.Raw[];
         examples: EndpointExample.Raw[];
         pagination?: Pagination.Raw | null;
     }

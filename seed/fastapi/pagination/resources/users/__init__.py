@@ -5,6 +5,7 @@ from .service import (
     ListUsersBodyOffsetPaginationRequest,
 )
 from .types import (
+    ListUsersExtendedOptionalListResponse,
     ListUsersExtendedResponse,
     ListUsersPaginationResponse,
     NextPage,
@@ -12,6 +13,8 @@ from .types import (
     Page,
     User,
     UserListContainer,
+    UserOptionalListContainer,
+    UserOptionalListPage,
     UserPage,
     UsernameContainer,
     WithCursor,
@@ -21,6 +24,7 @@ from .types import (
 __all__ = [
     "ListUsersBodyCursorPaginationRequest",
     "ListUsersBodyOffsetPaginationRequest",
+    "ListUsersExtendedOptionalListResponse",
     "ListUsersExtendedResponse",
     "ListUsersPaginationResponse",
     "NextPage",
@@ -28,6 +32,8 @@ __all__ = [
     "Page",
     "User",
     "UserListContainer",
+    "UserOptionalListContainer",
+    "UserOptionalListPage",
     "UserPage",
     "UsernameContainer",
     "WithCursor",

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import resources.users.requests.ListUsersBodyCursorPaginationRequest;
 import resources.users.requests.ListUsersBodyOffsetPaginationRequest;
+import resources.users.types.ListUsersExtendedOptionalListResponse;
 import resources.users.types.ListUsersExtendedResponse;
 import resources.users.types.ListUsersPaginationResponse;
 import resources.users.types.Order;
@@ -80,6 +81,13 @@ public interface UsersService {
       produces = "application/json"
   )
   ListUsersExtendedResponse listWithExtendedResults(@RequestParam("cursor") Optional<UUID> cursor);
+
+  @GetMapping(
+      value = "",
+      produces = "application/json"
+  )
+  ListUsersExtendedOptionalListResponse listWithExtendedResultsAndOptionalData(
+      @RequestParam("cursor") Optional<UUID> cursor);
 
   @GetMapping(
       value = "",

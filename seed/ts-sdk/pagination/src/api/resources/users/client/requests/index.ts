@@ -5,5 +5,6 @@ export { type ListUsersBodyOffsetPaginationRequest } from "./ListUsersBodyOffset
 export { type ListUsersOffsetStepPaginationRequest } from "./ListUsersOffsetStepPaginationRequest";
 export { type ListWithOffsetPaginationHasNextPageRequest } from "./ListWithOffsetPaginationHasNextPageRequest";
 export { type ListUsersExtendedRequest } from "./ListUsersExtendedRequest";
+export { type ListUsersExtendedRequestForOptionalData } from "./ListUsersExtendedRequestForOptionalData";
 export { type ListUsernamesRequest } from "./ListUsernamesRequest";
 export { type ListWithGlobalConfigRequest } from "./ListWithGlobalConfigRequest";

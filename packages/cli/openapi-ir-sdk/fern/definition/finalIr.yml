@@ -175,9 +175,17 @@ types:
         docs: |
           Expected error status codes for this endpoint, and their corresponding schema and examples.
           SDK generators will only read the StatusCodes. Docs generators will read the HttpError schema.
-      server: list<commons.Server>
+      server: list<HttpEndpointServer>
       examples: list<EndpointExample>
       pagination: optional<Pagination>
+
+  HttpEndpointServer: 
+    properties: 
+      name:
+        type: optional<string>
+        docs: Populated by `X-Server-Name`
+      url: optional<string>       
+      audiences: optional<list<string>>
 
   Pagination:
     union:

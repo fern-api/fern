@@ -1,4 +1,4 @@
-import { assertNever, isPlainObject } from "@fern-api/core-utils";
+import { assertNever, isNonNullish, isPlainObject } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { GithubPullRequestReviewer, OutputMetadata, PublishingMetadata, PypiMetadata } from "@fern-fern/fiddle-sdk/api";
@@ -17,6 +17,7 @@ import { APIConfigurationSchemaInternal } from "./schemas/APIConfigurationSchema
 import { GeneratorGroupSchema } from "./schemas/GeneratorGroupSchema";
 import { GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
 import { GeneratorOutputSchema } from "./schemas/GeneratorOutputSchema";
+import { isApiConfigurationV2Schema, isOpenAPISchema } from "./schemas/utils";
 import {
     API_ORIGIN_LOCATION_KEY,
     API_SETTINGS_KEY,
@@ -242,6 +243,35 @@ async function parseAPIConfiguration(
     rawGeneratorsConfiguration: GeneratorsConfigurationSchema
 ): Promise<APIDefinition> {
     const apiConfiguration = rawGeneratorsConfiguration.api;
+
+    if (apiConfiguration != null && isApiConfigurationV2Schema(apiConfiguration)) {
+        return {
+            type: "singleNamespace",
+            ...apiConfiguration,
+            definitions: apiConfiguration.specs
+                .map((spec): APIDefinitionLocation | undefined => {
+                    if (isOpenAPISchema(spec)) {
+                        return {
+                            schema: {
+                                type: "oss",
+                                path: spec.openapi
+                            },
+                            origin: undefined,
+                            overrides: spec.overrides,
+                            audiences: [],
+                            settings: {
+                                shouldUseTitleAsName: undefined,
+                                shouldUseUndiscriminatedUnionsWithLiterals: undefined,
+                                asyncApiMessageNaming: undefined
+                            }
+                        };
+                    }
+                    return undefined;
+                })
+                .filter(isNonNullish)
+        };
+    }
+
     if (isPlainObject(apiConfiguration) && "namespaces" in apiConfiguration) {
         const namespacedDefinitions: Record<string, APIDefinitionLocation[]> = {};
         for (const [namespace, configuration] of Object.entries(apiConfiguration.namespaces)) {

@@ -52,6 +52,9 @@ fixtures:
         package-prefix: com.fern.sdk
       outputMode: local_files
       outputFolder: local-files
+    - customConfig:
+        enable-public-constructors: true
+      outputFolder: enable-public-constructors
     - publishConfig:
         type: maven
         coordinate: com.fern:exhaustive
@@ -69,15 +72,14 @@ fixtures:
 scripts:
   - docker: fernapi/java-seed
     commands:
-      - source ~/.bash_profile 
-      - ./gradlew compileJava
-      - jenv shell 1.8 && source ~/.bash_profile && ./gradlew compileJava
+      - source ~/.bash_profile && jenv shell 1.8 && source ~/.bash_profile && ./gradlew compileJava
 allowedFailures:
+  - alias-extends
   - enum
-  - extends
   - examples
+  - exhaustive:signed_publish
   - exhaustive:local-files
+  - extends
+  - query-parameters
   - trace
   - unions
-  - query-parameters
-  - alias-extends

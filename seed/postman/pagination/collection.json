@@ -660,6 +660,80 @@
         },
         {
           "_type": "endpoint",
+          "name": "List With Extended Results And Optional Data",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/users?cursor=d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "cursor",
+                  "description": null,
+                  "value": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/users?cursor=d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "description": null,
+                      "value": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "{\n    \"total_count\": 1,\n    \"data\": {\n        \"users\": [\n            {\n                \"name\": \"string\",\n                \"id\": 1\n            }\n        ]\n    },\n    \"next\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
           "name": "List Usernames",
           "request": {
             "description": null,
