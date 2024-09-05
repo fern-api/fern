@@ -8,6 +8,7 @@ import { convert } from "../convert";
 
 const FIXTURES_PATH = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 
+// eslint-disable-next-line jest/no-export
 export declare namespace TestConvertOpenAPI {
     interface Options {
         asyncApiFilename?: string;
