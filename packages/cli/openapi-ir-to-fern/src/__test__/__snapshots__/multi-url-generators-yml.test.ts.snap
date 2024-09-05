@@ -60,7 +60,6 @@ exports[`multi-url-generators-yml > multi-url-generators-yml > docs 1`] = `
             "docs": "Successful response",
             "type": "Token",
           },
-          "url": "auth",
         },
         "getUserInformation": {
           "auth": false,
@@ -95,7 +94,6 @@ exports[`multi-url-generators-yml > multi-url-generators-yml > docs 1`] = `
             "docs": "Successful response",
             "type": "User",
           },
-          "url": "user",
         },
         "listUsers": {
           "auth": false,
@@ -221,7 +219,6 @@ exports[`multi-url-generators-yml > multi-url-generators-yml > simple 1`] = `
             "docs": "Successful response",
             "type": "Token",
           },
-          "url": "auth",
         },
         "getUserInformation": {
           "auth": false,
@@ -256,7 +253,6 @@ exports[`multi-url-generators-yml > multi-url-generators-yml > simple 1`] = `
             "docs": "Successful response",
             "type": "User",
           },
-          "url": "user",
         },
         "listUsers": {
           "auth": false,
