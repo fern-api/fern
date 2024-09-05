@@ -20,7 +20,9 @@ export async function getLatestGeneratorVersion({
     const parsedVersion = semver.parse(currentGeneratorVersion);
     // We're just using unauthed endpoints, so we don't need to pass in a token
     const client = new GeneratorsClient({});
-    context?.logger.info(`Getting latest version for ${generatorName} with CLI version ${cliVersion}`);
+    context?.logger.info(
+        `Getting latest version for ${generatorName} with CLI version ${cliVersion}, includeMajor: ${includeMajor}, prior version: ${parsedVersion} ${parsedVersion?.major}`
+    );
     const latestReleaseResponse = await client.generators.versions.getLatestGeneratorRelease({
         generator: getGeneratorMetadataFromName(generatorName, context),
         releaseType: channel ?? FernRegistry.generators.ReleaseType.Ga,

@@ -27,4 +27,8 @@ groups:
             boto3: ^1.34.0
             parameterized: "^0.9.0"
           improved_imports: true
+  shouldnt-upgrade:
+    generators:
+      - name: fernapi/fern-python-sdk
+        version: 2.16.0
 default-group: local
