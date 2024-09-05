@@ -10,6 +10,8 @@
           This is fix a regression where nested literals were being omitted due to the Pydantic V2 serializers not respecting the recursive .dict logic, as
           Pydantic V2 shells out `model_dump` calls to Rust library and serializers, as opposed to recursively calling `model_dump`.
 
+          It is expected that performance will not be degraded given the Rust-based serializers have optimized performance, compared to the Pydantic V1 .dict approach.
+
 - version: 3.11.0-rc0
   ir_version: 53
   changelog_entry:
