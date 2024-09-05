@@ -42,10 +42,12 @@ public final class ExtendedMovie implements IMovie {
 
   private final Map<String, Object> metadata;
 
+  private final long revenue;
+
   private final List<String> cast;
 
   private ExtendedMovie(MovieId id, Optional<MovieId> prequel, String title, String from,
-      double rating, Tag tag, Optional<String> book, Map<String, Object> metadata,
+      double rating, Tag tag, Optional<String> book, Map<String, Object> metadata, long revenue,
       List<String> cast) {
     this.id = id;
     this.prequel = prequel;
@@ -55,6 +57,7 @@ public final class ExtendedMovie implements IMovie {
     this.tag = tag;
     this.book = book;
     this.metadata = metadata;
+    this.revenue = revenue;
     this.cast = cast;
   }
 
@@ -115,6 +118,12 @@ public final class ExtendedMovie implements IMovie {
     return metadata;
   }
 
+  @JsonProperty("revenue")
+  @java.lang.Override
+  public long getRevenue() {
+    return revenue;
+  }
+
   @JsonProperty("cast")
   public List<String> getCast() {
     return cast;
@@ -127,12 +136,12 @@ public final class ExtendedMovie implements IMovie {
   }
 
   private boolean equalTo(ExtendedMovie other) {
-    return id.equals(other.id) && prequel.equals(other.prequel) && title.equals(other.title) && from.equals(other.from) && rating == other.rating && tag.equals(other.tag) && book.equals(other.book) && metadata.equals(other.metadata) && cast.equals(other.cast);
+    return id.equals(other.id) && prequel.equals(other.prequel) && title.equals(other.title) && from.equals(other.from) && rating == other.rating && tag.equals(other.tag) && book.equals(other.book) && metadata.equals(other.metadata) && revenue == other.revenue && cast.equals(other.cast);
   }
 
   @java.lang.Override
   public int hashCode() {
-    return Objects.hash(this.id, this.prequel, this.title, this.from, this.rating, this.tag, this.book, this.metadata, this.cast);
+    return Objects.hash(this.id, this.prequel, this.title, this.from, this.rating, this.tag, this.book, this.metadata, this.revenue, this.cast);
   }
 
   @java.lang.Override
@@ -163,7 +172,11 @@ public final class ExtendedMovie implements IMovie {
   }
 
   public interface TagStage {
-    _FinalStage tag(Tag tag);
+    RevenueStage tag(Tag tag);
+  }
+
+  public interface RevenueStage {
+    _FinalStage revenue(long revenue);
   }
 
   public interface _FinalStage {
@@ -193,7 +206,7 @@ public final class ExtendedMovie implements IMovie {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements IdStage, TitleStage, FromStage, RatingStage, TagStage, _FinalStage {
+  public static final class Builder implements IdStage, TitleStage, FromStage, RatingStage, TagStage, RevenueStage, _FinalStage {
     private MovieId id;
 
     private String title;
@@ -203,6 +216,8 @@ public final class ExtendedMovie implements IMovie {
     private double rating;
 
     private Tag tag;
+
+    private long revenue;
 
     private List<String> cast = new ArrayList<>();
 
@@ -225,6 +240,7 @@ public final class ExtendedMovie implements IMovie {
       tag(other.getTag());
       book(other.getBook());
       metadata(other.getMetadata());
+      revenue(other.getRevenue());
       cast(other.getCast());
       return this;
     }
@@ -263,8 +279,15 @@ public final class ExtendedMovie implements IMovie {
 
     @java.lang.Override
     @JsonSetter("tag")
-    public _FinalStage tag(Tag tag) {
+    public RevenueStage tag(Tag tag) {
       this.tag = tag;
+      return this;
+    }
+
+    @java.lang.Override
+    @JsonSetter("revenue")
+    public _FinalStage revenue(long revenue) {
+      this.revenue = revenue;
       return this;
     }
 
@@ -348,7 +371,7 @@ public final class ExtendedMovie implements IMovie {
 
     @java.lang.Override
     public ExtendedMovie build() {
-      return new ExtendedMovie(id, prequel, title, from, rating, tag, book, metadata, cast);
+      return new ExtendedMovie(id, prequel, title, from, rating, tag, book, metadata, revenue, cast);
     }
   }
 }

@@ -3961,6 +3961,39 @@
                         },
                         "availability": null,
                         "docs": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "revenue",
+                                "camelCase": {
+                                    "unsafeName": "revenue",
+                                    "safeName": "revenue"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "revenue",
+                                    "safeName": "revenue"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "REVENUE",
+                                    "safeName": "REVENUE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Revenue",
+                                    "safeName": "Revenue"
+                                }
+                            },
+                            "wireValue": "revenue"
+                        },
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "LONG",
+                                "v2": null
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
                     }
                 ],
                 "extra-properties": false,
@@ -5246,6 +5279,105 @@
                                     },
                                     "typeId": "type_types:Movie"
                                 }
+                            },
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "revenue",
+                                        "camelCase": {
+                                            "unsafeName": "revenue",
+                                            "safeName": "revenue"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "revenue",
+                                            "safeName": "revenue"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "REVENUE",
+                                            "safeName": "REVENUE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Revenue",
+                                            "safeName": "Revenue"
+                                        }
+                                    },
+                                    "wireValue": "revenue"
+                                },
+                                "value": {
+                                    "shape": {
+                                        "type": "primitive",
+                                        "primitive": {
+                                            "type": "long",
+                                            "long": 1000000
+                                        }
+                                    },
+                                    "jsonExample": 1000000
+                                },
+                                "originalTypeDeclaration": {
+                                    "name": {
+                                        "originalName": "Movie",
+                                        "camelCase": {
+                                            "unsafeName": "movie",
+                                            "safeName": "movie"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "movie",
+                                            "safeName": "movie"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "MOVIE",
+                                            "safeName": "MOVIE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Movie",
+                                            "safeName": "Movie"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [
+                                            {
+                                                "originalName": "types",
+                                                "camelCase": {
+                                                    "unsafeName": "types",
+                                                    "safeName": "types"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "types",
+                                                    "safeName": "types"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "TYPES",
+                                                    "safeName": "TYPES"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Types",
+                                                    "safeName": "Types"
+                                                }
+                                            }
+                                        ],
+                                        "packagePath": [],
+                                        "file": {
+                                            "originalName": "types",
+                                            "camelCase": {
+                                                "unsafeName": "types",
+                                                "safeName": "types"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "types",
+                                                "safeName": "types"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "TYPES",
+                                                "safeName": "TYPES"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Types",
+                                                "safeName": "Types"
+                                            }
+                                        }
+                                    },
+                                    "typeId": "type_types:Movie"
+                                }
                             }
                         ]
                     },
@@ -5268,7 +5400,8 @@
                                 "rottenTomatoes": 97,
                                 "imdb": 7.6
                             }
-                        }
+                        },
+                        "revenue": 1000000
                     },
                     "docs": null
                 }
@@ -7654,6 +7787,39 @@
                         },
                         "availability": null,
                         "docs": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "revenue",
+                                "camelCase": {
+                                    "unsafeName": "revenue",
+                                    "safeName": "revenue"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "revenue",
+                                    "safeName": "revenue"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "REVENUE",
+                                    "safeName": "REVENUE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Revenue",
+                                    "safeName": "Revenue"
+                                }
+                            },
+                            "wireValue": "revenue"
+                        },
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "LONG",
+                                "v2": null
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
                     }
                 ]
             },
@@ -8820,6 +8986,105 @@
                                     },
                                     "typeId": "type_types:Movie"
                                 }
+                            },
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "revenue",
+                                        "camelCase": {
+                                            "unsafeName": "revenue",
+                                            "safeName": "revenue"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "revenue",
+                                            "safeName": "revenue"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "REVENUE",
+                                            "safeName": "REVENUE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Revenue",
+                                            "safeName": "Revenue"
+                                        }
+                                    },
+                                    "wireValue": "revenue"
+                                },
+                                "value": {
+                                    "shape": {
+                                        "type": "primitive",
+                                        "primitive": {
+                                            "type": "long",
+                                            "long": 1000000
+                                        }
+                                    },
+                                    "jsonExample": 1000000
+                                },
+                                "originalTypeDeclaration": {
+                                    "name": {
+                                        "originalName": "Movie",
+                                        "camelCase": {
+                                            "unsafeName": "movie",
+                                            "safeName": "movie"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "movie",
+                                            "safeName": "movie"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "MOVIE",
+                                            "safeName": "MOVIE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Movie",
+                                            "safeName": "Movie"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [
+                                            {
+                                                "originalName": "types",
+                                                "camelCase": {
+                                                    "unsafeName": "types",
+                                                    "safeName": "types"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "types",
+                                                    "safeName": "types"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "TYPES",
+                                                    "safeName": "TYPES"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Types",
+                                                    "safeName": "Types"
+                                                }
+                                            }
+                                        ],
+                                        "packagePath": [],
+                                        "file": {
+                                            "originalName": "types",
+                                            "camelCase": {
+                                                "unsafeName": "types",
+                                                "safeName": "types"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "types",
+                                                "safeName": "types"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "TYPES",
+                                                "safeName": "TYPES"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Types",
+                                                "safeName": "Types"
+                                            }
+                                        }
+                                    },
+                                    "typeId": "type_types:Movie"
+                                }
                             }
                         ]
                     },
@@ -8843,7 +9108,8 @@
                                 "rottenTomatoes": 97,
                                 "imdb": 7.6
                             }
-                        }
+                        },
+                        "revenue": 1000000
                     },
                     "docs": null
                 }
@@ -25251,6 +25517,105 @@
                                                                     }
                                                                 }
                                                             }
+                                                        },
+                                                        {
+                                                            "name": {
+                                                                "name": {
+                                                                    "originalName": "revenue",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "revenue",
+                                                                        "safeName": "revenue"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "revenue",
+                                                                        "safeName": "revenue"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "REVENUE",
+                                                                        "safeName": "REVENUE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Revenue",
+                                                                        "safeName": "Revenue"
+                                                                    }
+                                                                },
+                                                                "wireValue": "revenue"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "long",
+                                                                        "long": 1000000
+                                                                    }
+                                                                },
+                                                                "jsonExample": 1000000
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_types:Movie",
+                                                                "fernFilepath": {
+                                                                    "allParts": [
+                                                                        {
+                                                                            "originalName": "types",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "types",
+                                                                                "safeName": "types"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "types",
+                                                                                "safeName": "types"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "TYPES",
+                                                                                "safeName": "TYPES"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Types",
+                                                                                "safeName": "Types"
+                                                                            }
+                                                                        }
+                                                                    ],
+                                                                    "packagePath": [],
+                                                                    "file": {
+                                                                        "originalName": "types",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "types",
+                                                                            "safeName": "types"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "types",
+                                                                            "safeName": "types"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "TYPES",
+                                                                            "safeName": "TYPES"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Types",
+                                                                            "safeName": "Types"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "name": {
+                                                                    "originalName": "Movie",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "movie",
+                                                                        "safeName": "movie"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "movie",
+                                                                        "safeName": "movie"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "MOVIE",
+                                                                        "safeName": "MOVIE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Movie",
+                                                                        "safeName": "Movie"
+                                                                    }
+                                                                }
+                                                            }
                                                         }
                                                     ]
                                                 }
@@ -25274,7 +25639,8 @@
                                                         "rottenTomatoes": 97,
                                                         "imdb": 7.6
                                                     }
-                                                }
+                                                },
+                                                "revenue": 1000000
                                             }
                                         }
                                     }
@@ -26726,6 +27092,105 @@
                                                                     }
                                                                 }
                                                             }
+                                                        },
+                                                        {
+                                                            "name": {
+                                                                "name": {
+                                                                    "originalName": "revenue",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "revenue",
+                                                                        "safeName": "revenue"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "revenue",
+                                                                        "safeName": "revenue"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "REVENUE",
+                                                                        "safeName": "REVENUE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Revenue",
+                                                                        "safeName": "Revenue"
+                                                                    }
+                                                                },
+                                                                "wireValue": "revenue"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "long",
+                                                                        "long": 1000000
+                                                                    }
+                                                                },
+                                                                "jsonExample": 1000000
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_types:Movie",
+                                                                "fernFilepath": {
+                                                                    "allParts": [
+                                                                        {
+                                                                            "originalName": "types",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "types",
+                                                                                "safeName": "types"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "types",
+                                                                                "safeName": "types"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "TYPES",
+                                                                                "safeName": "TYPES"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Types",
+                                                                                "safeName": "Types"
+                                                                            }
+                                                                        }
+                                                                    ],
+                                                                    "packagePath": [],
+                                                                    "file": {
+                                                                        "originalName": "types",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "types",
+                                                                            "safeName": "types"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "types",
+                                                                            "safeName": "types"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "TYPES",
+                                                                            "safeName": "TYPES"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Types",
+                                                                            "safeName": "Types"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "name": {
+                                                                    "originalName": "Movie",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "movie",
+                                                                        "safeName": "movie"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "movie",
+                                                                        "safeName": "movie"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "MOVIE",
+                                                                        "safeName": "MOVIE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Movie",
+                                                                        "safeName": "Movie"
+                                                                    }
+                                                                }
+                                                            }
                                                         }
                                                     ]
                                                 }
@@ -26749,12 +27214,13 @@
                                                         "rottenTomatoes": 97,
                                                         "imdb": 7.6
                                                     }
-                                                }
+                                                },
+                                                "revenue": 1000000
                                             }
                                         }
                                     }
                                 },
-                                "id": "42eb658f5996f846dace6ba51552eb6fdae09e9e",
+                                "id": "5344c28b65585253cd86636676e7e2db572db68c",
                                 "docs": null
                             }
                         }
@@ -28382,6 +28848,105 @@
                                                             }
                                                         }
                                                     }
+                                                },
+                                                {
+                                                    "name": {
+                                                        "name": {
+                                                            "originalName": "revenue",
+                                                            "camelCase": {
+                                                                "unsafeName": "revenue",
+                                                                "safeName": "revenue"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "revenue",
+                                                                "safeName": "revenue"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "REVENUE",
+                                                                "safeName": "REVENUE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Revenue",
+                                                                "safeName": "Revenue"
+                                                            }
+                                                        },
+                                                        "wireValue": "revenue"
+                                                    },
+                                                    "value": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "long",
+                                                                "long": 1000000
+                                                            }
+                                                        },
+                                                        "jsonExample": 1000000
+                                                    },
+                                                    "originalTypeDeclaration": {
+                                                        "typeId": "type_types:Movie",
+                                                        "fernFilepath": {
+                                                            "allParts": [
+                                                                {
+                                                                    "originalName": "types",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "types",
+                                                                        "safeName": "types"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "types",
+                                                                        "safeName": "types"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "TYPES",
+                                                                        "safeName": "TYPES"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Types",
+                                                                        "safeName": "Types"
+                                                                    }
+                                                                }
+                                                            ],
+                                                            "packagePath": [],
+                                                            "file": {
+                                                                "originalName": "types",
+                                                                "camelCase": {
+                                                                    "unsafeName": "types",
+                                                                    "safeName": "types"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "types",
+                                                                    "safeName": "types"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "TYPES",
+                                                                    "safeName": "TYPES"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Types",
+                                                                    "safeName": "Types"
+                                                                }
+                                                            }
+                                                        },
+                                                        "name": {
+                                                            "originalName": "Movie",
+                                                            "camelCase": {
+                                                                "unsafeName": "movie",
+                                                                "safeName": "movie"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "movie",
+                                                                "safeName": "movie"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "MOVIE",
+                                                                "safeName": "MOVIE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Movie",
+                                                                "safeName": "Movie"
+                                                            }
+                                                        }
+                                                    }
                                                 }
                                             ]
                                         }
@@ -28405,7 +28970,8 @@
                                                 "rottenTomatoes": 97,
                                                 "imdb": 7.6
                                             }
-                                        }
+                                        },
+                                        "revenue": 1000000
                                     }
                                 },
                                 "response": {
@@ -29834,6 +30400,105 @@
                                                             }
                                                         }
                                                     }
+                                                },
+                                                {
+                                                    "name": {
+                                                        "name": {
+                                                            "originalName": "revenue",
+                                                            "camelCase": {
+                                                                "unsafeName": "revenue",
+                                                                "safeName": "revenue"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "revenue",
+                                                                "safeName": "revenue"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "REVENUE",
+                                                                "safeName": "REVENUE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Revenue",
+                                                                "safeName": "Revenue"
+                                                            }
+                                                        },
+                                                        "wireValue": "revenue"
+                                                    },
+                                                    "value": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "long",
+                                                                "long": 1000000
+                                                            }
+                                                        },
+                                                        "jsonExample": 1000000
+                                                    },
+                                                    "originalTypeDeclaration": {
+                                                        "typeId": "type_types:Movie",
+                                                        "fernFilepath": {
+                                                            "allParts": [
+                                                                {
+                                                                    "originalName": "types",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "types",
+                                                                        "safeName": "types"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "types",
+                                                                        "safeName": "types"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "TYPES",
+                                                                        "safeName": "TYPES"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Types",
+                                                                        "safeName": "Types"
+                                                                    }
+                                                                }
+                                                            ],
+                                                            "packagePath": [],
+                                                            "file": {
+                                                                "originalName": "types",
+                                                                "camelCase": {
+                                                                    "unsafeName": "types",
+                                                                    "safeName": "types"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "types",
+                                                                    "safeName": "types"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "TYPES",
+                                                                    "safeName": "TYPES"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Types",
+                                                                    "safeName": "Types"
+                                                                }
+                                                            }
+                                                        },
+                                                        "name": {
+                                                            "originalName": "Movie",
+                                                            "camelCase": {
+                                                                "unsafeName": "movie",
+                                                                "safeName": "movie"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "movie",
+                                                                "safeName": "movie"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "MOVIE",
+                                                                "safeName": "MOVIE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Movie",
+                                                                "safeName": "Movie"
+                                                            }
+                                                        }
+                                                    }
                                                 }
                                             ]
                                         }
@@ -29857,7 +30522,8 @@
                                                 "rottenTomatoes": 97,
                                                 "imdb": 7.6
                                             }
-                                        }
+                                        },
+                                        "revenue": 1000000
                                     }
                                 },
                                 "name": null,
@@ -29953,7 +30619,7 @@
                                         }
                                     }
                                 },
-                                "id": "a96cdf4822974425fa31b5efc26b9eac10272bf8",
+                                "id": "af85e2648f0be46c854af598a495582af5f4bd47",
                                 "docs": null
                             }
                         }

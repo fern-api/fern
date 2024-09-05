@@ -1,3 +1,11 @@
+- version: 0.23.5
+  created_at: '2024-09-05'
+  changelog_entry:
+    - type: fix
+      summary: >-
+        Fix an issue where `long` type examples (generated as `int64` in Go) were not
+        successfully converted to their equivalent `string` representation for snippets.
+  ir_version: 40
 - version: 0.23.4
   created_at: '2024-08-30'
   changelog_entry:

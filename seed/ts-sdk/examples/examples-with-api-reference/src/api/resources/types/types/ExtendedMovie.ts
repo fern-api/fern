@@ -21,7 +21,8 @@ import * as SeedExamples from "../../../index";
  *                 "rottenTomatoes": 97,
  *                 "imdb": 7.6
  *             }
- *         }
+ *         },
+ *         revenue: 1000000
  *     }
  */
 export interface ExtendedMovie extends SeedExamples.Movie {
