@@ -4978,6 +4978,7 @@ exports[`fdr test definitions > examples 1`] = `
                 },
                 "prequel": "movie-cv9b914f",
                 "rating": 8,
+                "revenue": 1000000,
                 "tag": "tag-wf9as23d",
                 "title": "The Boy and the Heron",
                 "type": "movie",
@@ -5001,6 +5002,7 @@ exports[`fdr test definitions > examples 1`] = `
                   },
                   "prequel": "movie-cv9b914f",
                   "rating": 8,
+                  "revenue": 1000000,
                   "tag": "tag-wf9as23d",
                   "title": "The Boy and the Heron",
                   "type": "movie",
@@ -5100,6 +5102,7 @@ exports[`fdr test definitions > examples 1`] = `
                 },
                 "prequel": "movie-cv9b914f",
                 "rating": 8,
+                "revenue": 1000000,
                 "tag": "tag-wf9as23d",
                 "title": "The Boy and the Heron",
                 "type": "movie",
@@ -5123,6 +5126,7 @@ exports[`fdr test definitions > examples 1`] = `
                   },
                   "prequel": "movie-cv9b914f",
                   "rating": 8,
+                  "revenue": 1000000,
                   "tag": "tag-wf9as23d",
                   "title": "The Boy and the Heron",
                   "type": "movie",
@@ -6530,6 +6534,17 @@ exports[`fdr test definitions > examples 1`] = `
               "type": "map",
               "valueType": {
                 "type": "unknown",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "revenue",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "long",
               },
             },
           },
@@ -34128,6 +34143,270 @@ The offset is the id of the next trace response to load.",
           },
         ],
         "type": "object",
+      },
+    },
+  },
+}
+`;
+
+exports[`fdr test definitions > ts-express-casing 1`] = `
+{
+  "auth": {
+    "tokenName": "token",
+    "type": "bearerAuth",
+  },
+  "globalHeaders": [],
+  "rootPackage": {
+    "endpoints": [],
+    "pointsTo": undefined,
+    "subpackages": [
+      "subpackage_imdb",
+    ],
+    "types": [],
+    "webhooks": [],
+    "websockets": [],
+  },
+  "snippetsConfiguration": {},
+  "subpackages": {
+    "subpackage_imdb": {
+      "description": undefined,
+      "displayName": undefined,
+      "endpoints": [
+        {
+          "auth": false,
+          "availability": undefined,
+          "defaultEnvironment": undefined,
+          "description": "Add a movie to the database",
+          "environments": undefined,
+          "errors": undefined,
+          "errorsV2": [],
+          "examples": [],
+          "headers": [],
+          "id": "create_movie",
+          "method": "POST",
+          "name": "Create Movie",
+          "originalEndpointId": "endpoint_imdb.create_movie",
+          "path": {
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/movies",
+              },
+              {
+                "type": "literal",
+                "value": "/create-movie",
+              },
+            ],
+            "pathParameters": [],
+          },
+          "queryParameters": [],
+          "request": {
+            "type": {
+              "contentType": "application/json",
+              "shape": {
+                "extends": [],
+                "properties": [
+                  {
+                    "description": undefined,
+                    "key": "id",
+                    "valueType": {
+                      "type": "id",
+                      "value": "type_imdb:MovieId",
+                    },
+                  },
+                  {
+                    "description": undefined,
+                    "key": "movie_title",
+                    "valueType": {
+                      "type": "primitive",
+                      "value": {
+                        "default": undefined,
+                        "maxLength": undefined,
+                        "minLength": undefined,
+                        "regex": undefined,
+                        "type": "string",
+                      },
+                    },
+                  },
+                  {
+                    "description": "The rating scale is one to five stars",
+                    "key": "movie_rating",
+                    "valueType": {
+                      "type": "primitive",
+                      "value": {
+                        "default": undefined,
+                        "maximum": undefined,
+                        "minimum": undefined,
+                        "type": "double",
+                      },
+                    },
+                  },
+                ],
+                "type": "object",
+              },
+              "type": "json",
+            },
+          },
+          "response": {
+            "statusCode": 201,
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_imdb:MovieId",
+              },
+            },
+          },
+        },
+        {
+          "auth": false,
+          "availability": undefined,
+          "defaultEnvironment": undefined,
+          "description": undefined,
+          "environments": undefined,
+          "errors": undefined,
+          "errorsV2": [
+            {
+              "description": undefined,
+              "examples": [],
+              "statusCode": 404,
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "type_imdb:MovieId",
+                },
+              },
+            },
+          ],
+          "examples": [],
+          "headers": [],
+          "id": "get_movie",
+          "method": "GET",
+          "name": "Get Movie",
+          "originalEndpointId": "endpoint_imdb.get_movie",
+          "path": {
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/movies",
+              },
+              {
+                "type": "literal",
+                "value": "/",
+              },
+              {
+                "type": "pathParameter",
+                "value": "movie_id",
+              },
+              {
+                "type": "literal",
+                "value": "",
+              },
+            ],
+            "pathParameters": [
+              {
+                "description": undefined,
+                "key": "movie_id",
+                "type": {
+                  "type": "id",
+                  "value": "type_imdb:MovieId",
+                },
+              },
+            ],
+          },
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "statusCode": undefined,
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_imdb:Movie",
+              },
+            },
+          },
+        },
+      ],
+      "name": "imdb",
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_imdb",
+      "subpackages": [],
+      "types": [
+        "type_imdb:MovieId",
+        "type_imdb:Movie",
+      ],
+      "webhooks": [],
+      "websockets": [],
+    },
+  },
+  "types": {
+    "type_imdb:Movie": {
+      "availability": undefined,
+      "description": undefined,
+      "name": "Movie",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "id",
+            "valueType": {
+              "type": "id",
+              "value": "type_imdb:MovieId",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "title",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "The rating scale is one to five stars",
+            "key": "rating",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maximum": undefined,
+                "minimum": undefined,
+                "type": "double",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "type_imdb:MovieId": {
+      "availability": undefined,
+      "description": undefined,
+      "name": "MovieId",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "default": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "regex": undefined,
+            "type": "string",
+          },
+        },
       },
     },
   },

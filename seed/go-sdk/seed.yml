@@ -5,7 +5,7 @@ publish:
   preBuildCommands:
     - go build ./...
   docker:
-    file: ./generators/go/docker/Dockerfile.sdk
+    file: ./generators/go/sdk/Dockerfile
     image: fernapi/fern-go-sdk
     context: ./generators/go
 test:

@@ -424,6 +424,7 @@ client.service.create_movie(
         "releaseDate": "2023-12-08",
         "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
     },
+    revenue=1000000,
 )
 
 ```
@@ -481,6 +482,14 @@ client.service.create_movie(
 <dd>
 
 **metadata:** `typing.Dict[str, typing.Optional[typing.Any]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**revenue:** `int` 
     
 </dd>
 </dl>

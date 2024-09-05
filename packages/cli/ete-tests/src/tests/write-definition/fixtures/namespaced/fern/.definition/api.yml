@@ -2,6 +2,9 @@ name: api
 error-discrimination:
   strategy: status-code
 display-name: Train Travel API
+default-environment: Production
+environments:
+  Production: https://api.example.com
 auth-schemes:
   BearerAuthScheme:
     scheme: bearer

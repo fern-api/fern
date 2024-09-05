@@ -14,6 +14,7 @@ export declare namespace ExpressInlinedRequestBodyContextImpl {
         importsManager: ImportsManager;
         sourceFile: SourceFile;
         retainOriginalCasing: boolean;
+        includeSerdeLayer: boolean;
     }
 }
 
@@ -24,6 +25,7 @@ export class ExpressInlinedRequestBodyContextImpl implements ExpressInlinedReque
     private importsManager: ImportsManager;
     private sourceFile: SourceFile;
     private retainOriginalCasing: boolean;
+    private includeSerdeLayer: boolean;
 
     constructor({
         expressInlinedRequestBodyGenerator,
@@ -31,7 +33,8 @@ export class ExpressInlinedRequestBodyContextImpl implements ExpressInlinedReque
         packageResolver,
         importsManager,
         sourceFile,
-        retainOriginalCasing
+        retainOriginalCasing,
+        includeSerdeLayer
     }: ExpressInlinedRequestBodyContextImpl.Init) {
         this.expressInlinedRequestBodyGenerator = expressInlinedRequestBodyGenerator;
         this.expressInlinedRequestBodyDeclarationReferencer = expressInlinedRequestBodyDeclarationReferencer;
@@ -39,6 +42,7 @@ export class ExpressInlinedRequestBodyContextImpl implements ExpressInlinedReque
         this.importsManager = importsManager;
         this.sourceFile = sourceFile;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.includeSerdeLayer = includeSerdeLayer;
     }
 
     public getGeneratedInlinedRequestBody(
@@ -61,7 +65,8 @@ export class ExpressInlinedRequestBodyContextImpl implements ExpressInlinedReque
                 packageId,
                 endpoint
             }),
-            retainOriginalCasing: this.retainOriginalCasing
+            retainOriginalCasing: this.retainOriginalCasing,
+            includeSerdeLayer: this.includeSerdeLayer
         });
     }
 

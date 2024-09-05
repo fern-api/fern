@@ -1,10 +1,9 @@
 import { FERN_PACKAGE_MARKER_FILENAME, generatorsYml } from "@fern-api/configuration";
 import { isNonNullish } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-import { convert, OpenApiConvertedFernDefinition } from "@fern-api/openapi-ir-to-fern";
+import { convert } from "@fern-api/openapi-ir-to-fern";
 import { parse, ParseOpenAPIOptions } from "@fern-api/openapi-parser";
 import { TaskContext } from "@fern-api/task-context";
-import { isRawProtobufSourceSchema } from "@fern-api/fern-definition-schema";
 import yaml from "js-yaml";
 import { mapValues as mapValuesLodash } from "lodash-es";
 import { v4 as uuidv4 } from "uuid";
@@ -83,9 +82,12 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
         // file paths with the inputted namespace, however given auth and other shared settings I think we have to
         // resolve to the IR first, and namespace there.
         const definition = convert({
-            environmentOverrides: {
-                ...this.generatorsConfiguration?.api
-            },
+            authOverrides:
+                this.generatorsConfiguration?.api?.auth != null ? { ...this.generatorsConfiguration?.api } : undefined,
+            environmentOverrides:
+                this.generatorsConfiguration?.api?.environments != null
+                    ? { ...this.generatorsConfiguration?.api }
+                    : undefined,
             taskContext: context,
             ir: openApiIr,
             enableUniqueErrorsPerEndpoint: settings?.enableUniqueErrorsPerEndpoint ?? false,
