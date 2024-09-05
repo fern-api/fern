@@ -33,6 +33,7 @@ import { OutputMetadataSchema } from "./schemas/OutputMetadataSchema";
 import { PypiOutputMetadataSchema } from "./schemas/PypiOutputMetadataSchema";
 import { ReadmeSchema } from "./schemas/ReadmeSchema";
 import { ReviewersSchema } from "./schemas/ReviewersSchema";
+import { visitRawApiAuth } from "@fern-api/fern-definition-schema";
 
 export async function convertGeneratorsConfiguration({
     absolutePathToGeneratorsConfiguration,
@@ -247,6 +248,24 @@ async function parseAPIConfiguration(
     if (apiConfiguration != null && isApiConfigurationV2Schema(apiConfiguration)) {
         return {
             type: "singleNamespace",
+            "auth-schemes":
+                apiConfiguration.auth != null
+                    ? Object.fromEntries(
+                          Object.entries(rawGeneratorsConfiguration["auth-schemes"] ?? {}).filter(([name, _]) => {
+                              if (apiConfiguration.auth == null) {
+                                  return false;
+                              }
+                              return visitRawApiAuth(apiConfiguration.auth, {
+                                  any: (any) => {
+                                      return any.any.includes(name);
+                                  },
+                                  single: (single) => {
+                                      return single === name;
+                                  }
+                              });
+                          })
+                      )
+                    : undefined,
             ...apiConfiguration,
             definitions: apiConfiguration.specs
                 .map((spec): APIDefinitionLocation | undefined => {

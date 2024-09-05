@@ -1,5 +1,30 @@
 - changelog_entry:
   - summary: |
+      Fixes an issue introduced in `0.41.1` that ignored server urls for docs generation.
+    type: fix
+  - summary: |
+      Adds a `auth-schemes` and `auth` block where you can override auth for an existing spec. 
+      See below: 
+
+      ```generators.yml 
+      auth-schemes: 
+        Oauth: 
+          scheme: oauth
+          type: client-credentials
+          get-token: 
+            endpoint: auth.get-token
+      api: 
+        auth: Oauth # overrides auth scheme
+        specs: 
+          - openapi: path/to/openapi
+      ```
+    type: feat
+  created_at: '2024-09-05'
+  ir_version: 53
+  version: 0.41.2
+
+- changelog_entry:
+  - summary: |
       Adds a V2 configuration for the `api` block that is more flexible and allows
       OpenAPI users to consume Fern Definition features. 
 
