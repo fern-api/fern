@@ -621,9 +621,7 @@ class UsersClient:
             "users",
             method="GET",
             params={
-                "cursor": convert_and_respect_annotation_metadata(
-                    object_=cursor, annotation=uuid.UUID, direction="write"
-                ),
+                "cursor": cursor,
             },
             request_options=request_options,
         )
@@ -1441,9 +1439,7 @@ class AsyncUsersClient:
             "users",
             method="GET",
             params={
-                "cursor": convert_and_respect_annotation_metadata(
-                    object_=cursor, annotation=uuid.UUID, direction="write"
-                ),
+                "cursor": cursor,
             },
             request_options=request_options,
         )
