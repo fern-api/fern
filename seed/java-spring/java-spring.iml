@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/alias" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/api-wide-base-path" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/audiences" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/auth-environment-variables" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/basic-auth" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/basic-auth-environment-variables" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/bearer-token-environment-variable" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/circular-references" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/circular-references-advanced" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/code-samples" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cross-package-type-names" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/custom-auth" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/enum" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/enum-query-params" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/error-property" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/examples" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/exhaustive" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/extends" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/extra-properties" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/folders" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/grpc-proto" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/grpc-proto-exhaustive" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/idempotency-headers" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/imdb" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/literal" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/mixed-case" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/multi-line-docs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/multi-url-environment" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/multi-url-environment-no-default" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/no-environment" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/oauth-client-credentials" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/oauth-client-credentials-default" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/oauth-client-credentials-environment-variables" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/oauth-client-credentials-nested-root" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/object" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/objects-with-imports" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/optional" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/package-yml" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/pagination" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/query-parameters" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/reserved-keywords" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/root" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/server-sent-events" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/simple-fhir" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/single-url-environment-default" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/single-url-environment-no-default" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/streaming-parameter" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/trace" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/undiscriminated-unions" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/unions" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/unknown" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/validation" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/variables" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/version" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/version-no-default" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/websocket" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
