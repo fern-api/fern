@@ -2,6 +2,7 @@
   "extends": "../../shared/tsconfig.shared.json",
   "compilerOptions": {
     "composite": true,
+    "outDir": "dist"
   },
   "include": ["./src/**/*"],
   "references": [
