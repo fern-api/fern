@@ -11,7 +11,7 @@ export interface FernDefinitionBuilder {
 
     addAuthScheme({ name, schema }: { name: string; schema: RawSchemas.AuthSchemeDeclarationSchema }): void;
 
-    setAuth(name: string): void;
+    setAuth(name: RawSchemas.ApiAuthSchema): void;
 
     getGlobalHeaderNames(): Set<string>;
 
@@ -138,8 +138,8 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         this.rootApiFile.audiences.push(name);
     }
 
-    public setAuth(name: string): void {
-        this.rootApiFile.auth = name;
+    public setAuth(auth: RawSchemas.ApiAuthSchema): void {
+        this.rootApiFile.auth = auth;
     }
 
     public addAuthScheme({ name, schema }: { name: string; schema: RawSchemas.AuthSchemeDeclarationSchema }): void {

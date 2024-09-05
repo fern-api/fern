@@ -1,3 +1,3 @@
 export { DefinitionFileSchema } from "./DefinitionFileSchema";
 export { PackageMarkerFileSchema } from "./PackageMarkerFileSchema";
-export { RootApiFileSchema, WithEnvironmentsSchema } from "./RootApiFileSchema";
+export { RootApiFileSchema, WithEnvironmentsSchema, WithAuthSchema } from "./RootApiFileSchema";

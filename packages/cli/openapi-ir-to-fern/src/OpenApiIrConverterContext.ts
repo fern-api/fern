@@ -20,6 +20,8 @@ export interface OpenApiIrConverterContextOpts {
      */
     detectGlobalHeaders: boolean;
 
+    authOverrides?: RawSchemas.WithAuthSchema;
+
     environmentOverrides?: RawSchemas.WithEnvironmentsSchema;
 }
 
@@ -29,6 +31,7 @@ export class OpenApiIrConverterContext {
     public ir: OpenApiIntermediateRepresentation;
     public builder: FernDefinitionBuilder;
     public environmentOverrides: RawSchemas.WithEnvironmentsSchema | undefined;
+    public authOverrides: RawSchemas.WithAuthSchema | undefined;
     public detectGlobalHeaders: boolean;
     private defaultServerName: string | undefined = undefined;
 
@@ -37,7 +40,8 @@ export class OpenApiIrConverterContext {
         ir,
         enableUniqueErrorsPerEndpoint,
         detectGlobalHeaders,
-        environmentOverrides
+        environmentOverrides,
+        authOverrides
     }: OpenApiIrConverterContextOpts) {
         this.logger = taskContext.logger;
         this.taskContext = taskContext;
@@ -45,6 +49,7 @@ export class OpenApiIrConverterContext {
         this.builder = new FernDefinitionBuilderImpl(ir, false, enableUniqueErrorsPerEndpoint);
         this.detectGlobalHeaders = detectGlobalHeaders;
         this.environmentOverrides = environmentOverrides;
+        this.authOverrides = authOverrides;
     }
 
     public getSchema(id: SchemaId): Schema | undefined {
