@@ -8,6 +8,7 @@ export declare namespace ExpressInlinedRequestBodyGenerator {
             requestBody: InlinedRequestBody;
             typeName: string;
             retainOriginalCasing: boolean;
+            includeSerdeLayer: boolean;
         }
     }
 }
@@ -16,12 +17,14 @@ export class ExpressInlinedRequestBodyGenerator {
     public generateInlinedRequestBody({
         requestBody,
         typeName,
-        retainOriginalCasing
+        retainOriginalCasing,
+        includeSerdeLayer
     }: ExpressInlinedRequestBodyGenerator.generateInlinedRequestBody.Args): GeneratedExpressInlinedRequestBody {
         return new GeneratedExpressInlinedRequestBodyImpl({
             requestBody,
             typeName,
-            retainOriginalCasing
+            retainOriginalCasing,
+            includeSerdeLayer
         });
     }
 }

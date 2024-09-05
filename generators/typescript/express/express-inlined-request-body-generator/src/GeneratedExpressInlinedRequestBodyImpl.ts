@@ -7,6 +7,7 @@ export declare namespace GeneratedExpressInlinedRequestBodyImpl {
         requestBody: InlinedRequestBody;
         typeName: string;
         retainOriginalCasing: boolean;
+        includeSerdeLayer: boolean;
     }
 }
 
@@ -14,11 +15,18 @@ export class GeneratedExpressInlinedRequestBodyImpl implements GeneratedExpressI
     private requestBody: InlinedRequestBody;
     private typeName: string;
     private retainOriginalCasing: boolean;
+    private includeSerdeLayer: boolean;
 
-    constructor({ requestBody, typeName, retainOriginalCasing }: GeneratedExpressInlinedRequestBodyImpl.Init) {
+    constructor({
+        requestBody,
+        typeName,
+        retainOriginalCasing,
+        includeSerdeLayer
+    }: GeneratedExpressInlinedRequestBodyImpl.Init) {
         this.requestBody = requestBody;
         this.typeName = typeName;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.includeSerdeLayer = includeSerdeLayer;
     }
 
     public writeToFile(context: ExpressContext): void {
@@ -40,6 +48,10 @@ export class GeneratedExpressInlinedRequestBodyImpl implements GeneratedExpressI
     }
 
     public getPropertyKey(property: InlinedRequestBodyProperty): string {
-        return this.retainOriginalCasing ? property.name.name.originalName : property.name.name.camelCase.unsafeName;
+        if (this.includeSerdeLayer && !this.retainOriginalCasing) {
+            return property.name.name.camelCase.unsafeName;
+        } else {
+            return property.name.name.originalName;
+        }
     }
 }

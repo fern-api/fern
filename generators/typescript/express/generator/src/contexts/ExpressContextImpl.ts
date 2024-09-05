@@ -175,7 +175,8 @@ export class ExpressContextImpl implements ExpressContext {
             packageResolver,
             sourceFile: this.sourceFile,
             importsManager,
-            retainOriginalCasing
+            retainOriginalCasing,
+            includeSerdeLayer
         });
         this.expressInlinedRequestBodySchema = new ExpressInlinedRequestBodySchemaContextImpl({
             packageResolver,
