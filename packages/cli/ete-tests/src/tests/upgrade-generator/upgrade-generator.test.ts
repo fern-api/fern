@@ -26,7 +26,7 @@ describe("fern generator upgrade", () => {
             }
         );
 
-        expect(pythonVersion.stdout).not.toEqual("0.0.0");
+        expect(pythonVersion.stdout).not.toEqual("3.0.0");
 
         // Let's make sure that we don't touch the version if it's not found
         // TODO: remove this test when we register Java generators
@@ -69,7 +69,7 @@ describe("fern generator upgrade", () => {
             }
         );
 
-        expect(pythonVersion.stdout).not.toEqual("0.0.0");
+        expect(pythonVersion.stdout).not.toEqual("3.0.0");
     }, 60_000);
 
     it("fern generator help commands", async () => {
