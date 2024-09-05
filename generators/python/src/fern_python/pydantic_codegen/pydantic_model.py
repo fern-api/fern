@@ -35,6 +35,7 @@ class PydanticModel:
         require_optional_fields: bool,
         update_forward_ref_function_reference: AST.Reference,
         field_metadata_getter: Callable[[], FieldMetadata],
+        use_pydantic_field_aliases: bool,
         should_export: bool = True,
         base_models: Sequence[AST.ClassReference] = [],
         parent: Optional[ClassParent] = None,
@@ -77,6 +78,7 @@ class PydanticModel:
 
         self._update_forward_ref_function_reference = update_forward_ref_function_reference
         self._field_metadata_getter = field_metadata_getter
+        self._use_pydantic_field_aliases = use_pydantic_field_aliases
 
     def to_reference(self) -> LocalClassReference:
         return self._local_class_reference
@@ -117,13 +119,13 @@ class PydanticModel:
         )
 
         initializer = get_field_name_initializer(
+            alias=field.json_field_name if (is_aliased and self._use_pydantic_field_aliases) else None,
             default_factory=field.default_factory,
             description=field.description,
             default=default_value,
-            version=self._version,
         )
 
-        if is_aliased:
+        if is_aliased and not self._use_pydantic_field_aliases:
             field_metadata = self._field_metadata_getter().get_instance()
             field_metadata.add_alias(field.json_field_name)
 
@@ -422,18 +424,21 @@ class PydanticModel:
 
 def get_field_name_initializer(
     *,
-    version: PydanticVersionCompatibility,
+    alias: Optional[str],
     default: Optional[AST.Expression],
     default_factory: Optional[AST.Expression],
     description: Optional[str],
 ) -> Union[AST.Expression, None]:
-    if default_factory is None and description is None:
+    if alias is None and default_factory is None and description is None:
         return default
 
     def write(writer: AST.NodeWriter) -> None:
         writer.write_reference(Pydantic.Field())
         writer.write("(")
         arg_present = False
+        if alias is not None:
+            arg_present = True
+            writer.write(f'alias="{alias}"')
         if default is not None:
             if arg_present:
                 writer.write(", ")

@@ -1,4 +1,27 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.0.0-rc0
+  ir_version: 53
+  changelog_entry:
+    - type: fix
+      summary: Rerelease 3.11.0-rc0 as a major version, with a configuration flag to disable the behavior (`use_pydantic_field_aliases`), defaulted to `true` to preserve existing behavior.
+      fixed:
+        - >-
+          Rerelease 3.11.0-rc0 as a major version, with a configuration flag to
+          disable the behavior (`use_pydantic_field_aliases`), defaulted to `false`
+          to introduce the break on a major version.
+
+          To maintain parity with pre-3.11.0 behavior, update the flag to `true`:
+            
+            ```yaml
+            - name: fernapi/fern-python-sdk
+              version: 4.0.0-rc0
+              config:
+                pydantic_config:
+                  use_pydantic_field_aliases: true
+            ```
+    - type: internal
+      summary: The generator now shares "as is" files with Pydantic and FastAPI generators.
+
 - version: 3.11.0-rc0
   ir_version: 53
   changelog_entry:
@@ -15,6 +38,8 @@
           used the deprecated `class Config`, regardless of the Pydantic version to satisfy mypy, which lead to warnings in the console.
 
           Now, we've removed the field aliases and replaced them with an internal representation, which allows us to avoid pydantic config altogether.
+  is_yanked:
+    remediation_version: 4.0.0-rc0
 
 
 - version: 3.10.8

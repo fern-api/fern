@@ -5,7 +5,6 @@ import httpx
 from .core.client_wrapper import SyncClientWrapper
 from .service.client import ServiceClient
 from .core.request_options import RequestOptions
-from .core.jsonable_encoder import jsonable_encoder
 from .core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
 from .core.api_error import ApiError
@@ -94,7 +93,7 @@ class SeedPackageYml:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(id)}/",
+            f"{id}/",
             method="POST",
             json={
                 "name": name,
@@ -206,7 +205,7 @@ class AsyncSeedPackageYml:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(id)}/",
+            f"{id}/",
             method="POST",
             json={
                 "name": name,

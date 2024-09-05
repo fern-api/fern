@@ -16,7 +16,6 @@ from ..core.api_error import ApiError
 from ..core.pydantic_utilities import parse_obj_as
 from ..commons.types.problem_id import ProblemId
 from .types.update_problem_response import UpdateProblemResponse
-from ..core.jsonable_encoder import jsonable_encoder
 from .types.get_default_starter_files_response import GetDefaultStarterFilesResponse
 from ..core.client_wrapper import AsyncClientWrapper
 
@@ -266,7 +265,7 @@ class ProblemClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"problem-crud/update/{jsonable_encoder(problem_id)}",
+            f"problem-crud/update/{problem_id}",
             method="POST",
             json={
                 "problemName": problem_name,
@@ -332,7 +331,7 @@ class ProblemClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"problem-crud/delete/{jsonable_encoder(problem_id)}",
+            f"problem-crud/delete/{problem_id}",
             method="DELETE",
             request_options=request_options,
         )
@@ -686,7 +685,7 @@ class AsyncProblemClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"problem-crud/update/{jsonable_encoder(problem_id)}",
+            f"problem-crud/update/{problem_id}",
             method="POST",
             json={
                 "problemName": problem_name,
@@ -762,7 +761,7 @@ class AsyncProblemClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"problem-crud/delete/{jsonable_encoder(problem_id)}",
+            f"problem-crud/delete/{problem_id}",
             method="DELETE",
             request_options=request_options,
         )

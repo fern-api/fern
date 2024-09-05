@@ -3,7 +3,6 @@
 import typing
 from ...core.client_wrapper import SyncClientWrapper
 from ...core.request_options import RequestOptions
-from ...core.jsonable_encoder import jsonable_encoder
 from ...core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
@@ -46,7 +45,7 @@ class HttpMethodsClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"http-methods/{jsonable_encoder(id)}",
+            f"http-methods/{id}",
             method="GET",
             request_options=request_options,
         )
@@ -145,7 +144,7 @@ class HttpMethodsClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"http-methods/{jsonable_encoder(id)}",
+            f"http-methods/{id}",
             method="PUT",
             json={
                 "string": string,
@@ -260,7 +259,7 @@ class HttpMethodsClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"http-methods/{jsonable_encoder(id)}",
+            f"http-methods/{id}",
             method="PATCH",
             json={
                 "string": string,
@@ -320,7 +319,7 @@ class HttpMethodsClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"http-methods/{jsonable_encoder(id)}",
+            f"http-methods/{id}",
             method="DELETE",
             request_options=request_options,
         )
@@ -377,7 +376,7 @@ class AsyncHttpMethodsClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"http-methods/{jsonable_encoder(id)}",
+            f"http-methods/{id}",
             method="GET",
             request_options=request_options,
         )
@@ -492,7 +491,7 @@ class AsyncHttpMethodsClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"http-methods/{jsonable_encoder(id)}",
+            f"http-methods/{id}",
             method="PUT",
             json={
                 "string": string,
@@ -614,7 +613,7 @@ class AsyncHttpMethodsClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"http-methods/{jsonable_encoder(id)}",
+            f"http-methods/{id}",
             method="PATCH",
             json={
                 "string": string,
@@ -682,7 +681,7 @@ class AsyncHttpMethodsClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"http-methods/{jsonable_encoder(id)}",
+            f"http-methods/{id}",
             method="DELETE",
             request_options=request_options,
         )

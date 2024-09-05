@@ -55,11 +55,9 @@ class SdkGeneratorContext(ABC):
             map(lambda service: any(map(lambda ep: ep.pagination is not None, service.endpoints)), ir.services.values())
         )
         self.core_utilities = CoreUtilities(
-            allow_skipping_validation=custom_config.pydantic_config.skip_validation,
             has_paginated_endpoints=_has_paginated_endpoints,
-            version=custom_config.pydantic_config.version,
             project_module_path=project_module_path,
-            use_typeddict_requests=custom_config.pydantic_config.use_typeddict_requests,
+            custom_config=custom_config,
         )
         self.custom_config = custom_config
         self.source_file_factory = SourceFileFactory(should_format=not custom_config.skip_formatting)

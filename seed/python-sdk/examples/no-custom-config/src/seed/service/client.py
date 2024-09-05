@@ -5,7 +5,6 @@ from ..core.client_wrapper import SyncClientWrapper
 from ..types.types.movie_id import MovieId
 from ..core.request_options import RequestOptions
 from ..types.types.movie import Movie
-from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
@@ -49,7 +48,7 @@ class ServiceClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"movie/{jsonable_encoder(movie_id)}",
+            f"movie/{movie_id}",
             method="GET",
             request_options=request_options,
         )
@@ -307,7 +306,7 @@ class AsyncServiceClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"movie/{jsonable_encoder(movie_id)}",
+            f"movie/{movie_id}",
             method="GET",
             request_options=request_options,
         )

@@ -1,5 +1,5 @@
-from core_utilities.sdk.http_client import get_request_body
-from core_utilities.sdk.request_options import RequestOptions
+from core_utilities.shared.http_client import get_request_body
+from core_utilities.shared.request_options import RequestOptions
 
 def get_request_options() -> RequestOptions:
     return {"additional_body_parameters": {"see you": "later"}}

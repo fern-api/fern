@@ -3,7 +3,6 @@
 import typing
 from ...core.client_wrapper import SyncClientWrapper
 from ...core.request_options import RequestOptions
-from ...core.jsonable_encoder import jsonable_encoder
 from ...core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
@@ -45,7 +44,7 @@ class ParamsClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"params/path/{jsonable_encoder(param)}",
+            f"params/path/{param}",
             method="GET",
             request_options=request_options,
         )
@@ -198,7 +197,7 @@ class ParamsClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"params/path-query/{jsonable_encoder(param)}",
+            f"params/path-query/{param}",
             method="GET",
             params={
                 "query": query,
@@ -246,7 +245,7 @@ class ParamsClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"params/path/{jsonable_encoder(param)}",
+            f"params/path/{param}",
             method="PUT",
             json=request,
             request_options=request_options,
@@ -307,7 +306,7 @@ class AsyncParamsClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"params/path/{jsonable_encoder(param)}",
+            f"params/path/{param}",
             method="GET",
             request_options=request_options,
         )
@@ -484,7 +483,7 @@ class AsyncParamsClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"params/path-query/{jsonable_encoder(param)}",
+            f"params/path-query/{param}",
             method="GET",
             params={
                 "query": query,
@@ -540,7 +539,7 @@ class AsyncParamsClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"params/path/{jsonable_encoder(param)}",
+            f"params/path/{param}",
             method="PUT",
             json=request,
             request_options=request_options,

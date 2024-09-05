@@ -6,7 +6,6 @@ import datetime as dt
 from ..commons.types.problem_id import ProblemId
 from ..core.request_options import RequestOptions
 from .types.playlist import Playlist
-from ..core.jsonable_encoder import jsonable_encoder
 from ..core.datetime_utils import serialize_datetime
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
@@ -82,7 +81,7 @@ class PlaylistClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v2/playlist/{jsonable_encoder(service_param)}/create",
+            f"v2/playlist/{service_param}/create",
             method="POST",
             params={
                 "datetime": serialize_datetime(datetime),
@@ -165,7 +164,7 @@ class PlaylistClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v2/playlist/{jsonable_encoder(service_param)}/all",
+            f"v2/playlist/{service_param}/all",
             method="GET",
             params={
                 "limit": limit,
@@ -223,7 +222,7 @@ class PlaylistClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v2/playlist/{jsonable_encoder(service_param)}/{jsonable_encoder(playlist_id)}",
+            f"v2/playlist/{service_param}/{playlist_id}",
             method="GET",
             request_options=request_options,
         )
@@ -299,7 +298,7 @@ class PlaylistClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v2/playlist/{jsonable_encoder(service_param)}/{jsonable_encoder(playlist_id)}",
+            f"v2/playlist/{service_param}/{playlist_id}",
             method="PUT",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=UpdatePlaylistRequest, direction="write"
@@ -365,7 +364,7 @@ class PlaylistClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v2/playlist/{jsonable_encoder(service_param)}/{jsonable_encoder(playlist_id)}",
+            f"v2/playlist/{service_param}/{playlist_id}",
             method="DELETE",
             request_options=request_options,
         )
@@ -444,7 +443,7 @@ class AsyncPlaylistClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v2/playlist/{jsonable_encoder(service_param)}/create",
+            f"v2/playlist/{service_param}/create",
             method="POST",
             params={
                 "datetime": serialize_datetime(datetime),
@@ -535,7 +534,7 @@ class AsyncPlaylistClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v2/playlist/{jsonable_encoder(service_param)}/all",
+            f"v2/playlist/{service_param}/all",
             method="GET",
             params={
                 "limit": limit,
@@ -601,7 +600,7 @@ class AsyncPlaylistClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v2/playlist/{jsonable_encoder(service_param)}/{jsonable_encoder(playlist_id)}",
+            f"v2/playlist/{service_param}/{playlist_id}",
             method="GET",
             request_options=request_options,
         )
@@ -685,7 +684,7 @@ class AsyncPlaylistClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v2/playlist/{jsonable_encoder(service_param)}/{jsonable_encoder(playlist_id)}",
+            f"v2/playlist/{service_param}/{playlist_id}",
             method="PUT",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=UpdatePlaylistRequest, direction="write"
@@ -759,7 +758,7 @@ class AsyncPlaylistClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v2/playlist/{jsonable_encoder(service_param)}/{jsonable_encoder(playlist_id)}",
+            f"v2/playlist/{service_param}/{playlist_id}",
             method="DELETE",
             request_options=request_options,
         )

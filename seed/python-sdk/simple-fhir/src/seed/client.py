@@ -5,7 +5,6 @@ import httpx
 from .core.client_wrapper import SyncClientWrapper
 from .core.request_options import RequestOptions
 from .types.account import Account
-from .core.jsonable_encoder import jsonable_encoder
 from .core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
 from .core.api_error import ApiError
@@ -83,7 +82,7 @@ class SeedApi:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"account/{jsonable_encoder(account_id)}",
+            f"account/{account_id}",
             method="GET",
             request_options=request_options,
         )
@@ -181,7 +180,7 @@ class AsyncSeedApi:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"account/{jsonable_encoder(account_id)}",
+            f"account/{account_id}",
             method="GET",
             request_options=request_options,
         )

@@ -4,7 +4,6 @@ from ...core.client_wrapper import SyncClientWrapper
 import typing
 from ...core.request_options import RequestOptions
 from ...types.types.file import File
-from ...core.jsonable_encoder import jsonable_encoder
 from ...core.pydantic_utilities import parse_obj_as
 from ...types.errors.not_found_error import NotFoundError
 from json.decoder import JSONDecodeError
@@ -51,7 +50,7 @@ class ServiceClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"file/{jsonable_encoder(filename)}",
+            f"file/{filename}",
             method="GET",
             headers={
                 "X-File-API-Version": str(x_file_api_version) if x_file_api_version is not None else None,
@@ -130,7 +129,7 @@ class AsyncServiceClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"file/{jsonable_encoder(filename)}",
+            f"file/{filename}",
             method="GET",
             headers={
                 "X-File-API-Version": str(x_file_api_version) if x_file_api_version is not None else None,

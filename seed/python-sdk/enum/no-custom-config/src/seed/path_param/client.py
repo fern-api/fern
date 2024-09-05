@@ -5,7 +5,6 @@ from ..types.operand import Operand
 import typing
 from ..types.color_or_operand import ColorOrOperand
 from ..core.request_options import RequestOptions
-from ..core.jsonable_encoder import jsonable_encoder
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper
@@ -57,7 +56,7 @@ class PathParamClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"path/{jsonable_encoder(operand)}/{jsonable_encoder(maybe_operand)}/{jsonable_encoder(operand_or_color)}/{jsonable_encoder(maybe_operand_or_color)}",
+            f"path/{operand}/{maybe_operand}/{operand_or_color}/{maybe_operand_or_color}",
             method="POST",
             request_options=request_options,
         )
@@ -124,7 +123,7 @@ class AsyncPathParamClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"path/{jsonable_encoder(operand)}/{jsonable_encoder(maybe_operand)}/{jsonable_encoder(operand_or_color)}/{jsonable_encoder(maybe_operand_or_color)}",
+            f"path/{operand}/{maybe_operand}/{operand_or_color}/{maybe_operand_or_color}",
             method="POST",
             request_options=request_options,
         )

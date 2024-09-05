@@ -9,7 +9,6 @@ from ....core.api_error import ApiError
 from ....core.pydantic_utilities import parse_obj_as
 from .types.problem_info_v_2 import ProblemInfoV2
 from ....commons.types.problem_id import ProblemId
-from ....core.jsonable_encoder import jsonable_encoder
 from ....core.client_wrapper import AsyncClientWrapper
 
 
@@ -133,7 +132,7 @@ class ProblemClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"problems-v2/problem-info/{jsonable_encoder(problem_id)}",
+            f"problems-v2/problem-info/{problem_id}",
             method="GET",
             request_options=request_options,
         )
@@ -184,7 +183,7 @@ class ProblemClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"problems-v2/problem-info/{jsonable_encoder(problem_id)}/version/{jsonable_encoder(problem_version)}",
+            f"problems-v2/problem-info/{problem_id}/version/{problem_version}",
             method="GET",
             request_options=request_options,
         )
@@ -349,7 +348,7 @@ class AsyncProblemClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"problems-v2/problem-info/{jsonable_encoder(problem_id)}",
+            f"problems-v2/problem-info/{problem_id}",
             method="GET",
             request_options=request_options,
         )
@@ -408,7 +407,7 @@ class AsyncProblemClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"problems-v2/problem-info/{jsonable_encoder(problem_id)}/version/{jsonable_encoder(problem_version)}",
+            f"problems-v2/problem-info/{problem_id}/version/{problem_version}",
             method="GET",
             request_options=request_options,
         )

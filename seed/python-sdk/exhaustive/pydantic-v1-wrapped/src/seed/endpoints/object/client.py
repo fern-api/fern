@@ -14,7 +14,6 @@ from ...types.object.types.object_with_map_of_map import ObjectWithMapOfMap
 from ...types.object.types.nested_object_with_optional_field import NestedObjectWithOptionalField
 from ...core.serialization import convert_and_respect_annotation_metadata
 from ...types.object.types.nested_object_with_required_field import NestedObjectWithRequiredField
-from ...core.jsonable_encoder import jsonable_encoder
 from ...core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -395,7 +394,7 @@ class ObjectClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"object/get-and-return-nested-with-required-field/{jsonable_encoder(string_)}",
+            f"object/get-and-return-nested-with-required-field/{string_}",
             method="POST",
             json={
                 "string": string,
@@ -917,7 +916,7 @@ class AsyncObjectClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"object/get-and-return-nested-with-required-field/{jsonable_encoder(string_)}",
+            f"object/get-and-return-nested-with-required-field/{string_}",
             method="POST",
             json={
                 "string": string,

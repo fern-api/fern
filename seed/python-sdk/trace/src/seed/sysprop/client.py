@@ -4,7 +4,6 @@ from ..core.client_wrapper import SyncClientWrapper
 from ..commons.types.language import Language
 import typing
 from ..core.request_options import RequestOptions
-from ..core.jsonable_encoder import jsonable_encoder
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.pydantic_utilities import parse_obj_as
@@ -46,7 +45,7 @@ class SyspropClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"sysprop/num-warm-instances/{jsonable_encoder(language)}/{jsonable_encoder(num_warm_instances)}",
+            f"sysprop/num-warm-instances/{language}/{num_warm_instances}",
             method="PUT",
             request_options=request_options,
         )
@@ -144,7 +143,7 @@ class AsyncSyspropClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"sysprop/num-warm-instances/{jsonable_encoder(language)}/{jsonable_encoder(num_warm_instances)}",
+            f"sysprop/num-warm-instances/{language}/{num_warm_instances}",
             method="PUT",
             request_options=request_options,
         )
