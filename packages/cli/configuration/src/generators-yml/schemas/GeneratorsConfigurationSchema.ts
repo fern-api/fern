@@ -1,3 +1,4 @@
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { z } from "zod";
 import { APIConfigurationSchema, APIDefinitionSettingsSchema } from "./APIConfigurationSchema";
 import { GeneratorGroupSchema } from "./GeneratorGroupSchema";
@@ -15,6 +16,8 @@ export const ASYNC_API_LOCATION_KEY = "async-api";
 export const API_SETTINGS_KEY = "api-settings";
 
 export const GeneratorsConfigurationSchema = z.strictObject({
+    "auth-schemes": z.optional(z.record(RawSchemas.AuthSchemeDeclarationSchema)),
+
     api: z.optional(APIConfigurationSchema),
 
     whitelabel: z.optional(WhitelabelConfigurationSchema),

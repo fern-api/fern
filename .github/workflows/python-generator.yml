@@ -56,6 +56,9 @@ jobs:
           cd ../union_utils
           fern generate --group dummy_union_types --local
 
+          cd ../unaliased_models
+          fern generate --group dummy_unaliased_types --local
+
       - name: Install Dependencies - Pydantic V1
         working-directory: ./generators/python
         run: |

@@ -141,6 +141,15 @@ fixtures:
     - customConfig:
         inline_request_params: true
       outputFolder: inline_request_params
+    - customConfig:
+        pydantic_config:
+          use_pydantic_field_aliases: true
+          skip_validation: true
+      outputFolder: aliases_without_validation
+    - customConfig:
+        pydantic_config:
+          use_pydantic_field_aliases: true
+      outputFolder: aliases_with_validation
   unions:
     - customConfig: null
       outputFolder: no-custom-config

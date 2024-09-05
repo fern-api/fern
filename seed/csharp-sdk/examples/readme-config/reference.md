@@ -316,6 +316,7 @@ await client.Service.CreateMovieAsync(
                 new Dictionary<object, object?>() { { "imdb", 7.6 }, { "rottenTomatoes", 97 } }
             },
         },
+        Revenue = 1000000,
     }
 );
 ```

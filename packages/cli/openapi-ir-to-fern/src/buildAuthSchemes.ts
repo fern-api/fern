@@ -8,6 +8,19 @@ const BASIC_AUTH_SCHEME = "BasicAuthScheme";
 const BEARER_AUTH_SCHEME = "BearerAuthScheme";
 
 export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
+    if (context.authOverrides != null) {
+        for (const [name, declaration] of Object.entries(context.authOverrides["auth-schemes"] ?? {})) {
+            context.builder.addAuthScheme({
+                name,
+                schema: declaration
+            });
+        }
+        if (context.authOverrides.auth != null) {
+            context.builder.setAuth(context.authOverrides.auth);
+        }
+        return;
+    }
+
     let setAuth = false;
 
     for (const [id, securityScheme] of Object.entries(context.ir.securitySchemes)) {

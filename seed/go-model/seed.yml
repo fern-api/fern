@@ -5,7 +5,7 @@ publish:
   preBuildCommands:
     - go build ./...
   docker:
-    file: ./generators/go/docker/Dockerfile.model
+    file: ./generators/go/model/Dockerfile
     image: fernapi/fern-go-model
     context: ./generators/go
 test:

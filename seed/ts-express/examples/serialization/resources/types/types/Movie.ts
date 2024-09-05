@@ -17,6 +17,7 @@ export const Movie: core.serialization.ObjectSchema<serializers.Movie.Raw, SeedE
         tag: core.serialization.lazy(() => serializers.commons.Tag),
         book: core.serialization.string().optional(),
         metadata: core.serialization.record(core.serialization.string(), core.serialization.unknown()),
+        revenue: core.serialization.number(),
     });
 
 export declare namespace Movie {
@@ -30,5 +31,6 @@ export declare namespace Movie {
         tag: serializers.commons.Tag.Raw;
         book?: string | null;
         metadata: Record<string, unknown>;
+        revenue: number;
     }
 }

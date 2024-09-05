@@ -22,5 +22,6 @@ export const SpecSchema = z.union([OpenAPISpecSchema, AsyncAPISchema]);
 export type SpecSchema = z.infer<typeof SpecSchema>;
 
 export const APIConfigurationV2Schema = RawSchemas.WithEnvironmentsSchema.extend({
+    auth: z.optional(RawSchemas.ApiAuthSchema),
     specs: z.array(SpecSchema)
 });

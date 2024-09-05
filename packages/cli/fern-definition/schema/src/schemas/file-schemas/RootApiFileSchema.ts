@@ -17,23 +17,31 @@ export const WithEnvironmentsSchema = z.strictObject({
 
 export type WithEnvironmentsSchema = z.infer<typeof WithEnvironmentsSchema>;
 
-export const RootApiFileSchema = WithEnvironmentsSchema.extend({
-    name: z.string(), // TODO: should this be migrated to id?
-    "display-name": z.optional(z.string()),
-    imports: z.optional(z.record(z.string())),
+export const WithAuthSchema = z.strictObject({
     auth: z.optional(ApiAuthSchema),
-    "auth-schemes": z.optional(z.record(AuthSchemeDeclarationSchema)),
-    headers: z.optional(z.record(z.string(), HttpHeaderSchema)),
-    "error-discrimination": z.optional(ErrorDiscriminationSchema),
-    audiences: z.optional(z.array(z.string())),
-    docs: z.optional(z.string()),
-    errors: z.optional(z.array(z.string())),
-    "base-path": z.optional(z.string()),
-    "path-parameters": z.optional(z.record(HttpPathParameterSchema)),
-    "idempotency-headers": z.optional(z.record(z.string(), HttpHeaderSchema)),
-    variables: z.optional(z.record(VariableDeclarationSchema)),
-    pagination: z.optional(PaginationSchema),
-    version: z.optional(VersionDeclarationSchema)
+    "auth-schemes": z.optional(z.record(AuthSchemeDeclarationSchema))
 });
+
+export type WithAuthSchema = z.infer<typeof WithAuthSchema>;
+
+export const RootApiFileSchema = z
+    .strictObject({
+        name: z.string(), // TODO: should this be migrated to id?
+        "display-name": z.optional(z.string()),
+        imports: z.optional(z.record(z.string())),
+        headers: z.optional(z.record(z.string(), HttpHeaderSchema)),
+        "error-discrimination": z.optional(ErrorDiscriminationSchema),
+        audiences: z.optional(z.array(z.string())),
+        docs: z.optional(z.string()),
+        errors: z.optional(z.array(z.string())),
+        "base-path": z.optional(z.string()),
+        "path-parameters": z.optional(z.record(HttpPathParameterSchema)),
+        "idempotency-headers": z.optional(z.record(z.string(), HttpHeaderSchema)),
+        variables: z.optional(z.record(VariableDeclarationSchema)),
+        pagination: z.optional(PaginationSchema),
+        version: z.optional(VersionDeclarationSchema)
+    })
+    .extend(WithEnvironmentsSchema.shape)
+    .extend(WithAuthSchema.shape);
 
 export type RootApiFileSchema = z.infer<typeof RootApiFileSchema>;
