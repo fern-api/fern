@@ -1,3 +1,4 @@
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
 import { parse, Spec } from "@fern-api/openapi-parser";
@@ -8,7 +9,15 @@ import { convert } from "../convert";
 const FIXTURES_PATH = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 
 // eslint-disable-next-line jest/no-export
-export function testConvertOpenAPI(fixtureName: string, filename: string, asyncApiFilename?: string): void {
+export declare namespace TestConvertOpenAPI {
+    interface Options {
+        asyncApiFilename?: string;
+        environmentOverrides?: RawSchemas.WithEnvironmentsSchema;
+    }
+}
+
+// eslint-disable-next-line jest/no-export
+export function testConvertOpenAPI(fixtureName: string, filename: string, opts: TestConvertOpenAPI.Options = {}): void {
     // eslint-disable-next-line jest/valid-title
     describe(fixtureName, () => {
         it("simple", async () => {
@@ -16,8 +25,8 @@ export function testConvertOpenAPI(fixtureName: string, filename: string, asyncA
             const mockTaskContext = createMockTaskContext({ logger: CONSOLE_LOGGER });
 
             const absolutePathToAsyncAPI =
-                asyncApiFilename != null
-                    ? join(FIXTURES_PATH, RelativeFilePath.of(fixtureName), RelativeFilePath.of(asyncApiFilename))
+                opts.asyncApiFilename != null
+                    ? join(FIXTURES_PATH, RelativeFilePath.of(fixtureName), RelativeFilePath.of(opts.asyncApiFilename))
                     : undefined;
 
             const specs: Spec[] = [];
@@ -46,6 +55,7 @@ export function testConvertOpenAPI(fixtureName: string, filename: string, asyncA
                 taskContext: createMockTaskContext({ logger: CONSOLE_LOGGER })
             });
             const fernDefinition = convert({
+                environmentOverrides: opts.environmentOverrides,
                 ir: openApiIr,
                 taskContext: mockTaskContext,
                 enableUniqueErrorsPerEndpoint: false,
@@ -59,8 +69,8 @@ export function testConvertOpenAPI(fixtureName: string, filename: string, asyncA
             const mockTaskContext = createMockTaskContext({ logger: CONSOLE_LOGGER });
 
             const absolutePathToAsyncAPI =
-                asyncApiFilename != null
-                    ? join(FIXTURES_PATH, RelativeFilePath.of(fixtureName), RelativeFilePath.of(asyncApiFilename))
+                opts.asyncApiFilename != null
+                    ? join(FIXTURES_PATH, RelativeFilePath.of(fixtureName), RelativeFilePath.of(opts.asyncApiFilename))
                     : undefined;
 
             const specs: Spec[] = [];
@@ -89,6 +99,7 @@ export function testConvertOpenAPI(fixtureName: string, filename: string, asyncA
                 taskContext: createMockTaskContext({ logger: CONSOLE_LOGGER })
             });
             const fernDefinition = convert({
+                environmentOverrides: opts.environmentOverrides,
                 ir: openApiIr,
                 taskContext: mockTaskContext,
                 enableUniqueErrorsPerEndpoint: true,
