@@ -5,39 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.7] - 2024-09-04
-
-- Improvement: Public constructors can now be generated for all model types:
-  ```yaml
-  generators:
-    - name: fernapi/fern-java-sdk
-      config:
-        enable-public-constructors: true # default false
-  ```
-
 ## [1.0.6] - 2024-09-04
 
 - Fix: Fixed a bug where optional collections are not handled properly in paginated responses.
 
 ## [1.0.5] - 2024-07-26
 
-- Fix: Fixed a bug where local generation custom config doesn't pick up some values, including exception naming.
+* Fix: Fixed a bug where local generation custom config doesn't pick up some values, including exception naming. 
 
 ## [1.0.4] - 2024-07-24
 
-- Fix: Fixed a bug where OkHttp responses could be closed prematurely.
+* Fix: Fixed a bug where OkHttp responses could be closed prematurely.
 
 ## [1.0.3] - 2024-07-23
 
-- Improvement: Generated builder methods for optional fields can now accept null directly.
+* Improvement: Generated builder methods for optional fields can now accept null directly.
 
 ## [1.0.2-rc0] - 2024-07-02
 
-- Improvement: The SDK generator now adds a class-level `@JsonInclude(JsonInclude.Include.NON_ABSENT)` annotation to
-  each generated type in place of the previous `@JsonInclude(JsonInclude.Include.NON_EMPTY)` by default. This ensures
-  that required empty collection fields are not removed from request or response json. This is configurable in the
+* Improvement: The SDK generator now adds a class-level `@JsonInclude(JsonInclude.Include.NON_ABSENT)` annotation to 
+  each generated type in place of the previous `@JsonInclude(JsonInclude.Include.NON_EMPTY)` by default. This ensures 
+  that required empty collection fields are not removed from request or response json. This is configurable in the 
   `generators.yml` file:
-  ```yaml
+    ```yaml
   generators:
     - name: fernapi/fern-java-sdk
       config:
@@ -46,14 +36,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.1] - 2024-06-26
 
-- Break: The Java SDK is now on major version 1. To take this upgrade without any breaks, please add the below
+- Break: The Java SDK is now on major version 1. To take this upgrade without any breaks, please add the below 
   configuration to your `generators.yml` file:
   ```yaml
   generators:
-    - name: fernapi/fern-java-sdk
-      config:
-        base-api-exception-class-name: ApiError
-        base-exception-class-name: CompanyException # Optional: This should only be set if default naming is undesirable
+  - name: fernapi/fern-java-sdk
+    config:
+      base-api-exception-class-name: ApiError
+      base-exception-class-name: CompanyException # Optional: This should only be set if default naming is undesirable
   ```
 - Improvement: We now generate Exception types for all errors that are defined in the IR. Generated clients with an
   error discrimination strategy of "status code" will throw one of these typed Exceptions based on the status code of
@@ -68,7 +58,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.10.1] - 2024-06-13
 
-- Feature: Add support for cursor and offset pagination.
+- Feature: Add support for cursor and offset pagination. 
 
   For example, consider the following endpoint `/users` endpoint:
 
@@ -100,23 +90,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
             starting_after: optional<string>
         response: ListUsersResponse
   ```
-
+  
   The generated `SyncPagingIterable<User>` can then be used to traverse through the `User` objects:
-
   ```java
   for (User user : client.users.list(...)) {
       System.out.println(user);
   }
   ```
-
+  
   Or stream them:
-
   ```java
   client.users.list(...).streamItems().map(user -> ...);
   ```
-
+  
   Or statically calling `nextPage()` to perform the pagination manually:
-
   ```java
   SyncPagingIterable<User> pager = client.users.list(...);
   // First page
@@ -133,18 +120,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.9.8] - 2024-06-06
 
-- Fix: `RequestOptions` are now generated with the `timeout` field initialized to `Optional.empty()` instead of `null`
+- Fix: `RequestOptions` are now generated with the `timeout` field initialized to `Optional.empty()` instead of `null` 
   to avoid NPEs if `timeout` is not set in the builder.
 
 ## [0.9.7] - 2024-06-06
 
 - Feature: The SDK generator now generates `@java.lang.Override` over `@Override` in all files to avoid clashes with any
-  `Override.java` class that may have been generated in the same package. The former was used most places, but not all,
+  `Override.java` class that may have been generated in the same package. The former was used most places, but not all, 
   until this release.
 
 ## [0.9.6] - 2024-06-05
 
-- Feature: The SDK generator now supports returning response properties from client methods rather than just the
+- Feature: The SDK generator now supports returning response properties from client methods rather than just the 
   responses themselves.
 
 ## [0.9.5] - 2024-05-30

@@ -34,6 +34,12 @@ public interface SpringCustomConfig extends ICustomConfig {
         return true;
     }
 
+    @Value.Default
+    @JsonProperty("enable-public-constructors")
+    default Boolean enablePublicConstructors() {
+        return false;
+    }
+
     static ImmutableSpringCustomConfig.Builder builder() {
         return ImmutableSpringCustomConfig.builder();
     }

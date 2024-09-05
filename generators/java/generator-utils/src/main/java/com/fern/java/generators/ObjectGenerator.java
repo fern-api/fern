@@ -45,6 +45,7 @@ public final class ObjectGenerator extends AbstractFileGenerator {
     private final Optional<GeneratedJavaInterface> selfInterface;
     private final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
     private final List<GeneratedJavaInterface> extendedInterfaces = new ArrayList<>();
+    private final boolean publicConstructorsEnabled;
 
     public ObjectGenerator(
             ObjectTypeDeclaration objectTypeDeclaration,
@@ -52,13 +53,15 @@ public final class ObjectGenerator extends AbstractFileGenerator {
             List<GeneratedJavaInterface> extendedInterfaces,
             AbstractGeneratorContext<?, ?> generatorContext,
             Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces,
-            ClassName className) {
+            ClassName className,
+            boolean publicConstructorsEnabled) {
         super(className, generatorContext);
         this.objectTypeDeclaration = objectTypeDeclaration;
         this.selfInterface = selfInterface;
         selfInterface.ifPresent(this.extendedInterfaces::add);
         this.extendedInterfaces.addAll(extendedInterfaces);
         this.allGeneratedInterfaces = allGeneratedInterfaces;
+        this.publicConstructorsEnabled = publicConstructorsEnabled;
     }
 
     @Override
@@ -114,7 +117,7 @@ public final class ObjectGenerator extends AbstractFileGenerator {
                 enrichedObjectProperties,
                 implementsInterfaces,
                 true,
-                generatorContext.getCustomConfig().enablePublicConstructors(),
+                publicConstructorsEnabled,
                 generatorContext.deserializeWithAdditionalProperties(),
                 generatorContext.getCustomConfig().jsonInclude());
         TypeSpec objectTypeSpec = genericObjectGenerator.generate();

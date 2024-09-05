@@ -34,7 +34,7 @@ public final class HeaderAuthGenerator extends AbstractFileGenerator {
                 .resolvedType(ResolvedTypeReference.primitive(
                         PrimitiveType.builder().v1(PrimitiveTypeV1.STRING).build()))
                 .build();
-        AliasGenerator aliasGenerator = new AliasGenerator(className, generatorContext, aliasTypeDeclaration);
+        AliasGenerator aliasGenerator = new AliasGenerator(className, generatorContext, aliasTypeDeclaration, false);
         return aliasGenerator.generateFile();
     }
 }
