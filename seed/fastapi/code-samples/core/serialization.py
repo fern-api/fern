@@ -68,7 +68,9 @@ def convert_and_respect_annotation_metadata(
     ):
         return _convert_mapping(object_, clean_type, direction)
     # TypedDicts
-    if typing_extensions.is_typeddict(clean_type) and isinstance(object_, typing.Mapping):
+    if typing_extensions.is_typeddict(clean_type) and isinstance(
+        object_, typing.Mapping
+    ):
         return _convert_mapping(object_, clean_type, direction)
 
     # If you're iterating on a string, do not bother to coerce it to a sequence.
@@ -163,8 +165,10 @@ def _convert_mapping(
                 object_=value, annotation=type_, direction=direction
             )
         else:
-            converted_object[_alias_key(key, type_, direction, aliases_to_field_names)] = (
-                convert_and_respect_annotation_metadata(object_=value, annotation=type_, direction=direction)
+            converted_object[
+                _alias_key(key, type_, direction, aliases_to_field_names)
+            ] = convert_and_respect_annotation_metadata(
+                object_=value, annotation=type_, direction=direction
             )
     return converted_object
 
