@@ -19,14 +19,16 @@ export async function getLatestGeneratorVersion({
 }): Promise<string | undefined> {
     const parsedVersion = semver.parse(currentGeneratorVersion);
     // We're just using unauthed endpoints, so we don't need to pass in a token
-    const client = new GeneratorsClient({});
+    const client = new GeneratorsClient({
+        environment: process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com"
+    });
     context?.logger.info(
-        `Getting latest version for ${generatorName} with CLI version ${cliVersion}, includeMajor: ${includeMajor}, prior version: ${parsedVersion} ${parsedVersion?.major}`
+        `Getting latest version for ${generatorName} with CLI version ${cliVersion}, includeMajor: ${includeMajor}, prior version: ${parsedVersion} ${parsedVersion?.major} ${process.env.DEFAULT_FDR_ORIGIN}`
     );
     const latestReleaseResponse = await client.generators.versions.getLatestGeneratorRelease({
         generator: getGeneratorMetadataFromName(generatorName, context),
-        releaseType: channel ?? FernRegistry.generators.ReleaseType.Ga,
-        retainMajorVersion: !includeMajor && parsedVersion != null ? parsedVersion.major : undefined,
+        releaseTypes: [channel ?? FernRegistry.generators.ReleaseType.Ga],
+        generatorMajorVersion: !includeMajor && parsedVersion != null ? parsedVersion.major : undefined,
         // We get "*" as 0.0.0, so we need to handle that case for tests
         // if we see this, then we shouldn't restrict on the CLI version
         cliVersion: cliVersion === "0.0.0" ? undefined : cliVersion
