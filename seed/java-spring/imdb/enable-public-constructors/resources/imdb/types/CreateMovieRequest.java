@@ -23,7 +23,7 @@ public final class CreateMovieRequest {
 
   private final double rating;
 
-  private CreateMovieRequest(String title, double rating) {
+  public CreateMovieRequest(String title, double rating) {
     this.title = title;
     this.rating = rating;
   }

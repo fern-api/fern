@@ -25,7 +25,7 @@ public final class Movie {
 
   private final double rating;
 
-  private Movie(MovieId id, String title, double rating) {
+  public Movie(MovieId id, String title, double rating) {
     this.id = id;
     this.title = title;
     this.rating = rating;

@@ -12,7 +12,7 @@ import java.lang.String;
 public final class MovieId {
   private final String value;
 
-  private MovieId(String value) {
+  public MovieId(String value) {
     this.value = value;
   }
 
