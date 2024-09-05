@@ -1,5 +1,5 @@
 import { noop, visitObject } from "@fern-api/core-utils";
-import { RootApiFileSchema } from "@fern-api/fern-definition-schema";
+import { isOAuthScheme, RootApiFileSchema } from "@fern-api/fern-definition-schema";
 import { RootApiFileAstVisitor } from "./RootApiFileAstVisitor";
 import { visitPathParameters } from "./visitors/services/visitHttpService";
 
@@ -16,7 +16,18 @@ export async function visitRootApiFileYamlAst(
         imports: noop,
         auth: noop,
         "idempotency-headers": noop,
-        "auth-schemes": noop,
+        "auth-schemes": async (authSchemes) => {
+            await Promise.all(
+                Object.entries(authSchemes ?? {}).map(async ([authScheme, authSchemeDeclaration]) => {
+                    if (isOAuthScheme(authSchemeDeclaration)) {
+                        await visitor["oauth"]?.({ name: authScheme, declaration: authSchemeDeclaration }, [
+                            "auth-scheme",
+                            authScheme
+                        ]);
+                    }
+                })
+            );
+        },
         pagination: noop,
         "default-environment": async (defaultEnvironment) => {
             await visitor.defaultEnvironment?.(defaultEnvironment, ["default-environment"]);

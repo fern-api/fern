@@ -42,3 +42,5 @@ export {
     type RawTypeDeclarationVisitor
 } from "./utils/visitRawTypeDeclaration";
 export { FernContainerRegex, visitRawTypeReference } from "./utils/visitRawTypeReference";
+export { HttpEndpointReferenceParser } from "./utils/HttpEndpointReferenceParser";
+export { isOAuthScheme } from "./utils/auth/isOAuthScheme";

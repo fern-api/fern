@@ -6,6 +6,10 @@ export type RootApiFileAstVisitor<R = void | Promise<void>> = {
 
 export interface RootApiFileAstNodeTypes {
     file: RootApiFileSchema;
+    oauth: {
+        name: string;
+        oauth: RawSchemas.OAuthSchemeSchema;
+    }
     defaultEnvironment: string | null | undefined;
     environment: {
         environmentId: string;

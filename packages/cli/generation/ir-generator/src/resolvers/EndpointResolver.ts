@@ -1,5 +1,12 @@
-import { FernWorkspace, getDefinitionFile } from "@fern-api/workspace-loader";
+import { HttpMethod } from "@fern-api/ir-sdk";
+import {
+    FernWorkspace,
+    getDefinitionFile,
+    visitAllDefinitionFiles,
+    visitAllPackageMarkers
+} from "@fern-api/workspace-loader";
 import { constructFernFileContext, FernFileContext } from "../FernFileContext";
+import { CASINGS_GENERATOR } from "../utils/getAllPropertiesForObject";
 import { parseReferenceToEndpointName } from "../utils/parseReferenceToEndpointName";
 import { ResolvedEndpoint } from "./ResolvedEndpoint";
 
@@ -25,6 +32,52 @@ export class EndpointResolverImpl implements EndpointResolver {
         return resolvedEndpoint;
     }
 
+    public async resolveEndpointByMethodAndPath({
+        method,
+        path
+    }: {
+        method: HttpMethod;
+        path: string;
+    }): Promise<Promise<ResolvedEndpoint | undefined>> {
+        let result: ResolvedEndpoint | undefined = undefined;
+        await visitAllDefinitionFiles(this.workspace, async (relativeFilepath, file, metadata) => {
+            const context = constructFernFileContext({
+                relativeFilepath,
+                definitionFile: file,
+                casingsGenerator: CASINGS_GENERATOR,
+                rootApiFile: this.workspace.definition.rootApiFile.contents,
+                defaultUrl: metadata.defaultUrl
+            });
+            for (const [endpointId, endpointDeclaration] of Object.entries(file.service?.endpoints ?? {})) {
+                if (endpointDeclaration.method === method && endpointDeclaration.path === path) {
+                    result = {
+                        endpointId,
+                        endpoint: endpointDeclaration,
+                        file: context
+                    };
+                }
+            }
+        });
+        await visitAllPackageMarkers(this.workspace, async (relativeFilepath, packageMarker) => {
+            const context = constructFernFileContext({
+                relativeFilepath,
+                definitionFile: packageMarker,
+                casingsGenerator: CASINGS_GENERATOR,
+                rootApiFile: this.workspace.definition.rootApiFile.contents
+            });
+            for (const [endpointId, endpointDeclaration] of Object.entries(packageMarker.service?.endpoints ?? {})) {
+                if (endpointDeclaration.method === method && endpointDeclaration.path === path) {
+                    result = {
+                        endpointId,
+                        endpoint: endpointDeclaration,
+                        file: context
+                    };
+                }
+            }
+        });
+        return result;
+    }
+
     public resolveEndpoint({
         endpoint,
         file
@@ -32,6 +85,8 @@ export class EndpointResolverImpl implements EndpointResolver {
         endpoint: string;
         file: FernFileContext;
     }): ResolvedEndpoint | undefined {
+        if ()
+
         const maybeDeclaration = this.getDeclarationOfEndpoint({
             referenceToEndpoint: endpoint,
             file

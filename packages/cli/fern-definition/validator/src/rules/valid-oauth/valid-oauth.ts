@@ -12,6 +12,7 @@ import terminalLink from "terminal-link";
 import { Rule } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 import { validateClientCredentials } from "./validateClientCredentials";
+import { HttpEndpointReferenceParser } from "@fern-api/fern-definition-schema";
 
 const DOCS_LINK_MESSAGE = `For details, see the ${terminalLink("docs", DocsLinks.oauth, {
     fallback: (text, url) => `${text}: ${url}`
@@ -29,63 +30,52 @@ export const ValidOauthRule: Rule = {
         const typeResolver = new TypeResolverImpl(workspace);
         const endpointResolver = new EndpointResolverImpl(workspace);
 
-        const imports = workspace.definition.rootApiFile.contents.imports;
-        if (imports == null) {
-            return {
-                rootApiFile: {
-                    file: (_) => {
-                        return [
-                            {
-                                severity: "error",
-                                message: `File declares oauth scheme '${oauthScheme.name}', but no imports are declared to reference the required token endpoint(s). ${DOCS_LINK_MESSAGE}`
-                            }
-                        ];
-                    }
-                }
-            };
-        }
-
         const apiFile = constructRootApiFileContext({
             casingsGenerator: CASINGS_GENERATOR,
             rootApiFile: workspace.definition.rootApiFile.contents
         });
 
-        const resolvedTokenEndpoint = endpointResolver.resolveEndpoint({
-            endpoint: oauthSchema["get-token"].endpoint,
-            file: apiFile
-        });
         if (resolvedTokenEndpoint == null) {
             return {
                 rootApiFile: {
-                    file: (_) => {
-                        return [
-                            {
-                                severity: "error",
-                                message: `File declares oauth scheme '${oauthScheme.name}', but the OAuth 'get-token' endpoint could not be resolved. ${DOCS_LINK_MESSAGE}`
-                            }
-                        ];
-                    }
-                }
-            };
-        }
+                    "auth-scheme": ({ name, authScheme }, { relativeFilepath }) => {
+                        if (!isRawOAuthSchemeSchema(authScheme)) {
+                            return;
+                        }
 
-        const resolvedRefreshEndpoint =
-            oauthSchema["refresh-token"] != null
-                ? endpointResolver.resolveEndpoint({
-                      endpoint: oauthSchema["refresh-token"].endpoint,
-                      file: apiFile
-                  })
-                : undefined;
-        if (oauthSchema["refresh-token"] != null && resolvedRefreshEndpoint == null) {
-            return {
-                rootApiFile: {
-                    file: (_) => {
-                        return [
-                            {
-                                severity: "error",
-                                message: `File declares oauth scheme '${oauthScheme.name}', but the OAuth 'refresh-token' endpoint could not be resolved. ${DOCS_LINK_MESSAGE}`
-                            }
-                        ];
+                        const tokenEndpointReference = oauthSchema["get-token"].endpoint;
+                        const resolvedTokenEndpoint = endpointResolver.resolveEndpoint({
+                            endpoint: tokenEndpointReference,
+                            file: apiFile
+                        });
+                        if (resolvedTokenEndpoint == null) {
+                            return [
+                                {
+                                    severity: "error",
+                                    message: `Failed to resolve endpoint ${tokenEndpointReference}`
+                                }
+                            ];
+                        }
+
+                        const refreshEndpointReference = oauthSchema["refresh-token"]?.endpoint;
+                        if (refreshEndpointReference == null) {
+                            return;
+                        }
+                        const resolvedRefreshEndpoint = endpointResolver.resolveEndpoint({
+                            endpoint: refreshEndpointReference,
+                            file: apiFile
+                        });
+                        if (resolvedRefreshEndpoint == null) {
+                            return [
+                                {
+                                    severity: "error",
+                                    message: `Failed to resolve endpoint ${tokenEndpointReference}`
+                                }
+                            ];
+                        }
+
+
+
                     }
                 }
             };
@@ -156,10 +146,4 @@ function maybeGetOAuthScheme({ workspace }: { workspace: FernWorkspace }): OAuth
     };
 }
 
-function isRawOAuthSchemeSchema(rawOAuthSchemeSchema: unknown): rawOAuthSchemeSchema is RawSchemas.OAuthSchemeSchema {
-    return (
-        (rawOAuthSchemeSchema as RawSchemas.OAuthSchemeSchema).scheme === "oauth" &&
-        (rawOAuthSchemeSchema as RawSchemas.OAuthSchemeSchema).type != null &&
-        (rawOAuthSchemeSchema as RawSchemas.OAuthSchemeSchema)["get-token"] != null
-    );
-}
+
