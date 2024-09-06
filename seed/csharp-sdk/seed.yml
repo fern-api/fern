@@ -90,6 +90,7 @@ allowedFailures:
   - objects-with-imports
   - examples:no-custom-config
   - examples:readme-config
+  - mixed-file-directory
   ## WIRE TEST FAILURES
   - unknown # issue with example object
   # - package-yml # user-provided example path not coming in properly

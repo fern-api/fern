@@ -41,12 +41,11 @@ fixtures:
         flattenModuleStructure: true
       outputFolder: flattened-module-structure
 allowedFailures:
-  - streaming
-  - objects-with-imports
-  - circular-references
-  # TODO: Add support for recursive undiscriminated unions.
-  - grpc
   - any-auth
+  - circular-references
+  - mixed-file-directory
+  - objects-with-imports
+  - streaming
   - trace
 features:
   requestOptions: true

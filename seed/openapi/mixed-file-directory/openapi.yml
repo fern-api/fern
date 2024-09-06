@@ -1,0 +1,155 @@
+openapi: 3.0.1
+info:
+  title: mixed-file-directory
+  version: ''
+paths:
+  /organizations/:
+    post:
+      description: Create a new organization.
+      operationId: organization_create
+      tags:
+        - Organization
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrganizationRequest'
+  /users/:
+    get:
+      description: List all users.
+      operationId: user_list
+      tags:
+        - User
+      parameters:
+        - name: limit
+          in: query
+          description: The maximum number of results to return.
+          required: false
+          schema:
+            type: integer
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+  /users/events/:
+    get:
+      description: List all user events.
+      operationId: user_events_listEvents
+      tags:
+        - UserEvents
+      parameters:
+        - name: limit
+          in: query
+          description: The maximum number of results to return.
+          required: false
+          schema:
+            type: integer
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/userEvent'
+  /users/events/metadata/:
+    get:
+      description: Get event metadata.
+      operationId: user_events_metadata_getMetadata
+      tags:
+        - UserEventsMetadata
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/Id'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/usereventsMetadata'
+components:
+  schemas:
+    Id:
+      title: Id
+      type: string
+    Organization:
+      title: Organization
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/Id'
+        name:
+          type: string
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+      required:
+        - id
+        - name
+        - users
+    CreateOrganizationRequest:
+      title: CreateOrganizationRequest
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+    User:
+      title: User
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/Id'
+        name:
+          type: string
+        age:
+          type: integer
+      required:
+        - id
+        - name
+        - age
+    userEvent:
+      title: userEvent
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/Id'
+        name:
+          type: string
+      required:
+        - id
+        - name
+    usereventsMetadata:
+      title: usereventsMetadata
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/Id'
+        value: {}
+      required:
+        - id
+        - value
+  securitySchemes: {}

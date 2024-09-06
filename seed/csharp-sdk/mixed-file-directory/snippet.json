@@ -1,0 +1,53 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/organizations/",
+                "method": "POST",
+                "identifier_override": "endpoint_organization.create"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedMixedFileDirectory;\n\nvar client = new SeedMixedFileDirectoryClient();\nawait client.Organization.CreateAsync(new CreateOrganizationRequest { Name = \"string\" });\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users/",
+                "method": "GET",
+                "identifier_override": "endpoint_user.list"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedMixedFileDirectory;\n\nvar client = new SeedMixedFileDirectoryClient();\nawait client.User.ListAsync(new ListUsersRequest { Limit = 1 });\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users/events/",
+                "method": "GET",
+                "identifier_override": "endpoint_user/events.listEvents"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedMixedFileDirectory.User;\nusing SeedMixedFileDirectory;\n\nvar client = new SeedMixedFileDirectoryClient();\nawait client.User.Events.ListEventsAsync(new ListUserEventsRequest { Limit = 1 });\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users/events/metadata/",
+                "method": "GET",
+                "identifier_override": "endpoint_user/events/metadata.getMetadata"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedMixedFileDirectory.User.Events;\nusing SeedMixedFileDirectory;\n\nvar client = new SeedMixedFileDirectoryClient();\nawait client.User.Events.Metadata.GetMetadataAsync(new GetEventMetadataRequest { Id = \"string\" });\n"
+            }
+        }
+    ]
+}
