@@ -257,6 +257,10 @@ export class DocsDefinitionResolver {
             footerLinks: this.parsedDocsConfig.footerLinks,
             defaultLanguage: this.parsedDocsConfig.defaultLanguage,
             analyticsConfig: this.parsedDocsConfig.analyticsConfig,
+            announcement:
+                this.parsedDocsConfig.announcement != null
+                    ? { text: this.parsedDocsConfig.announcement.message }
+                    : undefined,
             // deprecated
             logo: undefined,
             logoV2: undefined,

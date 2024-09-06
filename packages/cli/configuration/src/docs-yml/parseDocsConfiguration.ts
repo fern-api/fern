@@ -130,6 +130,7 @@ export async function parseDocsConfiguration({
         navbarLinks: convertNavbarLinks(navbarLinks),
         footerLinks: convertFooterLinks(footerLinks),
         defaultLanguage,
+        announcement: rawDocsConfiguration.announcement,
 
         /* seo */
         metadata,
