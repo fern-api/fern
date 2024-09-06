@@ -4,6 +4,8 @@ import typing
 from ..core.client_wrapper import SyncClientWrapper
 from .. import core
 from .types.my_object import MyObject
+from .types.object_type import ObjectType
+from .types.id import Id
 from ..core.request_options import RequestOptions
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
@@ -29,6 +31,9 @@ class ServiceClient:
         maybe_file_list: typing.Optional[typing.List[core.File]] = None,
         maybe_integer: typing.Optional[int] = None,
         optional_list_of_strings: typing.Optional[typing.List[str]] = None,
+        optional_metadata: typing.Optional[typing.Optional[typing.Any]] = None,
+        optional_object_type: typing.Optional[ObjectType] = None,
+        optional_id: typing.Optional[Id] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -56,6 +61,12 @@ class ServiceClient:
 
         optional_list_of_strings : typing.Optional[typing.List[str]]
 
+        optional_metadata : typing.Optional[typing.Optional[typing.Any]]
+
+        optional_object_type : typing.Optional[ObjectType]
+
+        optional_id : typing.Optional[Id]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -80,6 +91,9 @@ class ServiceClient:
                 "maybeInteger": maybe_integer,
                 "optionalListOfStrings": optional_list_of_strings,
                 "listOfObjects": list_of_objects,
+                "optionalMetadata": optional_metadata,
+                "optionalObjectType": optional_object_type,
+                "optionalId": optional_id,
             },
             files={
                 "file": file,
@@ -230,6 +244,9 @@ class AsyncServiceClient:
         maybe_file_list: typing.Optional[typing.List[core.File]] = None,
         maybe_integer: typing.Optional[int] = None,
         optional_list_of_strings: typing.Optional[typing.List[str]] = None,
+        optional_metadata: typing.Optional[typing.Optional[typing.Any]] = None,
+        optional_object_type: typing.Optional[ObjectType] = None,
+        optional_id: typing.Optional[Id] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -256,6 +273,12 @@ class AsyncServiceClient:
         maybe_integer : typing.Optional[int]
 
         optional_list_of_strings : typing.Optional[typing.List[str]]
+
+        optional_metadata : typing.Optional[typing.Optional[typing.Any]]
+
+        optional_object_type : typing.Optional[ObjectType]
+
+        optional_id : typing.Optional[Id]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -289,6 +312,9 @@ class AsyncServiceClient:
                 "maybeInteger": maybe_integer,
                 "optionalListOfStrings": optional_list_of_strings,
                 "listOfObjects": list_of_objects,
+                "optionalMetadata": optional_metadata,
+                "optionalObjectType": optional_object_type,
+                "optionalId": optional_id,
             },
             files={
                 "file": file,

@@ -18,7 +18,10 @@ service:
             maybeInteger: optional<integer>
             optionalListOfStrings: optional<list<string>>
             listOfObjects: list<MyObject>
-    
+            optionalMetadata: optional<unknown>
+            optionalObjectType: optional<ObjectType>
+            optionalId: optional<Id>
+
     justFile:
       path: /just-file
       method: POST
@@ -48,7 +51,13 @@ service:
             file: file
 
 types:
+  Id: string
 
   MyObject:
     properties:
       foo: string
+
+  ObjectType:
+    enum:
+      - FOO
+      - BAR

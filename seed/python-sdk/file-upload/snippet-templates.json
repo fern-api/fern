@@ -227,6 +227,55 @@
                             },
                             "type": "iterable"
                         }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "optional_metadata=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "BODY",
+                                    "path": "optionalMetadata",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "optional_object_type=$FERN_INPUT",
+                            "values": {
+                                "FOO": "\"FOO\"",
+                                "BAR": "\"BAR\""
+                            },
+                            "templateInput": {
+                                "location": "BODY",
+                                "path": "optionalObjectType"
+                            },
+                            "type": "enum"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "optional_id=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "BODY",
+                                    "path": "optionalId",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
                     }
                 ],
                 "inputDelimiter": ",\n\t",
@@ -451,6 +500,55 @@
                                     "path": "listOfObjects"
                                 },
                                 "type": "iterable"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "optional_metadata=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "BODY",
+                                        "path": "optionalMetadata",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "optional_object_type=$FERN_INPUT",
+                                "values": {
+                                    "FOO": "\"FOO\"",
+                                    "BAR": "\"BAR\""
+                                },
+                                "templateInput": {
+                                    "location": "BODY",
+                                    "path": "optionalObjectType"
+                                },
+                                "type": "enum"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "optional_id=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "BODY",
+                                        "path": "optionalId",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
                             }
                         }
                     ],
