@@ -61,18 +61,20 @@ The full path for the endpoint is the concatenation of:
 
 ## Display name
 
-The display name will appear as the title of an endpoint [like this one](https://buildwithfern.com/learn/cli-api/api-reference/docs/generate). By default, the display name is equal to the 'Title Case' of the endpoint name. If you would like to customize the endpoint name, you can **set the display name**. 
+The display name will appear as the title of an endpoint. By default, the display name is equal to the 'Title Case' of the endpoint name. If you would like to customize the endpoint name, you can **set the display name**. 
+
+In the example below, ["Create User"](https://plantstore.dev/api-reference/user/create-user) displays as the title of the endpoint page within the API Reference.
 
 <CodeBlock title="user.yml">
 ```yaml {7}
 service:
-  base-path: /users
+  base-path: /
   auth: false
   endpoints:
-    getAllUsers:
-      path: /all
-      display-name: Retrieve All Users 
-      method: GET
+    createUser:
+      path: /user
+      display-name: Create user
+      method: POST
 ```
 </CodeBlock>
 
