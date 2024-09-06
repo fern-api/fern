@@ -4,7 +4,4 @@
 
 import * as FernOpenapiIr from "../../../index";
 
-/**
- * This is populated by `x-fern-sdk-method-name`
- */
-export type SdkGroupName = FernOpenapiIr.SdkGroup[];
+export type SdkGroup = string | FernOpenapiIr.Namespace;

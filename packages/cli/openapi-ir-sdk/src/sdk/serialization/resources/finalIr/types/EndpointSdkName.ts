@@ -6,6 +6,7 @@ import * as serializers from "../../../index";
 import * as FernOpenapiIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { SdkGroupName } from "../../commons/types/SdkGroupName";
+import { SdkGroup } from "../../commons/types/SdkGroup";
 
 export const EndpointSdkName: core.serialization.ObjectSchema<
     serializers.EndpointSdkName.Raw,

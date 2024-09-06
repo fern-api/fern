@@ -20,5 +20,7 @@ export * from "./QuerySecurityScheme";
 export * from "./OauthSecurityScheme";
 export * from "./StatusCode";
 export * from "./Server";
+export * from "./Namespace";
+export * from "./SdkGroup";
 export * from "./SdkGroupName";
 export * from "./WithSdkGroupName";

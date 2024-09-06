@@ -5,10 +5,11 @@
 import * as serializers from "../../../index";
 import * as FernOpenapiIr from "../../../../api/index";
 import * as core from "../../../../core";
+import { SdkGroup } from "./SdkGroup";
 
 export const SdkGroupName: core.serialization.Schema<serializers.SdkGroupName.Raw, FernOpenapiIr.SdkGroupName> =
-    core.serialization.list(core.serialization.string());
+    core.serialization.list(SdkGroup);
 
 export declare namespace SdkGroupName {
-    type Raw = string[];
+    type Raw = SdkGroup.Raw[];
 }
