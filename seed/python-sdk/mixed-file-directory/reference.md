@@ -1,4 +1,75 @@
 # Reference
+## Organization
+<details><summary><code>client.organization.<a href="src/seed/organization/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedMixedFileDirectory
+
+client = SeedMixedFileDirectory(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.organization.create(
+    name="string",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## User
 <details><summary><code>client.user.<a href="src/seed/user/client.py">list</a>(...)</code></summary>
 <dl>
@@ -122,77 +193,6 @@ client.user.events.list_events(
 <dd>
 
 **limit:** `typing.Optional[int]` — The maximum number of results to return.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Organization
-<details><summary><code>client.organization.<a href="src/seed/organization/client.py">create</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a new organization.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from seed import SeedMixedFileDirectory
-
-client = SeedMixedFileDirectory(
-    base_url="https://yourhost.com/path/to/api",
-)
-client.organization.create(
-    name="string",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**name:** `str` 
     
 </dd>
 </dl>

@@ -3,11 +3,11 @@
 import typing
 import httpx
 from .core.client_wrapper import SyncClientWrapper
-from .user.client import UserClient
 from .organization.client import OrganizationClient
+from .user.client import UserClient
 from .core.client_wrapper import AsyncClientWrapper
-from .user.client import AsyncUserClient
 from .organization.client import AsyncOrganizationClient
+from .user.client import AsyncUserClient
 
 
 class SeedMixedFileDirectory:
@@ -55,8 +55,8 @@ class SeedMixedFileDirectory:
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
-        self.user = UserClient(client_wrapper=self._client_wrapper)
         self.organization = OrganizationClient(client_wrapper=self._client_wrapper)
+        self.user = UserClient(client_wrapper=self._client_wrapper)
 
 
 class AsyncSeedMixedFileDirectory:
@@ -104,5 +104,5 @@ class AsyncSeedMixedFileDirectory:
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
-        self.user = AsyncUserClient(client_wrapper=self._client_wrapper)
         self.organization = AsyncOrganizationClient(client_wrapper=self._client_wrapper)
+        self.user = AsyncUserClient(client_wrapper=self._client_wrapper)

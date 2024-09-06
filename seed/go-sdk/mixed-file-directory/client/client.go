@@ -15,8 +15,8 @@ type Client struct {
 	caller  *core.Caller
 	header  http.Header
 
-	User         *userclient.Client
 	Organization *organization.Client
+	User         *userclient.Client
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -30,7 +30,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 			},
 		),
 		header:       options.ToHeader(),
-		User:         userclient.NewClient(opts...),
 		Organization: organization.NewClient(opts...),
+		User:         userclient.NewClient(opts...),
 	}
 }

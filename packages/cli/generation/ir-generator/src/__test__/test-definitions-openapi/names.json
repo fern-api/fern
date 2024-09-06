@@ -55,6 +55,247 @@
     "headers": [],
     "idempotencyHeaders": [],
     "types": {
+        "type_infra/telemetry:TelemetryData": {
+            "name": {
+                "name": {
+                    "originalName": "TelemetryData",
+                    "camelCase": {
+                        "unsafeName": "telemetryData",
+                        "safeName": "telemetryData"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "telemetry_data",
+                        "safeName": "telemetry_data"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TELEMETRY_DATA",
+                        "safeName": "TELEMETRY_DATA"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "TelemetryData",
+                        "safeName": "TelemetryData"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "infra",
+                            "camelCase": {
+                                "unsafeName": "infra",
+                                "safeName": "infra"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "infra",
+                                "safeName": "infra"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "INFRA",
+                                "safeName": "INFRA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Infra",
+                                "safeName": "Infra"
+                            }
+                        },
+                        {
+                            "originalName": "telemetry",
+                            "camelCase": {
+                                "unsafeName": "telemetry",
+                                "safeName": "telemetry"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "telemetry",
+                                "safeName": "telemetry"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TELEMETRY",
+                                "safeName": "TELEMETRY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Telemetry",
+                                "safeName": "Telemetry"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "infra",
+                            "camelCase": {
+                                "unsafeName": "infra",
+                                "safeName": "infra"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "infra",
+                                "safeName": "infra"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "INFRA",
+                                "safeName": "INFRA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Infra",
+                                "safeName": "Infra"
+                            }
+                        }
+                    ],
+                    "file": {
+                        "originalName": "telemetry",
+                        "camelCase": {
+                            "unsafeName": "telemetry",
+                            "safeName": "telemetry"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "telemetry",
+                            "safeName": "telemetry"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TELEMETRY",
+                            "safeName": "TELEMETRY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Telemetry",
+                            "safeName": "Telemetry"
+                        }
+                    }
+                },
+                "typeId": "type_infra/telemetry:TelemetryData"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [],
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "cpu",
+                                "camelCase": {
+                                    "unsafeName": "cpu",
+                                    "safeName": "cpu"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "cpu",
+                                    "safeName": "cpu"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "CPU",
+                                    "safeName": "CPU"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "CPU",
+                                    "safeName": "CPU"
+                                }
+                            },
+                            "wireValue": "cpu"
+                        },
+                        "valueType": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "optional",
+                                "optional": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "FLOAT",
+                                        "v2": null
+                                    }
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": "CPU usage"
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "memory",
+                                "camelCase": {
+                                    "unsafeName": "memory",
+                                    "safeName": "memory"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "memory",
+                                    "safeName": "memory"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "MEMORY",
+                                    "safeName": "MEMORY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Memory",
+                                    "safeName": "Memory"
+                                }
+                            },
+                            "wireValue": "memory"
+                        },
+                        "valueType": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "optional",
+                                "optional": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "FLOAT",
+                                        "v2": null
+                                    }
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": "Memory usage"
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "network",
+                                "camelCase": {
+                                    "unsafeName": "network",
+                                    "safeName": "network"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "network",
+                                    "safeName": "network"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "NETWORK",
+                                    "safeName": "NETWORK"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Network",
+                                    "safeName": "Network"
+                                }
+                            },
+                            "wireValue": "network"
+                        },
+                        "valueType": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "optional",
+                                "optional": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "FLOAT",
+                                        "v2": null
+                                    }
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": "Network usage"
+                    }
+                ],
+                "extra-properties": false,
+                "extendedProperties": []
+            },
+            "referencedTypes": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "availability": null,
+            "docs": null
+        },
         "type_telemetry:TelemetryGetTelemetryDataResponse": {
             "name": {
                 "name": {
@@ -353,247 +594,6 @@
             "referencedTypes": [
                 "type_infra/telemetry:TelemetryData"
             ],
-            "encoding": {
-                "json": {},
-                "proto": null
-            },
-            "source": null,
-            "userProvidedExamples": [],
-            "autogeneratedExamples": [],
-            "availability": null,
-            "docs": null
-        },
-        "type_infra/telemetry:TelemetryData": {
-            "name": {
-                "name": {
-                    "originalName": "TelemetryData",
-                    "camelCase": {
-                        "unsafeName": "telemetryData",
-                        "safeName": "telemetryData"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "telemetry_data",
-                        "safeName": "telemetry_data"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "TELEMETRY_DATA",
-                        "safeName": "TELEMETRY_DATA"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "TelemetryData",
-                        "safeName": "TelemetryData"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "infra",
-                            "camelCase": {
-                                "unsafeName": "infra",
-                                "safeName": "infra"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "infra",
-                                "safeName": "infra"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "INFRA",
-                                "safeName": "INFRA"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Infra",
-                                "safeName": "Infra"
-                            }
-                        },
-                        {
-                            "originalName": "telemetry",
-                            "camelCase": {
-                                "unsafeName": "telemetry",
-                                "safeName": "telemetry"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "telemetry",
-                                "safeName": "telemetry"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "TELEMETRY",
-                                "safeName": "TELEMETRY"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Telemetry",
-                                "safeName": "Telemetry"
-                            }
-                        }
-                    ],
-                    "packagePath": [
-                        {
-                            "originalName": "infra",
-                            "camelCase": {
-                                "unsafeName": "infra",
-                                "safeName": "infra"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "infra",
-                                "safeName": "infra"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "INFRA",
-                                "safeName": "INFRA"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Infra",
-                                "safeName": "Infra"
-                            }
-                        }
-                    ],
-                    "file": {
-                        "originalName": "telemetry",
-                        "camelCase": {
-                            "unsafeName": "telemetry",
-                            "safeName": "telemetry"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "telemetry",
-                            "safeName": "telemetry"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "TELEMETRY",
-                            "safeName": "TELEMETRY"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Telemetry",
-                            "safeName": "Telemetry"
-                        }
-                    }
-                },
-                "typeId": "type_infra/telemetry:TelemetryData"
-            },
-            "shape": {
-                "_type": "object",
-                "extends": [],
-                "properties": [
-                    {
-                        "name": {
-                            "name": {
-                                "originalName": "cpu",
-                                "camelCase": {
-                                    "unsafeName": "cpu",
-                                    "safeName": "cpu"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "cpu",
-                                    "safeName": "cpu"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "CPU",
-                                    "safeName": "CPU"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "CPU",
-                                    "safeName": "CPU"
-                                }
-                            },
-                            "wireValue": "cpu"
-                        },
-                        "valueType": {
-                            "_type": "container",
-                            "container": {
-                                "_type": "optional",
-                                "optional": {
-                                    "_type": "primitive",
-                                    "primitive": {
-                                        "v1": "FLOAT",
-                                        "v2": null
-                                    }
-                                }
-                            }
-                        },
-                        "availability": null,
-                        "docs": "CPU usage"
-                    },
-                    {
-                        "name": {
-                            "name": {
-                                "originalName": "memory",
-                                "camelCase": {
-                                    "unsafeName": "memory",
-                                    "safeName": "memory"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "memory",
-                                    "safeName": "memory"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "MEMORY",
-                                    "safeName": "MEMORY"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Memory",
-                                    "safeName": "Memory"
-                                }
-                            },
-                            "wireValue": "memory"
-                        },
-                        "valueType": {
-                            "_type": "container",
-                            "container": {
-                                "_type": "optional",
-                                "optional": {
-                                    "_type": "primitive",
-                                    "primitive": {
-                                        "v1": "FLOAT",
-                                        "v2": null
-                                    }
-                                }
-                            }
-                        },
-                        "availability": null,
-                        "docs": "Memory usage"
-                    },
-                    {
-                        "name": {
-                            "name": {
-                                "originalName": "network",
-                                "camelCase": {
-                                    "unsafeName": "network",
-                                    "safeName": "network"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "network",
-                                    "safeName": "network"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "NETWORK",
-                                    "safeName": "NETWORK"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Network",
-                                    "safeName": "Network"
-                                }
-                            },
-                            "wireValue": "network"
-                        },
-                        "valueType": {
-                            "_type": "container",
-                            "container": {
-                                "_type": "optional",
-                                "optional": {
-                                    "_type": "primitive",
-                                    "primitive": {
-                                        "v1": "FLOAT",
-                                        "v2": null
-                                    }
-                                }
-                            }
-                        },
-                        "availability": null,
-                        "docs": "Network usage"
-                    }
-                ],
-                "extra-properties": false,
-                "extendedProperties": []
-            },
-            "referencedTypes": [],
             "encoding": {
                 "json": {},
                 "proto": null
@@ -3266,81 +3266,6 @@
     "sourceConfig": null,
     "publishConfig": null,
     "subpackages": {
-        "subpackage_telemetry": {
-            "name": {
-                "originalName": "telemetry",
-                "camelCase": {
-                    "unsafeName": "telemetry",
-                    "safeName": "telemetry"
-                },
-                "snakeCase": {
-                    "unsafeName": "telemetry",
-                    "safeName": "telemetry"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "TELEMETRY",
-                    "safeName": "TELEMETRY"
-                },
-                "pascalCase": {
-                    "unsafeName": "Telemetry",
-                    "safeName": "Telemetry"
-                }
-            },
-            "fernFilepath": {
-                "allParts": [
-                    {
-                        "originalName": "telemetry",
-                        "camelCase": {
-                            "unsafeName": "telemetry",
-                            "safeName": "telemetry"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "telemetry",
-                            "safeName": "telemetry"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "TELEMETRY",
-                            "safeName": "TELEMETRY"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Telemetry",
-                            "safeName": "Telemetry"
-                        }
-                    }
-                ],
-                "packagePath": [],
-                "file": {
-                    "originalName": "telemetry",
-                    "camelCase": {
-                        "unsafeName": "telemetry",
-                        "safeName": "telemetry"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "telemetry",
-                        "safeName": "telemetry"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "TELEMETRY",
-                        "safeName": "TELEMETRY"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "Telemetry",
-                        "safeName": "Telemetry"
-                    }
-                }
-            },
-            "service": "service_telemetry",
-            "types": [
-                "type_telemetry:TelemetryGetTelemetryDataResponse"
-            ],
-            "errors": [],
-            "subpackages": [],
-            "navigationConfig": null,
-            "webhooks": null,
-            "websocket": null,
-            "hasEndpointsInTree": true,
-            "docs": null
-        },
         "subpackage_infra": {
             "name": {
                 "originalName": "infra",
@@ -3531,6 +3456,81 @@
             "websocket": null,
             "hasEndpointsInTree": false,
             "docs": null
+        },
+        "subpackage_telemetry": {
+            "name": {
+                "originalName": "telemetry",
+                "camelCase": {
+                    "unsafeName": "telemetry",
+                    "safeName": "telemetry"
+                },
+                "snakeCase": {
+                    "unsafeName": "telemetry",
+                    "safeName": "telemetry"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "TELEMETRY",
+                    "safeName": "TELEMETRY"
+                },
+                "pascalCase": {
+                    "unsafeName": "Telemetry",
+                    "safeName": "Telemetry"
+                }
+            },
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "telemetry",
+                        "camelCase": {
+                            "unsafeName": "telemetry",
+                            "safeName": "telemetry"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "telemetry",
+                            "safeName": "telemetry"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TELEMETRY",
+                            "safeName": "TELEMETRY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Telemetry",
+                            "safeName": "Telemetry"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "telemetry",
+                    "camelCase": {
+                        "unsafeName": "telemetry",
+                        "safeName": "telemetry"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "telemetry",
+                        "safeName": "telemetry"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TELEMETRY",
+                        "safeName": "TELEMETRY"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Telemetry",
+                        "safeName": "Telemetry"
+                    }
+                }
+            },
+            "service": "service_telemetry",
+            "types": [
+                "type_telemetry:TelemetryGetTelemetryDataResponse"
+            ],
+            "errors": [],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": true,
+            "docs": null
         }
     },
     "rootPackage": {
@@ -3544,8 +3544,8 @@
         "types": [],
         "errors": [],
         "subpackages": [
-            "subpackage_telemetry",
-            "subpackage_infra"
+            "subpackage_infra",
+            "subpackage_telemetry"
         ],
         "webhooks": null,
         "navigationConfig": null,

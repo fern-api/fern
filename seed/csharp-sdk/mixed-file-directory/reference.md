@@ -1,4 +1,59 @@
 # Reference
+## Organization
+<details><summary><code>client.Organization.<a href="/src/SeedMixedFileDirectory/Organization/OrganizationClient.cs">CreateAsync</a>(CreateOrganizationRequest { ... }) -> Organization</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Organization.CreateAsync(new CreateOrganizationRequest { Name = "string" });
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `CreateOrganizationRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## User
 <details><summary><code>client.User.<a href="/src/SeedMixedFileDirectory/User/UserClient.cs">ListAsync</a>(ListUsersRequest { ... }) -> IEnumerable<User></code></summary>
 <dl>
@@ -98,61 +153,6 @@ await client.User.Events.ListEventsAsync(new ListUserEventsRequest { Limit = 1 }
 <dd>
 
 **request:** `ListUserEventsRequest` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Organization
-<details><summary><code>client.Organization.<a href="/src/SeedMixedFileDirectory/Organization/OrganizationClient.cs">CreateAsync</a>(CreateOrganizationRequest { ... }) -> Organization</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a new organization.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```csharp
-await client.Organization.CreateAsync(new CreateOrganizationRequest { Name = "string" });
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `CreateOrganizationRequest` 
     
 </dd>
 </dl>

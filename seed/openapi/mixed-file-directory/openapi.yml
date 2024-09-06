@@ -3,6 +3,26 @@ info:
   title: mixed-file-directory
   version: ''
 paths:
+  /organizations/:
+    post:
+      description: Create a new organization.
+      operationId: organization_create
+      tags:
+        - Organization
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrganizationRequest'
   /users/:
     get:
       description: List all users.
@@ -49,26 +69,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/userEvent'
-  /organizations/:
-    post:
-      description: Create a new organization.
-      operationId: organization_create
-      tags:
-        - Organization
-      parameters: []
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Organization'
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateOrganizationRequest'
   /users/events/metadata/:
     get:
       description: Get event metadata.
@@ -90,34 +90,9 @@ paths:
                 $ref: '#/components/schemas/usereventsMetadata'
 components:
   schemas:
-    User:
-      title: User
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/Id'
-        name:
-          type: string
-        age:
-          type: integer
-      required:
-        - id
-        - name
-        - age
     Id:
       title: Id
       type: string
-    userEvent:
-      title: userEvent
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/Id'
-        name:
-          type: string
-      required:
-        - id
-        - name
     Organization:
       title: Organization
       type: object
@@ -141,6 +116,31 @@ components:
         name:
           type: string
       required:
+        - name
+    User:
+      title: User
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/Id'
+        name:
+          type: string
+        age:
+          type: integer
+      required:
+        - id
+        - name
+        - age
+    userEvent:
+      title: userEvent
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/Id'
+        name:
+          type: string
+      required:
+        - id
         - name
     usereventsMetadata:
       title: usereventsMetadata

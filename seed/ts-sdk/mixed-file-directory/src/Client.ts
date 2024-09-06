@@ -3,8 +3,8 @@
  */
 
 import * as core from "./core";
-import { User } from "./api/resources/user/client/Client";
 import { Organization } from "./api/resources/organization/client/Client";
+import { User } from "./api/resources/user/client/Client";
 
 export declare namespace SeedMixedFileDirectoryClient {
     interface Options {
@@ -24,15 +24,15 @@ export declare namespace SeedMixedFileDirectoryClient {
 export class SeedMixedFileDirectoryClient {
     constructor(protected readonly _options: SeedMixedFileDirectoryClient.Options) {}
 
-    protected _user: User | undefined;
-
-    public get user(): User {
-        return (this._user ??= new User(this._options));
-    }
-
     protected _organization: Organization | undefined;
 
     public get organization(): Organization {
         return (this._organization ??= new Organization(this._options));
+    }
+
+    protected _user: User | undefined;
+
+    public get user(): User {
+        return (this._user ??= new User(this._options));
     }
 }

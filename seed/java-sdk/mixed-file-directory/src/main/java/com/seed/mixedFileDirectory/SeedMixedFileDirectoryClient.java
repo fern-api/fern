@@ -12,22 +12,22 @@ import java.util.function.Supplier;
 public class SeedMixedFileDirectoryClient {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<UserClient> userClient;
-
     protected final Supplier<OrganizationClient> organizationClient;
+
+    protected final Supplier<UserClient> userClient;
 
     public SeedMixedFileDirectoryClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.userClient = Suppliers.memoize(() -> new UserClient(clientOptions));
         this.organizationClient = Suppliers.memoize(() -> new OrganizationClient(clientOptions));
-    }
-
-    public UserClient user() {
-        return this.userClient.get();
+        this.userClient = Suppliers.memoize(() -> new UserClient(clientOptions));
     }
 
     public OrganizationClient organization() {
         return this.organizationClient.get();
+    }
+
+    public UserClient user() {
+        return this.userClient.get();
     }
 
     public static SeedMixedFileDirectoryClientBuilder builder() {

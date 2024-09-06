@@ -16,6 +16,91 @@
     {
       "_type": "container",
       "description": null,
+      "name": "Organization",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Create",
+          "request": {
+            "description": "Create a new organization.",
+            "url": {
+              "raw": "{{baseUrl}}/organizations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "organizations"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "Create a new organization.",
+                "url": {
+                  "raw": "{{baseUrl}}/organizations",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "organizations"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"users\": [\n        {\n            \"id\": \"string\",\n            \"name\": \"string\",\n            \"age\": 1\n        }\n    ]\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_type": "container",
+      "description": null,
       "name": "User",
       "item": [
         {
@@ -256,91 +341,6 @@
               },
               "description": null,
               "body": "[\n    {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"age\": 1\n    }\n]",
-              "_postman_previewlanguage": "json"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "_type": "container",
-      "description": null,
-      "name": "Organization",
-      "item": [
-        {
-          "_type": "endpoint",
-          "name": "Create",
-          "request": {
-            "description": "Create a new organization.",
-            "url": {
-              "raw": "{{baseUrl}}/organizations",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "organizations"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [
-              {
-                "type": "text",
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"name\": \"string\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "name": "Success",
-              "status": "OK",
-              "code": 200,
-              "originalRequest": {
-                "description": "Create a new organization.",
-                "url": {
-                  "raw": "{{baseUrl}}/organizations",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "organizations"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "type": "text",
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "auth": null,
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n    \"name\": \"string\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "description": null,
-              "body": "{\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"users\": [\n        {\n            \"id\": \"string\",\n            \"name\": \"string\",\n            \"age\": 1\n        }\n    ]\n}",
               "_postman_previewlanguage": "json"
             }
           ]

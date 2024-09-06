@@ -6,6 +6,96 @@
             "type": "python"
         },
         "endpointId": {
+            "path": "/organizations",
+            "method": "POST",
+            "identifierOverride": "endpoint_organization.create"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "from seed import SeedMixedFileDirectory"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedMixedFileDirectory(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateInputs": [],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "client.organization.create(\n\t$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "name=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "BODY",
+                                    "path": "name",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n\t",
+                "type": "generic"
+            },
+            "type": "v1"
+        },
+        "additionalTemplates": {
+            "async": {
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed import AsyncSeedMixedFileDirectory"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedMixedFileDirectory(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateInputs": [],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
+                "functionInvocation": {
+                    "imports": [],
+                    "isOptional": true,
+                    "templateString": "await client.organization.create(\n\t$FERN_INPUT\n)",
+                    "templateInputs": [
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "name=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "BODY",
+                                        "path": "name",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        }
+                    ],
+                    "inputDelimiter": ",\n\t",
+                    "type": "generic"
+                },
+                "type": "v1"
+            }
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_mixed-file-directory",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
             "path": "/users",
             "method": "GET",
             "identifierOverride": "endpoint_user.list"
@@ -165,96 +255,6 @@
                                     {
                                         "location": "QUERY",
                                         "path": "limit",
-                                        "type": "payload"
-                                    }
-                                ],
-                                "type": "generic"
-                            }
-                        }
-                    ],
-                    "inputDelimiter": ",\n\t",
-                    "type": "generic"
-                },
-                "type": "v1"
-            }
-        }
-    },
-    {
-        "sdk": {
-            "package": "fern_mixed-file-directory",
-            "version": "0.0.1",
-            "type": "python"
-        },
-        "endpointId": {
-            "path": "/organizations",
-            "method": "POST",
-            "identifierOverride": "endpoint_organization.create"
-        },
-        "snippetTemplate": {
-            "clientInstantiation": {
-                "imports": [
-                    "from seed import SeedMixedFileDirectory"
-                ],
-                "isOptional": true,
-                "templateString": "client = SeedMixedFileDirectory(base_url=\"https://yourhost.com/path/to/api\", )",
-                "templateInputs": [],
-                "inputDelimiter": ",",
-                "type": "generic"
-            },
-            "functionInvocation": {
-                "imports": [],
-                "isOptional": true,
-                "templateString": "client.organization.create(\n\t$FERN_INPUT\n)",
-                "templateInputs": [
-                    {
-                        "type": "template",
-                        "value": {
-                            "imports": [],
-                            "isOptional": true,
-                            "templateString": "name=$FERN_INPUT",
-                            "templateInputs": [
-                                {
-                                    "location": "BODY",
-                                    "path": "name",
-                                    "type": "payload"
-                                }
-                            ],
-                            "type": "generic"
-                        }
-                    }
-                ],
-                "inputDelimiter": ",\n\t",
-                "type": "generic"
-            },
-            "type": "v1"
-        },
-        "additionalTemplates": {
-            "async": {
-                "clientInstantiation": {
-                    "imports": [
-                        "from seed import AsyncSeedMixedFileDirectory"
-                    ],
-                    "isOptional": true,
-                    "templateString": "client = AsyncSeedMixedFileDirectory(base_url=\"https://yourhost.com/path/to/api\", )",
-                    "templateInputs": [],
-                    "inputDelimiter": ",",
-                    "type": "generic"
-                },
-                "functionInvocation": {
-                    "imports": [],
-                    "isOptional": true,
-                    "templateString": "await client.organization.create(\n\t$FERN_INPUT\n)",
-                    "templateInputs": [
-                        {
-                            "type": "template",
-                            "value": {
-                                "imports": [],
-                                "isOptional": true,
-                                "templateString": "name=$FERN_INPUT",
-                                "templateInputs": [
-                                    {
-                                        "location": "BODY",
-                                        "path": "name",
                                         "type": "payload"
                                     }
                                 ],

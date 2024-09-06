@@ -28,11 +28,11 @@ public partial class SeedMixedFileDirectoryClient
             }
         }
         _client = new RawClient(clientOptions);
-        User = new UserClient(_client);
         Organization = new OrganizationClient(_client);
+        User = new UserClient(_client);
     }
 
-    public UserClient User { get; init; }
-
     public OrganizationClient Organization { get; init; }
+
+    public UserClient User { get; init; }
 }
