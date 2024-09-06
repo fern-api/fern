@@ -97,6 +97,15 @@ public class ServiceClient {
                         "optionalMetadata",
                         ObjectMappers.JSON_MAPPER.writeValueAsString(request.getOptionalMetadata()));
             }
+            if (request.getOptionalObjectType().isPresent()) {
+                body.addFormDataPart(
+                        "optionalObjectType",
+                        ObjectMappers.JSON_MAPPER.writeValueAsString(request.getOptionalObjectType()));
+            }
+            if (request.getOptionalId().isPresent()) {
+                body.addFormDataPart(
+                        "optionalId", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getOptionalId()));
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

@@ -50,6 +50,12 @@ paths:
                     $ref: '#/components/schemas/MyObject'
                 optionalMetadata:
                   nullable: true
+                optionalObjectType:
+                  $ref: '#/components/schemas/ObjectType'
+                  nullable: true
+                optionalId:
+                  $ref: '#/components/schemas/Id'
+                  nullable: true
   /just-file:
     post:
       operationId: service_justFile
@@ -122,6 +128,9 @@ paths:
                   format: binary
 components:
   schemas:
+    Id:
+      title: Id
+      type: string
     MyObject:
       title: MyObject
       type: object
@@ -130,4 +139,10 @@ components:
           type: string
       required:
         - foo
+    ObjectType:
+      title: ObjectType
+      type: string
+      enum:
+        - FOO
+        - BAR
   securitySchemes: {}

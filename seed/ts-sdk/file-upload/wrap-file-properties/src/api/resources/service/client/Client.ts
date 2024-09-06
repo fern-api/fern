@@ -82,6 +82,14 @@ export class Service {
                 }}
         }
 
+        if (request.optionalObjectType != null) {
+            await _request.append("optionalObjectType", request.optionalObjectType);
+        }
+
+        if (request.optionalId != null) {
+            await _request.append("optionalId", request.optionalId);
+        }
+
         const _maybeEncodedRequest = await _request.getRequest();
         const _response = await core.fetcher({
             url: await core.Supplier.get(this._options.environment),
