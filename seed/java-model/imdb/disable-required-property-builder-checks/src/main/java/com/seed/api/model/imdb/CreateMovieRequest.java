@@ -10,7 +10,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.api.core.ObjectMappers;
 import java.util.Objects;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = CreateMovieRequest.Builder.class)
@@ -59,7 +58,7 @@ public final class CreateMovieRequest {
     }
 
     public interface TitleStage {
-        RatingStage title(@NotNull String title);
+        RatingStage title(String title);
 
         Builder from(CreateMovieRequest other);
     }
@@ -89,7 +88,7 @@ public final class CreateMovieRequest {
 
         @java.lang.Override
         @JsonSetter("title")
-        public RatingStage title(@NotNull String title) {
+        public RatingStage title(String title) {
             this.title = title;
             return this;
         }

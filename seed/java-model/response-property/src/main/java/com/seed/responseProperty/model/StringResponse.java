@@ -10,7 +10,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.responseProperty.core.ObjectMappers;
 import java.util.Objects;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = StringResponse.Builder.class)
@@ -51,7 +50,7 @@ public final class StringResponse {
     }
 
     public interface DataStage {
-        _FinalStage data(@NotNull String data);
+        _FinalStage data(String data);
 
         Builder from(StringResponse other);
     }
@@ -74,7 +73,7 @@ public final class StringResponse {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(@NotNull String data) {
+        public _FinalStage data(String data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }

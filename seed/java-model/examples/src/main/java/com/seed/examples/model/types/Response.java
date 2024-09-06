@@ -14,7 +14,6 @@ import com.seed.examples.model.Identifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Response.Builder.class)
@@ -63,7 +62,7 @@ public final class Response {
     }
 
     public interface ResponseStage {
-        _FinalStage response(@NotNull Object response);
+        _FinalStage response(Object response);
 
         Builder from(Response other);
     }
@@ -95,7 +94,7 @@ public final class Response {
 
         @java.lang.Override
         @JsonSetter("response")
-        public _FinalStage response(@NotNull Object response) {
+        public _FinalStage response(Object response) {
             this.response = Objects.requireNonNull(response, "response must not be null");
             return this;
         }

@@ -13,7 +13,6 @@ import com.seed.objectsWithImports.core.ObjectMappers;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Metadata.Builder.class)
@@ -62,7 +61,7 @@ public final class Metadata {
     }
 
     public interface IdStage {
-        _FinalStage id(@NotNull String id);
+        _FinalStage id(String id);
 
         Builder from(Metadata other);
     }
@@ -92,7 +91,7 @@ public final class Metadata {
 
         @java.lang.Override
         @JsonSetter("id")
-        public _FinalStage id(@NotNull String id) {
+        public _FinalStage id(String id) {
             this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }

@@ -14,7 +14,6 @@ import com.seed.responseProperty.model.IWithMetadata;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Response.Builder.class)
@@ -73,13 +72,13 @@ public final class Response implements IWithMetadata, IWithDocs {
     }
 
     public interface DocsStage {
-        DataStage docs(@NotNull String docs);
+        DataStage docs(String docs);
 
         Builder from(Response other);
     }
 
     public interface DataStage {
-        _FinalStage data(@NotNull Movie data);
+        _FinalStage data(Movie data);
     }
 
     public interface _FinalStage {
@@ -112,14 +111,14 @@ public final class Response implements IWithMetadata, IWithDocs {
 
         @java.lang.Override
         @JsonSetter("docs")
-        public DataStage docs(@NotNull String docs) {
+        public DataStage docs(String docs) {
             this.docs = Objects.requireNonNull(docs, "docs must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(@NotNull Movie data) {
+        public _FinalStage data(Movie data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }

@@ -12,7 +12,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.streaming.core.ObjectMappers;
 import java.util.Objects;
 import java.util.Optional;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = StreamResponse.Builder.class)
@@ -61,7 +60,7 @@ public final class StreamResponse {
     }
 
     public interface IdStage {
-        _FinalStage id(@NotNull String id);
+        _FinalStage id(String id);
 
         Builder from(StreamResponse other);
     }
@@ -91,7 +90,7 @@ public final class StreamResponse {
 
         @java.lang.Override
         @JsonSetter("id")
-        public _FinalStage id(@NotNull String id) {
+        public _FinalStage id(String id) {
             this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }

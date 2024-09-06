@@ -13,7 +13,6 @@ import com.seed.pagination.core.ObjectMappers;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ListUsersExtendedResponse.Builder.class)
@@ -75,7 +74,7 @@ public final class ListUsersExtendedResponse implements IUserPage {
     }
 
     public interface DataStage {
-        TotalCountStage data(@NotNull UserListContainer data);
+        TotalCountStage data(UserListContainer data);
 
         Builder from(ListUsersExtendedResponse other);
     }
@@ -112,7 +111,7 @@ public final class ListUsersExtendedResponse implements IUserPage {
 
         @java.lang.Override
         @JsonSetter("data")
-        public TotalCountStage data(@NotNull UserListContainer data) {
+        public TotalCountStage data(UserListContainer data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }

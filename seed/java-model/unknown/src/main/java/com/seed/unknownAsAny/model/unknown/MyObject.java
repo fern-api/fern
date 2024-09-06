@@ -10,7 +10,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.unknownAsAny.core.ObjectMappers;
 import java.util.Objects;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = MyObject.Builder.class)
@@ -51,7 +50,7 @@ public final class MyObject {
     }
 
     public interface UnknownStage {
-        _FinalStage unknown(@NotNull Object unknown);
+        _FinalStage unknown(Object unknown);
 
         Builder from(MyObject other);
     }
@@ -74,7 +73,7 @@ public final class MyObject {
 
         @java.lang.Override
         @JsonSetter("unknown")
-        public _FinalStage unknown(@NotNull Object unknown) {
+        public _FinalStage unknown(Object unknown) {
             this.unknown = Objects.requireNonNull(unknown, "unknown must not be null");
             return this;
         }

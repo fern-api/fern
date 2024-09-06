@@ -10,7 +10,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.api.core.ObjectMappers;
 import java.util.Objects;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ObjectFieldValue.Builder.class)
@@ -59,13 +58,13 @@ public final class ObjectFieldValue {
     }
 
     public interface NameStage {
-        ValueStage name(@NotNull String name);
+        ValueStage name(String name);
 
         Builder from(ObjectFieldValue other);
     }
 
     public interface ValueStage {
-        _FinalStage value(@NotNull FieldValue value);
+        _FinalStage value(FieldValue value);
     }
 
     public interface _FinalStage {
@@ -89,14 +88,14 @@ public final class ObjectFieldValue {
 
         @java.lang.Override
         @JsonSetter("name")
-        public ValueStage name(@NotNull String name) {
+        public ValueStage name(String name) {
             this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("value")
-        public _FinalStage value(@NotNull FieldValue value) {
+        public _FinalStage value(FieldValue value) {
             this.value = Objects.requireNonNull(value, "value must not be null");
             return this;
         }

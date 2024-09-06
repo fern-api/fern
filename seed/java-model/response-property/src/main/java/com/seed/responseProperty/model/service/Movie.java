@@ -10,7 +10,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.responseProperty.core.ObjectMappers;
 import java.util.Objects;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Movie.Builder.class)
@@ -59,13 +58,13 @@ public final class Movie {
     }
 
     public interface IdStage {
-        NameStage id(@NotNull String id);
+        NameStage id(String id);
 
         Builder from(Movie other);
     }
 
     public interface NameStage {
-        _FinalStage name(@NotNull String name);
+        _FinalStage name(String name);
     }
 
     public interface _FinalStage {
@@ -89,14 +88,14 @@ public final class Movie {
 
         @java.lang.Override
         @JsonSetter("id")
-        public NameStage id(@NotNull String id) {
+        public NameStage id(String id) {
             this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
-        public _FinalStage name(@NotNull String name) {
+        public _FinalStage name(String name) {
             this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }

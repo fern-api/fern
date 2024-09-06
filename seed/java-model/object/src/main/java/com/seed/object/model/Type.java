@@ -21,7 +21,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Type.Builder.class)
@@ -310,7 +309,7 @@ public final class Type {
     }
 
     public interface ThreeStage {
-        FourStage three(@NotNull String three);
+        FourStage three(String three);
     }
 
     public interface FourStage {
@@ -322,27 +321,27 @@ public final class Type {
     }
 
     public interface SixStage {
-        SevenStage six(@NotNull OffsetDateTime six);
+        SevenStage six(OffsetDateTime six);
     }
 
     public interface SevenStage {
-        EightStage seven(@NotNull String seven);
+        EightStage seven(String seven);
     }
 
     public interface EightStage {
-        NineStage eight(@NotNull UUID eight);
+        NineStage eight(UUID eight);
     }
 
     public interface NineStage {
-        FourteenStage nine(@NotNull byte[] nine);
+        FourteenStage nine(byte[] nine);
     }
 
     public interface FourteenStage {
-        NineteenStage fourteen(@NotNull Object fourteen);
+        NineteenStage fourteen(Object fourteen);
     }
 
     public interface NineteenStage {
-        TwentyStage nineteen(@NotNull Name nineteen);
+        TwentyStage nineteen(Name nineteen);
     }
 
     public interface TwentyStage {
@@ -358,7 +357,7 @@ public final class Type {
     }
 
     public interface TwentythreeStage {
-        _FinalStage twentythree(@NotNull BigInteger twentythree);
+        _FinalStage twentythree(BigInteger twentythree);
     }
 
     public interface _FinalStage {
@@ -512,7 +511,7 @@ public final class Type {
 
         @java.lang.Override
         @JsonSetter("three")
-        public FourStage three(@NotNull String three) {
+        public FourStage three(String three) {
             this.three = Objects.requireNonNull(three, "three must not be null");
             return this;
         }
@@ -533,42 +532,42 @@ public final class Type {
 
         @java.lang.Override
         @JsonSetter("six")
-        public SevenStage six(@NotNull OffsetDateTime six) {
+        public SevenStage six(OffsetDateTime six) {
             this.six = Objects.requireNonNull(six, "six must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("seven")
-        public EightStage seven(@NotNull String seven) {
+        public EightStage seven(String seven) {
             this.seven = Objects.requireNonNull(seven, "seven must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("eight")
-        public NineStage eight(@NotNull UUID eight) {
+        public NineStage eight(UUID eight) {
             this.eight = Objects.requireNonNull(eight, "eight must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("nine")
-        public FourteenStage nine(@NotNull byte[] nine) {
+        public FourteenStage nine(byte[] nine) {
             this.nine = Objects.requireNonNull(nine, "nine must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("fourteen")
-        public NineteenStage fourteen(@NotNull Object fourteen) {
+        public NineteenStage fourteen(Object fourteen) {
             this.fourteen = Objects.requireNonNull(fourteen, "fourteen must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("nineteen")
-        public TwentyStage nineteen(@NotNull Name nineteen) {
+        public TwentyStage nineteen(Name nineteen) {
             this.nineteen = Objects.requireNonNull(nineteen, "nineteen must not be null");
             return this;
         }
@@ -596,7 +595,7 @@ public final class Type {
 
         @java.lang.Override
         @JsonSetter("twentythree")
-        public _FinalStage twentythree(@NotNull BigInteger twentythree) {
+        public _FinalStage twentythree(BigInteger twentythree) {
             this.twentythree = Objects.requireNonNull(twentythree, "twentythree must not be null");
             return this;
         }

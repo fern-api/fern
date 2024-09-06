@@ -13,7 +13,6 @@ import com.seed.api.core.ObjectMappers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = BaseResource.Builder.class)
@@ -73,13 +72,13 @@ public final class BaseResource implements IBaseResource {
     }
 
     public interface IdStage {
-        MemoStage id(@NotNull String id);
+        MemoStage id(String id);
 
         Builder from(BaseResource other);
     }
 
     public interface MemoStage {
-        _FinalStage memo(@NotNull Memo memo);
+        _FinalStage memo(Memo memo);
     }
 
     public interface _FinalStage {
@@ -112,14 +111,14 @@ public final class BaseResource implements IBaseResource {
 
         @java.lang.Override
         @JsonSetter("id")
-        public MemoStage id(@NotNull String id) {
+        public MemoStage id(String id) {
             this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("memo")
-        public _FinalStage memo(@NotNull Memo memo) {
+        public _FinalStage memo(Memo memo) {
             this.memo = Objects.requireNonNull(memo, "memo must not be null");
             return this;
         }

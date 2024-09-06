@@ -10,7 +10,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.unions.core.ObjectMappers;
 import java.util.Objects;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Bar.Builder.class)
@@ -51,7 +50,7 @@ public final class Bar {
     }
 
     public interface NameStage {
-        _FinalStage name(@NotNull String name);
+        _FinalStage name(String name);
 
         Builder from(Bar other);
     }
@@ -74,7 +73,7 @@ public final class Bar {
 
         @java.lang.Override
         @JsonSetter("name")
-        public _FinalStage name(@NotNull String name) {
+        public _FinalStage name(String name) {
             this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }

@@ -10,7 +10,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.examples.core.ObjectMappers;
 import java.util.Objects;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = File.Builder.class)
@@ -59,13 +58,13 @@ public final class File {
     }
 
     public interface NameStage {
-        ContentsStage name(@NotNull String name);
+        ContentsStage name(String name);
 
         Builder from(File other);
     }
 
     public interface ContentsStage {
-        _FinalStage contents(@NotNull String contents);
+        _FinalStage contents(String contents);
     }
 
     public interface _FinalStage {
@@ -89,14 +88,14 @@ public final class File {
 
         @java.lang.Override
         @JsonSetter("name")
-        public ContentsStage name(@NotNull String name) {
+        public ContentsStage name(String name) {
             this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("contents")
-        public _FinalStage contents(@NotNull String contents) {
+        public _FinalStage contents(String contents) {
             this.contents = Objects.requireNonNull(contents, "contents must not be null");
             return this;
         }

@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Account.Builder.class)
@@ -114,17 +113,17 @@ public final class Account implements IBaseResource {
     }
 
     public interface IdStage {
-        MemoStage id(@NotNull String id);
+        MemoStage id(String id);
 
         Builder from(Account other);
     }
 
     public interface MemoStage {
-        NameStage memo(@NotNull Memo memo);
+        NameStage memo(Memo memo);
     }
 
     public interface NameStage {
-        _FinalStage name(@NotNull String name);
+        _FinalStage name(String name);
     }
 
     public interface _FinalStage {
@@ -174,21 +173,21 @@ public final class Account implements IBaseResource {
 
         @java.lang.Override
         @JsonSetter("id")
-        public MemoStage id(@NotNull String id) {
+        public MemoStage id(String id) {
             this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("memo")
-        public NameStage memo(@NotNull Memo memo) {
+        public NameStage memo(Memo memo) {
             this.memo = Objects.requireNonNull(memo, "memo must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
-        public _FinalStage name(@NotNull String name) {
+        public _FinalStage name(String name) {
             this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }

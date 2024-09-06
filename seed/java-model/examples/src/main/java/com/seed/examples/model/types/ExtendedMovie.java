@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ExtendedMovie.Builder.class)
@@ -176,17 +175,17 @@ public final class ExtendedMovie implements IMovie {
     }
 
     public interface IdStage {
-        TitleStage id(@NotNull String id);
+        TitleStage id(String id);
 
         Builder from(ExtendedMovie other);
     }
 
     public interface TitleStage {
-        FromStage title(@NotNull String title);
+        FromStage title(String title);
     }
 
     public interface FromStage {
-        RatingStage from(@NotNull String from);
+        RatingStage from(String from);
     }
 
     public interface RatingStage {
@@ -194,7 +193,7 @@ public final class ExtendedMovie implements IMovie {
     }
 
     public interface TagStage {
-        RevenueStage tag(@NotNull String tag);
+        RevenueStage tag(String tag);
     }
 
     public interface RevenueStage {
@@ -267,21 +266,21 @@ public final class ExtendedMovie implements IMovie {
 
         @java.lang.Override
         @JsonSetter("id")
-        public TitleStage id(@NotNull String id) {
+        public TitleStage id(String id) {
             this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("title")
-        public FromStage title(@NotNull String title) {
+        public FromStage title(String title) {
             this.title = Objects.requireNonNull(title, "title must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("from")
-        public RatingStage from(@NotNull String from) {
+        public RatingStage from(String from) {
             this.from = Objects.requireNonNull(from, "from must not be null");
             return this;
         }
@@ -299,7 +298,7 @@ public final class ExtendedMovie implements IMovie {
 
         @java.lang.Override
         @JsonSetter("tag")
-        public RevenueStage tag(@NotNull String tag) {
+        public RevenueStage tag(String tag) {
             this.tag = Objects.requireNonNull(tag, "tag must not be null");
             return this;
         }
