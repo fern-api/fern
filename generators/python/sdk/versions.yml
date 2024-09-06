@@ -51,9 +51,6 @@
           used the deprecated `class Config`, regardless of the Pydantic version to satisfy mypy, which lead to warnings in the console.
 
           Now, we've removed the field aliases and replaced them with an internal representation, which allows us to avoid pydantic config altogether.
-  is_yanked:
-    remediation_version: 4.0.0-rc0
-
 
 - version: 3.10.8
   ir_version: 53
