@@ -70,3 +70,4 @@ export * from "./IntegrationsConfig";
 export * from "./ExperimentalConfig";
 export * from "./PlaygroundSettings";
 export * from "./PlaygroundButtonSettings";
+export * from "./AnnouncementConfig";

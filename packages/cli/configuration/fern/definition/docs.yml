@@ -119,6 +119,8 @@ types:
           The `analytics` object allows you to configure analytics for your docs site.
           Currently, only Segment is supported.
 
+      announcement: optional<AnnouncementConfig>
+
       # navigation
       tabs: optional<map<TabId, TabConfig>>
       versions: optional<list<VersionConfig>>
@@ -975,3 +977,9 @@ types:
   PlaygroundButtonSettings:
     properties:
       href: optional<string>
+
+  AnnouncementConfig:
+    properties:
+      message:
+        type: string
+        docs: The message to display in the announcement bar. Markdown is supported.
