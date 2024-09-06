@@ -100,47 +100,6 @@ service:
 exports[`validate namespaced API > namespaced 1`] = `
 [
   {
-    "contents": "channel:
-  path: marketDataV1
-  auth: false
-  path-parameters:
-    symbol:
-      type: string
-      docs: >
-        Symbols are formatted as CCY1CCY2 where prices are in CCY2 and
-        quantities are in CCY1. To read more click
-        [here](https://docs.sandbox.gemini.com/websocket-api/#symbols-and-minimums).
-  query-parameters:
-    heartbeat:
-      type: optional<boolean>
-      docs: >-
-        Optionally add this parameter and set to true to receive a heartbeat
-        every 5 seconds
-    top_of_book:
-      type: optional<boolean>
-      docs: >-
-        If absent or false, receive full order book depth; if present and true,
-        receive top of book only. Only applies to bids and offers.
-    bids:
-      type: optional<boolean>
-      docs: Include bids in change events
-    offers:
-      type: optional<boolean>
-      docs: Include asks in change events
-    trades:
-      type: optional<boolean>
-      docs: Include trade events
-    auctions:
-      type: optional<boolean>
-      docs: Include auction events
-  messages: {}
-  examples:
-    - messages: []
-",
-    "name": "[object Object].yml",
-    "type": "file",
-  },
-  {
     "contents": "types:
   OauthScope:
     enum:
@@ -332,7 +291,43 @@ service:
   {
     "contents": [
       {
-        "contents": "types:
+        "contents": "channel:
+  path: marketDataV1
+  auth: false
+  path-parameters:
+    symbol:
+      type: string
+      docs: >
+        Symbols are formatted as CCY1CCY2 where prices are in CCY2 and
+        quantities are in CCY1. To read more click
+        [here](https://docs.sandbox.gemini.com/websocket-api/#symbols-and-minimums).
+  query-parameters:
+    heartbeat:
+      type: optional<boolean>
+      docs: >-
+        Optionally add this parameter and set to true to receive a heartbeat
+        every 5 seconds
+    top_of_book:
+      type: optional<boolean>
+      docs: >-
+        If absent or false, receive full order book depth; if present and true,
+        receive top of book only. Only applies to bids and offers.
+    bids:
+      type: optional<boolean>
+      docs: Include bids in change events
+    offers:
+      type: optional<boolean>
+      docs: Include asks in change events
+    trades:
+      type: optional<boolean>
+      docs: Include trade events
+    auctions:
+      type: optional<boolean>
+      docs: Include auction events
+  messages: {}
+  examples:
+    - messages: []
+types:
   Market:
     discriminated: false
     union:
