@@ -18,7 +18,6 @@ package com.fern.java.spring;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fern.java.DownloadFilesCustomConfig;
 import com.fern.java.ICustomConfig;
 import com.fern.java.IDownloadFilesCustomConfig;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
