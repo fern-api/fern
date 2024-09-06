@@ -15587,6 +15587,523 @@ exports[`fdr test definitions > mixed-case 1`] = `
 }
 `;
 
+exports[`fdr test definitions > mixed-file-directory 1`] = `
+{
+  "auth": undefined,
+  "globalHeaders": [],
+  "rootPackage": {
+    "endpoints": [],
+    "pointsTo": undefined,
+    "subpackages": [
+      "subpackage_organization",
+      "subpackage_user",
+    ],
+    "types": [
+      "type_:Id",
+    ],
+    "webhooks": [],
+    "websockets": [],
+  },
+  "snippetsConfiguration": {},
+  "subpackages": {
+    "subpackage_organization": {
+      "description": undefined,
+      "displayName": undefined,
+      "endpoints": [
+        {
+          "auth": false,
+          "availability": undefined,
+          "defaultEnvironment": undefined,
+          "description": "Create a new organization.",
+          "environments": undefined,
+          "errors": undefined,
+          "errorsV2": [],
+          "examples": [],
+          "headers": [],
+          "id": "create",
+          "method": "POST",
+          "name": "Create",
+          "originalEndpointId": "endpoint_organization.create",
+          "path": {
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/organizations",
+              },
+              {
+                "type": "literal",
+                "value": "/",
+              },
+            ],
+            "pathParameters": [],
+          },
+          "queryParameters": [],
+          "request": {
+            "type": {
+              "contentType": "application/json",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "type_organization:CreateOrganizationRequest",
+                },
+              },
+              "type": "json",
+            },
+          },
+          "response": {
+            "statusCode": undefined,
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_organization:Organization",
+              },
+            },
+          },
+        },
+      ],
+      "name": "organization",
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_organization",
+      "subpackages": [],
+      "types": [
+        "type_organization:Organization",
+        "type_organization:CreateOrganizationRequest",
+      ],
+      "webhooks": [],
+      "websockets": [],
+    },
+    "subpackage_user": {
+      "description": undefined,
+      "displayName": undefined,
+      "endpoints": [
+        {
+          "auth": false,
+          "availability": undefined,
+          "defaultEnvironment": undefined,
+          "description": "List all users.",
+          "environments": undefined,
+          "errors": undefined,
+          "errorsV2": [],
+          "examples": [],
+          "headers": [],
+          "id": "list",
+          "method": "GET",
+          "name": "List",
+          "originalEndpointId": "endpoint_user.list",
+          "path": {
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/users",
+              },
+              {
+                "type": "literal",
+                "value": "/",
+              },
+            ],
+            "pathParameters": [],
+          },
+          "queryParameters": [
+            {
+              "availability": undefined,
+              "description": "The maximum number of results to return.",
+              "key": "limit",
+              "type": {
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "default": undefined,
+                    "maximum": undefined,
+                    "minimum": undefined,
+                    "type": "integer",
+                  },
+                },
+                "type": "optional",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "statusCode": undefined,
+            "type": {
+              "type": "reference",
+              "value": {
+                "itemType": {
+                  "type": "id",
+                  "value": "type_user:User",
+                },
+                "type": "list",
+              },
+            },
+          },
+        },
+      ],
+      "name": "user",
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_user",
+      "subpackages": [
+        "subpackage_user/events",
+      ],
+      "types": [
+        "type_user:User",
+      ],
+      "webhooks": [],
+      "websockets": [],
+    },
+    "subpackage_user/events": {
+      "description": undefined,
+      "displayName": undefined,
+      "endpoints": [
+        {
+          "auth": false,
+          "availability": undefined,
+          "defaultEnvironment": undefined,
+          "description": "List all user events.",
+          "environments": undefined,
+          "errors": undefined,
+          "errorsV2": [],
+          "examples": [],
+          "headers": [],
+          "id": "listEvents",
+          "method": "GET",
+          "name": "List Events",
+          "originalEndpointId": "endpoint_user/events.listEvents",
+          "path": {
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/users/events",
+              },
+              {
+                "type": "literal",
+                "value": "/",
+              },
+            ],
+            "pathParameters": [],
+          },
+          "queryParameters": [
+            {
+              "availability": undefined,
+              "description": "The maximum number of results to return.",
+              "key": "limit",
+              "type": {
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "default": undefined,
+                    "maximum": undefined,
+                    "minimum": undefined,
+                    "type": "integer",
+                  },
+                },
+                "type": "optional",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "statusCode": undefined,
+            "type": {
+              "type": "reference",
+              "value": {
+                "itemType": {
+                  "type": "id",
+                  "value": "type_user/events:Event",
+                },
+                "type": "list",
+              },
+            },
+          },
+        },
+      ],
+      "name": "events",
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_user/events",
+      "subpackages": [
+        "subpackage_user/events/metadata",
+      ],
+      "types": [
+        "type_user/events:Event",
+      ],
+      "webhooks": [],
+      "websockets": [],
+    },
+    "subpackage_user/events/metadata": {
+      "description": undefined,
+      "displayName": undefined,
+      "endpoints": [
+        {
+          "auth": false,
+          "availability": undefined,
+          "defaultEnvironment": undefined,
+          "description": "Get event metadata.",
+          "environments": undefined,
+          "errors": undefined,
+          "errorsV2": [],
+          "examples": [],
+          "headers": [],
+          "id": "getMetadata",
+          "method": "GET",
+          "name": "Get Metadata",
+          "originalEndpointId": "endpoint_user/events/metadata.getMetadata",
+          "path": {
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/users/events/metadata",
+              },
+              {
+                "type": "literal",
+                "value": "/",
+              },
+            ],
+            "pathParameters": [],
+          },
+          "queryParameters": [
+            {
+              "availability": undefined,
+              "description": undefined,
+              "key": "id",
+              "type": {
+                "type": "id",
+                "value": "type_:Id",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "statusCode": undefined,
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_user/events/metadata:Metadata",
+              },
+            },
+          },
+        },
+      ],
+      "name": "metadata",
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_user/events/metadata",
+      "subpackages": [],
+      "types": [
+        "type_user/events/metadata:Metadata",
+      ],
+      "webhooks": [],
+      "websockets": [],
+    },
+  },
+  "types": {
+    "type_:Id": {
+      "availability": undefined,
+      "description": undefined,
+      "name": "Id",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "default": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "regex": undefined,
+            "type": "string",
+          },
+        },
+      },
+    },
+    "type_organization:CreateOrganizationRequest": {
+      "availability": undefined,
+      "description": undefined,
+      "name": "CreateOrganizationRequest",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "type_organization:Organization": {
+      "availability": undefined,
+      "description": undefined,
+      "name": "Organization",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "id",
+            "valueType": {
+              "type": "id",
+              "value": "type_:Id",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "users",
+            "valueType": {
+              "itemType": {
+                "type": "id",
+                "value": "type_user:User",
+              },
+              "type": "list",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "type_user/events/metadata:Metadata": {
+      "availability": undefined,
+      "description": undefined,
+      "name": "Metadata",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "id",
+            "valueType": {
+              "type": "id",
+              "value": "type_:Id",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "value",
+            "valueType": {
+              "type": "unknown",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "type_user/events:Event": {
+      "availability": undefined,
+      "description": undefined,
+      "name": "Event",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "id",
+            "valueType": {
+              "type": "id",
+              "value": "type_:Id",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "type_user:User": {
+      "availability": undefined,
+      "description": undefined,
+      "name": "User",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "id",
+            "valueType": {
+              "type": "id",
+              "value": "type_:Id",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "age",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maximum": undefined,
+                "minimum": undefined,
+                "type": "integer",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+  },
+}
+`;
+
 exports[`fdr test definitions > multi-line-docs 1`] = `
 {
   "auth": undefined,

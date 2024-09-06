@@ -1,0 +1,48 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/organizations",
+                "method": "POST",
+                "identifier_override": "endpoint_organization.create"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/mixed-file-directory/fern\"\n\tfernclient \"github.com/mixed-file-directory/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Organization.Create(\n\tcontext.TODO(),\n\t\u0026fern.CreateOrganizationRequest{\n\t\tName: \"string\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_user.list"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/mixed-file-directory/fern\"\n\tfernclient \"github.com/mixed-file-directory/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.List(\n\tcontext.TODO(),\n\t\u0026fern.ListUsersRequest{\n\t\tLimit: fern.Int(\n\t\t\t1,\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users/events",
+                "method": "GET",
+                "identifier_override": "endpoint_user/events.listEvents"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/mixed-file-directory/fern\"\n\tfernclient \"github.com/mixed-file-directory/fern/client\"\n\tuser \"github.com/mixed-file-directory/fern/user\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.Events.ListEvents(\n\tcontext.TODO(),\n\t\u0026user.ListUserEventsRequest{\n\t\tLimit: fern.Int(\n\t\t\t1,\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users/events/metadata",
+                "method": "GET",
+                "identifier_override": "endpoint_user/events/metadata.getMetadata"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tevents \"github.com/mixed-file-directory/fern/user/events\"\n\tfernclient \"github.com/mixed-file-directory/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.Events.Metadata.GetMetadata(\n\tcontext.TODO(),\n\t\u0026events.GetEventMetadataRequest{\n\t\tId: \"string\",\n\t},\n)\n"
+            }
+        }
+    ]
+}
