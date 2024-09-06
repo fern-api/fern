@@ -141,13 +141,13 @@ public final class Cli extends AbstractGeneratorCli<SpringCustomConfig, SpringCu
     }
 
     @Override
-    public SpringDownloadFilesCustomConfig getDownloadFilesCustomConfig(GeneratorConfig generatorConfig) {
+    public SpringCustomConfig getDownloadFilesCustomConfig(GeneratorConfig generatorConfig) {
         if (generatorConfig.getCustomConfig().isPresent()) {
             JsonNode node = ObjectMappers.JSON_MAPPER.valueToTree(
                     generatorConfig.getCustomConfig().get());
-            return ObjectMappers.JSON_MAPPER.convertValue(node, SpringDownloadFilesCustomConfig.class);
+            return ObjectMappers.JSON_MAPPER.convertValue(node, SpringCustomConfig.class);
         }
-        return SpringDownloadFilesCustomConfig.builder().build();
+        return SpringCustomConfig.builder().build();
     }
 
     @Override
