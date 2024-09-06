@@ -20,7 +20,7 @@ export async function visitRootApiFileYamlAst(
             await Promise.all(
                 Object.entries(authSchemes ?? {}).map(async ([authScheme, authSchemeDeclaration]) => {
                     if (isOAuthScheme(authSchemeDeclaration)) {
-                        await visitor["oauth"]?.({ name: authScheme, declaration: authSchemeDeclaration }, [
+                        await visitor["oauth"]?.({ name: authScheme, oauth: authSchemeDeclaration }, [
                             "auth-scheme",
                             authScheme
                         ]);

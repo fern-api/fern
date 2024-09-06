@@ -40,6 +40,7 @@ export function createRootApiFileAstVisitorForRules({
 
     return {
         ...createAstNodeVisitor("file"),
+        ...createAstNodeVisitor("oauth"),
         ...createAstNodeVisitor("defaultEnvironment"),
         ...createAstNodeVisitor("environment"),
         ...createAstNodeVisitor("errorDiscrimination"),

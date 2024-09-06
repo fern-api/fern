@@ -3,6 +3,7 @@ export { type NodePath, type NodePathItem } from "./NodePath";
 export * as RawSchemas from "./schemas";
 export * from "./schemas/file-schemas";
 export * from "./utils/generics";
+export * from "./utils/auth";
 export { getRequestBody } from "./utils/getRequestBody";
 export { isInlineRequestBody } from "./utils/isInlineRequestBody";
 export { isRawProtobufSourceSchema } from "./utils/isRawProtobufSourceSchema";
@@ -43,4 +44,3 @@ export {
 } from "./utils/visitRawTypeDeclaration";
 export { FernContainerRegex, visitRawTypeReference } from "./utils/visitRawTypeReference";
 export { HttpEndpointReferenceParser } from "./utils/HttpEndpointReferenceParser";
-export { isOAuthScheme } from "./utils/auth/isOAuthScheme";

@@ -1,32 +1,14 @@
 import { DocsLinks } from "@fern-api/configuration";
-import { assertNever } from "@fern-api/core-utils";
-import {
-    constructFernFileContext,
-    constructRootApiFileContext,
-    EndpointResolverImpl,
-    TypeResolverImpl
-} from "@fern-api/ir-generator";
-import { FernWorkspace } from "@fern-api/workspace-loader";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { constructRootApiFileContext, EndpointResolverImpl, TypeResolverImpl } from "@fern-api/ir-generator";
 import terminalLink from "terminal-link";
-import { Rule } from "../../Rule";
+import { Rule, RuleViolation } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
-import { validateClientCredentials } from "./validateClientCredentials";
-import { HttpEndpointReferenceParser } from "@fern-api/fern-definition-schema";
-
-const DOCS_LINK_MESSAGE = `For details, see the ${terminalLink("docs", DocsLinks.oauth, {
-    fallback: (text, url) => `${text}: ${url}`
-})}.`;
+import { validateRefreshTokenEndpoint } from "./validateRefreshTokenEndpoint";
+import { validateTokenEndpoint } from "./validateTokenEndpoint";
 
 export const ValidOauthRule: Rule = {
     name: "valid-oauth",
     create: ({ workspace }) => {
-        const oauthScheme = maybeGetOAuthScheme({ workspace });
-        if (oauthScheme == null) {
-            return {};
-        }
-
-        const oauthSchema = oauthScheme.schema;
         const typeResolver = new TypeResolverImpl(workspace);
         const endpointResolver = new EndpointResolverImpl(workspace);
 
@@ -35,115 +17,60 @@ export const ValidOauthRule: Rule = {
             rootApiFile: workspace.definition.rootApiFile.contents
         });
 
-        if (resolvedTokenEndpoint == null) {
-            return {
-                rootApiFile: {
-                    "auth-scheme": ({ name, authScheme }, { relativeFilepath }) => {
-                        if (!isRawOAuthSchemeSchema(authScheme)) {
-                            return;
-                        }
+        return {
+            rootApiFile: {
+                oauth: async ({ name, oauth }, { relativeFilepath }) => {
+                    const violations: RuleViolation[] = [];
 
-                        const tokenEndpointReference = oauthSchema["get-token"].endpoint;
-                        const resolvedTokenEndpoint = endpointResolver.resolveEndpoint({
-                            endpoint: tokenEndpointReference,
-                            file: apiFile
+                    const tokenEndpointReference = oauth["get-token"].endpoint;
+                    const resolvedTokenEndpoint = await endpointResolver.resolveEndpoint({
+                        endpoint: tokenEndpointReference,
+                        file: apiFile
+                    });
+                    if (resolvedTokenEndpoint == null) {
+                        violations.push({
+                            severity: "error",
+                            message: `Failed to resolve endpoint ${tokenEndpointReference}`
                         });
-                        if (resolvedTokenEndpoint == null) {
-                            return [
-                                {
-                                    severity: "error",
-                                    message: `Failed to resolve endpoint ${tokenEndpointReference}`
-                                }
-                            ];
-                        }
+                    } else {
+                        violations.push(
+                            ...validateTokenEndpoint({
+                                endpointId: resolvedTokenEndpoint.endpointId,
+                                endpoint: resolvedTokenEndpoint.endpoint,
+                                typeResolver,
+                                file: resolvedTokenEndpoint.file,
+                                tokenEndpoint: oauth["get-token"]
+                            })
+                        );
+                    }
 
-                        const refreshEndpointReference = oauthSchema["refresh-token"]?.endpoint;
-                        if (refreshEndpointReference == null) {
-                            return;
-                        }
-                        const resolvedRefreshEndpoint = endpointResolver.resolveEndpoint({
+                    const refreshEndpointReference = oauth["refresh-token"]?.endpoint;
+                    if (oauth["refresh-token"] != null && refreshEndpointReference != null) {
+                        const resolvedRefreshEndpoint = await endpointResolver.resolveEndpoint({
                             endpoint: refreshEndpointReference,
                             file: apiFile
                         });
                         if (resolvedRefreshEndpoint == null) {
-                            return [
-                                {
-                                    severity: "error",
-                                    message: `Failed to resolve endpoint ${tokenEndpointReference}`
-                                }
-                            ];
-                        }
-
-
-
-                    }
-                }
-            };
-        }
-
-        return {
-            definitionFile: {
-                httpEndpoint: ({ endpointId, endpoint }, { relativeFilepath, contents: definitionFile }) => {
-                    if (
-                        endpointId !== resolvedTokenEndpoint.endpointId &&
-                        endpointId !== resolvedRefreshEndpoint?.endpointId
-                    ) {
-                        return [];
-                    }
-
-                    const file = constructFernFileContext({
-                        relativeFilepath,
-                        definitionFile,
-                        casingsGenerator: CASINGS_GENERATOR,
-                        rootApiFile: workspace.definition.rootApiFile.contents
-                    });
-
-                    switch (oauthSchema.type) {
-                        case "client-credentials": {
-                            const violations = validateClientCredentials({
-                                endpointId,
-                                endpoint,
-                                typeResolver,
-                                file,
-                                resolvedTokenEndpoint,
-                                resolvedRefreshEndpoint,
-                                clientCredentials: oauthSchema
+                            violations.push({
+                                severity: "error",
+                                message: `Failed to resolve endpoint ${tokenEndpointReference}`
                             });
-                            if (violations.length > 0) {
-                                return violations.map((violation) => ({
-                                    severity: violation.severity,
-                                    message: violation.message + ` ${DOCS_LINK_MESSAGE}`
-                                }));
-                            }
-                            return [];
+                        } else {
+                            violations.push(
+                                ...validateRefreshTokenEndpoint({
+                                    endpointId: resolvedRefreshEndpoint.endpointId,
+                                    endpoint: resolvedRefreshEndpoint.endpoint,
+                                    typeResolver,
+                                    file: resolvedRefreshEndpoint.file,
+                                    refreshEndpoint: oauth["refresh-token"]
+                                })
+                            );
                         }
-                        default:
-                            assertNever(oauthSchema.type);
                     }
+
+                    return violations;
                 }
             }
         };
     }
 };
-
-interface OAuthScheme {
-    name: string;
-    schema: RawSchemas.OAuthSchemeSchema;
-}
-
-function maybeGetOAuthScheme({ workspace }: { workspace: FernWorkspace }): OAuthScheme | undefined {
-    const authSchemes = workspace.definition.rootApiFile.contents["auth-schemes"];
-    if (authSchemes == null) {
-        return undefined;
-    }
-    const oauthSchemePair = Object.entries(authSchemes).find(([_, value]) => isRawOAuthSchemeSchema(value));
-    if (oauthSchemePair == null) {
-        return undefined;
-    }
-    return {
-        name: oauthSchemePair[0],
-        schema: oauthSchemePair[1] as RawSchemas.OAuthSchemeSchema
-    };
-}
-
-

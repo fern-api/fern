@@ -21,7 +21,7 @@ export declare namespace HttpEndpointReferenceParser {
  * Parses an HTTP endpoint reference like `POST /users/get`
  */
 export class HttpEndpointReferenceParser {
-    private REFERENCE_REGEX: RegExp = /^(GET|POST|PUT|DELETE|PATCH)\s\/[a-zA-Z0-9\/]*$/;
+    private REFERENCE_REGEX: RegExp = /^(GET|POST|PUT|DELETE|PATCH)\s(\/[a-zA-Z0-9\/]*)$/;
 
     public validate(reference: string): HttpEndpointReferenceParser.ValidationResult {
         const validFormat = this.REFERENCE_REGEX.test(reference);
@@ -31,18 +31,18 @@ export class HttpEndpointReferenceParser {
         return { type: "valid" };
     }
 
-    public async tryParse(reference: string): Promise<HttpEndpointReferenceParser.Parsed | undefined> {
+    public tryParse(reference: string): HttpEndpointReferenceParser.Parsed | undefined {
         const validationResponse = this.validate(reference);
         if (validationResponse.type === "invalid") {
             return undefined;
         }
         const match = reference.match(this.REFERENCE_REGEX);
-        if (match == null || match[0] == null || match[1] == null) {
+        if (match == null || match[1] == null || match[2] == null) {
             return undefined;
         }
         return {
-            method: match[0] as HttpMethodSchema,
-            path: match[1]
+            method: match[1] as HttpMethodSchema,
+            path: match[2]
         };
     }
 }

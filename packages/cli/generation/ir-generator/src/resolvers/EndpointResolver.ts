@@ -1,3 +1,4 @@
+import { HttpEndpointReferenceParser } from "@fern-api/fern-definition-schema";
 import { HttpMethod } from "@fern-api/ir-sdk";
 import {
     FernWorkspace,
@@ -12,8 +13,8 @@ import { ResolvedEndpoint } from "./ResolvedEndpoint";
 
 export interface EndpointResolver {
     // Resolves an endpoint reference specified in a Fern definition (e.g. "auth.getToken").
-    resolveEndpoint: (args: { endpoint: string; file: FernFileContext }) => ResolvedEndpoint | undefined;
-    resolveEndpointOrThrow: (args: { endpoint: string; file: FernFileContext }) => ResolvedEndpoint;
+    resolveEndpoint: (args: { endpoint: string; file: FernFileContext }) => Promise<ResolvedEndpoint | undefined>;
+    resolveEndpointOrThrow: (args: { endpoint: string; file: FernFileContext }) => Promise<ResolvedEndpoint>;
 }
 
 interface RawEndpointInfo {
@@ -24,8 +25,14 @@ interface RawEndpointInfo {
 export class EndpointResolverImpl implements EndpointResolver {
     constructor(private readonly workspace: FernWorkspace) {}
 
-    public resolveEndpointOrThrow({ endpoint, file }: { endpoint: string; file: FernFileContext }): ResolvedEndpoint {
-        const resolvedEndpoint = this.resolveEndpoint({ endpoint, file });
+    public async resolveEndpointOrThrow({
+        endpoint,
+        file
+    }: {
+        endpoint: string;
+        file: FernFileContext;
+    }): Promise<ResolvedEndpoint> {
+        const resolvedEndpoint = await this.resolveEndpoint({ endpoint, file });
         if (resolvedEndpoint == null) {
             throw new Error("Cannot resolve endpoint: " + endpoint + " in file " + file.relativeFilepath);
         }
@@ -38,7 +45,7 @@ export class EndpointResolverImpl implements EndpointResolver {
     }: {
         method: HttpMethod;
         path: string;
-    }): Promise<Promise<ResolvedEndpoint | undefined>> {
+    }): Promise<ResolvedEndpoint | undefined> {
         let result: ResolvedEndpoint | undefined = undefined;
         await visitAllDefinitionFiles(this.workspace, async (relativeFilepath, file, metadata) => {
             const context = constructFernFileContext({
@@ -78,14 +85,18 @@ export class EndpointResolverImpl implements EndpointResolver {
         return result;
     }
 
-    public resolveEndpoint({
+    public async resolveEndpoint({
         endpoint,
         file
     }: {
         endpoint: string;
         file: FernFileContext;
-    }): ResolvedEndpoint | undefined {
-        if ()
+    }): Promise<ResolvedEndpoint | undefined> {
+        const referenceParser = new HttpEndpointReferenceParser();
+        const parsedEndpointReference = referenceParser.tryParse(endpoint);
+        if (parsedEndpointReference != null) {
+            return await this.resolveEndpointByMethodAndPath(parsedEndpointReference);
+        }
 
         const maybeDeclaration = this.getDeclarationOfEndpoint({
             referenceToEndpoint: endpoint,
