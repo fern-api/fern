@@ -2908,8 +2908,8 @@ importers:
         specifier: 0.0.584
         version: 0.0.584
       '@fern-fern/generators-sdk':
-        specifier: 0.107.0-892e7c392
-        version: 0.107.0-892e7c392
+        specifier: 0.107.0-00fe26566
+        version: 0.107.0-00fe26566
       '@types/get-port':
         specifier: ^4.2.0
         version: 4.2.0
@@ -3125,8 +3125,8 @@ importers:
         specifier: 0.0.584
         version: 0.0.584
       '@fern-fern/generators-sdk':
-        specifier: 0.107.0-cb3377224
-        version: 0.107.0-cb3377224
+        specifier: 0.107.0-00fe26566
+        version: 0.107.0-00fe26566
       find-up:
         specifier: ^6.3.0
         version: 6.3.0
@@ -5381,8 +5381,8 @@ importers:
         specifier: ^0.0.898
         version: 0.0.898
       '@fern-fern/generators-sdk':
-        specifier: 0.107.0-892e7c392
-        version: 0.107.0-892e7c392
+        specifier: 0.107.0-00fe26566
+        version: 0.107.0-00fe26566
       '@types/pretty-ms':
         specifier: ^5.0.1
         version: 5.0.1
@@ -6503,11 +6503,8 @@ packages:
   '@fern-fern/generator-exec-sdk@0.0.898':
     resolution: {integrity: sha512-VQYn32CkAd437deesaGk4LKikbVptxrWINAwUwiAUWOy77LelX1zWNKihjU2XDgIPv3VXK07aJwoPR5BDYD46Q==}
 
-  '@fern-fern/generators-sdk@0.107.0-892e7c392':
-    resolution: {integrity: sha512-QZMP6cMMIbxSzSZ67hzUkDsb8Mn1la8AHngi9L+AbJN9nlqLOcvufoxhGMK6oPvLHsEX6pXOlFYbjG1QTLfThg==}
-
-  '@fern-fern/generators-sdk@0.107.0-cb3377224':
-    resolution: {integrity: sha512-hpTNDi6uu/ER62glO4PbdjJi/zFSeSM2K5uVXus2DOT7rsXNBsxIsIJ8RrfPDiTZ4b08D/TKdFaQhz2v6tNyLw==}
+  '@fern-fern/generators-sdk@0.107.0-00fe26566':
+    resolution: {integrity: sha512-fwk1xrv3wTO/6kJztIwO8Zz/thkRxIMLjYCtHelfbtbYNH9ZZr+yWDiCZGFBOOu7m8tuEZjaoOYOR3wiqmeivQ==}
 
   '@fern-fern/ir-sdk@0.0.2828':
     resolution: {integrity: sha512-qFZZHyw0cuHtoR9v7KsrPpz0PFH0V6/ORSMHdTKU/82KcaNCMjk0BbzicK8jjrMD0mYS4JxNUzEjcUOvgeuqaA==}
@@ -13610,18 +13607,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@fern-fern/generators-sdk@0.107.0-892e7c392':
-    dependencies:
-      form-data: 4.0.0
-      formdata-node: 6.0.3
-      js-base64: 3.7.2
-      node-fetch: 2.7.0
-      qs: 6.11.2
-      url-join: 4.0.1
-    transitivePeerDependencies:
-      - encoding
-
-  '@fern-fern/generators-sdk@0.107.0-cb3377224':
+  '@fern-fern/generators-sdk@0.107.0-00fe26566':
     dependencies:
       form-data: 4.0.0
       formdata-node: 6.0.3

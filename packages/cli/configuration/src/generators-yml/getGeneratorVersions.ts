@@ -23,16 +23,31 @@ export async function getLatestGeneratorVersion({
         environment: process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com"
     });
     context?.logger.info(
-        `Getting latest version for ${generatorName} with CLI version ${cliVersion}, includeMajor: ${includeMajor}, prior version: ${parsedVersion} ${parsedVersion?.major} ${process.env.DEFAULT_FDR_ORIGIN}`
+        `Getting latest version for ${generatorName} with CLI version ${cliVersion}, includeMajor: ${includeMajor}, prior version: ${parsedVersion} ${
+            parsedVersion?.major
+        } ${process.env.DEFAULT_FDR_ORIGIN} ${JSON.stringify({
+            generator: getGeneratorMetadataFromName(generatorName, context),
+            releaseTypes: [channel ?? FernRegistry.generators.ReleaseType.Ga],
+            generatorMajorVersion: !includeMajor && parsedVersion != null ? parsedVersion.major : undefined,
+            // We get "*" as 0.0.0, so we need to handle that case for tests
+            // if we see this, then we shouldn't restrict on the CLI version
+            cliVersion: cliVersion === "0.0.0" ? undefined : cliVersion
+        })}`
     );
-    const latestReleaseResponse = await client.generators.versions.getLatestGeneratorRelease({
+
+    const payload: FernRegistry.generators.versions.GetLatestGeneratorReleaseRequest = {
         generator: getGeneratorMetadataFromName(generatorName, context),
         releaseTypes: [channel ?? FernRegistry.generators.ReleaseType.Ga],
-        generatorMajorVersion: !includeMajor && parsedVersion != null ? parsedVersion.major : undefined,
         // We get "*" as 0.0.0, so we need to handle that case for tests
         // if we see this, then we shouldn't restrict on the CLI version
         cliVersion: cliVersion === "0.0.0" ? undefined : cliVersion
-    });
+    };
+
+    if (!includeMajor && parsedVersion != null) {
+        payload["generatorMajorVersion"] = parsedVersion.major;
+    }
+
+    const latestReleaseResponse = await client.generators.versions.getLatestGeneratorRelease(payload);
 
     if (latestReleaseResponse.ok) {
         return latestReleaseResponse.body.version;

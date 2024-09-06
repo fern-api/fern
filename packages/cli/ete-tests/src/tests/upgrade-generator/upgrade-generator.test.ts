@@ -15,7 +15,7 @@ describe("fern generator upgrade", () => {
 
         await cp(FIXTURES_DIR, directory, { recursive: true });
 
-        await runFernCli(["generator", "upgrade", "--include-major"], {
+        await runFernCli(["generator", "upgrade"], {
             cwd: directory
         });
 
