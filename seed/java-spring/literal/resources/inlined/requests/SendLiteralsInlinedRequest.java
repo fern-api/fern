@@ -17,8 +17,8 @@ import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
-import resources.inlined.types.ATopLevelLiteral;
 import org.jetbrains.annotations.NotNull;
+import resources.inlined.types.ATopLevelLiteral;
 import resources.inlined.types.SomeAliasedLiteral;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -124,7 +124,7 @@ public final class SendLiteralsInlinedRequest {
   }
 
   public interface ObjectWithLiteralStage {
-    _FinalStage objectWithLiteral(ATopLevelLiteral objectWithLiteral);
+    _FinalStage objectWithLiteral(@NotNull ATopLevelLiteral objectWithLiteral);
   }
 
   public interface _FinalStage {
@@ -189,8 +189,8 @@ public final class SendLiteralsInlinedRequest {
 
     @java.lang.Override
     @JsonSetter("objectWithLiteral")
-    public _FinalStage objectWithLiteral(ATopLevelLiteral objectWithLiteral) {
-      this.objectWithLiteral = objectWithLiteral;
+    public _FinalStage objectWithLiteral(@NotNull ATopLevelLiteral objectWithLiteral) {
+      this.objectWithLiteral = Objects.requireNonNull(objectWithLiteral, "objectWithLiteral must not be null");
       return this;
     }
 

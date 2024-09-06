@@ -144,7 +144,7 @@ public final class SendLiteralsInlinedRequest {
     }
 
     public interface ObjectWithLiteralStage {
-        _FinalStage objectWithLiteral(ATopLevelLiteral objectWithLiteral);
+        _FinalStage objectWithLiteral(@NotNull ATopLevelLiteral objectWithLiteral);
     }
 
     public interface _FinalStage {
@@ -209,8 +209,8 @@ public final class SendLiteralsInlinedRequest {
 
         @java.lang.Override
         @JsonSetter("objectWithLiteral")
-        public _FinalStage objectWithLiteral(ATopLevelLiteral objectWithLiteral) {
-            this.objectWithLiteral = objectWithLiteral;
+        public _FinalStage objectWithLiteral(@NotNull ATopLevelLiteral objectWithLiteral) {
+            this.objectWithLiteral = Objects.requireNonNull(objectWithLiteral, "objectWithLiteral must not be null");
             return this;
         }
 

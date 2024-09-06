@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.literal.core.ObjectMappers;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ATopLevelLiteral.Builder.class)
@@ -50,7 +51,7 @@ public final class ATopLevelLiteral {
     }
 
     public interface NestedLiteralStage {
-        _FinalStage nestedLiteral(ANestedLiteral nestedLiteral);
+        _FinalStage nestedLiteral(@NotNull ANestedLiteral nestedLiteral);
 
         Builder from(ATopLevelLiteral other);
     }
@@ -73,8 +74,8 @@ public final class ATopLevelLiteral {
 
         @java.lang.Override
         @JsonSetter("nestedLiteral")
-        public _FinalStage nestedLiteral(ANestedLiteral nestedLiteral) {
-            this.nestedLiteral = nestedLiteral;
+        public _FinalStage nestedLiteral(@NotNull ANestedLiteral nestedLiteral) {
+            this.nestedLiteral = Objects.requireNonNull(nestedLiteral, "nestedLiteral must not be null");
             return this;
         }
 

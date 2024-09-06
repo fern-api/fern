@@ -13,6 +13,7 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
@@ -74,13 +75,13 @@ public final class Movie {
   }
 
   public interface IdStage {
-    TitleStage id(MovieId id);
+    TitleStage id(@NotNull MovieId id);
 
     Builder from(Movie other);
   }
 
   public interface TitleStage {
-    RatingStage title(String title);
+    RatingStage title(@NotNull String title);
   }
 
   public interface RatingStage {
@@ -114,15 +115,15 @@ public final class Movie {
 
     @java.lang.Override
     @JsonSetter("id")
-    public TitleStage id(MovieId id) {
-      this.id = id;
+    public TitleStage id(@NotNull MovieId id) {
+      this.id = Objects.requireNonNull(id, "id must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("title")
-    public RatingStage title(String title) {
-      this.title = title;
+    public RatingStage title(@NotNull String title) {
+      this.title = Objects.requireNonNull(title, "title must not be null");
       return this;
     }
 
