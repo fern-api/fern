@@ -3,12 +3,16 @@
 from .types import SendResponse
 from . import headers, inlined, path, query, reference
 from .client import AsyncSeedLiteral, SeedLiteral
-from .inlined import SomeAliasedLiteral
+from .inlined import ANestedLiteral, ANestedLiteralParams, ATopLevelLiteral, ATopLevelLiteralParams, SomeAliasedLiteral
 from .reference import SendRequest, SendRequestParams, SomeLiteral
 from .requests import SendResponseParams
 from .version import __version__
 
 __all__ = [
+    "ANestedLiteral",
+    "ANestedLiteralParams",
+    "ATopLevelLiteral",
+    "ATopLevelLiteralParams",
     "AsyncSeedLiteral",
     "SeedLiteral",
     "SendRequest",

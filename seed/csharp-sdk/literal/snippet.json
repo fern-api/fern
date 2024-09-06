@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedLiteral;\n\nvar client = new SeedLiteralClient();\nawait client.Inlined.SendAsync(\n    new SendLiteralsInlinedRequest\n    {\n        Temperature = 10.1,\n        Prompt = \"You are a helpful assistant\",\n        Context = \"You're super wise\",\n        AliasedContext = \"You're super wise\",\n        MaybeContext = \"You're super wise\",\n        Stream = false,\n        Query = \"What is the weather today\",\n    }\n);\n"
+                "client": "using SeedLiteral;\n\nvar client = new SeedLiteralClient();\nawait client.Inlined.SendAsync(\n    new SendLiteralsInlinedRequest\n    {\n        Temperature = 10.1,\n        Prompt = \"You are a helpful assistant\",\n        Context = \"You're super wise\",\n        AliasedContext = \"You're super wise\",\n        MaybeContext = \"You're super wise\",\n        ObjectWithLiteral = new ATopLevelLiteral\n        {\n            NestedLiteral = new ANestedLiteral { MyLiteral = \"How super cool\" },\n        },\n        Stream = false,\n        Query = \"What is the weather today\",\n    }\n);\n"
             }
         },
         {

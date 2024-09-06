@@ -44,6 +44,11 @@ export class Inlined {
      *         context: "You're super wise",
      *         aliasedContext: "You're super wise",
      *         maybeContext: "You're super wise",
+     *         objectWithLiteral: {
+     *             nestedLiteral: {
+     *                 myLiteral: "How super cool"
+     *             }
+     *         },
      *         query: "What is the weather today"
      *     })
      */

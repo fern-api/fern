@@ -13,6 +13,7 @@ async def test_send(client: SeedLiteral, async_client: AsyncSeedLiteral) -> None
         temperature=10.1,
         context="You're super wise",
         maybe_context="You're super wise",
+        object_with_literal={"nested_literal": {"my_literal": "How super cool"}},
         query="What is the weather today",
     )
     validate_response(response, expected_response, expected_types)
@@ -21,6 +22,7 @@ async def test_send(client: SeedLiteral, async_client: AsyncSeedLiteral) -> None
         temperature=10.1,
         context="You're super wise",
         maybe_context="You're super wise",
+        object_with_literal={"nested_literal": {"my_literal": "How super cool"}},
         query="What is the weather today",
     )
     validate_response(async_response, expected_response, expected_types)

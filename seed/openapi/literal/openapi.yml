@@ -107,11 +107,14 @@ paths:
                 maybeContext:
                   $ref: '#/components/schemas/SomeAliasedLiteral'
                   nullable: true
+                objectWithLiteral:
+                  $ref: '#/components/schemas/ATopLevelLiteral'
               required:
                 - prompt
                 - query
                 - stream
                 - aliasedContext
+                - objectWithLiteral
             examples:
               Example1:
                 value:
@@ -120,6 +123,9 @@ paths:
                   context: You're super wise
                   aliasedContext: You're super wise
                   maybeContext: You're super wise
+                  objectWithLiteral:
+                    nestedLiteral:
+                      myLiteral: How super cool
                   stream: false
                   query: What is the weather today
   /path/{id}:
@@ -252,6 +258,24 @@ components:
       type: string
       enum:
         - You're super wise
+    ATopLevelLiteral:
+      title: ATopLevelLiteral
+      type: object
+      properties:
+        nestedLiteral:
+          $ref: '#/components/schemas/ANestedLiteral'
+      required:
+        - nestedLiteral
+    ANestedLiteral:
+      title: ANestedLiteral
+      type: object
+      properties:
+        myLiteral:
+          type: string
+          enum:
+            - How super cool
+      required:
+        - myLiteral
     SendRequest:
       title: SendRequest
       type: object

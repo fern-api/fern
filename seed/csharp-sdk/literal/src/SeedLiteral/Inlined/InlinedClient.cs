@@ -26,6 +26,10 @@ public partial class InlinedClient
     ///         Context = "You're super wise",
     ///         AliasedContext = "You're super wise",
     ///         MaybeContext = "You're super wise",
+    ///         ObjectWithLiteral = new ATopLevelLiteral
+    ///         {
+    ///             NestedLiteral = new ANestedLiteral { MyLiteral = "How super cool" },
+    ///         },
     ///         Stream = false,
     ///         Query = "What is the weather today",
     ///     }
