@@ -115,7 +115,7 @@ public final class User {
         @java.lang.Override
         @JsonSetter("userName")
         public _FinalStage userName(String userName) {
-            this.userName = userName;
+            this.userName = Objects.requireNonNull(userName, "userName must not be null");
             return this;
         }
 

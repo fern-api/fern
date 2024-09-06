@@ -52,6 +52,12 @@ public interface ICustomConfig {
         return false;
     }
 
+    @Value.Default
+    @JsonProperty("disable-required-property-builder-checks")
+    default Boolean disableRequiredPropertyBuilderChecks() {
+        return false;
+    }
+
     enum JsonInclude {
         NON_EMPTY("non-empty"),
         NON_ABSENT("non-absent");

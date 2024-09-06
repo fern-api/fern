@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SendLiteralsInlinedRequest.Builder.class)
@@ -133,17 +134,17 @@ public final class SendLiteralsInlinedRequest {
     }
 
     public interface QueryStage {
-        AliasedContextStage query(String query);
+        AliasedContextStage query(@NotNull String query);
 
         Builder from(SendLiteralsInlinedRequest other);
     }
 
     public interface AliasedContextStage {
-        ObjectWithLiteralStage aliasedContext(String aliasedContext);
+        ObjectWithLiteralStage aliasedContext(@NotNull String aliasedContext);
     }
 
     public interface ObjectWithLiteralStage {
-        _FinalStage objectWithLiteral(ATopLevelLiteral objectWithLiteral);
+        _FinalStage objectWithLiteral(@NotNull ATopLevelLiteral objectWithLiteral);
     }
 
     public interface _FinalStage {
@@ -194,22 +195,22 @@ public final class SendLiteralsInlinedRequest {
 
         @java.lang.Override
         @JsonSetter("query")
-        public AliasedContextStage query(String query) {
-            this.query = query;
+        public AliasedContextStage query(@NotNull String query) {
+            this.query = Objects.requireNonNull(query, "query must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("aliasedContext")
-        public ObjectWithLiteralStage aliasedContext(String aliasedContext) {
-            this.aliasedContext = aliasedContext;
+        public ObjectWithLiteralStage aliasedContext(@NotNull String aliasedContext) {
+            this.aliasedContext = Objects.requireNonNull(aliasedContext, "aliasedContext must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("objectWithLiteral")
-        public _FinalStage objectWithLiteral(ATopLevelLiteral objectWithLiteral) {
-            this.objectWithLiteral = objectWithLiteral;
+        public _FinalStage objectWithLiteral(@NotNull ATopLevelLiteral objectWithLiteral) {
+            this.objectWithLiteral = Objects.requireNonNull(objectWithLiteral, "objectWithLiteral must not be null");
             return this;
         }
 

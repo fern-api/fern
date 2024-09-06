@@ -14,6 +14,7 @@ import com.seed.trace.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GenericCreateProblemError.Builder.class)
@@ -79,17 +80,17 @@ public final class GenericCreateProblemError {
     }
 
     public interface MessageStage {
-        TypeStage message(String message);
+        TypeStage message(@NotNull String message);
 
         Builder from(GenericCreateProblemError other);
     }
 
     public interface TypeStage {
-        StacktraceStage type(String type);
+        StacktraceStage type(@NotNull String type);
     }
 
     public interface StacktraceStage {
-        _FinalStage stacktrace(String stacktrace);
+        _FinalStage stacktrace(@NotNull String stacktrace);
     }
 
     public interface _FinalStage {
@@ -119,22 +120,22 @@ public final class GenericCreateProblemError {
 
         @java.lang.Override
         @JsonSetter("message")
-        public TypeStage message(String message) {
-            this.message = message;
+        public TypeStage message(@NotNull String message) {
+            this.message = Objects.requireNonNull(message, "message must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("type")
-        public StacktraceStage type(String type) {
-            this.type = type;
+        public StacktraceStage type(@NotNull String type) {
+            this.type = Objects.requireNonNull(type, "type must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("stacktrace")
-        public _FinalStage stacktrace(String stacktrace) {
-            this.stacktrace = stacktrace;
+        public _FinalStage stacktrace(@NotNull String stacktrace) {
+            this.stacktrace = Objects.requireNonNull(stacktrace, "stacktrace must not be null");
             return this;
         }
 

@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GetMetadataRequest.Builder.class)
@@ -84,7 +85,7 @@ public final class GetMetadataRequest {
     }
 
     public interface XApiVersionStage {
-        _FinalStage xApiVersion(String xApiVersion);
+        _FinalStage xApiVersion(@NotNull String xApiVersion);
 
         Builder from(GetMetadataRequest other);
     }
@@ -124,8 +125,8 @@ public final class GetMetadataRequest {
 
         @java.lang.Override
         @JsonSetter("X-API-Version")
-        public _FinalStage xApiVersion(String xApiVersion) {
-            this.xApiVersion = xApiVersion;
+        public _FinalStage xApiVersion(@NotNull String xApiVersion) {
+            this.xApiVersion = Objects.requireNonNull(xApiVersion, "xApiVersion must not be null");
             return this;
         }
 

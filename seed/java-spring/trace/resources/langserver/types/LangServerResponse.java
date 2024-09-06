@@ -13,6 +13,7 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
@@ -55,7 +56,7 @@ public final class LangServerResponse {
   }
 
   public interface ResponseStage {
-    _FinalStage response(Object response);
+    _FinalStage response(@NotNull Object response);
 
     Builder from(LangServerResponse other);
   }
@@ -81,8 +82,8 @@ public final class LangServerResponse {
 
     @java.lang.Override
     @JsonSetter("response")
-    public _FinalStage response(Object response) {
-      this.response = response;
+    public _FinalStage response(@NotNull Object response) {
+      this.response = Objects.requireNonNull(response, "response must not be null");
       return this;
     }
 

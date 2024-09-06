@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ListUsersExtendedResponse.Builder.class)
@@ -87,7 +88,7 @@ public final class ListUsersExtendedResponse implements IUserPage {
     }
 
     public interface DataStage {
-        TotalCountStage data(UserListContainer data);
+        TotalCountStage data(@NotNull UserListContainer data);
 
         Builder from(ListUsersExtendedResponse other);
     }
@@ -127,8 +128,8 @@ public final class ListUsersExtendedResponse implements IUserPage {
 
         @java.lang.Override
         @JsonSetter("data")
-        public TotalCountStage data(UserListContainer data) {
-            this.data = data;
+        public TotalCountStage data(@NotNull UserListContainer data) {
+            this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }
 

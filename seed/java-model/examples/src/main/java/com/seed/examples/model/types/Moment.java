@@ -106,21 +106,21 @@ public final class Moment {
         @java.lang.Override
         @JsonSetter("id")
         public DateStage id(UUID id) {
-            this.id = id;
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("date")
         public DatetimeStage date(String date) {
-            this.date = date;
+            this.date = Objects.requireNonNull(date, "date must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("datetime")
         public _FinalStage datetime(OffsetDateTime datetime) {
-            this.datetime = datetime;
+            this.datetime = Objects.requireNonNull(datetime, "datetime must not be null");
             return this;
         }
 

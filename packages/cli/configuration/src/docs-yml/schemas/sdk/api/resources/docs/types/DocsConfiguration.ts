@@ -13,6 +13,7 @@ export interface DocsConfiguration {
      * Currently, only Segment is supported.
      */
     analytics?: FernDocsConfig.AnalyticsConfig;
+    announcement?: FernDocsConfig.AnnouncementConfig;
     tabs?: Record<FernDocsConfig.TabId, FernDocsConfig.TabConfig>;
     versions?: FernDocsConfig.VersionConfig[];
     landingPage?: FernDocsConfig.PageConfiguration;

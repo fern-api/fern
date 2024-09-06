@@ -16,6 +16,7 @@ import java.lang.String;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 import resources.commons.types.Language;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -84,17 +85,17 @@ public final class GetSubmissionStateResponse {
   }
 
   public interface SubmissionStage {
-    LanguageStage submission(String submission);
+    LanguageStage submission(@NotNull String submission);
 
     Builder from(GetSubmissionStateResponse other);
   }
 
   public interface LanguageStage {
-    SubmissionTypeStateStage language(Language language);
+    SubmissionTypeStateStage language(@NotNull Language language);
   }
 
   public interface SubmissionTypeStateStage {
-    _FinalStage submissionTypeState(SubmissionTypeState submissionTypeState);
+    _FinalStage submissionTypeState(@NotNull SubmissionTypeState submissionTypeState);
   }
 
   public interface _FinalStage {
@@ -131,22 +132,22 @@ public final class GetSubmissionStateResponse {
 
     @java.lang.Override
     @JsonSetter("submission")
-    public LanguageStage submission(String submission) {
-      this.submission = submission;
+    public LanguageStage submission(@NotNull String submission) {
+      this.submission = Objects.requireNonNull(submission, "submission must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("language")
-    public SubmissionTypeStateStage language(Language language) {
-      this.language = language;
+    public SubmissionTypeStateStage language(@NotNull Language language) {
+      this.language = Objects.requireNonNull(language, "language must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("submissionTypeState")
-    public _FinalStage submissionTypeState(SubmissionTypeState submissionTypeState) {
-      this.submissionTypeState = submissionTypeState;
+    public _FinalStage submissionTypeState(@NotNull SubmissionTypeState submissionTypeState) {
+      this.submissionTypeState = Objects.requireNonNull(submissionTypeState, "submissionTypeState must not be null");
       return this;
     }
 

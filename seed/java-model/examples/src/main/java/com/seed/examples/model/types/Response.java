@@ -95,7 +95,7 @@ public final class Response {
         @java.lang.Override
         @JsonSetter("response")
         public _FinalStage response(Object response) {
-            this.response = response;
+            this.response = Objects.requireNonNull(response, "response must not be null");
             return this;
         }
 

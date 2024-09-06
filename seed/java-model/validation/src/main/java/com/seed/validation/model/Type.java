@@ -133,14 +133,14 @@ public final class Type {
         @java.lang.Override
         @JsonSetter("name")
         public ShapeStage name(String name) {
-            this.name = name;
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("shape")
         public _FinalStage shape(Shape shape) {
-            this.shape = shape;
+            this.shape = Objects.requireNonNull(shape, "shape must not be null");
             return this;
         }
 

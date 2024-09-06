@@ -112,7 +112,7 @@ public final class ListUsersExtendedResponse implements IUserPage {
         @java.lang.Override
         @JsonSetter("data")
         public TotalCountStage data(UserListContainer data) {
-            this.data = data;
+            this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }
 

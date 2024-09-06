@@ -17,6 +17,7 @@ import java.lang.String;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
@@ -76,13 +77,13 @@ public final class NestedObjectWithRequiredField {
   }
 
   public interface StringStage {
-    NestedObjectStage string(String string);
+    NestedObjectStage string(@NotNull String string);
 
     Builder from(NestedObjectWithRequiredField other);
   }
 
   public interface NestedObjectStage {
-    _FinalStage nestedObject(ObjectWithOptionalField nestedObject);
+    _FinalStage nestedObject(@NotNull ObjectWithOptionalField nestedObject);
   }
 
   public interface _FinalStage {
@@ -112,15 +113,15 @@ public final class NestedObjectWithRequiredField {
 
     @java.lang.Override
     @JsonSetter("string")
-    public NestedObjectStage string(String string) {
-      this.string = string;
+    public NestedObjectStage string(@NotNull String string) {
+      this.string = Objects.requireNonNull(string, "string must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("NestedObject")
-    public _FinalStage nestedObject(ObjectWithOptionalField nestedObject) {
-      this.nestedObject = nestedObject;
+    public _FinalStage nestedObject(@NotNull ObjectWithOptionalField nestedObject) {
+      this.nestedObject = Objects.requireNonNull(nestedObject, "nestedObject must not be null");
       return this;
     }
 

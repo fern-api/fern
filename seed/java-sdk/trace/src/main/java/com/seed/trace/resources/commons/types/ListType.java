@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ListType.Builder.class)
@@ -76,7 +77,7 @@ public final class ListType {
     }
 
     public interface ValueTypeStage {
-        _FinalStage valueType(VariableType valueType);
+        _FinalStage valueType(@NotNull VariableType valueType);
 
         Builder from(ListType other);
     }
@@ -109,8 +110,8 @@ public final class ListType {
 
         @java.lang.Override
         @JsonSetter("valueType")
-        public _FinalStage valueType(VariableType valueType) {
-            this.valueType = valueType;
+        public _FinalStage valueType(@NotNull VariableType valueType) {
+            this.valueType = Objects.requireNonNull(valueType, "valueType must not be null");
             return this;
         }
 

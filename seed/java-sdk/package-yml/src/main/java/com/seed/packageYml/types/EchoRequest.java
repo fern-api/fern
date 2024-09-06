@@ -14,6 +14,7 @@ import com.seed.packageYml.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = EchoRequest.Builder.class)
@@ -70,7 +71,7 @@ public final class EchoRequest {
     }
 
     public interface NameStage {
-        SizeStage name(String name);
+        SizeStage name(@NotNull String name);
 
         Builder from(EchoRequest other);
     }
@@ -103,8 +104,8 @@ public final class EchoRequest {
 
         @java.lang.Override
         @JsonSetter("name")
-        public SizeStage name(String name) {
-            this.name = name;
+        public SizeStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 

@@ -15,6 +15,7 @@ import com.seed.trace.resources.commons.types.VariableType;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = VariableTypeAndName.Builder.class)
@@ -71,13 +72,13 @@ public final class VariableTypeAndName {
     }
 
     public interface VariableTypeStage {
-        NameStage variableType(VariableType variableType);
+        NameStage variableType(@NotNull VariableType variableType);
 
         Builder from(VariableTypeAndName other);
     }
 
     public interface NameStage {
-        _FinalStage name(String name);
+        _FinalStage name(@NotNull String name);
     }
 
     public interface _FinalStage {
@@ -104,15 +105,15 @@ public final class VariableTypeAndName {
 
         @java.lang.Override
         @JsonSetter("variableType")
-        public NameStage variableType(VariableType variableType) {
-            this.variableType = variableType;
+        public NameStage variableType(@NotNull VariableType variableType) {
+            this.variableType = Objects.requireNonNull(variableType, "variableType must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
-        public _FinalStage name(String name) {
-            this.name = name;
+        public _FinalStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 

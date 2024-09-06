@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SubmissionIdNotFound.Builder.class)
@@ -63,7 +64,7 @@ public final class SubmissionIdNotFound {
     }
 
     public interface MissingSubmissionIdStage {
-        _FinalStage missingSubmissionId(UUID missingSubmissionId);
+        _FinalStage missingSubmissionId(@NotNull UUID missingSubmissionId);
 
         Builder from(SubmissionIdNotFound other);
     }
@@ -89,8 +90,9 @@ public final class SubmissionIdNotFound {
 
         @java.lang.Override
         @JsonSetter("missingSubmissionId")
-        public _FinalStage missingSubmissionId(UUID missingSubmissionId) {
-            this.missingSubmissionId = missingSubmissionId;
+        public _FinalStage missingSubmissionId(@NotNull UUID missingSubmissionId) {
+            this.missingSubmissionId =
+                    Objects.requireNonNull(missingSubmissionId, "missingSubmissionId must not be null");
             return this;
         }
 

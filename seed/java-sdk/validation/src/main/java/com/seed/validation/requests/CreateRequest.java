@@ -15,6 +15,7 @@ import com.seed.validation.types.Shape;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = CreateRequest.Builder.class)
@@ -98,11 +99,11 @@ public final class CreateRequest {
     }
 
     public interface NameStage {
-        ShapeStage name(String name);
+        ShapeStage name(@NotNull String name);
     }
 
     public interface ShapeStage {
-        _FinalStage shape(Shape shape);
+        _FinalStage shape(@NotNull Shape shape);
     }
 
     public interface _FinalStage {
@@ -149,15 +150,15 @@ public final class CreateRequest {
 
         @java.lang.Override
         @JsonSetter("name")
-        public ShapeStage name(String name) {
-            this.name = name;
+        public ShapeStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("shape")
-        public _FinalStage shape(Shape shape) {
-            this.shape = shape;
+        public _FinalStage shape(@NotNull Shape shape) {
+            this.shape = Objects.requireNonNull(shape, "shape must not be null");
             return this;
         }
 

@@ -16,6 +16,7 @@ import java.lang.String;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
@@ -67,7 +68,7 @@ public final class VoidFunctionDefinitionThatTakesActualResult {
   }
 
   public interface CodeStage {
-    _FinalStage code(FunctionImplementationForMultipleLanguages code);
+    _FinalStage code(@NotNull FunctionImplementationForMultipleLanguages code);
 
     Builder from(VoidFunctionDefinitionThatTakesActualResult other);
   }
@@ -102,8 +103,8 @@ public final class VoidFunctionDefinitionThatTakesActualResult {
 
     @java.lang.Override
     @JsonSetter("code")
-    public _FinalStage code(FunctionImplementationForMultipleLanguages code) {
-      this.code = code;
+    public _FinalStage code(@NotNull FunctionImplementationForMultipleLanguages code) {
+      this.code = Objects.requireNonNull(code, "code must not be null");
       return this;
     }
 

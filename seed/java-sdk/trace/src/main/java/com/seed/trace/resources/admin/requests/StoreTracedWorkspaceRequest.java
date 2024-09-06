@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = StoreTracedWorkspaceRequest.Builder.class)
@@ -78,7 +79,7 @@ public final class StoreTracedWorkspaceRequest {
     }
 
     public interface WorkspaceRunDetailsStage {
-        _FinalStage workspaceRunDetails(WorkspaceRunDetails workspaceRunDetails);
+        _FinalStage workspaceRunDetails(@NotNull WorkspaceRunDetails workspaceRunDetails);
 
         Builder from(StoreTracedWorkspaceRequest other);
     }
@@ -113,8 +114,9 @@ public final class StoreTracedWorkspaceRequest {
 
         @java.lang.Override
         @JsonSetter("workspaceRunDetails")
-        public _FinalStage workspaceRunDetails(WorkspaceRunDetails workspaceRunDetails) {
-            this.workspaceRunDetails = workspaceRunDetails;
+        public _FinalStage workspaceRunDetails(@NotNull WorkspaceRunDetails workspaceRunDetails) {
+            this.workspaceRunDetails =
+                    Objects.requireNonNull(workspaceRunDetails, "workspaceRunDetails must not be null");
             return this;
         }
 

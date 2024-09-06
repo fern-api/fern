@@ -14,6 +14,7 @@ import com.seed.trace.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = InvalidRequestResponse.Builder.class)
@@ -71,13 +72,13 @@ public final class InvalidRequestResponse {
     }
 
     public interface RequestStage {
-        CauseStage request(SubmissionRequest request);
+        CauseStage request(@NotNull SubmissionRequest request);
 
         Builder from(InvalidRequestResponse other);
     }
 
     public interface CauseStage {
-        _FinalStage cause(InvalidRequestCause cause);
+        _FinalStage cause(@NotNull InvalidRequestCause cause);
     }
 
     public interface _FinalStage {
@@ -104,15 +105,15 @@ public final class InvalidRequestResponse {
 
         @java.lang.Override
         @JsonSetter("request")
-        public CauseStage request(SubmissionRequest request) {
-            this.request = request;
+        public CauseStage request(@NotNull SubmissionRequest request) {
+            this.request = Objects.requireNonNull(request, "request must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("cause")
-        public _FinalStage cause(InvalidRequestCause cause) {
-            this.cause = cause;
+        public _FinalStage cause(@NotNull InvalidRequestCause cause) {
+            this.cause = Objects.requireNonNull(cause, "cause must not be null");
             return this;
         }
 

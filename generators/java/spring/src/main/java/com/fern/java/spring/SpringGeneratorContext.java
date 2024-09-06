@@ -26,4 +26,9 @@ public final class SpringGeneratorContext
     public boolean deserializeWithAdditionalProperties() {
         return false;
     }
+
+    @Override
+    public boolean builderNotNullChecks() {
+        return true;
+    }
 }

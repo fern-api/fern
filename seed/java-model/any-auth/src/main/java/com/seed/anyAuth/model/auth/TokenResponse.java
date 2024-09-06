@@ -108,7 +108,7 @@ public final class TokenResponse {
         @java.lang.Override
         @JsonSetter("access_token")
         public ExpiresInStage accessToken(String accessToken) {
-            this.accessToken = accessToken;
+            this.accessToken = Objects.requireNonNull(accessToken, "accessToken must not be null");
             return this;
         }
 

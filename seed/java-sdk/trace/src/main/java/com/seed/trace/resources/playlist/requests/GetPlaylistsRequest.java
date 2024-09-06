@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GetPlaylistsRequest.Builder.class)
@@ -114,17 +115,17 @@ public final class GetPlaylistsRequest {
     }
 
     public interface OtherFieldStage {
-        MultiLineDocsStage otherField(String otherField);
+        MultiLineDocsStage otherField(@NotNull String otherField);
 
         Builder from(GetPlaylistsRequest other);
     }
 
     public interface MultiLineDocsStage {
-        MultipleFieldStage multiLineDocs(String multiLineDocs);
+        MultipleFieldStage multiLineDocs(@NotNull String multiLineDocs);
     }
 
     public interface MultipleFieldStage {
-        _FinalStage multipleField(String multipleField);
+        _FinalStage multipleField(@NotNull String multipleField);
     }
 
     public interface _FinalStage {
@@ -172,8 +173,8 @@ public final class GetPlaylistsRequest {
          */
         @java.lang.Override
         @JsonSetter("otherField")
-        public MultiLineDocsStage otherField(String otherField) {
-            this.otherField = otherField;
+        public MultiLineDocsStage otherField(@NotNull String otherField) {
+            this.otherField = Objects.requireNonNull(otherField, "otherField must not be null");
             return this;
         }
 
@@ -184,15 +185,15 @@ public final class GetPlaylistsRequest {
          */
         @java.lang.Override
         @JsonSetter("multiLineDocs")
-        public MultipleFieldStage multiLineDocs(String multiLineDocs) {
-            this.multiLineDocs = multiLineDocs;
+        public MultipleFieldStage multiLineDocs(@NotNull String multiLineDocs) {
+            this.multiLineDocs = Objects.requireNonNull(multiLineDocs, "multiLineDocs must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("multipleField")
-        public _FinalStage multipleField(String multipleField) {
-            this.multipleField = multipleField;
+        public _FinalStage multipleField(@NotNull String multipleField) {
+            this.multipleField = Objects.requireNonNull(multipleField, "multipleField must not be null");
             return this;
         }
 

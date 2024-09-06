@@ -15,6 +15,7 @@ import com.seed.examples.types.Type;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ResponseType.Builder.class)
@@ -63,7 +64,7 @@ public final class ResponseType {
     }
 
     public interface TypeStage {
-        _FinalStage type(Type type);
+        _FinalStage type(@NotNull Type type);
 
         Builder from(ResponseType other);
     }
@@ -89,8 +90,8 @@ public final class ResponseType {
 
         @java.lang.Override
         @JsonSetter("type")
-        public _FinalStage type(Type type) {
-            this.type = type;
+        public _FinalStage type(@NotNull Type type) {
+            this.type = Objects.requireNonNull(type, "type must not be null");
             return this;
         }
 

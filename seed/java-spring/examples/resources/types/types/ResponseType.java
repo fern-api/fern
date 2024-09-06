@@ -13,6 +13,7 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 import types.Type;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -56,7 +57,7 @@ public final class ResponseType {
   }
 
   public interface TypeStage {
-    _FinalStage type(Type type);
+    _FinalStage type(@NotNull Type type);
 
     Builder from(ResponseType other);
   }
@@ -82,8 +83,8 @@ public final class ResponseType {
 
     @java.lang.Override
     @JsonSetter("type")
-    public _FinalStage type(Type type) {
-      this.type = type;
+    public _FinalStage type(@NotNull Type type) {
+      this.type = Objects.requireNonNull(type, "type must not be null");
       return this;
     }
 

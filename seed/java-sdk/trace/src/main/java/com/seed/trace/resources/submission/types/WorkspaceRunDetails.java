@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = WorkspaceRunDetails.Builder.class)
@@ -86,7 +87,7 @@ public final class WorkspaceRunDetails {
     }
 
     public interface StdoutStage {
-        _FinalStage stdout(String stdout);
+        _FinalStage stdout(@NotNull String stdout);
 
         Builder from(WorkspaceRunDetails other);
     }
@@ -126,8 +127,8 @@ public final class WorkspaceRunDetails {
 
         @java.lang.Override
         @JsonSetter("stdout")
-        public _FinalStage stdout(String stdout) {
-            this.stdout = stdout;
+        public _FinalStage stdout(@NotNull String stdout) {
+            this.stdout = Objects.requireNonNull(stdout, "stdout must not be null");
             return this;
         }
 

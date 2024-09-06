@@ -16,6 +16,7 @@ import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
@@ -80,7 +81,7 @@ public final class ListUsersExtendedOptionalListResponse implements IUserOptiona
   }
 
   public interface DataStage {
-    TotalCountStage data(UserOptionalListContainer data);
+    TotalCountStage data(@NotNull UserOptionalListContainer data);
 
     Builder from(ListUsersExtendedOptionalListResponse other);
   }
@@ -120,8 +121,8 @@ public final class ListUsersExtendedOptionalListResponse implements IUserOptiona
 
     @java.lang.Override
     @JsonSetter("data")
-    public TotalCountStage data(UserOptionalListContainer data) {
-      this.data = data;
+    public TotalCountStage data(@NotNull UserOptionalListContainer data) {
+      this.data = Objects.requireNonNull(data, "data must not be null");
       return this;
     }
 

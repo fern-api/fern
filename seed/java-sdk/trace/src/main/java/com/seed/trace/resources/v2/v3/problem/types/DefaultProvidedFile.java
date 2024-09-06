@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = DefaultProvidedFile.Builder.class)
@@ -75,7 +76,7 @@ public final class DefaultProvidedFile {
     }
 
     public interface FileStage {
-        _FinalStage file(FileInfoV2 file);
+        _FinalStage file(@NotNull FileInfoV2 file);
 
         Builder from(DefaultProvidedFile other);
     }
@@ -110,8 +111,8 @@ public final class DefaultProvidedFile {
 
         @java.lang.Override
         @JsonSetter("file")
-        public _FinalStage file(FileInfoV2 file) {
-            this.file = file;
+        public _FinalStage file(@NotNull FileInfoV2 file) {
+            this.file = Objects.requireNonNull(file, "file must not be null");
             return this;
         }
 

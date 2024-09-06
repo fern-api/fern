@@ -16,6 +16,7 @@ import java.lang.String;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 import resources.commons.types.VariableType;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -67,7 +68,7 @@ public final class DefaultProvidedFile {
   }
 
   public interface FileStage {
-    _FinalStage file(FileInfoV2 file);
+    _FinalStage file(@NotNull FileInfoV2 file);
 
     Builder from(DefaultProvidedFile other);
   }
@@ -102,8 +103,8 @@ public final class DefaultProvidedFile {
 
     @java.lang.Override
     @JsonSetter("file")
-    public _FinalStage file(FileInfoV2 file) {
-      this.file = file;
+    public _FinalStage file(@NotNull FileInfoV2 file) {
+      this.file = Objects.requireNonNull(file, "file must not be null");
       return this;
     }
 

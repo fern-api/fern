@@ -31,6 +31,8 @@ public final class ObjectTypeSpecGenerator {
     private final boolean isSerialized;
     private final boolean publicConstructorsEnabled;
     private final boolean supportAdditionalProperties;
+    private final boolean disableRequiredPropertyBuilderChecks;
+    private final boolean builderNotNullChecks;
 
     public ObjectTypeSpecGenerator(
             ClassName objectClassName,
@@ -40,11 +42,14 @@ public final class ObjectTypeSpecGenerator {
             boolean isSerialized,
             boolean publicConstructorsEnabled,
             boolean supportAdditionalProperties,
-            ICustomConfig.JsonInclude jsonInclude) {
+            ICustomConfig.JsonInclude jsonInclude,
+            Boolean disableRequiredPropertyBuilderChecks,
+            boolean builderNotNullChecks) {
         this.objectClassName = objectClassName;
         this.generatedObjectMapperClassName = generatedObjectMapperClassName;
         this.interfaces = interfaces;
         this.jsonInclude = jsonInclude;
+        this.builderNotNullChecks = builderNotNullChecks;
         for (ImplementsInterface implementsInterface : interfaces) {
             allEnrichedProperties.addAll(implementsInterface.interfaceProperties());
         }
@@ -52,6 +57,7 @@ public final class ObjectTypeSpecGenerator {
         this.isSerialized = isSerialized;
         this.publicConstructorsEnabled = publicConstructorsEnabled;
         this.supportAdditionalProperties = supportAdditionalProperties;
+        this.disableRequiredPropertyBuilderChecks = disableRequiredPropertyBuilderChecks;
     }
 
     public TypeSpec generate() {
@@ -191,8 +197,13 @@ public final class ObjectTypeSpecGenerator {
     }
 
     private Optional<ObjectBuilder> generateBuilder() {
-        BuilderGenerator builderGenerator =
-                new BuilderGenerator(objectClassName, allEnrichedProperties, isSerialized, supportAdditionalProperties);
+        BuilderGenerator builderGenerator = new BuilderGenerator(
+                objectClassName,
+                allEnrichedProperties,
+                isSerialized,
+                supportAdditionalProperties,
+                disableRequiredPropertyBuilderChecks,
+                builderNotNullChecks);
         return builderGenerator.generate();
     }
 }

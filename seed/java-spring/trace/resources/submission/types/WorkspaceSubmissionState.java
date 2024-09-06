@@ -13,6 +13,7 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
@@ -55,7 +56,7 @@ public final class WorkspaceSubmissionState {
   }
 
   public interface StatusStage {
-    _FinalStage status(WorkspaceSubmissionStatus status);
+    _FinalStage status(@NotNull WorkspaceSubmissionStatus status);
 
     Builder from(WorkspaceSubmissionState other);
   }
@@ -81,8 +82,8 @@ public final class WorkspaceSubmissionState {
 
     @java.lang.Override
     @JsonSetter("status")
-    public _FinalStage status(WorkspaceSubmissionStatus status) {
-      this.status = status;
+    public _FinalStage status(@NotNull WorkspaceSubmissionStatus status) {
+      this.status = Objects.requireNonNull(status, "status must not be null");
       return this;
     }
 

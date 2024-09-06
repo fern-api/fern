@@ -1,7 +1,7 @@
 const { pnpPlugin } = require("@yarnpkg/esbuild-plugin-pnp");
 const { build } = require("esbuild");
 const path = require("path");
-const { chmod, writeFile, mkdir } = require("fs/promises");
+const { chmod, writeFile } = require("fs/promises");
 
 const packageJson = require("./package.json");
 const jsoncParserResolverPlugin = require("./jsoncParserResolverPlugin.cjs");
@@ -34,7 +34,9 @@ async function main() {
             "process.env.POSTHOG_API_KEY": getEnvironmentVariable("POSTHOG_API_KEY"),
             "process.env.DOCS_DOMAIN_SUFFIX": getEnvironmentVariable("DOCS_DOMAIN_SUFFIX"),
             "process.env.DOCS_PREVIEW_BUCKET": getEnvironmentVariable("DOCS_PREVIEW_BUCKET")
-        }
+        },
+        minify: true,
+        treeShaking: true
     };
 
     function getEnvironmentVariable(environmentVariable) {

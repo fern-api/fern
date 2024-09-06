@@ -13,6 +13,7 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
@@ -56,7 +57,7 @@ public final class Docs implements IDocs {
   }
 
   public interface DocsStage {
-    _FinalStage docs(String docs);
+    _FinalStage docs(@NotNull String docs);
 
     Builder from(Docs other);
   }
@@ -82,8 +83,8 @@ public final class Docs implements IDocs {
 
     @java.lang.Override
     @JsonSetter("docs")
-    public _FinalStage docs(String docs) {
-      this.docs = docs;
+    public _FinalStage docs(@NotNull String docs) {
+      this.docs = Objects.requireNonNull(docs, "docs must not be null");
       return this;
     }
 

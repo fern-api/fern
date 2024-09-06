@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = WorkspaceSubmitRequest.Builder.class)
@@ -100,13 +101,13 @@ public final class WorkspaceSubmitRequest {
     }
 
     public interface SubmissionIdStage {
-        LanguageStage submissionId(UUID submissionId);
+        LanguageStage submissionId(@NotNull UUID submissionId);
 
         Builder from(WorkspaceSubmitRequest other);
     }
 
     public interface LanguageStage {
-        _FinalStage language(Language language);
+        _FinalStage language(@NotNull Language language);
     }
 
     public interface _FinalStage {
@@ -149,15 +150,15 @@ public final class WorkspaceSubmitRequest {
 
         @java.lang.Override
         @JsonSetter("submissionId")
-        public LanguageStage submissionId(UUID submissionId) {
-            this.submissionId = submissionId;
+        public LanguageStage submissionId(@NotNull UUID submissionId) {
+            this.submissionId = Objects.requireNonNull(submissionId, "submissionId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("language")
-        public _FinalStage language(Language language) {
-            this.language = language;
+        public _FinalStage language(@NotNull Language language) {
+            this.language = Objects.requireNonNull(language, "language must not be null");
             return this;
         }
 

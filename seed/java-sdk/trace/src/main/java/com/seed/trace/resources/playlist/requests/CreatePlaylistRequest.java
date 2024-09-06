@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = CreatePlaylistRequest.Builder.class)
@@ -88,13 +89,13 @@ public final class CreatePlaylistRequest {
     }
 
     public interface DatetimeStage {
-        BodyStage datetime(OffsetDateTime datetime);
+        BodyStage datetime(@NotNull OffsetDateTime datetime);
 
         Builder from(CreatePlaylistRequest other);
     }
 
     public interface BodyStage {
-        _FinalStage body(PlaylistCreateRequest body);
+        _FinalStage body(@NotNull PlaylistCreateRequest body);
     }
 
     public interface _FinalStage {
@@ -128,15 +129,15 @@ public final class CreatePlaylistRequest {
 
         @java.lang.Override
         @JsonSetter("datetime")
-        public BodyStage datetime(OffsetDateTime datetime) {
-            this.datetime = datetime;
+        public BodyStage datetime(@NotNull OffsetDateTime datetime) {
+            this.datetime = Objects.requireNonNull(datetime, "datetime must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("body")
-        public _FinalStage body(PlaylistCreateRequest body) {
-            this.body = body;
+        public _FinalStage body(@NotNull PlaylistCreateRequest body) {
+            this.body = Objects.requireNonNull(body, "body must not be null");
             return this;
         }
 
