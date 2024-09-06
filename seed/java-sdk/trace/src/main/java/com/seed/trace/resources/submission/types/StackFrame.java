@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = StackFrame.Builder.class)
@@ -82,7 +83,7 @@ public final class StackFrame {
     }
 
     public interface MethodNameStage {
-        LineNumberStage methodName(String methodName);
+        LineNumberStage methodName(@NotNull String methodName);
 
         Builder from(StackFrame other);
     }
@@ -124,8 +125,8 @@ public final class StackFrame {
 
         @java.lang.Override
         @JsonSetter("methodName")
-        public LineNumberStage methodName(String methodName) {
-            this.methodName = methodName;
+        public LineNumberStage methodName(@NotNull String methodName) {
+            this.methodName = Objects.requireNonNull(methodName, "methodName must not be null");
             return this;
         }
 

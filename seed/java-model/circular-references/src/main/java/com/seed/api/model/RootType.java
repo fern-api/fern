@@ -75,7 +75,7 @@ public final class RootType implements IRootType {
         @java.lang.Override
         @JsonSetter("s")
         public _FinalStage s(String s) {
-            this.s = s;
+            this.s = Objects.requireNonNull(s, "s must not be null");
             return this;
         }
 

@@ -14,6 +14,7 @@ import com.seed.trace.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GetAttemptedMigrationsRequest.Builder.class)
@@ -62,7 +63,7 @@ public final class GetAttemptedMigrationsRequest {
     }
 
     public interface AdminKeyHeaderStage {
-        _FinalStage adminKeyHeader(String adminKeyHeader);
+        _FinalStage adminKeyHeader(@NotNull String adminKeyHeader);
 
         Builder from(GetAttemptedMigrationsRequest other);
     }
@@ -88,8 +89,8 @@ public final class GetAttemptedMigrationsRequest {
 
         @java.lang.Override
         @JsonSetter("admin-key-header")
-        public _FinalStage adminKeyHeader(String adminKeyHeader) {
-            this.adminKeyHeader = adminKeyHeader;
+        public _FinalStage adminKeyHeader(@NotNull String adminKeyHeader) {
+            this.adminKeyHeader = Objects.requireNonNull(adminKeyHeader, "adminKeyHeader must not be null");
             return this;
         }
 

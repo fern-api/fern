@@ -15,6 +15,7 @@ import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
@@ -65,7 +66,7 @@ public final class Memo {
   }
 
   public interface DescriptionStage {
-    _FinalStage description(String description);
+    _FinalStage description(@NotNull String description);
 
     Builder from(Memo other);
   }
@@ -98,8 +99,8 @@ public final class Memo {
 
     @java.lang.Override
     @JsonSetter("description")
-    public _FinalStage description(String description) {
-      this.description = description;
+    public _FinalStage description(@NotNull String description) {
+      this.description = Objects.requireNonNull(description, "description must not be null");
       return this;
     }
 

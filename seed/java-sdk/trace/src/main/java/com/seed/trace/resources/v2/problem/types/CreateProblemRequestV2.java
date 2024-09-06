@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = CreateProblemRequestV2.Builder.class)
@@ -138,17 +139,17 @@ public final class CreateProblemRequestV2 {
     }
 
     public interface ProblemNameStage {
-        ProblemDescriptionStage problemName(String problemName);
+        ProblemDescriptionStage problemName(@NotNull String problemName);
 
         Builder from(CreateProblemRequestV2 other);
     }
 
     public interface ProblemDescriptionStage {
-        CustomFilesStage problemDescription(ProblemDescription problemDescription);
+        CustomFilesStage problemDescription(@NotNull ProblemDescription problemDescription);
     }
 
     public interface CustomFilesStage {
-        IsPublicStage customFiles(CustomFiles customFiles);
+        IsPublicStage customFiles(@NotNull CustomFiles customFiles);
     }
 
     public interface IsPublicStage {
@@ -213,22 +214,22 @@ public final class CreateProblemRequestV2 {
 
         @java.lang.Override
         @JsonSetter("problemName")
-        public ProblemDescriptionStage problemName(String problemName) {
-            this.problemName = problemName;
+        public ProblemDescriptionStage problemName(@NotNull String problemName) {
+            this.problemName = Objects.requireNonNull(problemName, "problemName must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("problemDescription")
-        public CustomFilesStage problemDescription(ProblemDescription problemDescription) {
-            this.problemDescription = problemDescription;
+        public CustomFilesStage problemDescription(@NotNull ProblemDescription problemDescription) {
+            this.problemDescription = Objects.requireNonNull(problemDescription, "problemDescription must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("customFiles")
-        public IsPublicStage customFiles(CustomFiles customFiles) {
-            this.customFiles = customFiles;
+        public IsPublicStage customFiles(@NotNull CustomFiles customFiles) {
+            this.customFiles = Objects.requireNonNull(customFiles, "customFiles must not be null");
             return this;
         }
 

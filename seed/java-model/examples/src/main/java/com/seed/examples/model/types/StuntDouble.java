@@ -89,14 +89,14 @@ public final class StuntDouble {
         @java.lang.Override
         @JsonSetter("name")
         public ActorOrActressIdStage name(String name) {
-            this.name = name;
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("actorOrActressId")
         public _FinalStage actorOrActressId(String actorOrActressId) {
-            this.actorOrActressId = actorOrActressId;
+            this.actorOrActressId = Objects.requireNonNull(actorOrActressId, "actorOrActressId must not be null");
             return this;
         }
 

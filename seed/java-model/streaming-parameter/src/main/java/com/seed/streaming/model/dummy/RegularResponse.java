@@ -91,7 +91,7 @@ public final class RegularResponse {
         @java.lang.Override
         @JsonSetter("id")
         public _FinalStage id(String id) {
-            this.id = id;
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 

@@ -14,6 +14,7 @@ import com.seed.trace.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = WorkspaceSubmissionState.Builder.class)
@@ -62,7 +63,7 @@ public final class WorkspaceSubmissionState {
     }
 
     public interface StatusStage {
-        _FinalStage status(WorkspaceSubmissionStatus status);
+        _FinalStage status(@NotNull WorkspaceSubmissionStatus status);
 
         Builder from(WorkspaceSubmissionState other);
     }
@@ -88,8 +89,8 @@ public final class WorkspaceSubmissionState {
 
         @java.lang.Override
         @JsonSetter("status")
-        public _FinalStage status(WorkspaceSubmissionStatus status) {
-            this.status = status;
+        public _FinalStage status(@NotNull WorkspaceSubmissionStatus status) {
+            this.status = Objects.requireNonNull(status, "status must not be null");
             return this;
         }
 

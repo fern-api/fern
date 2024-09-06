@@ -13,6 +13,7 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
@@ -63,13 +64,13 @@ public final class ObjectFieldValue {
   }
 
   public interface NameStage {
-    ValueStage name(FieldName name);
+    ValueStage name(@NotNull FieldName name);
 
     Builder from(ObjectFieldValue other);
   }
 
   public interface ValueStage {
-    _FinalStage value(FieldValue value);
+    _FinalStage value(@NotNull FieldValue value);
   }
 
   public interface _FinalStage {
@@ -96,15 +97,15 @@ public final class ObjectFieldValue {
 
     @java.lang.Override
     @JsonSetter("name")
-    public ValueStage name(FieldName name) {
-      this.name = name;
+    public ValueStage name(@NotNull FieldName name) {
+      this.name = Objects.requireNonNull(name, "name must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("value")
-    public _FinalStage value(FieldValue value) {
-      this.value = value;
+    public _FinalStage value(@NotNull FieldValue value) {
+      this.value = Objects.requireNonNull(value, "value must not be null");
       return this;
     }
 

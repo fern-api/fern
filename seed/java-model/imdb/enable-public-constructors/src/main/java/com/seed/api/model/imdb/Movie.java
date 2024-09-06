@@ -107,14 +107,14 @@ public final class Movie {
         @java.lang.Override
         @JsonSetter("id")
         public TitleStage id(String id) {
-            this.id = id;
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("title")
         public RatingStage title(String title) {
-            this.title = title;
+            this.title = Objects.requireNonNull(title, "title must not be null");
             return this;
         }
 

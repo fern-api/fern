@@ -14,6 +14,7 @@ import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
 import java.util.UUID;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
@@ -56,7 +57,7 @@ public final class FolderCFoo {
   }
 
   public interface BarPropertyStage {
-    _FinalStage barProperty(UUID barProperty);
+    _FinalStage barProperty(@NotNull UUID barProperty);
 
     Builder from(FolderCFoo other);
   }
@@ -82,8 +83,8 @@ public final class FolderCFoo {
 
     @java.lang.Override
     @JsonSetter("bar_property")
-    public _FinalStage barProperty(UUID barProperty) {
-      this.barProperty = barProperty;
+    public _FinalStage barProperty(@NotNull UUID barProperty) {
+      this.barProperty = Objects.requireNonNull(barProperty, "barProperty must not be null");
       return this;
     }
 

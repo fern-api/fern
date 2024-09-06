@@ -16,6 +16,7 @@ import java.lang.String;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 import resources.commons.types.Language;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -84,17 +85,17 @@ public final class BasicCustomFiles {
   }
 
   public interface MethodNameStage {
-    SignatureStage methodName(String methodName);
+    SignatureStage methodName(@NotNull String methodName);
 
     Builder from(BasicCustomFiles other);
   }
 
   public interface SignatureStage {
-    BasicTestCaseTemplateStage signature(NonVoidFunctionSignature signature);
+    BasicTestCaseTemplateStage signature(@NotNull NonVoidFunctionSignature signature);
   }
 
   public interface BasicTestCaseTemplateStage {
-    _FinalStage basicTestCaseTemplate(BasicTestCaseTemplate basicTestCaseTemplate);
+    _FinalStage basicTestCaseTemplate(@NotNull BasicTestCaseTemplate basicTestCaseTemplate);
   }
 
   public interface _FinalStage {
@@ -133,22 +134,22 @@ public final class BasicCustomFiles {
 
     @java.lang.Override
     @JsonSetter("methodName")
-    public SignatureStage methodName(String methodName) {
-      this.methodName = methodName;
+    public SignatureStage methodName(@NotNull String methodName) {
+      this.methodName = Objects.requireNonNull(methodName, "methodName must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("signature")
-    public BasicTestCaseTemplateStage signature(NonVoidFunctionSignature signature) {
-      this.signature = signature;
+    public BasicTestCaseTemplateStage signature(@NotNull NonVoidFunctionSignature signature) {
+      this.signature = Objects.requireNonNull(signature, "signature must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("basicTestCaseTemplate")
-    public _FinalStage basicTestCaseTemplate(BasicTestCaseTemplate basicTestCaseTemplate) {
-      this.basicTestCaseTemplate = basicTestCaseTemplate;
+    public _FinalStage basicTestCaseTemplate(@NotNull BasicTestCaseTemplate basicTestCaseTemplate) {
+      this.basicTestCaseTemplate = Objects.requireNonNull(basicTestCaseTemplate, "basicTestCaseTemplate must not be null");
       return this;
     }
 

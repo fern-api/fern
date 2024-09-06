@@ -14,6 +14,7 @@ import com.seed.audiences.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Response.Builder.class)
@@ -62,7 +63,7 @@ public final class Response {
     }
 
     public interface FooStage {
-        _FinalStage foo(String foo);
+        _FinalStage foo(@NotNull String foo);
 
         Builder from(Response other);
     }
@@ -88,8 +89,8 @@ public final class Response {
 
         @java.lang.Override
         @JsonSetter("foo")
-        public _FinalStage foo(String foo) {
-            this.foo = foo;
+        public _FinalStage foo(@NotNull String foo) {
+            this.foo = Objects.requireNonNull(foo, "foo must not be null");
             return this;
         }
 

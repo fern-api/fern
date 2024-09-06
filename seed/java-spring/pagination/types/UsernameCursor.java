@@ -13,6 +13,7 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
@@ -55,7 +56,7 @@ public final class UsernameCursor {
   }
 
   public interface CursorStage {
-    _FinalStage cursor(UsernamePage cursor);
+    _FinalStage cursor(@NotNull UsernamePage cursor);
 
     Builder from(UsernameCursor other);
   }
@@ -81,8 +82,8 @@ public final class UsernameCursor {
 
     @java.lang.Override
     @JsonSetter("cursor")
-    public _FinalStage cursor(UsernamePage cursor) {
-      this.cursor = cursor;
+    public _FinalStage cursor(@NotNull UsernamePage cursor) {
+      this.cursor = Objects.requireNonNull(cursor, "cursor must not be null");
       return this;
     }
 

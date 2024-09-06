@@ -13,6 +13,7 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 import resources.commons.types.Imported;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -56,7 +57,7 @@ public final class ImportingType {
   }
 
   public interface ImportedStage {
-    _FinalStage imported(Imported imported);
+    _FinalStage imported(@NotNull Imported imported);
 
     Builder from(ImportingType other);
   }
@@ -82,8 +83,8 @@ public final class ImportingType {
 
     @java.lang.Override
     @JsonSetter("imported")
-    public _FinalStage imported(Imported imported) {
-      this.imported = imported;
+    public _FinalStage imported(@NotNull Imported imported) {
+      this.imported = Objects.requireNonNull(imported, "imported must not be null");
       return this;
     }
 

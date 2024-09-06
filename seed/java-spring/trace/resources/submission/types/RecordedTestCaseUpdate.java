@@ -13,6 +13,7 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 import resources.v2.problem.types.TestCaseId;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -64,7 +65,7 @@ public final class RecordedTestCaseUpdate {
   }
 
   public interface TestCaseIdStage {
-    TraceResponsesSizeStage testCaseId(TestCaseId testCaseId);
+    TraceResponsesSizeStage testCaseId(@NotNull TestCaseId testCaseId);
 
     Builder from(RecordedTestCaseUpdate other);
   }
@@ -97,8 +98,8 @@ public final class RecordedTestCaseUpdate {
 
     @java.lang.Override
     @JsonSetter("testCaseId")
-    public TraceResponsesSizeStage testCaseId(TestCaseId testCaseId) {
-      this.testCaseId = testCaseId;
+    public TraceResponsesSizeStage testCaseId(@NotNull TestCaseId testCaseId) {
+      this.testCaseId = Objects.requireNonNull(testCaseId, "testCaseId must not be null");
       return this;
     }
 

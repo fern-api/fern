@@ -17,6 +17,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GradedResponseV2.Builder.class)
@@ -74,7 +75,7 @@ public final class GradedResponseV2 {
     }
 
     public interface SubmissionIdStage {
-        _FinalStage submissionId(UUID submissionId);
+        _FinalStage submissionId(@NotNull UUID submissionId);
 
         Builder from(GradedResponseV2 other);
     }
@@ -109,8 +110,8 @@ public final class GradedResponseV2 {
 
         @java.lang.Override
         @JsonSetter("submissionId")
-        public _FinalStage submissionId(UUID submissionId) {
-            this.submissionId = submissionId;
+        public _FinalStage submissionId(@NotNull UUID submissionId) {
+            this.submissionId = Objects.requireNonNull(submissionId, "submissionId must not be null");
             return this;
         }
 

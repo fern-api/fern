@@ -15,6 +15,7 @@ import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 import resources.commons.types.DebugVariableValue;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -108,7 +109,7 @@ public final class TraceResponseV2 {
   }
 
   public interface SubmissionIdStage {
-    LineNumberStage submissionId(SubmissionId submissionId);
+    LineNumberStage submissionId(@NotNull SubmissionId submissionId);
 
     Builder from(TraceResponseV2 other);
   }
@@ -118,11 +119,11 @@ public final class TraceResponseV2 {
   }
 
   public interface FileStage {
-    StackStage file(TracedFile file);
+    StackStage file(@NotNull TracedFile file);
   }
 
   public interface StackStage {
-    _FinalStage stack(StackInformation stack);
+    _FinalStage stack(@NotNull StackInformation stack);
   }
 
   public interface _FinalStage {
@@ -176,8 +177,8 @@ public final class TraceResponseV2 {
 
     @java.lang.Override
     @JsonSetter("submissionId")
-    public LineNumberStage submissionId(SubmissionId submissionId) {
-      this.submissionId = submissionId;
+    public LineNumberStage submissionId(@NotNull SubmissionId submissionId) {
+      this.submissionId = Objects.requireNonNull(submissionId, "submissionId must not be null");
       return this;
     }
 
@@ -190,15 +191,15 @@ public final class TraceResponseV2 {
 
     @java.lang.Override
     @JsonSetter("file")
-    public StackStage file(TracedFile file) {
-      this.file = file;
+    public StackStage file(@NotNull TracedFile file) {
+      this.file = Objects.requireNonNull(file, "file must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("stack")
-    public _FinalStage stack(StackInformation stack) {
-      this.stack = stack;
+    public _FinalStage stack(@NotNull StackInformation stack) {
+      this.stack = Objects.requireNonNull(stack, "stack must not be null");
       return this;
     }
 

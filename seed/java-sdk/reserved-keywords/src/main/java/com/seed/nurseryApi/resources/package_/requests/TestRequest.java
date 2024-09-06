@@ -14,6 +14,7 @@ import com.seed.nurseryApi.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TestRequest.Builder.class)
@@ -62,7 +63,7 @@ public final class TestRequest {
     }
 
     public interface ForStage {
-        _FinalStage for_(String for_);
+        _FinalStage for_(@NotNull String for_);
 
         Builder from(TestRequest other);
     }
@@ -88,8 +89,8 @@ public final class TestRequest {
 
         @java.lang.Override
         @JsonSetter("for")
-        public _FinalStage for_(String for_) {
-            this.for_ = for_;
+        public _FinalStage for_(@NotNull String for_) {
+            this.for_ = Objects.requireNonNull(for_, "for_ must not be null");
             return this;
         }
 

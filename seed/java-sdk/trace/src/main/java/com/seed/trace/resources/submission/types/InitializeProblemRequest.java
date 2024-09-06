@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = InitializeProblemRequest.Builder.class)
@@ -73,7 +74,7 @@ public final class InitializeProblemRequest {
     }
 
     public interface ProblemIdStage {
-        _FinalStage problemId(String problemId);
+        _FinalStage problemId(@NotNull String problemId);
 
         Builder from(InitializeProblemRequest other);
     }
@@ -106,8 +107,8 @@ public final class InitializeProblemRequest {
 
         @java.lang.Override
         @JsonSetter("problemId")
-        public _FinalStage problemId(String problemId) {
-            this.problemId = problemId;
+        public _FinalStage problemId(@NotNull String problemId) {
+            this.problemId = Objects.requireNonNull(problemId, "problemId must not be null");
             return this;
         }
 

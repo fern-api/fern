@@ -13,6 +13,7 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
@@ -55,7 +56,7 @@ public final class DeepEqualityCorrectnessCheck {
   }
 
   public interface ExpectedValueParameterIdStage {
-    _FinalStage expectedValueParameterId(ParameterId expectedValueParameterId);
+    _FinalStage expectedValueParameterId(@NotNull ParameterId expectedValueParameterId);
 
     Builder from(DeepEqualityCorrectnessCheck other);
   }
@@ -81,8 +82,8 @@ public final class DeepEqualityCorrectnessCheck {
 
     @java.lang.Override
     @JsonSetter("expectedValueParameterId")
-    public _FinalStage expectedValueParameterId(ParameterId expectedValueParameterId) {
-      this.expectedValueParameterId = expectedValueParameterId;
+    public _FinalStage expectedValueParameterId(@NotNull ParameterId expectedValueParameterId) {
+      this.expectedValueParameterId = Objects.requireNonNull(expectedValueParameterId, "expectedValueParameterId must not be null");
       return this;
     }
 

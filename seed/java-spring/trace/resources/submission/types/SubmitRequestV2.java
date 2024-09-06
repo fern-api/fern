@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 import resources.commons.types.Language;
 import resources.commons.types.ProblemId;
 
@@ -104,17 +105,17 @@ public final class SubmitRequestV2 {
   }
 
   public interface SubmissionIdStage {
-    LanguageStage submissionId(SubmissionId submissionId);
+    LanguageStage submissionId(@NotNull SubmissionId submissionId);
 
     Builder from(SubmitRequestV2 other);
   }
 
   public interface LanguageStage {
-    ProblemIdStage language(Language language);
+    ProblemIdStage language(@NotNull Language language);
   }
 
   public interface ProblemIdStage {
-    _FinalStage problemId(ProblemId problemId);
+    _FinalStage problemId(@NotNull ProblemId problemId);
   }
 
   public interface _FinalStage {
@@ -167,22 +168,22 @@ public final class SubmitRequestV2 {
 
     @java.lang.Override
     @JsonSetter("submissionId")
-    public LanguageStage submissionId(SubmissionId submissionId) {
-      this.submissionId = submissionId;
+    public LanguageStage submissionId(@NotNull SubmissionId submissionId) {
+      this.submissionId = Objects.requireNonNull(submissionId, "submissionId must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("language")
-    public ProblemIdStage language(Language language) {
-      this.language = language;
+    public ProblemIdStage language(@NotNull Language language) {
+      this.language = Objects.requireNonNull(language, "language must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("problemId")
-    public _FinalStage problemId(ProblemId problemId) {
-      this.problemId = problemId;
+    public _FinalStage problemId(@NotNull ProblemId problemId) {
+      this.problemId = Objects.requireNonNull(problemId, "problemId must not be null");
       return this;
     }
 

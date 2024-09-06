@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SubmitRequestV2.Builder.class)
@@ -126,17 +127,17 @@ public final class SubmitRequestV2 {
     }
 
     public interface SubmissionIdStage {
-        LanguageStage submissionId(UUID submissionId);
+        LanguageStage submissionId(@NotNull UUID submissionId);
 
         Builder from(SubmitRequestV2 other);
     }
 
     public interface LanguageStage {
-        ProblemIdStage language(Language language);
+        ProblemIdStage language(@NotNull Language language);
     }
 
     public interface ProblemIdStage {
-        _FinalStage problemId(String problemId);
+        _FinalStage problemId(@NotNull String problemId);
     }
 
     public interface _FinalStage {
@@ -189,22 +190,22 @@ public final class SubmitRequestV2 {
 
         @java.lang.Override
         @JsonSetter("submissionId")
-        public LanguageStage submissionId(UUID submissionId) {
-            this.submissionId = submissionId;
+        public LanguageStage submissionId(@NotNull UUID submissionId) {
+            this.submissionId = Objects.requireNonNull(submissionId, "submissionId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("language")
-        public ProblemIdStage language(Language language) {
-            this.language = language;
+        public ProblemIdStage language(@NotNull Language language) {
+            this.language = Objects.requireNonNull(language, "language must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("problemId")
-        public _FinalStage problemId(String problemId) {
-            this.problemId = problemId;
+        public _FinalStage problemId(@NotNull String problemId) {
+            this.problemId = Objects.requireNonNull(problemId, "problemId must not be null");
             return this;
         }
 

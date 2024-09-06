@@ -14,6 +14,7 @@ import com.seed.examples.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GetFileRequest.Builder.class)
@@ -62,7 +63,7 @@ public final class GetFileRequest {
     }
 
     public interface XFileApiVersionStage {
-        _FinalStage xFileApiVersion(String xFileApiVersion);
+        _FinalStage xFileApiVersion(@NotNull String xFileApiVersion);
 
         Builder from(GetFileRequest other);
     }
@@ -88,8 +89,8 @@ public final class GetFileRequest {
 
         @java.lang.Override
         @JsonSetter("X-File-API-Version")
-        public _FinalStage xFileApiVersion(String xFileApiVersion) {
-            this.xFileApiVersion = xFileApiVersion;
+        public _FinalStage xFileApiVersion(@NotNull String xFileApiVersion) {
+            this.xFileApiVersion = Objects.requireNonNull(xFileApiVersion, "xFileApiVersion must not be null");
             return this;
         }
 

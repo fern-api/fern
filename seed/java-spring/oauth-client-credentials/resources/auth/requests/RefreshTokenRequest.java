@@ -15,6 +15,7 @@ import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
@@ -92,17 +93,17 @@ public final class RefreshTokenRequest {
   }
 
   public interface ClientIdStage {
-    ClientSecretStage clientId(String clientId);
+    ClientSecretStage clientId(@NotNull String clientId);
 
     Builder from(RefreshTokenRequest other);
   }
 
   public interface ClientSecretStage {
-    RefreshTokenStage clientSecret(String clientSecret);
+    RefreshTokenStage clientSecret(@NotNull String clientSecret);
   }
 
   public interface RefreshTokenStage {
-    _FinalStage refreshToken(String refreshToken);
+    _FinalStage refreshToken(@NotNull String refreshToken);
   }
 
   public interface _FinalStage {
@@ -139,22 +140,22 @@ public final class RefreshTokenRequest {
 
     @java.lang.Override
     @JsonSetter("client_id")
-    public ClientSecretStage clientId(String clientId) {
-      this.clientId = clientId;
+    public ClientSecretStage clientId(@NotNull String clientId) {
+      this.clientId = Objects.requireNonNull(clientId, "clientId must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("client_secret")
-    public RefreshTokenStage clientSecret(String clientSecret) {
-      this.clientSecret = clientSecret;
+    public RefreshTokenStage clientSecret(@NotNull String clientSecret) {
+      this.clientSecret = Objects.requireNonNull(clientSecret, "clientSecret must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("refresh_token")
-    public _FinalStage refreshToken(String refreshToken) {
-      this.refreshToken = refreshToken;
+    public _FinalStage refreshToken(@NotNull String refreshToken) {
+      this.refreshToken = Objects.requireNonNull(refreshToken, "refreshToken must not be null");
       return this;
     }
 

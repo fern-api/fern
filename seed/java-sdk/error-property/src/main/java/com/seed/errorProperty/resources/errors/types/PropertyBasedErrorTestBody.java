@@ -14,6 +14,7 @@ import com.seed.errorProperty.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = PropertyBasedErrorTestBody.Builder.class)
@@ -62,7 +63,7 @@ public final class PropertyBasedErrorTestBody {
     }
 
     public interface MessageStage {
-        _FinalStage message(String message);
+        _FinalStage message(@NotNull String message);
 
         Builder from(PropertyBasedErrorTestBody other);
     }
@@ -88,8 +89,8 @@ public final class PropertyBasedErrorTestBody {
 
         @java.lang.Override
         @JsonSetter("message")
-        public _FinalStage message(String message) {
-            this.message = message;
+        public _FinalStage message(@NotNull String message) {
+            this.message = Objects.requireNonNull(message, "message must not be null");
             return this;
         }
 

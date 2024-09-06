@@ -16,6 +16,7 @@ import java.lang.String;
 import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
+import org.jetbrains.annotations.NotNull;
 import resources.commons.types.ProblemId;
 import resources.commons.types.VariableType;
 
@@ -85,13 +86,13 @@ public final class LightweightProblemInfoV2 {
   }
 
   public interface ProblemIdStage {
-    ProblemNameStage problemId(ProblemId problemId);
+    ProblemNameStage problemId(@NotNull ProblemId problemId);
 
     Builder from(LightweightProblemInfoV2 other);
   }
 
   public interface ProblemNameStage {
-    ProblemVersionStage problemName(String problemName);
+    ProblemVersionStage problemName(@NotNull String problemName);
   }
 
   public interface ProblemVersionStage {
@@ -134,15 +135,15 @@ public final class LightweightProblemInfoV2 {
 
     @java.lang.Override
     @JsonSetter("problemId")
-    public ProblemNameStage problemId(ProblemId problemId) {
-      this.problemId = problemId;
+    public ProblemNameStage problemId(@NotNull ProblemId problemId) {
+      this.problemId = Objects.requireNonNull(problemId, "problemId must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("problemName")
-    public ProblemVersionStage problemName(String problemName) {
-      this.problemName = problemName;
+    public ProblemVersionStage problemName(@NotNull String problemName) {
+      this.problemName = Objects.requireNonNull(problemName, "problemName must not be null");
       return this;
     }
 

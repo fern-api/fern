@@ -13,6 +13,7 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 import types.IExampleType;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -74,17 +75,17 @@ public final class Inlined implements IExampleType {
   }
 
   public interface NameStage {
-    DocsStage name(String name);
+    DocsStage name(@NotNull String name);
 
     Builder from(Inlined other);
   }
 
   public interface DocsStage {
-    UniqueStage docs(String docs);
+    UniqueStage docs(@NotNull String docs);
   }
 
   public interface UniqueStage {
-    _FinalStage unique(String unique);
+    _FinalStage unique(@NotNull String unique);
   }
 
   public interface _FinalStage {
@@ -114,22 +115,22 @@ public final class Inlined implements IExampleType {
 
     @java.lang.Override
     @JsonSetter("name")
-    public DocsStage name(String name) {
-      this.name = name;
+    public DocsStage name(@NotNull String name) {
+      this.name = Objects.requireNonNull(name, "name must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("docs")
-    public UniqueStage docs(String docs) {
-      this.docs = docs;
+    public UniqueStage docs(@NotNull String docs) {
+      this.docs = Objects.requireNonNull(docs, "docs must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("unique")
-    public _FinalStage unique(String unique) {
-      this.unique = unique;
+    public _FinalStage unique(@NotNull String unique) {
+      this.unique = Objects.requireNonNull(unique, "unique must not be null");
       return this;
     }
 

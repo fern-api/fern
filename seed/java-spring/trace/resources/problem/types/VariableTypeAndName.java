@@ -13,6 +13,7 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 import resources.commons.types.VariableType;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -64,13 +65,13 @@ public final class VariableTypeAndName {
   }
 
   public interface VariableTypeStage {
-    NameStage variableType(VariableType variableType);
+    NameStage variableType(@NotNull VariableType variableType);
 
     Builder from(VariableTypeAndName other);
   }
 
   public interface NameStage {
-    _FinalStage name(String name);
+    _FinalStage name(@NotNull String name);
   }
 
   public interface _FinalStage {
@@ -97,15 +98,15 @@ public final class VariableTypeAndName {
 
     @java.lang.Override
     @JsonSetter("variableType")
-    public NameStage variableType(VariableType variableType) {
-      this.variableType = variableType;
+    public NameStage variableType(@NotNull VariableType variableType) {
+      this.variableType = Objects.requireNonNull(variableType, "variableType must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("name")
-    public _FinalStage name(String name) {
-      this.name = name;
+    public _FinalStage name(@NotNull String name) {
+      this.name = Objects.requireNonNull(name, "name must not be null");
       return this;
     }
 

@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = JustFileWithQueryParamsRequet.Builder.class)
@@ -113,7 +114,7 @@ public final class JustFileWithQueryParamsRequet {
     }
 
     public interface ListOfStringsStage {
-        _FinalStage listOfStrings(String listOfStrings);
+        _FinalStage listOfStrings(@NotNull String listOfStrings);
     }
 
     public interface _FinalStage {
@@ -168,8 +169,8 @@ public final class JustFileWithQueryParamsRequet {
 
         @java.lang.Override
         @JsonSetter("listOfStrings")
-        public _FinalStage listOfStrings(String listOfStrings) {
-            this.listOfStrings = listOfStrings;
+        public _FinalStage listOfStrings(@NotNull String listOfStrings) {
+            this.listOfStrings = Objects.requireNonNull(listOfStrings, "listOfStrings must not be null");
             return this;
         }
 
