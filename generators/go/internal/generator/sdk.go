@@ -2960,7 +2960,7 @@ func formatForValueType(typeReference *ir.TypeReference, types map[ir.TypeId]*ir
 	)
 	if typeReference.Container != nil && typeReference.Container.Optional != nil {
 		isOptional = true
-		if needsOptionalDereference(typeReference.Container.Optional) {
+		if needsOptionalDereference(typeReference.Container.Optional, types) {
 			prefix = "*"
 		}
 	}
@@ -3077,6 +3077,16 @@ func isOptionalType(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.Typ
 //
 // Container types like lists, maps, and sets are already nil-able, so they don't
 // require a dereference prefix.
-func needsOptionalDereference(optionalTypeReference *ir.TypeReference) bool {
-	return optionalTypeReference.Container == nil
+func needsOptionalDereference(optionalTypeReference *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration) bool {
+	if optionalTypeReference.Named != nil {
+		typeDeclaration := types[optionalTypeReference.Named.TypeId]
+		if typeDeclaration.Shape.Alias != nil {
+			return needsOptionalDereference(typeDeclaration.Shape.Alias.AliasOf, types)
+		}
+		if typeDeclaration.Shape.Enum != nil {
+			return true
+		}
+		return false
+	}
+	return optionalTypeReference.Type == "primitive"
 }

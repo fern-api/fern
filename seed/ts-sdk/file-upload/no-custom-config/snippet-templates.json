@@ -252,6 +252,56 @@
                                         "type": "iterable"
                                     },
                                     "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "optionalMetadata: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "optionalMetadata",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "values": {
+                                            "FOO": "SeedFileUpload.ObjectType.Foo",
+                                            "BAR": "SeedFileUpload.ObjectType.Bar"
+                                        },
+                                        "templateString": "optionalObjectType: $FERN_INPUT",
+                                        "templateInput": {
+                                            "location": "BODY",
+                                            "path": "optionalObjectType",
+                                            "type": "payload"
+                                        },
+                                        "type": "enum"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "optionalId: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "optionalId",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
                                 }
                             ],
                             "type": "generic"
