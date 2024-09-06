@@ -10752,6 +10752,41 @@ exports[`fdr test definitions > file-upload 1`] = `
                       "type": "list",
                     },
                   },
+                  {
+                    "description": undefined,
+                    "key": "optionalMetadata",
+                    "type": "bodyProperty",
+                    "valueType": {
+                      "itemType": {
+                        "type": "unknown",
+                      },
+                      "type": "optional",
+                    },
+                  },
+                  {
+                    "description": undefined,
+                    "key": "optionalObjectType",
+                    "type": "bodyProperty",
+                    "valueType": {
+                      "itemType": {
+                        "type": "id",
+                        "value": "type_service:ObjectType",
+                      },
+                      "type": "optional",
+                    },
+                  },
+                  {
+                    "description": undefined,
+                    "key": "optionalId",
+                    "type": "bodyProperty",
+                    "valueType": {
+                      "itemType": {
+                        "type": "id",
+                        "value": "type_service:Id",
+                      },
+                      "type": "optional",
+                    },
+                  },
                 ],
               },
             },
@@ -10947,13 +10982,33 @@ exports[`fdr test definitions > file-upload 1`] = `
       "subpackageId": "subpackage_service",
       "subpackages": [],
       "types": [
+        "type_service:Id",
         "type_service:MyObject",
+        "type_service:ObjectType",
       ],
       "webhooks": [],
       "websockets": [],
     },
   },
   "types": {
+    "type_service:Id": {
+      "availability": undefined,
+      "description": undefined,
+      "name": "Id",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "default": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "regex": undefined,
+            "type": "string",
+          },
+        },
+      },
+    },
     "type_service:MyObject": {
       "availability": undefined,
       "description": undefined,
@@ -10978,6 +11033,27 @@ exports[`fdr test definitions > file-upload 1`] = `
           },
         ],
         "type": "object",
+      },
+    },
+    "type_service:ObjectType": {
+      "availability": undefined,
+      "description": undefined,
+      "name": "ObjectType",
+      "shape": {
+        "default": undefined,
+        "type": "enum",
+        "values": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "FOO",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "BAR",
+          },
+        ],
       },
     },
   },
