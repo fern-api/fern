@@ -169,6 +169,18 @@ export async function loadAPIWorkspace({
                 }
                 specs.push(...maybeSpecs);
             }
+
+            if (generatorsConfiguration.api.rootDefinitions != null) {
+                const maybeRootSpecs = await loadSingleNamespaceAPIWorkspace({
+                    absolutePathToWorkspace,
+                    namespace: undefined,
+                    definitions: generatorsConfiguration.api.rootDefinitions
+                });
+                if (!Array.isArray(maybeRootSpecs)) {
+                    return maybeRootSpecs;
+                }
+                specs.push(...maybeRootSpecs);
+            }
         }
 
         return {
