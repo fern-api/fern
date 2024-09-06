@@ -49,13 +49,15 @@ public final class BuilderGenerator {
     private final boolean isSerialized;
     private final boolean supportAdditionalProperties;
     private final boolean disableRequiredPropertyBuilderChecks;
+    private final boolean builderNotNullChecks;
 
     public BuilderGenerator(
             ClassName objectClassName,
             List<EnrichedObjectProperty> objectPropertyWithFields,
             boolean isSerialized,
             boolean supportAdditionalProperties,
-            boolean disableRequiredPropertyBuilderChecks) {
+            boolean disableRequiredPropertyBuilderChecks,
+            boolean builderNotNullChecks) {
         this.objectClassName = objectClassName;
         this.objectPropertyWithFields = objectPropertyWithFields.stream()
                 .map(BuilderGenerator::maybeGetEnrichedObjectPropertyWithField)
@@ -74,6 +76,7 @@ public final class BuilderGenerator {
         this.nestedBuilderClassName = objectClassName.nestedClass(NESTED_BUILDER_CLASS_NAME);
         this.isSerialized = isSerialized;
         this.supportAdditionalProperties = supportAdditionalProperties;
+        this.builderNotNullChecks = builderNotNullChecks;
     }
 
     public Optional<ObjectBuilder> generate() {
@@ -294,7 +297,7 @@ public final class BuilderGenerator {
             EnrichedObjectPropertyWithField enrichedObjectProperty, ClassName returnClass) {
         Builder parameterSpecBuilder = ParameterSpec.builder(
                 enrichedObjectProperty.enrichedObjectProperty.poetTypeName(), enrichedObjectProperty.fieldSpec.name);
-        if (!enrichedObjectProperty.enrichedObjectProperty.poetTypeName().isPrimitive()) {
+        if (!enrichedObjectProperty.enrichedObjectProperty.poetTypeName().isPrimitive() && builderNotNullChecks) {
             parameterSpecBuilder.addAnnotation(ClassName.get("org.jetbrains.annotations", "NotNull"));
         }
         return MethodSpec.methodBuilder(enrichedObjectProperty.fieldSpec.name)

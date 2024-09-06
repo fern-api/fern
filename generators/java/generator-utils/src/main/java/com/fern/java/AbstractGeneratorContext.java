@@ -65,6 +65,8 @@ public abstract class AbstractGeneratorContext<T extends AbstractPoetClassNameFa
         return customConfig;
     }
 
+    public abstract boolean builderNotNullChecks();
+
     public final T getPoetClassNameFactory() {
         return poetClassNameFactory;
     }

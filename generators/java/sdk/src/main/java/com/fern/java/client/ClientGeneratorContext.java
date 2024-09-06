@@ -22,4 +22,9 @@ public final class ClientGeneratorContext
     public boolean deserializeWithAdditionalProperties() {
         return true;
     }
+
+    @Override
+    public boolean builderNotNullChecks() {
+        return true;
+    }
 }
