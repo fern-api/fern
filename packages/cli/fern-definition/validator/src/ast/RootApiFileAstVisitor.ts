@@ -9,7 +9,7 @@ export interface RootApiFileAstNodeTypes {
     oauth: {
         name: string;
         oauth: RawSchemas.OAuthSchemeSchema;
-    }
+    };
     defaultEnvironment: string | null | undefined;
     environment: {
         environmentId: string;
