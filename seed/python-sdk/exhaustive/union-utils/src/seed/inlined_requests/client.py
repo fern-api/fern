@@ -4,6 +4,7 @@ import typing
 from ..core.client_wrapper import SyncClientWrapper
 from ..types.object.types.object_with_optional_field import ObjectWithOptionalField
 from ..core.request_options import RequestOptions
+from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.pydantic_utilities import parse_obj_as
 from ..general_errors.errors.bad_request_body import BadRequestBody
 from ..general_errors.types.bad_object_request_info import BadObjectRequestInfo
@@ -89,7 +90,9 @@ class InlinedRequestsClient:
             json={
                 "string": string,
                 "integer": integer,
-                "NestedObject": nested_object,
+                "NestedObject": convert_and_respect_annotation_metadata(
+                    object_=nested_object, annotation=ObjectWithOptionalField, direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -200,7 +203,9 @@ class AsyncInlinedRequestsClient:
             json={
                 "string": string,
                 "integer": integer,
-                "NestedObject": nested_object,
+                "NestedObject": convert_and_respect_annotation_metadata(
+                    object_=nested_object, annotation=ObjectWithOptionalField, direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,

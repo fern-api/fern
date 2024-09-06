@@ -16,10 +16,12 @@ import com.seed.pagination.resources.users.requests.ListUsersBodyCursorPaginatio
 import com.seed.pagination.resources.users.requests.ListUsersBodyOffsetPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersCursorPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersExtendedRequest;
+import com.seed.pagination.resources.users.requests.ListUsersExtendedRequestForOptionalData;
 import com.seed.pagination.resources.users.requests.ListUsersOffsetPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListWithGlobalConfigRequest;
 import com.seed.pagination.resources.users.requests.ListWithOffsetPaginationHasNextPageRequest;
+import com.seed.pagination.resources.users.types.ListUsersExtendedOptionalListResponse;
 import com.seed.pagination.resources.users.types.ListUsersExtendedResponse;
 import com.seed.pagination.resources.users.types.ListUsersPaginationResponse;
 import com.seed.pagination.resources.users.types.NextPage;
@@ -28,6 +30,7 @@ import com.seed.pagination.resources.users.types.User;
 import com.seed.pagination.resources.users.types.UsernameContainer;
 import com.seed.pagination.types.UsernameCursor;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -399,6 +402,60 @@ public class UsersClient {
                 List<User> result = parsedResponse.getData().getUsers();
                 return new SyncPagingIterable<>(
                         startingAfter.isPresent(), result, () -> listWithExtendedResults(nextRequest, requestOptions));
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedPaginationApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new SeedPaginationException("Network error executing HTTP request", e);
+        }
+    }
+
+    public SyncPagingIterable<User> listWithExtendedResultsAndOptionalData() {
+        return listWithExtendedResultsAndOptionalData(
+                ListUsersExtendedRequestForOptionalData.builder().build());
+    }
+
+    public SyncPagingIterable<User> listWithExtendedResultsAndOptionalData(
+            ListUsersExtendedRequestForOptionalData request) {
+        return listWithExtendedResultsAndOptionalData(request, null);
+    }
+
+    public SyncPagingIterable<User> listWithExtendedResultsAndOptionalData(
+            ListUsersExtendedRequestForOptionalData request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("users");
+        if (request.getCursor().isPresent()) {
+            httpUrl.addQueryParameter("cursor", request.getCursor().get().toString());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                ListUsersExtendedOptionalListResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
+                        responseBody.string(), ListUsersExtendedOptionalListResponse.class);
+                Optional<UUID> startingAfter = parsedResponse.getNext();
+                ListUsersExtendedRequestForOptionalData nextRequest = ListUsersExtendedRequestForOptionalData.builder()
+                        .from(request)
+                        .cursor(startingAfter)
+                        .build();
+                List<User> result = parsedResponse.getData().getUsers().orElse(Collections.emptyList());
+                return new SyncPagingIterable<>(
+                        startingAfter.isPresent(),
+                        result,
+                        () -> listWithExtendedResultsAndOptionalData(nextRequest, requestOptions));
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedPaginationApiException(

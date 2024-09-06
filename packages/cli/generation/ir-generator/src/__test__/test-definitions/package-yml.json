@@ -379,7 +379,7 @@
                             "example": {
                                 "id": "0cac54025d268eb1640f255e93d7e1528007ae3ce7931de6d1c5699da66af4d1",
                                 "name": null,
-                                "url": "/",
+                                "url": "/id-ksfd9c1/",
                                 "rootPathParameters": [
                                     {
                                         "name": {
@@ -1082,7 +1082,7 @@
                             "example": {
                                 "id": "7c20f2e4ee05e0f9f96a9d824fd47f991dc6b563d45f4c99c8248c68dc7afdd0",
                                 "name": null,
-                                "url": "//id-219xca8",
+                                "url": "/id-a2ijs82/id-219xca8",
                                 "rootPathParameters": [
                                     {
                                         "name": {
@@ -1356,6 +1356,7 @@
     "websocketChannels": {},
     "readmeConfig": null,
     "sourceConfig": null,
+    "publishConfig": null,
     "subpackages": {
         "subpackage_service": {
             "name": {

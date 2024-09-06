@@ -1,6 +1,6 @@
 import { Encoding, ExampleType, FernFilepath, Source, Type, TypeDeclaration } from "@fern-api/ir-sdk";
 import { FernWorkspace } from "@fern-api/workspace-loader";
-import { isRawObjectDefinition, RawSchemas, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
+import { isRawObjectDefinition, RawSchemas, visitRawTypeDeclaration } from "@fern-api/fern-definition-schema";
 import { FernFileContext } from "../../FernFileContext";
 import { AudienceId } from "../../filtered-ir/ids";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
@@ -14,6 +14,7 @@ import { convertAliasTypeDeclaration } from "./convertAliasTypeDeclaration";
 import { convertDiscriminatedUnionTypeDeclaration } from "./convertDiscriminatedUnionTypeDeclaration";
 import { convertEnumTypeDeclaration } from "./convertEnumTypeDeclaration";
 import { convertTypeExample } from "./convertExampleType";
+import { convertGenericTypeDeclaration } from "./convertGenericTypeDeclaration";
 import { convertObjectTypeDeclaration } from "./convertObjectTypeDeclaration";
 import { convertUndiscriminatedUnionTypeDeclaration } from "./convertUndiscriminatedUnionTypeDeclaration";
 import { getReferencedTypesFromRawDeclaration } from "./getReferencedTypesFromRawDeclaration";
@@ -46,6 +47,7 @@ export async function convertTypeDeclaration({
         typeName,
         file
     });
+
     const referencedTypes = getReferencedTypesFromRawDeclaration({ typeDeclaration, file, typeResolver });
 
     let propertiesByAudience: Record<AudienceId, Set<string>> = {};
@@ -145,7 +147,7 @@ async function convertTypeDeclarationSource({
         source: typeDeclaration.source,
         file
     });
-    if (resolvedSource.type !== "protobuf") {
+    if (resolvedSource == null || resolvedSource.type !== "protobuf") {
         return undefined;
     }
     return Source.proto(

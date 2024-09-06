@@ -71,6 +71,7 @@ client.headers.send(
 
 ```python
 from seed import SeedLiteral
+from seed.inlined import ANestedLiteral, ATopLevelLiteral
 
 client = SeedLiteral(
     base_url="https://yourhost.com/path/to/api",
@@ -79,6 +80,9 @@ client.inlined.send(
     temperature=10.1,
     context="You're super wise",
     maybe_context="You're super wise",
+    object_with_literal=ATopLevelLiteral(
+        nested_literal=ANestedLiteral(),
+    ),
     query="What is the weather today",
 )
 
@@ -97,6 +101,14 @@ client.inlined.send(
 <dd>
 
 **query:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**object_with_literal:** `ATopLevelLiteral` 
     
 </dd>
 </dl>

@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedMixedCase.Core;
 
 #nullable enable
@@ -15,7 +16,16 @@ public partial class ServiceClient
         _client = client;
     }
 
-    public async Task<object> GetResourceAsync(string resourceId, RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Service.GetResourceAsync("rsc-xyz");
+    /// </code>
+    /// </example>
+    public async Task<object> GetResourceAsync(
+        string resourceId,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -23,8 +33,9 @@ public partial class ServiceClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"/resource/{resourceId}",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -46,14 +57,22 @@ public partial class ServiceClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Service.ListResourcesAsync(
+    ///     new ListResourcesRequest { PageLimit = 10, BeforeDate = new DateOnly(2023, 1, 1) }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<IEnumerable<object>> ListResourcesAsync(
         ListResourcesRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         _query["page_limit"] = request.PageLimit.ToString();
-        _query["beforeDate"] = request.BeforeDate.ToString();
+        _query["beforeDate"] = request.BeforeDate.ToString(Constants.DateFormat);
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
@@ -61,8 +80,9 @@ public partial class ServiceClient
                 Method = HttpMethod.Get,
                 Path = "/resource",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

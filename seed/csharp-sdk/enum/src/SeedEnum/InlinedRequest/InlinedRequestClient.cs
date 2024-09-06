@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using SeedEnum.Core;
 
@@ -15,7 +16,18 @@ public partial class InlinedRequestClient
         _client = client;
     }
 
-    public async Task SendAsync(SendEnumInlinedRequest request, RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.InlinedRequest.SendAsync(
+    ///     new SendEnumInlinedRequest { Operand = Operand.GreaterThan, OperandOrColor = Color.Red }
+    /// );
+    /// </code>
+    /// </example>
+    public async Task SendAsync(
+        SendEnumInlinedRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -24,8 +36,9 @@ public partial class InlinedRequestClient
                 Method = HttpMethod.Post,
                 Path = "inlined",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {

@@ -94,7 +94,7 @@ public final class UserPage implements IUserPage {
         @java.lang.Override
         @JsonSetter("data")
         public _FinalStage data(UserListContainer data) {
-            this.data = data;
+            this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }
 

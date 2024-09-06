@@ -1,16 +1,31 @@
 imports:
   features: features.yml
 types:
+  CliSeedWorkspaceConfiguration:
+    properties:
+      publishGa: PublishCommand
+      publishRc: PublishCommand
+      publishDev: PublishCommand
+      changelogLocation: 
+        type: optional<string>
+        docs: | 
+          The location of the changelog file, the schema of which must follow FDR's `GeneratorReleaseRequest` object.
+
   SeedWorkspaceConfiguration:
     properties:
       irVersion: string
+      test: TestConfiguration
+      publish: PublishConfiguration
+      changelogLocation: 
+        type: optional<string>
+        docs: | 
+          The location of the changelog file, the schema of which must follow FDR's `GeneratorReleaseRequest` object.
+
       language: optional<Language>
       defaultCustomConfig: optional<map<string, unknown>>
       defaultOutputMode: OutputMode
       generatorType: GeneratorType
-      docker: string
-      dockerCommand: optional<DockerCommand>
-      local: optional<LocalBuildInfo>
+
       customFixtureConfig: 
         type: optional<FixtureConfigurations>
         docs: |
@@ -25,6 +40,49 @@ types:
           just list the fixture name. For configured fixture list {fixture}:{outputFolder}.
       features: optional<features.GeneratorFeatures>
   
+  PublishDockerConfiguration:
+    properties:
+      context: string
+      image: string
+      file: string
+
+  PublishDocker:
+    docs: |
+      Configuration for publishing from a docker image, assuming a vanilla docker deployment.
+    properties:
+      workingDirectory: optional<string>
+      preBuildCommands: optional<DockerCommand>
+      docker: PublishDockerConfiguration
+
+  PublishCommand:
+    docs: |
+      Configuration for publishing from a command, assuming something packaged up, like with the TypeScript generator.
+      ex. `pnpm --filter @fern-typescript/express-generator-cli dockerTagVersion "$VERSION"`
+      Commands can be multi-line, we'll run them all!
+    properties:
+      workingDirectory: optional<string>
+      versionSubstitution: 
+        type: optional<string>
+        docs: | 
+          The string to substitute for the version in the command. ex. `"$VERSION"`
+      command: DockerCommand
+
+  PublishConfiguration:
+    discriminated: false
+    union: 
+      - PublishDocker
+      - PublishCommand
+  
+  TestDockerConfiguration:
+    properties:
+      image: string
+      command: optional<DockerCommand>
+
+  TestConfiguration:
+    properties:
+      docker: TestDockerConfiguration
+      local: optional<LocalBuildInfo>
+
   LocalBuildInfo: 
     properties: 
       workingDirectory: 
@@ -111,4 +169,3 @@ types:
       - github
       - local_files
       - publish
-

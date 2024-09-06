@@ -1,20 +1,50 @@
 
 irVersion: v53
-docker: fernapi/fern-csharp-sdk:latest
-dockerCommand: pnpm --filter @fern-api/fern-csharp-sdk dockerTagLatest
+changelogLocation: ../../generators/csharp/sdk/versions.yml
+publish:
+  preBuildCommands:
+    - pnpm --filter @fern-api/fern-csharp-sdk dist:cli
+  docker: 
+    file: ./generators/csharp/sdk/Dockerfile
+    image: fernapi/fern-csharp-sdk
+    context: .
+test:
+  docker:
+    image: fernapi/fern-csharp-sdk:latest
+    command: pnpm --filter @fern-api/fern-csharp-sdk dockerTagLatest
+  local: 
+    workingDirectory: generators/csharp
+    buildCommand: 
+      - pnpm --filter @fern-api/fern-csharp-sdk dist:cli
+    runCommand: node sdk/dist/bundle.cjs
+
 language: csharp
 generatorType: SDK
 defaultOutputMode: github
+defaultCustomConfig:
+  generate-mock-server-tests: true
 scripts:
   - docker: bitnami/dotnet-sdk:8
     commands:
       - dotnet build src -c Release /p:ContinuousIntegrationBuild=true
-local: 
-  workingDirectory: generators/csharp
-  buildCommand: 
-    - pnpm --filter @fern-api/fern-csharp-sdk dist:cli
-  runCommand: node sdk/dist/bundle.cjs
+      - dotnet test src --filter "FullyQualifiedName~SeedApi.Test.Core"
+      # - dotnet test src
+
 fixtures: 
+  examples:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig: null
+      readmeConfig:
+        bannerLink: https://www.fernapi.com
+        apiReferenceLink: https://www.docs.fernapi.com
+        defaultEndpoint: POST /movie
+        features:
+          timeouts:
+            - GET /movie/{movieId}
+            - method: POST
+              path: /movie
+      outputFolder: readme-config
   imdb:
     - customConfig: null
       outputFolder: no-custom-config
@@ -45,8 +75,28 @@ fixtures:
     - customConfig:
         simplify-object-dictionaries: false
       outputFolder: no-simplify-object-dictionaries
+  grpc-proto-exhaustive:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        package-id: Seed.Client
+      outputFolder: package-id
+    - customConfig:
+        read-only-memory-types:
+          - float
+      outputFolder: read-only-memory
 allowedFailures:
+  ## COMPILE FAILURES
   - objects-with-imports
-  - examples
-  # TODO: Add support for recursive undiscriminated unions.
-  - grpc
+  - examples:no-custom-config
+  - examples:readme-config
+  ## WIRE TEST FAILURES
+  - unknown # issue with example object
+  # - package-yml # user-provided example path not coming in properly
+  # - simple-fhir # nested generated examples are wonky
+  # - enum # failing because of oneofs as header values
+  # - trace # failing because we don't call stringify on enums path params
+  # - undiscriminated-unions # failing because of union type as dictionary key
+  # - exhaustive:explicit-namespaces # single test failing because we don't support discriminated unions properly
+  # - exhaustive:no-root-namespace-for-core-classes
+  # - exhaustive:no-generate-error-types

@@ -74,7 +74,7 @@ public final class UsernameCursor {
         @java.lang.Override
         @JsonSetter("cursor")
         public _FinalStage cursor(UsernamePage cursor) {
-            this.cursor = cursor;
+            this.cursor = Objects.requireNonNull(cursor, "cursor must not be null");
             return this;
         }
 

@@ -3,6 +3,7 @@ import { csharp } from "../..";
 import { BaseCsharpCustomConfigSchema } from "../../custom-config";
 import { AstNode } from "./AstNode";
 
+type Alias = string;
 type Namespace = string;
 
 const TAB_SIZE = 4;
@@ -24,17 +25,19 @@ export declare namespace Writer {
 
 export class Writer {
     /* The contents being written */
-    private buffer = "";
+    public buffer = "";
     /* Indentation level (multiple of 4) */
     private indentLevel = 0;
     /* Whether anything has been written to the buffer */
     private hasWrittenAnything = false;
     /* Whether the last character written was a newline */
     private lastCharacterIsNewline = false;
-    /* The current line number */
+    /* Import statements */
     private references: Record<Namespace, ClassReference[]> = {};
     /* The namespace that is being written to */
     private namespace: string;
+    /* The set of namespace aliases */
+    private namespaceAliases: Record<Alias, Namespace> = {};
     /* All base namespaces in the project */
     private allNamespaceSegments: Set<string>;
     /* The name of every type in the project mapped to the namespaces a type of that name belongs to */
@@ -58,7 +61,7 @@ export class Writer {
         const textWithoutNewline = textEndsInNewline ? text.substring(0, text.length - 1) : text;
 
         const indent = this.getIndentString();
-        let indentedText = textWithoutNewline.replace("\n", `\n${indent}`);
+        let indentedText = textWithoutNewline.replaceAll("\n", `\n${indent}`);
         if (this.isAtStartOfLine()) {
             indentedText = indent + indentedText;
         }
@@ -97,11 +100,11 @@ export class Writer {
      * Writes text but then suffixes with a `;`
      * @param node
      */
-    public controlFlow(prefix: string, statement: string): void {
+    public controlFlow(prefix: string, statement: AstNode): void {
         const codeBlock = csharp.codeblock(prefix);
         codeBlock.write(this);
         this.write(" (");
-        this.write(statement);
+        this.writeNode(statement);
         this.write(") {");
         this.writeNewLineIfLastLineNot();
         this.indent();
@@ -153,11 +156,22 @@ export class Writer {
         }
     }
 
+    public addNamespace(namespace: string): void {
+        const foundNamespace = this.references[namespace];
+        if (foundNamespace == null) {
+            this.references[namespace] = [];
+        }
+    }
+
+    public addNamespaceAlias(alias: string, namespace: string): void {
+        this.namespaceAliases[alias] = namespace;
+    }
+
     public getAllTypeClassReferences(): Map<string, Set<Namespace>> {
         return this.allTypeClassReferences;
     }
 
-    public getAllNamespaceSegmentsAndTypes(): Set<string | ClassReference> {
+    public getAllNamespaceSegments(): Set<string> {
         return this.allNamespaceSegments;
     }
 
@@ -169,20 +183,34 @@ export class Writer {
         return this.namespace;
     }
 
+    public getCustomConfig(): BaseCsharpCustomConfigSchema {
+        return this.customConfig;
+    }
+
     public getSimplifyObjectDictionaries(): boolean {
         return this.customConfig["simplify-object-dictionaries"] ?? true;
     }
 
-    public toString(): string {
-        const imports = this.stringifyImports();
-        if (imports.length > 0) {
-            return `${imports}
-
-#nullable enable
-
-${this.buffer}`;
+    public toString(skipImports = false): string {
+        if (!skipImports) {
+            const imports = this.stringifyImports();
+            if (imports.length > 0) {
+                return `${imports}
+    #nullable enable
+    
+    ${this.buffer}`;
+            }
         }
         return this.buffer;
+    }
+
+    public importsToString(): string | undefined {
+        const imports = this.stringifyImports();
+        return imports.length > 0 ? imports : undefined;
+    }
+
+    public isReadOnlyMemoryType(type: string): boolean {
+        return this.customConfig["read-only-memory-types"]?.includes(type) ?? false;
     }
 
     /*******************************
@@ -206,12 +234,26 @@ ${this.buffer}`;
     }
 
     private stringifyImports(): string {
-        return (
-            Object.keys(this.references)
-                // filter out the current namespace
-                .filter((referenceNamespace) => referenceNamespace !== this.namespace)
-                .map((ref) => `using ${ref};`)
-                .join("\n")
-        );
+        const referenceKeys = Object.keys(this.references);
+        const namespaceAliasEntries = Object.entries(this.namespaceAliases);
+        if (referenceKeys.length === 0 && namespaceAliasEntries.length === 0) {
+            return "";
+        }
+
+        let result = referenceKeys
+            // Filter out the current namespace.
+            .filter((referenceNamespace) => referenceNamespace !== this.namespace)
+            .map((ref) => `using ${ref};`)
+            .join("\n");
+
+        if (result.length > 0) {
+            result += "\n";
+        }
+
+        for (const [alias, namespace] of namespaceAliasEntries) {
+            result += `using ${alias} = ${namespace};\n`;
+        }
+
+        return result;
     }
 }

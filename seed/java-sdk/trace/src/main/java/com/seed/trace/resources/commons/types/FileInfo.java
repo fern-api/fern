@@ -14,6 +14,7 @@ import com.seed.trace.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = FileInfo.Builder.class)
@@ -70,13 +71,13 @@ public final class FileInfo {
     }
 
     public interface FilenameStage {
-        ContentsStage filename(String filename);
+        ContentsStage filename(@NotNull String filename);
 
         Builder from(FileInfo other);
     }
 
     public interface ContentsStage {
-        _FinalStage contents(String contents);
+        _FinalStage contents(@NotNull String contents);
     }
 
     public interface _FinalStage {
@@ -103,15 +104,15 @@ public final class FileInfo {
 
         @java.lang.Override
         @JsonSetter("filename")
-        public ContentsStage filename(String filename) {
-            this.filename = filename;
+        public ContentsStage filename(@NotNull String filename) {
+            this.filename = Objects.requireNonNull(filename, "filename must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("contents")
-        public _FinalStage contents(String contents) {
-            this.contents = contents;
+        public _FinalStage contents(@NotNull String contents) {
+            this.contents = Objects.requireNonNull(contents, "contents must not be null");
             return this;
         }
 

@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedObject.Core;
 
 #nullable enable
 
@@ -75,4 +76,9 @@ public record Type
 
     [JsonPropertyName("twentythree")]
     public required string Twentythree { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

@@ -15,6 +15,7 @@ import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
@@ -65,7 +66,7 @@ public final class FunctionImplementation {
   }
 
   public interface ImplStage {
-    _FinalStage impl(String impl);
+    _FinalStage impl(@NotNull String impl);
 
     Builder from(FunctionImplementation other);
   }
@@ -98,8 +99,8 @@ public final class FunctionImplementation {
 
     @java.lang.Override
     @JsonSetter("impl")
-    public _FinalStage impl(String impl) {
-      this.impl = impl;
+    public _FinalStage impl(@NotNull String impl) {
+      this.impl = Objects.requireNonNull(impl, "impl must not be null");
       return this;
     }
 

@@ -1,5 +1,5 @@
 import { cwd, resolve } from "@fern-api/fs-utils";
-import { writeFernJsonSchema } from "@fern-api/json-schema";
+import { writeFernJsonSchema } from "@fern-api/fern-definition-json-schema";
 import { noop } from "lodash-es";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";

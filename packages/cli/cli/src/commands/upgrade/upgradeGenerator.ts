@@ -5,22 +5,26 @@ import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import { readFile, writeFile } from "fs/promises";
 import path from "path";
-import * as semver from "semver";
 import YAML from "yaml";
 import { CliContext } from "../../cli-context/CliContext";
+import { FernRegistry } from "@fern-fern/generators-sdk";
 
 export async function loadAndUpdateGenerators({
     absolutePathToWorkspace,
     context,
     generatorFilter,
     groupFilter,
-    includeMajor
+    includeMajor,
+    channel,
+    cliVersion
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
     context: TaskContext;
     generatorFilter: string | undefined;
     groupFilter: string | undefined;
     includeMajor: boolean;
+    channel: FernRegistry.generators.ReleaseType | undefined;
+    cliVersion: string;
 }): Promise<string | undefined> {
     const filepath = generatorsYml.getPathToGeneratorsConfiguration({ absolutePathToWorkspace });
     if (!(await doesPathExist(filepath))) {
@@ -45,7 +49,10 @@ export async function loadAndUpdateGenerators({
     context.logger.debug(`Groups found: ${generatorGroups.toString()}`);
 
     for (const groupBlock of generatorGroups.items) {
-        const groupName = groupBlock.key;
+        // The typing appears to be off in this lib, but BLOCK.key.value is meant to always be available
+        // https://eemeli.org/yaml/#creating-nodes
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const groupName = (groupBlock.key as any).value as string;
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-arguments
         const group = groupBlock.value as YAML.YAMLMap<string, YAML.YAMLSeq<YAML.YAMLMap<unknown, unknown>>>;
         if (!YAML.isMap(group)) {
@@ -55,7 +62,8 @@ export async function loadAndUpdateGenerators({
             continue;
         }
 
-        if (groupFilter != null && group.get("name") !== groupName) {
+        if (groupFilter != null && groupFilter !== groupName) {
+            context.logger.debug(`Skipping group ${groupName} as it does not match the filter: ${groupFilter}`);
             continue;
         }
 
@@ -74,29 +82,35 @@ export async function loadAndUpdateGenerators({
                     `Expected generator in group ${groupName} to be a map in ${path.relative(process.cwd(), filepath)}`
                 );
             }
-            if (generatorFilter != null && generator.get("name") !== generatorFilter) {
+            const generatorName = generator.get("name") as string;
+
+            if (generatorFilter != null && generatorName !== generatorFilter) {
+                context.logger.debug(
+                    `Skipping generator ${generatorName} as it does not match the filter: ${generatorFilter}`
+                );
                 continue;
             }
 
-            const generatorName = generator.get("name") as string;
             const normalizedGeneratorName = generatorsYml.getGeneratorNameOrThrow(generatorName, context);
 
-            const currentVersion = generator.get("version") as string;
+            const currentGeneratorVersion = generator.get("version") as string;
 
-            const latestVersion = await generatorsYml.getLatestGeneratorVersion(normalizedGeneratorName, context);
-            context.logger.debug(`${generatorName}, ${currentVersion}, ${latestVersion}`);
+            const latestVersion = await generatorsYml.getLatestGeneratorVersion({
+                generatorName: normalizedGeneratorName,
+                cliVersion,
+                currentGeneratorVersion,
+                channel,
+                includeMajor,
+                context
+            });
 
             if (latestVersion == null) {
                 continue;
             }
-
-            // check if the versions have the same major version, if not fail, if yes do the upgrade
-            const currentMajor = semver.major(currentVersion);
-            const latestMajor = semver.major(latestVersion);
-            if (currentMajor === latestMajor || includeMajor) {
-                generator.set("version", latestVersion);
-                context.logger.info(chalk.green(`${generatorName} has been upgraded to latest in group: ${groupName}`));
-            }
+            context.logger.debug(
+                chalk.green(`Upgrading ${generatorName} from ${currentGeneratorVersion} to ${latestVersion}`)
+            );
+            generator.set("version", latestVersion);
         }
     }
 
@@ -108,13 +122,15 @@ export async function upgradeGenerator({
     generator,
     group,
     project: { apiWorkspaces },
-    includeMajor
+    includeMajor,
+    channel
 }: {
     cliContext: CliContext;
     generator: string | undefined;
     group: string | undefined;
     project: Project;
     includeMajor: boolean;
+    channel: FernRegistry.generators.ReleaseType | undefined;
 }): Promise<void> {
     await Promise.all(
         apiWorkspaces.map(async (workspace) => {
@@ -139,7 +155,9 @@ export async function upgradeGenerator({
                     context,
                     generatorFilter: generator,
                     groupFilter: group,
-                    includeMajor
+                    includeMajor,
+                    channel,
+                    cliVersion: cliContext.environment.packageVersion
                 });
 
                 if (updatedConfiguration != null) {

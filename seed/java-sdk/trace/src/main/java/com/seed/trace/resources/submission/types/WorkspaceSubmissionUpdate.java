@@ -15,6 +15,7 @@ import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = WorkspaceSubmissionUpdate.Builder.class)
@@ -74,13 +75,13 @@ public final class WorkspaceSubmissionUpdate {
     }
 
     public interface UpdateTimeStage {
-        UpdateInfoStage updateTime(OffsetDateTime updateTime);
+        UpdateInfoStage updateTime(@NotNull OffsetDateTime updateTime);
 
         Builder from(WorkspaceSubmissionUpdate other);
     }
 
     public interface UpdateInfoStage {
-        _FinalStage updateInfo(WorkspaceSubmissionUpdateInfo updateInfo);
+        _FinalStage updateInfo(@NotNull WorkspaceSubmissionUpdateInfo updateInfo);
     }
 
     public interface _FinalStage {
@@ -107,15 +108,15 @@ public final class WorkspaceSubmissionUpdate {
 
         @java.lang.Override
         @JsonSetter("updateTime")
-        public UpdateInfoStage updateTime(OffsetDateTime updateTime) {
-            this.updateTime = updateTime;
+        public UpdateInfoStage updateTime(@NotNull OffsetDateTime updateTime) {
+            this.updateTime = Objects.requireNonNull(updateTime, "updateTime must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("updateInfo")
-        public _FinalStage updateInfo(WorkspaceSubmissionUpdateInfo updateInfo) {
-            this.updateInfo = updateInfo;
+        public _FinalStage updateInfo(@NotNull WorkspaceSubmissionUpdateInfo updateInfo) {
+            this.updateInfo = Objects.requireNonNull(updateInfo, "updateInfo must not be null");
             return this;
         }
 

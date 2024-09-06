@@ -6,7 +6,7 @@ import {
     SingleBaseUrlEnvironment,
     SingleBaseUrlEnvironments
 } from "@fern-api/ir-sdk";
-import { RawSchemas, visitRawEnvironmentDeclaration } from "@fern-api/yaml-schema";
+import { RawSchemas, visitRawEnvironmentDeclaration } from "@fern-api/fern-definition-schema";
 import { mapValues } from "lodash-es";
 import { CasingsGenerator } from "../casings/CasingsGenerator";
 

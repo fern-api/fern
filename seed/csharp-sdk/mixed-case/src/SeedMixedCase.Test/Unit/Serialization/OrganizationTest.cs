@@ -18,13 +18,13 @@ public class OrganizationTest
         var inputJson =
             @"
         {
-  ""name"": ""orgName""
-}
-";
+          ""name"": ""orgName""
+        }
+        ";
 
         var serializerOptions = new JsonSerializerOptions
         {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         };
 
         var deserializedObject = JsonSerializer.Deserialize<Organization>(

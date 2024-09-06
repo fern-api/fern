@@ -1,3 +1,4 @@
+export { And } from "./And";
 export { Annotation } from "./Annotation";
 export { type Argument, type Arguments, type NamedArgument, type UnnamedArgument } from "./Argument";
 export { Class } from "./Class";
@@ -16,8 +17,10 @@ export { Interface } from "./Interface";
 export { List } from "./List";
 export { Method, MethodType } from "./Method";
 export { MethodInvocation } from "./MethodInvocation";
+export { Or } from "./Or";
 export { Parameter } from "./Parameter";
 export { Set } from "./Set";
+export { Switch } from "./Switch";
 export { Ternary } from "./Ternary";
 export { TestClass } from "./TestClass";
-export { Type } from "./Type";
+export { convertReadOnlyPrimitiveTypes, Type, VALID_READ_ONLY_MEMORY_TYPES } from "./Type";

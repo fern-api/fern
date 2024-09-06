@@ -16,5 +16,5 @@ public enum Shape
     Circle,
 
     [EnumMember(Value = "TRIANGLE")]
-    Triangle
+    Triangle,
 }

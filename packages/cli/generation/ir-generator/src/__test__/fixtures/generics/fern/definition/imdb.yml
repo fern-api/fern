@@ -1,0 +1,46 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  MovieId:
+    type: string
+    docs: The unique identifier for a Movie in the database
+
+  Movie:
+    properties:
+      id: MovieId
+      title: string
+      rating:
+        type: double
+        docs: The rating scale out of ten stars
+      cast: list<Cast>
+
+  CreateMovieRequest:
+    properties:
+      title: string
+      rating: double
+  
+  Cast: 
+    base-properties: 
+      name: Name
+    union: 
+      actor: {}
+      actress: {}
+  
+  Name: string
+
+  GenericTest<T>:
+    properties:
+      value: T
+      other-value: Movie
+  
+  GenericApplication:
+    type: GenericTest<CreateMovieRequest>
+    docs: This is a generic application type
+
+  Sample:
+    type: GenericTest<Movie>
+
+  VanillaAlias:
+    properties:
+      vanilla-value: CreateMovieRequest
+      vanilla-other-value: Movie

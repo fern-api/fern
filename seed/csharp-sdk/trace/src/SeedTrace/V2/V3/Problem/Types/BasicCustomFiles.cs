@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedTrace;
+using SeedTrace.Core;
 
 #nullable enable
 
@@ -19,4 +20,9 @@ public record BasicCustomFiles
 
     [JsonPropertyName("basicTestCaseTemplate")]
     public required BasicTestCaseTemplate BasicTestCaseTemplate { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Threading;
 using SeedPlainText.Core;
 
 #nullable enable
@@ -14,7 +15,15 @@ public partial class ServiceClient
         _client = client;
     }
 
-    public async Task<string> GetTextAsync(RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Service.GetTextAsync();
+    /// </code>
+    /// </example>
+    public async Task<string> GetTextAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -22,8 +31,9 @@ public partial class ServiceClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "text",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

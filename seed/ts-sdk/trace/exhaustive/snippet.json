@@ -30,7 +30,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.admin.sendTestSubmissionUpdate(SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"), {\n    updateTime: new Date(\"2024-01-15T09:30:00.000Z\"),\n    updateInfo: SeedTrace.TestSubmissionUpdateInfo.running(SeedTrace.RunningSubmissionState.QueueingSubmission)\n});\n"
+                "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.admin.sendTestSubmissionUpdate(SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"), {\n    updateTime: \"2024-01-15T09:30:00Z\",\n    updateInfo: SeedTrace.TestSubmissionUpdateInfo.running(SeedTrace.RunningSubmissionState.QueueingSubmission)\n});\n"
             }
         },
         {
@@ -52,7 +52,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.admin.sendWorkspaceSubmissionUpdate(SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"), {\n    updateTime: new Date(\"2024-01-15T09:30:00.000Z\"),\n    updateInfo: SeedTrace.WorkspaceSubmissionUpdateInfo.running(SeedTrace.RunningSubmissionState.QueueingSubmission)\n});\n"
+                "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.admin.sendWorkspaceSubmissionUpdate(SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"), {\n    updateTime: \"2024-01-15T09:30:00Z\",\n    updateInfo: SeedTrace.WorkspaceSubmissionUpdateInfo.running(SeedTrace.RunningSubmissionState.QueueingSubmission)\n});\n"
             }
         },
         {
@@ -63,7 +63,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.admin.storeTracedTestCase(SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"), \"string\", {\n    result: {\n        result: {},\n        stdout: \"string\"\n    },\n    traceResponses: [{\n            submissionId: SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"),\n            lineNumber: 1,\n            returnValue: SeedTrace.DebugVariableValue.integerValue(1),\n            expressionLocation: {},\n            stack: {},\n            stdout: \"string\"\n        }]\n});\n"
+                "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.admin.storeTracedTestCase(SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"), \"string\", {\n    result: {\n        result: {\n            expectedResult: SeedTrace.VariableValue.integerValue(1),\n            actualResult: SeedTrace.ActualResult.value(SeedTrace.VariableValue.integerValue({\n                \"key\": \"value\"\n            })),\n            passed: true\n        },\n        stdout: \"string\"\n    },\n    traceResponses: [{\n            submissionId: SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"),\n            lineNumber: 1,\n            returnValue: SeedTrace.DebugVariableValue.integerValue(1),\n            expressionLocation: {\n                start: 1,\n                offset: 1\n            },\n            stack: {\n                numStackFrames: 1,\n                topStackFrame: {\n                    methodName: \"string\",\n                    lineNumber: 1,\n                    scopes: [{\n                            variables: {\n                                \"string\": {\n                                    \"key\": \"value\"\n                                }\n                            }\n                        }]\n                }\n            },\n            stdout: \"string\"\n        }]\n});\n"
             }
         },
         {
@@ -74,7 +74,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.admin.storeTracedTestCaseV2(SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"), SeedTrace.TestCaseId(\"string\"), [{\n        submissionId: SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"),\n        lineNumber: 1,\n        file: {},\n        returnValue: SeedTrace.DebugVariableValue.integerValue(1),\n        expressionLocation: {},\n        stack: {},\n        stdout: \"string\"\n    }]);\n"
+                "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.admin.storeTracedTestCaseV2(SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"), SeedTrace.TestCaseId(\"string\"), [{\n        submissionId: SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"),\n        lineNumber: 1,\n        file: {\n            filename: \"string\",\n            directory: \"string\"\n        },\n        returnValue: SeedTrace.DebugVariableValue.integerValue(1),\n        expressionLocation: {\n            start: 1,\n            offset: 1\n        },\n        stack: {\n            numStackFrames: 1,\n            topStackFrame: {\n                methodName: \"string\",\n                lineNumber: 1,\n                scopes: [{\n                        variables: {\n                            \"string\": {\n                                \"key\": \"value\"\n                            }\n                        }\n                    }]\n            }\n        },\n        stdout: \"string\"\n    }]);\n"
             }
         },
         {
@@ -85,7 +85,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.admin.storeTracedWorkspace(SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"), {\n    workspaceRunDetails: {\n        exceptionV2: SeedTrace.ExceptionV2.generic({}),\n        exception: {},\n        stdout: \"string\"\n    },\n    traceResponses: [{\n            submissionId: SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"),\n            lineNumber: 1,\n            returnValue: SeedTrace.DebugVariableValue.integerValue(1),\n            expressionLocation: {},\n            stack: {},\n            stdout: \"string\"\n        }]\n});\n"
+                "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.admin.storeTracedWorkspace(SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"), {\n    workspaceRunDetails: {\n        exceptionV2: SeedTrace.ExceptionV2.generic({\n            exceptionType: \"string\",\n            exceptionMessage: \"string\",\n            exceptionStacktrace: \"string\"\n        }),\n        exception: {\n            exceptionType: \"string\",\n            exceptionMessage: \"string\",\n            exceptionStacktrace: \"string\"\n        },\n        stdout: \"string\"\n    },\n    traceResponses: [{\n            submissionId: SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"),\n            lineNumber: 1,\n            returnValue: SeedTrace.DebugVariableValue.integerValue(1),\n            expressionLocation: {\n                start: 1,\n                offset: 1\n            },\n            stack: {\n                numStackFrames: 1,\n                topStackFrame: {\n                    methodName: \"string\",\n                    lineNumber: 1,\n                    scopes: [{\n                            variables: {\n                                \"string\": {\n                                    \"key\": \"value\"\n                                }\n                            }\n                        }]\n                }\n            },\n            stdout: \"string\"\n        }]\n});\n"
             }
         },
         {
@@ -96,7 +96,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.admin.storeTracedWorkspaceV2(SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"), [{\n        submissionId: SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"),\n        lineNumber: 1,\n        file: {},\n        returnValue: SeedTrace.DebugVariableValue.integerValue(1),\n        expressionLocation: {},\n        stack: {},\n        stdout: \"string\"\n    }]);\n"
+                "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.admin.storeTracedWorkspaceV2(SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"), [{\n        submissionId: SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"),\n        lineNumber: 1,\n        file: {\n            filename: \"string\",\n            directory: \"string\"\n        },\n        returnValue: SeedTrace.DebugVariableValue.integerValue(1),\n        expressionLocation: {\n            start: 1,\n            offset: 1\n        },\n        stack: {\n            numStackFrames: 1,\n            topStackFrame: {\n                methodName: \"string\",\n                lineNumber: 1,\n                scopes: [{\n                        variables: {\n                            \"string\": {\n                                \"key\": \"value\"\n                            }\n                        }\n                    }]\n            }\n        },\n        stdout: \"string\"\n    }]);\n"
             }
         },
         {
@@ -140,7 +140,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.playlist.createPlaylist(1, {\n    datetime: new Date(\"2024-01-15T09:30:00.000Z\"),\n    optionalDatetime: new Date(\"2024-01-15T09:30:00.000Z\"),\n    body: {\n        name: \"string\",\n        problems: [SeedTrace.ProblemId(\"string\")]\n    }\n});\n"
+                "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.playlist.createPlaylist(1, {\n    datetime: \"2024-01-15T09:30:00Z\",\n    optionalDatetime: \"2024-01-15T09:30:00Z\",\n    body: {\n        name: \"string\",\n        problems: [SeedTrace.ProblemId(\"string\")]\n    }\n});\n"
             }
         },
         {

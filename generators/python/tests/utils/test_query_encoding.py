@@ -1,5 +1,5 @@
 
-from core_utilities.sdk.query_encoder import encode_query
+from core_utilities.shared.query_encoder import encode_query
 
 
 def test_query_encoding_deep_objects() -> None:

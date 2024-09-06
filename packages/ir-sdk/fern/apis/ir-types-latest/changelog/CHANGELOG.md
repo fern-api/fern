@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v53.9.0] - 2024-08-12 (TODO: Make required in next major)
+
+- Feature: Introduce a `PublishingConfig` to the IR instead of trying to go through Fiddle.
+
+## [v53.8.0] - 2024-08-12 (TODO: Make required in next major)
+
+- Fix: Include the raw datetime alongside the parsed datetime in `ExamplePrimitive`. 
+
+## [v53.7.2] - 2024-08-12
+
+- Fix: Upgrade the Pydantic generator so that `enum_type` is set to `python_enums`
+
+## [v53.7.1] - 2024-08-12
+
+- Fix: Upgrade the Pydantic generator so that `unknown` properties that are missing do not throw. 
+
 ## [v53.7.0] - 2024-08-12
 
 - Improvement: The IR now contains a `shape` field on the `ExampleQueryParameter` type that denotes whether the parameter

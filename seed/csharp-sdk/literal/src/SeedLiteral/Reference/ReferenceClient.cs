@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedLiteral.Core;
 
 #nullable enable
@@ -15,7 +16,24 @@ public partial class ReferenceClient
         _client = client;
     }
 
-    public async Task<SendResponse> SendAsync(SendRequest request, RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Reference.SendAsync(
+    ///     new SendRequest
+    ///     {
+    ///         Prompt = "You are a helpful assistant",
+    ///         Stream = false,
+    ///         Context = "You're super wise",
+    ///         Query = "What is the weather today",
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
+    public async Task<SendResponse> SendAsync(
+        SendRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -24,8 +42,9 @@ public partial class ReferenceClient
                 Method = HttpMethod.Post,
                 Path = "reference",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

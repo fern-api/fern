@@ -15,6 +15,7 @@ import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
@@ -66,7 +67,7 @@ public final class GetGeneratedTestCaseFileRequest {
   }
 
   public interface TestCaseStage {
-    _FinalStage testCase(TestCaseV2 testCase);
+    _FinalStage testCase(@NotNull TestCaseV2 testCase);
 
     Builder from(GetGeneratedTestCaseFileRequest other);
   }
@@ -99,8 +100,8 @@ public final class GetGeneratedTestCaseFileRequest {
 
     @java.lang.Override
     @JsonSetter("testCase")
-    public _FinalStage testCase(TestCaseV2 testCase) {
-      this.testCase = testCase;
+    public _FinalStage testCase(@NotNull TestCaseV2 testCase) {
+      this.testCase = Objects.requireNonNull(testCase, "testCase must not be null");
       return this;
     }
 

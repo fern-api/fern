@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types;
 
@@ -16,8 +17,14 @@ public partial class NoReqBodyClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.NoReqBody.GetWithNoRequestBodyAsync();
+    /// </code>
+    /// </example>
     public async Task<ObjectWithOptionalField> GetWithNoRequestBodyAsync(
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -26,8 +33,9 @@ public partial class NoReqBodyClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "/no-req-body",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -49,7 +57,15 @@ public partial class NoReqBodyClient
         );
     }
 
-    public async Task<string> PostWithNoRequestBodyAsync(RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.NoReqBody.PostWithNoRequestBodyAsync();
+    /// </code>
+    /// </example>
+    public async Task<string> PostWithNoRequestBodyAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -57,8 +73,9 @@ public partial class NoReqBodyClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/no-req-body",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

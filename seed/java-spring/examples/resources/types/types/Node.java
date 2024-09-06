@@ -16,6 +16,7 @@ import java.lang.String;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
@@ -74,7 +75,7 @@ public final class Node {
   }
 
   public interface NameStage {
-    _FinalStage name(String name);
+    _FinalStage name(@NotNull String name);
 
     Builder from(Node other);
   }
@@ -114,8 +115,8 @@ public final class Node {
 
     @java.lang.Override
     @JsonSetter("name")
-    public _FinalStage name(String name) {
-      this.name = name;
+    public _FinalStage name(@NotNull String name) {
+      this.name = Objects.requireNonNull(name, "name must not be null");
       return this;
     }
 

@@ -18,14 +18,14 @@ public class NameTest
         var inputJson =
             @"
         {
-  ""id"": ""name-sdfg8ajk"",
-  ""value"": ""name""
-}
-";
+          ""id"": ""name-sdfg8ajk"",
+          ""value"": ""name""
+        }
+        ";
 
         var serializerOptions = new JsonSerializerOptions
         {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         };
 
         var deserializedObject = JsonSerializer.Deserialize<Name>(inputJson, serializerOptions);

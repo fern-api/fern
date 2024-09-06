@@ -56,9 +56,9 @@ import { SdkInlinedRequestBodyDeclarationReferencer } from "./declaration-refere
 import { TimeoutSdkErrorDeclarationReferencer } from "./declaration-referencers/TimeoutSdkErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "./declaration-referencers/TypeDeclarationReferencer";
 import { VersionDeclarationReferencer } from "./declaration-referencers/VersionDeclarationReferencer";
-import { GeneratorCli } from "./generator-cli/Client";
-import { ReadmeGenerator } from "./generator-cli/ReadmeGenerator";
-import { ReferenceGenerator } from "./generator-cli/ReferenceGenerator";
+import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
+import { ReferenceConfigBuilder } from "@fern-api/generator-commons";
+import { TypeScriptGeneratorAgent } from "./TypeScriptGeneratorAgent";
 import { TemplateGenerator } from "./TemplateGenerator";
 import { JestTestGenerator } from "./test-generator/JestTestGenerator";
 import { VersionGenerator } from "./version/VersionGenerator";
@@ -123,8 +123,6 @@ export declare namespace SdkGenerator {
         organization: string;
         apiName: string;
         packageJson: Record<string, unknown> | undefined;
-        githubRepoUrl: string | undefined;
-        githubInstallationToken: string | undefined;
     }
 }
 
@@ -182,9 +180,8 @@ export class SdkGenerator {
     private timeoutSdkErrorGenerator: TimeoutSdkErrorGenerator;
     private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     private jestTestGenerator: JestTestGenerator;
-    private generatorCli: GeneratorCli;
-    private readmeGenerator: ReadmeGenerator;
-    private refGenerator: ReferenceGenerator;
+    private referenceConfigBuilder: ReferenceConfigBuilder;
+    private generatorAgent: TypeScriptGeneratorAgent;
     private FdrClient: FdrSnippetTemplateClient | undefined;
 
     constructor({
@@ -360,21 +357,20 @@ export class SdkGenerator {
             allowExtraFields: config.allowExtraFields,
             omitUndefined: config.omitUndefined
         });
-        this.jestTestGenerator = new JestTestGenerator(
-            intermediateRepresentation,
-            this.dependencyManager,
-            this.rootDirectory,
-            this.config.writeUnitTests
-        );
-        this.generatorCli = new GeneratorCli({
-            logger: context.logger
+        this.jestTestGenerator = new JestTestGenerator({
+            ir: intermediateRepresentation,
+            dependencyManager: this.dependencyManager,
+            rootDirectory: this.rootDirectory,
+            writeUnitTests: this.config.writeUnitTests,
+            includeSerdeLayer: config.includeSerdeLayer
         });
-        this.readmeGenerator = new ReadmeGenerator({
-            generatorCli: this.generatorCli,
-            logger: context.logger
-        });
-        this.refGenerator = new ReferenceGenerator({
-            generatorCli: this.generatorCli
+        this.referenceConfigBuilder = new ReferenceConfigBuilder();
+        this.generatorAgent = new TypeScriptGeneratorAgent({
+            logger: this.context.logger,
+            config: this.rawConfig,
+            readmeConfigBuilder: new ReadmeConfigBuilder({
+                endpointSnippets: this.endpointSnippets
+            })
         });
 
         this.FdrClient =
@@ -732,17 +728,12 @@ export class SdkGenerator {
             return;
         }
         await this.withRawFile({
-            filepath: this.readmeGenerator.getExportedFilePath(),
+            filepath: this.generatorAgent.getExportedReadmeFilePath(),
             run: async ({ sourceFile, importsManager }) => {
                 const context = this.generateSdkContext({ sourceFile, importsManager });
-                const readmeContent = await this.readmeGenerator.generateReadme({
+                const readmeContent = await this.generatorAgent.generateReadme({
                     context,
-                    ir: this.intermediateRepresentation,
-                    organization: this.config.organization,
-                    npmPackage: this.npmPackage,
-                    endpointSnippets: this.endpointSnippets,
-                    githubRepoUrl: this.config.githubRepoUrl,
-                    githubInstallationToken: this.config.githubInstallationToken
+                    endpointSnippets: this.endpointSnippets
                 });
                 sourceFile.replaceWithText(readmeContent);
             }
@@ -750,14 +741,15 @@ export class SdkGenerator {
     }
 
     private async generateReference(): Promise<void> {
-        if (this.refGenerator.isEmpty()) {
+        if (this.referenceConfigBuilder.isEmpty()) {
             // Don't generate a reference.md if there aren't any sections.
             return;
         }
         await this.withRawFile({
-            filepath: this.refGenerator.getExportedFilePath(),
-            run: async ({ sourceFile }) => {
-                const referenceContent = await this.refGenerator.generateReference();
+            filepath: this.generatorAgent.getExportedReferenceFilePath(),
+            run: async ({ sourceFile, importsManager }) => {
+                const context = this.generateSdkContext({ sourceFile, importsManager });
+                const referenceContent = await this.generatorAgent.generateReference(this.referenceConfigBuilder);
                 sourceFile.replaceWithText(referenceContent);
             }
         });
@@ -819,7 +811,7 @@ export class SdkGenerator {
             if (service.endpoints.length === 0) {
                 return;
             }
-            let serviceReference = this.refGenerator.addSection({
+            let serviceReference = this.referenceConfigBuilder.addSection({
                 title:
                     service.displayName ??
                     service.name.fernFilepath.allParts.map((part) => part.pascalCase.unsafeName).join(" ")
@@ -830,7 +822,7 @@ export class SdkGenerator {
 
             for (const endpoint of service.endpoints) {
                 if (packageId.isRoot) {
-                    serviceReference = this.refGenerator.addRootSection();
+                    serviceReference = this.referenceConfigBuilder.addRootSection();
                 }
 
                 if (this.config.snippetTemplateFilepath != null && this.npmPackage != null) {
@@ -1215,6 +1207,7 @@ export class SdkGenerator {
         { isForSnippet }: { isForSnippet?: boolean } = {}
     ): SdkContextImpl {
         return new SdkContextImpl({
+            logger: this.context.logger,
             config: this.rawConfig,
             ir: this.intermediateRepresentation,
             npmPackage: this.npmPackage,

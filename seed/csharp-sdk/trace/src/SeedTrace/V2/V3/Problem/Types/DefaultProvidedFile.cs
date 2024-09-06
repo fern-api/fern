@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedTrace.Core;
 
 #nullable enable
 
@@ -11,4 +12,9 @@ public record DefaultProvidedFile
 
     [JsonPropertyName("relatedTypes")]
     public IEnumerable<object> RelatedTypes { get; set; } = new List<object>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

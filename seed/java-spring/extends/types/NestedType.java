@@ -13,6 +13,7 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
@@ -73,17 +74,17 @@ public final class NestedType implements IJson {
   }
 
   public interface RawStage {
-    DocsStage raw(String raw);
+    DocsStage raw(@NotNull String raw);
 
     Builder from(NestedType other);
   }
 
   public interface DocsStage {
-    NameStage docs(String docs);
+    NameStage docs(@NotNull String docs);
   }
 
   public interface NameStage {
-    _FinalStage name(String name);
+    _FinalStage name(@NotNull String name);
   }
 
   public interface _FinalStage {
@@ -113,22 +114,22 @@ public final class NestedType implements IJson {
 
     @java.lang.Override
     @JsonSetter("raw")
-    public DocsStage raw(String raw) {
-      this.raw = raw;
+    public DocsStage raw(@NotNull String raw) {
+      this.raw = Objects.requireNonNull(raw, "raw must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("docs")
-    public NameStage docs(String docs) {
-      this.docs = docs;
+    public NameStage docs(@NotNull String docs) {
+      this.docs = Objects.requireNonNull(docs, "docs must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("name")
-    public _FinalStage name(String name) {
-      this.name = name;
+    public _FinalStage name(@NotNull String name) {
+      this.name = Objects.requireNonNull(name, "name must not be null");
       return this;
     }
 

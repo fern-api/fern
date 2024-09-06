@@ -14,6 +14,7 @@ import com.seed.trace.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = LightweightStackframeInformation.Builder.class)
@@ -77,7 +78,7 @@ public final class LightweightStackframeInformation {
     }
 
     public interface TopStackFrameMethodNameStage {
-        _FinalStage topStackFrameMethodName(String topStackFrameMethodName);
+        _FinalStage topStackFrameMethodName(@NotNull String topStackFrameMethodName);
     }
 
     public interface _FinalStage {
@@ -111,8 +112,9 @@ public final class LightweightStackframeInformation {
 
         @java.lang.Override
         @JsonSetter("topStackFrameMethodName")
-        public _FinalStage topStackFrameMethodName(String topStackFrameMethodName) {
-            this.topStackFrameMethodName = topStackFrameMethodName;
+        public _FinalStage topStackFrameMethodName(@NotNull String topStackFrameMethodName) {
+            this.topStackFrameMethodName =
+                    Objects.requireNonNull(topStackFrameMethodName, "topStackFrameMethodName must not be null");
             return this;
         }
 

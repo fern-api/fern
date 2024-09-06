@@ -1,0 +1,122 @@
+types:
+  StringAlias:
+    type: string
+    examples:
+      - value: I am a string
+      - value: 14
+      - value:
+          key: some value
+  IntegerAlias1: integer
+  IntegerAlias2:
+    type: integer
+    examples:
+      - value: 1
+      - value: 2.0
+      - value: 3.14
+  LongAlias:
+    type: long
+    examples:
+      - value: 1
+      - value: 9120830129830912
+      - value: hello
+  DoubleAlias:
+    type: double
+    examples:
+      - value: 1
+      - value: 3.14
+      - value: false
+  BooleanAlias:
+    type: boolean
+    examples:
+      - value: true
+      - value: 100
+      - value: false
+  DateAlias:
+    type: date
+    examples:
+      - value: "2024-01-01"
+      - value: "2024-01-35"
+      - value: "2024-01-01T00:00:00Z"
+      - value: "2024-1-1"
+  DateTimeAlias:
+    type: datetime
+    examples:
+      - value: 4/13/2002
+      - value: "2022-12-06T23:13:15+00:00"
+      - value: "2022-12-06T23:13:15Z"
+      - value: "20221206T231315Z"
+      - value: "2024-01-01"
+  UnknownAlias:
+    type: unknown
+    examples:
+      - value: 213
+      - value: hello
+      - value:
+          key: value
+  UuidAlias:
+    type: uuid
+    examples:
+      - value: my-id
+      - value: 123e4567-e89b-12d3-a456-426614174000
+  ListAlias:
+    type: list<string>
+    examples:
+      - value:
+          - hello
+          - world
+      - value:
+          - hello
+          - 3.14
+      - value: hello
+  SetAlias:
+    type: set<string>
+    examples:
+      - value:
+          key: value
+      - value:
+          - hello
+          - world
+      - value:
+          - hello
+          - hello
+      - value:
+          - hello
+          - 3.14
+  MapAlias:
+    type: map<string, integer>
+    examples:
+      - value:
+          key: 4
+          otherKey: 42
+      - value:
+          key: 1
+          lastKey: 3.15
+      - value:
+          - hello
+  OptionalAlias:
+    type: optional<double>
+    examples:
+      - value: hello
+      - value: null
+      - value: 3.0
+  LiteralAlias:
+    type: literal<"hello">
+    examples:
+      - value: hello
+      - value: goodbye
+  LiteralFalseAlias:
+    type: literal<false>
+    examples:
+      - value: false
+      - value: true
+      - value: "false"
+      - value: "true"
+      - value: goodbye
+  LiteralTrueAlias:
+    type: literal<true>
+    examples:
+      - value: true
+      - value: false
+      - value: "true"
+      - value: "false"
+      - value: goodbye

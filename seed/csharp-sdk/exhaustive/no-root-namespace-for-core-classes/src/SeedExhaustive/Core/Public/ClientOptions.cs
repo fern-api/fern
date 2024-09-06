@@ -26,4 +26,9 @@ public partial class ClientOptions
     /// The timeout for the request.
     /// </summary>
     public TimeSpan Timeout { get; init; } = TimeSpan.FromSeconds(30);
+
+    /// <summary>
+    /// The http headers sent with the request.
+    /// </summary>
+    internal Headers Headers { get; init; } = new();
 }

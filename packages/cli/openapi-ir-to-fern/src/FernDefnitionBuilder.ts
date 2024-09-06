@@ -1,7 +1,7 @@
 import { FERN_PACKAGE_MARKER_FILENAME, ROOT_API_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, dirname, relative, RelativeFilePath } from "@fern-api/fs-utils";
 import { OpenApiIntermediateRepresentation, Source } from "@fern-api/openapi-ir-sdk";
-import { RawSchemas, RootApiFileSchema, visitRawEnvironmentDeclaration } from "@fern-api/yaml-schema";
+import { RawSchemas, RootApiFileSchema, visitRawEnvironmentDeclaration } from "@fern-api/fern-definition-schema";
 import { camelCase, isEqual } from "lodash-es";
 import path, { basename, extname } from "path";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema";
@@ -11,7 +11,7 @@ export interface FernDefinitionBuilder {
 
     addAuthScheme({ name, schema }: { name: string; schema: RawSchemas.AuthSchemeDeclarationSchema }): void;
 
-    setAuth(name: string): void;
+    setAuth(name: RawSchemas.ApiAuthSchema): void;
 
     getGlobalHeaderNames(): Set<string>;
 
@@ -24,6 +24,8 @@ export interface FernDefinitionBuilder {
     addEnvironment({ name, schema }: { name: string; schema: RawSchemas.EnvironmentSchema }): void;
 
     setDefaultEnvironment(name: string): void;
+
+    setDefaultUrl(name: string): void;
 
     setBasePath(basePath: string): void;
 
@@ -136,8 +138,8 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         this.rootApiFile.audiences.push(name);
     }
 
-    public setAuth(name: string): void {
-        this.rootApiFile.auth = name;
+    public setAuth(auth: RawSchemas.ApiAuthSchema): void {
+        this.rootApiFile.auth = auth;
     }
 
     public addAuthScheme({ name, schema }: { name: string; schema: RawSchemas.AuthSchemeDeclarationSchema }): void {
@@ -151,6 +153,10 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
 
     public setDefaultEnvironment(name: string): void {
         this.rootApiFile["default-environment"] = name;
+    }
+
+    public setDefaultUrl(name: string): void {
+        this.rootApiFile["default-url"] = name;
     }
 
     public setBasePath(basePath: string): void {

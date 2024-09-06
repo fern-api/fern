@@ -5,8 +5,10 @@ import abc
 import fastapi
 import typing
 from ..pydantic_utilities import UniversalBaseModel
-import pydantic
+import typing_extensions
+from ..serialization import FieldMetadata
 import uuid
+import pydantic
 import http
 
 
@@ -23,12 +25,12 @@ class FernHTTPException(abc.ABC, fastapi.HTTPException):
         self.content = content
 
     class Body(UniversalBaseModel):
-        error_name: typing.Optional[str] = pydantic.Field(
-            alias="errorName", default=None
-        )
-        error_instance_id: uuid.UUID = pydantic.Field(
-            alias="errorInstanceId", default_factory=uuid.uuid4
-        )
+        error_name: typing_extensions.Annotated[
+            typing.Optional[str], FieldMetadata(alias="errorName")
+        ] = None
+        error_instance_id: typing_extensions.Annotated[
+            uuid.UUID, FieldMetadata(alias="errorInstanceId")
+        ] = pydantic.Field(default_factory=uuid.uuid4)
         content: typing.Optional[typing.Any] = None
 
     def to_json_response(self) -> fastapi.responses.JSONResponse:

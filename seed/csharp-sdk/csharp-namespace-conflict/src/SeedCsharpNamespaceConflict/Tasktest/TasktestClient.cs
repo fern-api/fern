@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Threading;
 using SeedCsharpNamespaceConflict.Core;
 
 #nullable enable
@@ -14,7 +15,15 @@ public partial class TasktestClient
         _client = client;
     }
 
-    public async System.Threading.Tasks.Task HelloAsync(RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Tasktest.HelloAsync();
+    /// </code>
+    /// </example>
+    public async System.Threading.Tasks.Task HelloAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -22,8 +31,9 @@ public partial class TasktestClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "hello",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {

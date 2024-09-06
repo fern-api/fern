@@ -38,7 +38,7 @@ class CursorPagination(Paginator):
         return self._next_none_safe_condition
 
     def init_has_next(self) -> str:
-        return f"{CursorPagination.PARSED_RESPONSE_NEXT_VARIABLE} is not None"
+        return f'{CursorPagination.PARSED_RESPONSE_NEXT_VARIABLE} is not None and {CursorPagination.PARSED_RESPONSE_NEXT_VARIABLE} != ""'
 
     def init_get_next(self, *, writer: AST.NodeWriter) -> None:
         writer.write("lambda: ")

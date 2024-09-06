@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types;
 
@@ -16,9 +17,32 @@ public partial class ObjectClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Endpoints.Object.GetAndReturnWithOptionalFieldAsync(
+    ///     new ObjectWithOptionalField
+    ///     {
+    ///         String = "string",
+    ///         Integer = 1,
+    ///         Long = 1000000,
+    ///         Double = 1.1,
+    ///         Bool = true,
+    ///         Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Date = new DateOnly(2023, 1, 15),
+    ///         Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///         Base64 = "SGVsbG8gd29ybGQh",
+    ///         List = new List<string>() { "string" },
+    ///         Set = new HashSet<string>() { "string" },
+    ///         Map = new Dictionary<int, string>() { { 1, "string" } },
+    ///         Bigint = "123456789123456789",
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<ObjectWithOptionalField> GetAndReturnWithOptionalFieldAsync(
         ObjectWithOptionalField request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -28,8 +52,9 @@ public partial class ObjectClient
                 Method = HttpMethod.Post,
                 Path = "/object/get-and-return-with-optional-field",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -51,9 +76,17 @@ public partial class ObjectClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Endpoints.Object.GetAndReturnWithRequiredFieldAsync(
+    ///     new ObjectWithRequiredField { String = "string" }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<ObjectWithRequiredField> GetAndReturnWithRequiredFieldAsync(
         ObjectWithRequiredField request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -63,8 +96,9 @@ public partial class ObjectClient
                 Method = HttpMethod.Post,
                 Path = "/object/get-and-return-with-required-field",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -86,9 +120,26 @@ public partial class ObjectClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Endpoints.Object.GetAndReturnWithMapOfMapAsync(
+    ///     new ObjectWithMapOfMap
+    ///     {
+    ///         Map = new Dictionary<string, Dictionary<string, string>>()
+    ///         {
+    ///             {
+    ///                 "string",
+    ///                 new Dictionary<string, string>() { { "string", "string" } }
+    ///             },
+    ///         },
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<ObjectWithMapOfMap> GetAndReturnWithMapOfMapAsync(
         ObjectWithMapOfMap request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -98,8 +149,9 @@ public partial class ObjectClient
                 Method = HttpMethod.Post,
                 Path = "/object/get-and-return-with-map-of-map",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -121,9 +173,36 @@ public partial class ObjectClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Endpoints.Object.GetAndReturnNestedWithOptionalFieldAsync(
+    ///     new NestedObjectWithOptionalField
+    ///     {
+    ///         String = "string",
+    ///         NestedObject = new ObjectWithOptionalField
+    ///         {
+    ///             String = "string",
+    ///             Integer = 1,
+    ///             Long = 1000000,
+    ///             Double = 1.1,
+    ///             Bool = true,
+    ///             Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///             Date = new DateOnly(2023, 1, 15),
+    ///             Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///             Base64 = "SGVsbG8gd29ybGQh",
+    ///             List = new List<string>() { "string" },
+    ///             Set = new HashSet<string>() { "string" },
+    ///             Map = new Dictionary<int, string>() { { 1, "string" } },
+    ///             Bigint = "123456789123456789",
+    ///         },
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<NestedObjectWithOptionalField> GetAndReturnNestedWithOptionalFieldAsync(
         NestedObjectWithOptionalField request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -133,8 +212,9 @@ public partial class ObjectClient
                 Method = HttpMethod.Post,
                 Path = "/object/get-and-return-nested-with-optional-field",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -156,10 +236,38 @@ public partial class ObjectClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsync(
+    ///     "string",
+    ///     new NestedObjectWithRequiredField
+    ///     {
+    ///         String = "string",
+    ///         NestedObject = new ObjectWithOptionalField
+    ///         {
+    ///             String = "string",
+    ///             Integer = 1,
+    ///             Long = 1000000,
+    ///             Double = 1.1,
+    ///             Bool = true,
+    ///             Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///             Date = new DateOnly(2023, 1, 15),
+    ///             Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///             Base64 = "SGVsbG8gd29ybGQh",
+    ///             List = new List<string>() { "string" },
+    ///             Set = new HashSet<string>() { "string" },
+    ///             Map = new Dictionary<int, string>() { { 1, "string" } },
+    ///             Bigint = "123456789123456789",
+    ///         },
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<NestedObjectWithRequiredField> GetAndReturnNestedWithRequiredFieldAsync(
         string string_,
         NestedObjectWithRequiredField request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -169,8 +277,9 @@ public partial class ObjectClient
                 Method = HttpMethod.Post,
                 Path = $"/object/get-and-return-nested-with-required-field/{string_}",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -192,9 +301,39 @@ public partial class ObjectClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsListAsync(
+    ///     new List<NestedObjectWithRequiredField>()
+    ///     {
+    ///         new NestedObjectWithRequiredField
+    ///         {
+    ///             String = "string",
+    ///             NestedObject = new ObjectWithOptionalField
+    ///             {
+    ///                 String = "string",
+    ///                 Integer = 1,
+    ///                 Long = 1000000,
+    ///                 Double = 1.1,
+    ///                 Bool = true,
+    ///                 Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///                 Date = new DateOnly(2023, 1, 15),
+    ///                 Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///                 Base64 = "SGVsbG8gd29ybGQh",
+    ///                 List = new List<string>() { "string" },
+    ///                 Set = new HashSet<string>() { "string" },
+    ///                 Map = new Dictionary<int, string>() { { 1, "string" } },
+    ///                 Bigint = "123456789123456789",
+    ///             },
+    ///         },
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<NestedObjectWithRequiredField> GetAndReturnNestedWithRequiredFieldAsListAsync(
         IEnumerable<NestedObjectWithRequiredField> request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -204,8 +343,9 @@ public partial class ObjectClient
                 Method = HttpMethod.Post,
                 Path = "/object/get-and-return-nested-with-required-field-list",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

@@ -1,20 +1,28 @@
 import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { ExampleObjectType, NameAndWireValue, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
+import {
+    ExampleObjectType,
+    NameAndWireValue,
+    ObjectProperty,
+    ObjectTypeDeclaration,
+    TypeDeclaration
+} from "@fern-fern/ir-sdk/api";
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import { ExampleGenerator } from "../snippets/ExampleGenerator";
 import { getUndiscriminatedUnionSerializerAnnotation } from "../undiscriminated-union/getUndiscriminatedUnionSerializerAnnotation";
 
 export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
+    private readonly typeDeclaration: TypeDeclaration;
     private readonly classReference: csharp.ClassReference;
     private readonly exampleGenerator: ExampleGenerator;
     constructor(
         context: ModelGeneratorContext,
-        private readonly typeDeclaration: TypeDeclaration,
+        typeDeclaration: TypeDeclaration,
         private readonly objectDeclaration: ObjectTypeDeclaration
     ) {
         super(context);
+        this.typeDeclaration = typeDeclaration;
         this.classReference = this.context.csharpTypeMapper.convertToClassReference(this.typeDeclaration.name);
         this.exampleGenerator = new ExampleGenerator(context);
     }
@@ -31,18 +39,6 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
             ...(this.objectDeclaration.extendedProperties ?? [])
         ];
         flattenedProperties.forEach((property) => {
-            const annotations: csharp.Annotation[] = [];
-            const maybeUndiscriminatedUnion = this.context.getAsUndiscriminatedUnionTypeDeclaration(property.valueType);
-            if (maybeUndiscriminatedUnion != null) {
-                annotations.push(
-                    getUndiscriminatedUnionSerializerAnnotation({
-                        context: this.context,
-                        undiscriminatedUnionDeclaration: maybeUndiscriminatedUnion.declaration,
-                        isList: maybeUndiscriminatedUnion.isList
-                    })
-                );
-            }
-
             class_.addField(
                 csharp.field({
                     name: this.getPropertyName({ className: this.classReference.name, objectProperty: property.name }),
@@ -52,11 +48,19 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
                     set: true,
                     summary: property.docs,
                     jsonPropertyName: property.name.wireValue,
-                    annotations,
                     useRequired: true
                 })
             );
         });
+
+        class_.addMethod(this.context.getToStringMethod());
+
+        if (this.shouldAddProtobufMappers(this.typeDeclaration)) {
+            this.addProtobufMappers({
+                class_,
+                flattenedProperties
+            });
+        }
 
         return new CSharpFile({
             clazz: class_,
@@ -68,13 +72,22 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
         });
     }
 
-    public doGenerateSnippet(exampleObject: ExampleObjectType): csharp.CodeBlock {
+    public doGenerateSnippet({
+        exampleObject,
+        parseDatetimes
+    }: {
+        exampleObject: ExampleObjectType;
+        parseDatetimes: boolean;
+    }): csharp.CodeBlock {
         const args = exampleObject.properties.map((exampleProperty) => {
             const propertyName = this.getPropertyName({
                 className: this.classReference.name,
                 objectProperty: exampleProperty.name
             });
-            const assignment = this.exampleGenerator.getSnippetForTypeReference(exampleProperty.value);
+            const assignment = this.exampleGenerator.getSnippetForTypeReference({
+                exampleTypeReference: exampleProperty.value,
+                parseDatetimes
+            });
             // todo: considering filtering out "assignments" are are actually just null so that null properties
             // are completely excluded from object initializers
             return { name: propertyName, assignment };
@@ -84,6 +97,41 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
             arguments_: args
         });
         return csharp.codeblock((writer) => writer.writeNode(instantiateClass));
+    }
+
+    private addProtobufMappers({
+        class_,
+        flattenedProperties
+    }: {
+        class_: csharp.Class;
+        flattenedProperties: ObjectProperty[];
+    }): void {
+        const protobufClassReference = this.context.protobufResolver.getProtobufClassReferenceOrThrow(
+            this.typeDeclaration.name.typeId
+        );
+        const properties = flattenedProperties.map((property) => {
+            return {
+                propertyName: this.getPropertyName({
+                    className: this.classReference.name,
+                    objectProperty: property.name
+                }),
+                typeReference: property.valueType
+            };
+        });
+        class_.addMethod(
+            this.context.csharpProtobufTypeMapper.toProtoMethod({
+                classReference: this.classReference,
+                protobufClassReference,
+                properties
+            })
+        );
+        class_.addMethod(
+            this.context.csharpProtobufTypeMapper.fromProtoMethod({
+                classReference: this.classReference,
+                protobufClassReference,
+                properties
+            })
+        );
     }
 
     /**
@@ -101,6 +149,10 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
             return `${propertyName}_`;
         }
         return propertyName;
+    }
+
+    private shouldAddProtobufMappers(typeDeclaration: TypeDeclaration): boolean {
+        return typeDeclaration.encoding?.proto != null;
     }
 
     protected getFilepath(): RelativeFilePath {

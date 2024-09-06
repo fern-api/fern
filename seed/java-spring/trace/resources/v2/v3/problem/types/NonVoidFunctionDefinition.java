@@ -13,6 +13,7 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
@@ -64,13 +65,13 @@ public final class NonVoidFunctionDefinition {
   }
 
   public interface SignatureStage {
-    CodeStage signature(NonVoidFunctionSignature signature);
+    CodeStage signature(@NotNull NonVoidFunctionSignature signature);
 
     Builder from(NonVoidFunctionDefinition other);
   }
 
   public interface CodeStage {
-    _FinalStage code(FunctionImplementationForMultipleLanguages code);
+    _FinalStage code(@NotNull FunctionImplementationForMultipleLanguages code);
   }
 
   public interface _FinalStage {
@@ -97,15 +98,15 @@ public final class NonVoidFunctionDefinition {
 
     @java.lang.Override
     @JsonSetter("signature")
-    public CodeStage signature(NonVoidFunctionSignature signature) {
-      this.signature = signature;
+    public CodeStage signature(@NotNull NonVoidFunctionSignature signature) {
+      this.signature = Objects.requireNonNull(signature, "signature must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("code")
-    public _FinalStage code(FunctionImplementationForMultipleLanguages code) {
-      this.code = code;
+    public _FinalStage code(@NotNull FunctionImplementationForMultipleLanguages code) {
+      this.code = Objects.requireNonNull(code, "code must not be null");
       return this;
     }
 

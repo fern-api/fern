@@ -14,6 +14,7 @@ import com.seed.examples.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Request.Builder.class)
@@ -62,7 +63,7 @@ public final class Request {
     }
 
     public interface RequestStage {
-        _FinalStage request(Object request);
+        _FinalStage request(@NotNull Object request);
 
         Builder from(Request other);
     }
@@ -88,8 +89,8 @@ public final class Request {
 
         @java.lang.Override
         @JsonSetter("request")
-        public _FinalStage request(Object request) {
-            this.request = request;
+        public _FinalStage request(@NotNull Object request) {
+            this.request = Objects.requireNonNull(request, "request must not be null");
             return this;
         }
 

@@ -24,19 +24,17 @@ export const getCollectionOutputFilename = (postmanGeneratorConfig?: PostmanGene
 };
 
 export async function writePostmanCollection(pathToConfig: string): Promise<void> {
-    try {
-        const config = await parseGeneratorConfig(pathToConfig);
+    const config = await parseGeneratorConfig(pathToConfig);
 
+    const generatorLoggingClient = new GeneratorNotificationService(config.environment);
+    // eslint-disable-next-line no-console
+    console.log("Initialized generator logging client");
+
+    try {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const postmanGeneratorConfig = config.customConfig as any as PostmanGeneratorConfigSchema;
-        // eslint-disable-next-line no-console
-        console.log("Validated custom config");
 
         const collectionOutputFilename = getCollectionOutputFilename(postmanGeneratorConfig);
-
-        const generatorLoggingClient = new GeneratorNotificationService(config.environment);
-        // eslint-disable-next-line no-console
-        console.log("Initialized generator logging client");
 
         try {
             await generatorLoggingClient.sendUpdate(
@@ -56,9 +54,7 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
                 })
             );
             const _collectionDefinition = convertToPostmanCollection(ir);
-            const rawCollectionDefinition = await PostmanParsing.PostmanCollectionSchema.jsonOrThrow(
-                _collectionDefinition
-            );
+            const rawCollectionDefinition = PostmanParsing.PostmanCollectionSchema.jsonOrThrow(_collectionDefinition);
             // eslint-disable-next-line no-console
             console.log("Converted ir to postman collection");
 
@@ -76,7 +72,24 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
             );
 
             const outputMode = config.output.mode;
-            if (outputMode.type === "publish" && outputMode.publishTarget != null) {
+
+            const publishConfig = ir.publishConfig;
+            if (publishConfig?.type === "direct" && publishConfig.target.type === "postman") {
+                await publishConfig._visit({
+                    _other: () => undefined,
+                    direct: async () => {
+                        await publishCollection({
+                            publishConfig: {
+                                apiKey: publishConfig.target.apiKey,
+                                workspaceId: publishConfig.target.workspaceId,
+                                collectionId: publishConfig.target.collectionId
+                            },
+                            collection: rawCollectionDefinition
+                        });
+                    },
+                    github: () => undefined
+                });
+            } else if (outputMode.type === "publish" && outputMode.publishTarget != null) {
                 if (outputMode.publishTarget.type !== "postman") {
                     // eslint-disable-next-line no-console
                     console.log(`Received incorrect publish config (type is ${outputMode.type}`);
@@ -116,19 +129,23 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
 
             await generatorLoggingClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful({})));
         } catch (e) {
-            // eslint-disable-next-line no-console
-            console.log("Encountered error", e);
             await generatorLoggingClient.sendUpdate(
                 GeneratorUpdate.exitStatusUpdate(
                     ExitStatusUpdate.error({
-                        message: e instanceof Error ? e.message : "Encountered error"
+                        message: e instanceof Error ? `${e.name}: ${e.message}\n${e.stack}` : "Encountered error"
                     })
                 )
             );
         }
     } catch (e) {
         // eslint-disable-next-line no-console
-        console.log("Encountered error", e);
+        await generatorLoggingClient.sendUpdate(
+            GeneratorUpdate.exitStatusUpdate(
+                ExitStatusUpdate.error({
+                    message: e instanceof Error ? `${e.name}: ${e.message}\n${e.stack}` : "Encountered error"
+                })
+            )
+        );
         throw e;
     }
 }
@@ -146,30 +163,43 @@ async function publishCollection({
         apiKey: publishConfig.apiKey
     });
     const workspace = publishConfig.workspaceId != null ? publishConfig.workspaceId : undefined;
-    // eslint-disable-next-line no-console
-    console.log(`Workspace id is ${workspace}`);
-    const getCollectionMetadataResponse = await postman.collection.getAllCollectionMetadata({
-        workspace
-    });
-    const collectionsToUpdate = getCollectionMetadataResponse.collections.filter((collectionMetadata) => {
-        return collectionMetadata.name === collection.info.name;
-    });
-    if (collectionsToUpdate.length === 0) {
+
+    if (publishConfig.collectionId == null) {
         // eslint-disable-next-line no-console
-        console.log("Creating new postman collection!");
-        await postman.collection.createCollection({
-            workspace,
-            body: { collection }
+        console.log(`Workspace id is ${workspace}`);
+        const getCollectionMetadataResponse = await postman.collection.getAllCollectionMetadata({
+            workspace
         });
+        const collectionsToUpdate = getCollectionMetadataResponse.collections.filter((collectionMetadata) => {
+            return collectionMetadata.name === collection.info.name;
+        });
+        if (collectionsToUpdate.length === 0) {
+            // eslint-disable-next-line no-console
+            console.log("Creating new postman collection!");
+            await postman.collection.createCollection({
+                workspace,
+                body: { collection }
+            });
+        } else {
+            await Promise.all(
+                collectionsToUpdate.map(async (collectionMetadata) => {
+                    // eslint-disable-next-line no-console
+                    console.log("Updating postman collection!");
+                    await postman.collection.updateCollection(collectionMetadata.uid, {
+                        collection
+                    });
+                })
+            );
+        }
     } else {
-        await Promise.all(
-            collectionsToUpdate.map(async (collectionMetadata) => {
-                // eslint-disable-next-line no-console
-                console.log("Updating postman collection!");
-                await postman.collection.updateCollection(collectionMetadata.uid, {
-                    collection
-                });
-            })
+        await postman.collection.updateCollection(
+            publishConfig.collectionId,
+            {
+                collection
+            },
+            {
+                timeoutInSeconds: 180
+            }
         );
     }
 }
@@ -177,5 +207,9 @@ async function publishCollection({
 async function loadIntermediateRepresentation(pathToFile: string): Promise<IntermediateRepresentation> {
     const irString = (await readFile(pathToFile)).toString();
     const irJson = JSON.parse(irString);
-    return IrSerialization.IntermediateRepresentation.parseOrThrow(irJson);
+    return IrSerialization.IntermediateRepresentation.parseOrThrow(irJson, {
+        unrecognizedObjectKeys: "passthrough",
+        allowUnrecognizedUnionMembers: true,
+        allowUnrecognizedEnumValues: true
+    });
 }

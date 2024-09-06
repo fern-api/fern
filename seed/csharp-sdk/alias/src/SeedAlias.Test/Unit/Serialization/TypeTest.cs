@@ -18,14 +18,14 @@ public class TypeTest
         var inputJson =
             @"
         {
-  ""id"": ""type-df89sdg1"",
-  ""name"": ""foo""
-}
-";
+          ""id"": ""type-df89sdg1"",
+          ""name"": ""foo""
+        }
+        ";
 
         var serializerOptions = new JsonSerializerOptions
         {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         };
 
         var deserializedObject = JsonSerializer.Deserialize<Type>(inputJson, serializerOptions);

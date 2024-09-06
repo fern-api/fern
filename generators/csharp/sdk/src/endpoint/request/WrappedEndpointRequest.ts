@@ -2,6 +2,7 @@ import { csharp } from "@fern-api/csharp-codegen";
 import {
     HttpEndpoint,
     HttpHeader,
+    HttpService,
     Name,
     QueryParameter,
     SdkRequest,
@@ -10,7 +11,7 @@ import {
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { RawClient } from "../RawClient";
+import { RawClient } from "../http/RawClient";
 import {
     EndpointRequest,
     HeaderParameterCodeBlock,
@@ -74,7 +75,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 }
                 for (const query of optionalQueryParameters) {
                     const queryParameterReference = `${this.getParameterName()}.${query.name.name.pascalCase.safeName}`;
-                    writer.controlFlow("if", `${queryParameterReference} != null`);
+                    writer.controlFlow("if", csharp.codeblock(`${queryParameterReference} != null`));
                     this.writeQueryParameter(writer, query);
                     writer.endControlFlow();
                 }
@@ -107,12 +108,14 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }
 
     public getHeaderParameterCodeBlock(): HeaderParameterCodeBlock | undefined {
-        if (this.endpoint.headers.length === 0) {
+        const service = this.context.getHttpServiceOrThrow(this.serviceId);
+        const headers = [...service.headers, ...this.endpoint.headers];
+        if (headers.length === 0) {
             return undefined;
         }
         const requiredHeaders: HttpHeader[] = [];
         const optionalHeaders: HttpHeader[] = [];
-        for (const header of this.endpoint.headers) {
+        for (const header of headers) {
             if (this.context.isOptional(header.valueType)) {
                 optionalHeaders.push(header);
             } else {
@@ -124,23 +127,31 @@ export class WrappedEndpointRequest extends EndpointRequest {
             code: csharp.codeblock((writer) => {
                 writer.write(`var ${HEADER_BAG_NAME} = `);
                 writer.writeNodeStatement(
-                    csharp.dictionary({
-                        keyType: csharp.Type.string(),
-                        valueType: csharp.Type.string(),
-                        values: {
-                            type: "entries",
-                            entries: requiredHeaders.map((header) => {
-                                return {
-                                    key: csharp.codeblock(`"${header.name.wireValue}"`),
-                                    value: this.stringify({ reference: header.valueType, name: header.name.name })
-                                };
+                    csharp.instantiateClass({
+                        classReference: this.context.getHeadersClassReference(),
+                        arguments_: [
+                            csharp.dictionary({
+                                keyType: csharp.Type.string(),
+                                valueType: csharp.Type.string(),
+                                values: {
+                                    type: "entries",
+                                    entries: requiredHeaders.map((header) => {
+                                        return {
+                                            key: csharp.codeblock(`"${header.name.wireValue}"`),
+                                            value: this.stringify({
+                                                reference: header.valueType,
+                                                name: header.name.name
+                                            })
+                                        };
+                                    })
+                                }
                             })
-                        }
+                        ]
                     })
                 );
                 for (const header of optionalHeaders) {
                     const headerReference = `${this.getParameterName()}.${header.name.name.pascalCase.safeName}`;
-                    writer.controlFlow("if", `${headerReference} != null`);
+                    writer.controlFlow("if", csharp.codeblock(`${headerReference} != null`));
                     writer.write(`${HEADER_BAG_NAME}["${header.name.wireValue}"] = `);
                     writer.writeNodeStatement(this.stringify({ reference: header.valueType, name: header.name.name }));
                     writer.endControlFlow();
@@ -176,39 +187,26 @@ export class WrappedEndpointRequest extends EndpointRequest {
         allowOptionals?: boolean;
     }): csharp.CodeBlock {
         const parameter = parameterOverride ?? `${this.getParameterName()}.${name.pascalCase.safeName}`;
+        const maybeDotValue = this.isOptional({ typeReference: reference }) && (allowOptionals ?? true) ? ".Value" : "";
         if (this.isString(reference)) {
             return csharp.codeblock(`${parameter}`);
-        } else if (this.isDatetime({ typeReference: reference, allowOptionals: allowOptionals ?? false })) {
+        } else if (this.isDateOrDateTime({ type: "datetime", typeReference: reference })) {
             return csharp.codeblock((writer) => {
-                writer.write(`${parameter}.ToString(`);
+                writer.write(`${parameter}${maybeDotValue}.ToString(`);
                 writer.writeNode(this.context.getConstantsClassReference());
                 writer.write(".DateTimeFormat)");
             });
-        } else if (this.isDatetime({ typeReference: reference, allowOptionals: allowOptionals ?? true })) {
+        } else if (this.isDateOrDateTime({ type: "date", typeReference: reference })) {
             return csharp.codeblock((writer) => {
-                writer.write(`${parameter}.Value.ToString(`);
+                writer.write(`${parameter}${maybeDotValue}.ToString(`);
                 writer.writeNode(this.context.getConstantsClassReference());
-                writer.write(".DateTimeFormat)");
+                writer.write(".DateFormat)");
             });
-        } else if (this.isEnum({ typeReference: reference, allowOptionals: allowOptionals ?? false })) {
+        } else if (this.isEnum({ typeReference: reference })) {
             return csharp.codeblock((writer) => {
-                writer.writeNode(
-                    csharp.classReference({
-                        name: "JsonSerializer",
-                        namespace: "System.Text.Json"
-                    })
-                );
-                writer.write(`.Serialize(${parameter})`);
-            });
-        } else if (this.isEnum({ typeReference: reference, allowOptionals: allowOptionals ?? true })) {
-            return csharp.codeblock((writer) => {
-                writer.writeNode(
-                    csharp.classReference({
-                        name: "JsonSerializer",
-                        namespace: "System.Text.Json"
-                    })
-                );
-                writer.write(`.Serialize(${parameter}.Value)`);
+                // Stringify is an extension method that we wrote in the core namespace, so need to add here
+                writer.addNamespace(this.context.getCoreNamespace());
+                writer.write(`${parameter}${maybeDotValue}.Stringify()`);
             });
         } else {
             return csharp.codeblock(`${parameter}.ToString()`);
@@ -225,13 +223,36 @@ export class WrappedEndpointRequest extends EndpointRequest {
                     requestBodyReference: `${this.getParameterName()}.${this.wrapper.bodyKey.pascalCase.safeName}`
                 };
             },
-            inlinedRequestBody: () => {
+            inlinedRequestBody: (inlinedRequestBody) => {
                 if (this.endpoint.queryParameters.length === 0 && this.endpoint.headers.length === 0) {
                     return {
                         requestBodyReference: `${this.getParameterName()}`
                     };
                 }
-                return undefined;
+                const allProperties = [
+                    ...inlinedRequestBody.properties,
+                    ...(inlinedRequestBody.extendedProperties ?? [])
+                ];
+                const requestBody = csharp.dictionary({
+                    keyType: csharp.Type.string(),
+                    valueType: csharp.Type.object(),
+                    values: {
+                        type: "entries",
+                        entries: allProperties.map((property) => ({
+                            key: csharp.codeblock(`"${property.name.wireValue}"`),
+                            value: csharp.codeblock(
+                                `${this.getParameterName()}.${property.name.name.pascalCase.safeName}`
+                            )
+                        }))
+                    }
+                });
+                return {
+                    requestBodyReference: this.getRequestBodyVariableName(),
+                    code: csharp.codeblock((writer) => {
+                        writer.write(`var ${this.getRequestBodyVariableName()} = `);
+                        writer.writeNodeStatement(requestBody);
+                    })
+                };
             },
             fileUpload: () => undefined,
             bytes: () => {
@@ -266,28 +287,22 @@ export class WrappedEndpointRequest extends EndpointRequest {
         }
     }
 
-    private isDatetime({
-        typeReference,
-        allowOptionals = true
-    }: {
-        typeReference: TypeReference;
-        allowOptionals: boolean;
-    }): boolean {
+    private isOptional({ typeReference }: { typeReference: TypeReference }): boolean {
         switch (typeReference.type) {
             case "container":
-                if (typeReference.container.type === "optional" && allowOptionals) {
-                    return this.isDatetime({ typeReference: typeReference.container.optional, allowOptionals });
+                if (typeReference.container.type === "optional") {
+                    return true;
                 }
                 return false;
             case "named": {
                 const declaration = this.context.getTypeDeclarationOrThrow(typeReference.typeId);
                 if (declaration.shape.type === "alias") {
-                    return this.isDatetime({ typeReference: declaration.shape.aliasOf, allowOptionals });
+                    return this.isOptional({ typeReference: declaration.shape.aliasOf });
                 }
                 return false;
             }
             case "primitive": {
-                return typeReference.primitive.v1 === "DATE_TIME";
+                return false;
             }
             case "unknown": {
                 return false;
@@ -295,17 +310,41 @@ export class WrappedEndpointRequest extends EndpointRequest {
         }
     }
 
-    private isEnum({
-        typeReference,
-        allowOptionals = true
+    private isDateOrDateTime({
+        type,
+        typeReference
     }: {
+        type: "date" | "datetime";
         typeReference: TypeReference;
-        allowOptionals: boolean;
     }): boolean {
+        const matchingPrimitiveValue = type === "date" ? "DATE" : "DATE_TIME";
         switch (typeReference.type) {
             case "container":
-                if (typeReference.container.type === "optional" && allowOptionals) {
-                    return this.isEnum({ typeReference: typeReference.container.optional, allowOptionals });
+                if (typeReference.container.type === "optional") {
+                    return this.isDateOrDateTime({ type, typeReference: typeReference.container.optional });
+                }
+                return false;
+            case "named": {
+                const declaration = this.context.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (declaration.shape.type === "alias") {
+                    return this.isDateOrDateTime({ type, typeReference: declaration.shape.aliasOf });
+                }
+                return false;
+            }
+            case "primitive": {
+                return typeReference.primitive.v1 === matchingPrimitiveValue;
+            }
+            case "unknown": {
+                return false;
+            }
+        }
+    }
+
+    private isEnum({ typeReference }: { typeReference: TypeReference }): boolean {
+        switch (typeReference.type) {
+            case "container":
+                if (typeReference.container.type === "optional") {
+                    return this.isEnum({ typeReference: typeReference.container.optional });
                 }
                 return false;
             case "named": {
@@ -314,7 +353,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                     return true;
                 }
                 if (declaration.shape.type === "alias") {
-                    return this.isEnum({ typeReference: declaration.shape.aliasOf, allowOptionals });
+                    return this.isEnum({ typeReference: declaration.shape.aliasOf });
                 }
                 return false;
             }

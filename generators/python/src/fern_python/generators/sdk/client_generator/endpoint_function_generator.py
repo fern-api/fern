@@ -7,7 +7,7 @@ from fern_python.codegen import AST
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
 from fern_python.external_dependencies import HttpX
 from fern_python.external_dependencies.asyncio import Asyncio
-from fern_python.generators.pydantic_model.typeddict import FernTypedDict
+from fern_python.generators.pydantic_model.model_utilities import can_tr_be_fern_model
 from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
     EndpointMetadata,
     EndpointMetadataCollector,
@@ -854,14 +854,26 @@ class EndpointFunctionGenerator:
                 if possible_path_part_literal is not None:
                     writer.write_node(AST.Expression(f"{possible_path_part_literal}"))
                 else:
+                    parameter = AST.Expression(
+                        self._get_path_parameter_from_name(
+                            endpoint=endpoint,
+                            path_parameter_name=part.path_parameter,
+                        )
+                    )
+                    if self._context.custom_config.pydantic_config.use_pydantic_field_aliases:
+                        parameter = self.convert_and_respect_annotation_metadata_raw(
+                            context=self._context,
+                            object_=parameter,
+                            type_reference=parameter_obj.value_type,
+                        )
+
                     writer.write("{")
                     writer.write_node(
                         self._context.core_utilities.jsonable_encoder(
-                            AST.Expression(
-                                self._get_path_parameter_from_name(
-                                    endpoint=endpoint,
-                                    path_parameter_name=part.path_parameter,
-                                )
+                            self.convert_and_respect_annotation_metadata_raw(
+                                context=self._context,
+                                object_=parameter,
+                                type_reference=parameter_obj.value_type,
                             )
                         )
                     )
@@ -1096,7 +1108,7 @@ class EndpointFunctionGenerator:
 
                 reference = AST.Expression(AST.CodeWriter(write_ternary))
 
-        elif self._context.custom_config.pydantic_config.use_typeddict_requests and FernTypedDict.can_tr_be_typeddict(
+        elif self._context.custom_config.pydantic_config.use_typeddict_requests and can_tr_be_fern_model(
             query_parameter.value_type, self._context.get_types()
         ):
             # We don't need any optional wrappings for the coercion here.
@@ -1108,10 +1120,9 @@ class EndpointFunctionGenerator:
                 object_=reference, annotation=type_hint
             )
 
-        elif not self._is_httpx_primitive_data(query_parameter.value_type, allow_optional=True):
-            reference = self._context.core_utilities.jsonable_encoder(reference)
-
-        return reference
+        return self.convert_and_respect_annotation_metadata_raw(
+            context=self._context, object_=reference, type_reference=query_parameter.value_type
+        )
 
     # Only get the environment expression if the environment is multipleBaseUrls, if it's
     # not we'll leverage the URL from the client wrapper
@@ -1130,6 +1141,7 @@ class EndpointFunctionGenerator:
                 )
         return None
 
+    # Note if we ever somehow allow for objects in headers, we'd need to handle the alias conversion (same as with the other types, via `convert_and_respect_annotation_metadata_raw`)
     def _get_headers_for_endpoint(
         self,
         *,
@@ -1340,6 +1352,28 @@ class EndpointFunctionGenerator:
                 ),
             )
         return query_parameter_type_hint
+
+    def convert_and_respect_annotation_metadata_raw(
+        self, context: SdkGeneratorContext, object_: AST.Expression, type_reference: ir_types.TypeReference
+    ) -> AST.Expression:
+        if (
+            self._is_datetime(type_reference, allow_optional=True)
+            or self._is_date(type_reference, allow_optional=True)
+            or self._is_httpx_primitive_data(type_reference, allow_optional=True)
+            or not can_tr_be_fern_model(type_reference, context.get_types())
+            or (
+                not context.custom_config.pydantic_config.use_typeddict_requests
+                and context.custom_config.pydantic_config.use_pydantic_field_aliases
+            )
+        ):
+            return object_
+
+        # Only bother to convert if we're using objects
+        unwrapped_tr = context.unwrap_optional_type_reference(type_reference)
+        type_hint = context.pydantic_generator_context.get_type_hint_for_type_reference(
+            unwrapped_tr, in_endpoint=True, for_typeddict=True
+        )
+        return context.core_utilities.convert_and_respect_annotation_metadata(object_=object_, annotation=type_hint)
 
 
 def _is_request_body_optional(request_body: ir_types.HttpRequestBody) -> bool:

@@ -5,31 +5,31 @@ export declare namespace Ternary {
     interface Args {
         /* The condition to check */
         condition: AstNode;
-        /* The truth statement */
-        trueStatement: AstNode;
-        /* The false statement */
-        falseStatement: AstNode;
+        /* The true expression */
+        true_: AstNode;
+        /* The false expression */
+        false_: AstNode;
     }
 }
 
 export class Ternary extends AstNode {
     private condition: AstNode;
-    private trueStatement: AstNode;
-    private falseStatement: AstNode;
+    private true_: AstNode;
+    private false_: AstNode;
 
-    constructor({ condition, trueStatement, falseStatement }: Ternary.Args) {
+    constructor({ condition, true_, false_ }: Ternary.Args) {
         super();
 
         this.condition = condition;
-        this.trueStatement = trueStatement;
-        this.falseStatement = falseStatement;
+        this.true_ = true_;
+        this.false_ = false_;
     }
 
     public write(writer: Writer): void {
         writer.writeNode(this.condition);
         writer.write(" ? ");
-        writer.writeNode(this.trueStatement);
+        writer.writeNode(this.true_);
         writer.write(" : ");
-        writer.writeNode(this.falseStatement);
+        writer.writeNode(this.false_);
     }
 }

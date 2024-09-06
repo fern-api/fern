@@ -12,14 +12,19 @@ export enum AsIsFiles {
     DateTimeSerializer = "DateTimeSerializer.cs",
     EnumConverter = "EnumConverter.Template.cs",
     GrpcRequestOptions = "GrpcRequestOptions.Template.cs",
+    Headers = "Headers.Template.cs",
+    HeaderValue = "HeaderValue.Template.cs",
     HttpMethodExtensions = "HttpMethodExtensions.cs",
     JsonConfiguration = "JsonConfiguration.cs",
     OneOfSerializer = "OneOfSerializer.cs",
     RawClient = "RawClient.Template.cs",
+    RawClientTests = "RawClientTests.Template.cs",
+    RawGrpcClient = "RawGrpcClient.Template.cs",
     StringEnum = "StringEnum.Template.cs",
     StringEnumSerializer = "StringEnumSerializer.cs",
     TemplateCsProj = "Template.csproj",
     TemplateTestCsProj = "Template.Test.csproj",
     TemplateTestClientCs = "TemplateTestClient.cs",
-    UsingCs = "Using.cs"
+    UsingCs = "Using.cs",
+    Extensions = "Extensions.cs"
 }

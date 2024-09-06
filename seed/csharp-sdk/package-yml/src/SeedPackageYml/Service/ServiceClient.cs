@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using SeedPackageYml.Core;
 
@@ -15,7 +16,17 @@ public partial class ServiceClient
         _client = client;
     }
 
-    public async Task NopAsync(string id, string nestedId, RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Service.NopAsync("id-a2ijs82", "id-219xca8");
+    /// </code>
+    /// </example>
+    public async Task NopAsync(
+        string id,
+        string nestedId,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -23,8 +34,9 @@ public partial class ServiceClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"/{id}//{nestedId}",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {

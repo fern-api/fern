@@ -1,6 +1,16 @@
 irVersion: v39
-docker: fernapi/fern-ruby-model:latest
-dockerCommand: pnpm --filter @fern-api/fern-ruby-model dockerTagLatest
+changelogLocation: ../../generators/ruby/model/versions.yml
+publish:
+  preBuildCommands:
+    - pnpm --filter @fern-api/fern-ruby-model dist:cli
+  docker: 
+    file: ./generators/ruby/model/Dockerfile
+    image: fernapi/fern-ruby-model
+    context: .
+test:
+  docker:
+    image: fernapi/fern-ruby-model:latest
+    command: pnpm --filter @fern-api/fern-ruby-model dockerTagLatest
 language: ruby
 generatorType: model
 defaultOutputMode: local_files

@@ -1,0 +1,61 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  GenericApplicationObject:
+    properties:
+      foo: GenericUsedType<string>
+
+  GenericApplicationDiscriminatedUnion: 
+    union:
+      foo: GenericUsedType<string>
+      bar: string
+
+  GenericApplicationEnum:
+    enum:
+      - GenericUsedType<string>
+      - bar
+
+  GenericApplicationUndiscriminatedUnion:
+    union:
+      - GenericUsedType<string>
+      - string
+    discriminated: false
+
+  GenericUsedType<T>:
+    properties:
+      foo: T
+      bar: list<string>
+
+  GenericUsedTypeAlias<T>:
+    type: T
+
+  GenericUsedTypeEnum<T>:
+    enum:
+      - T
+      - bar
+  
+  GenericUsedTypeUndiscriminatedUnion<T>:
+    union:
+      - T
+      - bar
+    discriminated: false
+
+  GenericUsedDiscriminatedUnion<T>:
+    union:
+      foo: T
+      bar: string
+
+  GenericWrongNumberOfArguments<T, U, V, W, X, Y>:
+    properties:
+      foo: T
+      bar: U
+      baz: V
+      qux: W
+      quux: X
+      corge: Y
+  
+  GenericWrongNumberOfArgumentsApplied:
+    type: GenericWrongNumberOfArguments<string, string>
+
+  GenericWrongNumberOfArgumentsNoArgumentsApplied:
+    type: GenericWrongNumberOfArguments

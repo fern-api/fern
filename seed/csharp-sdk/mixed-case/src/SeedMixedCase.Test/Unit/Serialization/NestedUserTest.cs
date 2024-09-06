@@ -18,24 +18,24 @@ public class NestedUserTest
         var inputJson =
             @"
         {
-  ""Name"": ""username"",
-  ""NestedUser"": {
-    ""userName"": ""nestedUsername"",
-    ""metadata_tags"": [
-      ""tag1"",
-      ""tag2""
-    ],
-    ""EXTRA_PROPERTIES"": {
-      ""foo"": ""bar"",
-      ""baz"": ""qux""
-    }
-  }
-}
-";
+          ""Name"": ""username"",
+          ""NestedUser"": {
+            ""userName"": ""nestedUsername"",
+            ""metadata_tags"": [
+              ""tag1"",
+              ""tag2""
+            ],
+            ""EXTRA_PROPERTIES"": {
+              ""foo"": ""bar"",
+              ""baz"": ""qux""
+            }
+          }
+        }
+        ";
 
         var serializerOptions = new JsonSerializerOptions
         {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         };
 
         var deserializedObject = JsonSerializer.Deserialize<NestedUser>(

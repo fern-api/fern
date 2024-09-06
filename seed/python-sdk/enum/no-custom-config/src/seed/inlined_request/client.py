@@ -5,6 +5,7 @@ from ..core.client_wrapper import SyncClientWrapper
 from ..types.operand import Operand
 from ..types.color_or_operand import ColorOrOperand
 from ..core.request_options import RequestOptions
+from ..core.serialization import convert_and_respect_annotation_metadata
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper
@@ -62,8 +63,12 @@ class InlinedRequestClient:
             json={
                 "operand": operand,
                 "maybeOperand": maybe_operand,
-                "operandOrColor": operand_or_color,
-                "maybeOperandOrColor": maybe_operand_or_color,
+                "operandOrColor": convert_and_respect_annotation_metadata(
+                    object_=operand_or_color, annotation=ColorOrOperand, direction="write"
+                ),
+                "maybeOperandOrColor": convert_and_respect_annotation_metadata(
+                    object_=maybe_operand_or_color, annotation=ColorOrOperand, direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -134,8 +139,12 @@ class AsyncInlinedRequestClient:
             json={
                 "operand": operand,
                 "maybeOperand": maybe_operand,
-                "operandOrColor": operand_or_color,
-                "maybeOperandOrColor": maybe_operand_or_color,
+                "operandOrColor": convert_and_respect_annotation_metadata(
+                    object_=operand_or_color, annotation=ColorOrOperand, direction="write"
+                ),
+                "maybeOperandOrColor": convert_and_respect_annotation_metadata(
+                    object_=maybe_operand_or_color, annotation=ColorOrOperand, direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,

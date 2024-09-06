@@ -1,14 +1,26 @@
-import { AbstractCsharpGeneratorCli, TestFileGenerator } from "@fern-api/csharp-codegen";
-import { generateModels, generateTests } from "@fern-api/fern-csharp-model";
+import {
+    AbstractCsharpGeneratorCli,
+    File,
+    TestFileGenerator,
+    validateReadOnlyMemoryTypes
+} from "@fern-api/csharp-codegen";
+import {
+    generateModels,
+    generateTests as generateModelTests,
+    generateWellKnownProtobufFiles,
+    generateVersion
+} from "@fern-api/fern-csharp-model";
 import { GeneratorNotificationService } from "@fern-api/generator-commons";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { writeFile } from "fs/promises";
+import { SnippetJsonGenerator } from "./endpoint/snippets/SnippetJsonGenerator";
 import { MultiUrlEnvironmentGenerator } from "./environment/MultiUrlEnvironmentGenerator";
 import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator";
 import { BaseApiExceptionGenerator } from "./error/BaseApiExceptionGenerator";
 import { BaseExceptionGenerator } from "./error/BaseExceptionGenerator";
 import { ErrorGenerator } from "./error/ErrorGenerator";
-import { RawGrpcClientGenerator } from "./grpc/RawGrpcClientGenerator";
+import { generateSdkTests } from "./generateSdkTests";
 import { BaseOptionsGenerator } from "./options/BaseOptionsGenerator";
 import { ClientOptionsGenerator } from "./options/ClientOptionsGenerator";
 import { RequestOptionsGenerator } from "./options/RequestOptionsGenerator";
@@ -17,6 +29,9 @@ import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
 import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator";
+import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
+import { RelativeFilePath } from "@fern-api/fs-utils";
+import { buildReference } from "./reference/buildReference";
 
 export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -42,6 +57,12 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
     }
 
     private validateCustomConfig(customConfig: SdkCustomConfigSchema): SdkCustomConfigSchema {
+        this.validateExceptionClassNames(customConfig);
+        validateReadOnlyMemoryTypes(customConfig);
+        return customConfig;
+    }
+
+    private validateExceptionClassNames(customConfig: SdkCustomConfigSchema): void {
         const baseExceptionClassName = customConfig["base-exception-class-name"];
         const baseApiExceptionClassName = customConfig["base-api-exception-class-name"];
 
@@ -52,8 +73,6 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
         ) {
             throw new Error("The 'base-api-exception-class-name' and 'base-exception-class-name' cannot be the same.");
         }
-
-        return customConfig;
     }
 
     protected async publishPackage(context: SdkGeneratorContext): Promise<void> {
@@ -88,10 +107,20 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
         for (const file of models) {
             context.project.addSourceFiles(file);
         }
-        const tests = generateTests({ context });
-        for (const file of tests) {
-            context.project.addTestFiles(file);
+
+        context.project.addSourceFiles(generateVersion({ context }));
+
+        if (context.config.writeUnitTests) {
+            const modelTests = generateModelTests({ context });
+            for (const file of modelTests) {
+                context.project.addTestFiles(file);
+            }
+            const sdkTests = generateSdkTests({ context });
+            for (const file of sdkTests) {
+                context.project.addTestFiles(file);
+            }
         }
+
         for (const [_, subpackage] of Object.entries(context.ir.subpackages)) {
             const service = subpackage.service != null ? context.getHttpServiceOrThrow(subpackage.service) : undefined;
             const subClient = new SubPackageClientGenerator({
@@ -155,15 +184,64 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
             _other: () => undefined
         });
 
-        if (context.hasGrpcEndpoints()) {
-            const grpcClient = new RawGrpcClientGenerator({ context });
-            context.project.addSourceFiles(grpcClient.generate());
+        const wellKnownProtobufFiles = generateWellKnownProtobufFiles(context);
+        if (wellKnownProtobufFiles != null) {
+            for (const file of wellKnownProtobufFiles) {
+                context.project.addSourceFiles(file);
+            }
         }
 
         const testGenerator = new TestFileGenerator(context);
         const test = testGenerator.generate();
         context.project.addTestFiles(test);
 
+        if (context.config.output.snippetFilepath != null) {
+            const snippets = new SnippetJsonGenerator({ context }).generate();
+            await writeFile(
+                context.config.output.snippetFilepath,
+                JSON.stringify(await FernGeneratorExecSerializers.Snippets.jsonOrThrow(snippets), undefined, 4)
+            );
+
+            try {
+                await this.generateReadme({
+                    context,
+                    endpointSnippets: snippets.endpoints
+                });
+            } catch (e) {
+                context.logger.warn("Failed to generate README.md, this is OK.");
+            }
+
+            try {
+                await this.generateReference({ context });
+            } catch (e) {
+                context.logger.warn("Failed to generate reference.md, this is OK.");
+            }
+        }
         await context.project.persist();
+    }
+
+    private async generateReadme({
+        context,
+        endpointSnippets
+    }: {
+        context: SdkGeneratorContext;
+        endpointSnippets: FernGeneratorExec.Endpoint[];
+    }): Promise<void> {
+        if (endpointSnippets.length === 0) {
+            context.logger.debug("No snippets were produced; skipping README.md generation.");
+            return;
+        }
+        const content = await context.generatorAgent.generateReadme({ context, endpointSnippets });
+        context.project.addRawFiles(
+            new File(context.generatorAgent.README_FILENAME, RelativeFilePath.of("."), content)
+        );
+    }
+
+    private async generateReference({ context }: { context: SdkGeneratorContext }): Promise<void> {
+        const builder = buildReference({ context });
+        const content = await context.generatorAgent.generateReference(builder);
+        context.project.addRawFiles(
+            new File(context.generatorAgent.REFERENCE_FILENAME, RelativeFilePath.of("."), content)
+        );
     }
 }

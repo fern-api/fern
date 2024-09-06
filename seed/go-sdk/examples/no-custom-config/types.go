@@ -413,6 +413,9 @@ func (e *Exception) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	e.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", e)
+	}
 	switch unmarshaler.Type {
 	case "generic":
 		value := new(ExceptionInfo)
@@ -517,6 +520,7 @@ type ExtendedMovie struct {
 	Tag      commons.Tag            `json:"tag" url:"tag"`
 	Book     *string                `json:"book,omitempty" url:"book,omitempty"`
 	Metadata map[string]interface{} `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Revenue  int64                  `json:"revenue" url:"revenue"`
 	Cast     []string               `json:"cast,omitempty" url:"cast,omitempty"`
 	type_    string
 
@@ -536,6 +540,7 @@ func (e *ExtendedMovie) UnmarshalJSON(data []byte) error {
 	type embed ExtendedMovie
 	var unmarshaler = struct {
 		embed
+		Type string `json:"type"`
 	}{
 		embed: embed(*e),
 	}
@@ -543,7 +548,10 @@ func (e *ExtendedMovie) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExtendedMovie(unmarshaler.embed)
-	e.type_ = "movie"
+	if unmarshaler.Type != "movie" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", e, "movie", unmarshaler.Type)
+	}
+	e.type_ = unmarshaler.Type
 
 	extraProperties, err := core.ExtractExtraProperties(data, *e, "type")
 	if err != nil {
@@ -649,6 +657,9 @@ func (m *Metadata) UnmarshalJSON(data []byte) error {
 	m.Type = unmarshaler.Type
 	m.Extra = unmarshaler.Extra
 	m.Tags = unmarshaler.Tags
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", m)
+	}
 	switch unmarshaler.Type {
 	case "html":
 		var valueUnmarshaler struct {
@@ -863,6 +874,7 @@ type Movie struct {
 	Tag      commons.Tag            `json:"tag" url:"tag"`
 	Book     *string                `json:"book,omitempty" url:"book,omitempty"`
 	Metadata map[string]interface{} `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Revenue  int64                  `json:"revenue" url:"revenue"`
 	type_    string
 
 	extraProperties map[string]interface{}
@@ -881,6 +893,7 @@ func (m *Movie) UnmarshalJSON(data []byte) error {
 	type embed Movie
 	var unmarshaler = struct {
 		embed
+		Type string `json:"type"`
 	}{
 		embed: embed(*m),
 	}
@@ -888,7 +901,10 @@ func (m *Movie) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*m = Movie(unmarshaler.embed)
-	m.type_ = "movie"
+	if unmarshaler.Type != "movie" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", m, "movie", unmarshaler.Type)
+	}
+	m.type_ = unmarshaler.Type
 
 	extraProperties, err := core.ExtractExtraProperties(data, *m, "type")
 	if err != nil {
@@ -1157,6 +1173,9 @@ func (t *Test) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	t.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", t)
+	}
 	switch unmarshaler.Type {
 	case "and":
 		var valueUnmarshaler struct {

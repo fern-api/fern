@@ -5265,6 +5265,7 @@
     "websocketChannels": {},
     "readmeConfig": null,
     "sourceConfig": null,
+    "publishConfig": null,
     "subpackages": {
         "subpackage_imdb": {
             "name": {

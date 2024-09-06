@@ -24,4 +24,9 @@ public class ModelGeneratorContext extends AbstractGeneratorContext<ModelPoetCla
     public final boolean deserializeWithAdditionalProperties() {
         return false;
     }
+
+    @Override
+    public boolean builderNotNullChecks() {
+        return false;
+    }
 }

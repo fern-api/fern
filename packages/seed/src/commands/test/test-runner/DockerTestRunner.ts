@@ -10,9 +10,9 @@ import { TestRunner } from "./TestRunner";
 export class DockerTestRunner extends TestRunner {
     async build(): Promise<void> {
         const dockerCommands =
-            typeof this.generator.workspaceConfig.dockerCommand === "string"
-                ? [this.generator.workspaceConfig.dockerCommand]
-                : this.generator.workspaceConfig.dockerCommand;
+            typeof this.generator.workspaceConfig.test.docker.command === "string"
+                ? [this.generator.workspaceConfig.test.docker.command]
+                : this.generator.workspaceConfig.test.docker.command;
         if (dockerCommands == null) {
             throw new Error(`Failed. No docker command for ${this.generator.workspaceName}`);
         }

@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using SeedApiWideBasePath.Core;
 
@@ -15,12 +16,18 @@ public partial class ServiceClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Service.PostAsync("string", "string", "string", 1);
+    /// </code>
+    /// </example>
     public async Task PostAsync(
         string pathParam,
         string serviceParam,
         string resourceParam,
         int endpointParam,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -29,8 +36,9 @@ public partial class ServiceClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = $"/test/{pathParam}/{serviceParam}/{endpointParam}/{resourceParam}",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {

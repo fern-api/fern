@@ -22,6 +22,7 @@ from .pydantic_utilities import (
     parse_datetime,
     parse_obj_as,
 )
+from .serialization import get_field_to_alias_mapping
 
 
 class UnionMetadata:
@@ -67,12 +68,16 @@ class UncheckedBaseModel(UniversalBaseModel):
 
         fields = _get_model_fields(cls)
         populate_by_name = _get_is_populate_by_name(cls)
+        field_aliases = get_field_to_alias_mapping(cls)
 
         for name, field in fields.items():
             # Key here is only used to pull data from the values dict
             # you should always use the NAME of the field to for field_values, etc.
             # because that's how the object is constructed from a pydantic perspective
             key = field.alias
+            if (key is None or field.alias == name) and name in field_aliases:
+                key = field_aliases[name]
+
             if key is None or (key not in values and populate_by_name):  # Added this to allow population by field name
                 key = name
 
@@ -98,9 +103,11 @@ class UncheckedBaseModel(UniversalBaseModel):
 
         # Add extras back in
         extras = {}
-        alias_fields = [field.alias for field in fields.values()]
+        pydantic_alias_fields = [field.alias for field in fields.values()]
+        internal_alias_fields = list(field_aliases.values())
         for key, value in values.items():
-            if key not in alias_fields and key not in fields:
+            # If the key is not a field by name, nor an alias to a field, then it's extra
+            if (key not in pydantic_alias_fields and key not in internal_alias_fields) and key not in fields:
                 if IS_PYDANTIC_V2:
                     extras[key] = value
                 else:
@@ -213,7 +220,14 @@ def construct_type(*, type_: typing.Type[typing.Any], object_: typing.Any) -> ty
     if (
         object_ is not None
         and not is_literal_type(type_)
-        and (inspect.isclass(base_type) and issubclass(base_type, pydantic.BaseModel))
+        and (
+            (inspect.isclass(base_type) and issubclass(base_type, pydantic.BaseModel))
+            or (
+                is_annotated
+                and inspect.isclass(maybe_annotation_members[0])
+                and issubclass(maybe_annotation_members[0], pydantic.BaseModel)
+            )
+        )
     ):
         if IS_PYDANTIC_V2:
             return type_.model_construct(**object_)

@@ -20,10 +20,10 @@ export declare namespace Method {
         access: Access;
         /* Whether the method is sync or async. Defaults to false. */
         isAsync: boolean;
-        /* Whether the method overrides a method in it's base class */
-        override?: boolean;
         /* The parameters of the method */
         parameters: Parameter[];
+        /* Whether the method overrides a method in it's base class */
+        override?: boolean;
         /* The return type of the method */
         return_?: Type;
         /* The body of the method */
@@ -36,6 +36,8 @@ export declare namespace Method {
         classReference?: ClassReference;
         /* Any annotations to add to the method */
         annotations?: Annotation[];
+        /* Any code example to add to the method */
+        codeExample?: string;
     }
 }
 
@@ -51,6 +53,7 @@ export class Method extends AstNode {
     public readonly override: boolean;
     private readonly parameters: Parameter[];
     private readonly annotations: Annotation[];
+    private readonly codeExample: string | undefined;
 
     constructor({
         name,
@@ -63,7 +66,8 @@ export class Method extends AstNode {
         type,
         classReference,
         parameters,
-        annotations
+        annotations,
+        codeExample
     }: Method.Args) {
         super();
         this.name = name;
@@ -77,6 +81,7 @@ export class Method extends AstNode {
         this.reference = classReference;
         this.parameters = parameters;
         this.annotations = annotations ?? [];
+        this.codeExample = codeExample;
     }
 
     public addParameter(parameter: Parameter): void {
@@ -89,7 +94,19 @@ export class Method extends AstNode {
             this.summary.split("\n").forEach((line) => {
                 writer.writeLine(`/// ${line}`);
             });
+
             writer.writeLine("/// </summary>");
+        }
+        if (this.codeExample != null) {
+            writer.writeLine("/// <example>");
+            writer.writeLine("/// <code>");
+            this.codeExample.split("\n").forEach((line) => {
+                if (line !== "") {
+                    writer.writeLine(`/// ${line}`);
+                }
+            });
+            writer.writeLine("/// </code>");
+            writer.writeLine("/// </example>");
         }
 
         if (this.annotations.length > 0) {

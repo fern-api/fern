@@ -97,14 +97,14 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.9.5
+        version: 0.39.3
         output:
           location: local-file-system
           path: ../sdks/typescript
   typescript:
     generators:
       - name: fernapi/fern-typescript
-        version: 0.7.2
+        version: 0.39.3
 ",
         "name": "generators.yml",
         "type": "file",

@@ -6,6 +6,7 @@ from ..submission.types.submission_id import SubmissionId
 from ..submission.types.test_submission_status import TestSubmissionStatus
 from ..core.request_options import RequestOptions
 from ..core.jsonable_encoder import jsonable_encoder
+from ..core.serialization import convert_and_respect_annotation_metadata
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 import datetime as dt
@@ -69,7 +70,9 @@ class AdminClient:
         _response = self._client_wrapper.httpx_client.request(
             f"admin/store-test-submission-status/{jsonable_encoder(submission_id)}",
             method="POST",
-            json=request,
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=TestSubmissionStatus, direction="write"
+            ),
             request_options=request_options,
             omit=OMIT,
         )
@@ -132,7 +135,9 @@ class AdminClient:
             method="POST",
             json={
                 "updateTime": update_time,
-                "updateInfo": update_info,
+                "updateInfo": convert_and_respect_annotation_metadata(
+                    object_=update_info, annotation=TestSubmissionUpdateInfo, direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -187,7 +192,9 @@ class AdminClient:
         _response = self._client_wrapper.httpx_client.request(
             f"admin/store-workspace-submission-status/{jsonable_encoder(submission_id)}",
             method="POST",
-            json=request,
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=WorkspaceSubmissionStatus, direction="write"
+            ),
             request_options=request_options,
             omit=OMIT,
         )
@@ -252,7 +259,9 @@ class AdminClient:
             method="POST",
             json={
                 "updateTime": update_time,
-                "updateInfo": update_info,
+                "updateInfo": convert_and_respect_annotation_metadata(
+                    object_=update_info, annotation=WorkspaceSubmissionUpdateInfo, direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -297,9 +306,15 @@ class AdminClient:
         import uuid
 
         from seed import SeedTrace
-        from seed.commons import DebugVariableValue_IntegerValue
+        from seed.commons import (
+            DebugVariableValue_IntegerValue,
+            VariableValue_IntegerValue,
+        )
         from seed.submission import (
+            ActualResult_Value,
             ExpressionLocation,
+            Scope,
+            StackFrame,
             StackInformation,
             TestCaseResult,
             TestCaseResultWithStdout,
@@ -316,7 +331,13 @@ class AdminClient:
             ),
             test_case_id="string",
             result=TestCaseResultWithStdout(
-                result=TestCaseResult(),
+                result=TestCaseResult(
+                    expected_result=VariableValue_IntegerValue(value=1),
+                    actual_result=ActualResult_Value(
+                        value=VariableValue_IntegerValue(value={"key": "value"})
+                    ),
+                    passed=True,
+                ),
                 stdout="string",
             ),
             trace_responses=[
@@ -326,8 +347,22 @@ class AdminClient:
                     ),
                     line_number=1,
                     return_value=DebugVariableValue_IntegerValue(value=1),
-                    expression_location=ExpressionLocation(),
-                    stack=StackInformation(),
+                    expression_location=ExpressionLocation(
+                        start=1,
+                        offset=1,
+                    ),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                        top_stack_frame=StackFrame(
+                            method_name="string",
+                            line_number=1,
+                            scopes=[
+                                Scope(
+                                    variables={"string": {"key": "value"}},
+                                )
+                            ],
+                        ),
+                    ),
                     stdout="string",
                 )
             ],
@@ -337,8 +372,12 @@ class AdminClient:
             f"admin/store-test-trace/submission/{jsonable_encoder(submission_id)}/testCase/{jsonable_encoder(test_case_id)}",
             method="POST",
             json={
-                "result": result,
-                "traceResponses": trace_responses,
+                "result": convert_and_respect_annotation_metadata(
+                    object_=result, annotation=TestCaseResultWithStdout, direction="write"
+                ),
+                "traceResponses": convert_and_respect_annotation_metadata(
+                    object_=trace_responses, annotation=typing.Sequence[TraceResponse], direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -383,6 +422,8 @@ class AdminClient:
         from seed.commons import DebugVariableValue_IntegerValue
         from seed.submission import (
             ExpressionLocation,
+            Scope,
+            StackFrame,
             StackInformation,
             TracedFile,
             TraceResponseV2,
@@ -403,10 +444,27 @@ class AdminClient:
                         "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     ),
                     line_number=1,
-                    file=TracedFile(),
+                    file=TracedFile(
+                        filename="string",
+                        directory="string",
+                    ),
                     return_value=DebugVariableValue_IntegerValue(value=1),
-                    expression_location=ExpressionLocation(),
-                    stack=StackInformation(),
+                    expression_location=ExpressionLocation(
+                        start=1,
+                        offset=1,
+                    ),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                        top_stack_frame=StackFrame(
+                            method_name="string",
+                            line_number=1,
+                            scopes=[
+                                Scope(
+                                    variables={"string": {"key": "value"}},
+                                )
+                            ],
+                        ),
+                    ),
                     stdout="string",
                 )
             ],
@@ -415,7 +473,9 @@ class AdminClient:
         _response = self._client_wrapper.httpx_client.request(
             f"admin/store-test-trace-v2/submission/{jsonable_encoder(submission_id)}/testCase/{jsonable_encoder(test_case_id)}",
             method="POST",
-            json=request,
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=typing.Sequence[TraceResponseV2], direction="write"
+            ),
             request_options=request_options,
             omit=OMIT,
         )
@@ -461,6 +521,8 @@ class AdminClient:
             ExceptionInfo,
             ExceptionV2_Generic,
             ExpressionLocation,
+            Scope,
+            StackFrame,
             StackInformation,
             TraceResponse,
             WorkspaceRunDetails,
@@ -475,8 +537,16 @@ class AdminClient:
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
             workspace_run_details=WorkspaceRunDetails(
-                exception_v_2=ExceptionV2_Generic(),
-                exception=ExceptionInfo(),
+                exception_v_2=ExceptionV2_Generic(
+                    exception_type="string",
+                    exception_message="string",
+                    exception_stacktrace="string",
+                ),
+                exception=ExceptionInfo(
+                    exception_type="string",
+                    exception_message="string",
+                    exception_stacktrace="string",
+                ),
                 stdout="string",
             ),
             trace_responses=[
@@ -486,8 +556,22 @@ class AdminClient:
                     ),
                     line_number=1,
                     return_value=DebugVariableValue_IntegerValue(value=1),
-                    expression_location=ExpressionLocation(),
-                    stack=StackInformation(),
+                    expression_location=ExpressionLocation(
+                        start=1,
+                        offset=1,
+                    ),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                        top_stack_frame=StackFrame(
+                            method_name="string",
+                            line_number=1,
+                            scopes=[
+                                Scope(
+                                    variables={"string": {"key": "value"}},
+                                )
+                            ],
+                        ),
+                    ),
                     stdout="string",
                 )
             ],
@@ -497,8 +581,12 @@ class AdminClient:
             f"admin/store-workspace-trace/submission/{jsonable_encoder(submission_id)}",
             method="POST",
             json={
-                "workspaceRunDetails": workspace_run_details,
-                "traceResponses": trace_responses,
+                "workspaceRunDetails": convert_and_respect_annotation_metadata(
+                    object_=workspace_run_details, annotation=WorkspaceRunDetails, direction="write"
+                ),
+                "traceResponses": convert_and_respect_annotation_metadata(
+                    object_=trace_responses, annotation=typing.Sequence[TraceResponse], direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -540,6 +628,8 @@ class AdminClient:
         from seed.commons import DebugVariableValue_IntegerValue
         from seed.submission import (
             ExpressionLocation,
+            Scope,
+            StackFrame,
             StackInformation,
             TracedFile,
             TraceResponseV2,
@@ -559,10 +649,27 @@ class AdminClient:
                         "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     ),
                     line_number=1,
-                    file=TracedFile(),
+                    file=TracedFile(
+                        filename="string",
+                        directory="string",
+                    ),
                     return_value=DebugVariableValue_IntegerValue(value=1),
-                    expression_location=ExpressionLocation(),
-                    stack=StackInformation(),
+                    expression_location=ExpressionLocation(
+                        start=1,
+                        offset=1,
+                    ),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                        top_stack_frame=StackFrame(
+                            method_name="string",
+                            line_number=1,
+                            scopes=[
+                                Scope(
+                                    variables={"string": {"key": "value"}},
+                                )
+                            ],
+                        ),
+                    ),
                     stdout="string",
                 )
             ],
@@ -571,7 +678,9 @@ class AdminClient:
         _response = self._client_wrapper.httpx_client.request(
             f"admin/store-workspace-trace-v2/submission/{jsonable_encoder(submission_id)}",
             method="POST",
-            json=request,
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=typing.Sequence[TraceResponseV2], direction="write"
+            ),
             request_options=request_options,
             omit=OMIT,
         )
@@ -637,7 +746,9 @@ class AsyncAdminClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"admin/store-test-submission-status/{jsonable_encoder(submission_id)}",
             method="POST",
-            json=request,
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=TestSubmissionStatus, direction="write"
+            ),
             request_options=request_options,
             omit=OMIT,
         )
@@ -709,7 +820,9 @@ class AsyncAdminClient:
             method="POST",
             json={
                 "updateTime": update_time,
-                "updateInfo": update_info,
+                "updateInfo": convert_and_respect_annotation_metadata(
+                    object_=update_info, annotation=TestSubmissionUpdateInfo, direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -771,7 +884,9 @@ class AsyncAdminClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"admin/store-workspace-submission-status/{jsonable_encoder(submission_id)}",
             method="POST",
-            json=request,
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=WorkspaceSubmissionStatus, direction="write"
+            ),
             request_options=request_options,
             omit=OMIT,
         )
@@ -843,7 +958,9 @@ class AsyncAdminClient:
             method="POST",
             json={
                 "updateTime": update_time,
-                "updateInfo": update_info,
+                "updateInfo": convert_and_respect_annotation_metadata(
+                    object_=update_info, annotation=WorkspaceSubmissionUpdateInfo, direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -889,9 +1006,15 @@ class AsyncAdminClient:
         import uuid
 
         from seed import AsyncSeedTrace
-        from seed.commons import DebugVariableValue_IntegerValue
+        from seed.commons import (
+            DebugVariableValue_IntegerValue,
+            VariableValue_IntegerValue,
+        )
         from seed.submission import (
+            ActualResult_Value,
             ExpressionLocation,
+            Scope,
+            StackFrame,
             StackInformation,
             TestCaseResult,
             TestCaseResultWithStdout,
@@ -911,7 +1034,13 @@ class AsyncAdminClient:
                 ),
                 test_case_id="string",
                 result=TestCaseResultWithStdout(
-                    result=TestCaseResult(),
+                    result=TestCaseResult(
+                        expected_result=VariableValue_IntegerValue(value=1),
+                        actual_result=ActualResult_Value(
+                            value=VariableValue_IntegerValue(value={"key": "value"})
+                        ),
+                        passed=True,
+                    ),
                     stdout="string",
                 ),
                 trace_responses=[
@@ -921,8 +1050,22 @@ class AsyncAdminClient:
                         ),
                         line_number=1,
                         return_value=DebugVariableValue_IntegerValue(value=1),
-                        expression_location=ExpressionLocation(),
-                        stack=StackInformation(),
+                        expression_location=ExpressionLocation(
+                            start=1,
+                            offset=1,
+                        ),
+                        stack=StackInformation(
+                            num_stack_frames=1,
+                            top_stack_frame=StackFrame(
+                                method_name="string",
+                                line_number=1,
+                                scopes=[
+                                    Scope(
+                                        variables={"string": {"key": "value"}},
+                                    )
+                                ],
+                            ),
+                        ),
                         stdout="string",
                     )
                 ],
@@ -935,8 +1078,12 @@ class AsyncAdminClient:
             f"admin/store-test-trace/submission/{jsonable_encoder(submission_id)}/testCase/{jsonable_encoder(test_case_id)}",
             method="POST",
             json={
-                "result": result,
-                "traceResponses": trace_responses,
+                "result": convert_and_respect_annotation_metadata(
+                    object_=result, annotation=TestCaseResultWithStdout, direction="write"
+                ),
+                "traceResponses": convert_and_respect_annotation_metadata(
+                    object_=trace_responses, annotation=typing.Sequence[TraceResponse], direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -982,6 +1129,8 @@ class AsyncAdminClient:
         from seed.commons import DebugVariableValue_IntegerValue
         from seed.submission import (
             ExpressionLocation,
+            Scope,
+            StackFrame,
             StackInformation,
             TracedFile,
             TraceResponseV2,
@@ -1005,10 +1154,27 @@ class AsyncAdminClient:
                             "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                         ),
                         line_number=1,
-                        file=TracedFile(),
+                        file=TracedFile(
+                            filename="string",
+                            directory="string",
+                        ),
                         return_value=DebugVariableValue_IntegerValue(value=1),
-                        expression_location=ExpressionLocation(),
-                        stack=StackInformation(),
+                        expression_location=ExpressionLocation(
+                            start=1,
+                            offset=1,
+                        ),
+                        stack=StackInformation(
+                            num_stack_frames=1,
+                            top_stack_frame=StackFrame(
+                                method_name="string",
+                                line_number=1,
+                                scopes=[
+                                    Scope(
+                                        variables={"string": {"key": "value"}},
+                                    )
+                                ],
+                            ),
+                        ),
                         stdout="string",
                     )
                 ],
@@ -1020,7 +1186,9 @@ class AsyncAdminClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"admin/store-test-trace-v2/submission/{jsonable_encoder(submission_id)}/testCase/{jsonable_encoder(test_case_id)}",
             method="POST",
-            json=request,
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=typing.Sequence[TraceResponseV2], direction="write"
+            ),
             request_options=request_options,
             omit=OMIT,
         )
@@ -1067,6 +1235,8 @@ class AsyncAdminClient:
             ExceptionInfo,
             ExceptionV2_Generic,
             ExpressionLocation,
+            Scope,
+            StackFrame,
             StackInformation,
             TraceResponse,
             WorkspaceRunDetails,
@@ -1084,8 +1254,16 @@ class AsyncAdminClient:
                     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 ),
                 workspace_run_details=WorkspaceRunDetails(
-                    exception_v_2=ExceptionV2_Generic(),
-                    exception=ExceptionInfo(),
+                    exception_v_2=ExceptionV2_Generic(
+                        exception_type="string",
+                        exception_message="string",
+                        exception_stacktrace="string",
+                    ),
+                    exception=ExceptionInfo(
+                        exception_type="string",
+                        exception_message="string",
+                        exception_stacktrace="string",
+                    ),
                     stdout="string",
                 ),
                 trace_responses=[
@@ -1095,8 +1273,22 @@ class AsyncAdminClient:
                         ),
                         line_number=1,
                         return_value=DebugVariableValue_IntegerValue(value=1),
-                        expression_location=ExpressionLocation(),
-                        stack=StackInformation(),
+                        expression_location=ExpressionLocation(
+                            start=1,
+                            offset=1,
+                        ),
+                        stack=StackInformation(
+                            num_stack_frames=1,
+                            top_stack_frame=StackFrame(
+                                method_name="string",
+                                line_number=1,
+                                scopes=[
+                                    Scope(
+                                        variables={"string": {"key": "value"}},
+                                    )
+                                ],
+                            ),
+                        ),
                         stdout="string",
                     )
                 ],
@@ -1109,8 +1301,12 @@ class AsyncAdminClient:
             f"admin/store-workspace-trace/submission/{jsonable_encoder(submission_id)}",
             method="POST",
             json={
-                "workspaceRunDetails": workspace_run_details,
-                "traceResponses": trace_responses,
+                "workspaceRunDetails": convert_and_respect_annotation_metadata(
+                    object_=workspace_run_details, annotation=WorkspaceRunDetails, direction="write"
+                ),
+                "traceResponses": convert_and_respect_annotation_metadata(
+                    object_=trace_responses, annotation=typing.Sequence[TraceResponse], direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -1153,6 +1349,8 @@ class AsyncAdminClient:
         from seed.commons import DebugVariableValue_IntegerValue
         from seed.submission import (
             ExpressionLocation,
+            Scope,
+            StackFrame,
             StackInformation,
             TracedFile,
             TraceResponseV2,
@@ -1175,10 +1373,27 @@ class AsyncAdminClient:
                             "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                         ),
                         line_number=1,
-                        file=TracedFile(),
+                        file=TracedFile(
+                            filename="string",
+                            directory="string",
+                        ),
                         return_value=DebugVariableValue_IntegerValue(value=1),
-                        expression_location=ExpressionLocation(),
-                        stack=StackInformation(),
+                        expression_location=ExpressionLocation(
+                            start=1,
+                            offset=1,
+                        ),
+                        stack=StackInformation(
+                            num_stack_frames=1,
+                            top_stack_frame=StackFrame(
+                                method_name="string",
+                                line_number=1,
+                                scopes=[
+                                    Scope(
+                                        variables={"string": {"key": "value"}},
+                                    )
+                                ],
+                            ),
+                        ),
                         stdout="string",
                     )
                 ],
@@ -1190,7 +1405,9 @@ class AsyncAdminClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"admin/store-workspace-trace-v2/submission/{jsonable_encoder(submission_id)}",
             method="POST",
-            json=request,
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=typing.Sequence[TraceResponseV2], direction="write"
+            ),
             request_options=request_options,
             omit=OMIT,
         )

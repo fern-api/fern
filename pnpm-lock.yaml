@@ -92,15 +92,15 @@ importers:
       execa:
         specifier: ^5.1.1
         version: 5.1.1
+      husky:
+        specifier: ^9.1.5
+        version: 9.1.5
       immer:
         specifier: ^9.0.15
         version: 9.0.15
       is-ci:
         specifier: ^3.0.1
         version: 3.0.1
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       jsonc-parser:
         specifier: ~3.3.0
         version: 3.3.0
@@ -131,15 +131,15 @@ importers:
       tailwindcss:
         specifier: ^3.3.2
         version: 3.3.2(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@types/node@18.7.18)(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
     dependenciesMeta:
       jsonc-parser@2.2.1:
         unplugged: true
@@ -158,9 +158,18 @@ importers:
       '@fern-api/logging-execa':
         specifier: workspace:*
         version: link:../../packages/commons/logging-execa
+      '@fern-fern/generator-cli-sdk':
+        specifier: 0.0.56
+        version: 0.0.56
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.898
         version: 0.0.898
+      js-yaml:
+        specifier: ^4.1.0
+        version: 4.1.0
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
       tmp-promise:
         specifier: ^3.0.3
         version: 3.0.3
@@ -171,6 +180,12 @@ importers:
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
+      '@types/js-yaml':
+        specifier: ^4.0.8
+        version: 4.0.8
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
       '@types/node':
         specifier: ^18.7.18
         version: 18.7.18
@@ -183,18 +198,12 @@ importers:
       globals:
         specifier: link:@types/vitest/globals
         version: link:@types/vitest/globals
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
@@ -217,8 +226,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/logging-execa
       '@fern-fern/ir-sdk':
-        specifier: ^53.6.0
-        version: 53.6.0
+        specifier: ^53.7.0
+        version: 53.7.2
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -266,8 +275,8 @@ importers:
         specifier: workspace:*
         version: link:../../commons
       '@fern-fern/ir-sdk':
-        specifier: ^53.6.0
-        version: 53.6.0
+        specifier: ^53.7.0
+        version: 53.7.2
       zod:
         specifier: ^3.22.3
         version: 3.22.4
@@ -293,21 +302,18 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.15.7)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/csharp/sdk:
     dependencies:
@@ -326,15 +332,24 @@ importers:
       '@fern-api/generator-commons':
         specifier: workspace:*
         version: link:../../commons
+      '@fern-api/logger':
+        specifier: workspace:*
+        version: link:../../../packages/cli/logger
+      '@fern-fern/generator-cli-sdk':
+        specifier: 0.0.56
+        version: 0.0.56
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.898
         version: 0.0.898
       '@fern-fern/ir-sdk':
-        specifier: ^53.6.0
-        version: 53.6.0
+        specifier: ^53.7.0
+        version: 53.7.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
+      url-join:
+        specifier: ^5.0.0
+        version: 5.0.0
       zod:
         specifier: ^3.22.3
         version: 3.22.4
@@ -363,21 +378,18 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.15.7)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/openapi:
     dependencies:
@@ -427,33 +439,33 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.15.7)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/postman:
     dependencies:
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../packages/commons/core-utils
       '@fern-api/generator-commons':
         specifier: workspace:*
         version: link:../commons
       '@fern-fern/ir-sdk':
-        specifier: 0.0.2828
-        version: 0.0.2828
+        specifier: 53.9.0
+        version: 53.9.0
       '@fern-fern/postman-sdk':
-        specifier: 0.0.46
-        version: 0.0.46
+        specifier: 0.1.1
+        version: 0.1.1
       '@types/lodash':
         specifier: ^4.17.4
         version: 4.17.4
@@ -488,21 +500,18 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.15.7)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/ruby/cli:
     dependencies:
@@ -537,21 +546,18 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/ruby/codegen:
     dependencies:
@@ -589,21 +595,18 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/ruby/model:
     dependencies:
@@ -653,24 +656,21 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.15.7)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       ts-loader:
         specifier: ^9.3.1
-        version: 9.5.1(typescript@4.6.4)(webpack@5.93.0(esbuild@0.15.7))
+        version: 9.5.1(typescript@4.6.4)(webpack@5.94.0(esbuild@0.15.7))
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/ruby/sdk:
     dependencies:
@@ -723,21 +723,18 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.15.7)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/swift/codegen:
     dependencies:
@@ -782,54 +779,14 @@ importers:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
-  generators/template/codegen:
-    dependencies:
-      '@fern-api/core-utils':
-        specifier: workspace:*
-        version: link:../../../packages/commons/core-utils
-      '@fern-api/fs-utils':
-        specifier: workspace:*
-        version: link:../../../packages/commons/fs-utils
-      '@fern-api/generator-commons':
-        specifier: workspace:*
-        version: link:../../commons
-      '@fern-api/logging-execa':
-        specifier: workspace:*
-        version: link:../../../packages/commons/logging-execa
-      zod:
-        specifier: ^3.22.3
-        version: 3.22.4
-    devDependencies:
-      '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
-      depcheck:
-        specifier: ^1.4.6
-        version: 1.4.6
-      eslint:
-        specifier: ^8.56.0
-        version: 8.56.0
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
-      prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
-      typescript:
-        specifier: 4.6.4
-        version: 4.6.4
-      vitest:
-        specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
-
   generators/typescript/express/cli:
     devDependencies:
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.898
         version: 0.0.898
       '@fern-fern/ir-sdk':
-        specifier: 53.5.0
-        version: 53.5.0
+        specifier: 53.8.0
+        version: 53.8.0
       '@fern-typescript/abstract-generator-cli':
         specifier: workspace:*
         version: link:../../utils/abstract-generator-cli
@@ -863,9 +820,6 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -875,18 +829,18 @@ importers:
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       ts-loader:
         specifier: ^9.3.1
-        version: 9.5.1(typescript@4.6.4)(webpack@5.93.0(esbuild@0.19.12))
+        version: 9.5.1(typescript@4.6.4)(webpack@5.94.0(esbuild@0.19.12))
       tsup:
         specifier: ^8.0.2
         version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
       zod:
         specifier: ^3.22.3
         version: 3.22.4
@@ -897,8 +851,8 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
-        specifier: 53.5.0
-        version: 53.5.0
+        specifier: 53.8.0
+        version: 53.8.0
       '@fern-typescript/abstract-schema-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-schema-generator
@@ -924,27 +878,24 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/express/express-error-generator:
     dependencies:
       '@fern-fern/ir-sdk':
-        specifier: 53.5.0
-        version: 53.5.0
+        specifier: 53.8.0
+        version: 53.8.0
       '@fern-typescript/abstract-error-class-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-error-class-generator
@@ -970,21 +921,18 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/express/express-error-schema-generator:
     dependencies:
@@ -992,8 +940,8 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
-        specifier: 53.5.0
-        version: 53.5.0
+        specifier: 53.8.0
+        version: 53.8.0
       '@fern-typescript/abstract-schema-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-schema-generator
@@ -1019,27 +967,24 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/express/express-inlined-request-body-generator:
     dependencies:
       '@fern-fern/ir-sdk':
-        specifier: 53.5.0
-        version: 53.5.0
+        specifier: 53.8.0
+        version: 53.8.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -1059,27 +1004,24 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/express/express-inlined-request-body-schema-generator:
     dependencies:
       '@fern-fern/ir-sdk':
-        specifier: 53.5.0
-        version: 53.5.0
+        specifier: 53.8.0
+        version: 53.8.0
       '@fern-typescript/abstract-schema-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-schema-generator
@@ -1105,27 +1047,24 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/express/express-register-generator:
     dependencies:
       '@fern-fern/ir-sdk':
-        specifier: 53.5.0
-        version: 53.5.0
+        specifier: 53.8.0
+        version: 53.8.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -1157,27 +1096,24 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/express/express-service-generator:
     dependencies:
       '@fern-fern/ir-sdk':
-        specifier: 53.5.0
-        version: 53.5.0
+        specifier: 53.8.0
+        version: 53.8.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -1203,21 +1139,18 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/express/generator:
     dependencies:
@@ -1228,8 +1161,8 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/commons/fs-utils
       '@fern-fern/ir-sdk':
-        specifier: 53.5.0
-        version: 53.5.0
+        specifier: 53.8.0
+        version: 53.8.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -1291,21 +1224,18 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/express/generic-express-error-generators:
     dependencies:
@@ -1334,27 +1264,24 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/model/type-generator:
     dependencies:
       '@fern-fern/ir-sdk':
-        specifier: 53.5.0
-        version: 53.5.0
+        specifier: 53.8.0
+        version: 53.8.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -1380,27 +1307,24 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/model/type-reference-converters:
     dependencies:
       '@fern-fern/ir-sdk':
-        specifier: 53.5.0
-        version: 53.5.0
+        specifier: 53.8.0
+        version: 53.8.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -1423,21 +1347,18 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/model/type-reference-example-generator:
     dependencies:
@@ -1445,8 +1366,8 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
-        specifier: 53.5.0
-        version: 53.5.0
+        specifier: 53.8.0
+        version: 53.8.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -1469,27 +1390,24 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/model/type-schema-generator:
     dependencies:
       '@fern-fern/ir-sdk':
-        specifier: 53.5.0
-        version: 53.5.0
+        specifier: 53.8.0
+        version: 53.8.0
       '@fern-typescript/abstract-schema-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-schema-generator
@@ -1518,21 +1436,18 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/model/union-generator:
     dependencies:
@@ -1540,8 +1455,8 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
-        specifier: 53.5.0
-        version: 53.5.0
+        specifier: 53.8.0
+        version: 53.8.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -1564,27 +1479,24 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/model/union-schema-generator:
     dependencies:
       '@fern-fern/ir-sdk':
-        specifier: 53.5.0
-        version: 53.5.0
+        specifier: 53.8.0
+        version: 53.8.0
       '@fern-typescript/abstract-schema-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-schema-generator
@@ -1610,21 +1522,18 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/playground/browser:
     dependencies:
@@ -1677,9 +1586,6 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -1701,6 +1607,9 @@ importers:
       vite-plugin-checker:
         specifier: ^0.6.4
         version: 0.6.4(eslint@8.56.0)(meow@9.0.0)(optionator@0.9.3)(stylelint@16.2.1(typescript@4.6.4))(typescript@4.6.4)(vite@5.2.8(@types/node@18.7.18)(sass@1.72.0)(terser@5.31.5))
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/sdk/cli:
     devDependencies:
@@ -1711,8 +1620,8 @@ importers:
         specifier: workspace:*
         version: link:../../../commons
       '@fern-fern/ir-sdk':
-        specifier: 53.5.0
-        version: 53.5.0
+        specifier: 53.8.0
+        version: 53.8.0
       '@fern-typescript/abstract-generator-cli':
         specifier: workspace:*
         version: link:../../utils/abstract-generator-cli
@@ -1746,9 +1655,6 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -1758,18 +1664,18 @@ importers:
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       ts-loader:
         specifier: ^9.3.1
-        version: 9.5.1(typescript@4.6.4)(webpack@5.93.0)
+        version: 9.5.1(typescript@4.6.4)(webpack@5.94.0)
       tsup:
         specifier: ^8.0.2
         version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
       zod:
         specifier: ^3.22.3
         version: 3.22.4
@@ -1780,8 +1686,8 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
-        specifier: 53.5.0
-        version: 53.5.0
+        specifier: 53.8.0
+        version: 53.8.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -1810,27 +1716,24 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/sdk/endpoint-error-union-generator:
     dependencies:
       '@fern-fern/ir-sdk':
-        specifier: 53.5.0
-        version: 53.5.0
+        specifier: 53.8.0
+        version: 53.8.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -1859,27 +1762,24 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/sdk/environments-generator:
     dependencies:
       '@fern-fern/ir-sdk':
-        specifier: 53.5.0
-        version: 53.5.0
+        specifier: 53.8.0
+        version: 53.8.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -1902,21 +1802,18 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/sdk/generator:
     dependencies:
@@ -1926,12 +1823,12 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../../packages/commons/fs-utils
+      '@fern-api/generator-commons':
+        specifier: workspace:*
+        version: link:../../../commons
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../../../packages/cli/logger
-      '@fern-api/logging-execa':
-        specifier: workspace:*
-        version: link:../../../../packages/commons/logging-execa
       '@fern-fern/generator-cli-sdk':
         specifier: 0.0.56
         version: 0.0.56
@@ -1939,8 +1836,8 @@ importers:
         specifier: ^0.0.898
         version: 0.0.898
       '@fern-fern/ir-sdk':
-        specifier: 53.5.0
-        version: 53.5.0
+        specifier: 53.8.0
+        version: 53.8.0
       '@fern-fern/snippet-sdk':
         specifier: ^0.0.5526
         version: 0.0.5526
@@ -1995,15 +1892,6 @@ importers:
       '@types/uuid':
         specifier: ^9.0.8
         version: 9.0.8
-      js-yaml:
-        specifier: ^4.1.0
-        version: 4.1.0
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
-      tmp-promise:
-        specifier: ^3.0.3
-        version: 3.0.3
       ts-morph:
         specifier: ^15.1.0
         version: 15.1.0
@@ -2023,12 +1911,6 @@ importers:
       '@types/jest-specific-snapshot':
         specifier: ^0.5.9
         version: 0.5.9
-      '@types/js-yaml':
-        specifier: ^4.0.8
-        version: 4.0.8
-      '@types/lodash-es':
-        specifier: ^4.17.12
-        version: 4.17.12
       '@types/node':
         specifier: ^18.7.18
         version: 18.7.18
@@ -2044,9 +1926,6 @@ importers:
       globals:
         specifier: link:@types/vitest/globals
         version: link:@types/vitest/globals
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       jest-specific-snapshot:
         specifier: ^8.0.0
         version: 8.0.0(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))
@@ -2056,9 +1935,6 @@ importers:
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
@@ -2093,21 +1969,18 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/sdk/request-wrapper-generator:
     dependencies:
@@ -2115,8 +1988,8 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
-        specifier: 53.5.0
-        version: 53.5.0
+        specifier: 53.8.0
+        version: 53.8.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -2139,21 +2012,18 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/sdk/sdk-endpoint-type-schemas-generator:
     dependencies:
@@ -2161,8 +2031,8 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
-        specifier: 53.5.0
-        version: 53.5.0
+        specifier: 53.8.0
+        version: 53.8.0
       '@fern-typescript/abstract-schema-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-schema-generator
@@ -2194,27 +2064,24 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/sdk/sdk-error-generator:
     dependencies:
       '@fern-fern/ir-sdk':
-        specifier: 53.5.0
-        version: 53.5.0
+        specifier: 53.8.0
+        version: 53.8.0
       '@fern-typescript/abstract-error-class-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-error-class-generator
@@ -2240,21 +2107,18 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/sdk/sdk-error-schema-generator:
     dependencies:
@@ -2262,8 +2126,8 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
-        specifier: 53.5.0
-        version: 53.5.0
+        specifier: 53.8.0
+        version: 53.8.0
       '@fern-typescript/abstract-schema-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-schema-generator
@@ -2289,27 +2153,24 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/sdk/sdk-inlined-request-body-schema-generator:
     dependencies:
       '@fern-fern/ir-sdk':
-        specifier: 53.5.0
-        version: 53.5.0
+        specifier: 53.8.0
+        version: 53.8.0
       '@fern-typescript/abstract-schema-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-schema-generator
@@ -2335,21 +2196,18 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/utils/abstract-error-class-generator:
     dependencies:
@@ -2375,21 +2233,18 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/utils/abstract-generator-cli:
     dependencies:
@@ -2406,8 +2261,8 @@ importers:
         specifier: ^0.0.898
         version: 0.0.898
       '@fern-fern/ir-sdk':
-        specifier: 53.5.0
-        version: 53.5.0
+        specifier: 53.8.0
+        version: 53.8.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../commons
@@ -2427,21 +2282,18 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/utils/abstract-schema-generator:
     dependencies:
@@ -2467,21 +2319,18 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/utils/commons:
     dependencies:
@@ -2498,8 +2347,8 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/commons/logging-execa
       '@fern-fern/ir-sdk':
-        specifier: 53.5.0
-        version: 53.5.0
+        specifier: 53.8.0
+        version: 53.8.0
       '@fern-typescript/fetcher':
         specifier: workspace:*
         version: link:../core-utilities/fetcher
@@ -2567,9 +2416,6 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       memfs:
         specifier: ^3.4.1
         version: 3.5.3
@@ -2582,12 +2428,15 @@ importers:
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/utils/contexts:
     dependencies:
+      '@fern-api/generator-commons':
+        specifier: workspace:*
+        version: link:../../../commons
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../../../packages/cli/logger
@@ -2595,8 +2444,8 @@ importers:
         specifier: ^0.0.898
         version: 0.0.898
       '@fern-fern/ir-sdk':
-        specifier: 53.5.0
-        version: 53.5.0
+        specifier: 53.8.0
+        version: 53.8.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../commons
@@ -2616,21 +2465,18 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/typescript/utils/core-utilities/auth:
     dependencies:
@@ -2664,7 +2510,7 @@ importers:
         version: 2.7.1
       ts-jest:
         specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
+        version: 29.2.5(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
@@ -2694,7 +2540,7 @@ importers:
         version: 2.7.1
       ts-jest:
         specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
+        version: 29.2.5(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
@@ -2722,9 +2568,6 @@ importers:
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
@@ -2746,6 +2589,9 @@ importers:
       qs:
         specifier: 6.12.1
         version: 6.12.1
+      readable-stream:
+        specifier: ^4.5.2
+        version: 4.5.2
     devDependencies:
       '@types/express':
         specifier: ^4.17.21
@@ -2765,6 +2611,9 @@ importers:
       '@types/qs':
         specifier: 6.9.15
         version: 6.9.15
+      '@types/readable-stream':
+        specifier: ^4.0.15
+        version: 4.0.15
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -2797,10 +2646,16 @@ importers:
         version: 2.7.1
       ts-jest:
         specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
+        version: 29.2.5(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
+      ts-loader:
+        specifier: ^9.3.1
+        version: 9.5.1(typescript@4.6.4)(webpack@5.94.0)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      webpack:
+        specifier: ^5.94.0
+        version: 5.94.0
 
   generators/typescript/utils/core-utilities/utils:
     devDependencies:
@@ -2827,7 +2682,7 @@ importers:
         version: 2.7.1
       ts-jest:
         specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
+        version: 29.2.5(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
@@ -2863,7 +2718,7 @@ importers:
         version: 2.7.1
       ts-jest:
         specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
+        version: 29.2.5(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
@@ -2871,8 +2726,8 @@ importers:
   generators/typescript/utils/resolvers:
     dependencies:
       '@fern-fern/ir-sdk':
-        specifier: 53.5.0
-        version: 53.5.0
+        specifier: 53.8.0
+        version: 53.8.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../commons
@@ -2889,21 +2744,18 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/auth:
     dependencies:
@@ -2944,27 +2796,27 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/cli:
     dependencies:
       '@fern-api/auth':
         specifier: workspace:*
         version: link:../auth
+      '@fern-api/cli-migrations':
+        specifier: workspace:*
+        version: link:../cli-migrations
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../configuration
@@ -2980,6 +2832,15 @@ importers:
       '@fern-api/docs-validator':
         specifier: workspace:*
         version: link:../yaml/docs-validator
+      '@fern-api/fern-definition-formatter':
+        specifier: workspace:*
+        version: link:../fern-definition/formatter
+      '@fern-api/fern-definition-schema':
+        specifier: workspace:*
+        version: link:../fern-definition/schema
+      '@fern-api/fern-definition-validator':
+        specifier: workspace:*
+        version: link:../fern-definition/validator
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -3037,27 +2898,18 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../task-context
-      '@fern-api/validator':
-        specifier: workspace:*
-        version: link:../yaml/validator
       '@fern-api/venus-api-sdk':
         specifier: 0.0.38
         version: 0.0.38
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../workspace-loader
-      '@fern-api/yaml-formatter':
-        specifier: workspace:*
-        version: link:../yaml/formatter
-      '@fern-api/yaml-migrations':
-        specifier: workspace:*
-        version: link:../yaml/yaml-migrations
-      '@fern-api/yaml-schema':
-        specifier: workspace:*
-        version: link:../yaml/yaml-schema
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584
+      '@fern-fern/generators-sdk':
+        specifier: 0.107.0-00fe26566
+        version: 0.107.0-00fe26566
       '@types/get-port':
         specifier: ^4.2.0
         version: 4.2.0
@@ -3094,9 +2946,6 @@ importers:
       ora:
         specifier: ^7.0.1
         version: 7.0.1
-      semver:
-        specifier: ^7.6.2
-        version: 7.6.2
       tar:
         specifier: ^6.2.1
         version: 6.2.1
@@ -3137,9 +2986,6 @@ importers:
       '@types/node':
         specifier: ^18.7.18
         version: 18.7.18
-      '@types/semver':
-        specifier: ^7.5.8
-        version: 7.5.8
       '@types/tar':
         specifier: ^6.1.11
         version: 6.1.11
@@ -3161,27 +3007,109 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.15.7)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  packages/cli/cli-migrations:
+    dependencies:
+      '@fern-api/configuration':
+        specifier: workspace:*
+        version: link:../configuration
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../commons/core-utils
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../commons/fs-utils
+      '@fern-api/semver-utils':
+        specifier: workspace:*
+        version: link:../semver-utils
+      '@fern-api/task-context':
+        specifier: workspace:*
+        version: link:../task-context
+      '@fern-fern/docs-config':
+        specifier: 0.0.80
+        version: 0.0.80
+      '@fern-fern/legacy-docs-config':
+        specifier: 0.0.58
+        version: 0.0.58
+      chalk:
+        specifier: ^5.3.0
+        version: 5.3.0
+      find-up:
+        specifier: ^6.3.0
+        version: 6.3.0
+      glob:
+        specifier: ^8.0.3
+        version: 8.1.0
+      glob-promise:
+        specifier: ^5.0.0
+        version: 5.0.1(glob@8.1.0)
+      inquirer:
+        specifier: ^9.2.23
+        version: 9.2.23
+      js-yaml:
+        specifier: ^4.1.0
+        version: 4.1.0
+      yaml:
+        specifier: 2.3.3
+        version: 2.3.3
+      zod:
+        specifier: ^3.22.3
+        version: 3.22.4
+    devDependencies:
+      '@types/inquirer':
+        specifier: ^9.0.7
+        version: 9.0.7
+      '@types/jest':
+        specifier: ^29.5.12
+        version: 29.5.12
+      '@types/js-yaml':
+        specifier: ^4.0.8
+        version: 4.0.8
+      '@types/node':
+        specifier: ^18.7.18
+        version: 18.7.18
+      depcheck:
+        specifier: ^1.4.6
+        version: 1.4.6
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      organize-imports-cli:
+        specifier: ^0.10.0
+        version: 0.10.0
+      prettier:
+        specifier: ^2.7.1
+        version: 2.7.1
+      tmp-promise:
+        specifier: ^3.0.3
+        version: 3.0.3
+      typescript:
+        specifier: 4.6.4
+        version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/configuration:
     dependencies:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../commons/core-utils
+      '@fern-api/fern-definition-schema':
+        specifier: workspace:*
+        version: link:../fern-definition/schema
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -3194,9 +3122,9 @@ importers:
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584
-      dockerode:
-        specifier: ^4.0.2
-        version: 4.0.2
+      '@fern-fern/generators-sdk':
+        specifier: 0.107.0-00fe26566
+        version: 0.107.0-00fe26566
       find-up:
         specifier: ^6.3.0
         version: 6.3.0
@@ -3206,6 +3134,9 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
+      semver:
+        specifier: ^7.6.2
+        version: 7.6.2
       tinycolor2:
         specifier: ^1.6.0
         version: 1.6.0
@@ -3213,9 +3144,6 @@ importers:
         specifier: ^3.22.3
         version: 3.22.4
     devDependencies:
-      '@types/dockerode':
-        specifier: ^3.3.9
-        version: 3.3.9
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
@@ -3228,6 +3156,9 @@ importers:
       '@types/node':
         specifier: ^18.7.18
         version: 18.7.18
+      '@types/semver':
+        specifier: ^7.5.8
+        version: 7.5.8
       '@types/tinycolor2':
         specifier: ^1.4.6
         version: 1.4.6
@@ -3314,8 +3245,8 @@ importers:
         specifier: workspace:*
         version: link:../docs-resolver
       '@fern-api/fdr-sdk':
-        specifier: 0.98.20-86eba53a1
-        version: 0.98.20-86eba53a1(typescript@4.6.4)
+        specifier: 0.107.0-09e88f5f9
+        version: 0.107.0-09e88f5f9(typescript@4.6.4)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -3389,6 +3320,9 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
+      globals:
+        specifier: link:@types/vitest/globals
+        version: link:@types/vitest/globals
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -3414,8 +3348,8 @@ importers:
         specifier: workspace:*
         version: link:../docs-markdown-utils
       '@fern-api/fdr-sdk':
-        specifier: 0.98.20-86eba53a1
-        version: 0.98.20-86eba53a1(typescript@4.6.4)
+        specifier: 0.107.0-09e88f5f9
+        version: 0.107.0-09e88f5f9(typescript@4.6.4)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -3532,9 +3466,6 @@ importers:
       globals:
         specifier: link:@types/vitest/globals
         version: link:@types/vitest/globals
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       jest-environment-jsdom:
         specifier: ^29.7.0
         version: 29.7.0
@@ -3544,9 +3475,214 @@ importers:
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
+      typescript:
+        specifier: 4.6.4
+        version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  packages/cli/fern-definition/formatter:
+    dependencies:
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../commons/core-utils
+      '@fern-api/fern-definition-schema':
+        specifier: workspace:*
+        version: link:../schema
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../../commons/fs-utils
+      '@fern-api/task-context':
+        specifier: workspace:*
+        version: link:../../task-context
+      '@fern-api/workspace-loader':
+        specifier: workspace:*
+        version: link:../../workspace-loader
+      chalk:
+        specifier: ^5.3.0
+        version: 5.3.0
+    devDependencies:
+      '@types/jest':
+        specifier: ^29.5.12
+        version: 29.5.12
+      '@types/node':
+        specifier: ^18.7.18
+        version: 18.7.18
+      '@types/prettier':
+        specifier: ^2.7.1
+        version: 2.7.3
+      depcheck:
+        specifier: ^1.4.6
+        version: 1.4.6
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      globals:
+        specifier: link:@types/vitest/globals
+        version: link:@types/vitest/globals
+      organize-imports-cli:
+        specifier: ^0.10.0
+        version: 0.10.0
+      prettier:
+        specifier: ^2.7.1
+        version: 2.7.1
+      typescript:
+        specifier: 4.6.4
+        version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  packages/cli/fern-definition/json-schema:
+    dependencies:
+      '@fern-api/fern-definition-schema':
+        specifier: workspace:*
+        version: link:../schema
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../../commons/fs-utils
+      prettier:
+        specifier: ^2.7.1
+        version: 2.7.1
+      zod:
+        specifier: ^3.22.3
+        version: 3.22.4
+      zod-to-json-schema:
+        specifier: 3.14.1
+        version: 3.14.1(zod@3.22.4)
+    devDependencies:
+      '@types/jest':
+        specifier: ^29.5.12
+        version: 29.5.12
+      '@types/node':
+        specifier: ^18.7.18
+        version: 18.7.18
+      '@types/prettier':
+        specifier: ^2.7.1
+        version: 2.7.3
+      depcheck:
+        specifier: ^1.4.6
+        version: 1.4.6
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      organize-imports-cli:
+        specifier: ^0.10.0
+        version: 0.10.0
+      typescript:
+        specifier: 4.6.4
+        version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  packages/cli/fern-definition/schema:
+    dependencies:
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../commons/core-utils
+      '@fern-api/ir-sdk':
+        specifier: workspace:*
+        version: link:../../../ir-sdk
+      zod:
+        specifier: ^3.22.3
+        version: 3.22.4
+    devDependencies:
+      '@types/jest':
+        specifier: ^29.5.12
+        version: 29.5.12
+      '@types/node':
+        specifier: ^18.7.18
+        version: 18.7.18
+      depcheck:
+        specifier: ^1.4.6
+        version: 1.4.6
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      globals:
+        specifier: link:@types/vitest/globals
+        version: link:@types/vitest/globals
+      organize-imports-cli:
+        specifier: ^0.10.0
+        version: 0.10.0
+      prettier:
+        specifier: ^2.7.1
+        version: 2.7.1
+      typescript:
+        specifier: 4.6.4
+        version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  packages/cli/fern-definition/validator:
+    dependencies:
+      '@fern-api/configuration':
+        specifier: workspace:*
+        version: link:../../configuration
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../commons/core-utils
+      '@fern-api/fern-definition-schema':
+        specifier: workspace:*
+        version: link:../schema
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../../commons/fs-utils
+      '@fern-api/ir-generator':
+        specifier: workspace:*
+        version: link:../../generation/ir-generator
+      '@fern-api/ir-sdk':
+        specifier: workspace:*
+        version: link:../../../ir-sdk
+      '@fern-api/logger':
+        specifier: workspace:*
+        version: link:../../logger
+      '@fern-api/task-context':
+        specifier: workspace:*
+        version: link:../../task-context
+      '@fern-api/workspace-loader':
+        specifier: workspace:*
+        version: link:../../workspace-loader
+      chalk:
+        specifier: ^5.3.0
+        version: 5.3.0
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
+      strip-ansi:
+        specifier: ^7.1.0
+        version: 7.1.0
+      terminal-link:
+        specifier: ^3.0.0
+        version: 3.0.0
+    devDependencies:
+      '@types/jest':
+        specifier: ^29.5.12
+        version: 29.5.12
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
+      '@types/node':
+        specifier: ^18.7.18
+        version: 18.7.18
+      depcheck:
+        specifier: ^1.4.6
+        version: 1.4.6
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      globals:
+        specifier: link:@types/vitest/globals
+        version: link:@types/vitest/globals
+      organize-imports-cli:
+        specifier: ^0.10.0
+        version: 0.10.0
+      prettier:
+        specifier: ^2.7.1
+        version: 2.7.1
       typescript:
         specifier: 4.6.4
         version: 4.6.4
@@ -3562,6 +3698,9 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../commons/core-utils
+      '@fern-api/fern-definition-schema':
+        specifier: workspace:*
+        version: link:../../fern-definition/schema
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../commons/fs-utils
@@ -3577,9 +3716,6 @@ importers:
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../../workspace-loader
-      '@fern-api/yaml-schema':
-        specifier: workspace:*
-        version: link:../../yaml/yaml-schema
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -3593,9 +3729,6 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0
     devDependencies:
-      '@types/jest':
-        specifier: ^29.5.12
-        version: 29.5.12
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -3620,15 +3753,9 @@ importers:
       globals:
         specifier: link:@types/vitest/globals
         version: link:@types/vitest/globals
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
@@ -3880,6 +4007,9 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
+      globals:
+        specifier: link:@types/vitest/globals
+        version: link:@types/vitest/globals
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -3956,21 +4086,18 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/generation/remote-generation/remote-workspace-runner:
     dependencies:
@@ -4113,6 +4240,12 @@ importers:
       '@fern-api/core':
         specifier: workspace:*
         version: link:../../core
+      '@fern-api/fern-definition-formatter':
+        specifier: workspace:*
+        version: link:../fern-definition/formatter
+      '@fern-api/fern-definition-schema':
+        specifier: workspace:*
+        version: link:../fern-definition/schema
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -4122,12 +4255,6 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../task-context
-      '@fern-api/yaml-formatter':
-        specifier: workspace:*
-        version: link:../yaml/formatter
-      '@fern-api/yaml-schema':
-        specifier: workspace:*
-        version: link:../yaml/yaml-schema
       axios:
         specifier: ^0.28.0
         version: 0.28.0
@@ -4168,21 +4295,18 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/logger:
     dependencies:
@@ -4205,21 +4329,18 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/login:
     dependencies:
@@ -4275,21 +4396,18 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/mock:
     dependencies:
@@ -4363,21 +4481,18 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/openapi-ir-to-fern:
     dependencies:
@@ -4387,6 +4502,9 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../commons/core-utils
+      '@fern-api/fern-definition-schema':
+        specifier: workspace:*
+        version: link:../fern-definition/schema
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -4402,9 +4520,6 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../task-context
-      '@fern-api/yaml-schema':
-        specifier: workspace:*
-        version: link:../yaml/yaml-schema
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -4445,6 +4560,9 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../commons/core-utils
+      '@fern-api/fern-definition-schema':
+        specifier: workspace:*
+        version: link:../fern-definition/schema
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -4457,9 +4575,6 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../task-context
-      '@fern-api/yaml-schema':
-        specifier: workspace:*
-        version: link:../yaml/yaml-schema
       '@redocly/openapi-core':
         specifier: ^1.4.1
         version: 1.4.1
@@ -4500,6 +4615,9 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
+      globals:
+        specifier: link:@types/vitest/globals
+        version: link:@types/vitest/globals
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -4546,21 +4664,18 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/project-loader:
     dependencies:
@@ -4592,21 +4707,18 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/register:
     dependencies:
@@ -4724,21 +4836,18 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/workspace-loader:
     dependencies:
@@ -4751,6 +4860,9 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../commons/core-utils
+      '@fern-api/fern-definition-schema':
+        specifier: workspace:*
+        version: link:../fern-definition/schema
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -4772,9 +4884,6 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../task-context
-      '@fern-api/yaml-schema':
-        specifier: workspace:*
-        version: link:../yaml/yaml-schema
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584
@@ -4836,18 +4945,12 @@ importers:
       globals:
         specifier: link:@types/vitest/globals
         version: link:@types/vitest/globals
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
@@ -4866,6 +4969,9 @@ importers:
       '@fern-api/docs-markdown-utils':
         specifier: workspace:*
         version: link:../../docs-markdown-utils
+      '@fern-api/fern-definition-schema':
+        specifier: workspace:*
+        version: link:../../fern-definition/schema
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../commons/fs-utils
@@ -4881,9 +4987,6 @@ importers:
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../../workspace-loader
-      '@fern-api/yaml-schema':
-        specifier: workspace:*
-        version: link:../yaml-schema
       '@types/tinycolor2':
         specifier: ^1.4.6
         version: 1.4.6
@@ -4949,314 +5052,6 @@ importers:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
-  packages/cli/yaml/formatter:
-    dependencies:
-      '@fern-api/core-utils':
-        specifier: workspace:*
-        version: link:../../../commons/core-utils
-      '@fern-api/fs-utils':
-        specifier: workspace:*
-        version: link:../../../commons/fs-utils
-      '@fern-api/task-context':
-        specifier: workspace:*
-        version: link:../../task-context
-      '@fern-api/workspace-loader':
-        specifier: workspace:*
-        version: link:../../workspace-loader
-      '@fern-api/yaml-schema':
-        specifier: workspace:*
-        version: link:../yaml-schema
-      chalk:
-        specifier: ^5.3.0
-        version: 5.3.0
-    devDependencies:
-      '@types/jest':
-        specifier: ^29.5.12
-        version: 29.5.12
-      '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
-      '@types/prettier':
-        specifier: ^2.7.1
-        version: 2.7.3
-      depcheck:
-        specifier: ^1.4.6
-        version: 1.4.6
-      eslint:
-        specifier: ^8.56.0
-        version: 8.56.0
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
-      prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
-      typescript:
-        specifier: 4.6.4
-        version: 4.6.4
-      vitest:
-        specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
-
-  packages/cli/yaml/json-schema:
-    dependencies:
-      '@fern-api/fs-utils':
-        specifier: workspace:*
-        version: link:../../../commons/fs-utils
-      '@fern-api/yaml-schema':
-        specifier: workspace:*
-        version: link:../yaml-schema
-      prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
-      zod:
-        specifier: ^3.22.3
-        version: 3.22.4
-      zod-to-json-schema:
-        specifier: 3.14.1
-        version: 3.14.1(zod@3.22.4)
-    devDependencies:
-      '@types/jest':
-        specifier: ^29.5.12
-        version: 29.5.12
-      '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
-      '@types/prettier':
-        specifier: ^2.7.1
-        version: 2.7.3
-      depcheck:
-        specifier: ^1.4.6
-        version: 1.4.6
-      eslint:
-        specifier: ^8.56.0
-        version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
-      typescript:
-        specifier: 4.6.4
-        version: 4.6.4
-
-  packages/cli/yaml/validator:
-    dependencies:
-      '@fern-api/configuration':
-        specifier: workspace:*
-        version: link:../../configuration
-      '@fern-api/core-utils':
-        specifier: workspace:*
-        version: link:../../../commons/core-utils
-      '@fern-api/fs-utils':
-        specifier: workspace:*
-        version: link:../../../commons/fs-utils
-      '@fern-api/ir-generator':
-        specifier: workspace:*
-        version: link:../../generation/ir-generator
-      '@fern-api/ir-sdk':
-        specifier: workspace:*
-        version: link:../../../ir-sdk
-      '@fern-api/logger':
-        specifier: workspace:*
-        version: link:../../logger
-      '@fern-api/task-context':
-        specifier: workspace:*
-        version: link:../../task-context
-      '@fern-api/workspace-loader':
-        specifier: workspace:*
-        version: link:../../workspace-loader
-      '@fern-api/yaml-schema':
-        specifier: workspace:*
-        version: link:../yaml-schema
-      chalk:
-        specifier: ^5.3.0
-        version: 5.3.0
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
-      strip-ansi:
-        specifier: ^7.1.0
-        version: 7.1.0
-      terminal-link:
-        specifier: ^3.0.0
-        version: 3.0.0
-    devDependencies:
-      '@types/jest':
-        specifier: ^29.5.12
-        version: 29.5.12
-      '@types/lodash-es':
-        specifier: ^4.17.12
-        version: 4.17.12
-      '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
-      depcheck:
-        specifier: ^1.4.6
-        version: 1.4.6
-      eslint:
-        specifier: ^8.56.0
-        version: 8.56.0
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
-      prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
-      typescript:
-        specifier: 4.6.4
-        version: 4.6.4
-      vitest:
-        specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
-
-  packages/cli/yaml/yaml-migrations:
-    dependencies:
-      '@fern-api/configuration':
-        specifier: workspace:*
-        version: link:../../configuration
-      '@fern-api/core-utils':
-        specifier: workspace:*
-        version: link:../../../commons/core-utils
-      '@fern-api/fs-utils':
-        specifier: workspace:*
-        version: link:../../../commons/fs-utils
-      '@fern-api/semver-utils':
-        specifier: workspace:*
-        version: link:../../semver-utils
-      '@fern-api/task-context':
-        specifier: workspace:*
-        version: link:../../task-context
-      '@fern-fern/docs-config':
-        specifier: 0.0.80
-        version: 0.0.80
-      '@fern-fern/legacy-docs-config':
-        specifier: 0.0.58
-        version: 0.0.58
-      chalk:
-        specifier: ^5.3.0
-        version: 5.3.0
-      find-up:
-        specifier: ^6.3.0
-        version: 6.3.0
-      glob:
-        specifier: ^8.0.3
-        version: 8.1.0
-      glob-promise:
-        specifier: ^5.0.0
-        version: 5.0.1(glob@8.1.0)
-      inquirer:
-        specifier: ^9.2.23
-        version: 9.2.23
-      js-yaml:
-        specifier: ^4.1.0
-        version: 4.1.0
-      yaml:
-        specifier: 2.3.3
-        version: 2.3.3
-      zod:
-        specifier: ^3.22.3
-        version: 3.22.4
-    devDependencies:
-      '@types/inquirer':
-        specifier: ^9.0.7
-        version: 9.0.7
-      '@types/jest':
-        specifier: ^29.5.12
-        version: 29.5.12
-      '@types/js-yaml':
-        specifier: ^4.0.8
-        version: 4.0.8
-      '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
-      depcheck:
-        specifier: ^1.4.6
-        version: 1.4.6
-      eslint:
-        specifier: ^8.56.0
-        version: 8.56.0
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
-      prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
-      tmp-promise:
-        specifier: ^3.0.3
-        version: 3.0.3
-      typescript:
-        specifier: 4.6.4
-        version: 4.6.4
-      vitest:
-        specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
-
-  packages/cli/yaml/yaml-schema:
-    dependencies:
-      '@fern-api/configuration':
-        specifier: workspace:*
-        version: link:../../configuration
-      '@fern-api/core-utils':
-        specifier: workspace:*
-        version: link:../../../commons/core-utils
-      '@fern-api/ir-sdk':
-        specifier: workspace:*
-        version: link:../../../ir-sdk
-      zod:
-        specifier: ^3.22.3
-        version: 3.22.4
-    devDependencies:
-      '@types/jest':
-        specifier: ^29.5.12
-        version: 29.5.12
-      '@types/node':
-        specifier: ^18.7.18
-        version: 18.7.18
-      depcheck:
-        specifier: ^1.4.6
-        version: 1.4.6
-      eslint:
-        specifier: ^8.56.0
-        version: 8.56.0
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
-      prettier:
-        specifier: ^2.7.1
-        version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
-      typescript:
-        specifier: 4.6.4
-        version: 4.6.4
-      vitest:
-        specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
-
   packages/commons/core-utils:
     dependencies:
       strip-ansi:
@@ -5285,8 +5080,8 @@ importers:
         specifier: ^8.56.0
         version: 8.56.0
       globals:
-        specifier: link:@types/viteset/globals
-        version: link:@types/viteset/globals
+        specifier: link:@types/vitest/globals
+        version: link:@types/vitest/globals
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -5330,21 +5125,18 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/commons/loadable:
     dependencies:
@@ -5364,21 +5156,18 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/commons/logging-execa:
     dependencies:
@@ -5401,6 +5190,9 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
+      globals:
+        specifier: link:@types/vitest/globals
+        version: link:@types/vitest/globals
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -5441,21 +5233,18 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/ir-sdk:
     devDependencies:
@@ -5471,30 +5260,27 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/scripts:
     dependencies:
+      '@fern-api/fern-definition-json-schema':
+        specifier: workspace:*
+        version: link:../cli/fern-definition/json-schema
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../commons/fs-utils
-      '@fern-api/json-schema':
-        specifier: workspace:*
-        version: link:../cli/yaml/json-schema
       chalk:
         specifier: ^5.3.0
         version: 5.3.0
@@ -5577,6 +5363,9 @@ importers:
       '@fern-api/logging-execa':
         specifier: workspace:*
         version: link:../commons/logging-execa
+      '@fern-api/login':
+        specifier: workspace:*
+        version: link:../cli/login
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../cli/task-context
@@ -5589,6 +5378,9 @@ importers:
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.898
         version: 0.0.898
+      '@fern-fern/generators-sdk':
+        specifier: 0.107.0-00fe26566
+        version: 0.107.0-00fe26566
       '@types/pretty-ms':
         specifier: ^5.0.1
         version: 5.0.1
@@ -5610,6 +5402,9 @@ importers:
       pretty-ms:
         specifier: ^9.0.0
         version: 9.0.0
+      semver:
+        specifier: ^7.6.2
+        version: 7.6.2
       tmp-promise:
         specifier: ^3.0.3
         version: 3.0.3
@@ -5620,9 +5415,6 @@ importers:
       '@types/find-up':
         specifier: ^4.0.0
         version: 4.0.0
-      '@types/jest':
-        specifier: ^29.5.12
-        version: 29.5.12
       '@types/js-yaml':
         specifier: ^4.0.8
         version: 4.0.8
@@ -5632,6 +5424,9 @@ importers:
       '@types/node':
         specifier: ^18.7.18
         version: 18.7.18
+      '@types/semver':
+        specifier: ^7.5.8
+        version: 7.5.8
       '@types/yargs':
         specifier: ^17.0.28
         version: 17.0.28
@@ -5650,21 +5445,21 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
+      globals:
+        specifier: link:@types/vitest/globals
+        version: link:@types/vitest/globals
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
-      ts-jest:
-        specifier: ^29.2.4
-        version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.15.7)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
 packages:
 
@@ -6679,8 +6474,8 @@ packages:
   '@exodus/schemasafe@1.0.0':
     resolution: {integrity: sha512-2cyupPIZI69HQxEAPllLXBjQp4njDKkOjYRCYxvMZe3/LY9pp9fBM3Tb1wiFAdP6Emo4v3OEbCLGj6u73Q5KLw==}
 
-  '@fern-api/fdr-sdk@0.98.20-86eba53a1':
-    resolution: {integrity: sha512-gQsTxrmG69hE/W68e3RpS0Jiq+hD1OPwwEgPi7EjFHcUy0Ru9WlSDOGJ0Uv1WsS84AHAz84OrUs+KEQwUwDeyA==}
+  '@fern-api/fdr-sdk@0.107.0-09e88f5f9':
+    resolution: {integrity: sha512-9vVSuRIWgqRlJFvSbGCuOE3jbDIUGOWXkUA/ra9ELgDlqH0Uo5NZYC9AHcQze2wu5P5X5NOjQbwPNQp6B5Jy+g==}
 
   '@fern-api/venus-api-sdk@0.0.38':
     resolution: {integrity: sha512-1JjuctZwyPu4jN51bBqjIy+uCBPGa/ROcDfqN0UnGeVEW7NyztkGh/qOFwnN6K07VMMql1AIF4Zov+MVqTPwmw==}
@@ -6706,17 +6501,26 @@ packages:
   '@fern-fern/generator-exec-sdk@0.0.898':
     resolution: {integrity: sha512-VQYn32CkAd437deesaGk4LKikbVptxrWINAwUwiAUWOy77LelX1zWNKihjU2XDgIPv3VXK07aJwoPR5BDYD46Q==}
 
+  '@fern-fern/generators-sdk@0.107.0-00fe26566':
+    resolution: {integrity: sha512-fwk1xrv3wTO/6kJztIwO8Zz/thkRxIMLjYCtHelfbtbYNH9ZZr+yWDiCZGFBOOu7m8tuEZjaoOYOR3wiqmeivQ==}
+
   '@fern-fern/ir-sdk@0.0.2828':
     resolution: {integrity: sha512-qFZZHyw0cuHtoR9v7KsrPpz0PFH0V6/ORSMHdTKU/82KcaNCMjk0BbzicK8jjrMD0mYS4JxNUzEjcUOvgeuqaA==}
 
   '@fern-fern/ir-sdk@39.0.0':
     resolution: {integrity: sha512-cx8g0hX3gS/JveQPKanSWAyhM8SGhVOiQEcovqmcF/j9wvpjO8FXXNNI1+ZR1Wdmkcggx9UIqXDbS7jzefh6Rw==}
 
-  '@fern-fern/ir-sdk@53.5.0':
-    resolution: {integrity: sha512-0mgKOG7BgAKpABFBlHQCb0Bqph4ZFz/hmLWv/EuBHm5YD7NwWA0ZsOcZ0UX9pX/CRG0GAG3Me2APxzYRYaCw4A==}
+  '@fern-fern/ir-sdk@53.7.0':
+    resolution: {integrity: sha512-PoCj8yOep3kFeDZYORAzqPwVtCSNmbT2SfR/AoxKCcikeZ5i+4Um4ZXx1e6UaAy7dIYF5kWeRc6lptFBRoj7Gw==}
 
-  '@fern-fern/ir-sdk@53.6.0':
-    resolution: {integrity: sha512-LN7rilQZdMlgrUgLSj/3Tf9gEBAj/4auGDyqOsz295ji0aI+iq3KKwS7W/xdeZJJdf7yf0iJpJommGVqTDSd6A==}
+  '@fern-fern/ir-sdk@53.7.2':
+    resolution: {integrity: sha512-mLw91KwIwzLnY36X2oHLo/2ue3WaOFWQBSKRdVR12/wui0+Q5G7tNyXhxgZxT8UzQPYIt4dcOp+qp5XT9UZh1Q==}
+
+  '@fern-fern/ir-sdk@53.8.0':
+    resolution: {integrity: sha512-h5q0DuXyeCs61Nl0ueBYMtNhG5uiSKJqdqtgTON5RWjGH0aJAhGMfoRXoq5Sar4HLWHhbK/t/290O/iCJLE0hQ==}
+
+  '@fern-fern/ir-sdk@53.9.0':
+    resolution: {integrity: sha512-WAXXL+XVnDO4a3nfZRbRTr0+xz88jIYEZYTbJ7sYWLS7DLjmU780EFMMwO8ySmCdI0R2yRfeSY0qaGvuomXg6g==}
 
   '@fern-fern/ir-v1-model@0.0.2':
     resolution: {integrity: sha512-Rho6qXYfRoB1sAISFS4V7vttVFN0ypoaztmbfKKNFmSTNVOyLN++e2xNZ+Aw9ckE5ZZmfMXK9v4+dnFReWVzvA==}
@@ -6877,8 +6681,8 @@ packages:
   '@fern-fern/legacy-docs-config@0.0.58':
     resolution: {integrity: sha512-uSGlM9UFgNsILEHxKRUm5Vi06nna9+XZTMm245o0pmLdrucHfoO9N558e6khDYtfBxPIJVGUf1C1Et04mKX0kg==}
 
-  '@fern-fern/postman-sdk@0.0.46':
-    resolution: {integrity: sha512-9dE9W1bmv8ee+p8OmGefQuqc1s/9OmWblwrIxEHntrHRaunnLubJ9dkS5c0NBq1z2Ok9kY1DUIXdWCpMz70JAA==}
+  '@fern-fern/postman-sdk@0.1.1':
+    resolution: {integrity: sha512-wjeVDbw6xvsBe6I/uwZ1P0ZhzjpEAyzY9M0iQXEuZoYo5wsea3SeTCrqOub3jV0WDia0PFFacfpoV0U/sD7yIQ==}
 
   '@fern-fern/snippet-sdk@0.0.5526':
     resolution: {integrity: sha512-YHbU5X1EEtguvlD/77eudcHV1mWyUUbhGrJw0Vcu9JU264rvuq6pOHFR1r2F1L9pPsbAx0m02QdY6b1yxSga1g==}
@@ -7210,12 +7014,6 @@ packages:
   '@types/dockerode@3.3.9':
     resolution: {integrity: sha512-SYRN5FF/qmwpxUT6snJP5D8k0wgoUKOGVs625XvpRJOOUi6s//UYI4F0tbyE3OmzpI70Fo1+aqpzX27zCrInww==}
 
-  '@types/eslint-scope@3.7.7':
-    resolution: {integrity: sha512-MzMFlSLBqNF2gcHWO0G1vP/YQyfvrxZ0bF+u7mzUdZ1/xK4A4sru+nraZz5i3iEIk1l1uyicaDVTB4QbbEkAYg==}
-
-  '@types/eslint@9.6.0':
-    resolution: {integrity: sha512-gi6WQJ7cHRgZxtkQEoyHMppPjq9Kxo5Tjn2prSKDSmZrCz8TZ3jSRCeTJm+WoM+oB0WG37bRqLzaaU3q7JypGg==}
-
   '@types/estree-jsx@1.0.0':
     resolution: {integrity: sha512-3qvGd0z8F2ENTGr/GG1yViqfiKmRfrXVx5sJyHGFu3z7m5g5utCQtGp/g29JnjflhtQJBv1WDQukHiT58xPcYQ==}
 
@@ -7372,6 +7170,9 @@ packages:
 
   '@types/react@18.2.57':
     resolution: {integrity: sha512-ZvQsktJgSYrQiMirAN60y4O/LRevIV8hUzSOSNB6gfR3/o3wCBFQx3sPwIYtuDMeiVgsSS3UzCV26tEzgnfvQw==}
+
+  '@types/readable-stream@4.0.15':
+    resolution: {integrity: sha512-oAZ3kw+kJFkEqyh7xORZOku1YAKvsFTogRY8kVl4vHpEKiDkfnSA/My8haRE7fvmix5Zyy+1pwzOi7yycGLBJw==}
 
   '@types/scheduler@0.16.3':
     resolution: {integrity: sha512-5cJ8CB4yAx7BH1oMvdU0Jh9lrEXyPkar6F9G/ERswkCuvP4KQZfZkSjcMbAICCpQTN4OuZn8tz0HiKv9TGZgrQ==}
@@ -7691,6 +7492,10 @@ packages:
     resolution: {integrity: sha512-j2afSsaIENvHZN2B8GOpF566vZ5WVk5opAiMTvWgaQT8DkbOqsTfvNAvHoRGU2zzP8cPoqys+xHTRDWW8L+/BA==}
     deprecated: Use your platform's native atob() and btoa() methods instead
 
+  abort-controller@3.0.0:
+    resolution: {integrity: sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==}
+    engines: {node: '>=6.5'}
+
   accepts@1.3.8:
     resolution: {integrity: sha512-PYAthTa2m2VKxuvSD3DPC/Gy+U+sOA1LAuT8mkmRuvw+NACSaeXEQ+NHcVF7rONl6qcaxV3Uuemwawk+7+SJLw==}
     engines: {node: '>= 0.6'}
@@ -7883,8 +7688,8 @@ packages:
     resolution: {integrity: sha512-ISvCdHdlTDlH5IpxQJIex7BWBywFWgjJSVdwst+/iQCoEYnyOaQ95+X1JGshuBjGp6nxKUy1jMgE3zPqN7fQdg==}
     hasBin: true
 
-  async@3.2.5:
-    resolution: {integrity: sha512-baNZyqaaLhyLVKm/DlvdW051MSgO6b8eVfIezl9E5PqWxFgzLm/wQntEW4zOytVburDEr0JlALEpdOFwvErLsg==}
+  async@3.2.6:
+    resolution: {integrity: sha512-htCUDlxyyCLMgaM3xXg0C0LW2xqfuQ6p05pCEIsXuyQ+a1koYKTuBMzRNwmybfLgvJDMd0r1LTn4+E0Ti6C2AA==}
 
   asynckit@0.4.0:
     resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
@@ -9014,6 +8819,10 @@ packages:
     resolution: {integrity: sha512-aIL5Fx7mawVa300al2BnEE4iNvo1qETxLrPI/o05L7z6go7fCw1J6EQmbK4FmJ2AS7kgVF/KEZWufBfdClMcPg==}
     engines: {node: '>= 0.6'}
 
+  event-target-shim@5.0.1:
+    resolution: {integrity: sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==}
+    engines: {node: '>=6'}
+
   events@3.3.0:
     resolution: {integrity: sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==}
     engines: {node: '>=0.8.x'}
@@ -9492,6 +9301,11 @@ packages:
   human-signals@5.0.0:
     resolution: {integrity: sha512-AXcZb6vzzrFAUE61HnN4mpLqd/cSIwNQjtNWR0euPm6y0iqx3G4gOXaIDdtdDwZmhwe82LA6+zinmW4UBWVePQ==}
     engines: {node: '>=16.17.0'}
+
+  husky@9.1.5:
+    resolution: {integrity: sha512-rowAVRUBfI0b4+niA4SJMhfQwc107VLkBUgEYYAOQAbqDCnra1nYh83hF/MDmhYs9t9n1E3DuKOrs2LYNC+0Ag==}
+    engines: {node: '>=18'}
+    hasBin: true
 
   iconv-lite@0.4.24:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}
@@ -11147,6 +10961,10 @@ packages:
   process-nextick-args@2.0.1:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}
 
+  process@0.11.10:
+    resolution: {integrity: sha512-cdGef/drWFoydD1JsMzuFf8100nZl+GT+yacc2bEced5f9Rjk4z+WtFUTBu9PhOi9j/jfmBPu0mMEY4wIdAF8A==}
+    engines: {node: '>= 0.6.0'}
+
   promise-make-naked@2.1.2:
     resolution: {integrity: sha512-y7s8ZuHIG56JYspB24be9GFkXA1zXL85Ur9u1DKrW/tvyUoPxWgBjnalK6Nc6l7wHBcAW0c3PO07+XOsWTRuhg==}
 
@@ -11274,6 +11092,10 @@ packages:
   readable-stream@3.6.0:
     resolution: {integrity: sha512-BViHy7LKeTz4oNnkcLJ+lVSL6vpiFeX6/d3oSH8zCW7UxP2onchk+vTGB143xuFjHS3deTgkKoXXymXqymiIdA==}
     engines: {node: '>= 6'}
+
+  readable-stream@4.5.2:
+    resolution: {integrity: sha512-yjavECdqeZ3GLXNgRXgeQEdz9fvDDkNKyHnbHRFtOr7/LcfgBcmct7t/ET+HaCTqfh06OzoAxrkN/IfjJBVe+g==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
   readable-web-to-node-stream@3.0.2:
     resolution: {integrity: sha512-ePeK6cc1EcKLEhJFt/AebMCLL+GgSKhuygrZ/GLaKZYEecIgIECf4UaUuaByiGtzckwR4ain9VzUh95T1exYGw==}
@@ -11498,6 +11320,11 @@ packages:
 
   semver@7.6.2:
     resolution: {integrity: sha512-FNAIBWCx9qcRhoHcgcJ0gvU7SN1lYU2ZXuSfl04bSC5OpvDHFyJCjdNHomPXxjQlCBU67YW64PzY7/VIEH7F2w==}
+    engines: {node: '>=10'}
+    hasBin: true
+
+  semver@7.6.3:
+    resolution: {integrity: sha512-oVekP1cKtI+CTDvHWYFUcMtsK/00wmAEfyqKfNdARm8u1wNVhSgaX7A8d4UuIlUI5e84iEwOhs7ZPYRmzU9U6A==}
     engines: {node: '>=10'}
     hasBin: true
 
@@ -12055,8 +11882,8 @@ packages:
   ts-interface-checker@0.1.13:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
 
-  ts-jest@29.2.4:
-    resolution: {integrity: sha512-3d6tgDyhCI29HlpwIq87sNuI+3Q6GLTTCeYRHCs7vDz+/3GCMwEtV9jezLyl4ZtnBgx00I7hm8PCP8cTksMGrw==}
+  ts-jest@29.2.5:
+    resolution: {integrity: sha512-KD8zB2aAZrcKIdGk4OwpJggeLcH1FgrICqDSROWqlnJXGCXK4Mn6FcdK2B6670Xr73lHMG1kHw8R87A0ecZ+vA==}
     engines: {node: ^14.15.0 || ^16.10.0 || ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
@@ -12493,8 +12320,8 @@ packages:
     resolution: {integrity: sha512-/DyMEOrDgLKKIG0fmvtz+4dUX/3Ghozwgm6iPp8KRhvn+eQf9+Q7GWxVNMk3+uCPWfdXYC4ExGBckIXdFEfH1w==}
     engines: {node: '>=10.13.0'}
 
-  webpack@5.93.0:
-    resolution: {integrity: sha512-Y0m5oEY1LRuwly578VqluorkXbvXKh7U3rLoQCEO04M97ScRr44afGVkI0FQFsXzysk5OgFAxjZAb9rsGQVihA==}
+  webpack@5.94.0:
+    resolution: {integrity: sha512-KcsGn50VT+06JH/iunZJedYGUJS5FGjow8wb9c0v5n1Om8O1g4L6LjtfxwlXIATopoQu+vOXXa7gYisWxCoPyg==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     peerDependencies:
@@ -13699,7 +13526,7 @@ snapshots:
 
   '@exodus/schemasafe@1.0.0': {}
 
-  '@fern-api/fdr-sdk@0.98.20-86eba53a1(typescript@4.6.4)':
+  '@fern-api/fdr-sdk@0.107.0-09e88f5f9(typescript@4.6.4)':
     dependencies:
       dayjs: 1.11.11
       fast-deep-equal: 3.1.3
@@ -13778,13 +13605,28 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
+  '@fern-fern/generators-sdk@0.107.0-00fe26566':
+    dependencies:
+      form-data: 4.0.0
+      formdata-node: 6.0.3
+      js-base64: 3.7.2
+      node-fetch: 2.7.0
+      qs: 6.11.2
+      url-join: 4.0.1
+    transitivePeerDependencies:
+      - encoding
+
   '@fern-fern/ir-sdk@0.0.2828': {}
 
   '@fern-fern/ir-sdk@39.0.0': {}
 
-  '@fern-fern/ir-sdk@53.5.0': {}
+  '@fern-fern/ir-sdk@53.7.0': {}
 
-  '@fern-fern/ir-sdk@53.6.0': {}
+  '@fern-fern/ir-sdk@53.7.2': {}
+
+  '@fern-fern/ir-sdk@53.8.0': {}
+
+  '@fern-fern/ir-sdk@53.9.0': {}
 
   '@fern-fern/ir-v1-model@0.0.2': {}
 
@@ -13892,13 +13734,15 @@ snapshots:
 
   '@fern-fern/legacy-docs-config@0.0.58': {}
 
-  '@fern-fern/postman-sdk@0.0.46':
+  '@fern-fern/postman-sdk@0.1.1':
     dependencies:
-      '@types/url-join': 4.0.1
-      axios: 0.27.2
+      form-data: 4.0.0
+      formdata-node: 6.0.3
+      node-fetch: 2.7.0
+      qs: 6.11.2
       url-join: 4.0.1
     transitivePeerDependencies:
-      - debug
+      - encoding
 
   '@fern-fern/snippet-sdk@0.0.5526':
     dependencies:
@@ -14370,16 +14214,6 @@ snapshots:
       '@types/docker-modem': 3.0.2
       '@types/node': 18.7.18
 
-  '@types/eslint-scope@3.7.7':
-    dependencies:
-      '@types/eslint': 9.6.0
-      '@types/estree': 1.0.5
-
-  '@types/eslint@9.6.0':
-    dependencies:
-      '@types/estree': 1.0.5
-      '@types/json-schema': 7.0.15
-
   '@types/estree-jsx@1.0.0':
     dependencies:
       '@types/estree': 1.0.5
@@ -14548,6 +14382,11 @@ snapshots:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.3
       csstype: 3.1.2
+
+  '@types/readable-stream@4.0.15':
+    dependencies:
+      '@types/node': 18.7.18
+      safe-buffer: 5.1.2
 
   '@types/scheduler@0.16.3': {}
 
@@ -14986,6 +14825,10 @@ snapshots:
 
   abab@2.0.6: {}
 
+  abort-controller@3.0.0:
+    dependencies:
+      event-target-shim: 5.0.1
+
   accepts@1.3.8:
     dependencies:
       mime-types: 2.1.35
@@ -15186,7 +15029,7 @@ snapshots:
 
   astring@1.8.6: {}
 
-  async@3.2.5: {}
+  async@3.2.6: {}
 
   asynckit@0.4.0: {}
 
@@ -16491,6 +16334,8 @@ snapshots:
 
   etag@1.8.1: {}
 
+  event-target-shim@5.0.1: {}
+
   events@3.3.0: {}
 
   execa@0.8.0:
@@ -17108,6 +16953,8 @@ snapshots:
 
   human-signals@5.0.0: {}
 
+  husky@9.1.5: {}
+
   iconv-lite@0.4.24:
     dependencies:
       safer-buffer: 2.1.2
@@ -17405,7 +17252,7 @@ snapshots:
 
   jake@10.9.2:
     dependencies:
-      async: 3.2.5
+      async: 3.2.6
       chalk: 4.1.2
       filelist: 1.0.4
       minimatch: 3.1.2
@@ -19101,6 +18948,8 @@ snapshots:
 
   process-nextick-args@2.0.1: {}
 
+  process@0.11.10: {}
+
   promise-make-naked@2.1.2: {}
 
   promise-polyfill@8.3.0: {}
@@ -19236,6 +19085,14 @@ snapshots:
       inherits: 2.0.4
       string_decoder: 1.3.0
       util-deprecate: 1.0.2
+
+  readable-stream@4.5.2:
+    dependencies:
+      abort-controller: 3.0.0
+      buffer: 6.0.3
+      events: 3.3.0
+      process: 0.11.10
+      string_decoder: 1.3.0
 
   readable-web-to-node-stream@3.0.2:
     dependencies:
@@ -19515,6 +19372,8 @@ snapshots:
   semver@6.3.1: {}
 
   semver@7.6.2: {}
+
+  semver@7.6.3: {}
 
   send@0.18.0:
     dependencies:
@@ -20100,36 +19959,36 @@ snapshots:
       ansi-escapes: 5.0.0
       supports-hyperlinks: 2.3.0
 
-  terser-webpack-plugin@5.3.10(esbuild@0.15.7)(webpack@5.93.0(esbuild@0.15.7)):
+  terser-webpack-plugin@5.3.10(esbuild@0.15.7)(webpack@5.94.0(esbuild@0.15.7)):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
       jest-worker: 27.5.1
       schema-utils: 3.3.0
       serialize-javascript: 6.0.2
       terser: 5.31.5
-      webpack: 5.93.0(esbuild@0.15.7)
+      webpack: 5.94.0(esbuild@0.15.7)
     optionalDependencies:
       esbuild: 0.15.7
 
-  terser-webpack-plugin@5.3.10(esbuild@0.19.12)(webpack@5.93.0(esbuild@0.19.12)):
+  terser-webpack-plugin@5.3.10(esbuild@0.19.12)(webpack@5.94.0(esbuild@0.19.12)):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
       jest-worker: 27.5.1
       schema-utils: 3.3.0
       serialize-javascript: 6.0.2
       terser: 5.31.5
-      webpack: 5.93.0(esbuild@0.19.12)
+      webpack: 5.94.0(esbuild@0.19.12)
     optionalDependencies:
       esbuild: 0.19.12
 
-  terser-webpack-plugin@5.3.10(webpack@5.93.0):
+  terser-webpack-plugin@5.3.10(webpack@5.94.0):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
       jest-worker: 27.5.1
       schema-utils: 3.3.0
       serialize-javascript: 6.0.2
       terser: 5.31.5
-      webpack: 5.93.0
+      webpack: 5.94.0
 
   terser@5.31.5:
     dependencies:
@@ -20245,7 +20104,7 @@ snapshots:
 
   ts-interface-checker@0.1.13: {}
 
-  ts-jest@29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.15.7)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4):
+  ts-jest@29.2.5(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4):
     dependencies:
       bs-logger: 0.2.6
       ejs: 3.1.10
@@ -20255,7 +20114,7 @@ snapshots:
       json5: 2.2.2
       lodash.memoize: 4.1.2
       make-error: 1.3.6
-      semver: 7.6.2
+      semver: 7.6.3
       typescript: 4.6.4
       yargs-parser: 21.1.1
     optionalDependencies:
@@ -20263,29 +20122,8 @@ snapshots:
       '@jest/transform': 29.7.0
       '@jest/types': 29.6.3
       babel-jest: 29.7.0(@babel/core@7.25.2)
-      esbuild: 0.15.7
 
-  ts-jest@29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4):
-    dependencies:
-      bs-logger: 0.2.6
-      ejs: 3.1.10
-      fast-json-stable-stringify: 2.1.0
-      jest: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
-      jest-util: 29.7.0
-      json5: 2.2.2
-      lodash.memoize: 4.1.2
-      make-error: 1.3.6
-      semver: 7.6.2
-      typescript: 4.6.4
-      yargs-parser: 21.1.1
-    optionalDependencies:
-      '@babel/core': 7.25.2
-      '@jest/transform': 29.7.0
-      '@jest/types': 29.6.3
-      babel-jest: 29.7.0(@babel/core@7.25.2)
-      esbuild: 0.19.12
-
-  ts-loader@9.5.1(typescript@4.6.4)(webpack@5.93.0(esbuild@0.15.7)):
+  ts-loader@9.5.1(typescript@4.6.4)(webpack@5.94.0(esbuild@0.15.7)):
     dependencies:
       chalk: 4.1.2
       enhanced-resolve: 5.15.0
@@ -20293,9 +20131,9 @@ snapshots:
       semver: 7.6.2
       source-map: 0.7.4
       typescript: 4.6.4
-      webpack: 5.93.0(esbuild@0.15.7)
+      webpack: 5.94.0(esbuild@0.15.7)
 
-  ts-loader@9.5.1(typescript@4.6.4)(webpack@5.93.0(esbuild@0.19.12)):
+  ts-loader@9.5.1(typescript@4.6.4)(webpack@5.94.0(esbuild@0.19.12)):
     dependencies:
       chalk: 4.1.2
       enhanced-resolve: 5.15.0
@@ -20303,9 +20141,9 @@ snapshots:
       semver: 7.6.2
       source-map: 0.7.4
       typescript: 4.6.4
-      webpack: 5.93.0(esbuild@0.19.12)
+      webpack: 5.94.0(esbuild@0.19.12)
 
-  ts-loader@9.5.1(typescript@4.6.4)(webpack@5.93.0):
+  ts-loader@9.5.1(typescript@4.6.4)(webpack@5.94.0):
     dependencies:
       chalk: 4.1.2
       enhanced-resolve: 5.15.0
@@ -20313,7 +20151,7 @@ snapshots:
       semver: 7.6.2
       source-map: 0.7.4
       typescript: 4.6.4
-      webpack: 5.93.0
+      webpack: 5.94.0
 
   ts-morph@15.1.0:
     dependencies:
@@ -20751,9 +20589,8 @@ snapshots:
 
   webpack-sources@3.2.3: {}
 
-  webpack@5.93.0:
+  webpack@5.94.0:
     dependencies:
-      '@types/eslint-scope': 3.7.7
       '@types/estree': 1.0.5
       '@webassemblyjs/ast': 1.12.1
       '@webassemblyjs/wasm-edit': 1.12.1
@@ -20774,7 +20611,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 3.3.0
       tapable: 2.2.1
-      terser-webpack-plugin: 5.3.10(webpack@5.93.0)
+      terser-webpack-plugin: 5.3.10(webpack@5.94.0)
       watchpack: 2.4.1
       webpack-sources: 3.2.3
     transitivePeerDependencies:
@@ -20782,9 +20619,8 @@ snapshots:
       - esbuild
       - uglify-js
 
-  webpack@5.93.0(esbuild@0.15.7):
+  webpack@5.94.0(esbuild@0.15.7):
     dependencies:
-      '@types/eslint-scope': 3.7.7
       '@types/estree': 1.0.5
       '@webassemblyjs/ast': 1.12.1
       '@webassemblyjs/wasm-edit': 1.12.1
@@ -20805,7 +20641,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 3.3.0
       tapable: 2.2.1
-      terser-webpack-plugin: 5.3.10(esbuild@0.15.7)(webpack@5.93.0(esbuild@0.15.7))
+      terser-webpack-plugin: 5.3.10(esbuild@0.15.7)(webpack@5.94.0(esbuild@0.15.7))
       watchpack: 2.4.1
       webpack-sources: 3.2.3
     transitivePeerDependencies:
@@ -20813,9 +20649,8 @@ snapshots:
       - esbuild
       - uglify-js
 
-  webpack@5.93.0(esbuild@0.19.12):
+  webpack@5.94.0(esbuild@0.19.12):
     dependencies:
-      '@types/eslint-scope': 3.7.7
       '@types/estree': 1.0.5
       '@webassemblyjs/ast': 1.12.1
       '@webassemblyjs/wasm-edit': 1.12.1
@@ -20836,7 +20671,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 3.3.0
       tapable: 2.2.1
-      terser-webpack-plugin: 5.3.10(esbuild@0.19.12)(webpack@5.93.0(esbuild@0.19.12))
+      terser-webpack-plugin: 5.3.10(esbuild@0.19.12)(webpack@5.94.0(esbuild@0.19.12))
       watchpack: 2.4.1
       webpack-sources: 3.2.3
     transitivePeerDependencies:

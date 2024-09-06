@@ -1,6 +1,6 @@
 import { entries } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { PackageMarkerFileSchema } from "@fern-api/yaml-schema";
+import { PackageMarkerFileSchema } from "@fern-api/fern-definition-schema";
 import { FernWorkspace } from "../workspaces";
 import { getAllPackageMarkers } from "./getAllPackageMarkers";
 

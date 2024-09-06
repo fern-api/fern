@@ -18,15 +18,15 @@ public class NestedTypeTest
         var inputJson =
             @"
         {
-  ""docs"": ""This is an example nested type."",
-  ""name"": ""NestedExample"",
-  ""raw"": ""{\""nested\"": \""example\""}""
-}
-";
+          ""docs"": ""This is an example nested type."",
+          ""name"": ""NestedExample"",
+          ""raw"": ""{\""nested\"": \""example\""}""
+        }
+        ";
 
         var serializerOptions = new JsonSerializerOptions
         {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         };
 
         var deserializedObject = JsonSerializer.Deserialize<NestedType>(

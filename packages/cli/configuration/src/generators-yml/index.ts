@@ -1,7 +1,8 @@
 export { DEFAULT_GROUP_NAME } from "../constants";
-export { addGenerator, upgradeGenerator } from "./addGenerator";
+export { addGenerator } from "./addGenerator";
 export { GENERATOR_INVOCATIONS } from "./generatorInvocations";
 export { GeneratorName } from "./GeneratorName";
+export * from "./schemas/utils";
 export {
     GenerationLanguage,
     getPackageName,

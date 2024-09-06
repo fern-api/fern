@@ -186,7 +186,7 @@ export function generateIr({
         taskContext.logger.debug(`Converted schema ${key}`);
     }
 
-    const exampleEndpointFactory = new ExampleEndpointFactory(schemasWithoutDiscriminants, context.logger);
+    const exampleEndpointFactory = new ExampleEndpointFactory(schemasWithDiscriminants, context.logger);
     const endpoints = endpointsWithExample.map((endpointWithExample): Endpoint => {
         // if x-fern-examples is not present, generate an example
         const extensionExamples = endpointWithExample.examples;
@@ -239,6 +239,7 @@ export function generateIr({
                     description: pathParameter.description,
                     name: pathParameter.name,
                     schema: convertSchemaWithExampleToSchema(pathParameter.schema),
+                    parameterNameOverride: pathParameter.parameterNameOverride,
                     variableReference: pathParameter.variableReference,
                     availability: pathParameter.availability,
                     source: pathParameter.source

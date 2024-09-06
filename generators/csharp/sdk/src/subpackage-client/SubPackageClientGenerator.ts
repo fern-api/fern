@@ -2,11 +2,13 @@ import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
 import { EndpointGenerator } from "../endpoint/EndpointGenerator";
-import { RawClient } from "../endpoint/RawClient";
+import { RawClient } from "../endpoint/http/RawClient";
+import { GrpcClientInfo } from "../grpc/GrpcClientInfo";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 export const CLIENT_MEMBER_NAME = "_client";
+export const GRPC_CLIENT_MEMBER_NAME = "_grpc";
 
 export declare namespace SubClientGenerator {
     interface Args {
@@ -23,7 +25,7 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
     private serviceId?: ServiceId;
     private service?: HttpService;
     private rawClient: RawClient;
-    private endpointGenerator: EndpointGenerator;
+    private grpcClientInfo: GrpcClientInfo | undefined;
 
     constructor({ subpackage, context, serviceId, service }: SubClientGenerator.Args) {
         super(context);
@@ -32,7 +34,8 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
         this.rawClient = new RawClient(context);
         this.service = service;
         this.serviceId = serviceId;
-        this.endpointGenerator = new EndpointGenerator(context, this.rawClient);
+        this.grpcClientInfo =
+            this.serviceId != null ? this.context.getGrpcClientInfoForServiceId(this.serviceId) : undefined;
     }
 
     public doGenerate(): CSharpFile {
@@ -50,6 +53,23 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
             })
         );
 
+        if (this.grpcClientInfo != null) {
+            class_.addField(
+                csharp.field({
+                    access: "private",
+                    name: GRPC_CLIENT_MEMBER_NAME,
+                    type: csharp.Type.reference(this.context.getRawGrpcClientClassReference())
+                })
+            );
+            class_.addField(
+                csharp.field({
+                    access: "private",
+                    name: this.grpcClientInfo.privatePropertyName,
+                    type: csharp.Type.reference(this.grpcClientInfo.classReference)
+                })
+            );
+        }
+
         for (const subpackage of this.getSubpackages()) {
             class_.addField(
                 csharp.field({
@@ -65,10 +85,13 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
 
         if (this.service != null && this.serviceId != null) {
             for (const endpoint of this.service.endpoints) {
-                const method = this.endpointGenerator.generate({
+                const method = this.context.endpointGenerator.generate({
                     serviceId: this.serviceId,
                     endpoint,
-                    rawClientReference: CLIENT_MEMBER_NAME
+                    rawClientReference: CLIENT_MEMBER_NAME,
+                    rawClient: this.rawClient,
+                    rawGrpcClientReference: GRPC_CLIENT_MEMBER_NAME,
+                    grpcClientInfo: this.grpcClientInfo
                 });
                 class_.addMethod(method);
             }
@@ -95,6 +118,19 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
             ],
             body: csharp.codeblock((writer) => {
                 writer.writeLine("_client = client;");
+
+                if (this.grpcClientInfo != null) {
+                    writer.writeLine("_grpc = _client.Grpc;");
+                    writer.write(this.grpcClientInfo.privatePropertyName);
+                    writer.write(" = ");
+                    writer.writeNodeStatement(
+                        csharp.instantiateClass({
+                            classReference: this.grpcClientInfo.classReference,
+                            arguments_: [csharp.codeblock("_grpc.Channel")]
+                        })
+                    );
+                }
+
                 for (const subpackage of this.getSubpackages()) {
                     writer.writeLine(`${subpackage.name.pascalCase.safeName} = `);
                     writer.writeNodeStatement(

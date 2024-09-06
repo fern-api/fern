@@ -2,12 +2,13 @@ import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
 import { ExampleGenerator, getUndiscriminatedUnionSerializerAnnotation } from "@fern-api/fern-csharp-model";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import {
+    ContainerType,
     ExampleEndpointCall,
-    ExampleTypeReference,
     HttpEndpoint,
     Name,
     SdkRequestWrapper,
-    ServiceId
+    ServiceId,
+    TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
@@ -26,7 +27,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
     private wrapper: SdkRequestWrapper;
     private serviceId: ServiceId;
     private endpoint: HttpEndpoint;
-    private snippetHelper: ExampleGenerator;
+    private exampleGenerator: ExampleGenerator;
 
     public constructor({ wrapper, context, serviceId, endpoint }: WrappedRequestGenerator.Args) {
         super(context);
@@ -34,7 +35,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
         this.serviceId = serviceId;
         this.classReference = this.context.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName);
         this.endpoint = endpoint;
-        this.snippetHelper = new ExampleGenerator(context);
+        this.exampleGenerator = new ExampleGenerator(context);
     }
 
     protected doGenerate(): CSharpFile {
@@ -45,15 +46,18 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             record: true
         });
 
+        const protobufProperties: { propertyName: string; typeReference: TypeReference }[] = [];
         for (const query of this.endpoint.queryParameters) {
+            const propertyName = query.name.name.pascalCase.safeName;
             const type = query.allowMultiple
                 ? csharp.Type.list(
                       this.context.csharpTypeMapper.convert({ reference: query.valueType, unboxOptionals: true })
                   )
                 : this.context.csharpTypeMapper.convert({ reference: query.valueType });
+
             class_.addField(
                 csharp.field({
-                    name: query.name.name.pascalCase.safeName,
+                    name: propertyName,
                     type,
                     access: "public",
                     get: true,
@@ -62,9 +66,16 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     useRequired: true
                 })
             );
-        }
 
-        for (const header of this.endpoint.headers) {
+            protobufProperties.push({
+                propertyName,
+                typeReference: query.allowMultiple
+                    ? TypeReference.container(ContainerType.list(query.valueType))
+                    : query.valueType
+            });
+        }
+        const service = this.context.getHttpServiceOrThrow(this.serviceId);
+        for (const header of [...service.headers, ...this.endpoint.headers]) {
             class_.addField(
                 csharp.field({
                     name: header.name.name.pascalCase.safeName,
@@ -96,39 +107,49 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             },
             inlinedRequestBody: (request) => {
                 for (const property of [...request.properties, ...(request.extendedProperties ?? [])]) {
-                    const annotations: csharp.Annotation[] = [];
-                    const maybeUndiscriminatedUnion = this.context.getAsUndiscriminatedUnionTypeDeclaration(
-                        property.valueType
-                    );
-                    if (addJsonAnnotations && maybeUndiscriminatedUnion != null) {
-                        annotations.push(
-                            getUndiscriminatedUnionSerializerAnnotation({
-                                context: this.context,
-                                undiscriminatedUnionDeclaration: maybeUndiscriminatedUnion.declaration,
-                                isList: maybeUndiscriminatedUnion.isList
-                            })
-                        );
-                    }
-
+                    const propertyName = property.name.name.pascalCase.safeName;
                     class_.addField(
                         csharp.field({
-                            name: property.name.name.pascalCase.safeName,
+                            name: propertyName,
                             type: this.context.csharpTypeMapper.convert({ reference: property.valueType }),
                             access: "public",
                             get: true,
                             set: true,
                             summary: property.docs,
                             jsonPropertyName: addJsonAnnotations ? property.name.wireValue : undefined,
-                            annotations,
                             useRequired: true
                         })
                     );
+
+                    protobufProperties.push({
+                        propertyName,
+                        typeReference: property.valueType
+                    });
                 }
             },
             fileUpload: () => undefined,
             bytes: () => undefined,
             _other: () => undefined
         });
+
+        class_.addMethod(this.context.getToStringMethod());
+
+        const protobufService = this.context.protobufResolver.getProtobufServiceForServiceId(this.serviceId);
+        if (protobufService != null) {
+            const protobufClassReference = new csharp.ClassReference({
+                name: this.classReference.name,
+                namespace: this.context.protobufResolver.getNamespaceFromProtobufFileOrThrow(protobufService.file),
+                namespaceAlias: "Proto"
+            });
+            class_.addMethod(
+                this.context.csharpProtobufTypeMapper.toProtoMethod({
+                    classReference: this.classReference,
+                    protobufClassReference,
+                    properties: protobufProperties
+                })
+            );
+        }
+
         return new CSharpFile({
             clazz: class_,
             directory: this.getDirectory(),
@@ -139,39 +160,75 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
         });
     }
 
-    public doGenerateSnippet(example: ExampleEndpointCall): csharp.CodeBlock {
-        const orderedFields: { name: Name; value: ExampleTypeReference }[] = [];
+    public doGenerateSnippet({
+        example,
+        parseDatetimes
+    }: {
+        example: ExampleEndpointCall;
+        parseDatetimes: boolean;
+    }): csharp.CodeBlock {
+        const orderedFields: { name: Name; value: csharp.CodeBlock }[] = [];
         for (const exampleQueryParameter of example.queryParameters) {
-            orderedFields.push({ name: exampleQueryParameter.name.name, value: exampleQueryParameter.value });
+            const isSingleQueryParameter =
+                exampleQueryParameter.shape == null || exampleQueryParameter.shape.type === "single";
+            const singleValueSnippet = this.exampleGenerator.getSnippetForTypeReference({
+                exampleTypeReference: exampleQueryParameter.value,
+                parseDatetimes
+            });
+            const value = isSingleQueryParameter
+                ? singleValueSnippet
+                : csharp.codeblock((writer) =>
+                      writer.writeNode(
+                          csharp.list({
+                              entries: [singleValueSnippet]
+                          })
+                      )
+                  );
+            orderedFields.push({
+                name: exampleQueryParameter.name.name,
+                value
+            });
         }
 
-        for (const header of example.endpointHeaders) {
-            orderedFields.push({ name: header.name.name, value: header.value });
+        for (const header of [...example.endpointHeaders, ...example.serviceHeaders]) {
+            orderedFields.push({
+                name: header.name.name,
+                value: this.exampleGenerator.getSnippetForTypeReference({
+                    exampleTypeReference: header.value,
+                    parseDatetimes
+                })
+            });
         }
 
         example.request?._visit({
             reference: (reference) => {
-                orderedFields.push({ name: this.wrapper.bodyKey, value: reference });
+                orderedFields.push({
+                    name: this.wrapper.bodyKey,
+                    value: this.exampleGenerator.getSnippetForTypeReference({
+                        exampleTypeReference: reference,
+                        parseDatetimes
+                    })
+                });
             },
             inlinedRequestBody: (inlinedRequestBody) => {
                 for (const property of inlinedRequestBody.properties) {
-                    orderedFields.push({ name: property.name.name, value: property.value });
+                    orderedFields.push({
+                        name: property.name.name,
+                        value: this.exampleGenerator.getSnippetForTypeReference({
+                            exampleTypeReference: property.value,
+                            parseDatetimes
+                        })
+                    });
                 }
             },
             _other: () => undefined
         });
-        const args = orderedFields
-            .map(({ name, value }) => {
-                const assignment = this.snippetHelper.getSnippetForTypeReference(value);
-                if (assignment === undefined) {
-                    return null;
-                }
-                return {
-                    name: name.pascalCase.safeName,
-                    assignment
-                };
-            })
-            .filter((value): value is { name: string; assignment: csharp.CodeBlock } => value != null);
+        const args = orderedFields.map(({ name, value }) => {
+            return {
+                name: name.pascalCase.safeName,
+                assignment: value
+            };
+        });
         const instantiateClass = csharp.instantiateClass({
             classReference: this.classReference,
             arguments_: args

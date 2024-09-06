@@ -13,6 +13,7 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
@@ -71,17 +72,17 @@ public final class File {
   }
 
   public interface NameStage {
-    ContentsStage name(String name);
+    ContentsStage name(@NotNull String name);
 
     Builder from(File other);
   }
 
   public interface ContentsStage {
-    InfoStage contents(String contents);
+    InfoStage contents(@NotNull String contents);
   }
 
   public interface InfoStage {
-    _FinalStage info(FileInfo info);
+    _FinalStage info(@NotNull FileInfo info);
   }
 
   public interface _FinalStage {
@@ -111,22 +112,22 @@ public final class File {
 
     @java.lang.Override
     @JsonSetter("name")
-    public ContentsStage name(String name) {
-      this.name = name;
+    public ContentsStage name(@NotNull String name) {
+      this.name = Objects.requireNonNull(name, "name must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("contents")
-    public InfoStage contents(String contents) {
-      this.contents = contents;
+    public InfoStage contents(@NotNull String contents) {
+      this.contents = Objects.requireNonNull(contents, "contents must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("info")
-    public _FinalStage info(FileInfo info) {
-      this.info = info;
+    public _FinalStage info(@NotNull FileInfo info) {
+      this.info = Objects.requireNonNull(info, "info must not be null");
       return this;
     }
 

@@ -42,6 +42,10 @@ type ListUsersExtendedRequest struct {
 	Cursor *uuid.UUID `query:"cursor"`
 }
 
+type ListUsersExtendedRequestForOptionalData struct {
+	Cursor *uuid.UUID `query:"cursor"`
+}
+
 type ListWithGlobalConfigRequest struct {
 	Offset *int `query:"offset"`
 }
@@ -109,6 +113,43 @@ func (u *UsernameCursor) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
+}
+
+type ListUsersExtendedOptionalListResponse struct {
+	Data *UserOptionalListContainer `json:"data,omitempty" url:"data,omitempty"`
+	Next *uuid.UUID                 `json:"next,omitempty" url:"next,omitempty"`
+	// The totall number of /users
+	TotalCount int `json:"total_count" url:"total_count"`
+
+	extraProperties map[string]interface{}
+}
+
+func (l *ListUsersExtendedOptionalListResponse) GetExtraProperties() map[string]interface{} {
+	return l.extraProperties
+}
+
+func (l *ListUsersExtendedOptionalListResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUsersExtendedOptionalListResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListUsersExtendedOptionalListResponse(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+
+	return nil
+}
+
+func (l *ListUsersExtendedOptionalListResponse) String() string {
+	if value, err := core.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
 }
 
 type ListUsersExtendedResponse struct {

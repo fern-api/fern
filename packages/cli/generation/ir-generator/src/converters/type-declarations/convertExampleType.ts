@@ -17,7 +17,7 @@ import {
     RawSchemas,
     visitRawTypeDeclaration,
     visitRawTypeReference
-} from "@fern-api/yaml-schema";
+} from "@fern-api/fern-definition-schema";
 import { validateTypeReferenceExample } from "../../examples/validateTypeReferenceExample";
 import { FernFileContext } from "../../FernFileContext";
 import { IdGenerator } from "../../IdGenerator";
@@ -372,7 +372,12 @@ function convertPrimitiveExample({
             if (typeof example !== "string") {
                 throw new Error("Example is not a string");
             }
-            return ExampleTypeReferenceShape.primitive(ExamplePrimitive.datetime(new Date(example)));
+            return ExampleTypeReferenceShape.primitive(
+                ExamplePrimitive.datetime({
+                    datetime: new Date(example),
+                    raw: example
+                })
+            );
         },
         date: () => {
             if (typeof example !== "string") {
@@ -478,7 +483,7 @@ function convertObject({
     }
     return ExampleTypeShape.object({
         properties:
-            rawObject.properties != null
+            rawObject.properties != null || rawObject.extends != null
                 ? Object.entries(example).reduce<ExampleObjectProperty[]>(
                       (exampleProperties, [wireKey, propertyExample]) => {
                           const originalTypeDeclaration = getOriginalTypeDeclarationForProperty({

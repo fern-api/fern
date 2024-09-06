@@ -20,6 +20,8 @@
     "noUncheckedIndexedAccess": true,
     // "noUnusedLocals": true,
     // "noUnusedParameters": true,
-    "noImplicitReturns": true
+    "noImplicitReturns": true,
+    "types": ["node", "vitest/globals", "jest"],
+		"typeRoots": ["node_modules/@types"],
   }
 }

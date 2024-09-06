@@ -3,6 +3,8 @@
 from ....core.pydantic_utilities import UniversalBaseModel
 from .movie_id import MovieId
 import typing
+import typing_extensions
+from ....core.serialization import FieldMetadata
 import pydantic
 from ...commons.resources.types.types.tag import Tag
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
@@ -26,13 +28,14 @@ class Movie(UniversalBaseModel):
             "releaseDate": "2023-12-08",
             "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
         },
+        revenue=1000000,
     )
     """
 
     id: MovieId
     prequel: typing.Optional[MovieId] = None
     title: str
-    from_: str = pydantic.Field(alias="from")
+    from_: typing_extensions.Annotated[str, FieldMetadata(alias="from")]
     rating: float = pydantic.Field()
     """
     The rating scale is one to five stars
@@ -42,6 +45,7 @@ class Movie(UniversalBaseModel):
     tag: Tag
     book: typing.Optional[str] = None
     metadata: typing.Dict[str, typing.Optional[typing.Any]]
+    revenue: int
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(

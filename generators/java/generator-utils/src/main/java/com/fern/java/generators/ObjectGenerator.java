@@ -45,7 +45,6 @@ public final class ObjectGenerator extends AbstractFileGenerator {
     private final Optional<GeneratedJavaInterface> selfInterface;
     private final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
     private final List<GeneratedJavaInterface> extendedInterfaces = new ArrayList<>();
-    private final boolean publicConstructorsEnabled;
 
     public ObjectGenerator(
             ObjectTypeDeclaration objectTypeDeclaration,
@@ -53,15 +52,13 @@ public final class ObjectGenerator extends AbstractFileGenerator {
             List<GeneratedJavaInterface> extendedInterfaces,
             AbstractGeneratorContext<?, ?> generatorContext,
             Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces,
-            ClassName className,
-            boolean publicConstructorsEnabled) {
+            ClassName className) {
         super(className, generatorContext);
         this.objectTypeDeclaration = objectTypeDeclaration;
         this.selfInterface = selfInterface;
         selfInterface.ifPresent(this.extendedInterfaces::add);
         this.extendedInterfaces.addAll(extendedInterfaces);
         this.allGeneratedInterfaces = allGeneratedInterfaces;
-        this.publicConstructorsEnabled = publicConstructorsEnabled;
     }
 
     @Override
@@ -117,9 +114,11 @@ public final class ObjectGenerator extends AbstractFileGenerator {
                 enrichedObjectProperties,
                 implementsInterfaces,
                 true,
-                publicConstructorsEnabled,
+                generatorContext.getCustomConfig().enablePublicConstructors(),
                 generatorContext.deserializeWithAdditionalProperties(),
-                generatorContext.getCustomConfig().jsonInclude());
+                generatorContext.getCustomConfig().jsonInclude(),
+                generatorContext.getCustomConfig().disableRequiredPropertyBuilderChecks(),
+                generatorContext.builderNotNullChecks());
         TypeSpec objectTypeSpec = genericObjectGenerator.generate();
         JavaFile javaFile =
                 JavaFile.builder(className.packageName(), objectTypeSpec).build();

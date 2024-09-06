@@ -1,3 +1,4 @@
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { Logger } from "@fern-api/logger";
 import { OpenApiIntermediateRepresentation, Schema, SchemaId } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
@@ -18,6 +19,10 @@ export interface OpenApiIrConverterContextOpts {
      * the IR. This is primarily used for generating SDKs, but disabled for docs as it allows the documentation
      */
     detectGlobalHeaders: boolean;
+
+    authOverrides?: RawSchemas.WithAuthSchema;
+
+    environmentOverrides?: RawSchemas.WithEnvironmentsSchema;
 }
 
 export class OpenApiIrConverterContext {
@@ -25,6 +30,8 @@ export class OpenApiIrConverterContext {
     public taskContext: TaskContext;
     public ir: OpenApiIntermediateRepresentation;
     public builder: FernDefinitionBuilder;
+    public environmentOverrides: RawSchemas.WithEnvironmentsSchema | undefined;
+    public authOverrides: RawSchemas.WithAuthSchema | undefined;
     public detectGlobalHeaders: boolean;
     private defaultServerName: string | undefined = undefined;
 
@@ -32,13 +39,17 @@ export class OpenApiIrConverterContext {
         taskContext,
         ir,
         enableUniqueErrorsPerEndpoint,
-        detectGlobalHeaders
+        detectGlobalHeaders,
+        environmentOverrides,
+        authOverrides
     }: OpenApiIrConverterContextOpts) {
         this.logger = taskContext.logger;
         this.taskContext = taskContext;
         this.ir = ir;
         this.builder = new FernDefinitionBuilderImpl(ir, false, enableUniqueErrorsPerEndpoint);
         this.detectGlobalHeaders = detectGlobalHeaders;
+        this.environmentOverrides = environmentOverrides;
+        this.authOverrides = authOverrides;
     }
 
     public getSchema(id: SchemaId): Schema | undefined {
@@ -49,12 +60,7 @@ export class OpenApiIrConverterContext {
     /**
      * Returns the default server URL. This URL should only be set for multi-url cases.
      */
-    public getOrThrowDefaultServerName(): string {
-        if (this.defaultServerName == null) {
-            return this.taskContext.failAndThrow(
-                "Please provide a server URL in the servers block or add a server to every operation"
-            );
-        }
+    public getDefaultServerName(): string | undefined {
         return this.defaultServerName;
     }
 

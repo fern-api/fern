@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.api.core.ObjectMappers;
+import com.seed.api.types.Metadata;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -28,7 +29,7 @@ public final class CreateRequest {
 
     private final Optional<Double> weight;
 
-    private final Optional<Map<String, Object>> metadata;
+    private final Optional<Metadata> metadata;
 
     private final Map<String, Object> additionalProperties;
 
@@ -37,7 +38,7 @@ public final class CreateRequest {
             Optional<String> email,
             Optional<Integer> age,
             Optional<Double> weight,
-            Optional<Map<String, Object>> metadata,
+            Optional<Metadata> metadata,
             Map<String, Object> additionalProperties) {
         this.username = username;
         this.email = email;
@@ -68,7 +69,7 @@ public final class CreateRequest {
     }
 
     @JsonProperty("metadata")
-    public Optional<Map<String, Object>> getMetadata() {
+    public Optional<Metadata> getMetadata() {
         return metadata;
     }
 
@@ -115,7 +116,7 @@ public final class CreateRequest {
 
         private Optional<Double> weight = Optional.empty();
 
-        private Optional<Map<String, Object>> metadata = Optional.empty();
+        private Optional<Metadata> metadata = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -176,12 +177,12 @@ public final class CreateRequest {
         }
 
         @JsonSetter(value = "metadata", nulls = Nulls.SKIP)
-        public Builder metadata(Optional<Map<String, Object>> metadata) {
+        public Builder metadata(Optional<Metadata> metadata) {
             this.metadata = metadata;
             return this;
         }
 
-        public Builder metadata(Map<String, Object> metadata) {
+        public Builder metadata(Metadata metadata) {
             this.metadata = Optional.ofNullable(metadata);
             return this;
         }

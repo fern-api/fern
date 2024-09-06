@@ -13,6 +13,7 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
@@ -68,13 +69,13 @@ public final class GetTokenRequest {
   }
 
   public interface ClientIdStage {
-    ClientSecretStage clientId(String clientId);
+    ClientSecretStage clientId(@NotNull String clientId);
 
     Builder from(GetTokenRequest other);
   }
 
   public interface ClientSecretStage {
-    _FinalStage clientSecret(String clientSecret);
+    _FinalStage clientSecret(@NotNull String clientSecret);
   }
 
   public interface _FinalStage {
@@ -101,15 +102,15 @@ public final class GetTokenRequest {
 
     @java.lang.Override
     @JsonSetter("client_id")
-    public ClientSecretStage clientId(String clientId) {
-      this.clientId = clientId;
+    public ClientSecretStage clientId(@NotNull String clientId) {
+      this.clientId = Objects.requireNonNull(clientId, "clientId must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("client_secret")
-    public _FinalStage clientSecret(String clientSecret) {
-      this.clientSecret = clientSecret;
+    public _FinalStage clientSecret(@NotNull String clientSecret) {
+      this.clientSecret = Objects.requireNonNull(clientSecret, "clientSecret must not be null");
       return this;
     }
 

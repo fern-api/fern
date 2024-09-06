@@ -147,6 +147,29 @@
                             ],
                             "type": "generic"
                         }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "object_with_literal={\n\t\t$FERN_INPUT\n\t}",
+                            "templateInputs": [
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "\"nested_literal\": {\n\t\t\t$FERN_INPUT\n\t\t}",
+                                        "templateInputs": [],
+                                        "inputDelimiter": ",\n\t\t\t",
+                                        "type": "generic"
+                                    }
+                                }
+                            ],
+                            "inputDelimiter": ",\n\t\t",
+                            "type": "generic"
+                        }
                     }
                 ],
                 "inputDelimiter": ",\n\t",
@@ -200,6 +223,29 @@
                                         "type": "payload"
                                     }
                                 ],
+                                "type": "generic"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "object_with_literal={\n\t\t$FERN_INPUT\n\t}",
+                                "templateInputs": [
+                                    {
+                                        "type": "template",
+                                        "value": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "\"nested_literal\": {\n\t\t\t$FERN_INPUT\n\t\t}",
+                                            "templateInputs": [],
+                                            "inputDelimiter": ",\n\t\t\t",
+                                            "type": "generic"
+                                        }
+                                    }
+                                ],
+                                "inputDelimiter": ",\n\t\t",
                                 "type": "generic"
                             }
                         }

@@ -38,6 +38,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -154,6 +155,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -252,6 +254,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -262,6 +265,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "buyerId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -497,6 +501,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -523,6 +528,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Buyer ID",
           "name": "buyerId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -613,6 +619,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -623,6 +630,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "buyerId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -861,6 +869,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -887,6 +896,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Buyer ID",
           "name": "buyerId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -999,6 +1009,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -1009,6 +1020,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "buyerId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -1308,6 +1320,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -1334,6 +1347,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Buyer ID",
           "name": "buyerId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -1447,6 +1461,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -2035,6 +2050,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -2147,6 +2163,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -2446,6 +2463,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -2544,6 +2562,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -2554,6 +2573,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "entitlementId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -2848,6 +2868,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -2874,6 +2895,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Entitlement ID",
           "name": "entitlementId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -3001,6 +3023,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -3011,6 +3034,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "entitlementId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -3103,6 +3127,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -3129,6 +3154,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Entitlement ID",
           "name": "entitlementId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -3241,6 +3267,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -3251,6 +3278,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "entitlementId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -3548,6 +3576,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -3574,6 +3603,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Entitlement ID",
           "name": "entitlementId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -3686,6 +3716,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -3696,6 +3727,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "entitlementId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -3986,6 +4018,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -4012,6 +4045,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Entitlement ID",
           "name": "entitlementId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -4110,6 +4144,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -4120,6 +4155,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "entitlementId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -4130,6 +4166,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "entitlementTermId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -4415,6 +4452,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -4441,6 +4479,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Entitlement ID",
           "name": "entitlementId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -4467,6 +4506,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Entitlement Term ID",
           "name": "entitlementTermId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -4572,6 +4612,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -4582,6 +4623,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "entitlementId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -4705,6 +4747,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -4731,6 +4774,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Entitlement ID",
           "name": "entitlementId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -5023,6 +5067,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -5033,6 +5078,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "entitlementId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -5198,6 +5244,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -5224,6 +5271,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Entitlement ID",
           "name": "entitlementId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -5351,6 +5399,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -5361,6 +5410,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "entitlementId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -5452,6 +5502,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -5478,6 +5529,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Entitlement ID",
           "name": "entitlementId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -5741,6 +5793,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -5828,6 +5881,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -5963,6 +6017,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -6431,6 +6486,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -6569,6 +6625,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -6579,6 +6636,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "partner",
+              "parameterNameOverride": null,
               "value": {
                 "type": "enum",
                 "value": "AWS",
@@ -6586,6 +6644,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "service",
+              "parameterNameOverride": null,
               "value": {
                 "type": "enum",
                 "value": "MARKETPLACE",
@@ -7025,6 +7084,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -7051,6 +7111,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Cloud Partner",
           "name": "partner",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "default": null,
@@ -7115,6 +7176,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Partner Service",
           "name": "service",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "default": null,
@@ -7230,6 +7292,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -7240,6 +7303,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "partner",
+              "parameterNameOverride": null,
               "value": {
                 "type": "enum",
                 "value": "AWS",
@@ -7247,6 +7311,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "service",
+              "parameterNameOverride": null,
               "value": {
                 "type": "enum",
                 "value": "MARKETPLACE",
@@ -7278,6 +7343,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -7304,6 +7370,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Cloud Partner",
           "name": "partner",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "default": null,
@@ -7368,6 +7435,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Partner Service",
           "name": "service",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "default": null,
@@ -7523,6 +7591,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -7533,6 +7602,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "partner",
+              "parameterNameOverride": null,
               "value": {
                 "type": "enum",
                 "value": "AWS",
@@ -7540,6 +7610,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "service",
+              "parameterNameOverride": null,
               "value": {
                 "type": "enum",
                 "value": "MARKETPLACE",
@@ -8005,6 +8076,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -8031,6 +8103,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Cloud Partner",
           "name": "partner",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "default": null,
@@ -8095,6 +8168,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Partner Service",
           "name": "service",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "default": null,
@@ -8232,6 +8306,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -8242,6 +8317,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "partner",
+              "parameterNameOverride": null,
               "value": {
                 "type": "enum",
                 "value": "AWS",
@@ -8249,6 +8325,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "service",
+              "parameterNameOverride": null,
               "value": {
                 "type": "enum",
                 "value": "MARKETPLACE",
@@ -8280,6 +8357,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -8306,6 +8384,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Cloud Partner",
           "name": "partner",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "default": null,
@@ -8370,6 +8449,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Partner Service",
           "name": "service",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "default": null,
@@ -8484,6 +8564,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -8782,6 +8863,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -8895,6 +8977,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -9483,6 +9566,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -9595,6 +9679,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -9605,6 +9690,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "offerId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -10190,6 +10276,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -10216,6 +10303,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Offer ID",
           "name": "offerId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -10306,6 +10394,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -10316,6 +10405,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "offerId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -10350,6 +10440,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -10376,6 +10467,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Offer ID",
           "name": "offerId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -10484,6 +10576,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -10494,6 +10587,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "offerId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -10528,6 +10622,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -10554,6 +10649,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Offer ID",
           "name": "offerId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -10647,6 +10743,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -10657,6 +10754,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "offerId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -10956,6 +11054,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -10982,6 +11081,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Offer ID",
           "name": "offerId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -11080,6 +11180,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -11166,6 +11267,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -11401,6 +11503,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -11411,6 +11514,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "partner",
+              "parameterNameOverride": null,
               "value": {
                 "type": "enum",
                 "value": "AWS",
@@ -11707,6 +11811,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -11733,6 +11838,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Cloud Partner",
           "name": "partner",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "default": null,
@@ -11880,6 +11986,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -11890,6 +11997,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "partner",
+              "parameterNameOverride": null,
               "value": {
                 "type": "enum",
                 "value": "AWS",
@@ -12213,6 +12321,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -12239,6 +12348,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Cloud Partner",
           "name": "partner",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "default": null,
@@ -12375,6 +12485,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -12385,6 +12496,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "partner",
+              "parameterNameOverride": null,
               "value": {
                 "type": "enum",
                 "value": "AWS",
@@ -12582,6 +12694,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -12608,6 +12721,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Cloud Partner",
           "name": "partner",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "default": null,
@@ -12781,6 +12895,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -12791,6 +12906,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "partner",
+              "parameterNameOverride": null,
               "value": {
                 "type": "enum",
                 "value": "AWS",
@@ -12977,6 +13093,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -13003,6 +13120,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Cloud Partner",
           "name": "partner",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "default": null,
@@ -13409,6 +13527,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -13419,6 +13538,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "partner",
+              "parameterNameOverride": null,
               "value": {
                 "type": "enum",
                 "value": "AWS",
@@ -13464,6 +13584,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -13490,6 +13611,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Cloud Partner",
           "name": "partner",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "default": null,
@@ -13859,6 +13981,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -14059,6 +14182,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -14157,6 +14281,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -14167,6 +14292,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "productId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -14544,6 +14670,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -14570,6 +14697,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Product ID",
           "name": "productId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -14660,6 +14788,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -14670,6 +14799,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "productId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -14704,6 +14834,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -14730,6 +14861,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Product ID",
           "name": "productId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -14823,6 +14955,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -14833,6 +14966,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "productId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -15235,6 +15369,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -15261,6 +15396,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Product ID",
           "name": "productId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -15373,6 +15509,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -15383,6 +15520,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "productId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -15460,6 +15598,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -15486,6 +15625,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Product ID",
           "name": "productId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -15584,6 +15724,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -15594,6 +15735,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "productId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -15893,6 +16035,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -15919,6 +16062,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Product ID",
           "name": "productId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -16017,6 +16161,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -16027,6 +16172,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "productId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -16325,6 +16471,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -16351,6 +16498,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Product ID",
           "name": "productId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -16464,6 +16612,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -16474,6 +16623,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "productId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -16597,6 +16747,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -16623,6 +16774,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Product ID",
           "name": "productId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -16867,6 +17019,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -16877,6 +17030,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "productId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -16968,6 +17122,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -16994,6 +17149,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Product ID",
           "name": "productId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -17260,6 +17416,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -17521,6 +17678,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -17648,6 +17806,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -17771,6 +17930,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -18000,6 +18160,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -18010,6 +18171,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "usageRecordGroupId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -18139,6 +18301,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -18165,6 +18328,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "UsageRecordGroup ID",
           "name": "usageRecordGroupId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -18270,6 +18434,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -18361,6 +18526,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -18590,6 +18756,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -18600,6 +18767,7 @@ exports[`open api parser > suger > parse open api 1`] = `
             },
             {
               "name": "usageRecordReportId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -18912,6 +19080,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -18938,6 +19107,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "UsageRecordReport ID",
           "name": "usageRecordReportId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -19065,6 +19235,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "orgId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -19189,6 +19360,7 @@ exports[`open api parser > suger > parse open api 1`] = `
           "availability": null,
           "description": "Organization ID",
           "name": "orgId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -57675,6 +57847,7 @@ the same customer, dimension, and time, but a different quantity.",
   },
   "servers": [
     {
+      "audiences": null,
       "description": null,
       "name": null,
       "url": "//https://api.suger.cloud",

@@ -1,0 +1,50 @@
+---
+title: 'Local Development'
+subtitle: 'Preview changes locally to update your docs'
+description: 'Preview changes locally to update your docs'
+---
+
+<Info>
+**Prerequisite**: Please install Node.js (version 18 or higher) before proceeding.
+</Info>
+
+Follow these steps to install and run the Fern CLI:
+
+**Step 1**: Install the Fern CLI:
+
+<CodeGroup>
+
+```bash npm
+npm i -g fern-api
+```
+
+```bash yarn
+yarn global add fern-api
+```
+
+</CodeGroup>
+
+**Step 2**: Navigate to the docs directory (where the `fern` folder is located) and execute the following command:
+
+```bash
+fern docs dev
+```
+
+A local preview of your documentation will be available at `http://localhost:3000`.
+
+<Note>
+Some features (e.g. search) are disabled in the local development environment.
+</Note>
+
+
+## Custom ports
+
+By default, Fern uses port 3000. You can customize the port Fern runs on by using the `--port` flag. For example, to run Fern on port 3002, 
+use this command:
+
+```bash
+fern docs dev --port 3333
+```
+
+If you attempt to run Fern on a port that's already in use, it will use the next available port:
+

@@ -8,7 +8,6 @@ from ..core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from .types.user import User
-from ..core.jsonable_encoder import jsonable_encoder
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -128,8 +127,8 @@ class UserClient:
             method="GET",
             params={
                 "username": username,
-                "age": jsonable_encoder(age),
-                "weight": jsonable_encoder(weight),
+                "age": age,
+                "weight": weight,
             },
             request_options=request_options,
         )
@@ -277,8 +276,8 @@ class AsyncUserClient:
             method="GET",
             params={
                 "username": username,
-                "age": jsonable_encoder(age),
-                "weight": jsonable_encoder(weight),
+                "age": age,
+                "weight": weight,
             },
             request_options=request_options,
         )

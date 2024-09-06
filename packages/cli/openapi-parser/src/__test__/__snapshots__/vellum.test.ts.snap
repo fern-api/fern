@@ -54,6 +54,7 @@ Used to retrieve a deployment given its ID or name.
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -145,6 +146,7 @@ Used to retrieve a deployment given its ID or name.
           "availability": null,
           "description": "Either the Deployment's ID or its unique name",
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -1315,7 +1317,7 @@ Executes a deployed Workflow and streams back its results.",
       "sdkName": null,
       "server": [
         {
-          "description": null,
+          "audiences": null,
           "name": "Predict",
           "url": "https://predict.vellum.ai",
         },
@@ -1601,7 +1603,7 @@ Generate a completion using a previously defined deployment.
       "sdkName": null,
       "server": [
         {
-          "description": null,
+          "audiences": null,
           "name": "Predict",
           "url": "https://predict.vellum.ai",
         },
@@ -1778,7 +1780,7 @@ Generate a stream of completions using a previously defined deployment.
       "sdkName": null,
       "server": [
         {
-          "description": null,
+          "audiences": null,
           "name": "Predict",
           "url": "https://predict.vellum.ai",
         },
@@ -1811,6 +1813,7 @@ Used to retrieve a model version given its ID.
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -2060,6 +2063,7 @@ Used to retrieve a model version given its ID.
           "availability": null,
           "description": "A UUID string identifying this model version.",
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -2136,6 +2140,7 @@ Compiles the prompt backing the model version using the provided input values.",
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -2212,6 +2217,7 @@ Compiles the prompt backing the model version using the provided input values.",
           "availability": null,
           "description": "A UUID string identifying this model version.",
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -2658,6 +2664,7 @@ or overwritten with default values.",
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -2826,6 +2833,7 @@ or overwritten with default values.",
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -3007,6 +3015,7 @@ or overwritten with default values.",
           "availability": null,
           "description": "A UUID string identifying this sandbox.",
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -3105,6 +3114,7 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -3115,6 +3125,7 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
             },
             {
               "name": "scenario_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -3143,6 +3154,7 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
           "availability": null,
           "description": "A UUID string identifying this sandbox.",
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -3169,6 +3181,7 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
           "availability": null,
           "description": "An id identifying the scenario that you'd like to delete",
           "name": "scenario_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -3429,7 +3442,7 @@ Perform a search against a document index.
       "sdkName": null,
       "server": [
         {
-          "description": null,
+          "audiences": null,
           "name": "Predict",
           "url": "https://predict.vellum.ai",
         },
@@ -3587,7 +3600,7 @@ Used to submit feedback regarding the quality of previously generated completion
       "sdkName": null,
       "server": [
         {
-          "description": null,
+          "audiences": null,
           "name": "Predict",
           "url": "https://predict.vellum.ai",
         },
@@ -3624,6 +3637,7 @@ or overwritten with default values.",
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -3732,6 +3746,7 @@ or overwritten with default values.",
           "availability": null,
           "description": "A UUID string identifying this test suite.",
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -3830,6 +3845,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -3840,6 +3856,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
             },
             {
               "name": "test_case_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -3868,6 +3885,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           "availability": null,
           "description": "A UUID string identifying this test suite.",
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -3894,6 +3912,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           "availability": null,
           "description": "An id identifying the test case that you'd like to delete",
           "name": "test_case_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -4259,7 +4278,7 @@ Upload a document to be indexed and used for search.
       "sdkName": null,
       "server": [
         {
-          "description": null,
+          "audiences": null,
           "name": "Documents",
           "url": "https://documents.vellum.ai",
         },
@@ -16815,6 +16834,7 @@ Upload a document to be indexed and used for search.
   },
   "servers": [
     {
+      "audiences": null,
       "description": "Default Server",
       "name": "Default",
       "url": "https://api.vellum.ai",

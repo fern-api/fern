@@ -1,8 +1,10 @@
 import { Values } from "@fern-api/core-utils";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { Audiences } from "../commons";
 import { APIDefinitionSettingsSchema } from "./schemas/APIConfigurationSchema";
+import { GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
 import { GeneratorsConfigurationSchema } from "./schemas/GeneratorsConfigurationSchema";
 import { ReadmeSchema } from "./schemas/ReadmeSchema";
 
@@ -19,13 +21,14 @@ export interface GeneratorsConfiguration {
 
 export type APIDefinition = SingleNamespaceAPIDefinition | MultiNamespaceAPIDefinition;
 
-export interface SingleNamespaceAPIDefinition {
+export interface SingleNamespaceAPIDefinition extends RawSchemas.WithEnvironmentsSchema, RawSchemas.WithAuthSchema {
     type: "singleNamespace";
     definitions: APIDefinitionLocation[];
 }
 
-export interface MultiNamespaceAPIDefinition {
+export interface MultiNamespaceAPIDefinition extends RawSchemas.WithEnvironmentsSchema, RawSchemas.WithAuthSchema {
     type: "multiNamespace";
+    rootDefinitions: APIDefinitionLocation[] | undefined;
     definitions: Record<string, APIDefinitionLocation[]>;
 }
 
@@ -74,6 +77,8 @@ export interface Reviewers {
 }
 
 export interface GeneratorInvocation {
+    raw?: GeneratorInvocationSchema;
+
     name: string;
     irVersionOverride: string | undefined;
     version: string;

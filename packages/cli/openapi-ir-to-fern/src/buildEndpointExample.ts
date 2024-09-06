@@ -1,6 +1,6 @@
 import { isNonNullish } from "@fern-api/core-utils";
-import { EndpointExample, FullExample } from "@fern-api/openapi-ir-sdk";
-import { RawSchemas } from "@fern-api/yaml-schema";
+import { EndpointExample, FullExample, PathParameterExample } from "@fern-api/openapi-ir-sdk";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertFullExample } from "./utils/convertFullExample";
 
@@ -25,7 +25,7 @@ export function buildEndpointExample({
     }
 
     if (endpointExample.pathParameters != null && endpointExample.pathParameters.length > 0) {
-        example["path-parameters"] = convertNamedFullExamples(endpointExample.pathParameters);
+        example["path-parameters"] = convertPathParameterExample(endpointExample.pathParameters);
     }
 
     if (endpointExample.queryParameters != null && endpointExample.queryParameters.length > 0) {
@@ -79,13 +79,16 @@ interface NamedFullExample {
     value: FullExample;
 }
 
-function convertNamedFullExamples(
-    namedFullExamples: NamedFullExample[]
+function convertPathParameterExample(
+    pathParameterExamples: PathParameterExample[]
 ): Record<string, RawSchemas.ExampleTypeReferenceSchema> {
     const result: Record<string, RawSchemas.ExampleTypeReferenceSchema> = {};
-    namedFullExamples.map(
-        (namedFullExample) => (result[namedFullExample.name] = convertFullExample(namedFullExample.value))
-    );
+    pathParameterExamples.forEach((pathParameterExample) => {
+        const convertedExample = convertFullExample(pathParameterExample.value);
+        if (convertedExample != null) {
+            result[pathParameterExample.parameterNameOverride ?? pathParameterExample.name] = convertedExample;
+        }
+    });
     return result;
 }
 

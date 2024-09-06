@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { Source } from "@fern-api/openapi-ir-sdk";
-import { RawSchemas } from "@fern-api/yaml-schema";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 
 export function convertToSourceSchema(source: Source): RawSchemas.SourceSchema {
     switch (source.type) {

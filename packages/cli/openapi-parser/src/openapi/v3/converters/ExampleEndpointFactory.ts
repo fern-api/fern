@@ -15,7 +15,7 @@ import {
     SchemaWithExample,
     SupportedSdkLanguage
 } from "@fern-api/openapi-ir-sdk";
-import { RawSchemas } from "@fern-api/yaml-schema";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { ExampleTypeFactory } from "../../../schema/examples/ExampleTypeFactory";
 import { convertSchemaToSchemaWithExample } from "../../../schema/utils/convertSchemaToSchemaWithExample";
 import { isSchemaRequired } from "../../../schema/utils/isSchemaRequired";
@@ -158,6 +158,7 @@ export class ExampleEndpointFactory {
             } else if (example != null) {
                 pathParameters.push({
                     name: pathParameter.name,
+                    parameterNameOverride: pathParameter.parameterNameOverride,
                     value: example
                 });
             }

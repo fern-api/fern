@@ -13,18 +13,22 @@ public final class SpringGeneratorContext
             IntermediateRepresentation ir,
             GeneratorConfig generatorConfig,
             SpringCustomConfig customConfig,
-            SpringDownloadFilesCustomConfig springDownloadFilesCustomConfig,
             List<AuthScheme> resolvedAuthSchemes) {
         super(
                 ir,
                 generatorConfig,
                 customConfig,
-                new SpringLocalFilesPoetClassNameFactory(springDownloadFilesCustomConfig.packagePrefix()),
+                new SpringLocalFilesPoetClassNameFactory(customConfig.packagePrefix()),
                 resolvedAuthSchemes);
     }
 
     @Override
     public boolean deserializeWithAdditionalProperties() {
         return false;
+    }
+
+    @Override
+    public boolean builderNotNullChecks() {
+        return true;
     }
 }

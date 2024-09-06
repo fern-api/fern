@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedCustomAuth.Core;
 
 #nullable enable
@@ -18,7 +19,15 @@ public partial class CustomAuthClient
     /// <summary>
     /// GET request with custom auth scheme
     /// </summary>
-    public async Task<bool> GetWithCustomAuthAsync(RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.CustomAuth.GetWithCustomAuthAsync();
+    /// </code>
+    /// </example>
+    public async Task<bool> GetWithCustomAuthAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -26,8 +35,9 @@ public partial class CustomAuthClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "custom-auth",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -66,7 +76,18 @@ public partial class CustomAuthClient
     /// <summary>
     /// POST request with custom auth scheme
     /// </summary>
-    public async Task<bool> PostWithCustomAuthAsync(object request, RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.CustomAuth.PostWithCustomAuthAsync(
+    ///     new Dictionary<object, object?>() { { "key", "value" } }
+    /// );
+    /// </code>
+    /// </example>
+    public async Task<bool> PostWithCustomAuthAsync(
+        object request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -75,8 +96,9 @@ public partial class CustomAuthClient
                 Method = HttpMethod.Post,
                 Path = "custom-auth",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

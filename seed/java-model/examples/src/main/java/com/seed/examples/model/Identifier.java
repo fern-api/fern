@@ -104,21 +104,21 @@ public final class Identifier {
         @java.lang.Override
         @JsonSetter("type")
         public ValueStage type(Type type) {
-            this.type = type;
+            this.type = Objects.requireNonNull(type, "type must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("value")
         public LabelStage value(String value) {
-            this.value = value;
+            this.value = Objects.requireNonNull(value, "value must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("label")
         public _FinalStage label(String label) {
-            this.label = label;
+            this.label = Objects.requireNonNull(label, "label must not be null");
             return this;
         }
 

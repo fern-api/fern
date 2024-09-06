@@ -18,13 +18,13 @@ public class DocsTest
         var inputJson =
             @"
         {
-  ""docs"": ""Types extend this type to include a docs property.""
-}
-";
+          ""docs"": ""Types extend this type to include a docs property.""
+        }
+        ";
 
         var serializerOptions = new JsonSerializerOptions
         {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         };
 
         var deserializedObject = JsonSerializer.Deserialize<Docs>(inputJson, serializerOptions);

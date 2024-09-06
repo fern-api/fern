@@ -1,6 +1,6 @@
 import { generatorsYml } from "@fern-api/configuration";
 import { Name, NameAndWireValue, SafeAndUnsafeString } from "@fern-api/ir-sdk";
-import { RawSchemas } from "@fern-api/yaml-schema";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { camelCase, snakeCase, upperFirst, words } from "lodash-es";
 import { RESERVED_KEYWORDS } from "./reserved";
 

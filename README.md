@@ -10,7 +10,7 @@
 [![2023 Y Combinator Startup](https://img.shields.io/badge/Y%20Combinator-2023-orange)](https://www.ycombinator.com/companies/fern)
 ![License](https://img.shields.io/badge/License-MIT-blue)
 
-[![Discord](https://img.shields.io/badge/Join%20Our%20Community-black?logo=discord)](https://discord.com/invite/JkkXumPzcG)
+[![Slack](https://img.shields.io/badge/slack-pink.svg)](https://join.slack.com/t/fern-community/shared_invite/zt-2dpftfmif-MuAegl8AfP_PK8s2tx350Q)
 [![Documentation](https://img.shields.io/badge/Read%20our%20Documentation-black?logo=book)](https://buildwithfern.com/learn/home?utm_source=fern-api/fern/readme-read-our-documentation)
 
 </div>
@@ -103,6 +103,7 @@ Fern's model generators will output schemas or types defined in your OpenAPI spe
 | `fernapi/fern-pydantic-model` | [![Pydantic Model Generator Version](https://img.shields.io/docker/v/fernapi/fern-pydantic-model)](./generators/python/pydantic/VERSION) | [CHANGELOG.md](./generators/python/pydantic/CHANGELOG.md) | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)           |
 | `fernapi/java-model`     | [![Java Model Generator Version](https://img.shields.io/docker/v/fernapi/java-model)](./generators/java/model/VERSION) | [CHANGELOG.md](./generators/java/model/CHANGELOG.md)        | [Cli.java](./generators/java/sdk/src/main/java/com/fern/java/client/Cli.java) |
 | `fernapi/fern-ruby-model`     | [![Ruby Model Generator Version](https://img.shields.io/docker/v/fernapi/fern-ruby-model)](./generators/ruby/model/VERSION)| [CHANGELOG.md](./generators/ruby/model/CHANGELOG.md)      | [cli.ts](./generators/ruby/model/src/cli.ts)                                  |
+| `fernapi/fern-go-model`     | [![Go Model Generator Version](https://img.shields.io/docker/v/fernapi/fern-go-model)](./generators/go/model/VERSION)| [CHANGELOG.md](./generators/go/model/CHANGELOG.md)      | [main.go](./generators/go/cmd/fern-go-model/main.go)                                  |
 
 ### Spec Generators
 

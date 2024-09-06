@@ -1,6 +1,7 @@
 using System;
 using System.Net.Http;
 using Grpc.Core;
+using <%= namespace%>.Core;
 
 namespace <%= namespace%>;
 
@@ -17,17 +18,7 @@ public partial class GrpcRequestOptions
     /// The timeout for the request.
     /// </summary>
     public TimeSpan? Timeout { get; init; }
-    
-    /// <summary>
-    /// Headers to be sent with this particular request.
-    /// </summary>
-    public Dictionary<string, string> Headers { get; init; } = new Dictionary<string, string>();
 
-    /// <summary>
-    /// The cancellation token used with this particular request.
-    /// </summary>
-    public CancellationToken CancellationToken { get; init; } = default(CancellationToken);
-    
     /// <summary>
     /// Options for write operations.
     /// </summary>
@@ -37,4 +28,9 @@ public partial class GrpcRequestOptions
     /// Client-side call credentials. Provide authorization with per-call granularity.
     /// </summary>
     public CallCredentials? CallCredentials { get; init; }
+
+    /// <summary>
+    /// Headers to be sent with this particular request.
+    /// </summary>
+    internal Headers Headers { get; init; } = new();
 }

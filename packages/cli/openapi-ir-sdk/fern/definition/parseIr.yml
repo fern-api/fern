@@ -53,7 +53,7 @@ types:
         docs: |
           Expected error status codes for this endpoint, and their corresponding schema and examples.
           SDK generators will only read the StatusCodes. Docs generators will read the HttpError schema.
-      server: list<commons.Server>
+      server: list<finalIr.HttpEndpointServer>
       examples:
         type: list<finalIr.EndpointExample>
         docs: |
@@ -116,6 +116,10 @@ types:
       name: string
       schema: SchemaWithExample
       variableReference: optional<string>
+      parameterNameOverride:
+        type: optional<string>
+        docs: |
+          Populated by `x-fern-parameter-name` on a parameter object.
 
   QueryParameterWithExample:
     extends: 

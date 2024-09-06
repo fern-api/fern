@@ -1,0 +1,192 @@
+# Generators are registered within seed.yml, once their tests are passing
+name: publish-and-register-generators
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "generators/csharp/model/versions.yml"
+      - "generators/csharp/sdk/versions.yml"
+      - "generators/go/fiber/versions.yml"
+      - "generators/go/model/versions.yml"
+      - "generators/go/sdk/versions.yml"
+      - "generators/python/fastapi/versions.yml"
+      - "generators/python/pydantic/versions.yml"
+      - "generators/python/sdk/versions.yml"
+      - "generators/ruby/model/versions.yml"
+      - "generators/ruby/sdk/versions.yml"
+
+      # - "generators/openapi/versions.yml"
+      # - "generators/postman/versions.yml"
+      # - "generators/java/sdk/versions.yml"
+      # - "generators/java/model/versions.yml"
+      # - "generators/java/spring/versions.yml"
+      # - "generators/typescript/sdk/versions.yml"
+      # - "generators/typescript/express/versions.yml"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "The version of the generator to publish."
+        required: true
+        type: string
+      generator:
+        description: "The generator to publish and register releases for, this is a back door for convenience."
+        required: true
+        type: choice
+        options:
+          - csharp-model
+          - csharp-sdk
+          - go-fiber
+          - go-model
+          - go-sdk
+          - fastapi
+          - pydantic
+          - python-sdk
+          - ruby-model
+          - ruby-sdk
+
+          # - openapi
+          # - postman
+          # - java-sdk
+          # - java-model
+          # - java-spring
+          # - typescript-sdk
+          # - typescript-express
+
+env:
+  DOCKER_BUILDKIT: 1
+
+jobs:
+  versions-changed:
+    runs-on: ubuntu-latest
+    outputs:
+      generators: ${{ steps.filter.outputs.changes }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            csharp-model: 'generators/csharp/model/versions.yml'
+            csharp-sdk: 'generators/csharp/sdk/versions.yml'
+            go-fiber: "generators/go/fiber/versions.yml"
+            go-model: "generators/go/model/versions.yml"
+            go-sdk: "generators/go/sdk/versions.yml"
+            fastapi: "generators/python/fastapi/versions.yml"
+            pydantic: "generators/python/pydantic/versions.yml"
+            python-sdk: 'generators/python/sdk/versions.yml'
+            ruby-model: 'generators/ruby/model/versions.yml'
+            ruby-sdk: 'generators/ruby/sdk/versions.yml'
+
+          # openapi: 'generators/openapi/versions.yml'
+          # postman: 'generators/postman/versions.yml'
+          # java-sdk: 'generators/java/sdk/versions.yml'
+          # java-model: 'generators/java/model/versions.yml'
+          # spring: 'generators/java/spring/versions.yml'
+          # ts-sdk: 'generators/typescript/sdk/versions.yml'
+          # ts-express: 'generators/typescript/express/versions.yml'
+
+  # Test, publish and register generators
+  publish-changed-generators:
+    if: ${{ inputs.generator == null }}
+    runs-on: ubuntu-latest
+    needs: versions-changed
+    strategy:
+      matrix:
+        generator: ${{ fromJSON(needs.versions-changed.outputs.generators) }}
+    steps:
+      - name: Checkout repo at current ref
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 2
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      # Because tests take too long, we're skipping them for now here, they will still
+      # run in the CI pipeline, as before
+      # - name: Run test
+      #   run: pnpm seed:local test --generator ${{ matrix.generator }}
+
+      - name: Run publish
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+          DOCKER_USERNAME: fernapi
+          DOCKER_PASSWORD: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+        # This is wack and redundant, but the path filter Github Action above does not let you easily see
+        # the modified file once in the matrix, you have to access it at the filter (e.g. output.openapi_files)
+        # So as a workaround, we are doing this switch statement to set the VERSIONS_FILE variable and use that to publish
+        run: |
+          if [ ${{ matrix.generator }} = "csharp-model" ]; then
+              VERSIONS_FILE="generators/csharp/model/versions.yml"
+          elif [ ${{ matrix.generator }} = "csharp-sdk" ]; then
+              VERSIONS_FILE="generators/csharp/sdk/versions.yml"
+          elif [ ${{ matrix.generator }} = "go-fiber" ]; then
+              VERSIONS_FILE="generators/go/fiber/versions.yml"
+          elif [ ${{ matrix.generator }} = "go-model" ]; then
+              VERSIONS_FILE="generators/go/model/versions.yml"
+          elif [ ${{ matrix.generator }} = "go-sdk" ]; then
+              VERSIONS_FILE="generators/go/sdk/versions.yml"
+          elif [ ${{ matrix.generator }} = "fastapi" ]; then
+              VERSIONS_FILE="generators/python/fastapi/versions.yml"
+          elif [ ${{ matrix.generator }} = "pydantic" ]; then
+              VERSIONS_FILE="generators/python/pydantic/versions.yml"
+          elif [ ${{ matrix.generator }} = "python-sdk" ]; then
+              VERSIONS_FILE="generators/python/sdk/versions.yml"
+          elif [ ${{ matrix.generator }} = "ruby-model" ]; then
+              VERSIONS_FILE="generators/ruby/model/versions.yml"
+          elif [ ${{ matrix.generator }} = "ruby-sdk" ]; then
+              VERSIONS_FILE="generators/ruby/sdk/versions.yml"
+          fi
+
+          git show HEAD~1:${VERSIONS_FILE} > tmp_${{ matrix.generator }}_previous_versions.yml
+
+          if [ $? -eq 0 ]; then
+            pnpm seed:local publish generator ${{ matrix.generator }} --changelog $VERSIONS_FILE --previous-changelog tmp_${{ matrix.generator }}_previous_versions.yml --log-level debug
+          else
+            echo "No previous versions found, skipping publish."
+          fi
+
+          pnpm seed:local register generator --generators ${{ matrix.generator }}
+
+  # Manually publish and register generators
+  # The logic is identical to the step above, but could not find a good way to work with the matrix AND manual trigger in one job
+  publish-manually:
+    runs-on: ubuntu-latest
+    needs: versions-changed
+    # Only run this job if the there's no changed files and the generator is specified within inputs
+    if: ${{ fromJSON(needs.versions-changed.outputs.generators)[0] == null && inputs.generator != null }}
+    steps:
+      - name: Checkout repo at current ref
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 2
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      # Because tests take too long, we're skipping them for now here, they will still
+      # run in the CI pipeline, as before
+      # - name: Run test
+      #   run: pnpm seed:local test --generator ${{ matrix.generator }}
+
+      - name: Run publish
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+          DOCKER_USERNAME: fernapi
+          DOCKER_PASSWORD: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+        # This is wack and redundant, but the path filter Github Action above does not let you easily see
+        # the modified file once in the matrix, you have to access it at the filter (e.g. output.openapi_files)
+        # So as a workaround, we are doing this switch statement to set the VERSIONS_FILE variable and use that to publish
+        run: |
+          pnpm seed:local publish generator ${{ inputs.generator }} --ver ${{ inputs.version }} --log-level debug
+          pnpm seed:local register generator --generators ${{ inputs.generator }}

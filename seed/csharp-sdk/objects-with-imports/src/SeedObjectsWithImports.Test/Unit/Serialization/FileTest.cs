@@ -17,15 +17,15 @@ public class FileTest
         var inputJson =
             @"
         {
-  ""name"": ""file.txt"",
-  ""contents"": ""..."",
-  ""info"": ""REGULAR""
-}
-";
+          ""name"": ""file.txt"",
+          ""contents"": ""..."",
+          ""info"": ""REGULAR""
+        }
+        ";
 
         var serializerOptions = new JsonSerializerOptions
         {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         };
 
         var deserializedObject = JsonSerializer.Deserialize<File>(inputJson, serializerOptions);
@@ -41,15 +41,15 @@ public class FileTest
         var inputJson =
             @"
         {
-  ""name"": ""another_file.txt"",
-  ""contents"": ""..."",
-  ""info"": ""REGULAR""
-}
-";
+          ""name"": ""another_file.txt"",
+          ""contents"": ""..."",
+          ""info"": ""REGULAR""
+        }
+        ";
 
         var serializerOptions = new JsonSerializerOptions
         {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         };
 
         var deserializedObject = JsonSerializer.Deserialize<File>(inputJson, serializerOptions);

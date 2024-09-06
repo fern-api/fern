@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using SeedApi;
 using SeedApi.Core;
@@ -19,7 +20,15 @@ public partial class FolderClient
 
     public ServiceClient Service { get; }
 
-    public async Task FooAsync(RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Folder.FooAsync();
+    /// </code>
+    /// </example>
+    public async Task FooAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -27,8 +36,9 @@ public partial class FolderClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {

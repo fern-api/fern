@@ -18,13 +18,13 @@ public class ParentTest
         var inputJson =
             @"
         {
-  ""parent"": ""Property from the parent""
-}
-";
+          ""parent"": ""Property from the parent""
+        }
+        ";
 
         var serializerOptions = new JsonSerializerOptions
         {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         };
 
         var deserializedObject = JsonSerializer.Deserialize<Parent>(inputJson, serializerOptions);

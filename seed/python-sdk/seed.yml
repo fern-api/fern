@@ -1,19 +1,34 @@
 irVersion: v53
-docker: fernapi/fern-python-sdk:latest
-dockerCommand: docker build -f ./generators/python/sdk/Dockerfile -t fernapi/fern-python-sdk:latest ./generators/python
+changelogLocation: ../../generators/python/sdk/versions.yml
+publish:
+  workingDirectory: generators/python
+  preBuildCommands:
+    - pip install poetry
+    - poetry shell
+    - poetry config virtualenvs.in-project true
+    - poetry install
+  docker: 
+    file: ./generators/python/sdk/Dockerfile
+    image: fernapi/fern-python-sdk
+    context: ./generators/python
+test:
+  docker:
+    image: fernapi/fern-python-sdk:latest
+    command: docker build -f ./generators/python/sdk/Dockerfile -t fernapi/fern-python-sdk:latest ./generators/python
+  local:
+    workingDirectory: generators/python
+    buildCommand:
+      - chmod +x setup-python.sh && ./setup-python.sh
+      - poetry config virtualenvs.in-project true
+      - poetry install
+    # The envvar is needed to trick the generator to look in the right place for the core_utils files
+    runCommand: poetry run python -m src.fern_python.generators.sdk.cli
+    env: 
+      PYTEST_CURRENT_TEST: "some value"
+
 language: python
 generatorType: sdk
 defaultOutputMode: github
-local:
-  workingDirectory: generators/python
-  buildCommand:
-    - chmod +x setup-python.sh && ./setup-python.sh
-    - poetry config virtualenvs.in-project true
-    - poetry install
-  # The envvar is needed to trick the generator to look in the right place for the core_utils files
-  runCommand: poetry run python -m src.fern_python.generators.sdk.cli
-  env: 
-    PYTEST_CURRENT_TEST: "some value"
 customFixtureConfig:
   customConfig: 
     use_typeddict_requests: true
@@ -126,6 +141,15 @@ fixtures:
     - customConfig:
         inline_request_params: true
       outputFolder: inline_request_params
+    - customConfig:
+        pydantic_config:
+          use_pydantic_field_aliases: true
+          skip_validation: true
+      outputFolder: aliases_without_validation
+    - customConfig:
+        pydantic_config:
+          use_pydantic_field_aliases: true
+      outputFolder: aliases_with_validation
   unions:
     - customConfig: null
       outputFolder: no-custom-config
@@ -198,7 +222,7 @@ allowedFailures:
   # default enum value support, the latest primitive types, and gRPC
   # configuration. This otherwise causes a 'fern check' issue when
   # 'fern test' is run.
-  - grpc
+  - grpc-proto-exhaustive
   - grpc-proto
   - object
   - validation:no-custom-config
@@ -224,3 +248,6 @@ allowedFailures:
   - query-parameters
 
   - any-auth
+
+  - cross-package-type-names
+  - audiences

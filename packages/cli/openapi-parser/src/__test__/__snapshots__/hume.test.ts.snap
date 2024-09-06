@@ -24,7 +24,118 @@ exports[`open api parser > hume > parse open api 1`] = `
           "request": null,
           "response": {
             "type": "array",
-            "value": [],
+            "value": [
+              {
+                "properties": {
+                  "job_id": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "job_id",
+                    },
+                  },
+                  "request": {
+                    "properties": {
+                      "callback_url": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "callback_url",
+                        },
+                      },
+                      "files": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "md5sum": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "md5sum",
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "notify": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "boolean",
+                          "value": true,
+                        },
+                      },
+                      "urls": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "urls",
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "state": {
+                    "type": "oneOf",
+                    "value": {
+                      "type": "discriminated",
+                      "value": {
+                        "created_timestamp_ms": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "int64",
+                            "value": 1000000,
+                          },
+                        },
+                        "ended_timestamp_ms": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "int64",
+                            "value": 1000000,
+                          },
+                        },
+                        "message": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "state",
+                          },
+                        },
+                        "started_timestamp_ms": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "int64",
+                            "value": 1000000,
+                          },
+                        },
+                        "status": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "FAILED",
+                          },
+                        },
+                      },
+                    },
+                  },
+                  "user_id": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "user_id",
+                    },
+                  },
+                },
+                "type": "object",
+              },
+            ],
           },
           "type": "full",
         },
@@ -395,6 +506,7 @@ exports[`open api parser > hume > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -408,7 +520,106 @@ exports[`open api parser > hume > parse open api 1`] = `
           "request": null,
           "response": {
             "type": "array",
-            "value": [],
+            "value": [
+              {
+                "properties": {
+                  "error": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "error",
+                    },
+                  },
+                  "results": {
+                    "properties": {
+                      "errors": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "file": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "file",
+                                },
+                              },
+                              "message": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "message",
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "predictions": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "file": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "file",
+                                },
+                              },
+                              "models": {
+                                "properties": {},
+                                "type": "object",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "source": {
+                    "type": "oneOf",
+                    "value": {
+                      "type": "discriminated",
+                      "value": {
+                        "content_type": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "source",
+                          },
+                        },
+                        "filename": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "source",
+                          },
+                        },
+                        "md5sum": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "source",
+                          },
+                        },
+                        "type": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "file",
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+                "type": "object",
+              },
+            ],
           },
           "type": "full",
         },
@@ -426,6 +637,7 @@ exports[`open api parser > hume > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -513,6 +725,7 @@ exports[`open api parser > hume > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -564,7 +777,196 @@ exports[`open api parser > hume > parse open api 1`] = `
       "availability": null,
       "description": "Get the request details and state of a given job.",
       "errors": {},
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "id",
+              "parameterNameOverride": null,
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": {
+            "properties": {
+              "job_id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "job_id",
+                },
+              },
+              "request": {
+                "properties": {
+                  "callback_url": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "callback_url",
+                    },
+                  },
+                  "files": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "properties": {
+                          "md5sum": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "md5sum",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                  },
+                  "models": {
+                    "properties": {
+                      "burst": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "key",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "value",
+                                },
+                              },
+                            },
+                          },
+                        ],
+                      },
+                      "facemesh": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "key",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "value",
+                                },
+                              },
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "notify": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean",
+                      "value": true,
+                    },
+                  },
+                  "transcription": {
+                    "properties": {
+                      "language": {
+                        "type": "enum",
+                        "value": "zh",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "urls": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "urls",
+                        },
+                      },
+                    ],
+                  },
+                },
+                "type": "object",
+              },
+              "state": {
+                "type": "oneOf",
+                "value": {
+                  "type": "discriminated",
+                  "value": {
+                    "created_timestamp_ms": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "int64",
+                        "value": 1000000,
+                      },
+                    },
+                    "ended_timestamp_ms": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "int64",
+                        "value": 1000000,
+                      },
+                    },
+                    "message": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string",
+                        "value": "state",
+                      },
+                    },
+                    "started_timestamp_ms": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "int64",
+                        "value": 1000000,
+                      },
+                    },
+                    "status": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string",
+                        "value": "FAILED",
+                      },
+                    },
+                  },
+                },
+              },
+              "user_id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "user_id",
+                },
+              },
+            },
+            "type": "object",
+          },
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "GetJobRequest",
       "headers": [],
       "idempotent": null,
@@ -578,6 +980,7 @@ exports[`open api parser > hume > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -6610,6 +7013,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
   },
   "servers": [
     {
+      "audiences": null,
       "description": null,
       "name": null,
       "url": "https://api.hume.ai",

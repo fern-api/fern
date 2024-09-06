@@ -879,7 +879,32 @@ and check its status.",
                         },
                       },
                     ],
-                    "evaluators": [],
+                    "evaluators": [
+                      {
+                        "orchestrated": true,
+                        "version": {
+                          "created_at": "2024-01-15T09:30:00Z",
+                          "id": "id",
+                          "inputs": [
+                            {
+                              "name": "name",
+                            },
+                          ],
+                          "last_used_at": "2024-01-15T09:30:00Z",
+                          "name": "name",
+                          "spec": {
+                            "arguments_type": "target_free",
+                            "evaluator_type": "human",
+                            "return_type": "boolean",
+                          },
+                          "status": "uncommitted",
+                          "total_logs_count": 1,
+                          "updated_at": "2024-01-15T09:30:00Z",
+                          "version_id": "version_id",
+                          "version_logs_count": 1,
+                        },
+                      },
+                    ],
                     "id": "id",
                     "status": "pending",
                     "updated_at": "2024-01-15T09:30:00Z",
@@ -999,7 +1024,32 @@ Retrieve the Evaluation with the given ID.",
                         },
                       },
                     ],
-                    "evaluators": [],
+                    "evaluators": [
+                      {
+                        "orchestrated": true,
+                        "version": {
+                          "created_at": "2024-01-15T09:30:00Z",
+                          "id": "id",
+                          "inputs": [
+                            {
+                              "name": "name",
+                            },
+                          ],
+                          "last_used_at": "2024-01-15T09:30:00Z",
+                          "name": "name",
+                          "spec": {
+                            "arguments_type": "target_free",
+                            "evaluator_type": "human",
+                            "return_type": "boolean",
+                          },
+                          "status": "uncommitted",
+                          "total_logs_count": 1,
+                          "updated_at": "2024-01-15T09:30:00Z",
+                          "version_id": "version_id",
+                          "version_logs_count": 1,
+                        },
+                      },
+                    ],
                     "id": "id",
                     "status": "pending",
                     "updated_at": "2024-01-15T09:30:00Z",
@@ -1142,7 +1192,32 @@ Retrieve a list of Evaluations that evaluate versions of the specified File.",
                             },
                           },
                         ],
-                        "evaluators": [],
+                        "evaluators": [
+                          {
+                            "orchestrated": true,
+                            "version": {
+                              "created_at": "2024-01-15T09:30:00Z",
+                              "id": "id",
+                              "inputs": [
+                                {
+                                  "name": "name",
+                                },
+                              ],
+                              "last_used_at": "2024-01-15T09:30:00Z",
+                              "name": "name",
+                              "spec": {
+                                "arguments_type": "target_free",
+                                "evaluator_type": "human",
+                                "return_type": "boolean",
+                              },
+                              "status": "uncommitted",
+                              "total_logs_count": 1,
+                              "updated_at": "2024-01-15T09:30:00Z",
+                              "version_id": "version_id",
+                              "version_logs_count": 1,
+                            },
+                          },
+                        ],
                         "id": "id",
                         "status": "pending",
                         "updated_at": "2024-01-15T09:30:00Z",
@@ -1268,7 +1343,32 @@ Update the setup of an Evaluation by specifying the Dataset, Evaluatees, and Eva
                         },
                       },
                     ],
-                    "evaluators": [],
+                    "evaluators": [
+                      {
+                        "orchestrated": true,
+                        "version": {
+                          "created_at": "2024-01-15T09:30:00Z",
+                          "id": "id",
+                          "inputs": [
+                            {
+                              "name": "name",
+                            },
+                          ],
+                          "last_used_at": "2024-01-15T09:30:00Z",
+                          "name": "name",
+                          "spec": {
+                            "arguments_type": "target_free",
+                            "evaluator_type": "human",
+                            "return_type": "boolean",
+                          },
+                          "status": "uncommitted",
+                          "total_logs_count": 1,
+                          "updated_at": "2024-01-15T09:30:00Z",
+                          "version_id": "version_id",
+                          "version_logs_count": 1,
+                        },
+                      },
+                    ],
                     "id": "id",
                     "status": "pending",
                     "updated_at": "2024-01-15T09:30:00Z",
@@ -1371,7 +1471,32 @@ as completed.",
                         },
                       },
                     ],
-                    "evaluators": [],
+                    "evaluators": [
+                      {
+                        "orchestrated": true,
+                        "version": {
+                          "created_at": "2024-01-15T09:30:00Z",
+                          "id": "id",
+                          "inputs": [
+                            {
+                              "name": "name",
+                            },
+                          ],
+                          "last_used_at": "2024-01-15T09:30:00Z",
+                          "name": "name",
+                          "spec": {
+                            "arguments_type": "target_free",
+                            "evaluator_type": "human",
+                            "return_type": "boolean",
+                          },
+                          "status": "uncommitted",
+                          "total_logs_count": 1,
+                          "updated_at": "2024-01-15T09:30:00Z",
+                          "version_id": "version_id",
+                          "version_logs_count": 1,
+                        },
+                      },
+                    ],
                     "id": "id",
                     "status": "pending",
                     "updated_at": "2024-01-15T09:30:00Z",
@@ -1424,6 +1549,55 @@ as completed.",
             "errors": [
               "root.EvaluatorsCommitRequestUnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                  "version_id": "version_id",
+                },
+                "request": {
+                  "commit_message": "commit_message",
+                },
+                "response": {
+                  "body": {
+                    "commit_message": "commit_message",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "created_by": {
+                      "email_address": "email_address",
+                      "full_name": "full_name",
+                      "id": "id",
+                    },
+                    "directory_id": "directory_id",
+                    "environments": [
+                      {
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "id": "id",
+                        "name": "name",
+                        "tag": "default",
+                      },
+                    ],
+                    "id": "id",
+                    "inputs": [
+                      {
+                        "name": "name",
+                      },
+                    ],
+                    "last_used_at": "2024-01-15T09:30:00Z",
+                    "name": "name",
+                    "spec": {
+                      "arguments_type": "target_free",
+                      "evaluator_type": "human",
+                      "return_type": "boolean",
+                    },
+                    "status": "uncommitted",
+                    "total_logs_count": 1,
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "version_id": "version_id",
+                    "version_logs_count": 1,
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "pagination": undefined,
             "path": "/evaluators/{id}/versions/{version_id}/commit",
@@ -1459,6 +1633,55 @@ otherwise it will be uncommitted. If you try to commit an already committed vers
 an exception will be raised.",
             "errors": [
               "root.EvaluatorsCreateRequestUnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "request": {
+                  "spec": {
+                    "arguments_type": "target_free",
+                    "evaluator_type": "human",
+                    "return_type": "boolean",
+                  },
+                },
+                "response": {
+                  "body": {
+                    "commit_message": "commit_message",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "created_by": {
+                      "email_address": "email_address",
+                      "full_name": "full_name",
+                      "id": "id",
+                    },
+                    "directory_id": "directory_id",
+                    "environments": [
+                      {
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "id": "id",
+                        "name": "name",
+                        "tag": "default",
+                      },
+                    ],
+                    "id": "id",
+                    "inputs": [
+                      {
+                        "name": "name",
+                      },
+                    ],
+                    "last_used_at": "2024-01-15T09:30:00Z",
+                    "name": "name",
+                    "spec": {
+                      "arguments_type": "target_free",
+                      "evaluator_type": "human",
+                      "return_type": "boolean",
+                    },
+                    "status": "uncommitted",
+                    "total_logs_count": 1,
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "version_id": "version_id",
+                    "version_logs_count": 1,
+                  },
+                },
+              },
             ],
             "method": "POST",
             "pagination": undefined,
@@ -1496,6 +1719,216 @@ an exception will be raised.",
             "docs": "Run a synchronous evaluator execution on a collection of datapoints.",
             "errors": [
               "root.DebugEvaluatorsDebugPostRequestUnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "request": {
+                  "evaluator": {
+                    "arguments_type": "target_free",
+                    "evaluator_type": "human",
+                    "return_type": "boolean",
+                  },
+                  "file_id": "file_id",
+                },
+                "response": {
+                  "body": [
+                    {
+                      "datapoint_id": "datapoint_id",
+                      "error": "error",
+                      "llm_evaluation_log": {
+                        "batch_ids": [
+                          "batch_ids",
+                        ],
+                        "config": {
+                          "id": "config",
+                          "name": "config",
+                          "status": "config",
+                          "type": "generic",
+                        },
+                        "config_id": "config_id",
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "duration": 1.1,
+                        "environment": "environment",
+                        "error": "error",
+                        "evaluation_results": [
+                          {
+                            "created_at": "2024-01-15T09:30:00Z",
+                            "evaluator_id": "evaluator_id",
+                            "evaluator_version_id": "evaluator_version_id",
+                            "id": "id",
+                            "log_id": "log_id",
+                            "updated_at": "2024-01-15T09:30:00Z",
+                          },
+                        ],
+                        "feedback": [
+                          {
+                            "id": "id",
+                            "type": "rating",
+                            "value": 1.1,
+                          },
+                        ],
+                        "finish_reason": "finish_reason",
+                        "id": "id",
+                        "inputs": {
+                          "key": "value",
+                        },
+                        "judgment": true,
+                        "messages": [
+                          {
+                            "role": "user",
+                          },
+                        ],
+                        "metadata": {
+                          "key": "value",
+                        },
+                        "metric_values": [
+                          {
+                            "metric_id": "metric_id",
+                            "metric_name": "metric_name",
+                            "metric_value": 1.1,
+                          },
+                        ],
+                        "observability_status": "pending",
+                        "output": "output",
+                        "output_cost": 1.1,
+                        "output_message": {
+                          "role": "user",
+                        },
+                        "output_tokens": 1,
+                        "parent_id": "parent_id",
+                        "parent_reference_id": "parent_reference_id",
+                        "project": "project",
+                        "project_id": "project_id",
+                        "prompt_cost": 1.1,
+                        "prompt_tokens": 1,
+                        "provider_latency": 1.1,
+                        "provider_request": {
+                          "key": "value",
+                        },
+                        "provider_response": {
+                          "key": "value",
+                        },
+                        "raw_output": "raw_output",
+                        "reference_id": "reference_id",
+                        "save": true,
+                        "session_id": "session_id",
+                        "session_reference_id": "session_reference_id",
+                        "source": "source",
+                        "source_datapoint_id": "source_datapoint_id",
+                        "tokens": 1,
+                        "tool_choice": "none",
+                        "tools": [
+                          {
+                            "id": "id",
+                            "name": "name",
+                            "result": "result",
+                            "signature": "signature",
+                          },
+                        ],
+                        "trial_id": "trial_id",
+                        "updated_at": "2024-01-15T09:30:00Z",
+                        "user": "user",
+                      },
+                      "log": {
+                        "batch_ids": [
+                          "batch_ids",
+                        ],
+                        "config": {
+                          "id": "config",
+                          "name": "config",
+                          "status": "config",
+                          "type": "generic",
+                        },
+                        "config_id": "config_id",
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "duration": 1.1,
+                        "environment": "environment",
+                        "error": "error",
+                        "evaluation_results": [
+                          {
+                            "created_at": "2024-01-15T09:30:00Z",
+                            "evaluator_id": "evaluator_id",
+                            "evaluator_version_id": "evaluator_version_id",
+                            "id": "id",
+                            "log_id": "log_id",
+                            "updated_at": "2024-01-15T09:30:00Z",
+                          },
+                        ],
+                        "feedback": [
+                          {
+                            "id": "id",
+                            "type": "rating",
+                            "value": 1.1,
+                          },
+                        ],
+                        "finish_reason": "finish_reason",
+                        "id": "id",
+                        "inputs": {
+                          "key": "value",
+                        },
+                        "judgment": true,
+                        "messages": [
+                          {
+                            "role": "user",
+                          },
+                        ],
+                        "metadata": {
+                          "key": "value",
+                        },
+                        "metric_values": [
+                          {
+                            "metric_id": "metric_id",
+                            "metric_name": "metric_name",
+                            "metric_value": 1.1,
+                          },
+                        ],
+                        "observability_status": "pending",
+                        "output": "output",
+                        "output_cost": 1.1,
+                        "output_message": {
+                          "role": "user",
+                        },
+                        "output_tokens": 1,
+                        "parent_id": "parent_id",
+                        "parent_reference_id": "parent_reference_id",
+                        "project": "project",
+                        "project_id": "project_id",
+                        "prompt_cost": 1.1,
+                        "prompt_tokens": 1,
+                        "provider_latency": 1.1,
+                        "provider_request": {
+                          "key": "value",
+                        },
+                        "provider_response": {
+                          "key": "value",
+                        },
+                        "raw_output": "raw_output",
+                        "reference_id": "reference_id",
+                        "save": true,
+                        "session_id": "session_id",
+                        "session_reference_id": "session_reference_id",
+                        "source": "source",
+                        "source_datapoint_id": "source_datapoint_id",
+                        "tokens": 1,
+                        "tool_choice": "none",
+                        "tools": [
+                          {
+                            "id": "id",
+                            "name": "name",
+                            "result": "result",
+                            "signature": "signature",
+                          },
+                        ],
+                        "trial_id": "trial_id",
+                        "updated_at": "2024-01-15T09:30:00Z",
+                        "user": "user",
+                      },
+                      "log_id": "log_id",
+                      "value": true,
+                    },
+                  ],
+                },
+              },
             ],
             "method": "POST",
             "pagination": undefined,
@@ -1569,6 +2002,55 @@ will be used for calls made to the Evaluator in this Environment.",
             "errors": [
               "root.DeployEvaluatorsIdVersionsVersionIdDeployPostRequestUnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                  "version_id": "version_id",
+                },
+                "query-parameters": {
+                  "environment_id": "environment_id",
+                },
+                "response": {
+                  "body": {
+                    "commit_message": "commit_message",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "created_by": {
+                      "email_address": "email_address",
+                      "full_name": "full_name",
+                      "id": "id",
+                    },
+                    "directory_id": "directory_id",
+                    "environments": [
+                      {
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "id": "id",
+                        "name": "name",
+                        "tag": "default",
+                      },
+                    ],
+                    "id": "id",
+                    "inputs": [
+                      {
+                        "name": "name",
+                      },
+                    ],
+                    "last_used_at": "2024-01-15T09:30:00Z",
+                    "name": "name",
+                    "spec": {
+                      "arguments_type": "target_free",
+                      "evaluator_type": "human",
+                      "return_type": "boolean",
+                    },
+                    "status": "uncommitted",
+                    "total_logs_count": 1,
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "version_id": "version_id",
+                    "version_logs_count": 1,
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "pagination": undefined,
             "path": "/evaluators/{id}/versions/{version_id}/deploy",
@@ -1605,6 +2087,51 @@ By default the deployed version of the Evaluator is returned. Use the query para
 \`version_id\` or \`environment\` to target a specific version of the Evaluator.",
             "errors": [
               "root.EvaluatorsGetRequestUnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "commit_message": "commit_message",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "created_by": {
+                      "email_address": "email_address",
+                      "full_name": "full_name",
+                      "id": "id",
+                    },
+                    "directory_id": "directory_id",
+                    "environments": [
+                      {
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "id": "id",
+                        "name": "name",
+                        "tag": "default",
+                      },
+                    ],
+                    "id": "id",
+                    "inputs": [
+                      {
+                        "name": "name",
+                      },
+                    ],
+                    "last_used_at": "2024-01-15T09:30:00Z",
+                    "name": "name",
+                    "spec": {
+                      "arguments_type": "target_free",
+                      "evaluator_type": "human",
+                      "return_type": "boolean",
+                    },
+                    "status": "uncommitted",
+                    "total_logs_count": 1,
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "version_id": "version_id",
+                    "version_logs_count": 1,
+                  },
+                },
+              },
             ],
             "method": "GET",
             "pagination": undefined,
@@ -1644,7 +2171,43 @@ By default the deployed version of the Evaluator is returned. Use the query para
               {
                 "response": {
                   "body": {
-                    "records": [],
+                    "records": [
+                      {
+                        "commit_message": "commit_message",
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "created_by": {
+                          "email_address": "email_address",
+                          "id": "id",
+                        },
+                        "directory_id": "directory_id",
+                        "environments": [
+                          {
+                            "created_at": "2024-01-15T09:30:00Z",
+                            "id": "id",
+                            "name": "name",
+                            "tag": "default",
+                          },
+                        ],
+                        "id": "id",
+                        "inputs": [
+                          {
+                            "name": "name",
+                          },
+                        ],
+                        "last_used_at": "2024-01-15T09:30:00Z",
+                        "name": "name",
+                        "spec": {
+                          "arguments_type": "target_free",
+                          "evaluator_type": "human",
+                          "return_type": "boolean",
+                        },
+                        "status": "uncommitted",
+                        "total_logs_count": 1,
+                        "updated_at": "2024-01-15T09:30:00Z",
+                        "version_id": "version_id",
+                        "version_logs_count": 1,
+                      },
+                    ],
                   },
                 },
               },
@@ -1696,7 +2259,44 @@ By default the deployed version of the Evaluator is returned. Use the query para
             "examples": [
               {
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "commit_message": "commit_message",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "created_by": {
+                        "email_address": "email_address",
+                        "full_name": "full_name",
+                        "id": "id",
+                      },
+                      "directory_id": "directory_id",
+                      "environments": [
+                        {
+                          "created_at": "2024-01-15T09:30:00Z",
+                          "id": "id",
+                          "name": "name",
+                          "tag": "default",
+                        },
+                      ],
+                      "id": "id",
+                      "inputs": [
+                        {
+                          "name": "name",
+                        },
+                      ],
+                      "last_used_at": "2024-01-15T09:30:00Z",
+                      "name": "name",
+                      "spec": {
+                        "arguments_type": "target_free",
+                        "evaluator_type": "human",
+                        "return_type": "boolean",
+                      },
+                      "status": "uncommitted",
+                      "total_logs_count": 1,
+                      "updated_at": "2024-01-15T09:30:00Z",
+                      "version_id": "version_id",
+                      "version_logs_count": 1,
+                    },
+                  ],
                 },
               },
             ],
@@ -1722,7 +2322,43 @@ By default the deployed version of the Evaluator is returned. Use the query para
                 },
                 "response": {
                   "body": {
-                    "records": [],
+                    "records": [
+                      {
+                        "commit_message": "commit_message",
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "created_by": {
+                          "email_address": "email_address",
+                          "id": "id",
+                        },
+                        "directory_id": "directory_id",
+                        "environments": [
+                          {
+                            "created_at": "2024-01-15T09:30:00Z",
+                            "id": "id",
+                            "name": "name",
+                            "tag": "default",
+                          },
+                        ],
+                        "id": "id",
+                        "inputs": [
+                          {
+                            "name": "name",
+                          },
+                        ],
+                        "last_used_at": "2024-01-15T09:30:00Z",
+                        "name": "name",
+                        "spec": {
+                          "arguments_type": "target_free",
+                          "evaluator_type": "human",
+                          "return_type": "boolean",
+                        },
+                        "status": "uncommitted",
+                        "total_logs_count": 1,
+                        "updated_at": "2024-01-15T09:30:00Z",
+                        "version_id": "version_id",
+                        "version_logs_count": 1,
+                      },
+                    ],
                   },
                 },
               },
@@ -1761,6 +2397,52 @@ By default the deployed version of the Evaluator is returned. Use the query para
             "docs": "Update the Evaluator with the given ID.",
             "errors": [
               "root.EvaluatorsUpdateRequestUnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "request": {},
+                "response": {
+                  "body": {
+                    "commit_message": "commit_message",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "created_by": {
+                      "email_address": "email_address",
+                      "full_name": "full_name",
+                      "id": "id",
+                    },
+                    "directory_id": "directory_id",
+                    "environments": [
+                      {
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "id": "id",
+                        "name": "name",
+                        "tag": "default",
+                      },
+                    ],
+                    "id": "id",
+                    "inputs": [
+                      {
+                        "name": "name",
+                      },
+                    ],
+                    "last_used_at": "2024-01-15T09:30:00Z",
+                    "name": "name",
+                    "spec": {
+                      "arguments_type": "target_free",
+                      "evaluator_type": "human",
+                      "return_type": "boolean",
+                    },
+                    "status": "uncommitted",
+                    "total_logs_count": 1,
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "version_id": "version_id",
+                    "version_logs_count": 1,
+                  },
+                },
+              },
             ],
             "method": "PATCH",
             "pagination": undefined,
@@ -9124,7 +9806,32 @@ and check its status.",
                         },
                       },
                     ],
-                    "evaluators": [],
+                    "evaluators": [
+                      {
+                        "orchestrated": true,
+                        "version": {
+                          "created_at": "2024-01-15T09:30:00Z",
+                          "id": "id",
+                          "inputs": [
+                            {
+                              "name": "name",
+                            },
+                          ],
+                          "last_used_at": "2024-01-15T09:30:00Z",
+                          "name": "name",
+                          "spec": {
+                            "arguments_type": "target_free",
+                            "evaluator_type": "human",
+                            "return_type": "boolean",
+                          },
+                          "status": "uncommitted",
+                          "total_logs_count": 1,
+                          "updated_at": "2024-01-15T09:30:00Z",
+                          "version_id": "version_id",
+                          "version_logs_count": 1,
+                        },
+                      },
+                    ],
                     "id": "id",
                     "status": "pending",
                     "updated_at": "2024-01-15T09:30:00Z",
@@ -9244,7 +9951,32 @@ Retrieve the Evaluation with the given ID.",
                         },
                       },
                     ],
-                    "evaluators": [],
+                    "evaluators": [
+                      {
+                        "orchestrated": true,
+                        "version": {
+                          "created_at": "2024-01-15T09:30:00Z",
+                          "id": "id",
+                          "inputs": [
+                            {
+                              "name": "name",
+                            },
+                          ],
+                          "last_used_at": "2024-01-15T09:30:00Z",
+                          "name": "name",
+                          "spec": {
+                            "arguments_type": "target_free",
+                            "evaluator_type": "human",
+                            "return_type": "boolean",
+                          },
+                          "status": "uncommitted",
+                          "total_logs_count": 1,
+                          "updated_at": "2024-01-15T09:30:00Z",
+                          "version_id": "version_id",
+                          "version_logs_count": 1,
+                        },
+                      },
+                    ],
                     "id": "id",
                     "status": "pending",
                     "updated_at": "2024-01-15T09:30:00Z",
@@ -9387,7 +10119,32 @@ Retrieve a list of Evaluations that evaluate versions of the specified File.",
                             },
                           },
                         ],
-                        "evaluators": [],
+                        "evaluators": [
+                          {
+                            "orchestrated": true,
+                            "version": {
+                              "created_at": "2024-01-15T09:30:00Z",
+                              "id": "id",
+                              "inputs": [
+                                {
+                                  "name": "name",
+                                },
+                              ],
+                              "last_used_at": "2024-01-15T09:30:00Z",
+                              "name": "name",
+                              "spec": {
+                                "arguments_type": "target_free",
+                                "evaluator_type": "human",
+                                "return_type": "boolean",
+                              },
+                              "status": "uncommitted",
+                              "total_logs_count": 1,
+                              "updated_at": "2024-01-15T09:30:00Z",
+                              "version_id": "version_id",
+                              "version_logs_count": 1,
+                            },
+                          },
+                        ],
                         "id": "id",
                         "status": "pending",
                         "updated_at": "2024-01-15T09:30:00Z",
@@ -9513,7 +10270,32 @@ Update the setup of an Evaluation by specifying the Dataset, Evaluatees, and Eva
                         },
                       },
                     ],
-                    "evaluators": [],
+                    "evaluators": [
+                      {
+                        "orchestrated": true,
+                        "version": {
+                          "created_at": "2024-01-15T09:30:00Z",
+                          "id": "id",
+                          "inputs": [
+                            {
+                              "name": "name",
+                            },
+                          ],
+                          "last_used_at": "2024-01-15T09:30:00Z",
+                          "name": "name",
+                          "spec": {
+                            "arguments_type": "target_free",
+                            "evaluator_type": "human",
+                            "return_type": "boolean",
+                          },
+                          "status": "uncommitted",
+                          "total_logs_count": 1,
+                          "updated_at": "2024-01-15T09:30:00Z",
+                          "version_id": "version_id",
+                          "version_logs_count": 1,
+                        },
+                      },
+                    ],
                     "id": "id",
                     "status": "pending",
                     "updated_at": "2024-01-15T09:30:00Z",
@@ -9616,7 +10398,32 @@ as completed.",
                         },
                       },
                     ],
-                    "evaluators": [],
+                    "evaluators": [
+                      {
+                        "orchestrated": true,
+                        "version": {
+                          "created_at": "2024-01-15T09:30:00Z",
+                          "id": "id",
+                          "inputs": [
+                            {
+                              "name": "name",
+                            },
+                          ],
+                          "last_used_at": "2024-01-15T09:30:00Z",
+                          "name": "name",
+                          "spec": {
+                            "arguments_type": "target_free",
+                            "evaluator_type": "human",
+                            "return_type": "boolean",
+                          },
+                          "status": "uncommitted",
+                          "total_logs_count": 1,
+                          "updated_at": "2024-01-15T09:30:00Z",
+                          "version_id": "version_id",
+                          "version_logs_count": 1,
+                        },
+                      },
+                    ],
                     "id": "id",
                     "status": "pending",
                     "updated_at": "2024-01-15T09:30:00Z",
@@ -9669,6 +10476,55 @@ as completed.",
             "errors": [
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                  "version_id": "version_id",
+                },
+                "request": {
+                  "commit_message": "commit_message",
+                },
+                "response": {
+                  "body": {
+                    "commit_message": "commit_message",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "created_by": {
+                      "email_address": "email_address",
+                      "full_name": "full_name",
+                      "id": "id",
+                    },
+                    "directory_id": "directory_id",
+                    "environments": [
+                      {
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "id": "id",
+                        "name": "name",
+                        "tag": "default",
+                      },
+                    ],
+                    "id": "id",
+                    "inputs": [
+                      {
+                        "name": "name",
+                      },
+                    ],
+                    "last_used_at": "2024-01-15T09:30:00Z",
+                    "name": "name",
+                    "spec": {
+                      "arguments_type": "target_free",
+                      "evaluator_type": "human",
+                      "return_type": "boolean",
+                    },
+                    "status": "uncommitted",
+                    "total_logs_count": 1,
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "version_id": "version_id",
+                    "version_logs_count": 1,
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "pagination": undefined,
             "path": "/evaluators/{id}/versions/{version_id}/commit",
@@ -9704,6 +10560,55 @@ otherwise it will be uncommitted. If you try to commit an already committed vers
 an exception will be raised.",
             "errors": [
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "request": {
+                  "spec": {
+                    "arguments_type": "target_free",
+                    "evaluator_type": "human",
+                    "return_type": "boolean",
+                  },
+                },
+                "response": {
+                  "body": {
+                    "commit_message": "commit_message",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "created_by": {
+                      "email_address": "email_address",
+                      "full_name": "full_name",
+                      "id": "id",
+                    },
+                    "directory_id": "directory_id",
+                    "environments": [
+                      {
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "id": "id",
+                        "name": "name",
+                        "tag": "default",
+                      },
+                    ],
+                    "id": "id",
+                    "inputs": [
+                      {
+                        "name": "name",
+                      },
+                    ],
+                    "last_used_at": "2024-01-15T09:30:00Z",
+                    "name": "name",
+                    "spec": {
+                      "arguments_type": "target_free",
+                      "evaluator_type": "human",
+                      "return_type": "boolean",
+                    },
+                    "status": "uncommitted",
+                    "total_logs_count": 1,
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "version_id": "version_id",
+                    "version_logs_count": 1,
+                  },
+                },
+              },
             ],
             "method": "POST",
             "pagination": undefined,
@@ -9741,6 +10646,216 @@ an exception will be raised.",
             "docs": "Run a synchronous evaluator execution on a collection of datapoints.",
             "errors": [
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "request": {
+                  "evaluator": {
+                    "arguments_type": "target_free",
+                    "evaluator_type": "human",
+                    "return_type": "boolean",
+                  },
+                  "file_id": "file_id",
+                },
+                "response": {
+                  "body": [
+                    {
+                      "datapoint_id": "datapoint_id",
+                      "error": "error",
+                      "llm_evaluation_log": {
+                        "batch_ids": [
+                          "batch_ids",
+                        ],
+                        "config": {
+                          "id": "config",
+                          "name": "config",
+                          "status": "config",
+                          "type": "generic",
+                        },
+                        "config_id": "config_id",
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "duration": 1.1,
+                        "environment": "environment",
+                        "error": "error",
+                        "evaluation_results": [
+                          {
+                            "created_at": "2024-01-15T09:30:00Z",
+                            "evaluator_id": "evaluator_id",
+                            "evaluator_version_id": "evaluator_version_id",
+                            "id": "id",
+                            "log_id": "log_id",
+                            "updated_at": "2024-01-15T09:30:00Z",
+                          },
+                        ],
+                        "feedback": [
+                          {
+                            "id": "id",
+                            "type": "rating",
+                            "value": 1.1,
+                          },
+                        ],
+                        "finish_reason": "finish_reason",
+                        "id": "id",
+                        "inputs": {
+                          "key": "value",
+                        },
+                        "judgment": true,
+                        "messages": [
+                          {
+                            "role": "user",
+                          },
+                        ],
+                        "metadata": {
+                          "key": "value",
+                        },
+                        "metric_values": [
+                          {
+                            "metric_id": "metric_id",
+                            "metric_name": "metric_name",
+                            "metric_value": 1.1,
+                          },
+                        ],
+                        "observability_status": "pending",
+                        "output": "output",
+                        "output_cost": 1.1,
+                        "output_message": {
+                          "role": "user",
+                        },
+                        "output_tokens": 1,
+                        "parent_id": "parent_id",
+                        "parent_reference_id": "parent_reference_id",
+                        "project": "project",
+                        "project_id": "project_id",
+                        "prompt_cost": 1.1,
+                        "prompt_tokens": 1,
+                        "provider_latency": 1.1,
+                        "provider_request": {
+                          "key": "value",
+                        },
+                        "provider_response": {
+                          "key": "value",
+                        },
+                        "raw_output": "raw_output",
+                        "reference_id": "reference_id",
+                        "save": true,
+                        "session_id": "session_id",
+                        "session_reference_id": "session_reference_id",
+                        "source": "source",
+                        "source_datapoint_id": "source_datapoint_id",
+                        "tokens": 1,
+                        "tool_choice": "none",
+                        "tools": [
+                          {
+                            "id": "id",
+                            "name": "name",
+                            "result": "result",
+                            "signature": "signature",
+                          },
+                        ],
+                        "trial_id": "trial_id",
+                        "updated_at": "2024-01-15T09:30:00Z",
+                        "user": "user",
+                      },
+                      "log": {
+                        "batch_ids": [
+                          "batch_ids",
+                        ],
+                        "config": {
+                          "id": "config",
+                          "name": "config",
+                          "status": "config",
+                          "type": "generic",
+                        },
+                        "config_id": "config_id",
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "duration": 1.1,
+                        "environment": "environment",
+                        "error": "error",
+                        "evaluation_results": [
+                          {
+                            "created_at": "2024-01-15T09:30:00Z",
+                            "evaluator_id": "evaluator_id",
+                            "evaluator_version_id": "evaluator_version_id",
+                            "id": "id",
+                            "log_id": "log_id",
+                            "updated_at": "2024-01-15T09:30:00Z",
+                          },
+                        ],
+                        "feedback": [
+                          {
+                            "id": "id",
+                            "type": "rating",
+                            "value": 1.1,
+                          },
+                        ],
+                        "finish_reason": "finish_reason",
+                        "id": "id",
+                        "inputs": {
+                          "key": "value",
+                        },
+                        "judgment": true,
+                        "messages": [
+                          {
+                            "role": "user",
+                          },
+                        ],
+                        "metadata": {
+                          "key": "value",
+                        },
+                        "metric_values": [
+                          {
+                            "metric_id": "metric_id",
+                            "metric_name": "metric_name",
+                            "metric_value": 1.1,
+                          },
+                        ],
+                        "observability_status": "pending",
+                        "output": "output",
+                        "output_cost": 1.1,
+                        "output_message": {
+                          "role": "user",
+                        },
+                        "output_tokens": 1,
+                        "parent_id": "parent_id",
+                        "parent_reference_id": "parent_reference_id",
+                        "project": "project",
+                        "project_id": "project_id",
+                        "prompt_cost": 1.1,
+                        "prompt_tokens": 1,
+                        "provider_latency": 1.1,
+                        "provider_request": {
+                          "key": "value",
+                        },
+                        "provider_response": {
+                          "key": "value",
+                        },
+                        "raw_output": "raw_output",
+                        "reference_id": "reference_id",
+                        "save": true,
+                        "session_id": "session_id",
+                        "session_reference_id": "session_reference_id",
+                        "source": "source",
+                        "source_datapoint_id": "source_datapoint_id",
+                        "tokens": 1,
+                        "tool_choice": "none",
+                        "tools": [
+                          {
+                            "id": "id",
+                            "name": "name",
+                            "result": "result",
+                            "signature": "signature",
+                          },
+                        ],
+                        "trial_id": "trial_id",
+                        "updated_at": "2024-01-15T09:30:00Z",
+                        "user": "user",
+                      },
+                      "log_id": "log_id",
+                      "value": true,
+                    },
+                  ],
+                },
+              },
             ],
             "method": "POST",
             "pagination": undefined,
@@ -9814,6 +10929,55 @@ will be used for calls made to the Evaluator in this Environment.",
             "errors": [
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                  "version_id": "version_id",
+                },
+                "query-parameters": {
+                  "environment_id": "environment_id",
+                },
+                "response": {
+                  "body": {
+                    "commit_message": "commit_message",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "created_by": {
+                      "email_address": "email_address",
+                      "full_name": "full_name",
+                      "id": "id",
+                    },
+                    "directory_id": "directory_id",
+                    "environments": [
+                      {
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "id": "id",
+                        "name": "name",
+                        "tag": "default",
+                      },
+                    ],
+                    "id": "id",
+                    "inputs": [
+                      {
+                        "name": "name",
+                      },
+                    ],
+                    "last_used_at": "2024-01-15T09:30:00Z",
+                    "name": "name",
+                    "spec": {
+                      "arguments_type": "target_free",
+                      "evaluator_type": "human",
+                      "return_type": "boolean",
+                    },
+                    "status": "uncommitted",
+                    "total_logs_count": 1,
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "version_id": "version_id",
+                    "version_logs_count": 1,
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "pagination": undefined,
             "path": "/evaluators/{id}/versions/{version_id}/deploy",
@@ -9850,6 +11014,51 @@ By default the deployed version of the Evaluator is returned. Use the query para
 \`version_id\` or \`environment\` to target a specific version of the Evaluator.",
             "errors": [
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "commit_message": "commit_message",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "created_by": {
+                      "email_address": "email_address",
+                      "full_name": "full_name",
+                      "id": "id",
+                    },
+                    "directory_id": "directory_id",
+                    "environments": [
+                      {
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "id": "id",
+                        "name": "name",
+                        "tag": "default",
+                      },
+                    ],
+                    "id": "id",
+                    "inputs": [
+                      {
+                        "name": "name",
+                      },
+                    ],
+                    "last_used_at": "2024-01-15T09:30:00Z",
+                    "name": "name",
+                    "spec": {
+                      "arguments_type": "target_free",
+                      "evaluator_type": "human",
+                      "return_type": "boolean",
+                    },
+                    "status": "uncommitted",
+                    "total_logs_count": 1,
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "version_id": "version_id",
+                    "version_logs_count": 1,
+                  },
+                },
+              },
             ],
             "method": "GET",
             "pagination": undefined,
@@ -9889,7 +11098,43 @@ By default the deployed version of the Evaluator is returned. Use the query para
               {
                 "response": {
                   "body": {
-                    "records": [],
+                    "records": [
+                      {
+                        "commit_message": "commit_message",
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "created_by": {
+                          "email_address": "email_address",
+                          "id": "id",
+                        },
+                        "directory_id": "directory_id",
+                        "environments": [
+                          {
+                            "created_at": "2024-01-15T09:30:00Z",
+                            "id": "id",
+                            "name": "name",
+                            "tag": "default",
+                          },
+                        ],
+                        "id": "id",
+                        "inputs": [
+                          {
+                            "name": "name",
+                          },
+                        ],
+                        "last_used_at": "2024-01-15T09:30:00Z",
+                        "name": "name",
+                        "spec": {
+                          "arguments_type": "target_free",
+                          "evaluator_type": "human",
+                          "return_type": "boolean",
+                        },
+                        "status": "uncommitted",
+                        "total_logs_count": 1,
+                        "updated_at": "2024-01-15T09:30:00Z",
+                        "version_id": "version_id",
+                        "version_logs_count": 1,
+                      },
+                    ],
                   },
                 },
               },
@@ -9941,7 +11186,44 @@ By default the deployed version of the Evaluator is returned. Use the query para
             "examples": [
               {
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "commit_message": "commit_message",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "created_by": {
+                        "email_address": "email_address",
+                        "full_name": "full_name",
+                        "id": "id",
+                      },
+                      "directory_id": "directory_id",
+                      "environments": [
+                        {
+                          "created_at": "2024-01-15T09:30:00Z",
+                          "id": "id",
+                          "name": "name",
+                          "tag": "default",
+                        },
+                      ],
+                      "id": "id",
+                      "inputs": [
+                        {
+                          "name": "name",
+                        },
+                      ],
+                      "last_used_at": "2024-01-15T09:30:00Z",
+                      "name": "name",
+                      "spec": {
+                        "arguments_type": "target_free",
+                        "evaluator_type": "human",
+                        "return_type": "boolean",
+                      },
+                      "status": "uncommitted",
+                      "total_logs_count": 1,
+                      "updated_at": "2024-01-15T09:30:00Z",
+                      "version_id": "version_id",
+                      "version_logs_count": 1,
+                    },
+                  ],
                 },
               },
             ],
@@ -9967,7 +11249,43 @@ By default the deployed version of the Evaluator is returned. Use the query para
                 },
                 "response": {
                   "body": {
-                    "records": [],
+                    "records": [
+                      {
+                        "commit_message": "commit_message",
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "created_by": {
+                          "email_address": "email_address",
+                          "id": "id",
+                        },
+                        "directory_id": "directory_id",
+                        "environments": [
+                          {
+                            "created_at": "2024-01-15T09:30:00Z",
+                            "id": "id",
+                            "name": "name",
+                            "tag": "default",
+                          },
+                        ],
+                        "id": "id",
+                        "inputs": [
+                          {
+                            "name": "name",
+                          },
+                        ],
+                        "last_used_at": "2024-01-15T09:30:00Z",
+                        "name": "name",
+                        "spec": {
+                          "arguments_type": "target_free",
+                          "evaluator_type": "human",
+                          "return_type": "boolean",
+                        },
+                        "status": "uncommitted",
+                        "total_logs_count": 1,
+                        "updated_at": "2024-01-15T09:30:00Z",
+                        "version_id": "version_id",
+                        "version_logs_count": 1,
+                      },
+                    ],
                   },
                 },
               },
@@ -10006,6 +11324,52 @@ By default the deployed version of the Evaluator is returned. Use the query para
             "docs": "Update the Evaluator with the given ID.",
             "errors": [
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+                "request": {},
+                "response": {
+                  "body": {
+                    "commit_message": "commit_message",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "created_by": {
+                      "email_address": "email_address",
+                      "full_name": "full_name",
+                      "id": "id",
+                    },
+                    "directory_id": "directory_id",
+                    "environments": [
+                      {
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "id": "id",
+                        "name": "name",
+                        "tag": "default",
+                      },
+                    ],
+                    "id": "id",
+                    "inputs": [
+                      {
+                        "name": "name",
+                      },
+                    ],
+                    "last_used_at": "2024-01-15T09:30:00Z",
+                    "name": "name",
+                    "spec": {
+                      "arguments_type": "target_free",
+                      "evaluator_type": "human",
+                      "return_type": "boolean",
+                    },
+                    "status": "uncommitted",
+                    "total_logs_count": 1,
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "version_id": "version_id",
+                    "version_logs_count": 1,
+                  },
+                },
+              },
             ],
             "method": "PATCH",
             "pagination": undefined,

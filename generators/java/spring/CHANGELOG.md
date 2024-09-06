@@ -5,17 +5,38 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.9.2] - 2024-07-23
+## [1.0.0] - 2024-09-05
 
-* Improvement: Generated builder methods for optional fields can now accept null directly.
+- Break: The Spring generator is now on major version 1. To take this upgrade without any breaks, please add the below
+  configuration to your `generators.yml` file:
+  ```yaml
+  generators:
+    - name: fernapi/fern-java-spring
+      config:
+        disable-required-property-builder-checks: true
+  ```
+- Improvement: Generated builder methods now enforce non-null checks for required fields, ensuring that all required 
+fields are properly validated during object construction:
+  ```java
+  @java.lang.Override
+  @JsonSetter("name")
+  public NameStage name(@NotNull String name) {
+      this.name = Objects.requireNonNull(name, "name must not be null");
+      return this;
+  }
+  ```
+
+## [0.9.3] - 2024-07-23
+
+- Improvement: Generated builder methods for optional fields can now accept null directly.
 
 ## [0.9.1-rc0] - 2024-07-02
 
-* Improvement: The Spring generator now adds a class-level `@JsonInclude(JsonInclude.Include.NON_ABSENT)` annotation to
+- Improvement: The Spring generator now adds a class-level `@JsonInclude(JsonInclude.Include.NON_ABSENT)` annotation to
   each generated type in place of the previous `@JsonInclude(JsonInclude.Include.NON_EMPTY)` by default. This ensures
   that required empty collection fields are not removed from request or response json. This is configurable in the
   `generators.yml` file:
-    ```yaml
+  ```yaml
   generators:
     - name: fernapi/fern-java-spring
       config:
@@ -38,19 +59,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   undiscriminated unions would have failed to compile due to Java's type erasure causing conflicts.
 
 ## [0.8.1] - 2024-05-14
+
 - Feature: Support OAuth with bearer tokens.
 
 ## [0.8.0-rc0] - 2024-05-13
+
 - Chore: Bump intermediate representation to v42
 
 ## [0.7.1] - 2024-02-04
+
 - Chore: Bump intermediate representation to v31
 - Feature: The generated models now support boolean literals and users
   do not have to specify them in the builder.
   For example, for the following object
   ```yaml
-  Actor: 
-    properties: 
+  Actor:
+    properties:
       name: string
       isMale: literal<true>
   ```

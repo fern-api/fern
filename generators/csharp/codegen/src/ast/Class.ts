@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import { Access } from "./Access";
 import { Annotation } from "./Annotation";
 import { ClassInstantiation } from "./ClassInstantiation";
@@ -20,6 +21,8 @@ export declare namespace Class {
         /* The access level of the C# class */
         access: Access;
         /* Defaults to false */
+        abstract?: boolean;
+        /* Defaults to false */
         sealed?: boolean;
         /* Defaults to false */
         partial?: boolean;
@@ -28,7 +31,7 @@ export declare namespace Class {
         /* Summary for the method */
         summary?: string;
         /* The class to inherit from if any */
-        parentClassReference?: ClassReference;
+        parentClassReference?: AstNode;
         /* Any interfaces the class extends */
         interfaceReferences?: ClassReference[];
         /* Defaults to false */
@@ -56,16 +59,26 @@ export declare namespace Class {
         /* If this class extends another class, these will be the arguments passed to that parent class's constructor */
         superClassArguments: (CodeBlock | ClassInstantiation)[];
     }
+
+    interface Operator {
+        /* The type of the method */
+        type: "implicit" | "explicit";
+        /* The parameters of the method */
+        parameters: Parameter[];
+        /* The body of the operator */
+        body: CodeBlock;
+    }
 }
 
 export class Class extends AstNode {
     public readonly name: string;
     public readonly namespace: string;
     public readonly access: Access;
+    public readonly abstract: boolean;
     public readonly sealed: boolean;
     public readonly partial: boolean;
     public readonly reference: ClassReference;
-    public readonly parentClassReference: ClassReference | undefined;
+    public readonly parentClassReference: AstNode | undefined;
     public readonly interfaceReferences: ClassReference[];
     public readonly isNestedClass: boolean;
     public readonly record: boolean;
@@ -76,6 +89,7 @@ export class Class extends AstNode {
     private fields: Field[] = [];
     private constructors: Class.Constructor[] = [];
     private methods: Method[] = [];
+    private operators: Class.Operator[] = [];
     private nestedClasses: Class[] = [];
     private nestedInterfaces: Interface[] = [];
 
@@ -83,6 +97,7 @@ export class Class extends AstNode {
         name,
         namespace,
         access,
+        abstract,
         sealed,
         partial,
         parentClassReference,
@@ -97,6 +112,7 @@ export class Class extends AstNode {
         this.name = name;
         this.namespace = namespace;
         this.access = access;
+        this.abstract = abstract ?? false;
         this.sealed = sealed ?? false;
         this.partial = partial ?? false;
         this.isNestedClass = isNestedClass ?? false;
@@ -137,6 +153,10 @@ export class Class extends AstNode {
         this.annotations.push(annotation);
     }
 
+    public addOperator(operator: Class.Operator): void {
+        this.operators.push(operator);
+    }
+
     public getNamespace(): string {
         return this.namespace;
     }
@@ -146,6 +166,7 @@ export class Class extends AstNode {
             writer.writeLine(`namespace ${this.namespace};`);
             writer.newLine();
         }
+
         if (this.summary != null) {
             writer.writeLine("/// <summary>");
             this.summary.split("\n").forEach((line) => {
@@ -162,6 +183,9 @@ export class Class extends AstNode {
             writer.writeNewLineIfLastLineNot();
         }
         writer.write(`${this.access}`);
+        if (this.abstract) {
+            writer.write(" abstract");
+        }
         if (this.sealed) {
             writer.write(" sealed");
         }
@@ -212,6 +236,10 @@ export class Class extends AstNode {
         writer.writeLine("{");
 
         writer.indent();
+        this.writeFields({ writer, fields: this.getFieldsByAccess(Access.Protected) });
+        writer.dedent();
+
+        writer.indent();
         this.writeFields({ writer, fields: this.getFieldsByAccess(Access.Private) });
         writer.dedent();
 
@@ -221,6 +249,10 @@ export class Class extends AstNode {
 
         writer.indent();
         this.writeFields({ writer, fields: this.getFieldsByAccess(Access.Public) });
+        writer.dedent();
+
+        writer.indent();
+        this.writeFields({ writer, fields: this.getFieldsByAccess(Access.Internal) });
         writer.dedent();
 
         writer.indent();
@@ -250,7 +282,18 @@ export class Class extends AstNode {
         writer.dedent();
 
         writer.indent();
+        this.writeMethods({ writer, methods: this.getMethodsByAccess(Access.Internal) });
+        writer.dedent();
+
+        writer.indent();
         this.writeMethods({ writer, methods: this.getMethodsByAccess(Access.Private) });
+        writer.dedent();
+
+        writer.indent();
+        this.operators.forEach((operator) => {
+            this.writeOperator({ writer, operator });
+            writer.newLine();
+        });
         writer.dedent();
 
         writer.writeLine("}");
@@ -308,5 +351,31 @@ export class Class extends AstNode {
 
     public getFields(): Field[] {
         return this.fields;
+    }
+
+    private writeOperator({ writer, operator }: { writer: Writer; operator: Class.Operator }): void {
+        writer.write("public static ");
+        switch (operator.type) {
+            case "implicit":
+                writer.write("implicit ");
+                break;
+            case "explicit":
+                writer.write("explicit ");
+                break;
+            default:
+                assertNever(operator.type);
+        }
+        writer.write("operator ");
+
+        writer.write(`${this.name}(`);
+        operator.parameters.forEach((parameter, idx) => {
+            parameter.write(writer);
+            if (idx < operator.parameters.length - 1) {
+                writer.write(", ");
+            }
+        });
+        writer.write(") => ");
+
+        writer.writeNodeStatement(operator.body);
     }
 }

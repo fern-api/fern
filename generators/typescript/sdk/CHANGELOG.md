@@ -5,16 +5,44 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.39.6] - 2024-08-27
+
+- Fix: Browser clients can now import streams, via `readable-streams` polyfill. Additionally adds a
+  webpack unit test to verify that the core utilities can be compiled.
+
+## [0.39.5] - 2024-08-20
+
+- Fix: If `noSerdeLayer` is enabled, then the generated TypeScript SDK snippets and wire tests
+  will not use `Date` objects but instead use strings. Without this fix, the generated
+  wire tests would result in failures.
+
+## [0.39.4] - 2024-08-20
+
+- Fix: Ensure that environment files don't generate, unless there is a valid environment available.
+
+## [0.39.3] - 2024-08-16
+
+- Fix: Multipart form data unit tests only get generated if the SDK has multipart form uploads.
+
+## [0.39.2] - 2024-08-16
+
+- Fix: Allows filenames to be passed from underlying File objects in Node 18+ and browsers
+  Users can now supply files like so, using a simple multipart upload API as an example:
+  ```typescript
+  client.file.upload(new File([...blobParts], 'filename.ext'), ...)
+  ```
+  `filename.ext` will be encoded into the upload.
+
 ## [0.39.1] - 2024-08-07
 
-- Feature: The SDK now supports looking directly at a `hasNextPage` property for offset pagination if configured. 
-  Previously the SDK would look if the number of items were empty, but this failed in certain edge cases. 
+- Feature: The SDK now supports looking directly at a `hasNextPage` property for offset pagination if configured.
+  Previously the SDK would look if the number of items were empty, but this failed in certain edge cases.
 
 ## [0.38.6] - 2024-08-07
 
-- Feature: The SDK generator now sends a `User-Agent` header on each request that is set to 
-  `<package>/<version>`. For example if your package is called `imdb` and is versioned `0.1.0`, then 
-  the user agent header will be `imdb/0.1.0`. 
+- Feature: The SDK generator now sends a `User-Agent` header on each request that is set to
+  `<package>/<version>`. For example if your package is called `imdb` and is versioned `0.1.0`, then
+  the user agent header will be `imdb/0.1.0`.
 
 ## [0.38.5] - 2024-08-07
 

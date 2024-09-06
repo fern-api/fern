@@ -46,6 +46,18 @@ public interface ICustomConfig {
         return JsonInclude.NON_ABSENT;
     }
 
+    @Value.Default
+    @JsonProperty("enable-public-constructors")
+    default Boolean enablePublicConstructors() {
+        return false;
+    }
+
+    @Value.Default
+    @JsonProperty("disable-required-property-builder-checks")
+    default Boolean disableRequiredPropertyBuilderChecks() {
+        return false;
+    }
+
     enum JsonInclude {
         NON_EMPTY("non-empty"),
         NON_ABSENT("non-absent");

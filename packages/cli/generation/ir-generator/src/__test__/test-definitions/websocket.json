@@ -490,6 +490,7 @@
     },
     "readmeConfig": null,
     "sourceConfig": null,
+    "publishConfig": null,
     "subpackages": {
         "subpackage_realtime": {
             "name": {

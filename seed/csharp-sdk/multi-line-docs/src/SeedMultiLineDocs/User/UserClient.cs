@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using SeedMultiLineDocs.Core;
 
@@ -20,7 +21,16 @@ public partial class UserClient
     /// Retrieve a user.
     /// This endpoint is used to retrieve a user.
     /// </summary>
-    public async Task GetUserAsync(string userId, RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.User.GetUserAsync("string");
+    /// </code>
+    /// </example>
+    public async Task GetUserAsync(
+        string userId,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -28,8 +38,9 @@ public partial class UserClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"users/{userId}",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -47,9 +58,15 @@ public partial class UserClient
     /// Create a new user.
     /// This endpoint is used to create a new user.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.User.CreateUserAsync(new CreateUserRequest { Name = "string", Age = 1 });
+    /// </code>
+    /// </example>
     public async Task<User> CreateUserAsync(
         CreateUserRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -59,8 +76,9 @@ public partial class UserClient
                 Method = HttpMethod.Post,
                 Path = "users",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using SeedTrace;
 using SeedTrace.Core;
@@ -23,7 +24,15 @@ public partial class V2Client
 
     public V3Client V3 { get; }
 
-    public async Task TestAsync(RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.V2.TestAsync();
+    /// </code>
+    /// </example>
+    public async Task TestAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -31,8 +40,9 @@ public partial class V2Client
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {

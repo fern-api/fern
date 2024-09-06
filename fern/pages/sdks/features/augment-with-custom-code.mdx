@@ -17,8 +17,8 @@ the generated code.
 If you want to provide any logic in your SDK that goes beyond hitting the REST API, you can 
 do so by leveraging `.fernignore`.
 
-Simply add your custom files to the SDK repository and 
-list them out in `.fernignore`. Fern won't override any files that you add in `.fernignore`. 
+Simply add your custom files to the SDK repository and  list them out in `.fernignore`. Fern
+won't override any files that you add in `.fernignore`.
 
 <Tabs>
   <Tab title="TypeScript">
@@ -34,10 +34,10 @@ list them out in `.fernignore`. Fern won't override any files that you add in `.
       ### Add `src/helper.ts` to `.fernignore`
 
       <CodeBlock title=".fernignore">
-        ```yaml
-        #  Specify files that shouldn't be modified by Fern
+        ```yaml {3}
+        # Specify files that shouldn't be modified by Fern
 
-        + src/helper.ts
+        src/helper.ts
         ```
       </CodeBlock>
 
@@ -64,10 +64,10 @@ list them out in `.fernignore`. Fern won't override any files that you add in `.
       ### Add `src/<package>/helper.py` to `.fernignore`
 
       <CodeBlock title=".fernignore">
-        ```yaml
-        #  Specify files that shouldn't be modified by Fern
+        ```yaml {3}
+        # Specify files that shouldn't be modified by Fern
 
-        + src/<package>/helper.py
+        src/<package>/helper.py
         ```
       </CodeBlock>
 
@@ -101,10 +101,10 @@ list them out in `.fernignore`. Fern won't override any files that you add in `.
       ### Add `src/main/java/<package>/Helper.java` to `.fernignore`
 
       <CodeBlock title=".fernignore">
-        ```yaml
-        #  Specify files that shouldn't be modified by Fern
+        ```yaml {3}
+        # Specify files that shouldn't be modified by Fern
 
-        + src/main/java/<package>/Helper.java
+        src/main/java/<package>/Helper.java
         ```
       </CodeBlock>
 
@@ -125,12 +125,38 @@ list them out in `.fernignore`. Fern won't override any files that you add in `.
       ```
     </Steps>
   </Tab>
-</Tabs>
+  <Tab title="Go">
+    <Steps>
+      ### Create a new file `helper.go`
 
-<Note>
-  While the examples above only show TypeScript, Python, and Java, they can be extrapolated to
-  any language. 
-</Note>
+      ```go
+      func MyHelper() {
+        fmt.Println("Hello World!")
+      }
+      ```
+
+      ### Add `helper.go` to `.fernignore`
+
+      <CodeBlock title=".fernignore">
+        ```yaml {3}
+        # Specify files that shouldn't be modified by Fern
+
+        helper.go
+        ```
+      </CodeBlock>
+
+      ### Consume the helper
+
+      Now your users can consume the helper function by importing it from the SDK:
+
+      ```go
+      import "github.com/package/example"
+
+      example.MyHelper();
+      ```
+    </Steps>
+  </Tab>
+</Tabs>
 
 ## Custom SDK methods
 
@@ -142,6 +168,10 @@ Fern generated client and add whatever methods you want.
 
 <Tabs>
   <Tab title="TypeScript">
+    <Note>
+      See an example from Flatfile using this process in their [TypeScript SDK](https://github.com/FlatFilers/flatfile-node)
+    </Note>
+
     <Steps>
       ### Create a new file `src/wrapper/MyClient.ts`
 
@@ -154,7 +184,7 @@ Fern generated client and add whatever methods you want.
       export class MyClient extends FernClient { // extend the Fern generated client
         
         public myHelper(): void {
-          return console.log("Hello world!");
+          console.log("Hello world!");
         }
 
       }
@@ -167,7 +197,7 @@ Fern generated client and add whatever methods you want.
 
       <CodeBlock title="src/index.ts">
         ```typescript
-        + export { MyClient } from src/wrapper/MyClient; // instead of `src/Client`
+        export { MyClient } from src/wrapper/MyClient; // instead of `src/Client`
         ```
       </CodeBlock>
 
@@ -176,7 +206,7 @@ Fern generated client and add whatever methods you want.
       Add both the `wrapper` directory and `index.ts` to `.fernignore`.
 
       <CodeBlock title=".fernignore">
-        ```yaml
+        ```diff
         + src/wrapper
         + src/index.ts
         ```
@@ -190,12 +220,12 @@ Fern generated client and add whatever methods you want.
       client.myHelper()
       ```
     </Steps>
-
-    <Note>
-      See an example from Flatfile using this process in their [TypeScript SDK](https://github.com/FlatFilers/flatfile-node)
-    </Note>
   </Tab>
   <Tab title="Python">
+    <Note>
+      See an example from ElevenLabs using this process in their [Python SDK](https://github.com/elevenlabs/elevenlabs-python/blob/main/src/elevenlabs/client.py). 
+    </Note>
+
     <Steps>
       ### Update `generators.yml` configuration
 
@@ -244,7 +274,7 @@ Fern generated client and add whatever methods you want.
       Add the `client.py` to `.fernignore`.
 
       <CodeBlock title=".fernignore">
-        ```yaml
+        ```diff
         + src/<package>/client.py
         ```
       </CodeBlock>
@@ -257,10 +287,6 @@ Fern generated client and add whatever methods you want.
       client.my_helper()
       ```
     </Steps>
-
-    <Note>
-      See an example from ElevenLabs using this process in their [Python SDK](https://github.com/elevenlabs/elevenlabs-python/blob/main/src/elevenlabs/client.py). 
-    </Note>
   </Tab>
   <Tab title="Java">
     <Steps>
@@ -296,7 +322,7 @@ Fern generated client and add whatever methods you want.
       Add the `MyClient.java` to `.fernignore`.
 
       <CodeBlock title=".fernignore">
-        ```yaml
+        ```diff
         + src/main/java/com/example/MyClient.java
         ```
       </CodeBlock>
@@ -307,10 +333,63 @@ Fern generated client and add whatever methods you want.
       client.myHelper();
       ```
     </Steps>
-</Tab>
+  </Tab>
+  <Tab title="Go">
+    <Steps>
+      ### Create a new file `client/my_client.go`
+
+      You can import the Fern generated client from the same package and add whatever methods you want.
+
+      ```go
+      type MyClient struct {
+        *Client // Embed the Fern generated client.
+      }
+
+      func NewMyClient(opts ...option.RequestOption) *MyClient {
+        retun &MyClient{
+          Client: NewClient(opts...),
+        }
+      }
+
+      func (m *MyClient) MyHelper() {
+        fmt.Println("Hello World!")
+      }
+      ```
+
+      ### Export the extended client
+
+      Instead of constructing the generated client, your users will want to construct the extended client.
+
+      <CodeBlock title="main.go">
+        ```go
+        import exampleclient "github.com/package/example/client"
+
+        client := exampleclient.NewMyClient():
+        ```
+      </CodeBlock>
+
+      ### Update `.fernignore`
+
+      Add the `client/my_client.go.
+
+      <CodeBlock title=".fernignore">
+        ```diff
+        + client/my_client.go
+        ```
+      </CodeBlock>
+
+      ### Consume the method
+
+      Now your users can consume the helper function by importing it from the SDK:
+
+      ```go
+      client.MyHelper()
+      ```
+    </Steps>
+  </Tab>
 </Tabs>
 
-## Custom Dependencies
+## Custom dependencies
 
 To add custom dependencies to your generated SDKs, you can update your `generators.yml`. 
 

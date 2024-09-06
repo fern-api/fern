@@ -74,7 +74,7 @@ public final class UnauthorizedRequestErrorBody {
         @java.lang.Override
         @JsonSetter("message")
         public _FinalStage message(String message) {
-            this.message = message;
+            this.message = Objects.requireNonNull(message, "message must not be null");
             return this;
         }
 

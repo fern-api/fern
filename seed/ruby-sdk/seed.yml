@@ -1,6 +1,17 @@
 irVersion: v39
-docker: fernapi/fern-ruby-sdk:latest
-dockerCommand: pnpm --filter @fern-api/fern-ruby-sdk dockerTagLatest
+changelogLocation: ../../generators/ruby/sdk/versions.yml
+publish:
+  preBuildCommands:
+    - ./.github/actions/install
+    - pnpm --filter @fern-api/fern-ruby-sdk dist:cli
+  docker: 
+    file: ./generators/ruby/sdk/Dockerfile
+    image: fernapi/fern-ruby-sdk
+    context: .
+test:
+  docker:
+    image: fernapi/fern-ruby-sdk:latest
+    command: pnpm --filter @fern-api/fern-ruby-sdk dockerTagLatest
 language: ruby
 generatorType: sdk
 defaultOutputMode: github
@@ -36,6 +47,7 @@ allowedFailures:
   # TODO: Add support for recursive undiscriminated unions.
   - grpc
   - any-auth
+  - trace
 features:
   requestOptions: true
   idempotency: false

@@ -2,7 +2,7 @@ from typing import List
 
 from fern.generator_exec.logging import GeneratorUpdate, InitUpdateV2
 
-from core_utilities.sdk.jsonable_encoder import jsonable_encoder
+from core_utilities.shared.jsonable_encoder import jsonable_encoder
 
 
 def test_jsonable_encoder() -> None:

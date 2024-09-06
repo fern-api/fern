@@ -1,6 +1,6 @@
-using System;
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedValidation.Core;
 
 #nullable enable
@@ -13,14 +13,44 @@ public partial class SeedValidationClient
 
     public SeedValidationClient(ClientOptions? clientOptions = null)
     {
-        _client = new RawClient(
-            new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
-            new Dictionary<string, Func<string>>() { },
-            clientOptions ?? new ClientOptions()
+        var defaultHeaders = new Headers(
+            new Dictionary<string, string>()
+            {
+                { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedValidation" },
+                { "X-Fern-SDK-Version", Version.Current },
+                { "User-Agent", "Fernvalidation/0.0.1" },
+            }
         );
+        clientOptions ??= new ClientOptions();
+        foreach (var header in defaultHeaders)
+        {
+            if (!clientOptions.Headers.ContainsKey(header.Key))
+            {
+                clientOptions.Headers[header.Key] = header.Value;
+            }
+        }
+        _client = new RawClient(clientOptions);
     }
 
-    public async Task<Type> CreateAsync(CreateRequest request, RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.CreateAsync(
+    ///     new CreateRequest
+    ///     {
+    ///         Decimal = 1.1,
+    ///         Even = 1,
+    ///         Name = "string",
+    ///         Shape = Shape.Square,
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
+    public async Task<Type> CreateAsync(
+        CreateRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -29,8 +59,9 @@ public partial class SeedValidationClient
                 Method = HttpMethod.Post,
                 Path = "/create",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -52,9 +83,25 @@ public partial class SeedValidationClient
         );
     }
 
-    public async Task<Type> GetAsync(GetRequest request, RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.GetAsync(
+    ///     new GetRequest
+    ///     {
+    ///         Decimal = 1.1,
+    ///         Even = 1,
+    ///         Name = "string",
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
+    public async Task<Type> GetAsync(
+        GetRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         _query["decimal"] = request.Decimal.ToString();
         _query["even"] = request.Even.ToString();
         _query["name"] = request.Name;
@@ -65,8 +112,9 @@ public partial class SeedValidationClient
                 Method = HttpMethod.Get,
                 Path = "",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

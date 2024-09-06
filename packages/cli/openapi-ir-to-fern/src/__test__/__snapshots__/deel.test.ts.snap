@@ -2768,6 +2768,76 @@ exports[`open api parser > deel > docs 1`] = `
               "root.CreateDirectEmployeeRequestConflictError",
               "root.CreateDirectEmployeeRequestInternalServerError",
             ],
+            "examples": [
+              {
+                "request": {
+                  "compensation": {
+                    "currency": "USD",
+                    "gross_annual_salary": 1.1,
+                  },
+                  "contract": {
+                    "contract_oid": "pdcMQe0cXCCXWTkqkdytw",
+                    "employment_type": "FULL_TIME",
+                    "start_date": "1999-12-31",
+                  },
+                  "employee_details": {
+                    "country": "BR",
+                    "email": "john.doe@domain.com",
+                    "first_name": "John",
+                    "last_name": "Doe",
+                    "nationality": "CA",
+                    "work_email": "john.doe@domain.com",
+                  },
+                  "job_information": {
+                    "job_title_id": 1.1,
+                    "seniority_id": 1.1,
+                  },
+                  "team_information": {
+                    "legal_entity_id": 1.1,
+                    "team_id": 1.1,
+                  },
+                },
+                "response": {
+                  "body": {
+                    "data": {
+                      "compensation": {
+                        "currency": "USD",
+                        "gross_annual_salary": 1.1,
+                      },
+                      "contract": {
+                        "contract_oid": "pdcMQe0cXCCXWTkqkdytw",
+                        "employee_number": 1.1,
+                        "employment_type": "FULL_TIME",
+                        "end_date": "1999-12-31",
+                        "start_date": "1999-12-31",
+                      },
+                      "employee_details": {
+                        "country": "BR",
+                        "email": "john.doe@domain.com",
+                        "first_name": "John",
+                        "last_name": "Doe",
+                        "nationality": "CA",
+                        "state": "AC",
+                        "work_email": "john.doe@domain.com",
+                      },
+                      "id": "6733c95b-df52-419e-906d-6904d3117dab",
+                      "job_information": {
+                        "job_title_id": 1.1,
+                        "seniority_id": 1.1,
+                      },
+                      "team_information": {
+                        "legal_entity_id": 1.1,
+                        "team_id": 1.1,
+                      },
+                      "vacation_info": {
+                        "vacation_accrual_start_date": "vacation_accrual_start_date",
+                        "vacation_yearly_policy": 1.1,
+                      },
+                    },
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "pagination": undefined,
             "path": "/hris/direct-employees",
@@ -18033,6 +18103,76 @@ exports[`open api parser > deel > simple 1`] = `
               "root.NotFoundError",
               "root.ConflictError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "request": {
+                  "compensation": {
+                    "currency": "USD",
+                    "gross_annual_salary": 1.1,
+                  },
+                  "contract": {
+                    "contract_oid": "pdcMQe0cXCCXWTkqkdytw",
+                    "employment_type": "FULL_TIME",
+                    "start_date": "1999-12-31",
+                  },
+                  "employee_details": {
+                    "country": "BR",
+                    "email": "john.doe@domain.com",
+                    "first_name": "John",
+                    "last_name": "Doe",
+                    "nationality": "CA",
+                    "work_email": "john.doe@domain.com",
+                  },
+                  "job_information": {
+                    "job_title_id": 1.1,
+                    "seniority_id": 1.1,
+                  },
+                  "team_information": {
+                    "legal_entity_id": 1.1,
+                    "team_id": 1.1,
+                  },
+                },
+                "response": {
+                  "body": {
+                    "data": {
+                      "compensation": {
+                        "currency": "USD",
+                        "gross_annual_salary": 1.1,
+                      },
+                      "contract": {
+                        "contract_oid": "pdcMQe0cXCCXWTkqkdytw",
+                        "employee_number": 1.1,
+                        "employment_type": "FULL_TIME",
+                        "end_date": "1999-12-31",
+                        "start_date": "1999-12-31",
+                      },
+                      "employee_details": {
+                        "country": "BR",
+                        "email": "john.doe@domain.com",
+                        "first_name": "John",
+                        "last_name": "Doe",
+                        "nationality": "CA",
+                        "state": "AC",
+                        "work_email": "john.doe@domain.com",
+                      },
+                      "id": "6733c95b-df52-419e-906d-6904d3117dab",
+                      "job_information": {
+                        "job_title_id": 1.1,
+                        "seniority_id": 1.1,
+                      },
+                      "team_information": {
+                        "legal_entity_id": 1.1,
+                        "team_id": 1.1,
+                      },
+                      "vacation_info": {
+                        "vacation_accrual_start_date": "vacation_accrual_start_date",
+                        "vacation_yearly_policy": 1.1,
+                      },
+                    },
+                  },
+                },
+              },
             ],
             "method": "POST",
             "pagination": undefined,

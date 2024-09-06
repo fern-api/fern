@@ -9,7 +9,6 @@ import { AbsoluteFilePath, cwd, doesPathExist, resolve } from "@fern-api/fs-util
 import { initializeAPI, initializeDocs } from "@fern-api/init";
 import { LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import { askToLogin, login } from "@fern-api/login";
-import { loadProject, Project } from "@fern-api/project-loader";
 import { FernCliError, LoggableFernCliError } from "@fern-api/task-context";
 import getPort from "get-port";
 import { Argv } from "yargs";
@@ -18,6 +17,8 @@ import yargs from "yargs/yargs";
 import { loadOpenAPIFromUrl, LoadOpenAPIStatus } from "../../init/src/utils/loadOpenApiFromUrl";
 import { CliContext } from "./cli-context/CliContext";
 import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVersionOfCli";
+import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons";
+import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces";
@@ -40,10 +41,6 @@ import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeD
 import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 import { isURL } from "./utils/isUrl";
-
-interface GlobalCliOptions {
-    "log-level": LogLevel;
-}
 
 void runCli();
 
@@ -151,7 +148,6 @@ async function tryRunCli(cliContext: CliContext) {
     addWriteOverridesCommand(cli, cliContext);
     addTestCommand(cli, cliContext);
     addUpdateApiSpecCommand(cli, cliContext);
-    addUpgradeGeneratorCommand(cli, cliContext);
     addUpgradeCommand({
         cli,
         cliContext,
@@ -159,6 +155,10 @@ async function tryRunCli(cliContext: CliContext) {
             cliContext.suppressUpgradeMessage();
         }
     });
+
+    // CLI V2 Sanctioned Commands
+    addGetOrganizationCommand(cli, cliContext);
+    addGeneratorCommands(cli, cliContext);
 
     cli.middleware(async (argv) => {
         cliContext.setLogLevel(argv["log-level"]);
@@ -665,57 +665,6 @@ function addUpgradeCommand({
     );
 }
 
-function addUpgradeGeneratorCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
-    cli.command(
-        "generator upgrade",
-        `Upgrades the specified generator in ${GENERATORS_CONFIGURATION_FILENAME} to the latest stable version.`,
-        (yargs) =>
-            yargs
-                .option("generator", {
-                    string: true,
-                    description: "The type of generator to upgrade, ex: `fern-typescript-node-sdk`."
-                })
-                .option("group", {
-                    string: true,
-                    description:
-                        "The group in which the generator is located, if group is not specified, the all generators of the specified type will be upgraded."
-                })
-                .option("api", {
-                    string: true,
-                    description:
-                        "The API to upgrade the generator for. If not specified, the generator will be upgraded for all APIs."
-                })
-                .option("include-major", {
-                    boolean: true,
-                    default: false,
-                    description:
-                        "Whether or not to include major versions within the upgrade. Defaults to false, meaning major versions will be skipped."
-                }),
-        async (argv) => {
-            cliContext.instrumentPostHogEvent({
-                command: "fern generator upgrade",
-                properties: {
-                    generator: argv.generator,
-                    version: argv.version,
-                    api: argv.api,
-                    group: argv.group,
-                    includeMajor: argv.includeMajor
-                }
-            });
-            await upgradeGenerator({
-                cliContext,
-                generator: argv.generator,
-                group: argv.group,
-                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                    commandLineApiWorkspace: argv.api,
-                    defaultToAllApiWorkspaces: true
-                }),
-                includeMajor: argv.includeMajor
-            });
-        }
-    );
-}
-
 function addUpdateApiSpecCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "api update",
@@ -950,27 +899,4 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
             });
         }
     );
-}
-
-async function loadProjectAndRegisterWorkspacesWithContext(
-    cliContext: CliContext,
-    args: Omit<loadProject.Args, "context" | "cliName" | "cliVersion">,
-    registerDocsWorkspace = false
-): Promise<Project> {
-    const context = cliContext.addTask().start();
-    const project = await loadProject({
-        ...args,
-        cliName: cliContext.environment.cliName,
-        cliVersion: cliContext.environment.packageVersion,
-        context
-    });
-    context.finish();
-
-    if (registerDocsWorkspace && project.docsWorkspaces != null) {
-        cliContext.registerWorkspaces([...project.apiWorkspaces, project.docsWorkspaces]);
-    } else {
-        cliContext.registerWorkspaces(project.apiWorkspaces);
-    }
-
-    return project;
 }

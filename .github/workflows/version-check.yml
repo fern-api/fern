@@ -1,3 +1,4 @@
+# TODO: delete this when we migrate to the one versions file in `publish-generators-v2`
 name: generators
 
 on:
@@ -27,19 +28,12 @@ jobs:
 
           const paths = [
             "generators/openapi",
-            "generators/python/sdk",
-            "generators/python/fastapi",
-            "generators/python/pydantic",
             "generators/postman",
-            "generators/ruby/model",
-            "generators/ruby/sdk",
             "generators/java/sdk",
             "generators/java/model",
             "generators/java/spring",
             "generators/typescript/sdk",
             "generators/typescript/express",
-            "generators/csharp/sdk",
-            // "generators/csharp/model" EXCLUDED because not released
           ];
 
           const semverRegex = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-[\da-z\-]+(?:\.[\da-z\-]+)*)?(?:\+[\da-z\-]+(?:\.[\da-z\-]+)*)?$/i;

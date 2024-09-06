@@ -7,8 +7,8 @@ from .types.user import User
 import typing
 from .types.nested_user import NestedUser
 from ..core.request_options import RequestOptions
-from ..core.jsonable_encoder import jsonable_encoder
 from ..core.datetime_utils import serialize_datetime
+from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
@@ -137,18 +137,26 @@ class UserClient:
             method="GET",
             params={
                 "limit": limit,
-                "id": jsonable_encoder(id),
+                "id": id,
                 "date": str(date),
                 "deadline": serialize_datetime(deadline),
-                "bytes": jsonable_encoder(bytes),
-                "user": jsonable_encoder(user),
-                "userList": jsonable_encoder(user_list),
+                "bytes": bytes,
+                "user": convert_and_respect_annotation_metadata(object_=user, annotation=User, direction="write"),
+                "userList": convert_and_respect_annotation_metadata(
+                    object_=user_list, annotation=typing.Sequence[User], direction="write"
+                ),
                 "optionalDeadline": serialize_datetime(optional_deadline) if optional_deadline is not None else None,
-                "keyValue": jsonable_encoder(key_value),
+                "keyValue": key_value,
                 "optionalString": optional_string,
-                "nestedUser": jsonable_encoder(nested_user),
-                "optionalUser": jsonable_encoder(optional_user),
-                "excludeUser": jsonable_encoder(exclude_user),
+                "nestedUser": convert_and_respect_annotation_metadata(
+                    object_=nested_user, annotation=NestedUser, direction="write"
+                ),
+                "optionalUser": convert_and_respect_annotation_metadata(
+                    object_=optional_user, annotation=User, direction="write"
+                ),
+                "excludeUser": convert_and_respect_annotation_metadata(
+                    object_=exclude_user, annotation=User, direction="write"
+                ),
                 "filter": filter,
             },
             request_options=request_options,
@@ -297,18 +305,26 @@ class AsyncUserClient:
             method="GET",
             params={
                 "limit": limit,
-                "id": jsonable_encoder(id),
+                "id": id,
                 "date": str(date),
                 "deadline": serialize_datetime(deadline),
-                "bytes": jsonable_encoder(bytes),
-                "user": jsonable_encoder(user),
-                "userList": jsonable_encoder(user_list),
+                "bytes": bytes,
+                "user": convert_and_respect_annotation_metadata(object_=user, annotation=User, direction="write"),
+                "userList": convert_and_respect_annotation_metadata(
+                    object_=user_list, annotation=typing.Sequence[User], direction="write"
+                ),
                 "optionalDeadline": serialize_datetime(optional_deadline) if optional_deadline is not None else None,
-                "keyValue": jsonable_encoder(key_value),
+                "keyValue": key_value,
                 "optionalString": optional_string,
-                "nestedUser": jsonable_encoder(nested_user),
-                "optionalUser": jsonable_encoder(optional_user),
-                "excludeUser": jsonable_encoder(exclude_user),
+                "nestedUser": convert_and_respect_annotation_metadata(
+                    object_=nested_user, annotation=NestedUser, direction="write"
+                ),
+                "optionalUser": convert_and_respect_annotation_metadata(
+                    object_=optional_user, annotation=User, direction="write"
+                ),
+                "excludeUser": convert_and_respect_annotation_metadata(
+                    object_=exclude_user, annotation=User, direction="write"
+                ),
                 "filter": filter,
             },
             request_options=request_options,

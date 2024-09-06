@@ -3,6 +3,7 @@ import { Audiences, fernConfigJson, generatorsYml } from "@fern-api/configuratio
 import { createFdrService } from "@fern-api/core";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { FernIr } from "@fern-api/ir-sdk";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { InteractiveTaskContext } from "@fern-api/task-context";
 import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
@@ -12,6 +13,7 @@ import { createAndStartJob } from "./createAndStartJob";
 import { pollJobAndReportStatus } from "./pollJobAndReportStatus";
 import { RemoteTaskHandler } from "./RemoteTaskHandler";
 import { SourceUploader } from "./SourceUploader";
+import { replaceEnvVariables } from "@fern-api/core-utils";
 
 export async function runRemoteGenerationForGenerator({
     projectConfig,
@@ -55,7 +57,8 @@ export async function runRemoteGenerationForGenerator({
         audiences,
         readme,
         packageName,
-        version: version ?? (await computeSemanticVersion({ fdr, packageName, generatorInvocation }))
+        version: version ?? (await computeSemanticVersion({ fdr, packageName, generatorInvocation })),
+        context: interactiveTaskContext
     });
 
     const sources = workspace.getSources();
@@ -89,20 +92,31 @@ export async function runRemoteGenerationForGenerator({
         ir.sourceConfig = sourceConfig;
     }
 
+    /** Sugar to substitute templated env vars in a standard way */
+    const isPreview = absolutePathToPreview != null;
+    const substituteEnvVars = <T>(stringOrObject: T) =>
+        replaceEnvVariables(
+            stringOrObject,
+            { onError: (e) => interactiveTaskContext.failAndThrow(e) },
+            { substituteAsEmpty: isPreview }
+        );
+
+    const generatorInvocationWithEnvVarSubstitutions = substituteEnvVars(generatorInvocation);
+
     const job = await createAndStartJob({
         projectConfig,
         workspace,
         organization,
-        generatorInvocation,
+        generatorInvocation: generatorInvocationWithEnvVarSubstitutions,
         context: interactiveTaskContext,
         version,
         intermediateRepresentation: {
             ...ir,
-            fdrApiDefinitionId
+            publishConfig: getPublishConfig({ generatorInvocation: generatorInvocationWithEnvVarSubstitutions })
         },
         shouldLogS3Url,
         token,
-        whitelabel,
+        whitelabel: whitelabel != null ? substituteEnvVars(whitelabel) : undefined,
         irVersionOverride,
         absolutePathToPreview
     });
@@ -128,6 +142,42 @@ export async function runRemoteGenerationForGenerator({
         taskHandler,
         taskId,
         context: interactiveTaskContext
+    });
+}
+
+function getPublishConfig({
+    generatorInvocation
+}: {
+    generatorInvocation: generatorsYml.GeneratorInvocation;
+}): FernIr.PublishingConfig | undefined {
+    return generatorInvocation.outputMode._visit({
+        downloadFiles: () => undefined,
+        github: () => undefined,
+        githubV2: () => undefined,
+        publish: () => undefined,
+        publishV2: (value) =>
+            value._visit({
+                mavenOverride: () => undefined,
+                pypiOverride: () => undefined,
+                nugetOverride: () => undefined,
+                npmOverride: () => undefined,
+                rubyGemsOverride: () => undefined,
+                postman: (value) => {
+                    let collectionId = undefined;
+                    if (generatorInvocation.raw?.output?.location === "postman") {
+                        collectionId = generatorInvocation.raw.output?.["collection-id"];
+                    }
+                    return FernIr.PublishingConfig.direct({
+                        target: FernIr.PublishTarget.postman({
+                            apiKey: value.apiKey,
+                            workspaceId: value.workspaceId,
+                            collectionId
+                        })
+                    });
+                },
+                _other: () => undefined
+            }),
+        _other: () => undefined
     });
 }
 

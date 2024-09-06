@@ -18,16 +18,16 @@ public class TypeTest
         var inputJson =
             @"
         {
-  ""decimal"": 1.1,
-  ""even"": 2,
-  ""name"": ""rules"",
-  ""shape"": ""SQUARE""
-}
-";
+          ""decimal"": 1.1,
+          ""even"": 2,
+          ""name"": ""rules"",
+          ""shape"": ""SQUARE""
+        }
+        ";
 
         var serializerOptions = new JsonSerializerOptions
         {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         };
 
         var deserializedObject = JsonSerializer.Deserialize<Type>(inputJson, serializerOptions);

@@ -1,6 +1,6 @@
 ---
 title: FastAPI Instrumentation
-description: Learn about best practices for creating rich OpenAPI specs when instrumenting FastAPI applications.
+description: Learn about best practices for creating rich OpenAPI Specifications when instrumenting FastAPI applications.
 ---
 
 [FastAPI](https://fastapi.tiangolo.com/) is a popular Python web framework developed by [tiangolo](https://github.com/tiangolo).
@@ -9,14 +9,14 @@ The offering brands itself as
 
 > FastAPI is a modern, fast (high-performance), web framework for building APIs with Python based on standard Python type hints.
 
-FastAPI plays very nicely with Fern because it has the power to output OpenAPI specs! Below we'll outline some tips for generating a rich OpenAPI with FastAPI.
+FastAPI plays very nicely with Fern because it has the power to output OpenAPI Specifications! Below we'll outline some tips for generating a rich OpenAPI with FastAPI.
 
 
 ## OpenAPI generation
 
-By default, FastAPI will generate an OpenAPI spec for you based on your routes and your data models! You can access this spec by visiting `/docs` on your FastAPI server.
+By default, FastAPI will generate an OpenAPI Specification for you based on your routes and your data models! You can access this spec by visiting `/docs` on your FastAPI server.
 
-If you are not seeing any OpenAPI spec (or the Swagger UI), you may need to review your FastAPI server configuration as the path may have been changed, or completely omitted.
+If you are not seeing any OpenAPI Specification (or the Swagger UI), you may need to review your FastAPI server configuration as the path may have been changed, or completely omitted.
 
 ```python {6-8}
 from fastapi import FastAPI
@@ -24,15 +24,15 @@ from fastapi import FastAPI
 ...
 
 FastAPI(
-    openapi_url="/openapi.json",  # <-- this is the file and URL needed to access the OpenAPI spec, `docs_url` and `redoc_url` are convenient wrappers that display the file in a UI!
-    docs_url="/docs",             # <-- this is the URL to access the Swagger UI, which will point to your OpenAPI spec
-    redoc_url="/redoc"            # <-- this is the URL to access the ReDoc UI, which will point to your OpenAPI spec
+    openapi_url="/openapi.json",  # <-- this is the file and URL needed to access the OpenAPI Specification, `docs_url` and `redoc_url` are convenient wrappers that display the file in a UI!
+    docs_url="/docs",             # <-- this is the URL to access the Swagger UI, which will point to your OpenAPI Specification
+    redoc_url="/redoc"            # <-- this is the URL to access the ReDoc UI, which will point to your OpenAPI Specification
 )
 ```
 
 ## Specifying servers
 
-Fern will automatically generate clients that point to the servers you configure within your OpenAPI spec, so it's important to specify the servers that your API will be hosted on.
+Fern will automatically generate clients that point to the servers you configure within your OpenAPI Specification, so it's important to specify the servers that your API will be hosted on.
 
 ```python {5}
 from fastapi import FastAPI
@@ -40,7 +40,7 @@ from fastapi import FastAPI
 ...
 
 app = FastAPI(servers=[{"url": "http://prod.test.com", "description": "Production server"}])
-# This creates the following server object in your OpenAPI spec:
+# This creates the following server object in your OpenAPI Specification:
 # "servers":[{"url":"http://prod.test.com","description":"Production server"}],
 ```
 
@@ -52,7 +52,7 @@ Below, we've annotated a "good" route within FastAPI that has it's typings as we
 ```python {5-9}
 @router.post(
     "/your/post/endpoint",
-    response_model=YourResponseModel,            #  <-- with FastAPI, it is important to specify your response model so that it comes through to the OpenAPI spec
+    response_model=YourResponseModel,            #  <-- with FastAPI, it is important to specify your response model so that it comes through to the OpenAPI Specification
     summary="Get some response for your req",    #  <-- if you'd like to add a description to your endpoint, you can do so here
     openapi_extra={                              #  <-- finally, you can add in your Fern extensions here, these extensions will produce SDK code that looks something like: `client.endpoints.create(...)` in python
         "x-fern-sdk-method-name": "create",
@@ -69,7 +69,7 @@ async def your_post_endpoint(
 
 FastAPI allows you to specify examples for your data models, which Fern will pick up and use within your generated SDKs and documentation automatically.
 
-For more information on leveraging examples within Fern, please refer to the [Fern documentation](../examples).
+For more information on leveraging examples within Fern, please refer to the [Fern documentation](/learn/api-definition/openapi/extensions/others#request--response-examples).
 
 For more information on this FastAPI functionality, please refer to the [FastAPI documentation](https://fastapi.tiangolo.com/tutorial/schema-extra-example/).
 
@@ -89,4 +89,4 @@ class MyObject(BaseModel):
 
 ## Additional customization
 
-FastAPI has a lot of flexibility in how you can customize your OpenAPI spec. Please refer to the [FastAPI documentation](https://fastapi.tiangolo.com/how-to/extending-openapi/#modify-the-openapi-schema) for more information.
+FastAPI has a lot of flexibility in how you can customize your OpenAPI Specification. Please refer to the [FastAPI documentation](https://fastapi.tiangolo.com/how-to/extending-openapi/#modify-the-openapi-schema) for more information.

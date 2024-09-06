@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using SeedExhaustive;
 using SeedExhaustive.Core;
@@ -20,7 +21,16 @@ public partial class ParamsClient
     /// <summary>
     /// GET with path param
     /// </summary>
-    public async Task<string> GetWithPathAsync(string param, RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Endpoints.Params.GetWithPathAsync("string");
+    /// </code>
+    /// </example>
+    public async Task<string> GetWithPathAsync(
+        string param,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -28,8 +38,9 @@ public partial class ParamsClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"/params/path/{param}",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -54,9 +65,18 @@ public partial class ParamsClient
     /// <summary>
     /// GET with query param
     /// </summary>
-    public async Task GetWithQueryAsync(GetWithQuery request, RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Endpoints.Params.GetWithQueryAsync(new GetWithQuery { Query = "string", Number = 1 });
+    /// </code>
+    /// </example>
+    public async Task GetWithQueryAsync(
+        GetWithQuery request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         _query["query"] = request.Query;
         _query["number"] = request.Number.ToString();
         var response = await _client.MakeRequestAsync(
@@ -66,8 +86,9 @@ public partial class ParamsClient
                 Method = HttpMethod.Get,
                 Path = "/params",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -84,12 +105,20 @@ public partial class ParamsClient
     /// <summary>
     /// GET with multiple of same query param
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Endpoints.Params.GetWithAllowMultipleQueryAsync(
+    ///     new GetWithMultipleQuery { Query = ["string"], Numer = [1] }
+    /// );
+    /// </code>
+    /// </example>
     public async Task GetWithAllowMultipleQueryAsync(
         GetWithMultipleQuery request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         _query["query"] = request.Query;
         _query["numer"] = request.Numer.Select(_value => _value.ToString()).ToList();
         var response = await _client.MakeRequestAsync(
@@ -99,8 +128,9 @@ public partial class ParamsClient
                 Method = HttpMethod.Get,
                 Path = "/params",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -117,13 +147,22 @@ public partial class ParamsClient
     /// <summary>
     /// GET with path and query params
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Endpoints.Params.GetWithPathAndQueryAsync(
+    ///     "string",
+    ///     new GetWithPathAndQuery { Query = "string" }
+    /// );
+    /// </code>
+    /// </example>
     public async Task GetWithPathAndQueryAsync(
         string param,
         GetWithPathAndQuery request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         _query["query"] = request.Query;
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -132,8 +171,9 @@ public partial class ParamsClient
                 Method = HttpMethod.Get,
                 Path = $"/params/path-query/{param}",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -150,10 +190,16 @@ public partial class ParamsClient
     /// <summary>
     /// PUT to update with path param
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Endpoints.Params.ModifyWithPathAsync("string", "string");
+    /// </code>
+    /// </example>
     public async Task<string> ModifyWithPathAsync(
         string param,
         string request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -163,8 +209,9 @@ public partial class ParamsClient
                 Method = HttpMethod.Put,
                 Path = $"/params/path/{param}",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

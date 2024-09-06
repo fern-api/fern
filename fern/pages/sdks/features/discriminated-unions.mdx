@@ -6,7 +6,7 @@ description: Fern SDKs include idiomatic support for discriminated unions
 The SDKs natively support discriminated [unions](../../api-definition/fern/types#unions) for both OpenAPI and Fern APIs.
 
 <AccordionGroup>
-<Accordion title="Fern definition">
+<Accordion title="Fern Definition">
 Discriminated unions are defined with the `union` key. For example, a simple
 `Shape` type that can either be a `Triangle` or a `Square` can be defined as follows:
 
@@ -48,14 +48,14 @@ or
 <CodeBlock title="square.json">
   ```json
   {
-    "type": "sqaure",
+    "type": "square",
     "side": 5
   }
   ```
 </CodeBlock>
 </Accordion>
 
-<Accordion title="OpenAPI spec">
+<Accordion title="OpenAPI Specification">
 Discriminated unions are defined with the `oneOf` and `anyOf` keys. For example, consider
 the following `Shape` definition:
 
@@ -118,7 +118,7 @@ or
 <CodeBlock title="square.json">
   ```json
   {
-    "type": "sqaure",
+    "type": "square",
     "side": 5
   }
   ```

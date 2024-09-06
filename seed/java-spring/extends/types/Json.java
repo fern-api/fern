@@ -13,6 +13,7 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
@@ -65,13 +66,13 @@ public final class Json implements IJson, IDocs {
   }
 
   public interface RawStage {
-    DocsStage raw(String raw);
+    DocsStage raw(@NotNull String raw);
 
     Builder from(Json other);
   }
 
   public interface DocsStage {
-    _FinalStage docs(String docs);
+    _FinalStage docs(@NotNull String docs);
   }
 
   public interface _FinalStage {
@@ -98,15 +99,15 @@ public final class Json implements IJson, IDocs {
 
     @java.lang.Override
     @JsonSetter("raw")
-    public DocsStage raw(String raw) {
-      this.raw = raw;
+    public DocsStage raw(@NotNull String raw) {
+      this.raw = Objects.requireNonNull(raw, "raw must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("docs")
-    public _FinalStage docs(String docs) {
-      this.docs = docs;
+    public _FinalStage docs(@NotNull String docs) {
+      this.docs = Objects.requireNonNull(docs, "docs must not be null");
       return this;
     }
 

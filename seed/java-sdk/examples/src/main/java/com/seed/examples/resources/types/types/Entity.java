@@ -15,6 +15,7 @@ import com.seed.examples.types.Type;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Entity.Builder.class)
@@ -71,13 +72,13 @@ public final class Entity {
     }
 
     public interface TypeStage {
-        NameStage type(Type type);
+        NameStage type(@NotNull Type type);
 
         Builder from(Entity other);
     }
 
     public interface NameStage {
-        _FinalStage name(String name);
+        _FinalStage name(@NotNull String name);
     }
 
     public interface _FinalStage {
@@ -104,15 +105,15 @@ public final class Entity {
 
         @java.lang.Override
         @JsonSetter("type")
-        public NameStage type(Type type) {
-            this.type = type;
+        public NameStage type(@NotNull Type type) {
+            this.type = Objects.requireNonNull(type, "type must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
-        public _FinalStage name(String name) {
-            this.name = name;
+        public _FinalStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 

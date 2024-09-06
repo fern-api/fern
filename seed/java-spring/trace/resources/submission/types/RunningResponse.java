@@ -13,6 +13,7 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
@@ -63,13 +64,13 @@ public final class RunningResponse {
   }
 
   public interface SubmissionIdStage {
-    StateStage submissionId(SubmissionId submissionId);
+    StateStage submissionId(@NotNull SubmissionId submissionId);
 
     Builder from(RunningResponse other);
   }
 
   public interface StateStage {
-    _FinalStage state(RunningSubmissionState state);
+    _FinalStage state(@NotNull RunningSubmissionState state);
   }
 
   public interface _FinalStage {
@@ -96,15 +97,15 @@ public final class RunningResponse {
 
     @java.lang.Override
     @JsonSetter("submissionId")
-    public StateStage submissionId(SubmissionId submissionId) {
-      this.submissionId = submissionId;
+    public StateStage submissionId(@NotNull SubmissionId submissionId) {
+      this.submissionId = Objects.requireNonNull(submissionId, "submissionId must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("state")
-    public _FinalStage state(RunningSubmissionState state) {
-      this.state = state;
+    public _FinalStage state(@NotNull RunningSubmissionState state) {
+      this.state = Objects.requireNonNull(state, "state must not be null");
       return this;
     }
 

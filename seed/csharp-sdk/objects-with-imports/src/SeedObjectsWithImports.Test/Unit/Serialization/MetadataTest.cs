@@ -18,17 +18,17 @@ public class MetadataTest
         var inputJson =
             @"
         {
-  ""id"": ""metadata-js8dg24b"",
-  ""data"": {
-    ""foo"": ""bar"",
-    ""baz"": ""qux""
-  }
-}
-";
+          ""id"": ""metadata-js8dg24b"",
+          ""data"": {
+            ""foo"": ""bar"",
+            ""baz"": ""qux""
+          }
+        }
+        ";
 
         var serializerOptions = new JsonSerializerOptions
         {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         };
 
         var deserializedObject = JsonSerializer.Deserialize<Metadata>(inputJson, serializerOptions);

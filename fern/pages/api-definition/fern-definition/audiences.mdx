@@ -3,7 +3,7 @@ title: Audiences in Fern Definition
 subtitle: Use audiences in your Fern Definition to segment your API for different groups of consumers.
 ---
 
-Audiences are a useful tool for segmenting your API for different consumers. You can configure your Fern Docs to publish documentation specific to an `Audience`. You can use [audiences in your OpenAPI specification](/learn/api-definition/openapi/extensions#audiences), too. 
+Audiences are a useful tool for segmenting your API for different consumers. You can configure your Fern Docs to publish documentation specific to an `Audience`. You can use [audiences in your OpenAPI Specification](/learn/api-definition/openapi/extensions#audiences), too. 
 
 Common examples of audiences include:
 
@@ -29,7 +29,7 @@ audiences:
   - customers
 ```
 
-## Audiences for Endpoints
+## Audiences for endpoints
 
 To mark an endpoint for a particular consumer, add an `audience` with the relevant groups. 
 
@@ -47,7 +47,7 @@ service:
       ...
 ```
 
-## Audiences for Types
+## Audiences for types
 
 Types can also be marked for different audiences. 
 
@@ -63,7 +63,7 @@ Email:
     - beta
 ```
 
-## Audiences for Properties
+## Audiences for properties
 
 Properties of a type can also be marked for different audiences. 
 
@@ -86,7 +86,7 @@ Email:
 In `generators.yml`, you can apply audience filters so that only certain
 endpoints are passed to the generators. 
 
-The following example configures the SDKs to filter for customers:
+The following example configures the SDKs to filter for `customers`:
 
 ```yaml title='generators.yml' {3-4}
 groups:
@@ -97,11 +97,11 @@ groups:
     ...
 ```
 
-## Audiences with Docs 
+## Audiences with docs 
 
-If generating Fern Docs, update your docs.yml configuration to include your audiences. 
+If generating Fern Docs, update your `docs.yml` configuration to include your audiences. 
 
-The following example shows how to configure your `docs.yml` to publish documentation for the `public` audience:
+The following example shows how to configure your `docs.yml` to publish documentation for the `customers` audience:
 
 <CodeBlock title='docs.yml'>
 ```yaml {3-4}

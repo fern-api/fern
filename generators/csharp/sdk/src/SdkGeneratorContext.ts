@@ -1,27 +1,56 @@
 import { AbstractCsharpGeneratorContext, AsIsFiles, csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath } from "@fern-api/fs-utils";
+import { GeneratorNotificationService } from "@fern-api/generator-commons";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import {
     DeclaredErrorName,
+    ExampleEndpointCall,
     FernFilepath,
     HttpEndpoint,
     HttpService,
+    IntermediateRepresentation,
     Name,
     ProtobufService,
     ServiceId,
     Subpackage,
     SubpackageId,
-    TypeId,
-    TypeReference
+    TypeId
 } from "@fern-fern/ir-sdk/api";
 import { camelCase, upperFirst } from "lodash-es";
+import { EndpointSnippetsGenerator } from "./endpoint/snippets/EndpointSnippetsGenerator";
+import { CsharpGeneratorAgent } from "./CsharpGeneratorAgent";
+import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
+import { GrpcClientInfo } from "./grpc/GrpcClientInfo";
 import { CLIENT_OPTIONS_CLASS_NAME } from "./options/ClientOptionsGenerator";
 import { REQUEST_OPTIONS_CLASS_NAME, REQUEST_OPTIONS_PARAMETER_NAME } from "./options/RequestOptionsGenerator";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
+import { EndpointGenerator } from "./endpoint/EndpointGenerator";
 
 const TYPES_FOLDER_NAME = "Types";
 const EXCEPTIONS_FOLDER_NAME = "Exceptions";
+export const MOCK_SERVER_TEST_FOLDER = RelativeFilePath.of("Unit/MockServer");
+const CANCELLATION_TOKEN_PARAMETER_NAME = "cancellationToken";
 
 export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCustomConfigSchema> {
+    public readonly endpointGenerator: EndpointGenerator;
+    public readonly generatorAgent: CsharpGeneratorAgent;
+    public readonly snippetGenerator: EndpointSnippetsGenerator;
+    public constructor(
+        public readonly ir: IntermediateRepresentation,
+        public readonly config: FernGeneratorExec.config.GeneratorConfig,
+        public readonly customConfig: SdkCustomConfigSchema,
+        public readonly generatorNotificationService: GeneratorNotificationService
+    ) {
+        super(ir, config, customConfig, generatorNotificationService);
+        this.endpointGenerator = new EndpointGenerator({ context: this });
+        this.generatorAgent = new CsharpGeneratorAgent({
+            logger: this.logger,
+            config: this.config,
+            readmeConfigBuilder: new ReadmeConfigBuilder()
+        });
+        this.snippetGenerator = new EndpointSnippetsGenerator({ context: this });
+    }
+
     /**
      * Returns the service with the given id
      * @param serviceId
@@ -75,17 +104,40 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return this.getNamespaceFromFernFilepath(typeDeclaration.name.fernFilepath);
     }
 
+    public getAccessFromRootClient(fernFilepath: FernFilepath): string {
+        const clientVariableName = this.getClientVariableName();
+        const clientAccessParts = fernFilepath.allParts.map((part) => part.pascalCase.safeName);
+        return clientAccessParts.length > 0
+            ? `${clientVariableName}.${clientAccessParts.join(".")}`
+            : clientVariableName;
+    }
+
+    public getClientVariableName(): string {
+        return EndpointSnippetsGenerator.CLIENT_VARIABLE_NAME;
+    }
+
     public getCoreAsIsFiles(): string[] {
-        return [
-            AsIsFiles.RawClient,
-            AsIsFiles.StringEnumSerializer,
-            AsIsFiles.OneOfSerializer,
+        const files = [
             AsIsFiles.CollectionItemSerializer,
-            AsIsFiles.HttpMethodExtensions,
             AsIsFiles.Constants,
             AsIsFiles.DateTimeSerializer,
-            AsIsFiles.JsonConfiguration
+            AsIsFiles.Extensions,
+            AsIsFiles.Headers,
+            AsIsFiles.HeaderValue,
+            AsIsFiles.HttpMethodExtensions,
+            AsIsFiles.JsonConfiguration,
+            AsIsFiles.OneOfSerializer,
+            AsIsFiles.RawClient,
+            AsIsFiles.StringEnumSerializer
         ];
+        if (this.hasGrpcEndpoints()) {
+            files.push(AsIsFiles.RawGrpcClient);
+        }
+        return files;
+    }
+
+    public getCoreTestAsIsFiles(): string[] {
+        return [AsIsFiles.RawClientTests];
     }
 
     public getPublicCoreAsIsFiles(): string[] {
@@ -95,22 +147,44 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return [];
     }
 
+    public getPublicCoreTestAsIsFiles(): string[] {
+        return [];
+    }
+
+    public getAsIsTestUtils(): string[] {
+        return [];
+    }
+
+    public getExampleEndpointCallOrThrow(endpoint: HttpEndpoint): ExampleEndpointCall {
+        if (endpoint.userSpecifiedExamples.length > 0) {
+            const exampleEndpointCall = endpoint.userSpecifiedExamples[0]?.example;
+            if (exampleEndpointCall != null) {
+                return exampleEndpointCall;
+            }
+        }
+        const exampleEndpointCall = endpoint.autogeneratedExamples[0]?.example;
+        if (exampleEndpointCall == null) {
+            throw new Error(`No example found for endpoint ${endpoint.id}`);
+        }
+        return exampleEndpointCall;
+    }
+
     public getNamespaceForServiceId(serviceId: ServiceId): string {
         const service = this.getHttpServiceOrThrow(serviceId);
         return this.getNamespaceFromFernFilepath(service.name.fernFilepath);
     }
 
     public getDirectoryForSubpackage(subpackage: Subpackage): string {
-        return RelativeFilePath.of(
-            [...subpackage.fernFilepath.allParts.map((path) => path.pascalCase.safeName)].join("/")
-        );
+        return this.getDirectoryForFernFilepath(subpackage.fernFilepath);
     }
 
     public getDirectoryForServiceId(serviceId: ServiceId): string {
         const service = this.getHttpServiceOrThrow(serviceId);
-        return RelativeFilePath.of(
-            [...service.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName)].join("/")
-        );
+        return this.getDirectoryForFernFilepath(service.name.fernFilepath);
+    }
+
+    public getDirectoryForFernFilepath(fernFilepath: FernFilepath): string {
+        return RelativeFilePath.of([...fernFilepath.allParts.map((path) => path.pascalCase.safeName)].join("/"));
     }
 
     public getJsonExceptionClassReference(): csharp.ClassReference {
@@ -127,6 +201,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         });
     }
 
+    public getSubpackageForServiceId(serviceId: ServiceId): Subpackage | undefined {
+        return Object.values(this.ir.subpackages).find((subpackage) => subpackage.service === serviceId);
+    }
+
     private getComputedClientName(): string {
         return `${upperFirst(camelCase(this.config.organization))}${this.ir.apiName.pascalCase.unsafeName}`;
     }
@@ -136,6 +214,13 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             return this.customConfig["client-class-name"];
         }
         return `${this.getComputedClientName()}Client`;
+    }
+
+    public getRootClientClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: this.getRootClientClassName(),
+            namespace: this.getNamespace()
+        });
     }
 
     public getBaseExceptionClassReference(): csharp.ClassReference {
@@ -165,6 +250,17 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return this.customConfig["client-class-name"] ?? this.getComputedClientName();
     }
 
+    public getHeadersClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: this.getHeadersClassName(),
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    public getHeadersClassName(): string {
+        return "Headers";
+    }
+
     public getRawClientClassName(): string {
         return "RawClient";
     }
@@ -183,6 +279,13 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     public getRawGrpcClientClassReference(): csharp.ClassReference {
         return csharp.classReference({
             name: this.getRawGrpcClientClassName(),
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    public getExtensionsClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "Extensions",
             namespace: this.getCoreNamespace()
         });
     }
@@ -213,9 +316,31 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         });
     }
 
-    public getGrpcClientClassName(protobufService: ProtobufService): string {
-        const serviceName = protobufService.name.pascalCase.unsafeName;
-        return `${serviceName}Client`;
+    public getCancellationTokenClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "CancellationToken",
+            namespace: "System.Threading"
+        });
+    }
+
+    public getCancellationTokenParameterName(): string {
+        return CANCELLATION_TOKEN_PARAMETER_NAME;
+    }
+
+    public getGrpcClientInfoForServiceId(serviceId: ServiceId): GrpcClientInfo | undefined {
+        const protobufService = this.protobufResolver.getProtobufServiceForServiceId(serviceId);
+        if (protobufService == null) {
+            return undefined;
+        }
+        const serviceName = this.getGrpcClientServiceName(protobufService);
+        return {
+            privatePropertyName: this.getGrpcClientPrivatePropertyName(protobufService),
+            classReference: csharp.classReference({
+                name: `${serviceName}.${serviceName}Client`,
+                namespace: this.protobufResolver.getNamespaceFromProtobufFileOrThrow(protobufService.file)
+            }),
+            protobufService
+        };
     }
 
     public getEnvironmentsClassReference(): csharp.ClassReference {
@@ -235,6 +360,13 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return this.customConfig["root-namespace-for-core-classes"] ?? true
             ? this.getNamespace()
             : this.getCoreNamespace();
+    }
+
+    public getBaseMockServerTestClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "BaseMockServerTest",
+            namespace: this.getMockServerTestNamespace()
+        });
     }
 
     public getClientOptionsClassReference(): csharp.ClassReference {
@@ -272,27 +404,17 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return this.customConfig["extra-dependencies"] ?? {};
     }
 
+    private getGrpcClientPrivatePropertyName(protobufService: ProtobufService): string {
+        return `_${protobufService.name.camelCase.safeName}`;
+    }
+
+    private getGrpcClientServiceName(protobufService: ProtobufService): string {
+        return protobufService.name.pascalCase.safeName;
+    }
+
     override getChildNamespaceSegments(fernFilepath: FernFilepath): string[] {
         const segmentNames =
             this.customConfig["explicit-namespaces"] === true ? fernFilepath.allParts : fernFilepath.packagePath;
         return segmentNames.map((segmentName) => segmentName.pascalCase.safeName);
-    }
-
-    public isOptional(typeReference: TypeReference): boolean {
-        switch (typeReference.type) {
-            case "container":
-                return typeReference.container.type === "optional";
-            case "named": {
-                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
-                if (typeDeclaration.shape.type === "alias") {
-                    return this.isOptional(typeDeclaration.shape.aliasOf);
-                }
-                return false;
-            }
-            case "unknown":
-                return true;
-            case "primitive":
-                return false;
-        }
     }
 }

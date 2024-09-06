@@ -14,6 +14,7 @@ import com.seed.authEnvironmentVariables.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = HeaderAuthRequest.Builder.class)
@@ -65,7 +66,7 @@ public final class HeaderAuthRequest {
     }
 
     public interface XEndpointHeaderStage {
-        _FinalStage xEndpointHeader(String xEndpointHeader);
+        _FinalStage xEndpointHeader(@NotNull String xEndpointHeader);
 
         Builder from(HeaderAuthRequest other);
     }
@@ -95,8 +96,8 @@ public final class HeaderAuthRequest {
          */
         @java.lang.Override
         @JsonSetter("X-Endpoint-Header")
-        public _FinalStage xEndpointHeader(String xEndpointHeader) {
-            this.xEndpointHeader = xEndpointHeader;
+        public _FinalStage xEndpointHeader(@NotNull String xEndpointHeader) {
+            this.xEndpointHeader = Objects.requireNonNull(xEndpointHeader, "xEndpointHeader must not be null");
             return this;
         }
 

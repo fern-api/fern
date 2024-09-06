@@ -1,0 +1,77 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/",
+                "method": "POST",
+                "identifier_override": "endpoint_.foo"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.FooAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/",
+                "method": "POST",
+                "identifier_override": "endpoint_a/b.foo"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.A.B.FooAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/",
+                "method": "POST",
+                "identifier_override": "endpoint_a/c.foo"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.A.C.FooAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/",
+                "method": "POST",
+                "identifier_override": "endpoint_folder.foo"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Folder.FooAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/service",
+                "method": "GET",
+                "identifier_override": "endpoint_folder/service.endpoint"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Folder.Service.EndpointAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/service",
+                "method": "POST",
+                "identifier_override": "endpoint_folder/service.unknownRequest"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Folder.Service.UnknownRequestAsync(\n    new Dictionary<object, object?>() { { \"key\", \"value\" } }\n);\n"
+            }
+        }
+    ]
+}

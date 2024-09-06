@@ -2,7 +2,7 @@ import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { assertNever, MediaType } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Endpoint, EndpointExample, Request, Schema, SchemaId } from "@fern-api/openapi-ir-sdk";
-import { RawSchemas } from "@fern-api/yaml-schema";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { buildEndpointExample } from "./buildEndpointExample";
 import { ERROR_DECLARATIONS_FILENAME, EXTERNAL_AUDIENCE } from "./buildFernDefinition";
 import { buildHeader } from "./buildHeader";
@@ -35,9 +35,14 @@ export function buildEndpoint({
 
     const names = new Set<string>();
 
+    let path = endpoint.path;
+
     const pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> = {};
     for (const pathParameter of endpoint.pathParameters) {
-        pathParameters[pathParameter.name] = buildPathParameter({
+        if (pathParameter.parameterNameOverride) {
+            path = path.replace(pathParameter.name, pathParameter.parameterNameOverride);
+        }
+        pathParameters[pathParameter.parameterNameOverride ?? pathParameter.name] = buildPathParameter({
             pathParameter,
             context,
             fileContainingReference: declarationFile
@@ -79,7 +84,7 @@ export function buildEndpoint({
     }
 
     const convertedEndpoint: RawSchemas.HttpEndpointSchema = {
-        path: endpoint.path,
+        path,
         method: convertToHttpMethod(endpoint.method),
         auth: endpoint.authed,
         docs: endpoint.description ?? undefined,
@@ -205,9 +210,12 @@ export function buildEndpoint({
     }
 
     if (context.builder.getEnvironmentType() === "multi") {
+        const defaultServer = context.getDefaultServerName();
         const serverOverride = endpoint.server[0];
         if (serverOverride == null) {
-            convertedEndpoint.url = context.getOrThrowDefaultServerName();
+            if (defaultServer != null) {
+                convertedEndpoint.url = defaultServer;
+            }
         } else {
             convertedEndpoint.url = serverOverride.name ?? undefined;
         }

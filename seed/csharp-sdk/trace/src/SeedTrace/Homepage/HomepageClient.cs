@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using SeedTrace.Core;
 
@@ -16,7 +17,15 @@ public partial class HomepageClient
         _client = client;
     }
 
-    public async Task<IEnumerable<string>> GetHomepageProblemsAsync(RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Homepage.GetHomepageProblemsAsync();
+    /// </code>
+    /// </example>
+    public async Task<IEnumerable<string>> GetHomepageProblemsAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -24,8 +33,9 @@ public partial class HomepageClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "/homepage-problems",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -47,9 +57,15 @@ public partial class HomepageClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Homepage.SetHomepageProblemsAsync(new List<string>() { "string" });
+    /// </code>
+    /// </example>
     public async Task SetHomepageProblemsAsync(
         IEnumerable<string> request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -59,8 +75,9 @@ public partial class HomepageClient
                 Method = HttpMethod.Post,
                 Path = "/homepage-problems",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {

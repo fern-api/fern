@@ -14,6 +14,7 @@ import com.seed.trace.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = MapType.Builder.class)
@@ -70,13 +71,13 @@ public final class MapType {
     }
 
     public interface KeyTypeStage {
-        ValueTypeStage keyType(VariableType keyType);
+        ValueTypeStage keyType(@NotNull VariableType keyType);
 
         Builder from(MapType other);
     }
 
     public interface ValueTypeStage {
-        _FinalStage valueType(VariableType valueType);
+        _FinalStage valueType(@NotNull VariableType valueType);
     }
 
     public interface _FinalStage {
@@ -103,15 +104,15 @@ public final class MapType {
 
         @java.lang.Override
         @JsonSetter("keyType")
-        public ValueTypeStage keyType(VariableType keyType) {
-            this.keyType = keyType;
+        public ValueTypeStage keyType(@NotNull VariableType keyType) {
+            this.keyType = Objects.requireNonNull(keyType, "keyType must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("valueType")
-        public _FinalStage valueType(VariableType valueType) {
-            this.valueType = valueType;
+        public _FinalStage valueType(@NotNull VariableType valueType) {
+            this.valueType = Objects.requireNonNull(valueType, "valueType must not be null");
             return this;
         }
 

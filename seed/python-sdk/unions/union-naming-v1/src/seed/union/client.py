@@ -8,6 +8,7 @@ from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
+from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -91,7 +92,7 @@ class UnionClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             method="PATCH",
-            json=request,
+            json=convert_and_respect_annotation_metadata(object_=request, annotation=Shape, direction="write"),
             request_options=request_options,
             omit=OMIT,
         )
@@ -203,7 +204,7 @@ class AsyncUnionClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             method="PATCH",
-            json=request,
+            json=convert_and_respect_annotation_metadata(object_=request, annotation=Shape, direction="write"),
             request_options=request_options,
             omit=OMIT,
         )

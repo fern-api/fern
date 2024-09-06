@@ -1,5 +1,14 @@
-irVersion: v23
-docker: fernapi/fern-postman:latest
-dockerCommand: pnpm --filter @fern-api/postman-generator dockerTagLatest
+irVersion: v53
+publish:
+  preBuildCommands:
+    - pnpm --filter @fern-api/postman-generator dist:cli
+  docker:
+    file: ./generators/postman/Dockerfile
+    image: fernapi/fern-postman
+    context: ./generators/postman
+test:
+  docker:
+    image: fernapi/fern-postman:latest
+    command: pnpm --filter @fern-api/postman-generator dockerTagLatest
 generatorType: Documentation
 defaultOutputMode: local_files

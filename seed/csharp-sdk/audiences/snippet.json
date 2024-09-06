@@ -1,0 +1,41 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/",
+                "method": "GET",
+                "identifier_override": "endpoint_folder-a/service.getDirectThread"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedAudiences;\n\nvar client = new SeedAudiencesClient();\nawait client.FolderA.Service.GetDirectThreadAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/partner-path",
+                "method": "GET",
+                "identifier_override": "endpoint_folder-d/service.getDirectThread"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedAudiences;\n\nvar client = new SeedAudiencesClient();\nawait client.FolderD.Service.GetDirectThreadAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/",
+                "method": "POST",
+                "identifier_override": "endpoint_foo.find"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedAudiences;\n\nvar client = new SeedAudiencesClient();\nawait client.Foo.FindAsync(\n    new FindRequest\n    {\n        OptionalString = \"string\",\n        PublicProperty = \"string\",\n        PrivateProperty = 1,\n    }\n);\n"
+            }
+        }
+    ]
+}

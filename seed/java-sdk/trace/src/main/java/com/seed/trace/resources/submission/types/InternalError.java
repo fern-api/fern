@@ -14,6 +14,7 @@ import com.seed.trace.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = InternalError.Builder.class)
@@ -62,7 +63,7 @@ public final class InternalError {
     }
 
     public interface ExceptionInfoStage {
-        _FinalStage exceptionInfo(ExceptionInfo exceptionInfo);
+        _FinalStage exceptionInfo(@NotNull ExceptionInfo exceptionInfo);
 
         Builder from(InternalError other);
     }
@@ -88,8 +89,8 @@ public final class InternalError {
 
         @java.lang.Override
         @JsonSetter("exceptionInfo")
-        public _FinalStage exceptionInfo(ExceptionInfo exceptionInfo) {
-            this.exceptionInfo = exceptionInfo;
+        public _FinalStage exceptionInfo(@NotNull ExceptionInfo exceptionInfo) {
+            this.exceptionInfo = Objects.requireNonNull(exceptionInfo, "exceptionInfo must not be null");
             return this;
         }
 

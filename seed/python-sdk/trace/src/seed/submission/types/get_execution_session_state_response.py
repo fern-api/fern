@@ -3,14 +3,18 @@
 from ...core.pydantic_utilities import UniversalBaseModel
 import typing
 from .execution_session_state import ExecutionSessionState
-import pydantic
+import typing_extensions
+from ...core.serialization import FieldMetadata
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
+import pydantic
 
 
 class GetExecutionSessionStateResponse(UniversalBaseModel):
     states: typing.Dict[str, ExecutionSessionState]
-    num_warming_instances: typing.Optional[int] = pydantic.Field(alias="numWarmingInstances", default=None)
-    warming_session_ids: typing.List[str] = pydantic.Field(alias="warmingSessionIds")
+    num_warming_instances: typing_extensions.Annotated[
+        typing.Optional[int], FieldMetadata(alias="numWarmingInstances")
+    ] = None
+    warming_session_ids: typing_extensions.Annotated[typing.List[str], FieldMetadata(alias="warmingSessionIds")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

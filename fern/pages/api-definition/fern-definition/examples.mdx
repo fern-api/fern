@@ -1,6 +1,6 @@
 ---
 title: Examples in Fern Definition 
-subtitle: Use Fern Definition to add API examples that are shown in comments of SDKs, API reference documentation, and a Postman collection.
+subtitle: Use Fern Definition to add API examples that are shown in comments of SDKs, API Reference documentation, and a Postman collection.
 ---
 
 You can add examples for types and endpoints. Examples are shown as
@@ -31,7 +31,7 @@ You can reference an example from another type, endpoint, or error.
 Just like types, you can compose examples. To reference an example from another
 type, use `$`.
 
-```yaml
+```yaml {14}
 types:
   UserId:
     type: integer
@@ -45,7 +45,7 @@ types:
       name: string
     examples:
       - value:
-          id: $UserId.Example1 # <---
+          id: $UserId.Example1
           name: Jane Smith
 ```
 
@@ -76,7 +76,7 @@ types:
       - name: EmpireStateBuilding
         value:
           street1: 350 5th Ave
-          street2:
+          street2: Attn: Maintenance Department
           city: New York
           state: NY
           postalCode: "10118"
@@ -102,6 +102,7 @@ types:
  * * The Empire State Building address
  * @example {
  *  street1: "350 5th Ave",
+ *  street2: "Attn: Maintenance Department",
  *  city: "New York",
  *  state: "NY",
  *  postalCode: "10118",
@@ -137,7 +138,7 @@ type ShipTo = {
 
 ### Unions
 
-#### Discriminated Union
+#### Discriminated union
 
 ```yml
 types:
@@ -172,7 +173,7 @@ type Animal = Dog | Cat;
 ```
 </CodeBlock>
 
-#### Undiscriminated Union
+#### Undiscriminated union
 
 ```yml
 types:

@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using SeedNurseryApi.Core;
 
@@ -15,9 +16,18 @@ public partial class PackageClient
         _client = client;
     }
 
-    public async Task TestAsync(TestRequest request, RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Package.TestAsync(new TestRequest { For = "string" });
+    /// </code>
+    /// </example>
+    public async Task TestAsync(
+        TestRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         _query["for"] = request.For;
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -26,8 +36,9 @@ public partial class PackageClient
                 Method = HttpMethod.Post,
                 Path = "",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {

@@ -6,6 +6,7 @@ from typing import Callable, List, Literal, Optional, Sequence, Tuple, Type, Uni
 
 from fern_python.codegen import AST, ClassParent, LocalClassReference, SourceFile
 from fern_python.external_dependencies import Pydantic, PydanticVersionCompatibility
+from fern_python.generators.pydantic_model.field_metadata import FieldMetadata
 from pydantic import BaseModel
 
 from .pydantic_field import PydanticField
@@ -33,6 +34,8 @@ class PydanticModel:
         universal_field_validator: Callable[[str, bool], AST.FunctionInvocation],
         require_optional_fields: bool,
         update_forward_ref_function_reference: AST.Reference,
+        field_metadata_getter: Callable[[], FieldMetadata],
+        use_pydantic_field_aliases: bool,
         should_export: bool = True,
         base_models: Sequence[AST.ClassReference] = [],
         parent: Optional[ClassParent] = None,
@@ -74,6 +77,8 @@ class PydanticModel:
         self._include_model_config = include_model_config
 
         self._update_forward_ref_function_reference = update_forward_ref_function_reference
+        self._field_metadata_getter = field_metadata_getter
+        self._use_pydantic_field_aliases = use_pydantic_field_aliases
 
     def to_reference(self) -> LocalClassReference:
         return self._local_class_reference
@@ -114,12 +119,27 @@ class PydanticModel:
         )
 
         initializer = get_field_name_initializer(
-            alias=field.json_field_name if is_aliased else None,
+            alias=field.json_field_name if (is_aliased and self._use_pydantic_field_aliases) else None,
             default_factory=field.default_factory,
             description=field.description,
             default=default_value,
-            version=self._version,
         )
+
+        if is_aliased and not self._use_pydantic_field_aliases:
+            field_metadata = self._field_metadata_getter().get_instance()
+            field_metadata.add_alias(field.json_field_name)
+
+            aliased_type_hint = AST.TypeHint.annotated(
+                type=field.type_hint,
+                annotation=field_metadata.get_as_node(),
+            )
+
+            prev_fields = field.__dict__
+            del prev_fields["type_hint"]
+            field = PydanticField(
+                **(field.__dict__),
+                type_hint=aliased_type_hint,
+            )
 
         self._class_declaration.add_class_var(
             AST.VariableDeclaration(name=field.name, type_hint=field.type_hint, initializer=initializer)
@@ -404,7 +424,6 @@ class PydanticModel:
 
 def get_field_name_initializer(
     *,
-    version: PydanticVersionCompatibility,
     alias: Optional[str],
     default: Optional[AST.Expression],
     default_factory: Optional[AST.Expression],

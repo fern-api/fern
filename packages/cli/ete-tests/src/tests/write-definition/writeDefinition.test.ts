@@ -1,4 +1,9 @@
-import { AbsoluteFilePath, doesPathExist, getDirectoryContents } from "@fern-api/fs-utils";
+import {
+    AbsoluteFilePath,
+    doesPathExist,
+    getDirectoryContents,
+    getDirectoryContentsForSnapshot
+} from "@fern-api/fs-utils";
 import { rm } from "fs/promises";
 import path from "path";
 import { runFernCli } from "../../utils/runFernCli";
@@ -28,7 +33,7 @@ function itFixture(fixtureName: string) {
                 cwd: fixturePath
             });
 
-            expect(await getDirectoryContents(AbsoluteFilePath.of(definitionOutputPath))).toMatchSnapshot();
+            expect(await getDirectoryContentsForSnapshot(AbsoluteFilePath.of(definitionOutputPath))).toMatchSnapshot();
         },
         90_000
     );

@@ -91,7 +91,8 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
             const testNumber = this.testInputs.length > 1 ? `_${index + 1}` : "";
             testClass.addTestMethod({
                 name: `TestSerialization${testNumber}`,
-                body: methodBody
+                body: methodBody,
+                isAsync: false
             });
         });
         return new CSharpFile({

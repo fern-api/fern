@@ -156,12 +156,12 @@ export class LocalTestRunner extends TestRunner {
     }
 
     private async getLocalConfigOrthrow(): Promise<LocalBuildInfo> {
-        if (this.generator.workspaceConfig.local == null) {
+        if (this.generator.workspaceConfig.test.local == null) {
             throw new Error(
                 `Attempted to run ${this.generator.workspaceName} locally. No local configuration in seed.yml found.`
             );
         }
-        return this.generator.workspaceConfig.local;
+        return this.generator.workspaceConfig.test.local;
     }
 
     private getSourceConfig(workspace: FernWorkspace): SourceConfig {

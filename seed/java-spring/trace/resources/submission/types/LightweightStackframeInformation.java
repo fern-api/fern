@@ -13,6 +13,7 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
@@ -69,7 +70,7 @@ public final class LightweightStackframeInformation {
   }
 
   public interface TopStackFrameMethodNameStage {
-    _FinalStage topStackFrameMethodName(String topStackFrameMethodName);
+    _FinalStage topStackFrameMethodName(@NotNull String topStackFrameMethodName);
   }
 
   public interface _FinalStage {
@@ -103,8 +104,8 @@ public final class LightweightStackframeInformation {
 
     @java.lang.Override
     @JsonSetter("topStackFrameMethodName")
-    public _FinalStage topStackFrameMethodName(String topStackFrameMethodName) {
-      this.topStackFrameMethodName = topStackFrameMethodName;
+    public _FinalStage topStackFrameMethodName(@NotNull String topStackFrameMethodName) {
+      this.topStackFrameMethodName = Objects.requireNonNull(topStackFrameMethodName, "topStackFrameMethodName must not be null");
       return this;
     }
 

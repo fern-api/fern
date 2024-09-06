@@ -18,32 +18,32 @@ public class DirectoryTest
         var inputJson =
             @"
         {
-  ""name"": ""root"",
-  ""files"": [
-    {
-      ""name"": ""file.txt"",
-      ""contents"": ""..."",
-      ""info"": ""REGULAR""
-    }
-  ],
-  ""directories"": [
-    {
-      ""name"": ""tmp"",
-      ""files"": [
-        {
-          ""name"": ""another_file.txt"",
-          ""contents"": ""..."",
-          ""info"": ""REGULAR""
+          ""name"": ""root"",
+          ""files"": [
+            {
+              ""name"": ""file.txt"",
+              ""contents"": ""..."",
+              ""info"": ""REGULAR""
+            }
+          ],
+          ""directories"": [
+            {
+              ""name"": ""tmp"",
+              ""files"": [
+                {
+                  ""name"": ""another_file.txt"",
+                  ""contents"": ""..."",
+                  ""info"": ""REGULAR""
+                }
+              ]
+            }
+          ]
         }
-      ]
-    }
-  ]
-}
-";
+        ";
 
         var serializerOptions = new JsonSerializerOptions
         {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         };
 
         var deserializedObject = JsonSerializer.Deserialize<Directory>(

@@ -13,6 +13,7 @@ import {
     TypeId,
     Webhook
 } from "@fern-api/ir-sdk";
+import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "@fern-api/workspace-loader";
 import { mapValues, pickBy } from "lodash-es";
 import { constructCasingsGenerator } from "./casings/CasingsGenerator";
@@ -47,6 +48,7 @@ import { TypeResolverImpl } from "./resolvers/TypeResolver";
 import { VariableResolverImpl } from "./resolvers/VariableResolver";
 import { convertToFernFilepath } from "./utils/convertToFernFilepath";
 import { getAudienceForEnvironment } from "./utils/getEnvironmentsByAudience";
+import { isGeneric } from "@fern-api/fern-definition-schema";
 import { parseErrorName } from "./utils/parseErrorName";
 
 export async function generateIntermediateRepresentation({
@@ -59,7 +61,8 @@ export async function generateIntermediateRepresentation({
     audiences,
     readme,
     packageName,
-    version
+    version,
+    context
 }: {
     fdrApiDefinitionId?: string;
     workspace: FernWorkspace;
@@ -71,6 +74,7 @@ export async function generateIntermediateRepresentation({
     readme: generatorsYml.ReadmeSchema | undefined;
     packageName: string | undefined;
     version: string | undefined;
+    context: TaskContext;
 }): Promise<IntermediateRepresentation> {
     const casingsGenerator = constructCasingsGenerator({ generationLanguage, keywords, smartCasing });
 
@@ -96,7 +100,7 @@ export async function generateIntermediateRepresentation({
     const errorResolver = new ErrorResolverImpl(workspace);
     const exampleResolver = new ExampleResolverImpl(typeResolver);
     const variableResolver = new VariableResolverImpl();
-    const sourceResolver = new SourceResolverImpl(workspace);
+    const sourceResolver = new SourceResolverImpl(context, workspace);
 
     const intermediateRepresentation: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage"> = {
         fdrApiDefinitionId,
@@ -167,7 +171,8 @@ export async function generateIntermediateRepresentation({
         webhookGroups: {},
         websocketChannels: {},
         readmeConfig: undefined,
-        sourceConfig: undefined
+        sourceConfig: undefined,
+        publishConfig: undefined
     };
 
     const packageTreeGenerator = new PackageTreeGenerator();
@@ -189,6 +194,13 @@ export async function generateIntermediateRepresentation({
                 }
 
                 for (const [typeName, typeDeclaration] of Object.entries(types)) {
+                    // Generic type declarations are syntatic sugar for
+                    // fern definition users, but not actually meant to be in the
+                    // generated SDKs
+                    if (isGeneric(typeName)) {
+                        continue;
+                    }
+
                     const convertedTypeDeclarationWithFilepaths = await convertTypeDeclaration({
                         typeName,
                         typeDeclaration,

@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using SeedBytes.Core;
 
@@ -15,7 +16,11 @@ public partial class ServiceClient
         _client = client;
     }
 
-    public async Task UploadAsync(Stream request, RequestOptions? options = null)
+    public async Task UploadAsync(
+        Stream request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.StreamApiRequest
@@ -24,8 +29,9 @@ public partial class ServiceClient
                 Method = HttpMethod.Post,
                 Path = "upload-content",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {

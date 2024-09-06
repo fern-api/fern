@@ -16,6 +16,7 @@ import java.lang.String;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 import resources.commons.types.VariableType;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -67,7 +68,7 @@ public final class NonVoidFunctionSignature {
   }
 
   public interface ReturnTypeStage {
-    _FinalStage returnType(VariableType returnType);
+    _FinalStage returnType(@NotNull VariableType returnType);
 
     Builder from(NonVoidFunctionSignature other);
   }
@@ -102,8 +103,8 @@ public final class NonVoidFunctionSignature {
 
     @java.lang.Override
     @JsonSetter("returnType")
-    public _FinalStage returnType(VariableType returnType) {
-      this.returnType = returnType;
+    public _FinalStage returnType(@NotNull VariableType returnType) {
+      this.returnType = Objects.requireNonNull(returnType, "returnType must not be null");
       return this;
     }
 

@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using SeedVariables.Core;
 
@@ -15,7 +16,16 @@ public partial class ServiceClient
         _client = client;
     }
 
-    public async Task PostAsync(string endpointParam, RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Service.PostAsync("string");
+    /// </code>
+    /// </example>
+    public async Task PostAsync(
+        string endpointParam,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -23,8 +33,9 @@ public partial class ServiceClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = $"/{endpointParam}",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {

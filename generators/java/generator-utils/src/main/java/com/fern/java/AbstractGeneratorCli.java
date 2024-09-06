@@ -44,7 +44,7 @@ import org.immutables.value.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends DownloadFilesCustomConfig> {
+public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends IDownloadFilesCustomConfig> {
 
     @Value.Immutable
     @StagedBuilderImmutablesStyle
@@ -285,7 +285,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
 
     public abstract <T extends ICustomConfig> T getCustomConfig(GeneratorConfig generatorConfig);
 
-    public abstract <K extends DownloadFilesCustomConfig> K getDownloadFilesCustomConfig(
+    public abstract <K extends IDownloadFilesCustomConfig> K getDownloadFilesCustomConfig(
             GeneratorConfig generatorConfig);
 
     protected final void addGeneratedFile(GeneratedFile generatedFile) {

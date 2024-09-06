@@ -10,12 +10,14 @@ export interface File {
     type: "file";
     name: string;
     contents: string;
+    absolutePath: AbsoluteFilePath;
 }
 
 export interface Directory {
     type: "directory";
     name: string;
     contents: FileOrDirectory[];
+    absolutePath: AbsoluteFilePath;
 }
 
 export declare namespace getDirectoryContents {
@@ -42,16 +44,19 @@ export async function getDirectoryContents(
     const items = await readdir(absolutePath, { withFileTypes: true });
     await Promise.all(
         items.map(async (item) => {
+            const absolutePathToItem = join(absolutePath, RelativeFilePath.of(item.name));
             if (item.isDirectory()) {
                 contents.push({
                     type: "directory",
                     name: item.name,
-                    contents: await getDirectoryContents(join(absolutePath, RelativeFilePath.of(item.name)), options)
+                    absolutePath: absolutePathToItem,
+                    contents: await getDirectoryContents(absolutePathToItem, options)
                 });
             } else if (fileExtensionsWithPeriods == null || fileExtensionsWithPeriods.has(path.extname(item.name))) {
                 contents.push({
                     type: "file",
                     name: item.name,
+                    absolutePath: absolutePathToItem,
                     contents: (await readFile(path.join(absolutePath, item.name))).toString()
                 });
             }
@@ -59,4 +64,37 @@ export async function getDirectoryContents(
     );
 
     return contents.sort((a, b) => (a.name < b.name ? -1 : 1));
+}
+
+export type SnapshotFileOrDirectory = SnapshotFile | SnapshotDirectory;
+
+export interface SnapshotFile {
+    type: "file";
+    name: string;
+    contents: string;
+}
+
+export interface SnapshotDirectory {
+    type: "directory";
+    name: string;
+    contents: SnapshotFileOrDirectory[];
+}
+
+export async function getDirectoryContentsForSnapshot(
+    absolutePath: AbsoluteFilePath,
+    options: getDirectoryContents.Options = {}
+): Promise<SnapshotFileOrDirectory[]> {
+    const contents = await getDirectoryContents(absolutePath, options);
+    const removeAbsolutePath = (fileOrDir: FileOrDirectory): SnapshotFileOrDirectory => {
+        if (fileOrDir.type === "file") {
+            return { type: "file", name: fileOrDir.name, contents: fileOrDir.contents };
+        } else {
+            return {
+                type: "directory",
+                name: fileOrDir.name,
+                contents: fileOrDir.contents.map((item) => removeAbsolutePath(item))
+            };
+        }
+    };
+    return contents.map((item) => removeAbsolutePath(item));
 }

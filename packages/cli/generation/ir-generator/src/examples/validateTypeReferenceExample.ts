@@ -9,7 +9,7 @@ import {
     StringValidationRules
 } from "@fern-api/ir-sdk";
 import { FernWorkspace } from "@fern-api/workspace-loader";
-import { EXAMPLE_REFERENCE_PREFIX, RawSchemas, visitRawTypeReference } from "@fern-api/yaml-schema";
+import { EXAMPLE_REFERENCE_PREFIX, RawSchemas, visitRawTypeReference } from "@fern-api/fern-definition-schema";
 import { FernFileContext } from "../FernFileContext";
 import { ExampleResolver } from "../resolvers/ExampleResolver";
 import { ResolvedType } from "../resolvers/ResolvedType";
@@ -24,6 +24,8 @@ const ISO_8601_REGEX =
 
 // https://ihateregex.io/expr/uuid/
 const UUID_REGEX = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/;
+
+const RFC_3339_DATE_REGEX = /^\d{4}-\d{2}-\d{2}$/;
 
 export function validateTypeReferenceExample({
     rawTypeReference,
@@ -244,9 +246,9 @@ function validatePrimitiveExample({
                     example,
                     rules: v2.validation
                 }),
-            uuid: () => validateString(example),
+            uuid: () => validateUuid(example),
+            date: () => validateDate(example),
             dateTime: () => validateDateTime(example),
-            date: () => validateString(example),
             base64: () => validateString(example),
             bigInteger: () => validateString(example),
             _other: () => {
@@ -265,7 +267,7 @@ function validatePrimitiveExample({
         string: () => validateString(example),
         uuid: () => validateUuid(example),
         dateTime: () => validateDateTime(example),
-        date: () => validateString(example),
+        date: () => validateDate(example),
         base64: () => validateString(example),
         bigInteger: () => validateString(example),
         _other: () => {
@@ -420,6 +422,10 @@ const validateUuid = createValidator((example) => typeof example === "string" &&
 const validateDateTime = createValidator(
     (example) => typeof example === "string" && ISO_8601_REGEX.test(example),
     "an ISO 8601 timestamp"
+);
+const validateDate = createValidator(
+    (example) => typeof example === "string" && RFC_3339_DATE_REGEX.test(example) && ISO_8601_REGEX.test(example),
+    "a date"
 );
 
 function createValidator(
