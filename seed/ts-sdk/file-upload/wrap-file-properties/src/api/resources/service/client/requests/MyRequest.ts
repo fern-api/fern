@@ -22,4 +22,5 @@ export interface MyRequest {
     maybeInteger?: number;
     optionalListOfStrings?: string[];
     listOfObjects: SeedFileUpload.MyObject[];
+    optionalMetadata?: unknown;
 }

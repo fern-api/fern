@@ -92,6 +92,11 @@ public class ServiceClient {
             }
             body.addFormDataPart(
                     "listOfObjects", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getListOfObjects()));
+            if (request.getOptionalMetadata().isPresent()) {
+                body.addFormDataPart(
+                        "optionalMetadata",
+                        ObjectMappers.JSON_MAPPER.writeValueAsString(request.getOptionalMetadata()));
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

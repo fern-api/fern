@@ -18,7 +18,8 @@ service:
             maybeInteger: optional<integer>
             optionalListOfStrings: optional<list<string>>
             listOfObjects: list<MyObject>
-    
+            optionalMetadata: optional<unknown>
+
     justFile:
       path: /just-file
       method: POST

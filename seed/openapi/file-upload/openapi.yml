@@ -48,6 +48,8 @@ paths:
                   type: array
                   items:
                     $ref: '#/components/schemas/MyObject'
+                optionalMetadata:
+                  nullable: true
   /just-file:
     post:
       operationId: service_justFile

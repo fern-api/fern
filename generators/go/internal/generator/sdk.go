@@ -3078,5 +3078,5 @@ func isOptionalType(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.Typ
 // Container types like lists, maps, and sets are already nil-able, so they don't
 // require a dereference prefix.
 func needsOptionalDereference(optionalTypeReference *ir.TypeReference) bool {
-	return optionalTypeReference.Container == nil
+	return optionalTypeReference.Type == "primitive"
 }

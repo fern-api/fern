@@ -129,6 +129,11 @@ func (c *Client) Post(
 	if err := core.WriteMultipartJSON(writer, "listOfObjects", request.ListOfObjects); err != nil {
 		return err
 	}
+	if request.OptionalMetadata != nil {
+		if err := core.WriteMultipartJSON(writer, "optionalMetadata", request.OptionalMetadata); err != nil {
+			return err
+		}
+	}
 	if err := writer.Close(); err != nil {
 		return err
 	}

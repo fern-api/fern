@@ -72,6 +72,16 @@ export class Service {
             await _request.append("listOfObjects", JSON.stringify(_item));
         }
 
+        if (request.optionalMetadata != null) {
+            if (Array.isArray(request.optionalMetadata) || request.optionalMetadata instanceof Set)
+                {for (const _item of request.optionalMetadata) {
+                    await _request.append(
+                        "optionalMetadata",
+                        typeof _item === "string" ? _item : JSON.stringify(_item)
+                    );
+                }}
+        }
+
         const _maybeEncodedRequest = await _request.getRequest();
         const _response = await core.fetcher({
             url: await core.Supplier.get(this._options.environment),

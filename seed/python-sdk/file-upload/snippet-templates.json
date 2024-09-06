@@ -227,6 +227,22 @@
                             },
                             "type": "iterable"
                         }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "optional_metadata=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "BODY",
+                                    "path": "optionalMetadata",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
                     }
                 ],
                 "inputDelimiter": ",\n\t",
@@ -451,6 +467,22 @@
                                     "path": "listOfObjects"
                                 },
                                 "type": "iterable"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "optional_metadata=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "BODY",
+                                        "path": "optionalMetadata",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
                             }
                         }
                     ],

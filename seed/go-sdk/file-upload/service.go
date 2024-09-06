@@ -22,6 +22,7 @@ type MyRequest struct {
 	MaybeInteger          *int        `json:"maybeInteger,omitempty" url:"-"`
 	OptionalListOfStrings []string    `json:"optionalListOfStrings,omitempty" url:"-"`
 	ListOfObjects         []*MyObject `json:"listOfObjects,omitempty" url:"-"`
+	OptionalMetadata      interface{} `json:"optionalMetadata,omitempty" url:"-"`
 }
 
 type MyObject struct {

@@ -33,6 +33,8 @@ public final class MyRequest {
 
     private final List<MyObject> listOfObjects;
 
+    private final Optional<Object> optionalMetadata;
+
     private final Map<String, Object> additionalProperties;
 
     private MyRequest(
@@ -41,12 +43,14 @@ public final class MyRequest {
             Optional<Integer> maybeInteger,
             Optional<List<String>> optionalListOfStrings,
             List<MyObject> listOfObjects,
+            Optional<Object> optionalMetadata,
             Map<String, Object> additionalProperties) {
         this.maybeString = maybeString;
         this.integer = integer;
         this.maybeInteger = maybeInteger;
         this.optionalListOfStrings = optionalListOfStrings;
         this.listOfObjects = listOfObjects;
+        this.optionalMetadata = optionalMetadata;
         this.additionalProperties = additionalProperties;
     }
 
@@ -75,6 +79,11 @@ public final class MyRequest {
         return listOfObjects;
     }
 
+    @JsonProperty("optionalMetadata")
+    public Optional<Object> getOptionalMetadata() {
+        return optionalMetadata;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -91,13 +100,19 @@ public final class MyRequest {
                 && integer == other.integer
                 && maybeInteger.equals(other.maybeInteger)
                 && optionalListOfStrings.equals(other.optionalListOfStrings)
-                && listOfObjects.equals(other.listOfObjects);
+                && listOfObjects.equals(other.listOfObjects)
+                && optionalMetadata.equals(other.optionalMetadata);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.maybeString, this.integer, this.maybeInteger, this.optionalListOfStrings, this.listOfObjects);
+                this.maybeString,
+                this.integer,
+                this.maybeInteger,
+                this.optionalListOfStrings,
+                this.listOfObjects,
+                this.optionalMetadata);
     }
 
     @java.lang.Override
@@ -135,11 +150,17 @@ public final class MyRequest {
         _FinalStage addListOfObjects(MyObject listOfObjects);
 
         _FinalStage addAllListOfObjects(List<MyObject> listOfObjects);
+
+        _FinalStage optionalMetadata(Optional<Object> optionalMetadata);
+
+        _FinalStage optionalMetadata(Object optionalMetadata);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements IntegerStage, _FinalStage {
         private int integer;
+
+        private Optional<Object> optionalMetadata = Optional.empty();
 
         private List<MyObject> listOfObjects = new ArrayList<>();
 
@@ -161,6 +182,7 @@ public final class MyRequest {
             maybeInteger(other.getMaybeInteger());
             optionalListOfStrings(other.getOptionalListOfStrings());
             listOfObjects(other.getListOfObjects());
+            optionalMetadata(other.getOptionalMetadata());
             return this;
         }
 
@@ -168,6 +190,19 @@ public final class MyRequest {
         @JsonSetter("integer")
         public _FinalStage integer(int integer) {
             this.integer = integer;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage optionalMetadata(Object optionalMetadata) {
+            this.optionalMetadata = Optional.ofNullable(optionalMetadata);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "optionalMetadata", nulls = Nulls.SKIP)
+        public _FinalStage optionalMetadata(Optional<Object> optionalMetadata) {
+            this.optionalMetadata = optionalMetadata;
             return this;
         }
 
@@ -233,7 +268,13 @@ public final class MyRequest {
         @java.lang.Override
         public MyRequest build() {
             return new MyRequest(
-                    maybeString, integer, maybeInteger, optionalListOfStrings, listOfObjects, additionalProperties);
+                    maybeString,
+                    integer,
+                    maybeInteger,
+                    optionalListOfStrings,
+                    listOfObjects,
+                    optionalMetadata,
+                    additionalProperties);
         }
     }
 }

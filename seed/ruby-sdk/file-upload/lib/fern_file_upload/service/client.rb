@@ -26,6 +26,7 @@ module SeedFileUploadClient
     # @param optional_list_of_strings [Array<String>]
     # @param list_of_objects [Array<Hash>] Request of type Array<SeedFileUploadClient::Service::MyObject>, as a Hash
     #   * :foo (String)
+    # @param optional_metadata [Object]
     # @param request_options [SeedFileUploadClient::RequestOptions]
     # @return [Void]
     # @example
@@ -37,7 +38,7 @@ module SeedFileUploadClient
     #    maybe_file_list: my_file.txt
     #  )
     def post(integer:, file:, file_list:, list_of_objects:, maybe_string: nil, maybe_file: nil, maybe_file_list: nil, maybe_integer: nil,
-             optional_list_of_strings: nil, request_options: nil)
+             optional_list_of_strings: nil, optional_metadata: nil, request_options: nil)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = {
@@ -62,7 +63,8 @@ module SeedFileUploadClient
                          end,
           maybeInteger: maybe_integer,
           optionalListOfStrings: optional_list_of_strings,
-          listOfObjects: list_of_objects
+          listOfObjects: list_of_objects,
+          optionalMetadata: optional_metadata
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/"
       end
@@ -157,6 +159,7 @@ module SeedFileUploadClient
     # @param optional_list_of_strings [Array<String>]
     # @param list_of_objects [Array<Hash>] Request of type Array<SeedFileUploadClient::Service::MyObject>, as a Hash
     #   * :foo (String)
+    # @param optional_metadata [Object]
     # @param request_options [SeedFileUploadClient::RequestOptions]
     # @return [Void]
     # @example
@@ -168,7 +171,7 @@ module SeedFileUploadClient
     #    maybe_file_list: my_file.txt
     #  )
     def post(integer:, file:, file_list:, list_of_objects:, maybe_string: nil, maybe_file: nil, maybe_file_list: nil, maybe_integer: nil,
-             optional_list_of_strings: nil, request_options: nil)
+             optional_list_of_strings: nil, optional_metadata: nil, request_options: nil)
       Async do
         @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -194,7 +197,8 @@ module SeedFileUploadClient
                            end,
             maybeInteger: maybe_integer,
             optionalListOfStrings: optional_list_of_strings,
-            listOfObjects: list_of_objects
+            listOfObjects: list_of_objects,
+            optionalMetadata: optional_metadata
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/"
         end
