@@ -1,5 +1,5 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
-import { Entries, entries } from "@fern-api/core-utils";
+import { entries } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { DefinitionFileSchema } from "@fern-api/fern-definition-schema";
 import path from "path";
