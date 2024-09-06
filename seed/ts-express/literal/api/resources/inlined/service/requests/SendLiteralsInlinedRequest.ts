@@ -12,4 +12,5 @@ export interface SendLiteralsInlinedRequest {
     stream: false;
     aliasedContext: SeedLiteral.SomeAliasedLiteral;
     maybeContext?: SeedLiteral.SomeAliasedLiteral;
+    objectWithLiteral: SeedLiteral.ATopLevelLiteral;
 }

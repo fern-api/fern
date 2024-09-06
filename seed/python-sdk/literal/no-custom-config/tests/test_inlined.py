@@ -3,6 +3,8 @@
 from seed import SeedLiteral
 from seed import AsyncSeedLiteral
 import typing
+from seed.inlined import ATopLevelLiteral
+from seed.inlined import ANestedLiteral
 from .utilities import validate_response
 
 
@@ -13,6 +15,7 @@ async def test_send(client: SeedLiteral, async_client: AsyncSeedLiteral) -> None
         temperature=10.1,
         context="You're super wise",
         maybe_context="You're super wise",
+        object_with_literal=ATopLevelLiteral(nested_literal=ANestedLiteral()),
         query="What is the weather today",
     )
     validate_response(response, expected_response, expected_types)
@@ -21,6 +24,7 @@ async def test_send(client: SeedLiteral, async_client: AsyncSeedLiteral) -> None
         temperature=10.1,
         context="You're super wise",
         maybe_context="You're super wise",
+        object_with_literal=ATopLevelLiteral(nested_literal=ANestedLiteral()),
         query="What is the weather today",
     )
     validate_response(async_response, expected_response, expected_types)

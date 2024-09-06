@@ -11,6 +11,11 @@ import * as SeedLiteral from "../../../../index";
  *         context: "You're super wise",
  *         aliasedContext: "You're super wise",
  *         maybeContext: "You're super wise",
+ *         objectWithLiteral: {
+ *             nestedLiteral: {
+ *                 myLiteral: "How super cool"
+ *             }
+ *         },
  *         query: "What is the weather today"
  *     }
  */
@@ -19,4 +24,5 @@ export interface SendLiteralsInlinedRequest {
     query: string;
     temperature?: number;
     maybeContext?: SeedLiteral.SomeAliasedLiteral;
+    objectWithLiteral: SeedLiteral.ATopLevelLiteral;
 }

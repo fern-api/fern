@@ -269,7 +269,7 @@ jobs:
   java-spring:
     runs-on: ubuntu-latest
     needs: versions-changed
-    if: ${{ needs.versions-changed.outputs.java-model == 'true' || inputs.generator == 'java-spring' }}
+    if: ${{ needs.versions-changed.outputs.spring == 'true' || inputs.generator == 'java-spring' }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4

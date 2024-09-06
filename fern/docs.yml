@@ -412,7 +412,8 @@ navigation:
             slug: analytics
             contents: 
               - page: PostHog
-                path: ./pages/docs/integrations/analytics/posthog.mdx            
+                path: ./pages/docs/integrations/analytics/posthog.mdx 
+                slug: posthog           
               - page: Fullstory
                 path: ./pages/docs/integrations/analytics/fullstory.mdx
               - page: Segment

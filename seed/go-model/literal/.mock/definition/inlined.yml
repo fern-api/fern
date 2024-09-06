@@ -5,6 +5,14 @@ types:
   SomeAliasedLiteral:
     type: literal<"You're super wise">
 
+  ATopLevelLiteral:
+    properties:
+      nestedLiteral: ANestedLiteral
+  
+  ANestedLiteral:
+    properties:
+      myLiteral: literal<"How super cool">
+
 service:
   auth: false
   base-path: ""
@@ -23,6 +31,7 @@ service:
             stream: literal<false>
             aliasedContext: SomeAliasedLiteral
             maybeContext: optional<SomeAliasedLiteral>
+            objectWithLiteral: ATopLevelLiteral
 
       response: root.SendResponse
       examples: 
@@ -32,6 +41,9 @@ service:
             context: "You're super wise"
             aliasedContext: "You're super wise"
             maybeContext: "You're super wise"
+            objectWithLiteral:
+              nestedLiteral: 
+                myLiteral: "How super cool"
             stream: false
             query: "What is the weather today"
           response: 

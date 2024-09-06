@@ -14387,6 +14387,11 @@ exports[`fdr test definitions > literal 1`] = `
                 "aliasedContext": "You're super wise",
                 "context": "You're super wise",
                 "maybeContext": "You're super wise",
+                "objectWithLiteral": {
+                  "nestedLiteral": {
+                    "myLiteral": "How super cool",
+                  },
+                },
                 "prompt": "You are a helpful assistant",
                 "query": "What is the weather today",
                 "stream": false,
@@ -14398,6 +14403,11 @@ exports[`fdr test definitions > literal 1`] = `
                   "aliasedContext": "You're super wise",
                   "context": "You're super wise",
                   "maybeContext": "You're super wise",
+                  "objectWithLiteral": {
+                    "nestedLiteral": {
+                      "myLiteral": "How super cool",
+                    },
+                  },
                   "prompt": "You are a helpful assistant",
                   "query": "What is the weather today",
                   "stream": false,
@@ -14530,6 +14540,14 @@ exports[`fdr test definitions > literal 1`] = `
                       "type": "optional",
                     },
                   },
+                  {
+                    "description": undefined,
+                    "key": "objectWithLiteral",
+                    "valueType": {
+                      "type": "id",
+                      "value": "type_inlined:ATopLevelLiteral",
+                    },
+                  },
                 ],
                 "type": "object",
               },
@@ -14554,6 +14572,8 @@ exports[`fdr test definitions > literal 1`] = `
       "subpackages": [],
       "types": [
         "type_inlined:SomeAliasedLiteral",
+        "type_inlined:ATopLevelLiteral",
+        "type_inlined:ANestedLiteral",
       ],
       "webhooks": [],
       "websockets": [],
@@ -14946,6 +14966,49 @@ exports[`fdr test definitions > literal 1`] = `
                 "type": "booleanLiteral",
                 "value": true,
               },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "type_inlined:ANestedLiteral": {
+      "availability": undefined,
+      "description": undefined,
+      "name": "ANestedLiteral",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "myLiteral",
+            "valueType": {
+              "type": "literal",
+              "value": {
+                "type": "stringLiteral",
+                "value": "How super cool",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "type_inlined:ATopLevelLiteral": {
+      "availability": undefined,
+      "description": undefined,
+      "name": "ATopLevelLiteral",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "nestedLiteral",
+            "valueType": {
+              "type": "id",
+              "value": "type_inlined:ANestedLiteral",
             },
           },
         ],
