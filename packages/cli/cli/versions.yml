@@ -11,8 +11,8 @@
             type: ["string", "number"]
       ```
     type: feat
-  created_at: '2024-09-06'
-  ir_version: 53
+  createdAt: '2024-09-06'
+  irVersion: 53
   version: 0.41.4
 
 - changelogEntry:
