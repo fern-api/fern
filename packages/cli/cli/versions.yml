@@ -15,7 +15,7 @@
   ir_version: 53
   version: 0.41.4
 
-- changelog_entry:
+- changelogEntry:
   - summary: |
       Allow referencing by method and path. For example, when configuring an 
       oauth scheme you can now do: 
@@ -31,11 +31,11 @@
         auth: OAuth
       ```
     type: feat
-  created_at: '2024-09-06'
-  ir_version: 53
+  createdAt: '2024-09-06'
+  irVersion: 53
   version: 0.41.3
 
-- changelog_entry:
+- changelogEntry:
   - summary: |
       Fixes an issue introduced in `0.41.1` that ignored server urls for docs generation.
     type: fix
