@@ -1,5 +1,22 @@
 - changelogEntry:
   - summary: |
+      The Fern OpenAPI importer now handles importing an array for the `type` key. 
+
+      ```
+      User: 
+        properties: 
+          name: 
+            type: ["string"]
+          id: 
+            type: ["string", "number"]
+      ```
+    type: feat
+  created_at: '2024-09-06'
+  ir_version: 53
+  version: 0.41.4
+
+- changelog_entry:
+  - summary: |
       Allow referencing by method and path. For example, when configuring an 
       oauth scheme you can now do: 
 
