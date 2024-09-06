@@ -35,7 +35,7 @@ export async function getLatestGeneratorVersion({
     };
 
     if (!includeMajor && parsedVersion != null) {
-        payload["generatorMajorVersion"] = parsedVersion.major;
+        payload.generatorMajorVersion = parsedVersion.major;
     }
 
     const latestReleaseResponse = await client.generators.versions.getLatestGeneratorRelease(payload);
