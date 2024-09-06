@@ -79,6 +79,7 @@ client.inlined.send(
     temperature=10.1,
     context="You're super wise",
     maybe_context="You're super wise",
+    object_with_literal={"nested_literal": {"my_literal": "How super cool"}},
     query="What is the weather today",
 )
 
@@ -97,6 +98,14 @@ client.inlined.send(
 <dd>
 
 **query:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**object_with_literal:** `ATopLevelLiteralParams` 
     
 </dd>
 </dl>

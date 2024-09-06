@@ -2,9 +2,11 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .requests.a_top_level_literal import ATopLevelLiteralParams
 from .types.some_aliased_literal import SomeAliasedLiteral
 from ..core.request_options import RequestOptions
 from ..types.send_response import SendResponse
+from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
@@ -22,6 +24,7 @@ class InlinedClient:
         self,
         *,
         query: str,
+        object_with_literal: ATopLevelLiteralParams,
         context: typing.Optional[typing.Literal["You're super wise"]] = OMIT,
         temperature: typing.Optional[float] = OMIT,
         maybe_context: typing.Optional[SomeAliasedLiteral] = OMIT,
@@ -31,6 +34,8 @@ class InlinedClient:
         Parameters
         ----------
         query : str
+
+        object_with_literal : ATopLevelLiteralParams
 
         context : typing.Optional[typing.Literal["You're super wise"]]
 
@@ -56,6 +61,7 @@ class InlinedClient:
             temperature=10.1,
             context="You're super wise",
             maybe_context="You're super wise",
+            object_with_literal={"nested_literal": {"my_literal": "How super cool"}},
             query="What is the weather today",
         )
         """
@@ -67,6 +73,9 @@ class InlinedClient:
                 "query": query,
                 "temperature": temperature,
                 "maybeContext": maybe_context,
+                "objectWithLiteral": convert_and_respect_annotation_metadata(
+                    object_=object_with_literal, annotation=ATopLevelLiteralParams, direction="write"
+                ),
                 "prompt": "You are a helpful assistant",
                 "stream": False,
                 "aliasedContext": "You're super wise",
@@ -97,6 +106,7 @@ class AsyncInlinedClient:
         self,
         *,
         query: str,
+        object_with_literal: ATopLevelLiteralParams,
         context: typing.Optional[typing.Literal["You're super wise"]] = OMIT,
         temperature: typing.Optional[float] = OMIT,
         maybe_context: typing.Optional[SomeAliasedLiteral] = OMIT,
@@ -106,6 +116,8 @@ class AsyncInlinedClient:
         Parameters
         ----------
         query : str
+
+        object_with_literal : ATopLevelLiteralParams
 
         context : typing.Optional[typing.Literal["You're super wise"]]
 
@@ -136,6 +148,9 @@ class AsyncInlinedClient:
                 temperature=10.1,
                 context="You're super wise",
                 maybe_context="You're super wise",
+                object_with_literal={
+                    "nested_literal": {"my_literal": "How super cool"}
+                },
                 query="What is the weather today",
             )
 
@@ -150,6 +165,9 @@ class AsyncInlinedClient:
                 "query": query,
                 "temperature": temperature,
                 "maybeContext": maybe_context,
+                "objectWithLiteral": convert_and_respect_annotation_metadata(
+                    object_=object_with_literal, annotation=ATopLevelLiteralParams, direction="write"
+                ),
                 "prompt": "You are a helpful assistant",
                 "stream": False,
                 "aliasedContext": "You're super wise",

@@ -147,6 +147,33 @@
                             ],
                             "type": "generic"
                         }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [
+                                "from seed.inlined import ATopLevelLiteral"
+                            ],
+                            "isOptional": true,
+                            "templateString": "object_with_literal=ATopLevelLiteral(\n\t\t$FERN_INPUT\n\t)",
+                            "templateInputs": [
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [
+                                            "from seed.inlined import ANestedLiteral"
+                                        ],
+                                        "isOptional": true,
+                                        "templateString": "nested_literal=ANestedLiteral(\n\t\t\t$FERN_INPUT\n\t\t)",
+                                        "templateInputs": [],
+                                        "inputDelimiter": ",\n\t\t\t",
+                                        "type": "generic"
+                                    }
+                                }
+                            ],
+                            "inputDelimiter": ",\n\t\t",
+                            "type": "generic"
+                        }
                     }
                 ],
                 "inputDelimiter": ",\n\t",
@@ -200,6 +227,33 @@
                                         "type": "payload"
                                     }
                                 ],
+                                "type": "generic"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [
+                                    "from seed.inlined import ATopLevelLiteral"
+                                ],
+                                "isOptional": true,
+                                "templateString": "object_with_literal=ATopLevelLiteral(\n\t\t$FERN_INPUT\n\t)",
+                                "templateInputs": [
+                                    {
+                                        "type": "template",
+                                        "value": {
+                                            "imports": [
+                                                "from seed.inlined import ANestedLiteral"
+                                            ],
+                                            "isOptional": true,
+                                            "templateString": "nested_literal=ANestedLiteral(\n\t\t\t$FERN_INPUT\n\t\t)",
+                                            "templateInputs": [],
+                                            "inputDelimiter": ",\n\t\t\t",
+                                            "type": "generic"
+                                        }
+                                    }
+                                ],
+                                "inputDelimiter": ",\n\t\t",
                                 "type": "generic"
                             }
                         }

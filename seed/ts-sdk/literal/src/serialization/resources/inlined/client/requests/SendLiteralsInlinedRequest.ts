@@ -6,6 +6,7 @@ import * as serializers from "../../../../index";
 import * as SeedLiteral from "../../../../../api/index";
 import * as core from "../../../../../core";
 import { SomeAliasedLiteral } from "../../types/SomeAliasedLiteral";
+import { ATopLevelLiteral } from "../../types/ATopLevelLiteral";
 
 export const SendLiteralsInlinedRequest: core.serialization.Schema<
     serializers.SendLiteralsInlinedRequest.Raw,
@@ -15,6 +16,7 @@ export const SendLiteralsInlinedRequest: core.serialization.Schema<
     query: core.serialization.string(),
     temperature: core.serialization.number().optional(),
     maybeContext: SomeAliasedLiteral.optional(),
+    objectWithLiteral: ATopLevelLiteral,
 });
 
 export declare namespace SendLiteralsInlinedRequest {
@@ -23,5 +25,6 @@ export declare namespace SendLiteralsInlinedRequest {
         query: string;
         temperature?: number | null;
         maybeContext?: SomeAliasedLiteral.Raw | null;
+        objectWithLiteral: ATopLevelLiteral.Raw;
     }
 }

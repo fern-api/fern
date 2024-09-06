@@ -28,6 +28,9 @@ public record SendLiteralsInlinedRequest
     [JsonPropertyName("maybeContext")]
     public string? MaybeContext { get; set; }
 
+    [JsonPropertyName("objectWithLiteral")]
+    public required ATopLevelLiteral ObjectWithLiteral { get; set; }
+
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

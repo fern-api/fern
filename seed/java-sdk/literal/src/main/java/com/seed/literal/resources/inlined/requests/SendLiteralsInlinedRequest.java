@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.literal.core.ObjectMappers;
+import com.seed.literal.resources.inlined.types.ATopLevelLiteral;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -31,6 +32,8 @@ public final class SendLiteralsInlinedRequest {
 
     private final Optional<String> maybeContext;
 
+    private final ATopLevelLiteral objectWithLiteral;
+
     private final Map<String, Object> additionalProperties;
 
     private SendLiteralsInlinedRequest(
@@ -39,12 +42,14 @@ public final class SendLiteralsInlinedRequest {
             Optional<Double> temperature,
             String aliasedContext,
             Optional<String> maybeContext,
+            ATopLevelLiteral objectWithLiteral,
             Map<String, Object> additionalProperties) {
         this.context = context;
         this.query = query;
         this.temperature = temperature;
         this.aliasedContext = aliasedContext;
         this.maybeContext = maybeContext;
+        this.objectWithLiteral = objectWithLiteral;
         this.additionalProperties = additionalProperties;
     }
 
@@ -83,6 +88,11 @@ public final class SendLiteralsInlinedRequest {
         return maybeContext;
     }
 
+    @JsonProperty("objectWithLiteral")
+    public ATopLevelLiteral getObjectWithLiteral() {
+        return objectWithLiteral;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -99,12 +109,19 @@ public final class SendLiteralsInlinedRequest {
                 && query.equals(other.query)
                 && temperature.equals(other.temperature)
                 && aliasedContext.equals(other.aliasedContext)
-                && maybeContext.equals(other.maybeContext);
+                && maybeContext.equals(other.maybeContext)
+                && objectWithLiteral.equals(other.objectWithLiteral);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.context, this.query, this.temperature, this.aliasedContext, this.maybeContext);
+        return Objects.hash(
+                this.context,
+                this.query,
+                this.temperature,
+                this.aliasedContext,
+                this.maybeContext,
+                this.objectWithLiteral);
     }
 
     @java.lang.Override
@@ -123,7 +140,11 @@ public final class SendLiteralsInlinedRequest {
     }
 
     public interface AliasedContextStage {
-        _FinalStage aliasedContext(@NotNull String aliasedContext);
+        ObjectWithLiteralStage aliasedContext(@NotNull String aliasedContext);
+    }
+
+    public interface ObjectWithLiteralStage {
+        _FinalStage objectWithLiteral(ATopLevelLiteral objectWithLiteral);
     }
 
     public interface _FinalStage {
@@ -143,10 +164,12 @@ public final class SendLiteralsInlinedRequest {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements QueryStage, AliasedContextStage, _FinalStage {
+    public static final class Builder implements QueryStage, AliasedContextStage, ObjectWithLiteralStage, _FinalStage {
         private String query;
 
         private String aliasedContext;
+
+        private ATopLevelLiteral objectWithLiteral;
 
         private Optional<String> maybeContext = Optional.empty();
 
@@ -166,6 +189,7 @@ public final class SendLiteralsInlinedRequest {
             temperature(other.getTemperature());
             aliasedContext(other.getAliasedContext());
             maybeContext(other.getMaybeContext());
+            objectWithLiteral(other.getObjectWithLiteral());
             return this;
         }
 
@@ -178,8 +202,15 @@ public final class SendLiteralsInlinedRequest {
 
         @java.lang.Override
         @JsonSetter("aliasedContext")
-        public _FinalStage aliasedContext(@NotNull String aliasedContext) {
+        public ObjectWithLiteralStage aliasedContext(@NotNull String aliasedContext) {
             this.aliasedContext = Objects.requireNonNull(aliasedContext, "aliasedContext must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("objectWithLiteral")
+        public _FinalStage objectWithLiteral(ATopLevelLiteral objectWithLiteral) {
+            this.objectWithLiteral = objectWithLiteral;
             return this;
         }
 
@@ -225,7 +256,7 @@ public final class SendLiteralsInlinedRequest {
         @java.lang.Override
         public SendLiteralsInlinedRequest build() {
             return new SendLiteralsInlinedRequest(
-                    context, query, temperature, aliasedContext, maybeContext, additionalProperties);
+                    context, query, temperature, aliasedContext, maybeContext, objectWithLiteral, additionalProperties);
         }
     }
 }

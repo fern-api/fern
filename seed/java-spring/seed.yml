@@ -24,6 +24,11 @@ test:
       - tar -xvf build/distributions/spring.tar -C .
     runCommand: cd spring/spring && java -cp spring.jar:lib/* com.fern.java.spring.Cli
     env: {}
+fixtures:
+  imdb:
+    - customConfig:
+        enable-public-constructors: true
+      outputFolder: enable-public-constructors
 language: java
 generatorType: Server
 defaultOutputMode: local_files

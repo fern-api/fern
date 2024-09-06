@@ -1,3 +1,9 @@
+- version: 0.23.6
+  created_at: '2024-09-05'
+  changelog_entry:
+    - type: internal
+      summary: No changes.
+  ir_version: 40
 - version: 0.23.5
   created_at: '2024-09-05'
   changelog_entry:
