@@ -66,6 +66,22 @@
                                         "type": "generic"
                                     },
                                     "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "xApiVersion: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "HEADERS",
+                                                "path": "X-API-Version",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
                                 }
                             ],
                             "type": "generic"
@@ -147,6 +163,22 @@
                                             {
                                                 "location": "HEADERS",
                                                 "path": "X-Another-Header",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "xApiVersion: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "HEADERS",
+                                                "path": "X-API-Version",
                                                 "type": "payload"
                                             }
                                         ],
