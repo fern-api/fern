@@ -2,7 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { FernIr as Ir } from "@fern-api/ir-sdk";
 import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
 
-export function convertAuth(auth: Ir.auth.ApiAuth): FdrCjsSdk.api.v1.register.ApiAuth | undefined {
+export function convertAuth(auth: Ir.auth.ApiAuth, ir: Ir.ir.IntermediateRepresentation): FdrCjsSdk.api.v1.register.ApiAuth | undefined {
     const scheme = auth.schemes[0];
     if (auth.schemes.length === 1 && scheme != null) {
         switch (scheme.type) {
@@ -25,15 +25,32 @@ export function convertAuth(auth: Ir.auth.ApiAuth): FdrCjsSdk.api.v1.register.Ap
                     prefix: scheme.prefix
                 };
             case "oauth":
-                // TODO: Add support oauth for FDR. For now, we just map
-                //       it to the default bearer auth.
+                // TODO: alter if we support more than one scheme
+
+                // We have to do the following, since the id passed on resolved endpoints is originalName
+                let endpointId: string = "";
+                for (const irService of Object.values(ir.services)) {
+                    for (const irEndpoint of irService.endpoints) {
+                        if (irEndpoint.id === scheme.configuration.tokenEndpoint.endpointReference.endpointId) {
+                            endpointId = irEndpoint.name.originalName;
+                    }
+                }
+                
                 return {
-                    type: "bearerAuth",
-                    tokenName: "token"
+                    type: "oAuth",
+                    value: {
+                        type: "clientCredentials",
+                        value: {
+                            type: "definedEndpoint",
+                            endpointId,
+                            accessTokenLocation: scheme.configuration.tokenEndpoint.responseProperties.accessToken.propertyPath,
+                            tokenPrefix: scheme.configuration.tokenPrefix
+                        }
+                    }
                 };
             default:
                 assertNever(scheme);
         }
     }
-    return undefined;
+    return undefined; 
 }

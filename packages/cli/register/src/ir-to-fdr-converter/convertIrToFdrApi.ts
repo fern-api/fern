@@ -16,7 +16,7 @@ export function convertIrToFdrApi({
         types: {},
         subpackages: {},
         rootPackage: convertPackage(ir.rootPackage, ir),
-        auth: convertAuth(ir.auth),
+        auth: convertAuth(ir.auth, ir),
         snippetsConfiguration: snippetsConfig,
         globalHeaders: ir.headers.map(
             (header): FdrCjsSdk.api.v1.register.Header => ({

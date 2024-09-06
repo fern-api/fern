@@ -261,6 +261,7 @@ export class DocsDefinitionResolver {
                 this.parsedDocsConfig.announcement != null
                     ? { text: this.parsedDocsConfig.announcement.message }
                     : undefined,
+            oAuthPlaygroundEnabled: this.parsedDocsConfig.oAuthPlaygroundEnabled,
             // deprecated
             logo: undefined,
             logoV2: undefined,
