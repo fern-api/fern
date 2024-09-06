@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public final class Cli extends AbstractGeneratorCli<SpringCustomConfig, SpringDownloadFilesCustomConfig> {
+public final class Cli extends AbstractGeneratorCli<SpringCustomConfig, SpringCustomConfig> {
 
     private static final Logger log = LoggerFactory.getLogger(Cli.class);
 
@@ -44,13 +44,10 @@ public final class Cli extends AbstractGeneratorCli<SpringCustomConfig, SpringDo
             DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir,
-            SpringDownloadFilesCustomConfig customConfig) {
+            SpringCustomConfig customConfig) {
         SpringGeneratorContext context = new SpringGeneratorContext(
                 ir,
                 generatorConfig,
-                SpringCustomConfig.builder()
-                        .wrappedAliases(customConfig.wrappedAliases())
-                        .build(),
                 customConfig,
                 new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes());
         generateClient(context, ir);
@@ -101,7 +98,7 @@ public final class Cli extends AbstractGeneratorCli<SpringCustomConfig, SpringDo
         maybeAuth.ifPresent(this::addGeneratedFile);
 
         // types
-        TypesGenerator typesGenerator = new TypesGenerator(context, springCustomConfig.enablePublicConstructors());
+        TypesGenerator typesGenerator = new TypesGenerator(context);
         Result generatedTypes = typesGenerator.generateFiles();
         generatedTypes.getTypes().values().forEach(this::addGeneratedFile);
         generatedTypes.getInterfaces().values().forEach(this::addGeneratedFile);
@@ -144,13 +141,13 @@ public final class Cli extends AbstractGeneratorCli<SpringCustomConfig, SpringDo
     }
 
     @Override
-    public SpringDownloadFilesCustomConfig getDownloadFilesCustomConfig(GeneratorConfig generatorConfig) {
+    public SpringCustomConfig getDownloadFilesCustomConfig(GeneratorConfig generatorConfig) {
         if (generatorConfig.getCustomConfig().isPresent()) {
             JsonNode node = ObjectMappers.JSON_MAPPER.valueToTree(
                     generatorConfig.getCustomConfig().get());
-            return ObjectMappers.JSON_MAPPER.convertValue(node, SpringDownloadFilesCustomConfig.class);
+            return ObjectMappers.JSON_MAPPER.convertValue(node, SpringCustomConfig.class);
         }
-        return SpringDownloadFilesCustomConfig.builder().build();
+        return SpringCustomConfig.builder().build();
     }
 
     @Override
