@@ -66,7 +66,7 @@ export class PropertyResolverImpl implements PropertyResolver {
         endpoint: string;
         propertyComponents: string[];
     }): Promise<RequestProperty | undefined> {
-        const resolvedEndpoint = this.endpointResolver.resolveEndpointOrThrow({
+        const resolvedEndpoint = await this.endpointResolver.resolveEndpointOrThrow({
             endpoint,
             file
         });
@@ -125,7 +125,7 @@ export class PropertyResolverImpl implements PropertyResolver {
         endpoint: string;
         propertyComponents: string[];
     }): Promise<ResponseProperty | undefined> {
-        const resolvedEndpoint = this.endpointResolver.resolveEndpointOrThrow({
+        const resolvedEndpoint = await this.endpointResolver.resolveEndpointOrThrow({
             endpoint,
             file
         });

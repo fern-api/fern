@@ -1,12 +1,20 @@
-import { FernWorkspace, getDefinitionFile } from "@fern-api/workspace-loader";
+import { HttpEndpointReferenceParser } from "@fern-api/fern-definition-schema";
+import { HttpMethod } from "@fern-api/ir-sdk";
+import {
+    FernWorkspace,
+    getDefinitionFile,
+    visitAllDefinitionFiles,
+    visitAllPackageMarkers
+} from "@fern-api/workspace-loader";
 import { constructFernFileContext, FernFileContext } from "../FernFileContext";
+import { CASINGS_GENERATOR } from "../utils/getAllPropertiesForObject";
 import { parseReferenceToEndpointName } from "../utils/parseReferenceToEndpointName";
 import { ResolvedEndpoint } from "./ResolvedEndpoint";
 
 export interface EndpointResolver {
     // Resolves an endpoint reference specified in a Fern definition (e.g. "auth.getToken").
-    resolveEndpoint: (args: { endpoint: string; file: FernFileContext }) => ResolvedEndpoint | undefined;
-    resolveEndpointOrThrow: (args: { endpoint: string; file: FernFileContext }) => ResolvedEndpoint;
+    resolveEndpoint: (args: { endpoint: string; file: FernFileContext }) => Promise<ResolvedEndpoint | undefined>;
+    resolveEndpointOrThrow: (args: { endpoint: string; file: FernFileContext }) => Promise<ResolvedEndpoint>;
 }
 
 interface RawEndpointInfo {
@@ -17,21 +25,79 @@ interface RawEndpointInfo {
 export class EndpointResolverImpl implements EndpointResolver {
     constructor(private readonly workspace: FernWorkspace) {}
 
-    public resolveEndpointOrThrow({ endpoint, file }: { endpoint: string; file: FernFileContext }): ResolvedEndpoint {
-        const resolvedEndpoint = this.resolveEndpoint({ endpoint, file });
+    public async resolveEndpointOrThrow({
+        endpoint,
+        file
+    }: {
+        endpoint: string;
+        file: FernFileContext;
+    }): Promise<ResolvedEndpoint> {
+        const resolvedEndpoint = await this.resolveEndpoint({ endpoint, file });
         if (resolvedEndpoint == null) {
             throw new Error("Cannot resolve endpoint: " + endpoint + " in file " + file.relativeFilepath);
         }
         return resolvedEndpoint;
     }
 
-    public resolveEndpoint({
+    public async resolveEndpointByMethodAndPath({
+        method,
+        path
+    }: {
+        method: HttpMethod;
+        path: string;
+    }): Promise<ResolvedEndpoint | undefined> {
+        let result: ResolvedEndpoint | undefined = undefined;
+        await visitAllDefinitionFiles(this.workspace, async (relativeFilepath, file, metadata) => {
+            const context = constructFernFileContext({
+                relativeFilepath,
+                definitionFile: file,
+                casingsGenerator: CASINGS_GENERATOR,
+                rootApiFile: this.workspace.definition.rootApiFile.contents,
+                defaultUrl: metadata.defaultUrl
+            });
+            for (const [endpointId, endpointDeclaration] of Object.entries(file.service?.endpoints ?? {})) {
+                if (endpointDeclaration.method === method && endpointDeclaration.path === path) {
+                    result = {
+                        endpointId,
+                        endpoint: endpointDeclaration,
+                        file: context
+                    };
+                }
+            }
+        });
+        await visitAllPackageMarkers(this.workspace, async (relativeFilepath, packageMarker) => {
+            const context = constructFernFileContext({
+                relativeFilepath,
+                definitionFile: packageMarker,
+                casingsGenerator: CASINGS_GENERATOR,
+                rootApiFile: this.workspace.definition.rootApiFile.contents
+            });
+            for (const [endpointId, endpointDeclaration] of Object.entries(packageMarker.service?.endpoints ?? {})) {
+                if (endpointDeclaration.method === method && endpointDeclaration.path === path) {
+                    result = {
+                        endpointId,
+                        endpoint: endpointDeclaration,
+                        file: context
+                    };
+                }
+            }
+        });
+        return result;
+    }
+
+    public async resolveEndpoint({
         endpoint,
         file
     }: {
         endpoint: string;
         file: FernFileContext;
-    }): ResolvedEndpoint | undefined {
+    }): Promise<ResolvedEndpoint | undefined> {
+        const referenceParser = new HttpEndpointReferenceParser();
+        const parsedEndpointReference = referenceParser.tryParse(endpoint);
+        if (parsedEndpointReference != null) {
+            return await this.resolveEndpointByMethodAndPath(parsedEndpointReference);
+        }
+
         const maybeDeclaration = this.getDeclarationOfEndpoint({
             referenceToEndpoint: endpoint,
             file

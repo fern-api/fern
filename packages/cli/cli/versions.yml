@@ -1,5 +1,25 @@
 - changelog_entry:
   - summary: |
+      Allow referencing by method and path. For example, when configuring an 
+      oauth scheme you can now do: 
+
+      ```oauth.yml 
+      auth-schemes: 
+        OAuth: 
+          scheme: oauth
+          type: client-credentials
+          get-token:
+            endpoint: POST /oauth/token
+      api:
+        auth: OAuth
+      ```
+    type: feat
+  created_at: '2024-09-06'
+  ir_version: 53
+  version: 0.41.3
+
+- changelog_entry:
+  - summary: |
       Fixes an issue introduced in `0.41.1` that ignored server urls for docs generation.
     type: fix
   - summary: |
