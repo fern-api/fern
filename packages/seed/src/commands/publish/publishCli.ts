@@ -1,11 +1,8 @@
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { CliReleaseRequest } from "@fern-fern/generators-sdk/api/resources/generators";
 import path from "path";
-import semver from "semver";
 import { PublishCommand } from "../../config/api";
 import { loadCliWorkspace } from "../../loadGeneratorWorkspaces";
-import { parseCliReleasesFile } from "../../utils/convertVersionsFileToReleases";
 import { runCommands, subVersion } from "../../utils/publishUtilities";
 import { getNewCliVersion, VersionFilePair } from "../../utils/versionUtilities";
 

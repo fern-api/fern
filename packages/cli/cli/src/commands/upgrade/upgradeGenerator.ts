@@ -7,7 +7,6 @@ import { readFile, writeFile } from "fs/promises";
 import path from "path";
 import YAML from "yaml";
 import { CliContext } from "../../cli-context/CliContext";
-import { Values } from "@fern-api/core-utils";
 import { FernRegistry } from "@fern-fern/generators-sdk";
 
 export async function loadAndUpdateGenerators({
