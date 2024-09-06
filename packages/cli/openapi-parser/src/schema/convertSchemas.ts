@@ -546,6 +546,15 @@ export function convertSchemaObject(
         }
     }
 
+    // handle type array
+    if (Array.isArray(schema.type)) {
+        if (schema.oneOf == null) {
+            schema.oneOf = schema.type;
+        } else {
+            schema.oneOf.push(...schema.type);
+        }
+    }
+
     // handle oneOf
     if (schema.oneOf != null && schema.oneOf.length > 0) {
         const isUndiscriminated = getExtension(schema, FernOpenAPIExtension.IS_UNDISCRIMINATED);
