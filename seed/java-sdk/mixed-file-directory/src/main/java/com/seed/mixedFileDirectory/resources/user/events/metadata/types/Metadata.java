@@ -14,6 +14,7 @@ import com.seed.mixedFileDirectory.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Metadata.Builder.class)
@@ -70,13 +71,13 @@ public final class Metadata {
     }
 
     public interface IdStage {
-        ValueStage id(String id);
+        ValueStage id(@NotNull String id);
 
         Builder from(Metadata other);
     }
 
     public interface ValueStage {
-        _FinalStage value(Object value);
+        _FinalStage value(@NotNull Object value);
     }
 
     public interface _FinalStage {
@@ -103,15 +104,15 @@ public final class Metadata {
 
         @java.lang.Override
         @JsonSetter("id")
-        public ValueStage id(String id) {
-            this.id = id;
+        public ValueStage id(@NotNull String id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("value")
-        public _FinalStage value(Object value) {
-            this.value = value;
+        public _FinalStage value(@NotNull Object value) {
+            this.value = Objects.requireNonNull(value, "value must not be null");
             return this;
         }
 

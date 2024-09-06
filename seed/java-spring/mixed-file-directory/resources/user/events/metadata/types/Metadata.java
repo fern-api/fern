@@ -13,6 +13,7 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 import types.Id;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -64,13 +65,13 @@ public final class Metadata {
   }
 
   public interface IdStage {
-    ValueStage id(Id id);
+    ValueStage id(@NotNull Id id);
 
     Builder from(Metadata other);
   }
 
   public interface ValueStage {
-    _FinalStage value(Object value);
+    _FinalStage value(@NotNull Object value);
   }
 
   public interface _FinalStage {
@@ -97,15 +98,15 @@ public final class Metadata {
 
     @java.lang.Override
     @JsonSetter("id")
-    public ValueStage id(Id id) {
-      this.id = id;
+    public ValueStage id(@NotNull Id id) {
+      this.id = Objects.requireNonNull(id, "id must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("value")
-    public _FinalStage value(Object value) {
-      this.value = value;
+    public _FinalStage value(@NotNull Object value) {
+      this.value = Objects.requireNonNull(value, "value must not be null");
       return this;
     }
 
