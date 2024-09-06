@@ -3,7 +3,7 @@
   ir_version: 53
   changelog_entry:
     - type: chore
-      summary: Rerelease 3.11.0-rc0 as a major version, with a configuration flag to disable the behavior (`use_pydantic_field_aliases`), defaulted to `true` to preserve existing behavior.
+      summary: Remove Pydantic field aliases and leverage an internal representation
       fixed:
         - >-
           Pydantic field aliases are removed and replaced with an internal
@@ -15,6 +15,18 @@
           used the deprecated `class Config`, regardless of the Pydantic version to satisfy mypy, which lead to warnings in the console.
 
           Now, we've removed the field aliases and replaced them with an internal representation, which allows us to avoid pydantic config altogether.
+
+
+          If you'd like to disable this feature, you can set `use_pydantic_field_aliases` to `true` in your configuration, which will preserve the existing behavior.
+
+          To maintain parity with pre-3.11.0 behavior, update the flag to `true`:
+            
+            ```yaml
+            - name: fernapi/fern-pydantic-model
+              version: 1.4.5
+              config:
+                use_pydantic_field_aliases: true
+            ```
 
         - >-
           Pydantic V2 `.dict` calls are updated to be back to pre-3.10.4 logic.
