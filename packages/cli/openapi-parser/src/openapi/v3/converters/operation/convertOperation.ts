@@ -1,4 +1,4 @@
-import { EndpointSdkName, EndpointWithExample, HttpMethod, Webhook } from "@fern-api/openapi-ir-sdk";
+import { EndpointSdkName, EndpointWithExample, HttpMethod, SdkGroupName, Webhook } from "@fern-api/openapi-ir-sdk";
 import { camelCase } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../../getExtension";
@@ -133,9 +133,9 @@ function getSdkGroupAndMethod(
     const sdkMethodName = getExtension<string>(operation, FernOpenAPIExtension.SDK_METHOD_NAME);
     const sdkGroupName = getExtension(operation, FernOpenAPIExtension.SDK_GROUP_NAME) ?? [];
     if (sdkMethodName != null) {
-        let groupName = typeof sdkGroupName === "string" ? [sdkGroupName] : sdkGroupName;
+        let groupName: SdkGroupName = typeof sdkGroupName === "string" ? [sdkGroupName] : sdkGroupName;
         if (namespace != null) {
-            groupName = [namespace, ...groupName];
+            groupName = [{ type: "namespace", name: namespace }, ...groupName];
         }
         return {
             groupName,
@@ -161,7 +161,7 @@ function getBaseBreadcrumbs({
         if (sdkMethodName.groupName.length > 0) {
             const lastGroupName = sdkMethodName.groupName[sdkMethodName.groupName.length - 1];
             if (lastGroupName != null) {
-                baseBreadcrumbs.push(lastGroupName);
+                baseBreadcrumbs.push(typeof lastGroupName === "string" ? lastGroupName : lastGroupName.name);
             }
         }
         baseBreadcrumbs.push(sdkMethodName.methodName);

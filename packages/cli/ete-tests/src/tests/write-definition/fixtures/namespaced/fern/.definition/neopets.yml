@@ -1,3 +1,5 @@
+imports:
+  root: neopets/__package__.yml
 service:
   auth: false
   base-path: ''
@@ -15,7 +17,7 @@ service:
             docs: How many items to return at one time (max 100)
       response:
         docs: A paged array of pets
-        type: Pets
+        type: root.Pets
       examples:
         - response:
             body:
@@ -40,7 +42,7 @@ service:
       display-name: Info for a specific pet
       response:
         docs: Expected response to a valid request
-        type: Pet
+        type: root.Pet
       examples:
         - path-parameters:
             petId: petId
@@ -51,18 +53,3 @@ service:
               tag: tag
   source:
     openapi: openapi/petstore/openapi.yml
-types:
-  Pet:
-    properties:
-      id: long
-      name: string
-      tag: optional<string>
-    source:
-      openapi: openapi/petstore/openapi.yml
-  Pets: list<Pet>
-  Error:
-    properties:
-      code: integer
-      message: string
-    source:
-      openapi: openapi/petstore/openapi.yml

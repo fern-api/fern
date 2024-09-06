@@ -64,6 +64,14 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         return this.refOccurrences[schema.$ref] ?? 0;
     }
 
+    public resolveTagsToTagIds(operationTags: string[] | undefined): string[] {
+        const tags: string[] = [];
+        if (this.namespace != null) {
+            tags.push(this.namespace);
+        }
+        return tags.concat(operationTags ?? []);
+    }
+
     public resolveTags(operationTags: string[] | undefined): SdkGroup[] {
         const tags: SdkGroup[] = [];
         if (this.namespace != null) {

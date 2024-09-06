@@ -8,6 +8,7 @@ import { buildTypeReference } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertFullExample } from "./utils/convertFullExample";
 import { tokenizeString } from "./utils/getEndpointLocation";
+import { convertSdkGroupNameToFile } from "./utils/convertSdkGroupName";
 
 export function buildWebhooks(context: OpenApiIrConverterContext): void {
     for (const webhook of context.ir.webhooks) {
@@ -65,12 +66,8 @@ function getWebhookLocation({
     context: OpenApiIrConverterContext;
 }): WebhookLocation | undefined {
     if (webhook.sdkName != null) {
-        const filename =
-            webhook.sdkName.groupName.length === 0
-                ? "__package__.yml"
-                : `${webhook.sdkName.groupName.map((part) => camelCase(part)).join("/")}.yml`;
         return {
-            file: RelativeFilePath.of(filename),
+            file: convertSdkGroupNameToFile(webhook.sdkName.groupName),
             endpointId: webhook.sdkName.methodName
         };
     }

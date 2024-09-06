@@ -20,11 +20,12 @@ export function buildServices(context: OpenApiIrConverterContext): {
         if (endpoint.sdkName != null) {
             const groupInfo: Record<string, FernOpenapiIr.SdkGroupInfo> = context.ir.groups;
             for (const groupName of endpoint.sdkName.groupName) {
-                const value = groupInfo[groupName];
+                const trueGroupName = typeof groupName === "string" ? groupName : groupName.name;
+                const value = groupInfo[trueGroupName];
                 if (value == null) {
                     break;
                 } else if (value.summary != null || value.description != null) {
-                    group = groupInfo[groupName];
+                    group = groupInfo[trueGroupName];
                     break;
                 }
             }

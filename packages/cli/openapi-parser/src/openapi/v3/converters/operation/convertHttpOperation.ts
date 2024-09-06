@@ -114,7 +114,7 @@ export function convertHttpOperation({
             operation.operationId != null && suffix != null
                 ? operation.operationId + "_" + suffix
                 : operation.operationId,
-        tags: context.resolveTags(operation.tags),
+        tags: context.resolveTagsToTagIds(operation.tags),
         sdkName: sdkMethodName,
         pathParameters: convertedParameters.pathParameters,
         queryParameters: convertedParameters.queryParameters,
