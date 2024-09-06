@@ -21,7 +21,7 @@ export async function parseGeneratorReleasesFile({
         for (const entry of changelogs) {
             try {
                 const release = serializers.generators.GeneratorReleaseRequest.parseOrThrow({
-                    generator_id: generatorId,
+                    generatorId,
                     ...entry
                 });
                 await action(release);
