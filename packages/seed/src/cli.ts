@@ -554,7 +554,7 @@ function addValidateCommands(cli: Argv) {
                 async (argv) => {
                     const generators = await loadGeneratorWorkspaces();
                     if (argv.generator != null) {
-                        throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [argv.generator ]});
+                        throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [argv.generator] });
                     }
                     const taskContextFactory = new TaskContextFactory(argv["log-level"]);
 
