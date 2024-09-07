@@ -1,0 +1,17 @@
+irVersion: v53
+test:
+  docker:
+    image: fernapi/fern-php-sdk:latest
+    command: pnpm --filter @fern-api/php-sdk dockerTagLatest
+  local:
+    workingDirectory: generators/php
+    buildCommand:
+      - pnpm --filter @fern-api/php-sdk dist:cli
+    runCommand: node sdk/dist/bundle.cjs
+
+language: php
+generatorType: SDK
+defaultOutputMode: github
+fixtures: {}
+scripts: []
+allowedFailures: []

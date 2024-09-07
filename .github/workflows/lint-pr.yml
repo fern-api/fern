@@ -33,6 +33,7 @@ jobs:
             java
             csharp
             go
+            php
             ruby
             seed
             postman
