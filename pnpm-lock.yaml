@@ -460,9 +460,6 @@ importers:
       '@fern-api/generator-commons':
         specifier: workspace:*
         version: link:../../commons
-      '@fern-api/logging-execa':
-        specifier: workspace:*
-        version: link:../../../packages/commons/logging-execa
       '@fern-fern/ir-sdk':
         specifier: ^53.7.0
         version: 53.9.0

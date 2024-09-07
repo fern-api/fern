@@ -5,8 +5,6 @@ export declare namespace Writer {
 }
 
 export class Writer {
-    constructor() {}
-
     public write(text: string): void {
         return;
     }
