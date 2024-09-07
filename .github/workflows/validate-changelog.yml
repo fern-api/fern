@@ -1,4 +1,4 @@
-name: validate seed changelog file
+name: changelog
 
 on:
   pull_request:
@@ -53,7 +53,7 @@ jobs:
 
       - name: Validate changelog
         run: |
-          pnpm seed:local validate generator pydantic --log-level debug   
+          pnpm seed:local validate generator pydantic --log-level debug
 
   python-sdk:
     runs-on: ubuntu-latest
@@ -68,8 +68,8 @@ jobs:
 
       - name: Validate changelog
         run: |
-          pnpm seed:local validate generator python-sdk --log-level debug      
-          
+          pnpm seed:local validate generator python-sdk --log-level debug
+
   go-sdk:
     runs-on: ubuntu-latest
     steps:
@@ -83,8 +83,8 @@ jobs:
 
       - name: Validate changelog
         run: |
-          pnpm seed:local validate generator go-sdk --log-level debug 
-          
+          pnpm seed:local validate generator go-sdk --log-level debug
+
   ruby-sdk:
     runs-on: ubuntu-latest
     steps:
@@ -98,4 +98,4 @@ jobs:
 
       - name: Validate changelog
         run: |
-          pnpm seed:local validate generator ruby-sdk --log-level debug           
+          pnpm seed:local validate generator ruby-sdk --log-level debug

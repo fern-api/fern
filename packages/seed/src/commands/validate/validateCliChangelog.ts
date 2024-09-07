@@ -55,7 +55,7 @@ async function validateCliChangelog({
                     context.logger.error(`Failed to parse: ${yaml.dump(entry)}`);
                 }
                 // eslint-disable-next-line
-                context.logger.error(e as string);
+                context.logger.error((e as Error)?.message);
             }
         }
     }
