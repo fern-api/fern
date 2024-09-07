@@ -34,5 +34,4 @@ export interface DocsConfiguration {
     integrations?: FernDocsConfig.IntegrationsConfig;
     css?: FernDocsConfig.CssConfig;
     js?: FernDocsConfig.JsConfig;
-    playground?: FernDocsConfig.GlobalPlaygroundConfig;
 }

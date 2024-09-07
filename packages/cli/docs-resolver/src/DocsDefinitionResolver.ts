@@ -262,7 +262,7 @@ export class DocsDefinitionResolver {
                 this.parsedDocsConfig.announcement != null
                     ? { text: this.parsedDocsConfig.announcement.message }
                     : undefined,
-            playground: this.parsedDocsConfig.playground,
+            playground: undefined,
             // deprecated
             logo: undefined,
             logoV2: undefined,
@@ -290,7 +290,6 @@ export class DocsDefinitionResolver {
 
     private async convertNavigationConfig(): Promise<DocsV1Write.NavigationConfig> {
         const slug = FernNavigation.SlugGenerator.init(FernNavigation.utils.slugjoin(this.getDocsBasePath()));
-        const landingPage = this.parsedDocsConfig.landingPage;
         switch (this.parsedDocsConfig.navigation.type) {
             case "versioned": {
                 const versions = await Promise.all(
@@ -384,9 +383,9 @@ export class DocsDefinitionResolver {
                 const apiDefinitionId = await this.registerApi({
                     ir,
                     snippetsConfig,
-                    playgroundConfig: this.parsedDocsConfig.playground
+                    playgroundConfig: { oauth: item.playground?.oauth }
                 });
-                const api = convertIrToApiDefinition(ir, apiDefinitionId, this.parsedDocsConfig.playground);
+                const api = convertIrToApiDefinition(ir, apiDefinitionId, { oauth: item.playground?.oauth });
                 const node = new ApiReferenceNodeConverter(
                     item,
                     api,

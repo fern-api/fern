@@ -154,9 +154,6 @@ types:
       css: optional<CssConfig>
       js: optional<JsConfig>
 
-      # playground
-      playground: optional<GlobalPlaygroundConfig>
-
   TabId: string
 
   TabConfig:
@@ -969,10 +966,6 @@ types:
 
           This behavior is unstable and may change in the future.
 
-  GlobalPlaygroundConfig:
-    properties:
-      oauth: optional<boolean>
-
   PlaygroundSettings:
     properties:
       environments:
@@ -980,6 +973,7 @@ types:
         docs: A list of environment IDs that are allowed to be used in the playground.
           If not provided, all environments are allowed. And if the provided list is empty, the playground should be disabled.
       button: optional<PlaygroundButtonSettings>
+      oauth: optional<boolean>
 
   PlaygroundButtonSettings:
     properties:

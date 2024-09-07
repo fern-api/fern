@@ -60,7 +60,6 @@ export async function parseDocsConfiguration({
         typography: rawTypography,
         layout,
         analytics: analyticsConfig,
-        playground,
         /* integrations */
         integrations,
 
@@ -145,7 +144,6 @@ export async function parseDocsConfiguration({
         typography,
         layout: convertLayoutConfig(layout),
         analyticsConfig: rawDocsConfiguration.analytics,
-        playground,
 
         /* integrations */
         integrations,

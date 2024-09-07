@@ -68,7 +68,6 @@ export * from "./TwitterCardSetting";
 export * from "./RedirectConfig";
 export * from "./IntegrationsConfig";
 export * from "./ExperimentalConfig";
-export * from "./GlobalPlaygroundConfig";
 export * from "./PlaygroundSettings";
 export * from "./PlaygroundButtonSettings";
 export * from "./AnnouncementConfig";

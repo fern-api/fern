@@ -59,7 +59,6 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     integrations: core.serialization.lazyObject(async () => (await import("../../..")).IntegrationsConfig).optional(),
     css: core.serialization.lazy(async () => (await import("../../..")).CssConfig).optional(),
     js: core.serialization.lazy(async () => (await import("../../..")).JsConfig).optional(),
-    playground: core.serialization.lazyObject(async () => (await import("../../..")).GlobalPlaygroundConfig).optional(),
 });
 
 export declare namespace DocsConfiguration {
@@ -87,6 +86,5 @@ export declare namespace DocsConfiguration {
         integrations?: serializers.IntegrationsConfig.Raw | null;
         css?: serializers.CssConfig.Raw | null;
         js?: serializers.JsConfig.Raw | null;
-        playground?: serializers.GlobalPlaygroundConfig.Raw | null;
     }
 }
