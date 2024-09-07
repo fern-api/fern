@@ -48,6 +48,7 @@ export class DocsDefinitionResolver {
         private registerApi: (opts: {
             ir: IntermediateRepresentation;
             snippetsConfig: APIV1Write.SnippetsConfig;
+            playgroundConfig?: DocsV1Write.PlaygroundConfig;
         }) => Promise<string>
     ) {}
 
@@ -261,7 +262,7 @@ export class DocsDefinitionResolver {
                 this.parsedDocsConfig.announcement != null
                     ? { text: this.parsedDocsConfig.announcement.message }
                     : undefined,
-            oAuthPlaygroundEnabled: this.parsedDocsConfig.oAuthPlaygroundEnabled,
+            playground: this.parsedDocsConfig.playground,
             // deprecated
             logo: undefined,
             logoV2: undefined,
@@ -380,8 +381,12 @@ export class DocsDefinitionResolver {
                     packageName: undefined,
                     context: this.taskContext
                 });
-                const apiDefinitionId = await this.registerApi({ ir, snippetsConfig });
-                const api = convertIrToApiDefinition(ir, apiDefinitionId);
+                const apiDefinitionId = await this.registerApi({
+                    ir,
+                    snippetsConfig,
+                    playgroundConfig: this.parsedDocsConfig.playground
+                });
+                const api = convertIrToApiDefinition(ir, apiDefinitionId, this.parsedDocsConfig.playground);
                 const node = new ApiReferenceNodeConverter(
                     item,
                     api,

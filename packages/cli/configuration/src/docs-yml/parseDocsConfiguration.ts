@@ -60,7 +60,7 @@ export async function parseDocsConfiguration({
         typography: rawTypography,
         layout,
         analytics: analyticsConfig,
-        oAuthPlaygroundEnabled,
+        playground,
         /* integrations */
         integrations,
 
@@ -117,8 +117,6 @@ export async function parseDocsConfiguration({
         metadataPromise
     ]);
 
-    const oAuthPlaygroundEnabled = rawDocsConfiguration.oAuthPlaygroundEnabled;
-
     return {
         title,
         // absoluteFilepath: absoluteFilepathToDocsConfig,
@@ -147,7 +145,7 @@ export async function parseDocsConfiguration({
         typography,
         layout: convertLayoutConfig(layout),
         analyticsConfig: rawDocsConfiguration.analytics,
-        oAuthPlaygroundEnabled,
+        playground,
 
         /* integrations */
         integrations,

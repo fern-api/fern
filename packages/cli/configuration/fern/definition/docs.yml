@@ -154,6 +154,9 @@ types:
       css: optional<CssConfig>
       js: optional<JsConfig>
 
+      # playground
+      playground: optional<GlobalPlaygroundConfig>
+
   TabId: string
 
   TabConfig:
@@ -966,6 +969,10 @@ types:
 
           This behavior is unstable and may change in the future.
 
+  GlobalPlaygroundConfig:
+    properties:
+      oauth: optional<boolean>
+
   PlaygroundSettings:
     properties:
       environments:
@@ -983,3 +990,4 @@ types:
       message:
         type: string
         docs: The message to display in the announcement bar. Markdown is supported.
+
