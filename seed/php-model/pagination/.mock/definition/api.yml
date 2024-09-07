@@ -1,0 +1,5 @@
+name: pagination
+auth: bearer
+pagination:
+  offset: $request.offset
+  results: $response.results

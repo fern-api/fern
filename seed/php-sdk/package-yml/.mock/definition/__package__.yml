@@ -1,0 +1,23 @@
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    echo:
+      method: POST
+      path: ""
+      request: EchoRequest
+      response: string
+      examples:
+        - path-parameters:
+            id: id-ksfd9c1
+          request:
+            name: Hello world!
+            size: 20
+          response:
+            body: Hello world!
+
+types:
+  EchoRequest:
+    properties:
+      name: string
+      size: integer

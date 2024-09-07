@@ -126,6 +126,8 @@ function getGithubPublishInfo({
             });
         case "swift":
             return undefined;
+        case "php":
+            return undefined;
         default:
             assertNever(language);
     }
@@ -166,6 +168,8 @@ function getPublishInfo({
         case "csharp":
             throw new Error("Seed doesn't support publish mode in C#!");
         case "swift":
+            throw new Error("Seed doesn't support publish mode in Swift");
+        case "php":
             throw new Error("Seed doesn't support publish mode in Swift");
         default:
             assertNever(language);
