@@ -1,4 +1,15 @@
 # For unreleased changes, use unreleased.yml
+- version: 1.4.9
+  ir_version: 53
+  changelog_entry:
+    - type: fix
+      summary: Default on `pydantic aliases`
+      fixed: 
+        - The previous version of the FastAPI generator defaulted on a setting 
+          which removed pydantic aliases. Because FastAPI calls into the 
+          pydantic serializers itself, the generated models must have 
+          aliases. 
+
 - version: 1.4.8
   ir_version: 53
   changelog_entry:

@@ -2,19 +2,15 @@
 
 from ......core.pydantic_utilities import UniversalBaseModel
 from .file_info_v_2 import FileInfoV2
-import typing_extensions
 import typing
 from .....commons.types.variable_type import VariableType
-from ......core.serialization import FieldMetadata
-from ......core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from ......core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class DefaultProvidedFile(UniversalBaseModel):
     file: FileInfoV2
-    related_types: typing_extensions.Annotated[
-        typing.List[VariableType], FieldMetadata(alias="relatedTypes")
-    ]
+    related_types: typing.List[VariableType] = pydantic.Field(alias="relatedTypes")
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
