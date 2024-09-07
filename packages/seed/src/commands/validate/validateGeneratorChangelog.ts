@@ -55,14 +55,17 @@ async function validateGeneratorChangelog({
                 const maybeVersion = (entry as any)?.version;
                 if (maybeVersion != null) {
                     context.logger.error(`${maybeVersion} is invalid`);
-                    console.log(e);
                 } else {
                     context.logger.error(`Failed to parse: ${yaml.dump(entry)}`);
                 }
+                // eslint-disable-next-line
+                context.logger.error(e as string);
             }
         }
     }
     if (!hasErrors) {
         context.logger.info(chalk.green("All changelogs are valid"));
+    } else {
+        context.failAndThrow();
     }
 }

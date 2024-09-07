@@ -54,10 +54,14 @@ async function validateCliChangelog({
                 } else {
                     context.logger.error(`Failed to parse: ${yaml.dump(entry)}`);
                 }
+                // eslint-disable-next-line
+                context.logger.error(e as string);
             }
         }
     }
     if (!hasErrors) {
         context.logger.info(chalk.green("All changelogs are valid"));
+    } else {
+        context.failAndThrow();
     }
 }

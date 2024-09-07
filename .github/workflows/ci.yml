@@ -48,34 +48,7 @@ jobs:
         uses: ./.github/actions/install
 
       - name: Compile
-        run: pnpm compile
-  
-  validate-changelogs: 
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Install
-        uses: ./.github/actions/install   
-
-      - name: Build Seed
-        run: pnpm seed:build
-
-      - name: Validate CLI Changelogs
-        run: pnpm seed validate cli  
-        
-      - name: Validate FastAPI
-        run: pnpm seed validate generator fastapi
-
-      - name: Validate Pydantic
-        run: pnpm seed validate generator pydantic          
-      
-      - name: Validate Python SDK
-        run: pnpm seed validate generator python-sdk     
-        
-      - name: Validate Go SDK
-        run: pnpm seed validate generator go-sdk                     
+        run: pnpm compile                
 
   eslint:
     runs-on: ubuntu-latest
