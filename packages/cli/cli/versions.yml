@@ -1,5 +1,36 @@
 - changelogEntry:
   - summary: |
+      The Fern Docs CLI now supports OAuth 2.0 Client Credentials injection in API playgrounds.
+      To enable this feature, you can define the OAuth Authorization Scheme in your API configuration,
+      and enable the feature in your docs configuration.
+
+      API configuration:
+      ```yml
+      api:
+        auth-schemes:
+          OAuth:
+            scheme: oauth
+            type: client-credentials
+            get-token:
+              endpoint: endpoint.authorization
+      ```
+      (More Information)[https://buildwithfern.com/learn/api-definition/fern/authentication#oauth-client-credentials]
+
+      Docs configuration:
+      ```yml
+      navigation:
+        section: API Reference
+          playground:
+            oauth: true
+      ```
+      (More Information)[https://buildwithfern.com/learn/docs/api-references/customize-api-playground]
+    type: feat
+  createdAt: '2024-09-07'
+  irVersion: 53
+  version: 0.41.6
+
+- changelogEntry:
+  - summary: |
       Fix an issue with non-deterministic file ordering when OpenAPI is used as input.
     type: fix
   createdAt: '2024-09-06'

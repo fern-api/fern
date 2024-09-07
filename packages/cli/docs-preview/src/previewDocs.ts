@@ -95,15 +95,17 @@ class ReferencedAPICollector {
 
     public addReferencedAPI({
         ir,
-        snippetsConfig
+        snippetsConfig,
+        playgroundConfig
     }: {
         ir: IntermediateRepresentation;
         snippetsConfig: APIV1Write.SnippetsConfig;
+        playgroundConfig?: DocsV1Read.PlaygroundConfig;
     }): APIDefinitionID {
         try {
             const id = uuidv4();
 
-            const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig });
+            const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig });
 
             const dbApiDefinition = convertAPIDefinitionToDb(
                 apiDefinition,

@@ -12,11 +12,13 @@ export const PlaygroundSettings: core.serialization.ObjectSchema<
 > = core.serialization.object({
     environments: core.serialization.list(core.serialization.string()).optional(),
     button: core.serialization.lazyObject(async () => (await import("../../..")).PlaygroundButtonSettings).optional(),
+    oauth: core.serialization.boolean().optional(),
 });
 
 export declare namespace PlaygroundSettings {
     interface Raw {
         environments?: string[] | null;
         button?: serializers.PlaygroundButtonSettings.Raw | null;
+        oauth?: boolean | null;
     }
 }

@@ -28,11 +28,11 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/docs-resolver": "workspace:*",
-    "@fern-api/fdr-sdk": "0.107.0-58bab3016",
+    "@fern-api/docs-resolver": "workspace:*", 
+    "@fern-api/fdr-sdk": "0.108.0-e5e9d69a4",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
-    "@fern-api/logger": "workspace:*",
+    "@fern-api/logger": "workspace:*", 
     "@fern-api/project-loader": "workspace:*",
     "@fern-api/register": "workspace:*",
     "@fern-api/task-context": "workspace:*",
