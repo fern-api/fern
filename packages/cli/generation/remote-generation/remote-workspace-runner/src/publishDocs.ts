@@ -150,8 +150,8 @@ export async function publishDocs({
                 }
             }
         },
-        async ({ ir, snippetsConfig }) => {
-            const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig });
+        async ({ ir, snippetsConfig, playgroundConfig }) => {
+            const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig });
             context.logger.debug("Calling registerAPI... ", JSON.stringify(apiDefinition, undefined, 4));
             const response = await fdr.api.v1.register.registerApiDefinition({
                 orgId: organization,
