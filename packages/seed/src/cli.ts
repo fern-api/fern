@@ -16,8 +16,8 @@ import { ScriptRunner } from "./commands/test/ScriptRunner";
 import { TaskContextFactory } from "./commands/test/TaskContextFactory";
 import { DockerTestRunner, LocalTestRunner } from "./commands/test/test-runner";
 import { FIXTURES, testGenerator } from "./commands/test/testWorkspaceFixtures";
-import { validateCliRelease } from "./commands/validate/validateCliRelease";
-import { validateGenerator } from "./commands/validate/validateGenerator";
+import { validateCliRelease } from "./commands/validate/validateCliChangelog";
+import { validateGenerator } from "./commands/validate/validateGeneratorChangelog";
 import { GeneratorWorkspace, loadGeneratorWorkspaces } from "./loadGeneratorWorkspaces";
 import { Semaphore } from "./Semaphore";
 
@@ -43,8 +43,6 @@ export async function tryRunCli(): Promise<void> {
     addLatestCommands(cli);
 
     await cli.parse();
-
-    CONSOLE_LOGGER.info("Seed has finished...");
 }
 
 function addTestCommand(cli: Argv) {
@@ -532,7 +530,7 @@ function addValidateCommands(cli: Argv) {
                     }),
                 async (argv) => {
                     const taskContextFactory = new TaskContextFactory(argv["log-level"]);
-                    const context = taskContextFactory.create("Register");
+                    const context = taskContextFactory.create("CLI");
 
                     await validateCliRelease({
                         context
@@ -555,11 +553,10 @@ function addValidateCommands(cli: Argv) {
                         }),
                 async (argv) => {
                     const generators = await loadGeneratorWorkspaces();
-                    if (argv.generators != null) {
-                        throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [argv.generator] });
+                    if (argv.generator != null) {
+                        throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [argv.generator ]});
                     }
                     const taskContextFactory = new TaskContextFactory(argv["log-level"]);
-                    const context = taskContextFactory.create("Register");
 
                     for (const generator of generators) {
                         // If you've specified a list of generators, and the current generator is not in that list, skip it
@@ -569,7 +566,7 @@ function addValidateCommands(cli: Argv) {
                         // Register the generator and it's versions
                         await validateGenerator({
                             generator,
-                            context
+                            context: taskContextFactory.create(argv.generator)
                         });
                     }
                 }
