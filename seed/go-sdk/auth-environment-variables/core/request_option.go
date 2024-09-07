@@ -5,6 +5,7 @@ package core
 import (
 	fmt "fmt"
 	http "net/http"
+	os "os"
 )
 
 // RequestOption adapts the behavior of the client or an individual request.
@@ -23,6 +24,7 @@ type RequestOptions struct {
 	MaxAttempts    uint
 	ApiKey         string
 	XAnotherHeader string
+	XApiVersion    string
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -47,6 +49,11 @@ func (r *RequestOptions) ToHeader() http.Header {
 		header.Set("X-FERN-API-KEY", fmt.Sprintf("%v", r.ApiKey))
 	}
 	header.Set("X-Another-Header", fmt.Sprintf("%v", r.XAnotherHeader))
+	xApiVersion := fmt.Sprintf("%v", "01-01-2000")
+	if envValue := os.Getenv("VERSION"); envValue != "" {
+		xApiVersion = envValue
+	}
+	header.Set("X-API-Version", xApiVersion)
 	return header
 }
 
@@ -110,4 +117,13 @@ type XAnotherHeaderOption struct {
 
 func (x *XAnotherHeaderOption) applyRequestOptions(opts *RequestOptions) {
 	opts.XAnotherHeader = x.XAnotherHeader
+}
+
+// XApiVersionOption implements the RequestOption interface.
+type XApiVersionOption struct {
+	XApiVersion string
+}
+
+func (x *XApiVersionOption) applyRequestOptions(opts *RequestOptions) {
+	opts.XApiVersion = x.XApiVersion
 }

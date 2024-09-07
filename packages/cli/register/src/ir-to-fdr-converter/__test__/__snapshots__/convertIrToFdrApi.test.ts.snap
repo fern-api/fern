@@ -1347,6 +1347,17 @@ exports[`fdr test definitions > auth-environment-variables 1`] = `
         },
       },
     },
+    {
+      "description": undefined,
+      "key": "X-API-Version",
+      "type": {
+        "type": "literal",
+        "value": {
+          "type": "stringLiteral",
+          "value": "01-01-2000",
+        },
+      },
+    },
   ],
   "rootPackage": {
     "endpoints": [],

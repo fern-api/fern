@@ -22,6 +22,7 @@ public partial class SeedAuthEnvironmentVariablesClient
             new Dictionary<string, string>()
             {
                 { "X-FERN-API-KEY", apiKey },
+                { "X-API-Version", "01-01-2000" },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedAuthEnvironmentVariables" },
                 { "X-Fern-SDK-Version", Version.Current },
