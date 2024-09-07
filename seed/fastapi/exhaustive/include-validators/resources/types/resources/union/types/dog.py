@@ -2,24 +2,21 @@
 
 from __future__ import annotations
 from ......core.pydantic_utilities import UniversalBaseModel
-import typing_extensions
-from ......core.serialization import FieldMetadata
+import pydantic
 import typing
+import typing_extensions
 from ......core.pydantic_utilities import universal_root_validator
 from ......core.pydantic_utilities import universal_field_validator
 from ......core.pydantic_utilities import IS_PYDANTIC_V2
-import pydantic
 
 
 class Dog(UniversalBaseModel):
     name: str
-    likes_to_woof: typing_extensions.Annotated[bool, FieldMetadata(alias="likesToWoof")]
+    likes_to_woof: bool = pydantic.Field(alias="likesToWoof")
 
     class Partial(typing.TypedDict):
         name: typing_extensions.NotRequired[str]
-        likes_to_woof: typing_extensions.NotRequired[
-            typing_extensions.Annotated[bool, FieldMetadata(alias="likesToWoof")]
-        ]
+        likes_to_woof: typing_extensions.NotRequired[bool]
 
     class Validators:
         """
@@ -34,7 +31,7 @@ class Dog(UniversalBaseModel):
                 ...
 
             @Dog.Validators.field("likes_to_woof")
-            def validate_likes_to_woof(likes_to_woof: typing_extensions.Annotated[bool, FieldMetadata(alias="likesToWoof")], values: Dog.Partial) -> typing_extensions.Annotated[bool, FieldMetadata(alias="likesToWoof")]:
+            def validate_likes_to_woof(likes_to_woof: bool, values: Dog.Partial) -> bool:
                 ...
         """
 
@@ -151,15 +148,7 @@ class Dog(UniversalBaseModel):
             ) -> typing.Any: ...
 
         class LikesToWoofValidator(typing.Protocol):
-            def __call__(
-                self,
-                __v: typing_extensions.Annotated[
-                    bool, FieldMetadata(alias="likesToWoof")
-                ],
-                __values: Dog.Partial,
-            ) -> typing_extensions.Annotated[
-                bool, FieldMetadata(alias="likesToWoof")
-            ]: ...
+            def __call__(self, __v: bool, __values: Dog.Partial) -> bool: ...
 
         class _PreRootValidator(typing.Protocol):
             def __call__(self, __values: typing.Any) -> typing.Any: ...
@@ -192,21 +181,13 @@ class Dog(UniversalBaseModel):
         return v
 
     @universal_field_validator("likes_to_woof", pre=True)
-    def _pre_validate_likes_to_woof(
-        cls,
-        v: typing_extensions.Annotated[bool, FieldMetadata(alias="likesToWoof")],
-        values: Dog.Partial,
-    ) -> typing_extensions.Annotated[bool, FieldMetadata(alias="likesToWoof")]:
+    def _pre_validate_likes_to_woof(cls, v: bool, values: Dog.Partial) -> bool:
         for validator in Dog.Validators._likes_to_woof_pre_validators:
             v = validator(v, values)
         return v
 
     @universal_field_validator("likes_to_woof", pre=False)
-    def _post_validate_likes_to_woof(
-        cls,
-        v: typing_extensions.Annotated[bool, FieldMetadata(alias="likesToWoof")],
-        values: Dog.Partial,
-    ) -> typing_extensions.Annotated[bool, FieldMetadata(alias="likesToWoof")]:
+    def _post_validate_likes_to_woof(cls, v: bool, values: Dog.Partial) -> bool:
         for validator in Dog.Validators._likes_to_woof_post_validators:
             v = validator(v, values)
         return v

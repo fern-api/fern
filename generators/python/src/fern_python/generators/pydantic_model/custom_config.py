@@ -45,7 +45,6 @@ class BasePydanticModelCustomConfig(pydantic.BaseModel):
     ```
     """
 
-    # Defaulted to false for all, then SDK custom config will override
     use_pydantic_field_aliases: bool = False
 
     @pydantic.model_validator(mode="after")

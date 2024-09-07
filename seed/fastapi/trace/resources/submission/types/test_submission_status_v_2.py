@@ -3,23 +3,17 @@
 from ....core.pydantic_utilities import UniversalBaseModel
 import typing
 from .test_submission_update import TestSubmissionUpdate
-import typing_extensions
 from ...commons.types.problem_id import ProblemId
-from ....core.serialization import FieldMetadata
+import pydantic
 from ...v_2.resources.problem.types.problem_info_v_2 import ProblemInfoV2
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
-import pydantic
 
 
 class TestSubmissionStatusV2(UniversalBaseModel):
     updates: typing.List[TestSubmissionUpdate]
-    problem_id: typing_extensions.Annotated[ProblemId, FieldMetadata(alias="problemId")]
-    problem_version: typing_extensions.Annotated[
-        int, FieldMetadata(alias="problemVersion")
-    ]
-    problem_info: typing_extensions.Annotated[
-        ProblemInfoV2, FieldMetadata(alias="problemInfo")
-    ]
+    problem_id: ProblemId = pydantic.Field(alias="problemId")
+    problem_version: int = pydantic.Field(alias="problemVersion")
+    problem_info: ProblemInfoV2 = pydantic.Field(alias="problemInfo")
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(

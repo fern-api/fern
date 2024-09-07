@@ -2,31 +2,29 @@
 
 from ....core.pydantic_utilities import UniversalBaseModel
 import typing
-import typing_extensions
-from ....core.serialization import FieldMetadata
+import pydantic
 from ....types.metadata import Metadata
 from ....types.query_column import QueryColumn
 from ....types.indexed_data import IndexedData
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
-import pydantic
 
 
 class QueryRequest(UniversalBaseModel):
     namespace: typing.Optional[str] = None
-    top_k: typing_extensions.Annotated[int, FieldMetadata(alias="topK")]
+    top_k: int = pydantic.Field(alias="topK")
     filter: typing.Optional[Metadata] = None
-    include_values: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="includeValues")
-    ] = None
-    include_metadata: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="includeMetadata")
-    ] = None
+    include_values: typing.Optional[bool] = pydantic.Field(
+        alias="includeValues", default=None
+    )
+    include_metadata: typing.Optional[bool] = pydantic.Field(
+        alias="includeMetadata", default=None
+    )
     queries: typing.Optional[typing.List[QueryColumn]] = None
     column: typing.Optional[typing.List[float]] = None
     id: typing.Optional[str] = None
-    indexed_data: typing_extensions.Annotated[
-        typing.Optional[IndexedData], FieldMetadata(alias="indexedData")
-    ] = None
+    indexed_data: typing.Optional[IndexedData] = pydantic.Field(
+        alias="indexedData", default=None
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(

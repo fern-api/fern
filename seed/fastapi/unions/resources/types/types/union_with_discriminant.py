@@ -9,7 +9,6 @@ import typing
 import typing_extensions
 import pydantic
 from ....core.pydantic_utilities import UniversalBaseModel
-from ....core.serialization import FieldMetadata
 from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
@@ -81,15 +80,11 @@ class UnionWithDiscriminant(UniversalRootModel):
 
 class _UnionWithDiscriminant:
     class Foo(UniversalBaseModel):
-        type: typing_extensions.Annotated[
-            typing.Literal["foo"], FieldMetadata(alias="_type")
-        ] = "foo"
+        type: typing.Literal["foo"] = pydantic.Field(alias="_type", default="foo")
         foo: resources_types_types_foo_Foo
 
     class Bar(UniversalBaseModel):
-        type: typing_extensions.Annotated[
-            typing.Literal["bar"], FieldMetadata(alias="_type")
-        ] = "bar"
+        type: typing.Literal["bar"] = pydantic.Field(alias="_type", default="bar")
         bar: resources_types_types_bar_Bar
 
 
