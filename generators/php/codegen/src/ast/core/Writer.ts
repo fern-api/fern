@@ -5,7 +5,9 @@ export declare namespace Writer {
 }
 
 export class Writer {
-    constructor({}: Writer.Args) {}
+    constructor() {}
 
-    public write(text: string): void {}
+    public write(text: string): void {
+        return;
+    }
 }
