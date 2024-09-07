@@ -1,7 +1,7 @@
 # For unreleased changes, use unreleased.yml
 - version: 1.4.9
-  ir_version: 53
-  changelog_entry:
+  irVersion: 53
+  changelogEntry:
     - type: fix
       summary: Default on `pydantic aliases`
       fixed: 
@@ -11,8 +11,8 @@
           aliases. 
 
 - version: 1.4.8
-  ir_version: 53
-  changelog_entry:
+  irVersion: 53
+  changelogEntry:
     - type: chore
       summary: Remove Pydantic field aliases and leverage an internal representation
       fixed:

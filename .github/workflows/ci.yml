@@ -48,7 +48,7 @@ jobs:
         uses: ./.github/actions/install
 
       - name: Compile
-        run: pnpm compile
+        run: pnpm compile                
 
   eslint:
     runs-on: ubuntu-latest
