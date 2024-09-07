@@ -1,4 +1,4 @@
-import { FernGeneratorExec } from "./GeneratorNotificationService";
+import { FernGeneratorExec } from "../GeneratorNotificationService";
 import { camelCase } from "lodash-es";
 
 export abstract class AbstractReadmeSnippetBuilder {
