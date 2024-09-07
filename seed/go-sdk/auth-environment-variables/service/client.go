@@ -26,6 +26,9 @@ func NewClient(opts ...option.RequestOption) *Client {
 	if options.XAnotherHeader == "" {
 		options.XAnotherHeader = os.Getenv("ANOTHER_ENV_VAR")
 	}
+	if options.XApiVersion == "" {
+		options.XApiVersion = os.Getenv("VERSION")
+	}
 	return &Client{
 		baseURL: options.BaseURL,
 		caller: core.NewCaller(

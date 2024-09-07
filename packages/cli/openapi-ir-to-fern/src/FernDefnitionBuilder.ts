@@ -5,6 +5,7 @@ import { RawSchemas, RootApiFileSchema, visitRawEnvironmentDeclaration } from "@
 import { camelCase, isEqual } from "lodash-es";
 import path, { basename, extname } from "path";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema";
+import { FernDefinitionDirectory } from "./FernDefinitionDirectory";
 
 export interface FernDefinitionBuilder {
     addNavigation({ navigation }: { navigation: string[] }): void;
@@ -86,9 +87,9 @@ export interface FernDefinition {
 }
 
 export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
+    private root: FernDefinitionDirectory;
     private rootApiFile: RawSchemas.RootApiFileSchema;
     private packageMarkerFile: RawSchemas.PackageMarkerFileSchema = {};
-    private definitionFiles: Record<RelativeFilePath, RawSchemas.DefinitionFileSchema> = {};
     private basePath: string | undefined = undefined;
 
     public constructor(
@@ -96,6 +97,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         private readonly modifyBasePaths: boolean,
         public readonly enableUniqueErrorsPerEndpoint: boolean
     ) {
+        this.root = new FernDefinitionDirectory();
         this.rootApiFile = {
             name: "api",
             "error-discrimination": {
@@ -404,6 +406,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     }
 
     public build(): FernDefinition {
+        const definitionFiles = this.root.getAllFiles();
         if (this.modifyBasePaths) {
             const basePath = getSharedEnvironmentBasePath(this.rootApiFile);
 
@@ -426,7 +429,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
             }
 
             // subsitute definition files
-            for (const [_, file] of Object.entries(this.definitionFiles)) {
+            for (const file of Object.values(definitionFiles)) {
                 if (file.service != null) {
                     file.service = {
                         ...file.service,
@@ -497,7 +500,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
             }
 
             // subsitute definition files
-            for (const [_, file] of Object.entries(this.definitionFiles)) {
+            for (const file of Object.values(definitionFiles)) {
                 if (file.service != null) {
                     file.service = {
                         ...file.service,
@@ -520,7 +523,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         const definition: FernDefinition = {
             rootApiFile: this.rootApiFile,
             packageMarkerFile: this.packageMarkerFile,
-            definitionFiles: this.definitionFiles
+            definitionFiles
         };
         return definition;
     }
@@ -531,7 +534,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         if (file === FERN_PACKAGE_MARKER_FILENAME) {
             return this.packageMarkerFile;
         } else {
-            return (this.definitionFiles[file] ??= {});
+            return this.root.getOrCreateFile(file);
         }
     }
 

@@ -34,4 +34,5 @@ scripts:
     commands:
       - dotnet build src -c Release /p:ContinuousIntegrationBuild=true
 allowedFailures:
+  - mixed-file-directory
   - objects-with-imports

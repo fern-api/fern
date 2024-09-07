@@ -11,6 +11,8 @@ export declare namespace SeedAuthEnvironmentVariablesClient {
         apiKey?: core.Supplier<string | undefined>;
         /** Override the X-Another-Header header */
         xAnotherHeader: core.Supplier<string>;
+        /** Override the X-API-Version header */
+        xApiVersion?: "01-01-2000";
     }
 
     interface RequestOptions {
@@ -22,6 +24,8 @@ export declare namespace SeedAuthEnvironmentVariablesClient {
         abortSignal?: AbortSignal;
         /** Override the X-Another-Header header */
         xAnotherHeader?: string;
+        /** Override the X-API-Version header */
+        xApiVersion?: "01-01-2000";
     }
 }
 

@@ -21,6 +21,7 @@ class BaseClientWrapper:
         }
         headers["X-Another-Header"] = self._x_another_header
         headers["X-FERN-API-KEY"] = self.api_key
+        headers["X-API-Version"] = "01-01-2000"
         return headers
 
     def get_base_url(self) -> str:

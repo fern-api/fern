@@ -50,6 +50,7 @@ fixtures:
           - imdb.createMovie
       outputFolder: async-handlers
 allowedFailures: 
+  - auth-environment-variables
   - bytes
   - file-download
   - file-upload

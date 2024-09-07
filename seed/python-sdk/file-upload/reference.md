@@ -114,6 +114,30 @@ typing.Optional[typing.List[core.File]]` — See core.File for more documentatio
 <dl>
 <dd>
 
+**optional_metadata:** `typing.Optional[typing.Optional[typing.Any]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**optional_object_type:** `typing.Optional[ObjectType]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**optional_id:** `typing.Optional[Id]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>

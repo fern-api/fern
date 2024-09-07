@@ -1,3 +1,17 @@
+- version: 0.24.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Add support for reading headers from environment variables (e.g. `X-API-Version`).
+  irVersion: 40
+- version: 0.23.7
+  createdAt: '2024-09-06'
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Fixes an issue where optional `unknown` values (typed as `interface{}`) were
+        mistakenly dereferenced.
+  irVersion: 40
 - version: 0.23.6
   createdAt: '2024-09-05'
   changelogEntry:

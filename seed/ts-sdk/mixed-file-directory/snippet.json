@@ -1,0 +1,49 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/organizations/",
+                "method": "POST",
+                "identifier_override": "endpoint_organization.create"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedMixedFileDirectoryClient } from \"@fern/mixed-file-directory\";\n\nconst client = new SeedMixedFileDirectoryClient({ environment: \"YOUR_BASE_URL\" });\nawait client.organization.create({\n    name: \"string\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users/",
+                "method": "GET",
+                "identifier_override": "endpoint_user.list"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedMixedFileDirectoryClient } from \"@fern/mixed-file-directory\";\n\nconst client = new SeedMixedFileDirectoryClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.list({\n    limit: 1\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users/events/",
+                "method": "GET",
+                "identifier_override": "endpoint_user/events.listEvents"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedMixedFileDirectoryClient } from \"@fern/mixed-file-directory\";\n\nconst client = new SeedMixedFileDirectoryClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.events.listEvents({\n    limit: 1\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users/events/metadata/",
+                "method": "GET",
+                "identifier_override": "endpoint_user/events/metadata.getMetadata"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedMixedFileDirectoryClient } from \"@fern/mixed-file-directory\";\n\nconst client = new SeedMixedFileDirectoryClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.events.metadata.getMetadata({\n    id: \"string\"\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

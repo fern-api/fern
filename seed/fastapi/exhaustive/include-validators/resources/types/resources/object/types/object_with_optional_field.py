@@ -4,10 +4,9 @@ from __future__ import annotations
 from ......core.pydantic_utilities import UniversalBaseModel
 import typing
 import pydantic
-import typing_extensions
-from ......core.serialization import FieldMetadata
 import datetime as dt
 import uuid
+import typing_extensions
 from ......core.pydantic_utilities import universal_root_validator
 from ......core.pydantic_utilities import universal_field_validator
 from ......core.pydantic_utilities import IS_PYDANTIC_V2
@@ -20,73 +19,35 @@ class ObjectWithOptionalField(UniversalBaseModel):
     """
 
     integer: typing.Optional[int] = None
-    long_: typing_extensions.Annotated[
-        typing.Optional[int], FieldMetadata(alias="long")
-    ] = None
+    long_: typing.Optional[int] = pydantic.Field(alias="long", default=None)
     double: typing.Optional[float] = None
-    bool_: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="bool")
-    ] = None
+    bool_: typing.Optional[bool] = pydantic.Field(alias="bool", default=None)
     datetime: typing.Optional[dt.datetime] = None
     date: typing.Optional[dt.date] = None
-    uuid_: typing_extensions.Annotated[
-        typing.Optional[uuid.UUID], FieldMetadata(alias="uuid")
-    ] = None
-    base_64: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="base64")
-    ] = None
-    list_: typing_extensions.Annotated[
-        typing.Optional[typing.List[str]], FieldMetadata(alias="list")
-    ] = None
-    set_: typing_extensions.Annotated[
-        typing.Optional[typing.Set[str]], FieldMetadata(alias="set")
-    ] = None
-    map_: typing_extensions.Annotated[
-        typing.Optional[typing.Dict[int, str]], FieldMetadata(alias="map")
-    ] = None
+    uuid_: typing.Optional[uuid.UUID] = pydantic.Field(alias="uuid", default=None)
+    base_64: typing.Optional[str] = pydantic.Field(alias="base64", default=None)
+    list_: typing.Optional[typing.List[str]] = pydantic.Field(
+        alias="list", default=None
+    )
+    set_: typing.Optional[typing.Set[str]] = pydantic.Field(alias="set", default=None)
+    map_: typing.Optional[typing.Dict[int, str]] = pydantic.Field(
+        alias="map", default=None
+    )
     bigint: typing.Optional[str] = None
 
     class Partial(typing.TypedDict):
         string: typing_extensions.NotRequired[typing.Optional[str]]
         integer: typing_extensions.NotRequired[typing.Optional[int]]
-        long_: typing_extensions.NotRequired[
-            typing_extensions.Annotated[
-                typing.Optional[int], FieldMetadata(alias="long")
-            ]
-        ]
+        long_: typing_extensions.NotRequired[typing.Optional[int]]
         double: typing_extensions.NotRequired[typing.Optional[float]]
-        bool_: typing_extensions.NotRequired[
-            typing_extensions.Annotated[
-                typing.Optional[bool], FieldMetadata(alias="bool")
-            ]
-        ]
+        bool_: typing_extensions.NotRequired[typing.Optional[bool]]
         datetime: typing_extensions.NotRequired[typing.Optional[dt.datetime]]
         date: typing_extensions.NotRequired[typing.Optional[dt.date]]
-        uuid_: typing_extensions.NotRequired[
-            typing_extensions.Annotated[
-                typing.Optional[uuid.UUID], FieldMetadata(alias="uuid")
-            ]
-        ]
-        base_64: typing_extensions.NotRequired[
-            typing_extensions.Annotated[
-                typing.Optional[str], FieldMetadata(alias="base64")
-            ]
-        ]
-        list_: typing_extensions.NotRequired[
-            typing_extensions.Annotated[
-                typing.Optional[typing.List[str]], FieldMetadata(alias="list")
-            ]
-        ]
-        set_: typing_extensions.NotRequired[
-            typing_extensions.Annotated[
-                typing.Optional[typing.Set[str]], FieldMetadata(alias="set")
-            ]
-        ]
-        map_: typing_extensions.NotRequired[
-            typing_extensions.Annotated[
-                typing.Optional[typing.Dict[int, str]], FieldMetadata(alias="map")
-            ]
-        ]
+        uuid_: typing_extensions.NotRequired[typing.Optional[uuid.UUID]]
+        base_64: typing_extensions.NotRequired[typing.Optional[str]]
+        list_: typing_extensions.NotRequired[typing.Optional[typing.List[str]]]
+        set_: typing_extensions.NotRequired[typing.Optional[typing.Set[str]]]
+        map_: typing_extensions.NotRequired[typing.Optional[typing.Dict[int, str]]]
         bigint: typing_extensions.NotRequired[typing.Optional[str]]
 
     class Validators:
@@ -106,7 +67,7 @@ class ObjectWithOptionalField(UniversalBaseModel):
                 ...
 
             @ObjectWithOptionalField.Validators.field("long_")
-            def validate_long_(long_: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="long")], values: ObjectWithOptionalField.Partial) -> typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="long")]:
+            def validate_long_(long_: typing.Optional[int], values: ObjectWithOptionalField.Partial) -> typing.Optional[int]:
                 ...
 
             @ObjectWithOptionalField.Validators.field("double")
@@ -114,7 +75,7 @@ class ObjectWithOptionalField(UniversalBaseModel):
                 ...
 
             @ObjectWithOptionalField.Validators.field("bool_")
-            def validate_bool_(bool_: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="bool")], values: ObjectWithOptionalField.Partial) -> typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="bool")]:
+            def validate_bool_(bool_: typing.Optional[bool], values: ObjectWithOptionalField.Partial) -> typing.Optional[bool]:
                 ...
 
             @ObjectWithOptionalField.Validators.field("datetime")
@@ -126,23 +87,23 @@ class ObjectWithOptionalField(UniversalBaseModel):
                 ...
 
             @ObjectWithOptionalField.Validators.field("uuid_")
-            def validate_uuid_(uuid_: typing_extensions.Annotated[typing.Optional[uuid.UUID], FieldMetadata(alias="uuid")], values: ObjectWithOptionalField.Partial) -> typing_extensions.Annotated[typing.Optional[uuid.UUID], FieldMetadata(alias="uuid")]:
+            def validate_uuid_(uuid_: typing.Optional[uuid.UUID], values: ObjectWithOptionalField.Partial) -> typing.Optional[uuid.UUID]:
                 ...
 
             @ObjectWithOptionalField.Validators.field("base_64")
-            def validate_base_64(base_64: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="base64")], values: ObjectWithOptionalField.Partial) -> typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="base64")]:
+            def validate_base_64(base_64: typing.Optional[str], values: ObjectWithOptionalField.Partial) -> typing.Optional[str]:
                 ...
 
             @ObjectWithOptionalField.Validators.field("list_")
-            def validate_list_(list_: typing_extensions.Annotated[typing.Optional[typing.List[str]], FieldMetadata(alias="list")], values: ObjectWithOptionalField.Partial) -> typing_extensions.Annotated[typing.Optional[typing.List[str]], FieldMetadata(alias="list")]:
+            def validate_list_(list_: typing.Optional[typing.List[str]], values: ObjectWithOptionalField.Partial) -> typing.Optional[typing.List[str]]:
                 ...
 
             @ObjectWithOptionalField.Validators.field("set_")
-            def validate_set_(set_: typing_extensions.Annotated[typing.Optional[typing.Set[str]], FieldMetadata(alias="set")], values: ObjectWithOptionalField.Partial) -> typing_extensions.Annotated[typing.Optional[typing.Set[str]], FieldMetadata(alias="set")]:
+            def validate_set_(set_: typing.Optional[typing.Set[str]], values: ObjectWithOptionalField.Partial) -> typing.Optional[typing.Set[str]]:
                 ...
 
             @ObjectWithOptionalField.Validators.field("map_")
-            def validate_map_(map_: typing_extensions.Annotated[typing.Optional[typing.Dict[int, str]], FieldMetadata(alias="map")], values: ObjectWithOptionalField.Partial) -> typing_extensions.Annotated[typing.Optional[typing.Dict[int, str]], FieldMetadata(alias="map")]:
+            def validate_map_(map_: typing.Optional[typing.Dict[int, str]], values: ObjectWithOptionalField.Partial) -> typing.Optional[typing.Dict[int, str]]:
                 ...
 
             @ObjectWithOptionalField.Validators.field("bigint")
@@ -613,13 +574,9 @@ class ObjectWithOptionalField(UniversalBaseModel):
         class LongValidator(typing.Protocol):
             def __call__(
                 self,
-                __v: typing_extensions.Annotated[
-                    typing.Optional[int], FieldMetadata(alias="long")
-                ],
+                __v: typing.Optional[int],
                 __values: ObjectWithOptionalField.Partial,
-            ) -> typing_extensions.Annotated[
-                typing.Optional[int], FieldMetadata(alias="long")
-            ]: ...
+            ) -> typing.Optional[int]: ...
 
         class PreDoubleValidator(typing.Protocol):
             def __call__(
@@ -641,13 +598,9 @@ class ObjectWithOptionalField(UniversalBaseModel):
         class BoolValidator(typing.Protocol):
             def __call__(
                 self,
-                __v: typing_extensions.Annotated[
-                    typing.Optional[bool], FieldMetadata(alias="bool")
-                ],
+                __v: typing.Optional[bool],
                 __values: ObjectWithOptionalField.Partial,
-            ) -> typing_extensions.Annotated[
-                typing.Optional[bool], FieldMetadata(alias="bool")
-            ]: ...
+            ) -> typing.Optional[bool]: ...
 
         class PreDatetimeValidator(typing.Protocol):
             def __call__(
@@ -681,13 +634,9 @@ class ObjectWithOptionalField(UniversalBaseModel):
         class UuidValidator(typing.Protocol):
             def __call__(
                 self,
-                __v: typing_extensions.Annotated[
-                    typing.Optional[uuid.UUID], FieldMetadata(alias="uuid")
-                ],
+                __v: typing.Optional[uuid.UUID],
                 __values: ObjectWithOptionalField.Partial,
-            ) -> typing_extensions.Annotated[
-                typing.Optional[uuid.UUID], FieldMetadata(alias="uuid")
-            ]: ...
+            ) -> typing.Optional[uuid.UUID]: ...
 
         class PreBase64Validator(typing.Protocol):
             def __call__(
@@ -697,13 +646,9 @@ class ObjectWithOptionalField(UniversalBaseModel):
         class Base64Validator(typing.Protocol):
             def __call__(
                 self,
-                __v: typing_extensions.Annotated[
-                    typing.Optional[str], FieldMetadata(alias="base64")
-                ],
+                __v: typing.Optional[str],
                 __values: ObjectWithOptionalField.Partial,
-            ) -> typing_extensions.Annotated[
-                typing.Optional[str], FieldMetadata(alias="base64")
-            ]: ...
+            ) -> typing.Optional[str]: ...
 
         class PreListValidator(typing.Protocol):
             def __call__(
@@ -713,13 +658,9 @@ class ObjectWithOptionalField(UniversalBaseModel):
         class ListValidator(typing.Protocol):
             def __call__(
                 self,
-                __v: typing_extensions.Annotated[
-                    typing.Optional[typing.List[str]], FieldMetadata(alias="list")
-                ],
+                __v: typing.Optional[typing.List[str]],
                 __values: ObjectWithOptionalField.Partial,
-            ) -> typing_extensions.Annotated[
-                typing.Optional[typing.List[str]], FieldMetadata(alias="list")
-            ]: ...
+            ) -> typing.Optional[typing.List[str]]: ...
 
         class PreSetValidator(typing.Protocol):
             def __call__(
@@ -729,13 +670,9 @@ class ObjectWithOptionalField(UniversalBaseModel):
         class SetValidator(typing.Protocol):
             def __call__(
                 self,
-                __v: typing_extensions.Annotated[
-                    typing.Optional[typing.Set[str]], FieldMetadata(alias="set")
-                ],
+                __v: typing.Optional[typing.Set[str]],
                 __values: ObjectWithOptionalField.Partial,
-            ) -> typing_extensions.Annotated[
-                typing.Optional[typing.Set[str]], FieldMetadata(alias="set")
-            ]: ...
+            ) -> typing.Optional[typing.Set[str]]: ...
 
         class PreMapValidator(typing.Protocol):
             def __call__(
@@ -745,13 +682,9 @@ class ObjectWithOptionalField(UniversalBaseModel):
         class MapValidator(typing.Protocol):
             def __call__(
                 self,
-                __v: typing_extensions.Annotated[
-                    typing.Optional[typing.Dict[int, str]], FieldMetadata(alias="map")
-                ],
+                __v: typing.Optional[typing.Dict[int, str]],
                 __values: ObjectWithOptionalField.Partial,
-            ) -> typing_extensions.Annotated[
-                typing.Optional[typing.Dict[int, str]], FieldMetadata(alias="map")
-            ]: ...
+            ) -> typing.Optional[typing.Dict[int, str]]: ...
 
         class PreBigintValidator(typing.Protocol):
             def __call__(
@@ -823,24 +756,16 @@ class ObjectWithOptionalField(UniversalBaseModel):
 
     @universal_field_validator("long_", pre=True)
     def _pre_validate_long_(
-        cls,
-        v: typing_extensions.Annotated[
-            typing.Optional[int], FieldMetadata(alias="long")
-        ],
-        values: ObjectWithOptionalField.Partial,
-    ) -> typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="long")]:
+        cls, v: typing.Optional[int], values: ObjectWithOptionalField.Partial
+    ) -> typing.Optional[int]:
         for validator in ObjectWithOptionalField.Validators._long__pre_validators:
             v = validator(v, values)
         return v
 
     @universal_field_validator("long_", pre=False)
     def _post_validate_long_(
-        cls,
-        v: typing_extensions.Annotated[
-            typing.Optional[int], FieldMetadata(alias="long")
-        ],
-        values: ObjectWithOptionalField.Partial,
-    ) -> typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="long")]:
+        cls, v: typing.Optional[int], values: ObjectWithOptionalField.Partial
+    ) -> typing.Optional[int]:
         for validator in ObjectWithOptionalField.Validators._long__post_validators:
             v = validator(v, values)
         return v
@@ -863,28 +788,16 @@ class ObjectWithOptionalField(UniversalBaseModel):
 
     @universal_field_validator("bool_", pre=True)
     def _pre_validate_bool_(
-        cls,
-        v: typing_extensions.Annotated[
-            typing.Optional[bool], FieldMetadata(alias="bool")
-        ],
-        values: ObjectWithOptionalField.Partial,
-    ) -> typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="bool")
-    ]:
+        cls, v: typing.Optional[bool], values: ObjectWithOptionalField.Partial
+    ) -> typing.Optional[bool]:
         for validator in ObjectWithOptionalField.Validators._bool__pre_validators:
             v = validator(v, values)
         return v
 
     @universal_field_validator("bool_", pre=False)
     def _post_validate_bool_(
-        cls,
-        v: typing_extensions.Annotated[
-            typing.Optional[bool], FieldMetadata(alias="bool")
-        ],
-        values: ObjectWithOptionalField.Partial,
-    ) -> typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="bool")
-    ]:
+        cls, v: typing.Optional[bool], values: ObjectWithOptionalField.Partial
+    ) -> typing.Optional[bool]:
         for validator in ObjectWithOptionalField.Validators._bool__post_validators:
             v = validator(v, values)
         return v
@@ -923,56 +836,32 @@ class ObjectWithOptionalField(UniversalBaseModel):
 
     @universal_field_validator("uuid_", pre=True)
     def _pre_validate_uuid_(
-        cls,
-        v: typing_extensions.Annotated[
-            typing.Optional[uuid.UUID], FieldMetadata(alias="uuid")
-        ],
-        values: ObjectWithOptionalField.Partial,
-    ) -> typing_extensions.Annotated[
-        typing.Optional[uuid.UUID], FieldMetadata(alias="uuid")
-    ]:
+        cls, v: typing.Optional[uuid.UUID], values: ObjectWithOptionalField.Partial
+    ) -> typing.Optional[uuid.UUID]:
         for validator in ObjectWithOptionalField.Validators._uuid__pre_validators:
             v = validator(v, values)
         return v
 
     @universal_field_validator("uuid_", pre=False)
     def _post_validate_uuid_(
-        cls,
-        v: typing_extensions.Annotated[
-            typing.Optional[uuid.UUID], FieldMetadata(alias="uuid")
-        ],
-        values: ObjectWithOptionalField.Partial,
-    ) -> typing_extensions.Annotated[
-        typing.Optional[uuid.UUID], FieldMetadata(alias="uuid")
-    ]:
+        cls, v: typing.Optional[uuid.UUID], values: ObjectWithOptionalField.Partial
+    ) -> typing.Optional[uuid.UUID]:
         for validator in ObjectWithOptionalField.Validators._uuid__post_validators:
             v = validator(v, values)
         return v
 
     @universal_field_validator("base_64", pre=True)
     def _pre_validate_base_64(
-        cls,
-        v: typing_extensions.Annotated[
-            typing.Optional[str], FieldMetadata(alias="base64")
-        ],
-        values: ObjectWithOptionalField.Partial,
-    ) -> typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="base64")
-    ]:
+        cls, v: typing.Optional[str], values: ObjectWithOptionalField.Partial
+    ) -> typing.Optional[str]:
         for validator in ObjectWithOptionalField.Validators._base_64_pre_validators:
             v = validator(v, values)
         return v
 
     @universal_field_validator("base_64", pre=False)
     def _post_validate_base_64(
-        cls,
-        v: typing_extensions.Annotated[
-            typing.Optional[str], FieldMetadata(alias="base64")
-        ],
-        values: ObjectWithOptionalField.Partial,
-    ) -> typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="base64")
-    ]:
+        cls, v: typing.Optional[str], values: ObjectWithOptionalField.Partial
+    ) -> typing.Optional[str]:
         for validator in ObjectWithOptionalField.Validators._base_64_post_validators:
             v = validator(v, values)
         return v
@@ -980,13 +869,9 @@ class ObjectWithOptionalField(UniversalBaseModel):
     @universal_field_validator("list_", pre=True)
     def _pre_validate_list_(
         cls,
-        v: typing_extensions.Annotated[
-            typing.Optional[typing.List[str]], FieldMetadata(alias="list")
-        ],
+        v: typing.Optional[typing.List[str]],
         values: ObjectWithOptionalField.Partial,
-    ) -> typing_extensions.Annotated[
-        typing.Optional[typing.List[str]], FieldMetadata(alias="list")
-    ]:
+    ) -> typing.Optional[typing.List[str]]:
         for validator in ObjectWithOptionalField.Validators._list__pre_validators:
             v = validator(v, values)
         return v
@@ -994,13 +879,9 @@ class ObjectWithOptionalField(UniversalBaseModel):
     @universal_field_validator("list_", pre=False)
     def _post_validate_list_(
         cls,
-        v: typing_extensions.Annotated[
-            typing.Optional[typing.List[str]], FieldMetadata(alias="list")
-        ],
+        v: typing.Optional[typing.List[str]],
         values: ObjectWithOptionalField.Partial,
-    ) -> typing_extensions.Annotated[
-        typing.Optional[typing.List[str]], FieldMetadata(alias="list")
-    ]:
+    ) -> typing.Optional[typing.List[str]]:
         for validator in ObjectWithOptionalField.Validators._list__post_validators:
             v = validator(v, values)
         return v
@@ -1008,13 +889,9 @@ class ObjectWithOptionalField(UniversalBaseModel):
     @universal_field_validator("set_", pre=True)
     def _pre_validate_set_(
         cls,
-        v: typing_extensions.Annotated[
-            typing.Optional[typing.Set[str]], FieldMetadata(alias="set")
-        ],
+        v: typing.Optional[typing.Set[str]],
         values: ObjectWithOptionalField.Partial,
-    ) -> typing_extensions.Annotated[
-        typing.Optional[typing.Set[str]], FieldMetadata(alias="set")
-    ]:
+    ) -> typing.Optional[typing.Set[str]]:
         for validator in ObjectWithOptionalField.Validators._set__pre_validators:
             v = validator(v, values)
         return v
@@ -1022,13 +899,9 @@ class ObjectWithOptionalField(UniversalBaseModel):
     @universal_field_validator("set_", pre=False)
     def _post_validate_set_(
         cls,
-        v: typing_extensions.Annotated[
-            typing.Optional[typing.Set[str]], FieldMetadata(alias="set")
-        ],
+        v: typing.Optional[typing.Set[str]],
         values: ObjectWithOptionalField.Partial,
-    ) -> typing_extensions.Annotated[
-        typing.Optional[typing.Set[str]], FieldMetadata(alias="set")
-    ]:
+    ) -> typing.Optional[typing.Set[str]]:
         for validator in ObjectWithOptionalField.Validators._set__post_validators:
             v = validator(v, values)
         return v
@@ -1036,13 +909,9 @@ class ObjectWithOptionalField(UniversalBaseModel):
     @universal_field_validator("map_", pre=True)
     def _pre_validate_map_(
         cls,
-        v: typing_extensions.Annotated[
-            typing.Optional[typing.Dict[int, str]], FieldMetadata(alias="map")
-        ],
+        v: typing.Optional[typing.Dict[int, str]],
         values: ObjectWithOptionalField.Partial,
-    ) -> typing_extensions.Annotated[
-        typing.Optional[typing.Dict[int, str]], FieldMetadata(alias="map")
-    ]:
+    ) -> typing.Optional[typing.Dict[int, str]]:
         for validator in ObjectWithOptionalField.Validators._map__pre_validators:
             v = validator(v, values)
         return v
@@ -1050,13 +919,9 @@ class ObjectWithOptionalField(UniversalBaseModel):
     @universal_field_validator("map_", pre=False)
     def _post_validate_map_(
         cls,
-        v: typing_extensions.Annotated[
-            typing.Optional[typing.Dict[int, str]], FieldMetadata(alias="map")
-        ],
+        v: typing.Optional[typing.Dict[int, str]],
         values: ObjectWithOptionalField.Partial,
-    ) -> typing_extensions.Annotated[
-        typing.Optional[typing.Dict[int, str]], FieldMetadata(alias="map")
-    ]:
+    ) -> typing.Optional[typing.Dict[int, str]]:
         for validator in ObjectWithOptionalField.Validators._map__post_validators:
             v = validator(v, values)
         return v

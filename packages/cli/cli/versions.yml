@@ -27,6 +27,14 @@
     type: feat
   createdAt: '2024-09-07'
   irVersion: 53
+  version: 0.41.6
+
+- changelogEntry:
+  - summary: |
+      Fix an issue with non-deterministic file ordering when OpenAPI is used as input.
+    type: fix
+  createdAt: '2024-09-06'
+  irVersion: 53
   version: 0.41.5
 
 - changelogEntry:
