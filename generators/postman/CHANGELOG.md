@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] - 2024-08-30
+
+- Feat: Introduces a `collection-name` configuration that allows you to control 
+  the name of the collection in the generated Postman collection. 
+
+  ```yml
+  groups: 
+    generators: 
+      postman: 
+        - name: fernapi/fern-postman
+          version: 0.4.0
+          config: 
+            collection-name: My collection name
+  ```
+
 ## [0.3.2] - 2024-08-30
 
 - Fix: Increase timeout to 180 seconds when pubishing to postman. 

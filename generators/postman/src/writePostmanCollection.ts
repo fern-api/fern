@@ -9,13 +9,13 @@ import { PublishConfigSchema } from "./config/schemas/PublishConfigSchema";
 import { convertToPostmanCollection } from "./convertToPostmanCollection";
 import {
     GeneratorNotificationService,
-    GeneratorExecParsing,
     ExitStatusUpdate,
     GeneratorUpdate,
     LogLevel,
     parseGeneratorConfig
 } from "@fern-api/generator-commons";
 import { writePostmanGithubWorkflows } from "./writePostmanGithubWorkflows";
+import { startCase } from "lodash";
 
 const DEFAULT_COLLECTION_OUTPUT_FILENAME = "collection.json";
 
@@ -53,7 +53,13 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
                     message: `Generating ${collectionOutputFilename}`
                 })
             );
-            const _collectionDefinition = convertToPostmanCollection(ir);
+            const _collectionDefinition = convertToPostmanCollection({
+                ir,
+                collectionName:
+                    postmanGeneratorConfig?.["collection-name"] ??
+                    ir.apiDisplayName ??
+                    startCase(ir.apiName.originalName)
+            });
             const rawCollectionDefinition = PostmanParsing.PostmanCollectionSchema.jsonOrThrow(_collectionDefinition);
             // eslint-disable-next-line no-console
             console.log("Converted ir to postman collection");
