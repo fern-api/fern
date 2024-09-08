@@ -10,5 +10,12 @@ test:
   docker:
     image: fernapi/fern-postman:latest
     command: pnpm --filter @fern-api/postman-generator dockerTagLatest
+fixtures:
+  imdb:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        collection-name: GA Imdb Collection
+      outputFolder: collection-name
 generatorType: Documentation
 defaultOutputMode: local_files

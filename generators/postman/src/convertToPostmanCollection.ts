@@ -21,15 +21,19 @@ import { convertExampleEndpointCall } from "./convertExampleEndpointCall";
 import { GeneratedExampleRequest } from "./request/GeneratedExampleRequest";
 import { ORIGIN_VARIABLE_NAME } from "./utils";
 
-export function convertToPostmanCollection(ir: IntermediateRepresentation): PostmanCollectionSchema {
-    const id = ir.apiName;
-
+export function convertToPostmanCollection({
+    ir,
+    collectionName
+}: {
+    ir: IntermediateRepresentation;
+    collectionName: string;
+}): PostmanCollectionSchema {
     const authSchemes = filterAuthSchemes(ir.auth);
     const authHeaders = getAuthHeaders(authSchemes);
 
     return {
         info: {
-            name: ir.apiDisplayName ?? startCase(id.originalName),
+            name: collectionName,
             schema: "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
             description: ir.apiDocs ?? undefined
         },
