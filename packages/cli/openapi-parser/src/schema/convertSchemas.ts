@@ -162,9 +162,7 @@ export function convertSchemaObject(
         getExtension(schema, FernOpenAPIExtension.SDK_GROUP_NAME) ??
         getExtension<string[]>(schema, OpenAPIExtension.TAGS)?.[0];
     let groupName: SdkGroupName = (typeof mixedGroupName === "string" ? [mixedGroupName] : mixedGroupName) ?? [];
-    if (namespace != null) {
-        groupName = [{ type: "namespace", name: namespace }, ...groupName];
-    }
+    groupName = context.resolveGroupName(groupName);
 
     const generatedName = getGeneratedTypeName(breadcrumbs);
     const description = schema.description;

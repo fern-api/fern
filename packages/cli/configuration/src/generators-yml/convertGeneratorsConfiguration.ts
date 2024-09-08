@@ -240,10 +240,13 @@ async function parseAPIConfigurationToApiLocations(
     return apiDefinitions;
 }
 
-async function parseApiConfigurationV2Schema(
-    apiConfiguration: APIConfigurationV2Schema,
-    rawConfiguration: GeneratorsConfigurationSchema
-): Promise<APIDefinition> {
+async function parseApiConfigurationV2Schema({
+    apiConfiguration,
+    rawConfiguration
+}: {
+    apiConfiguration: APIConfigurationV2Schema;
+    rawConfiguration: GeneratorsConfigurationSchema;
+}): Promise<APIDefinition> {
     const rootDefinitions: APIDefinitionLocation[] = [];
     const namespacedDefinitions: Record<string, APIDefinitionLocation[]> = {};
 
@@ -266,9 +269,7 @@ async function parseApiConfigurationV2Schema(
             if (spec.namespace == null) {
                 rootDefinitions.push(definitionLocation);
             } else {
-                if (namespacedDefinitions[spec.namespace] == null) {
-                    namespacedDefinitions[spec.namespace] = [];
-                }
+                namespacedDefinitions[spec.namespace] ??= [];
                 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 namespacedDefinitions[spec.namespace]!.push(definitionLocation);
             }

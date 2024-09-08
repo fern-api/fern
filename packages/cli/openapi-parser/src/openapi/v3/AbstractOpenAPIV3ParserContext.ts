@@ -1,5 +1,5 @@
 import { Logger } from "@fern-api/logger";
-import { Namespace, SchemaId, SdkGroup, Source } from "@fern-api/openapi-ir-sdk";
+import { Namespace, SchemaId, SdkGroup, SdkGroupName, Source } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
 import { ParseOpenAPIOptions } from "../../options";
@@ -83,6 +83,14 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
             tags.push(namespaceSegment);
         }
         return tags.concat(operationTags ?? []);
+    }
+
+    public resolveGroupName(groupName: SdkGroupName): SdkGroupName {
+        if (this.namespace != null) {
+            return [{ type: "namespace", name: this.namespace }, ...groupName];
+        }
+
+        return groupName;
     }
 
     public resolveSchemaReference(schema: OpenAPIV3.ReferenceObject): OpenAPIV3.SchemaObject {

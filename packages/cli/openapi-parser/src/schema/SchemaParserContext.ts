@@ -1,5 +1,5 @@
 import { Logger } from "@fern-api/logger";
-import { SchemaId } from "@fern-api/openapi-ir-sdk";
+import { SchemaId, SdkGroupName } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { ParseOpenAPIOptions } from "../options";
 
@@ -10,6 +10,7 @@ export interface SchemaParserContext {
 
     referenceExists(ref: string): boolean;
     resolveSchemaReference(schema: OpenAPIV3.ReferenceObject): OpenAPIV3.SchemaObject;
+    resolveGroupName(groupName: SdkGroupName): SdkGroupName;
     markSchemaAsReferencedByNonRequest(schemaId: SchemaId): void;
     markSchemaAsReferencedByRequest(schemaId: SchemaId): void;
     markReferencedByDiscriminatedUnion(schema: OpenAPIV3.ReferenceObject, discrminant: string, times: number): void;

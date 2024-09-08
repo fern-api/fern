@@ -128,15 +128,13 @@ export function convertOperation({
 
 function getSdkGroupAndMethod(
     operation: OpenAPIV3.OperationObject,
-    namespace: string | undefined
+    context: AbstractOpenAPIV3ParserContext
 ): EndpointSdkName | undefined {
     const sdkMethodName = getExtension<string>(operation, FernOpenAPIExtension.SDK_METHOD_NAME);
     const sdkGroupName = getExtension(operation, FernOpenAPIExtension.SDK_GROUP_NAME) ?? [];
     if (sdkMethodName != null) {
         let groupName: SdkGroupName = typeof sdkGroupName === "string" ? [sdkGroupName] : sdkGroupName;
-        if (namespace != null) {
-            groupName = [{ type: "namespace", name: namespace }, ...groupName];
-        }
+        groupName = context.resolveGroupName(groupName);
         return {
             groupName,
             methodName: sdkMethodName
