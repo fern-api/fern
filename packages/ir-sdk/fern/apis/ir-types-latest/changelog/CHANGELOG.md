@@ -5,13 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v53.10.0] - 2024-08-12 (TODO: Make required in next major)
+
+- Feature: Add `cliVersion` and `definitionUrl` properties to the `SourceConfig`.
+
 ## [v53.9.0] - 2024-08-12 (TODO: Make required in next major)
 
 - Feature: Introduce a `PublishingConfig` to the IR instead of trying to go through Fiddle.
 
 ## [v53.8.0] - 2024-08-12 (TODO: Make required in next major)
 
-- Fix: Include the raw datetime alongside the parsed datetime in `ExamplePrimitive`. 
+- Fix: Include the raw datetime alongside the parsed datetime in `ExamplePrimitive`.
 
 ## [v53.7.2] - 2024-08-12
 
@@ -19,7 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v53.7.1] - 2024-08-12
 
-- Fix: Upgrade the Pydantic generator so that `unknown` properties that are missing do not throw. 
+- Fix: Upgrade the Pydantic generator so that `unknown` properties that are missing do not throw.
 
 ## [v53.7.0] - 2024-08-12
 
@@ -28,11 +32,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v53.6.0] - 2024-08-05
 
-- Internal: Bump to the latest typescript SDK generator. 
+- Internal: Bump to the latest typescript SDK generator.
 
 ## [v53.5.0] - 2024-08-05 \*\* (TODO: Make required in next major)
 
-- Feature: Support a `hasNextPage` property for offset pagination. 
+- Feature: Support a `hasNextPage` property for offset pagination.
 
 ## [v53.4.0] - 2024-08-05 \*\* (TODO: Make required in next major)
 

@@ -82,6 +82,12 @@ types:
         type: optional<map<commons.FeatureId, list<commons.EndpointId>>>
   SourceConfig:
     properties: 
+      cliVersion:
+        docs: The version of the CLI that generated the IR.
+        type: optional<string>
+      definitionUrl:
+        docs: The download URL that can be used to fetch the Fern definition used to generate the IR.
+        type: optional<string>
       sources:
         docs: The raw API definitions that produced the IR.
         type: list<ApiDefinitionSource> 
