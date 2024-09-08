@@ -173,9 +173,6 @@ importers:
       tmp-promise:
         specifier: ^3.0.3
         version: 3.0.3
-      zod:
-        specifier: ^3.22.3
-        version: 3.22.4
     devDependencies:
       '@types/jest':
         specifier: ^29.5.12
@@ -711,9 +708,6 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
-      '@fern-api/generator-commons':
-        specifier: workspace:*
-        version: link:../../commons
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.898
         version: 0.0.898
@@ -891,6 +885,9 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/fs-utils
       '@fern-api/generator-commons':
         specifier: workspace:*
         version: link:../../commons
@@ -3253,8 +3250,6 @@ importers:
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/cli/dist/dev: {}
-
-  packages/cli/cli/dist/local: {}
 
   packages/cli/cli/dist/prod: {}
 

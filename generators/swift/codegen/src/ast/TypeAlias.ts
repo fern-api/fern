@@ -1,4 +1,4 @@
-import { AstNode, Writer } from "@fern-api/generator-commons";
+import { AstNode, Writer } from "./core";
 import Swift from "..";
 import { AccessLevel } from "./AccessLevel";
 import { Type } from "./Type";
@@ -17,7 +17,7 @@ export class TypeAlias extends AstNode {
     public readonly type: Type;
 
     constructor(args: TypeAlias.Args) {
-        super(Swift.indentSize);
+        super();
         this.accessLevel = args.accessLevel;
         this.name = args.name;
         this.type = args.type;

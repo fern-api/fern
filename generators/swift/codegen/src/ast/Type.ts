@@ -1,4 +1,4 @@
-import { AstNode, Writer } from "@fern-api/generator-commons";
+import { AstNode, Writer } from "./core";
 import Swift, { AccessLevel, ClassLevel, Enum, Func } from "..";
 import { Field } from "./Field";
 
@@ -62,7 +62,7 @@ export class Type extends AstNode {
     public readonly inheritance?: Type[];
 
     constructor({ accessLevel, classLevel, name, subclasses, fields, functions, inheritance }: Type.Args) {
-        super(Swift.indentSize);
+        super();
         this.accessLevel = accessLevel;
         this.classLevel = classLevel;
         this.name = name;

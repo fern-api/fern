@@ -36,8 +36,7 @@
     "@fern-fern/generator-exec-sdk": "^0.0.898",
     "js-yaml": "^4.1.0",
     "lodash-es": "^4.17.21",
-    "tmp-promise": "^3.0.3",
-    "zod": "^3.22.3"
+    "tmp-promise": "^3.0.3"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",

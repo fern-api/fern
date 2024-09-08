@@ -1,4 +1,4 @@
-import { AstNode, Writer } from "@fern-api/generator-commons";
+import { AstNode, Writer } from "./core";
 import Swift from "..";
 
 export declare namespace Import {
@@ -11,7 +11,7 @@ export class Import extends AstNode {
     public readonly packageName: string;
 
     constructor({ packageName }: Import.Args) {
-        super(Swift.indentSize);
+        super();
         this.packageName = packageName;
     }
 

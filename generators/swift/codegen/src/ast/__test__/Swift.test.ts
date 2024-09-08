@@ -190,13 +190,5 @@ describe("Swift Language", () => {
         });
         // eslint-disable-next-line @typescript-eslint/no-base-to-string
         expect(output.toString()).toMatchSnapshot();
-
-        const file = new SwiftFile({
-            name: "Example",
-            file: output,
-            directory: "src/ast/__test__"
-        });
-
-        await file.generate();
     });
 });

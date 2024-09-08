@@ -1,4 +1,4 @@
-import { AstNode, Writer } from "@fern-api/generator-commons";
+import { AstNode, Writer } from "./core";
 import Swift, { FileHeader, Import } from "../";
 
 export declare namespace File {
@@ -15,7 +15,7 @@ export class File extends AstNode {
     public readonly node: AstNode;
 
     constructor({ fileHeader, imports, node }: File.Args) {
-        super(Swift.indentSize);
+        super();
         this.fileHeader = fileHeader;
         this.imports = imports;
         this.node = node;

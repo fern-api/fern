@@ -4,6 +4,7 @@ export * from "./AbstractGeneratorContext";
 export * from "./GeneratorNotificationService";
 export * from "./SourceFetcher";
 export * from "./ast";
+export * from "./project";
 export * from "./readme";
 export * from "./reference";
 export * from "./utils";

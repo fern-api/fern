@@ -1,4 +1,4 @@
-import { AstNode, Writer } from "@fern-api/generator-commons";
+import { AstNode, Writer } from "./core";
 import Swift from "..";
 
 export declare namespace EnumCase {
@@ -13,7 +13,7 @@ export class EnumCase extends AstNode {
     public readonly key?: string;
 
     constructor({ name, key }: EnumCase.Args) {
-        super(Swift.indentSize);
+        super();
         this.name = name;
         this.key = key;
     }
