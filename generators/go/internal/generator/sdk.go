@@ -26,6 +26,12 @@ var (
 	//go:embed sdk/core/core_test.go
 	coreTestFile string
 
+	//go:embed sdk/core/extra_properties.go
+	extraPropertiesFile string
+
+	//go:embed sdk/core/extra_properties_test.go
+	extraPropertiesTestFile string
+
 	//go:embed sdk/core/optional.go
 	optionalFile string
 
@@ -293,6 +299,8 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("BaseURL string")
 	f.P("HTTPClient HTTPClient")
 	f.P("HTTPHeader http.Header")
+	f.P("BodyProperties map[string]interface{}")
+	f.P("QueryParameters url.Values")
 	f.P("MaxAttempts uint")
 
 	// Generate the exported RequestOptions type that all clients can act upon.
@@ -336,6 +344,8 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("func NewRequestOptions(opts ...RequestOption) *RequestOptions {")
 	f.P("options := &RequestOptions{")
 	f.P("HTTPHeader: make(http.Header),")
+	f.P("BodyProperties: make(map[string]interface{}),")
+	f.P("QueryParameters: make(url.Values),")
 	f.P("}")
 	f.P("for _, opt := range opts {")
 	f.P("opt.applyRequestOptions(options)")
@@ -474,6 +484,12 @@ func (f *fileWriter) writeRequestOptionStructs(
 		return err
 	}
 	if err := f.writeOptionStruct("HTTPHeader", "http.Header", true, asIdempotentRequestOption); err != nil {
+		return err
+	}
+	if err := f.writeOptionStruct("BodyProperties", "map[string]interface{}", true, asIdempotentRequestOption); err != nil {
+		return err
+	}
+	if err := f.writeOptionStruct("QueryParameters", "url.Values", true, asIdempotentRequestOption); err != nil {
 		return err
 	}
 	if err := f.writeOptionStruct("MaxAttempts", "uint", true, asIdempotentRequestOption); err != nil {
@@ -654,6 +670,28 @@ func (f *fileWriter) WriteRequestOptions(
 	f.P("return &core.HTTPHeaderOption{")
 	f.P("// Clone the headers so they can't be modified after the option call.")
 	f.P("HTTPHeader: httpHeader.Clone(),")
+	f.P("}")
+	f.P("}")
+	f.P()
+	f.P("// WithBodyProperties adds the given body properties to the request.")
+	f.P("func WithBodyProperties(bodyProperties map[string]interface{}) *core.BodyPropertiesOption {")
+	f.P("copiedBodyProperties := make(map[string]interface{}, len(bodyProperties))")
+	f.P("for key, value := range bodyProperties {")
+	f.P("copiedBodyProperties[key] = value")
+	f.P("}")
+	f.P("return &core.BodyPropertiesOption{")
+	f.P("BodyProperties: copiedBodyProperties,")
+	f.P("}")
+	f.P("}")
+	f.P()
+	f.P("// WithQueryParameters adds the given query parameters to the request.")
+	f.P("func WithQueryParameters(queryParameters url.Values) *core.QueryParametersOption {")
+	f.P("copiedQueryParameters := make(url.Values, len(queryParameters))")
+	f.P("for key, values := range queryParameters {")
+	f.P("copiedQueryParameters[key] = values")
+	f.P("}")
+	f.P("return &core.QueryParametersOption{")
+	f.P("QueryParameters: copiedQueryParameters,")
 	f.P("}")
 	f.P("}")
 	f.P()
@@ -1178,6 +1216,8 @@ func (f *fileWriter) WriteClient(
 			f.P("URL: endpointURL, ")
 			f.P("Method:", endpoint.Method, ",")
 			f.P("MaxAttempts: options.MaxAttempts,")
+			f.P("BodyProperties: options.BodyProperties,")
+			f.P("QueryParameters: options.QueryParameters,")
 			f.P("Headers:", headersParameter, ",")
 			f.P("Client: options.HTTPClient,")
 			if endpoint.RequestValueName != "" {
@@ -1207,6 +1247,8 @@ func (f *fileWriter) WriteClient(
 			f.P("Method:", endpoint.Method, ",")
 			f.P("MaxAttempts: options.MaxAttempts,")
 			f.P("Headers:", headersParameter, ",")
+			f.P("BodyProperties: options.BodyProperties,")
+			f.P("QueryParameters: options.QueryParameters,")
 			f.P("Client: options.HTTPClient,")
 			if endpoint.RequestValueName != "" {
 				f.P("Request: ", endpoint.RequestValueName, ",")
@@ -1316,6 +1358,8 @@ func (f *fileWriter) WriteClient(
 			f.P("Method:", endpoint.Method, ",")
 			f.P("MaxAttempts: options.MaxAttempts,")
 			f.P("Headers:", headersParameter, ",")
+			f.P("BodyProperties: options.BodyProperties,")
+			f.P("QueryParameters: options.QueryParameters,")
 			f.P("Client: options.HTTPClient,")
 			if endpoint.RequestValueName != "" {
 				f.P("Request: ", endpoint.RequestValueName, ",")

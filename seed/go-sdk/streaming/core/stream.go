@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"net/url"
 	"strings"
 )
 
@@ -27,19 +28,29 @@ func NewStreamer[T any](caller *Caller) *Streamer[T] {
 
 // StreamParams represents the parameters used to issue an API streaming call.
 type StreamParams struct {
-	URL          string
-	Method       string
-	Delimiter    string
-	MaxAttempts  uint
-	Headers      http.Header
-	Client       HTTPClient
-	Request      interface{}
-	ErrorDecoder ErrorDecoder
+	URL             string
+	Method          string
+	Delimiter       string
+	MaxAttempts     uint
+	Headers         http.Header
+	BodyProperties  map[string]interface{}
+	QueryParameters url.Values
+	Client          HTTPClient
+	Request         interface{}
+	ErrorDecoder    ErrorDecoder
 }
 
 // Stream issues an API streaming call according to the given stream parameters.
 func (s *Streamer[T]) Stream(ctx context.Context, params *StreamParams) (*Stream[T], error) {
-	req, err := newRequest(ctx, params.URL, params.Method, params.Headers, params.Request)
+	url := buildURL(params.URL, params.QueryParameters)
+	req, err := newRequest(
+		ctx,
+		url,
+		params.Method,
+		params.Headers,
+		params.Request,
+		params.BodyProperties,
+	)
 	if err != nil {
 		return nil, err
 	}
