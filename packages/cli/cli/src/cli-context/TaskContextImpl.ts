@@ -90,8 +90,8 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
         return this.result;
     }
 
-    public instrumentPostHogEvent(event: PosthogEvent): void {
-        this.instrumentPostHogEventImpl(event);
+    public async instrumentPostHogEvent(event: PosthogEvent): Promise<void> {
+        await this.instrumentPostHogEventImpl(event);
     }
 
     protected logAtLevel(level: LogLevel, ...parts: string[]): void {

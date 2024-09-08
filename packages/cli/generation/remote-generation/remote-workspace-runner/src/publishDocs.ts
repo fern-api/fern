@@ -121,7 +121,7 @@ export async function publishDocs({
                         docsWorkspace.absoluteFilepath
                     );
                 } else {
-                    return startDocsRegisterFailed(startDocsRegisterResponse.error, context);
+                    return await startDocsRegisterFailed(startDocsRegisterResponse.error, context);
                 }
             } else {
                 const startDocsRegisterResponse = await fdr.docs.v2.write.startDocsRegister({
@@ -262,11 +262,11 @@ function convertToFilePathPairs(
     return toRet;
 }
 
-function startDocsRegisterFailed(
+async function startDocsRegisterFailed(
     error: CjsFdrSdk.docs.v2.write.startDocsPreviewRegister.Error | CjsFdrSdk.docs.v2.write.startDocsRegister.Error,
     context: TaskContext
-): never {
-    context.instrumentPostHogEvent({
+): Promise<never> {
+    await context.instrumentPostHogEvent({
         command: "docs-generation",
         properties: {
             error: JSON.stringify(error)
