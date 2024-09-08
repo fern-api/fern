@@ -71,7 +71,7 @@ async function runCli() {
             });
         }
     } catch (error) {
-        cliContext.instrumentPostHogEvent({
+        await cliContext.instrumentPostHogEvent({
             command: process.argv.join(" "),
             properties: {
                 failed: true,
@@ -676,7 +676,7 @@ function addUpdateApiSpecCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                     "The API to update the spec for. If not specified, all APIs with a declared origin will be updated."
             }),
         async (argv) => {
-            cliContext.instrumentPostHogEvent({
+            await cliContext.instrumentPostHogEvent({
                 command: "fern api update"
             });
             await updateApiSpec({
@@ -702,7 +702,7 @@ function addLoginCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
             }),
         async (argv) => {
             await cliContext.runTask(async (context) => {
-                cliContext.instrumentPostHogEvent({
+                await cliContext.instrumentPostHogEvent({
                     command: "fern login"
                 });
                 await login(context, { useDeviceCodeFlow: argv.deviceCode });
@@ -727,7 +727,7 @@ function addFormatCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     description: "Only run the command on the provided API"
                 }),
         async (argv) => {
-            cliContext.instrumentPostHogEvent({
+            await cliContext.instrumentPostHogEvent({
                 command: "fern format"
             });
             await formatWorkspaces({
@@ -761,7 +761,7 @@ function addTestCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     description: "Run the tests configured to a specific language"
                 }),
         async (argv) => {
-            cliContext.instrumentPostHogEvent({
+            await cliContext.instrumentPostHogEvent({
                 command: "fern test"
             });
             await testOutput({
@@ -794,7 +794,7 @@ function addMockCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     description: "The API to mock."
                 }),
         async (argv) => {
-            cliContext.instrumentPostHogEvent({
+            await cliContext.instrumentPostHogEvent({
                 command: "fern mock"
             });
             await mockServer({
@@ -826,7 +826,7 @@ function addWriteOverridesCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
             })
         ],
         async (argv) => {
-            cliContext.instrumentPostHogEvent({
+            await cliContext.instrumentPostHogEvent({
                 command: "fern generate-overrides"
             });
             await writeOverridesForWorkspaces({
@@ -856,7 +856,7 @@ function addWriteDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
                     description: "Write the definition for a particular SDK language"
                 }),
         async (argv) => {
-            cliContext.instrumentPostHogEvent({
+            await cliContext.instrumentPostHogEvent({
                 command: "fern write-definition"
             });
             await writeDefinitionForWorkspaces({

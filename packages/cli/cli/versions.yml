@@ -1,5 +1,14 @@
 - changelogEntry:
   - summary: |
+      Previously we weren't always awaiting PostHog API calls directly. Now the CLI 
+      awaits these calls so that we can ensure that events are sent. 
+    type: fix
+  createdAt: '2024-09-08'
+  irVersion: 53
+  version: 0.41.7
+
+- changelogEntry:
+  - summary: |
       The Fern Docs CLI now supports OAuth 2.0 Client Credentials injection in API playgrounds.
       To enable this feature, you can define the OAuth Authorization Scheme in your API configuration,
       and enable the feature in your docs configuration.

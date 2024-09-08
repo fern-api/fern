@@ -26,7 +26,7 @@ export declare namespace TaskContextImpl {
          */
         onResult?: (result: TaskResult) => void;
         shouldBufferLogs: boolean;
-        instrumentPostHogEvent: (event: PosthogEvent) => void;
+        instrumentPostHogEvent: (event: PosthogEvent) => Promise<void>;
     }
 }
 
@@ -39,7 +39,7 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
     private bufferedLogs: Log[] = [];
     protected status: "notStarted" | "running" | "finished" = "notStarted";
     private onResult: ((result: TaskResult) => void) | undefined;
-    private instrumentPostHogEventImpl: (event: PosthogEvent) => void;
+    private instrumentPostHogEventImpl: (event: PosthogEvent) => Promise<void>;
     public constructor({
         logImmediately,
         logPrefix,
@@ -92,7 +92,7 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
         return this.result;
     }
 
-    public instrumentPostHogEvent(event: PosthogEvent): void {
+    public async instrumentPostHogEvent(event: PosthogEvent): Promise<void> {
         this.instrumentPostHogEventImpl(event);
     }
 
@@ -135,7 +135,7 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
             takeOverTerminal: this.takeOverTerminal,
             onResult: this.onResult,
             shouldBufferLogs: this.shouldBufferLogs,
-            instrumentPostHogEvent: (event) => this.instrumentPostHogEventImpl(event)
+            instrumentPostHogEvent: async (event) => await this.instrumentPostHogEventImpl(event)
         });
         this.subtasks.push(subtask);
         return subtask;

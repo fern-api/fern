@@ -46,7 +46,7 @@ export class TaskContextFactory {
                 return;
             },
             shouldBufferLogs: false,
-            instrumentPostHogEvent: () => {
+            instrumentPostHogEvent: async () => {
                 return;
             },
             logPrefix: prefixWithColor
