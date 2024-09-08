@@ -476,6 +476,9 @@ navigation:
         #   typescript: "@fern-api/node-sdk"
 
 navbar-links:
+  - type: minimal
+    text: Join our community
+    url: https://join.slack.com/t/fern-community/shared_invite/zt-2q7ev4mki-mhO5anKslwRowp4oExWf4A
   - type: filled
     text: Book a demo
     url: https://buildwithfern.com/contact
