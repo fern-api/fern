@@ -12,12 +12,19 @@ export function convertSdkGroupNameToFileWithoutExtension(groupName: SdkGroupNam
     for (const [index, group] of groupName.entries()) {
         if (typeof group === "string") {
             fileNames.push(camelCase(group));
-        } else if (group.type === "namespace") {
-            if (index < groupName.length - 1) {
-                fileNames.push(camelCase(group.name));
-            } else {
-                // For the last namespace, make it a true namespace (ie. a directory with it's contents in the root package marker)
-                fileNames.push(...[group.name, FERN_PACKAGE_MARKER_FILENAME_NO_EXTENSION]);
+        } else if (typeof group === "object") {
+            switch (group.type) {
+                case "namespace": {
+                    if (index < groupName.length - 1) {
+                        fileNames.push(camelCase(group.name));
+                    } else {
+                        // For the last namespace, make it a true namespace (ie. a directory with it's contents in the root package marker)
+                        fileNames.push(...[group.name, FERN_PACKAGE_MARKER_FILENAME_NO_EXTENSION]);
+                    }
+                    break;
+                }
+                default:
+                    assertNever(group.type);
             }
         } else {
             assertNever(group);

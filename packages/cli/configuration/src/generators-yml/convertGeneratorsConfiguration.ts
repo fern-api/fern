@@ -321,7 +321,7 @@ async function parseAPIConfiguration(
     const apiConfiguration = rawGeneratorsConfiguration.api;
 
     if (apiConfiguration != null && isApiConfigurationV2Schema(apiConfiguration)) {
-        return parseApiConfigurationV2Schema(apiConfiguration, rawGeneratorsConfiguration);
+        return parseApiConfigurationV2Schema({ apiConfiguration, rawConfiguration: rawGeneratorsConfiguration });
     }
 
     if (isPlainObject(apiConfiguration) && "namespaces" in apiConfiguration) {

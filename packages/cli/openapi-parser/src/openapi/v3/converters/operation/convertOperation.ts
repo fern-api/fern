@@ -60,7 +60,7 @@ export function convertOperation({
         return undefined;
     }
 
-    const sdkMethodName = getSdkGroupAndMethod(operation, context.namespace);
+    const sdkMethodName = getSdkGroupAndMethod(operation, context);
     const pagination = getFernPaginationExtension(context.document, operation);
 
     const operationContext: OperationContext = {
