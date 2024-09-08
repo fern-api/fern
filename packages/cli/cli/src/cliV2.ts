@@ -20,7 +20,7 @@ export function addGetOrganizationCommand(cli: Argv<GlobalCliOptions>, cliContex
                 description: "The location to output the organization name as a text file, defaults to standard out."
             }),
         async (argv) => {
-            cliContext.instrumentPostHogEvent({
+            await cliContext.instrumentPostHogEvent({
                 command: "fern organization",
                 properties: {
                     outputLocation: argv.output
@@ -78,7 +78,7 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                                 "The APIs to list the generators for. If not specified, the generator will be upgraded for all APIs."
                         }),
                 async (argv) => {
-                    cliContext.instrumentPostHogEvent({
+                    await cliContext.instrumentPostHogEvent({
                         command: "fern generator list",
                         properties: {
                             outputLocation: argv.output
@@ -128,7 +128,7 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                             choices: Object.values(FernRegistry.generators.ReleaseType)
                         }),
                 async (argv) => {
-                    cliContext.instrumentPostHogEvent({
+                    await cliContext.instrumentPostHogEvent({
                         command: "fern generator upgrade",
                         properties: {
                             generator: argv.generator,
@@ -178,7 +178,7 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                             description: "Get the version of the specified generator."
                         }),
                 async (argv) => {
-                    cliContext.instrumentPostHogEvent({
+                    await cliContext.instrumentPostHogEvent({
                         command: "fern generator get",
                         properties: {
                             generator: argv.generator,

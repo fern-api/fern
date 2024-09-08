@@ -181,11 +181,7 @@ export class CliContext {
         return result;
     }
 
-    public instrumentPostHogEvent(event: PosthogEvent): void {
-        void this.instrumentPostHogEventAsync(event);
-    }
-
-    private async instrumentPostHogEventAsync(event: PosthogEvent): Promise<void> {
+    public async instrumentPostHogEvent(event: PosthogEvent): Promise<void> {
         (await getPosthogManager()).sendEvent(event);
     }
 
