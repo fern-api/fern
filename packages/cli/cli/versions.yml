@@ -14,7 +14,7 @@
             get-token:
               endpoint: endpoint.authorization
       ```
-      (More Information)[https://buildwithfern.com/learn/api-definition/fern/authentication#oauth-client-credentials]
+      [More Information](https://buildwithfern.com/learn/api-definition/fern/authentication#oauth-client-credentials)
 
       Docs configuration:
       ```yml
@@ -23,7 +23,7 @@
           playground:
             oauth: true
       ```
-      (More Information)[https://buildwithfern.com/learn/docs/api-references/customize-api-playground]
+      [More Information](https://buildwithfern.com/learn/docs/api-references/customize-api-playground)
     type: feat
   createdAt: '2024-09-07'
   irVersion: 53
