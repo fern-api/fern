@@ -221,8 +221,8 @@ export class CliContext {
                     this.didSucceed = false;
                 }
             },
-            instrumentPostHogEvent: (event) => {
-                this.instrumentPostHogEvent(event);
+            instrumentPostHogEvent: async (event) => {
+                await this.instrumentPostHogEvent(event);
             },
             shouldBufferLogs: false
         };
