@@ -1,4 +1,4 @@
-import { ExtraDependenciesSchema } from "@fern-api/generator-commons";
+import { ExtraDependenciesSchema } from "../BaseGeneratorConfig";
 import { AstNode } from "./core/AstNode";
 
 interface Version {

@@ -1,4 +1,4 @@
-import { AstNode, Writer } from "@fern-api/generator-commons";
+import { AstNode, Writer } from "./core";
 import Swift, { AccessLevel, EnumCase, Type } from "..";
 
 export declare namespace Enum {
@@ -17,7 +17,7 @@ export class Enum extends AstNode {
     public readonly enumCases: EnumCase[];
 
     constructor({ accessLevel, name, inheritance, enumCases }: Enum.Args) {
-        super(Swift.indentSize);
+        super();
         this.accessLevel = accessLevel;
         this.name = name;
         this.inheritance = inheritance;

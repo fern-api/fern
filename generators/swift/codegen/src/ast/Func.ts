@@ -1,4 +1,4 @@
-import { AstNode, Writer } from "@fern-api/generator-commons";
+import { AstNode, Writer } from "./core";
 import Swift, { AccessLevel, FunctionModifier, Param, Type } from "..";
 
 /*
@@ -49,7 +49,7 @@ export class Func extends AstNode {
     public readonly returnType?: Type;
 
     constructor({ accessLevel, modifier, name, params, async, throws, returnType }: Func.Args) {
-        super(Swift.indentSize);
+        super();
         this.accessLevel = accessLevel;
         (this.modifier = modifier), (this.name = name), (this.params = params);
         this.async = async ?? false;

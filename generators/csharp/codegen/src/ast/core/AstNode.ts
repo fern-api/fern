@@ -1,3 +1,4 @@
+import { AbstractAstNode } from "@fern-api/generator-commons";
 import { execSync } from "child_process";
 import { BaseCsharpCustomConfigSchema } from "../../custom-config";
 import { Writer } from "./Writer";
@@ -9,12 +10,7 @@ export interface FormattedAstNodeSnippet {
     body: string;
 }
 
-export abstract class AstNode {
-    /**
-     * Every AST node knows how to write itself to a string.
-     */
-    public abstract write(writer: Writer): void;
-
+export abstract class AstNode extends AbstractAstNode {
     /**
      * Writes the node to a string.
      */

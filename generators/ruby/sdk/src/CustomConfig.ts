@@ -1,4 +1,4 @@
-import { BaseGeneratorConfigSchema, ExtraDependenciesSchema } from "@fern-api/generator-commons";
+import { BaseGeneratorConfigSchema, ExtraDependenciesSchema } from "@fern-api/ruby-codegen";
 import { z } from "zod";
 
 export type RubySdkCustomConfig = z.infer<typeof RubySdkCustomConfigSchema>;

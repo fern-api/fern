@@ -5,7 +5,7 @@ import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
-import { ReferenceConfigBuilder } from "./ReferenceConfigBuilder";
+import { ReferenceConfigBuilder } from "./reference";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
 const DOCKER_FEATURES_CONFIG_PATH = "/assets/features.yml";
