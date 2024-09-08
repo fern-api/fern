@@ -105,6 +105,43 @@
             "env": "ANOTHER_ENV_VAR",
             "availability": null,
             "docs": null
+        },
+        {
+            "name": {
+                "name": {
+                    "originalName": "X-API-Version",
+                    "camelCase": {
+                        "unsafeName": "xAPIVersion",
+                        "safeName": "xAPIVersion"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "x_api_version",
+                        "safeName": "x_api_version"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "X_API_VERSION",
+                        "safeName": "X_API_VERSION"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "XAPIVersion",
+                        "safeName": "XAPIVersion"
+                    }
+                },
+                "wireValue": "X-API-Version"
+            },
+            "valueType": {
+                "_type": "container",
+                "container": {
+                    "_type": "literal",
+                    "literal": {
+                        "type": "string",
+                        "string": "01-01-2000"
+                    }
+                }
+            },
+            "env": "VERSION",
+            "availability": null,
+            "docs": null
         }
     ],
     "idempotencyHeaders": [],

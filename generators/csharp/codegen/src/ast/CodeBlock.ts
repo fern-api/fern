@@ -1,24 +1,21 @@
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
+import { CodeBlock as CommonCodeBlock } from "@fern-api/generator-commons";
+import { AstNode, Writer } from "../csharp";
 
 export declare namespace CodeBlock {
     /* Write arbitrary code */
-    type Arg = string | ((writer: Writer) => void);
+    type Arg = CommonCodeBlock.Arg<Writer>;
 }
 
 export class CodeBlock extends AstNode {
-    private value: string | ((writer: Writer) => void);
+    private arg: CodeBlock.Arg;
 
-    constructor(value: CodeBlock.Arg) {
+    public constructor(arg: CodeBlock.Arg) {
         super();
-        this.value = value;
+        this.arg = arg;
     }
 
     public write(writer: Writer): void {
-        if (typeof this.value === "string") {
-            writer.write(this.value);
-        } else {
-            this.value(writer);
-        }
+        const commonCodeBlock = new CommonCodeBlock(this.arg);
+        return commonCodeBlock.write(writer);
     }
 }

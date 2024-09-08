@@ -3,18 +3,14 @@
 from ......core.pydantic_utilities import UniversalBaseModel
 import typing
 from .parameter import Parameter
-import typing_extensions
 from .....commons.types.variable_type import VariableType
-from ......core.serialization import FieldMetadata
-from ......core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from ......core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class NonVoidFunctionSignature(UniversalBaseModel):
     parameters: typing.List[Parameter]
-    return_type: typing_extensions.Annotated[
-        VariableType, FieldMetadata(alias="returnType")
-    ]
+    return_type: VariableType = pydantic.Field(alias="returnType")
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(

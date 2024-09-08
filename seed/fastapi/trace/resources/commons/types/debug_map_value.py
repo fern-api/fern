@@ -2,18 +2,16 @@
 
 from __future__ import annotations
 from ....core.pydantic_utilities import UniversalBaseModel
-import typing_extensions
 import typing
-from ....core.serialization import FieldMetadata
-from ....core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.pydantic_utilities import update_forward_refs
 
 
 class DebugMapValue(UniversalBaseModel):
-    key_value_pairs: typing_extensions.Annotated[
-        typing.List["DebugKeyValuePairs"], FieldMetadata(alias="keyValuePairs")
-    ]
+    key_value_pairs: typing.List["DebugKeyValuePairs"] = pydantic.Field(
+        alias="keyValuePairs"
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(

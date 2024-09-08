@@ -119,6 +119,8 @@ types:
           The `analytics` object allows you to configure analytics for your docs site.
           Currently, only Segment is supported.
 
+      announcement: optional<AnnouncementConfig>
+
       # navigation
       tabs: optional<map<TabId, TabConfig>>
       versions: optional<list<VersionConfig>>
@@ -971,7 +973,15 @@ types:
         docs: A list of environment IDs that are allowed to be used in the playground.
           If not provided, all environments are allowed. And if the provided list is empty, the playground should be disabled.
       button: optional<PlaygroundButtonSettings>
+      oauth: optional<boolean>
 
   PlaygroundButtonSettings:
     properties:
       href: optional<string>
+
+  AnnouncementConfig:
+    properties:
+      message:
+        type: string
+        docs: The message to display in the announcement bar. Markdown is supported.
+

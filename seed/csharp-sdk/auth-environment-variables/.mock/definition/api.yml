@@ -9,3 +9,6 @@ headers:
   X-Another-Header:
     type: string
     env: ANOTHER_ENV_VAR
+  X-API-Version:
+    type: literal<"01-01-2000">
+    env: VERSION

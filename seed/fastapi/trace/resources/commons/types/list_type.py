@@ -2,21 +2,17 @@
 
 from __future__ import annotations
 from ....core.pydantic_utilities import UniversalBaseModel
-import typing_extensions
-from ....core.serialization import FieldMetadata
-import typing
 import pydantic
+import typing
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.pydantic_utilities import update_forward_refs
 
 
 class ListType(UniversalBaseModel):
-    value_type: typing_extensions.Annotated[
-        "VariableType", FieldMetadata(alias="valueType")
-    ]
-    is_fixed_length: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="isFixedLength")
-    ] = pydantic.Field(default=None)
+    value_type: "VariableType" = pydantic.Field(alias="valueType")
+    is_fixed_length: typing.Optional[bool] = pydantic.Field(
+        alias="isFixedLength", default=None
+    )
     """
     Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.
     """

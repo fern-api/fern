@@ -15,7 +15,7 @@ export async function mockServer({
     project: Project;
     port: number | undefined;
 }): Promise<void> {
-    cliContext.instrumentPostHogEvent({
+    await cliContext.instrumentPostHogEvent({
         orgId: project.config.organization,
         command: "fern mock"
     });

@@ -23,7 +23,8 @@ module SeedAuthEnvironmentVariablesClient
     #  auth_environment_variables = SeedAuthEnvironmentVariablesClient::Client.new(
     #    base_url: "https://api.example.com",
     #    api_key: "YOUR_API_KEY",
-    #    x_another_header: "XAnotherHeader"
+    #    x_another_header: "XAnotherHeader",
+    #    x_api_version: "XApiVersion"
     #  )
     #  auth_environment_variables.service.get_with_api_key
     def get_with_api_key(request_options: nil)
@@ -31,6 +32,7 @@ module SeedAuthEnvironmentVariablesClient
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["X-FERN-API-KEY"] = request_options.api_key unless request_options&.api_key.nil?
         req.headers["X-Another-Header"] = request_options.x_another_header unless request_options&.x_another_header.nil?
+        req.headers["X-API-Version"] = request_options.x_api_version unless request_options&.x_api_version.nil?
         req.headers = {
       **(req.headers || {}),
       **@request_client.get_headers,
@@ -56,7 +58,8 @@ module SeedAuthEnvironmentVariablesClient
     #  auth_environment_variables = SeedAuthEnvironmentVariablesClient::Client.new(
     #    base_url: "https://api.example.com",
     #    api_key: "YOUR_API_KEY",
-    #    x_another_header: "XAnotherHeader"
+    #    x_another_header: "XAnotherHeader",
+    #    x_api_version: "XApiVersion"
     #  )
     #  auth_environment_variables.service.get_with_header(x_endpoint_header: "string")
     def get_with_header(x_endpoint_header:, request_options: nil)
@@ -64,6 +67,7 @@ module SeedAuthEnvironmentVariablesClient
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["X-FERN-API-KEY"] = request_options.api_key unless request_options&.api_key.nil?
         req.headers["X-Another-Header"] = request_options.x_another_header unless request_options&.x_another_header.nil?
+        req.headers["X-API-Version"] = request_options.x_api_version unless request_options&.x_api_version.nil?
         req.headers = {
           **(req.headers || {}),
           **@request_client.get_headers,
@@ -100,7 +104,8 @@ module SeedAuthEnvironmentVariablesClient
     #  auth_environment_variables = SeedAuthEnvironmentVariablesClient::Client.new(
     #    base_url: "https://api.example.com",
     #    api_key: "YOUR_API_KEY",
-    #    x_another_header: "XAnotherHeader"
+    #    x_another_header: "XAnotherHeader",
+    #    x_api_version: "XApiVersion"
     #  )
     #  auth_environment_variables.service.get_with_api_key
     def get_with_api_key(request_options: nil)
@@ -112,6 +117,7 @@ module SeedAuthEnvironmentVariablesClient
             req.headers["X-Another-Header"] =
               request_options.x_another_header
           end
+          req.headers["X-API-Version"] = request_options.x_api_version unless request_options&.x_api_version.nil?
           req.headers = {
         **(req.headers || {}),
         **@request_client.get_headers,
@@ -139,7 +145,8 @@ module SeedAuthEnvironmentVariablesClient
     #  auth_environment_variables = SeedAuthEnvironmentVariablesClient::Client.new(
     #    base_url: "https://api.example.com",
     #    api_key: "YOUR_API_KEY",
-    #    x_another_header: "XAnotherHeader"
+    #    x_another_header: "XAnotherHeader",
+    #    x_api_version: "XApiVersion"
     #  )
     #  auth_environment_variables.service.get_with_header(x_endpoint_header: "string")
     def get_with_header(x_endpoint_header:, request_options: nil)
@@ -151,6 +158,7 @@ module SeedAuthEnvironmentVariablesClient
             req.headers["X-Another-Header"] =
               request_options.x_another_header
           end
+          req.headers["X-API-Version"] = request_options.x_api_version unless request_options&.x_api_version.nil?
           req.headers = {
             **(req.headers || {}),
             **@request_client.get_headers,

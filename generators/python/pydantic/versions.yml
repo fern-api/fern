@@ -1,7 +1,7 @@
 # For unreleased changes, use unreleased.yml
 - version: 1.4.5
-  ir_version: 53
-  changelog_entry:
+  irVersion: 53
+  changelogEntry:
     - type: chore
       summary: Remove Pydantic field aliases and leverage an internal representation
       fixed:

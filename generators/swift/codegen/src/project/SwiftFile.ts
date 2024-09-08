@@ -1,16 +1,19 @@
-import { GeneratedFile } from "@fern-api/generator-commons";
-import { File } from "../ast/File";
+import { File } from "@fern-api/generator-commons";
+import { RelativeFilePath } from "@fern-api/fs-utils";
+import { Enum } from "../ast/Enum";
+import { Struct } from "../ast/Struct";
 
 export declare namespace SwiftFile {
     interface Args {
-        name: string;
-        file: File;
-        directory: string;
+        /* The class to be written to the CSharp File */
+        clazz: Struct | Enum;
+        /* Directory of the filepath */
+        directory: RelativeFilePath;
     }
 }
 
-export class SwiftFile extends GeneratedFile {
-    constructor({ name, file, directory }: SwiftFile.Args) {
-        super(name, "swift", directory, file);
+export class SwiftFile extends File {
+    constructor({ clazz, directory }: SwiftFile.Args) {
+        super(`${clazz.name}.cs`, directory, clazz.toString());
     }
 }

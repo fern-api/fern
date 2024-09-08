@@ -3,6 +3,7 @@ import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 import { Audiences } from "../commons";
 import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks";
 import { DocsInstance, ExperimentalConfig, PlaygroundSettings, VersionAvailability } from "./schemas";
+import { AnnouncementConfig } from "./schemas/sdk/api/resources/docs/types/AnnouncementConfig";
 
 export interface ParsedDocsConfiguration {
     instances: DocsInstance[];
@@ -30,6 +31,7 @@ export interface ParsedDocsConfiguration {
     layout: WithoutQuestionMarks<CjsFdrSdk.docs.v1.commons.DocsLayoutConfig> | undefined;
     defaultLanguage: CjsFdrSdk.docs.v1.commons.ProgrammingLanguage | undefined;
     analyticsConfig: CjsFdrSdk.docs.v1.commons.AnalyticsConfig | undefined;
+    announcement: AnnouncementConfig | undefined;
 
     /* integrations */
     integrations: CjsFdrSdk.docs.v1.commons.IntegrationsConfig | undefined;

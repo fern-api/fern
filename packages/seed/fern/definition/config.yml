@@ -124,6 +124,7 @@ types:
       - ruby
       - csharp
       - swift
+      - php
 
   GeneratorType:
     enum:

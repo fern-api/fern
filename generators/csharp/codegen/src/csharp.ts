@@ -19,8 +19,7 @@ import {
     Set,
     Switch,
     Ternary,
-    TestClass,
-    Type
+    TestClass
 } from "./ast";
 import { ReadOnlyMemory } from "./ast/ReadOnlymemory";
 
@@ -112,7 +111,6 @@ export function enumInstantiation(args: EnumInstantiation.Args): EnumInstantiati
     return new EnumInstantiation(args);
 }
 
-export const Types = Type;
 export {
     Annotation,
     Class,
@@ -128,6 +126,7 @@ export {
     MethodType,
     Parameter,
     Type,
+    Type as Types,
     Writer,
     type Argument,
     type Arguments,

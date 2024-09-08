@@ -22,7 +22,12 @@ type MyRequest struct {
 	MaybeInteger          *int        `json:"maybeInteger,omitempty" url:"-"`
 	OptionalListOfStrings []string    `json:"optionalListOfStrings,omitempty" url:"-"`
 	ListOfObjects         []*MyObject `json:"listOfObjects,omitempty" url:"-"`
+	OptionalMetadata      interface{} `json:"optionalMetadata,omitempty" url:"-"`
+	OptionalObjectType    *ObjectType `json:"optionalObjectType,omitempty" url:"-"`
+	OptionalId            *Id         `json:"optionalId,omitempty" url:"-"`
 }
+
+type Id = string
 
 type MyObject struct {
 	Foo string `json:"foo" url:"foo"`
@@ -56,4 +61,26 @@ func (m *MyObject) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", m)
+}
+
+type ObjectType string
+
+const (
+	ObjectTypeFoo ObjectType = "FOO"
+	ObjectTypeBar ObjectType = "BAR"
+)
+
+func NewObjectTypeFromString(s string) (ObjectType, error) {
+	switch s {
+	case "FOO":
+		return ObjectTypeFoo, nil
+	case "BAR":
+		return ObjectTypeBar, nil
+	}
+	var t ObjectType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (o ObjectType) Ptr() *ObjectType {
+	return &o
 }

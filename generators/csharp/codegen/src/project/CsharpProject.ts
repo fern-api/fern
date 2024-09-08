@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { SourceFetcher } from "@fern-api/generator-commons";
+import { SourceFetcher, File } from "@fern-api/generator-commons";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { template } from "lodash-es";
@@ -8,7 +8,6 @@ import { AsIsFiles } from "../AsIs";
 import { AbstractCsharpGeneratorContext } from "../cli";
 import { BaseCsharpCustomConfigSchema } from "../custom-config";
 import { CSharpFile } from "./CSharpFile";
-import { File } from "./File";
 
 const SRC_DIRECTORY_NAME = "src";
 const PROTOBUF_DIRECTORY_NAME = "proto";

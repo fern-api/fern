@@ -141,8 +141,7 @@ func (f *fileWriter) WriteLegacyClientOptions(
 			f.P("}")
 		}
 		if authScheme.Header != nil {
-			if authScheme.Header.ValueType.Container != nil && authScheme.Header.ValueType.Container.Literal != nil {
-				// We don't want to generate a request option for literal values.
+			if !shouldGenerateHeaderAuthScheme(authScheme.Header, f.types) {
 				continue
 			}
 			var (
@@ -165,9 +164,7 @@ func (f *fileWriter) WriteLegacyClientOptions(
 	}
 
 	for _, header := range append(headers, idempotencyHeaders...) {
-		// TODO: We should remove these guards.
-		if header.ValueType.Container != nil && header.ValueType.Container.Literal != nil {
-			// We don't want to generate a request option for literal values.
+		if !shouldGenerateHeader(header, f.types) {
 			continue
 		}
 		var (
@@ -308,8 +305,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			f.P("Password string")
 		}
 		if authScheme.Header != nil {
-			if authScheme.Header.ValueType.Container != nil && authScheme.Header.ValueType.Container.Literal != nil {
-				// We don't want to generate a request option for literal values.
+			if !shouldGenerateHeaderAuthScheme(authScheme.Header, f.types) {
 				continue
 			}
 			f.P(
@@ -320,8 +316,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 		}
 	}
 	for _, header := range headers {
-		if header.ValueType.Container != nil && header.ValueType.Container.Literal != nil {
-			// We don't want to generate a request option for literal values.
+		if !shouldGenerateHeader(header, f.types) {
 			continue
 		}
 		f.P(
@@ -383,7 +378,16 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 				prefix = *header.Prefix + " "
 			}
 			if isLiteral := (header.ValueType.Container != nil && header.ValueType.Container.Literal != nil); isLiteral {
-				f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("`, prefix, `%v",`, literalToValue(header.ValueType.Container.Literal), "))")
+				formatValue := `fmt.Sprintf("` + prefix + `%v",` + literalToValue(header.ValueType.Container.Literal) + ")"
+				if header.HeaderEnvVar != nil {
+					f.P(header.Name.Name.CamelCase.SafeName, " := ", formatValue)
+					f.P(`if envValue := os.Getenv("`, *header.HeaderEnvVar, `"); envValue != "" {`)
+					f.P(header.Name.Name.CamelCase.SafeName, " = envValue")
+					f.P("}")
+					f.P(`header.Set("`, header.Name.WireValue, `", `, header.Name.Name.CamelCase.SafeName, ")")
+				} else {
+					f.P(`header.Set("`, header.Name.WireValue, `", `, formatValue, ")")
+				}
 				continue
 			}
 			valueTypeFormat := formatForValueType(header.ValueType, f.types)
@@ -395,7 +399,16 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	}
 	for _, header := range headers {
 		if isLiteral := (header.ValueType.Container != nil && header.ValueType.Container.Literal != nil); isLiteral {
-			f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("%v",`, literalToValue(header.ValueType.Container.Literal), "))")
+			formatValue := `fmt.Sprintf("%v",` + literalToValue(header.ValueType.Container.Literal) + ")"
+			if header.Env != nil {
+				f.P(header.Name.Name.CamelCase.SafeName, " := ", formatValue)
+				f.P(`if envValue := os.Getenv("`, *header.Env, `"); envValue != "" {`)
+				f.P(header.Name.Name.CamelCase.SafeName, " = envValue")
+				f.P("}")
+				f.P(`header.Set("`, header.Name.WireValue, `", `, header.Name.Name.CamelCase.SafeName, ")")
+			} else {
+				f.P(`header.Set("`, header.Name.WireValue, `", `, formatValue, ")")
+			}
 			continue
 		}
 		valueTypeFormat := formatForValueType(header.ValueType, f.types)
@@ -511,8 +524,7 @@ func (f *fileWriter) writeRequestOptionStructs(
 	}
 
 	for _, header := range headers {
-		if header.ValueType.Container != nil && header.ValueType.Container.Literal != nil {
-			// We don't want to generate a request option for literal values.
+		if !shouldGenerateHeader(header, f.types) {
 			continue
 		}
 		var (
@@ -2960,7 +2972,7 @@ func formatForValueType(typeReference *ir.TypeReference, types map[ir.TypeId]*ir
 	)
 	if typeReference.Container != nil && typeReference.Container.Optional != nil {
 		isOptional = true
-		if needsOptionalDereference(typeReference.Container.Optional) {
+		if needsOptionalDereference(typeReference.Container.Optional, types) {
 			prefix = "*"
 		}
 	}
@@ -3077,6 +3089,26 @@ func isOptionalType(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.Typ
 //
 // Container types like lists, maps, and sets are already nil-able, so they don't
 // require a dereference prefix.
-func needsOptionalDereference(optionalTypeReference *ir.TypeReference) bool {
-	return optionalTypeReference.Container == nil
+func needsOptionalDereference(optionalTypeReference *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration) bool {
+	if optionalTypeReference.Named != nil {
+		typeDeclaration := types[optionalTypeReference.Named.TypeId]
+		if typeDeclaration.Shape.Alias != nil {
+			return needsOptionalDereference(typeDeclaration.Shape.Alias.AliasOf, types)
+		}
+		if typeDeclaration.Shape.Enum != nil {
+			return true
+		}
+		return false
+	}
+	return optionalTypeReference.Type == "primitive"
+}
+
+// shouldGenerateHeader returns true if the given header should be generated.
+func shouldGenerateHeader(header *ir.HttpHeader, types map[ir.TypeId]*ir.TypeDeclaration) bool {
+	return header.Env != nil || !isLiteralType((header.ValueType), types)
+}
+
+// shouldGenerateHeaderAuthScheme returns true if the given header auth scheme should be generated.
+func shouldGenerateHeaderAuthScheme(auth *ir.HeaderAuthScheme, types map[ir.TypeId]*ir.TypeDeclaration) bool {
+	return auth.HeaderEnvVar != nil || !isLiteralType(auth.ValueType, types)
 }

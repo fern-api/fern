@@ -13,6 +13,8 @@ public final class SeedAuthEnvironmentVariablesClientBuilder {
 
     private String xAnotherHeader = null;
 
+    private String xApiVersion = "01-01-2000";
+
     private Environment environment;
 
     /**
@@ -46,6 +48,7 @@ public final class SeedAuthEnvironmentVariablesClientBuilder {
             throw new RuntimeException("Please provide xAnotherHeader");
         }
         this.clientOptionsBuilder.addHeader("X-Another-Header", this.xAnotherHeader);
+        this.clientOptionsBuilder.addHeader("X-API-Version", this.xApiVersion);
         clientOptionsBuilder.environment(this.environment);
         return new SeedAuthEnvironmentVariablesClient(clientOptionsBuilder.build());
     }

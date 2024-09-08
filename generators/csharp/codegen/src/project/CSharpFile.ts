@@ -3,7 +3,7 @@ import { FernFilepath } from "@fern-fern/ir-sdk/api";
 import path from "path";
 import { Class, Enum } from "../ast";
 import { BaseCsharpCustomConfigSchema } from "../custom-config";
-import { File } from "./File";
+import { File } from "@fern-api/generator-commons";
 
 export type Namespace = string;
 

@@ -1,0 +1,18 @@
+imports:
+  file: ../file.yml
+types:
+  Directory:
+    properties:
+      name: string
+      files: optional<list<file.File>>
+      directories: optional<list<Directory>>
+    examples:
+      - name: One
+        value:
+          name: root
+          files:
+            - $file.File.One
+          directories:
+            - name: tmp
+              files:
+                - $file.File.Two

@@ -173,9 +173,6 @@ importers:
       tmp-promise:
         specifier: ^3.0.3
         version: 3.0.3
-      zod:
-        specifier: ^3.22.3
-        version: 3.22.4
     devDependencies:
       '@types/jest':
         specifier: ^29.5.12
@@ -452,6 +449,153 @@ importers:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
+  generators/php/codegen:
+    devDependencies:
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/fs-utils
+      '@fern-api/generator-commons':
+        specifier: workspace:*
+        version: link:../../commons
+      '@fern-fern/ir-sdk':
+        specifier: ^53.7.0
+        version: 53.9.0
+      '@types/jest':
+        specifier: ^29.5.12
+        version: 29.5.12
+      '@types/node':
+        specifier: ^18.7.18
+        version: 18.7.18
+      depcheck:
+        specifier: ^1.4.6
+        version: 1.4.6
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      organize-imports-cli:
+        specifier: ^0.10.0
+        version: 0.10.0
+      prettier:
+        specifier: ^2.7.1
+        version: 2.7.1
+      typescript:
+        specifier: 4.6.4
+        version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+      zod:
+        specifier: ^3.22.3
+        version: 3.22.4
+
+  generators/php/model:
+    devDependencies:
+      '@fern-api/generator-commons':
+        specifier: workspace:*
+        version: link:../../commons
+      '@fern-api/php-codegen':
+        specifier: workspace:*
+        version: link:../codegen
+      '@fern-fern/ir-sdk':
+        specifier: ^53.7.0
+        version: 53.9.0
+      '@types/jest':
+        specifier: ^29.5.12
+        version: 29.5.12
+      '@types/node':
+        specifier: ^18.7.18
+        version: 18.7.18
+      '@yarnpkg/esbuild-plugin-pnp':
+        specifier: ^3.0.0-rc.14
+        version: 3.0.0-rc.14(esbuild@0.15.7)
+      depcheck:
+        specifier: ^1.4.6
+        version: 1.4.6
+      env-cmd:
+        specifier: toddbluhm/env-cmd
+        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+      esbuild:
+        specifier: ^0.15.7
+        version: 0.15.7
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      organize-imports-cli:
+        specifier: ^0.10.0
+        version: 0.10.0
+      prettier:
+        specifier: ^2.7.1
+        version: 2.7.1
+      tsup:
+        specifier: ^8.0.2
+        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
+      typescript:
+        specifier: 4.6.4
+        version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+      zod:
+        specifier: ^3.22.3
+        version: 3.22.4
+
+  generators/php/sdk:
+    devDependencies:
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/fs-utils
+      '@fern-api/generator-commons':
+        specifier: workspace:*
+        version: link:../../commons
+      '@fern-api/php-codegen':
+        specifier: workspace:*
+        version: link:../codegen
+      '@fern-fern/generator-exec-sdk':
+        specifier: ^0.0.898
+        version: 0.0.898
+      '@fern-fern/ir-sdk':
+        specifier: ^53.7.0
+        version: 53.9.0
+      '@types/jest':
+        specifier: ^29.5.12
+        version: 29.5.12
+      '@types/node':
+        specifier: ^18.7.18
+        version: 18.7.18
+      '@yarnpkg/esbuild-plugin-pnp':
+        specifier: ^3.0.0-rc.14
+        version: 3.0.0-rc.14(esbuild@0.15.7)
+      depcheck:
+        specifier: ^1.4.6
+        version: 1.4.6
+      env-cmd:
+        specifier: toddbluhm/env-cmd
+        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+      esbuild:
+        specifier: ^0.15.7
+        version: 0.15.7
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      organize-imports-cli:
+        specifier: ^0.10.0
+        version: 0.10.0
+      prettier:
+        specifier: ^2.7.1
+        version: 2.7.1
+      tsup:
+        specifier: ^8.0.2
+        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
+      typescript:
+        specifier: 4.6.4
+        version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+      zod:
+        specifier: ^3.22.3
+        version: 3.22.4
+
   generators/postman:
     dependencies:
       '@fern-api/core-utils':
@@ -564,9 +708,6 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
-      '@fern-api/generator-commons':
-        specifier: workspace:*
-        version: link:../../commons
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.898
         version: 0.0.898
@@ -579,6 +720,9 @@ importers:
       url-join:
         specifier: ^5.0.0
         version: 5.0.0
+      zod:
+        specifier: ^3.22.3
+        version: 3.22.4
     devDependencies:
       '@types/jest':
         specifier: ^29.5.12
@@ -741,6 +885,9 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/fs-utils
       '@fern-api/generator-commons':
         specifier: workspace:*
         version: link:../../commons
@@ -831,7 +978,7 @@ importers:
         version: 2.7.1
       ts-loader:
         specifier: ^9.3.1
-        version: 9.5.1(typescript@4.6.4)(webpack@5.94.0(esbuild@0.19.12))
+        version: 9.5.1(typescript@4.6.4)(webpack@5.94.0)
       tsup:
         specifier: ^8.0.2
         version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
@@ -3104,6 +3251,8 @@ importers:
 
   packages/cli/cli/dist/dev: {}
 
+  packages/cli/cli/dist/prod: {}
+
   packages/cli/configuration:
     dependencies:
       '@fern-api/core-utils':
@@ -3119,8 +3268,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.1.0
-        version: 0.1.0
+        specifier: 0.108.0-e5e9d69a4
+        version: 0.108.0-e5e9d69a4
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584
@@ -3192,8 +3341,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.1.0
-        version: 0.1.0
+        specifier: 0.108.0-e5e9d69a4
+        version: 0.108.0-e5e9d69a4
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
@@ -3247,8 +3396,8 @@ importers:
         specifier: workspace:*
         version: link:../docs-resolver
       '@fern-api/fdr-sdk':
-        specifier: 0.107.0-09e88f5f9
-        version: 0.107.0-09e88f5f9(typescript@4.6.4)
+        specifier: 0.108.0-e5e9d69a4
+        version: 0.108.0-e5e9d69a4(typescript@4.6.4)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -3350,8 +3499,8 @@ importers:
         specifier: workspace:*
         version: link:../docs-markdown-utils
       '@fern-api/fdr-sdk':
-        specifier: 0.107.0-09e88f5f9
-        version: 0.107.0-09e88f5f9(typescript@4.6.4)
+        specifier: 0.108.0-e5e9d69a4
+        version: 0.108.0-e5e9d69a4(typescript@4.6.4)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -3423,8 +3572,8 @@ importers:
         specifier: workspace:*
         version: link:../../commons/logging-execa
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.1.0
-        version: 0.1.0
+        specifier: 0.108.0-e5e9d69a4
+        version: 0.108.0-e5e9d69a4
       '@fern-typescript/fetcher':
         specifier: workspace:*
         version: link:../../../generators/typescript/utils/core-utilities/fetcher
@@ -4146,8 +4295,8 @@ importers:
         specifier: workspace:*
         version: link:../../../workspace-loader
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.1.0
-        version: 0.1.0
+        specifier: 0.108.0-e5e9d69a4
+        version: 0.108.0-e5e9d69a4
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584
@@ -4755,8 +4904,8 @@ importers:
         specifier: workspace:*
         version: link:../workspace-loader
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.1.0
-        version: 0.1.0
+        specifier: 0.108.0-e5e9d69a4
+        version: 0.108.0-e5e9d69a4
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -5214,8 +5363,8 @@ importers:
         specifier: 0.0.38
         version: 0.0.38
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.1.0
-        version: 0.1.0
+        specifier: 0.108.0-e5e9d69a4
+        version: 0.108.0-e5e9d69a4
       '@fern-fern/fdr-test-sdk':
         specifier: ^0.0.5297
         version: 0.0.5297
@@ -6476,8 +6625,8 @@ packages:
   '@exodus/schemasafe@1.0.0':
     resolution: {integrity: sha512-2cyupPIZI69HQxEAPllLXBjQp4njDKkOjYRCYxvMZe3/LY9pp9fBM3Tb1wiFAdP6Emo4v3OEbCLGj6u73Q5KLw==}
 
-  '@fern-api/fdr-sdk@0.107.0-09e88f5f9':
-    resolution: {integrity: sha512-9vVSuRIWgqRlJFvSbGCuOE3jbDIUGOWXkUA/ra9ELgDlqH0Uo5NZYC9AHcQze2wu5P5X5NOjQbwPNQp6B5Jy+g==}
+  '@fern-api/fdr-sdk@0.108.0-e5e9d69a4':
+    resolution: {integrity: sha512-LrvlYSw1h8nP/h0nB9g3n24eq1CiTxHPYue6nU6t7rs9gsWUHkN4VxO7fHSj3KU1T1qbFq/L8+HYKuiB7P4ljA==}
 
   '@fern-api/venus-api-sdk@0.0.38':
     resolution: {integrity: sha512-1JjuctZwyPu4jN51bBqjIy+uCBPGa/ROcDfqN0UnGeVEW7NyztkGh/qOFwnN6K07VMMql1AIF4Zov+MVqTPwmw==}
@@ -6485,8 +6634,8 @@ packages:
   '@fern-fern/docs-config@0.0.80':
     resolution: {integrity: sha512-wAZCNxwM4qIPn3idoIihPP65KWPjNuoTSfdP4+5f8K2jJLgs5cdkY0pm4cQlGWvi5K6b+lfbUWDaslnXscJ2gQ==}
 
-  '@fern-fern/fdr-cjs-sdk@0.1.0':
-    resolution: {integrity: sha512-d55immLwXpBQ5nwPtzg1bXKpGc8ENPTVGqoxLwcmo4wbN4N2HF6/O/qTLa/ZpfzDBmUA6DFcvlRQKzXk8sKDtQ==}
+  '@fern-fern/fdr-cjs-sdk@0.108.0-e5e9d69a4':
+    resolution: {integrity: sha512-vYw5dh/hqubHn2pNnocHvrYkg924tx3z107oZSHOoTynLd+fHlF/zFO8h/iK0370JlUUfCQ82GRBvZyoPHtUHA==}
 
   '@fern-fern/fdr-test-sdk@0.0.5297':
     resolution: {integrity: sha512-jrZUZ6oIA64LHtrv77xEq0X7qJhT9xRMGWhKcLjIUArMsD7h6KMWUHVdoB/1MP0Mz/uL/E2xmM31SOgJicpIcA==}
@@ -13528,7 +13677,7 @@ snapshots:
 
   '@exodus/schemasafe@1.0.0': {}
 
-  '@fern-api/fdr-sdk@0.107.0-09e88f5f9(typescript@4.6.4)':
+  '@fern-api/fdr-sdk@0.108.0-e5e9d69a4(typescript@4.6.4)':
     dependencies:
       dayjs: 1.11.11
       fast-deep-equal: 3.1.3
@@ -13556,7 +13705,7 @@ snapshots:
 
   '@fern-fern/docs-config@0.0.80': {}
 
-  '@fern-fern/fdr-cjs-sdk@0.1.0':
+  '@fern-fern/fdr-cjs-sdk@0.108.0-e5e9d69a4':
     dependencies:
       form-data: 4.0.0
       formdata-node: 6.0.3
@@ -19972,17 +20121,6 @@ snapshots:
     optionalDependencies:
       esbuild: 0.15.7
 
-  terser-webpack-plugin@5.3.10(esbuild@0.19.12)(webpack@5.94.0(esbuild@0.19.12)):
-    dependencies:
-      '@jridgewell/trace-mapping': 0.3.25
-      jest-worker: 27.5.1
-      schema-utils: 3.3.0
-      serialize-javascript: 6.0.2
-      terser: 5.31.5
-      webpack: 5.94.0(esbuild@0.19.12)
-    optionalDependencies:
-      esbuild: 0.19.12
-
   terser-webpack-plugin@5.3.10(webpack@5.94.0):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
@@ -20134,16 +20272,6 @@ snapshots:
       source-map: 0.7.4
       typescript: 4.6.4
       webpack: 5.94.0(esbuild@0.15.7)
-
-  ts-loader@9.5.1(typescript@4.6.4)(webpack@5.94.0(esbuild@0.19.12)):
-    dependencies:
-      chalk: 4.1.2
-      enhanced-resolve: 5.15.0
-      micromatch: 4.0.5
-      semver: 7.6.2
-      source-map: 0.7.4
-      typescript: 4.6.4
-      webpack: 5.94.0(esbuild@0.19.12)
 
   ts-loader@9.5.1(typescript@4.6.4)(webpack@5.94.0):
     dependencies:
@@ -20644,36 +20772,6 @@ snapshots:
       schema-utils: 3.3.0
       tapable: 2.2.1
       terser-webpack-plugin: 5.3.10(esbuild@0.15.7)(webpack@5.94.0(esbuild@0.15.7))
-      watchpack: 2.4.1
-      webpack-sources: 3.2.3
-    transitivePeerDependencies:
-      - '@swc/core'
-      - esbuild
-      - uglify-js
-
-  webpack@5.94.0(esbuild@0.19.12):
-    dependencies:
-      '@types/estree': 1.0.5
-      '@webassemblyjs/ast': 1.12.1
-      '@webassemblyjs/wasm-edit': 1.12.1
-      '@webassemblyjs/wasm-parser': 1.12.1
-      acorn: 8.11.3
-      acorn-import-attributes: 1.9.5(acorn@8.11.3)
-      browserslist: 4.23.3
-      chrome-trace-event: 1.0.4
-      enhanced-resolve: 5.17.1
-      es-module-lexer: 1.5.4
-      eslint-scope: 5.1.1
-      events: 3.3.0
-      glob-to-regexp: 0.4.1
-      graceful-fs: 4.2.11
-      json-parse-even-better-errors: 2.3.1
-      loader-runner: 4.3.0
-      mime-types: 2.1.35
-      neo-async: 2.6.2
-      schema-utils: 3.3.0
-      tapable: 2.2.1
-      terser-webpack-plugin: 5.3.10(esbuild@0.19.12)(webpack@5.94.0(esbuild@0.19.12))
       watchpack: 2.4.1
       webpack-sources: 3.2.3
     transitivePeerDependencies:

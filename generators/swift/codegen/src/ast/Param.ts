@@ -1,4 +1,4 @@
-import { AstNode, Writer } from "@fern-api/generator-commons";
+import { AstNode, Writer } from "./core";
 import Swift, { Type } from "..";
 
 /*
@@ -33,7 +33,7 @@ export class Param extends AstNode {
     public readonly defaultValue?: Type;
 
     constructor({ title, type, defaultValue }: Param.Args) {
-        super(Swift.indentSize);
+        super();
         this.title = title;
         this.type = type;
         this.defaultValue = defaultValue;

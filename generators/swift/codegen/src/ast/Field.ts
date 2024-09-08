@@ -1,4 +1,4 @@
-import { AstNode, Writer } from "@fern-api/generator-commons";
+import { AstNode, Writer } from "./core";
 import Swift, { AccessLevel, Type } from "..";
 import { VariableType } from "./VariableType";
 
@@ -20,7 +20,7 @@ export class Field extends AstNode {
     public readonly defaultValue?: string; // TODO
 
     constructor({ accessLevel, variableType, name, valueType, defaultValue }: Field.Args) {
-        super(Swift.indentSize);
+        super();
         this.accessLevel = accessLevel;
         this.variableType = variableType;
         this.name = name;

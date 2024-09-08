@@ -13,13 +13,21 @@ public final class RequestOptions {
 
     private final String xAnotherHeader;
 
+    private final String xApiVersion;
+
     private final Optional<Integer> timeout;
 
     private final TimeUnit timeoutTimeUnit;
 
-    private RequestOptions(String apiKey, String xAnotherHeader, Optional<Integer> timeout, TimeUnit timeoutTimeUnit) {
+    private RequestOptions(
+            String apiKey,
+            String xAnotherHeader,
+            String xApiVersion,
+            Optional<Integer> timeout,
+            TimeUnit timeoutTimeUnit) {
         this.apiKey = apiKey;
         this.xAnotherHeader = xAnotherHeader;
+        this.xApiVersion = xApiVersion;
         this.timeout = timeout;
         this.timeoutTimeUnit = timeoutTimeUnit;
     }
@@ -40,6 +48,9 @@ public final class RequestOptions {
         if (this.xAnotherHeader != null) {
             headers.put("X-Another-Header", this.xAnotherHeader);
         }
+        if (this.xApiVersion != null) {
+            headers.put("X-API-Version", this.xApiVersion);
+        }
         return headers;
     }
 
@@ -51,6 +62,8 @@ public final class RequestOptions {
         private String apiKey = null;
 
         private String xAnotherHeader = null;
+
+        private String xApiVersion = null;
 
         private Optional<Integer> timeout = Optional.empty();
 
@@ -66,6 +79,11 @@ public final class RequestOptions {
             return this;
         }
 
+        public Builder xApiVersion(String xApiVersion) {
+            this.xApiVersion = xApiVersion;
+            return this;
+        }
+
         public Builder timeout(Integer timeout) {
             this.timeout = Optional.of(timeout);
             return this;
@@ -78,7 +96,7 @@ public final class RequestOptions {
         }
 
         public RequestOptions build() {
-            return new RequestOptions(apiKey, xAnotherHeader, timeout, timeoutTimeUnit);
+            return new RequestOptions(apiKey, xAnotherHeader, xApiVersion, timeout, timeoutTimeUnit);
         }
     }
 }

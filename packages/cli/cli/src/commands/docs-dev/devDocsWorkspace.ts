@@ -19,7 +19,7 @@ export async function previewDocsWorkspace({
         return;
     }
 
-    cliContext.instrumentPostHogEvent({
+    await cliContext.instrumentPostHogEvent({
         orgId: project.config.organization,
         command: "fern docs dev"
     });

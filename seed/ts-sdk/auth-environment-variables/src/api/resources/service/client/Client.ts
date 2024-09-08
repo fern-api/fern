@@ -14,6 +14,8 @@ export declare namespace Service {
         apiKey?: core.Supplier<string | undefined>;
         /** Override the X-Another-Header header */
         xAnotherHeader: core.Supplier<string>;
+        /** Override the X-API-Version header */
+        xApiVersion?: "01-01-2000";
     }
 
     interface RequestOptions {
@@ -25,6 +27,8 @@ export declare namespace Service {
         abortSignal?: AbortSignal;
         /** Override the X-Another-Header header */
         xAnotherHeader?: string;
+        /** Override the X-API-Version header */
+        xApiVersion?: "01-01-2000";
     }
 }
 
@@ -45,6 +49,7 @@ export class Service {
             method: "GET",
             headers: {
                 "X-Another-Header": await core.Supplier.get(this._options.xAnotherHeader),
+                "X-API-Version": requestOptions?.xApiVersion ?? this._options?.xApiVersion ?? "01-01-2000",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/auth-environment-variables",
                 "X-Fern-SDK-Version": "0.0.1",
@@ -111,6 +116,7 @@ export class Service {
             method: "GET",
             headers: {
                 "X-Another-Header": await core.Supplier.get(this._options.xAnotherHeader),
+                "X-API-Version": requestOptions?.xApiVersion ?? this._options?.xApiVersion ?? "01-01-2000",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/auth-environment-variables",
                 "X-Fern-SDK-Version": "0.0.1",

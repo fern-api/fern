@@ -2,7 +2,7 @@
 
 from . import service
 from .client import AsyncSeedFileUpload, SeedFileUpload
-from .service import MyObject
+from .service import Id, MyObject, ObjectType
 from .version import __version__
 
-__all__ = ["AsyncSeedFileUpload", "MyObject", "SeedFileUpload", "__version__", "service"]
+__all__ = ["AsyncSeedFileUpload", "Id", "MyObject", "ObjectType", "SeedFileUpload", "__version__", "service"]

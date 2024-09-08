@@ -33,10 +33,14 @@ jobs:
             java
             csharp
             go
+            php
             ruby
             seed
             postman
             ci
+            fastapi
+            spring
+            express
           requireScope: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
