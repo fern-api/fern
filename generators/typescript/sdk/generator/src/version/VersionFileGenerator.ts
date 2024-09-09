@@ -1,21 +1,20 @@
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { Directory } from "ts-morph";
 import { Writer, ts } from "@fern-api/typescript-codegen";
 
 export declare namespace VersionFileGenerator {
     interface Args {
-        ir: IntermediateRepresentation;
         rootDirectory: Directory;
+        version: string;
     }
 }
 
 export class VersionFileGenerator {
-    private ir: IntermediateRepresentation;
     private rootDirectory: Directory;
+    private version: string;
 
-    constructor({ ir, rootDirectory }: VersionFileGenerator.Args) {
-        this.ir = ir;
+    constructor({ rootDirectory, version }: VersionFileGenerator.Args) {
         this.rootDirectory = rootDirectory;
+        this.version = version;
     }
 
     public generate(): void {
@@ -24,10 +23,10 @@ export class VersionFileGenerator {
             ts.variable({
                 const: true,
                 export: true,
-                initializer: ts.codeblock(`"${this.ir.sdkConfig.platformHeaders.sdkVersion}"`),
-                name: "SdkVersion"
+                initializer: ts.codeblock(`"${this.version}"`),
+                name: "SDK_VERSION"
             })
         );
-        this.rootDirectory.createSourceFile("version.ts", writer.toString());
+        this.rootDirectory.createSourceFile("src/version.ts", writer.toString());
     }
 }

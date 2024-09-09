@@ -424,11 +424,13 @@ export class SdkGenerator {
             }
         }
 
-        const versionFileGenerator = new VersionFileGenerator({
-            ir: this.intermediateRepresentation,
-            rootDirectory: this.rootDirectory
-        });
-        versionFileGenerator.generate();
+        if (this.npmPackage?.version != null) {
+            const versionFileGenerator = new VersionFileGenerator({
+                version: this.npmPackage.version,
+                rootDirectory: this.rootDirectory
+            });
+            versionFileGenerator.generate();
+        }
 
         this.coreUtilitiesManager.finalize(this.exportsManager, this.dependencyManager);
         this.exportsManager.writeExportsToProject(this.rootDirectory);
