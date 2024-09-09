@@ -658,6 +658,8 @@ components:
           examples:
             - Europe/Berlin
             - Europe/Paris
+        messages:
+          $ref: './V2ChatMessages.yaml'
     Links-Self:
       type: object
       properties:

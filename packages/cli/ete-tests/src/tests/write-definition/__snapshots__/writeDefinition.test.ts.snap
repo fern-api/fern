@@ -206,11 +206,22 @@ auth: BearerAuthScheme
     "contents": [
       {
         "contents": "types:
+  V2ChatMessages:
+    docs: >
+      A list of chat messages in chronological order, representing a
+      conversation between the user and the model.
+
+
+      Messages can be from \`User\`, \`Assistant\`, \`Tool\` and \`System\` roles. Learn
+      more about messages and roles in [the Chat API
+      guide](https://docs.cohere.com/docs/chat-api).
+    type: list<unknown>
   Pet:
     properties:
       id: long
       name: string
       tag: optional<string>
+      messages: optional<V2ChatMessages>
     source:
       openapi: openapi/petstore/openapi.yml
   Pets: list<Pet>
@@ -255,6 +266,8 @@ service:
               - id: 1000000
                 name: name
                 tag: tag
+                messages:
+                  - key: value
     createPets:
       path: /pets
       method: POST
@@ -282,6 +295,8 @@ service:
               id: 1000000
               name: name
               tag: tag
+              messages:
+                - key: value
   source:
     openapi: openapi/petstore/openapi.yml
 ",
@@ -450,7 +465,9 @@ types:
   {
     "contents": [
       {
-        "contents": "types:
+        "contents": "imports:
+  root: ../neopets/__package__.yml
+types:
   Station:
     properties:
       id:
@@ -472,6 +489,7 @@ types:
         docs: >-
           The timezone of the station in the [IANA Time Zone Database
           format](https://www.iana.org/time-zones).
+      messages: optional<root.V2ChatMessages>
     source:
       openapi: openapi/trains/openapi.yml
   LinksSelf:
