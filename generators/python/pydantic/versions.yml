@@ -3,7 +3,7 @@
   irVersion: 53
   changelogEntry:
     - type: fix
-      summary: Default new pydantic alias flag to false as it is a breaking change.
+      summary: Default new pydantic alias flag to true as it is a breaking change.
 
 
 - version: 1.4.5
