@@ -5,9 +5,7 @@ from ...core.pydantic_utilities import UniversalBaseModel
 import typing
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
-import typing_extensions
 from ..commons.variable_value import VariableValue
-from ...core.serialization import FieldMetadata
 from .exception_v_2 import ExceptionV2
 
 
@@ -26,9 +24,7 @@ class TestCaseGrade_Hidden(UniversalBaseModel):
 class TestCaseGrade_NonHidden(UniversalBaseModel):
     type: typing.Literal["nonHidden"] = "nonHidden"
     passed: bool
-    actual_result: typing_extensions.Annotated[typing.Optional[VariableValue], FieldMetadata(alias="actualResult")] = (
-        None
-    )
+    actual_result: typing.Optional[VariableValue] = pydantic.Field(alias="actualResult", default=None)
     exception: typing.Optional[ExceptionV2] = None
     stdout: str
 

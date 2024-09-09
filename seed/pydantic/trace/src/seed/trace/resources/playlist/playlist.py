@@ -2,17 +2,15 @@
 
 from .playlist_create_request import PlaylistCreateRequest
 from .playlist_id import PlaylistId
-import typing_extensions
 from ..commons.user_id import UserId
-from ...core.serialization import FieldMetadata
+import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
-import pydantic
 
 
 class Playlist(PlaylistCreateRequest):
     playlist_id: PlaylistId
-    owner_id: typing_extensions.Annotated[UserId, FieldMetadata(alias="owner-id")]
+    owner_id: UserId = pydantic.Field(alias="owner-id")
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

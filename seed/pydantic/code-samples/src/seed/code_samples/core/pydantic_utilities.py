@@ -110,21 +110,23 @@ class UniversalBaseModel(pydantic.BaseModel):
         # We'd ideally do the same for Pydantic V2, but it shells out to a library to serialize models
         # that we have less control over, and this is less intrusive than custom serializers for now.
         if IS_PYDANTIC_V2:
-<<<<<<< HEAD
             kwargs_with_defaults_exclude_unset: typing.Any = {
+                **kwargs,
                 "by_alias": True,
                 "exclude_unset": True,
-                **kwargs,
+                "exclude_none": False,
             }
             kwargs_with_defaults_exclude_none: typing.Any = {
+                **kwargs,
                 "by_alias": True,
                 "exclude_none": True,
-                **kwargs,
+                "exclude_unset": False,
             }
             dict_dump = deep_union_pydantic_dicts(
                 super().model_dump(**kwargs_with_defaults_exclude_unset),  # type: ignore # Pydantic v2
                 super().model_dump(**kwargs_with_defaults_exclude_none),  # type: ignore # Pydantic v2
             )
+
         else:
             _fields_set = self.__fields_set__
 
@@ -162,13 +164,6 @@ def deep_union_pydantic_dicts(
             destination[key] = value
 
     return destination
-=======
-            dict_dump = super().model_dump(**kwargs_with_defaults_exclude_unset)  # type: ignore # Pydantic v2
-        else:
-            dict_dump = super().dict(**kwargs_with_defaults_exclude_unset)
-
-        return convert_and_respect_annotation_metadata(object_=dict_dump, annotation=self.__class__, direction="write")
->>>>>>> main
 
 
 if IS_PYDANTIC_V2:

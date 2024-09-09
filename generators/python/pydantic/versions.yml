@@ -1,4 +1,11 @@
 # For unreleased changes, use unreleased.yml
+- version: 1.4.6
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: Default new pydantic alias flag to true as it is a breaking change.
+
+
 - version: 1.4.5
   irVersion: 53
   changelogEntry:

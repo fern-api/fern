@@ -45,7 +45,7 @@ class BasePydanticModelCustomConfig(pydantic.BaseModel):
     ```
     """
 
-    use_pydantic_field_aliases: bool = False
+    use_pydantic_field_aliases: bool = True
 
     @pydantic.model_validator(mode="after")
     def check_wrapped_aliases_v1_only(self) -> Self:
