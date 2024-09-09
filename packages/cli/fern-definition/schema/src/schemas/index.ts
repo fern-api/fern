@@ -56,6 +56,7 @@ export { OAuthGetTokenEndpointSchema } from "./OAuthGetTokenEndpointSchema";
 export { OAuthRefreshTokenEndpointSchema } from "./OAuthRefreshTokenEndpointSchema";
 export { OAuthRefreshTokenRequestPropertiesSchema } from "./OAuthRefreshTokenRequestPropertiesSchema";
 export { OAuthSchemeSchema } from "./OAuthSchemeSchema";
+export { ObjectExtendsSchema } from "./ObjectExtendsSchema";
 export { ObjectPropertySchema } from "./ObjectPropertySchema";
 export { ObjectSchema } from "./ObjectSchema";
 export { OffsetPaginationSchema } from "./OffsetPaginationSchema";

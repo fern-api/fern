@@ -7,7 +7,7 @@ import {
     visitAllPackageMarkers
 } from "@fern-api/workspace-loader";
 import { constructFernFileContext, FernFileContext } from "../FernFileContext";
-import { CASINGS_GENERATOR } from "../utils/getAllPropertiesForObject";
+import { CASINGS_GENERATOR } from "../utils/casingsGenerator";
 import { parseReferenceToEndpointName } from "../utils/parseReferenceToEndpointName";
 import { ResolvedEndpoint } from "./ResolvedEndpoint";
 

@@ -327,6 +327,54 @@ describe("valid-example-type", () => {
                 relativeFilepath: RelativeFilePath.of("union.yml"),
                 message: 'Unexpected property "randomProperty"',
                 nodePath: ["types", "Animal", { key: "examples", arrayIndex: 9 }]
+            },
+            {
+                severity: "error",
+                relativeFilepath: RelativeFilePath.of("union.yml"),
+                message: 'Example is missing required property "name"',
+                nodePath: ["types", "LoudAnimal", { key: "examples", arrayIndex: 3 }]
+            },
+            {
+                severity: "error",
+                relativeFilepath: RelativeFilePath.of("union.yml"),
+                message: "Expected example to be a string. Example is: 42",
+                nodePath: ["types", "LoudAnimal", { key: "examples", arrayIndex: 4 }]
+            },
+            {
+                severity: "error",
+                relativeFilepath: RelativeFilePath.of("union.yml"),
+                message: 'Unexpected property "randomProperty"',
+                nodePath: ["types", "LoudAnimal", { key: "examples", arrayIndex: 5 }]
+            },
+            {
+                severity: "error",
+                relativeFilepath: RelativeFilePath.of("union.yml"),
+                message: 'Missing property "value2"',
+                nodePath: ["types", "LoudAnimal", { key: "examples", arrayIndex: 6 }]
+            },
+            {
+                severity: "error",
+                relativeFilepath: RelativeFilePath.of("union.yml"),
+                message: "Expected example to be a string. Example is: 42",
+                nodePath: ["types", "LoudAnimal", { key: "examples", arrayIndex: 7 }]
+            },
+            {
+                severity: "error",
+                relativeFilepath: RelativeFilePath.of("union.yml"),
+                message: 'Missing property "value2"',
+                nodePath: ["types", "LoudAnimal", { key: "examples", arrayIndex: 8 }]
+            },
+            {
+                severity: "error",
+                relativeFilepath: RelativeFilePath.of("union.yml"),
+                message: 'Unexpected property "randomProperty"',
+                nodePath: ["types", "LoudAnimal", { key: "examples", arrayIndex: 8 }]
+            },
+            {
+                severity: "error",
+                relativeFilepath: RelativeFilePath.of("union.yml"),
+                message: 'Unexpected property "randomProperty"',
+                nodePath: ["types", "LoudAnimal", { key: "examples", arrayIndex: 9 }]
             }
         ];
 

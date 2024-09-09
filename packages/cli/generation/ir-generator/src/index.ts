@@ -26,10 +26,11 @@ export { TypeResolverImpl, type TypeResolver } from "./resolvers/TypeResolver";
 export { VariableResolverImpl, type VariableResolver } from "./resolvers/VariableResolver";
 export {
     convertObjectPropertyWithPathToString,
-    getAllPropertiesForObject,
+    getAllProperties,
     getAllPropertiesForType,
     type ObjectPropertyWithPath
-} from "./utils/getAllPropertiesForObject";
+} from "./utils/getAllProperties";
+export { getAllPropertiesForObject } from "./utils/getAllPropertiesForObject";
 export { getResolvedPathOfImportedFile } from "./utils/getResolvedPathOfImportedFile";
 export { parseReferenceToEndpointName, type ReferenceToEndpointName } from "./utils/parseReferenceToEndpointName";
 export { parseReferenceToTypeName, type ReferenceToTypeName } from "./utils/parseReferenceToTypeName";

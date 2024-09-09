@@ -68,7 +68,8 @@ export function convertTypeExample({
         object: (rawObject) => {
             return convertObject({
                 typeName,
-                rawObject,
+                objectProperties: rawObject.properties,
+                extendedTypes: rawObject.extends,
                 example,
                 fileContainingType,
                 fileContainingExample,
@@ -102,6 +103,8 @@ export function convertTypeExample({
                     ? rawSingleUnionType.type
                     : undefined;
 
+            const baseProperties = rawUnion["base-properties"];
+
             return ExampleTypeShape.union({
                 discriminant: fileContainingExample.casingsGenerator.generateNameAndWireValue({
                     name: getUnionDiscriminantName(rawUnion).name,
@@ -117,6 +120,7 @@ export function convertTypeExample({
                     example,
                     discriminant,
                     discriminantValueForExample,
+                    baseProperties,
                     workspace
                 })
             });
@@ -461,7 +465,8 @@ function convertPrimitiveExample({
 
 function convertObject({
     typeName,
-    rawObject,
+    objectProperties,
+    extendedTypes,
     example,
     fileContainingType,
     fileContainingExample,
@@ -470,7 +475,8 @@ function convertObject({
     workspace
 }: {
     typeName: DeclaredTypeName;
-    rawObject: RawSchemas.ObjectSchema;
+    objectProperties: Record<string, RawSchemas.ObjectPropertySchema> | undefined;
+    extendedTypes: RawSchemas.ObjectExtendsSchema | undefined;
     example: RawSchemas.ExampleTypeValueSchema;
     fileContainingType: FernFileContext;
     fileContainingExample: FernFileContext;
@@ -483,13 +489,14 @@ function convertObject({
     }
     return ExampleTypeShape.object({
         properties:
-            rawObject.properties != null || rawObject.extends != null
+            objectProperties != null || extendedTypes != null
                 ? Object.entries(example).reduce<ExampleObjectProperty[]>(
                       (exampleProperties, [wireKey, propertyExample]) => {
                           const originalTypeDeclaration = getOriginalTypeDeclarationForProperty({
                               typeName,
                               wirePropertyKey: wireKey,
-                              rawObject,
+                              objectProperties,
+                              extendedTypes,
                               typeResolver,
                               file: fileContainingType
                           });
@@ -532,25 +539,27 @@ function convertObject({
 function getOriginalTypeDeclarationForProperty({
     typeName,
     wirePropertyKey,
-    rawObject,
+    objectProperties,
+    extendedTypes,
     typeResolver,
     file
 }: {
     typeName: DeclaredTypeName;
     wirePropertyKey: string;
-    rawObject: RawSchemas.ObjectSchema;
+    objectProperties: Record<string, RawSchemas.ObjectPropertySchema> | undefined;
+    extendedTypes: RawSchemas.ObjectExtendsSchema | undefined;
     typeResolver: TypeResolver;
     file: FernFileContext;
 }):
     | { typeName: DeclaredTypeName; rawPropertyType: string | RawSchemas.ObjectPropertySchema; file: FernFileContext }
     | undefined {
-    const rawPropertyType = rawObject.properties?.[wirePropertyKey];
+    const rawPropertyType = objectProperties?.[wirePropertyKey];
     if (rawPropertyType != null) {
         return { typeName, rawPropertyType, file };
     } else {
         return getOriginalTypeDeclarationForPropertyFromExtensions({
             wirePropertyKey,
-            extends_: rawObject.extends,
+            extends_: extendedTypes,
             typeResolver,
             file
         });
@@ -582,7 +591,8 @@ export function getOriginalTypeDeclarationForPropertyFromExtensions({
             }
             const originalTypeDeclaration = getOriginalTypeDeclarationForProperty({
                 wirePropertyKey,
-                rawObject: resolvedType.declaration,
+                objectProperties: resolvedType.declaration.properties,
+                extendedTypes: resolvedType.declaration.extends,
                 typeResolver,
                 typeName: resolvedType.name,
                 file: resolvedType.file
@@ -606,6 +616,7 @@ function convertSingleUnionType({
     example,
     discriminant,
     discriminantValueForExample,
+    baseProperties,
     workspace
 }: {
     rawValueType: string | undefined;
@@ -617,6 +628,7 @@ function convertSingleUnionType({
     example: RawSchemas.ExampleTypeValueSchema;
     discriminant: string;
     discriminantValueForExample: string;
+    baseProperties: Record<string, RawSchemas.ObjectPropertySchema> | undefined;
     workspace: FernWorkspace;
 }): ExampleSingleUnionType {
     const wireDiscriminantValue = fileContainingExample.casingsGenerator.generateNameAndWireValue({
@@ -680,7 +692,11 @@ function convertSingleUnionType({
                 shape: ExampleSingleUnionTypeProperties.samePropertiesAsObject({
                     typeId: IdGenerator.generateTypeId(typeName),
                     object: convertObject({
-                        rawObject: rawDeclaration.declaration,
+                        objectProperties: {
+                            ...baseProperties,
+                            ...rawDeclaration.declaration.properties
+                        },
+                        extendedTypes: rawDeclaration.declaration.extends,
                         example: nonDiscriminantPropertiesFromExample,
                         fileContainingType: rawDeclaration.file,
                         fileContainingExample,
