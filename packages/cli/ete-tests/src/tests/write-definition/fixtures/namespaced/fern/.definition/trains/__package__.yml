@@ -1,3 +1,5 @@
+imports:
+  root: ../neopets/__package__.yml
 types:
   Station:
     properties:
@@ -20,6 +22,7 @@ types:
         docs: >-
           The timezone of the station in the [IANA Time Zone Database
           format](https://www.iana.org/time-zones).
+      messages: optional<root.V2ChatMessages>
     source:
       openapi: openapi/trains/openapi.yml
   LinksSelf:
