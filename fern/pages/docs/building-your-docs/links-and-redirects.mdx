@@ -16,6 +16,17 @@ redirects:
 ```
 </CodeBlock>
 
+By default, the redirects implement temporary (302) redirects. If you would like to implement permanent (301) redirects, you can set `permanent: true`.
+
+<CodeBlock title="docs.yml">
+```yml
+redirects:
+  - source: "/old-subdomain"
+    destination: "/new-subdomain"
+    permanent: true
+```
+</CodeBlock>
+
 ## Links
 
 You can add a link to an external page within your sidebar navigation with the following configuration: 
