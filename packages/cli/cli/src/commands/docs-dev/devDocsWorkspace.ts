@@ -7,11 +7,13 @@ import { validateDocsWorkspaceWithoutExiting } from "../validate/validateDocsWor
 export async function previewDocsWorkspace({
     loadProject,
     cliContext,
-    port
+    port,
+    bundlePath
 }: {
     loadProject: () => Promise<Project>;
     cliContext: CliContext;
     port: number;
+    bundlePath?: string;
 }): Promise<void> {
     const project = await loadProject();
     const docsWorkspace = project.docsWorkspaces;
@@ -54,7 +56,8 @@ export async function previewDocsWorkspace({
                 }
             },
             context,
-            port
+            port,
+            bundlePath
         });
     });
 }
