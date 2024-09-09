@@ -1,4 +1,10 @@
 - changelogEntry:
+  - summary: Fixes the namespacing config below to not break imports in the API definition if objects of the same name are found across namespaces.
+    type: fix
+  irVersion: 53
+  version: 0.41.9
+
+- changelogEntry:
   - summary: |
       The Fern generators.yml configuration now supports a new format for namespacing APIs for additional flexibility:
 
