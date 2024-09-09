@@ -1,0 +1,75 @@
+---
+title: Multipart File Upload
+subtitle: Document endpoints with the `multipart/form-data` content type
+---
+
+Multipart requests combine one or more sets of data into a single body, separated by boundaries.
+You typically use these requests for file uploads and for transferring data of several types in a single request
+(for example, a file along with a JSON object).
+
+```yml title="openapi.yml" maxLines=0 {12-24}
+paths:
+  /upload:
+    post:
+      summary: Upload a file
+      description: Upload a file using multipart/form-data encoding
+      operationId: uploadFile
+      tags:
+        - file
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The file to upload
+                description:
+                  type: string
+                  description: A description of the file (optional)
+              required:
+                - file
+      responses:
+        "200":
+          description: Successful upload
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  fileId:
+                    type: string
+```
+Any request body that is defined with a `multipart/form-data` content type, will be 
+treated as a multipart request. Within a given multipart request, a string parameter with 
+`format:binary` will represent an arbitrary file. 
+
+## Array of Files
+
+If your endpoint supports an array of files, then your request body must use
+an array type.
+
+```yml openapi.yml {12-17}
+paths:
+  /upload:
+    post:
+      summary: Upload multiple files
+      operationId: uploadFiles
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                  description: An array of files to upload
+```

@@ -69,17 +69,30 @@ navigation:
           # - page: OpenAPI Examples
           #   icon: fa-regular fa-square-terminal
           #   path: ./pages/api-definition/openapi/examples.mdx
-          #   slug: examples
-          - page: Audiences
-            icon: fa-duotone fa-users
-            path: ./pages/api-definition/openapi/extensions/audiences.mdx
-            slug: audiences                
-          - page: Streaming and SSE
-            path: ./pages/api-definition/openapi/streaming-server-sent-events.mdx
-            icon: fa-regular fa-signal-stream                
+          #   slug: examples    
+          - section: Endpoints
+            icon: fa-regular fa-object-intersect
+            slug: endpoints       
+            contents: 
+              - page: HTTP JSON Endpoints
+                icon: fa-regular fa-display-code
+                path: ./pages/api-definition/openapi/endpoints/rest.mdx
+                slug: http
+              - page: Multipart Form Uploads
+                icon: fa-regular fa-file
+                path: ./pages/api-definition/openapi/endpoints/multipart.mdx
+                slug: multipart
+              - page: Server Sent Events
+                path: ./pages/api-definition/openapi/endpoints/sse.mdx
+                icon: fa-regular fa-signal-stream    
+                slug: sse                                                                            
           - page: Webhooks
             path: ./pages/api-definition/openapi/webhooks.mdx
             icon: fa-regular fa-webhook    
+          - page: Audiences
+            icon: fa-duotone fa-users
+            path: ./pages/api-definition/openapi/extensions/audiences.mdx
+            slug: audiences              
           - section: Extensions
             icon: fa-regular fa-object-intersect
             slug: extensions
