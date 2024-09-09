@@ -11,7 +11,6 @@ class FastApiPydanticModelCustomConfig(BasePydanticModelCustomConfig):
     extra_fields: Optional[Literal["allow", "forbid"]] = "forbid"
     use_str_enums: bool = False
     enum_type: EnumTypes = "python_enums"
-    use_pydantic_field_aliases: bool = True
 
 
 class FastAPICustomConfig(pydantic.BaseModel):
