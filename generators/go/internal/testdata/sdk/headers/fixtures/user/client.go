@@ -77,12 +77,14 @@ func (c *Client) SetName(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:         endpointURL,
-			Method:      http.MethodPost,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Response:    &response,
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
 		},
 	); err != nil {
 		return "", err
@@ -114,12 +116,14 @@ func (c *Client) UpdateName(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:         endpointURL,
-			Method:      http.MethodPut,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Response:    &response,
+			URL:             endpointURL,
+			Method:          http.MethodPut,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
 		},
 	); err != nil {
 		return "", err

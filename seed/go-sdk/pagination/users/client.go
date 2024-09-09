@@ -64,12 +64,14 @@ func (c *Client) ListWithCursorPagination(
 			nextURL += "?" + queryParams.Encode()
 		}
 		return &core.CallParams{
-			URL:         nextURL,
-			Method:      http.MethodGet,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Response:    pageRequest.Response,
+			URL:             nextURL,
+			Method:          http.MethodGet,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        pageRequest.Response,
 		}
 	}
 	readPageResponse := func(response *fern.ListUsersPaginationResponse) *core.PageResponse[*string, *fern.User] {
@@ -113,13 +115,15 @@ func (c *Client) ListWithBodyCursorPagination(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:         endpointURL,
-			Method:      http.MethodPost,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Request:     request,
-			Response:    &response,
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+			Response:        &response,
 		},
 	); err != nil {
 		return nil, err
@@ -159,12 +163,14 @@ func (c *Client) ListWithOffsetPagination(
 			nextURL += "?" + queryParams.Encode()
 		}
 		return &core.CallParams{
-			URL:         nextURL,
-			Method:      http.MethodGet,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Response:    pageRequest.Response,
+			URL:             nextURL,
+			Method:          http.MethodGet,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        pageRequest.Response,
 		}
 	}
 	next := 1
@@ -209,13 +215,15 @@ func (c *Client) ListWithBodyOffsetPagination(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:         endpointURL,
-			Method:      http.MethodPost,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Request:     request,
-			Response:    &response,
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+			Response:        &response,
 		},
 	); err != nil {
 		return nil, err
@@ -253,12 +261,14 @@ func (c *Client) ListWithOffsetStepPagination(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:         endpointURL,
-			Method:      http.MethodGet,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Response:    &response,
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
 		},
 	); err != nil {
 		return nil, err
@@ -296,12 +306,14 @@ func (c *Client) ListWithOffsetPaginationHasNextPage(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:         endpointURL,
-			Method:      http.MethodGet,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Response:    &response,
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
 		},
 	); err != nil {
 		return nil, err
@@ -341,12 +353,14 @@ func (c *Client) ListWithExtendedResults(
 			nextURL += "?" + queryParams.Encode()
 		}
 		return &core.CallParams{
-			URL:         nextURL,
-			Method:      http.MethodGet,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Response:    pageRequest.Response,
+			URL:             nextURL,
+			Method:          http.MethodGet,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        pageRequest.Response,
 		}
 	}
 	readPageResponse := func(response *fern.ListUsersExtendedResponse) *core.PageResponse[*uuid.UUID, *fern.User] {
@@ -400,12 +414,14 @@ func (c *Client) ListWithExtendedResultsAndOptionalData(
 			nextURL += "?" + queryParams.Encode()
 		}
 		return &core.CallParams{
-			URL:         nextURL,
-			Method:      http.MethodGet,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Response:    pageRequest.Response,
+			URL:             nextURL,
+			Method:          http.MethodGet,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        pageRequest.Response,
 		}
 	}
 	readPageResponse := func(response *fern.ListUsersExtendedOptionalListResponse) *core.PageResponse[*uuid.UUID, *fern.User] {
@@ -459,12 +475,14 @@ func (c *Client) ListUsernames(
 			nextURL += "?" + queryParams.Encode()
 		}
 		return &core.CallParams{
-			URL:         nextURL,
-			Method:      http.MethodGet,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Response:    pageRequest.Response,
+			URL:             nextURL,
+			Method:          http.MethodGet,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        pageRequest.Response,
 		}
 	}
 	readPageResponse := func(response *fern.UsernameCursor) *core.PageResponse[*string, string] {
@@ -521,12 +539,14 @@ func (c *Client) ListWithGlobalConfig(
 			nextURL += "?" + queryParams.Encode()
 		}
 		return &core.CallParams{
-			URL:         nextURL,
-			Method:      http.MethodGet,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Response:    pageRequest.Response,
+			URL:             nextURL,
+			Method:          http.MethodGet,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        pageRequest.Response,
 		}
 	}
 	next := 1

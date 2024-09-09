@@ -54,11 +54,13 @@ func (c *Client) Endpoint(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:         endpointURL,
-			Method:      http.MethodGet,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
 		},
 	); err != nil {
 		return err
@@ -106,13 +108,15 @@ func (c *Client) UnknownRequest(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:          endpointURL,
-			Method:       http.MethodPost,
-			MaxAttempts:  options.MaxAttempts,
-			Headers:      headers,
-			Client:       options.HTTPClient,
-			Request:      request,
-			ErrorDecoder: errorDecoder,
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+			ErrorDecoder:    errorDecoder,
 		},
 	); err != nil {
 		return err

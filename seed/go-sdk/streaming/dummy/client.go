@@ -52,12 +52,14 @@ func (c *Client) GenerateStream(
 	return streamer.Stream(
 		ctx,
 		&core.StreamParams{
-			URL:         endpointURL,
-			Method:      http.MethodPost,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Request:     request,
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Headers:         headers,
+			Client:          options.HTTPClient,
+			Request:         request,
 		},
 	)
 }
@@ -84,13 +86,15 @@ func (c *Client) Generate(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:         endpointURL,
-			Method:      http.MethodPost,
-			MaxAttempts: options.MaxAttempts,
-			Headers:     headers,
-			Client:      options.HTTPClient,
-			Request:     request,
-			Response:    &response,
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			MaxAttempts:     options.MaxAttempts,
+			Headers:         headers,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+			Response:        &response,
 		},
 	); err != nil {
 		return nil, err

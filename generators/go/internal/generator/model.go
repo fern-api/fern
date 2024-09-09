@@ -13,12 +13,6 @@ import (
 )
 
 var (
-	//go:embed model/core/extra_properties.go
-	extraPropertiesFile string
-
-	//go:embed model/core/extra_properties_test.go
-	extraPropertiesTestFile string
-
 	//go:embed model/core/stringer.go
 	stringerFile string
 

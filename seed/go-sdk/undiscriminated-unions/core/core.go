@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"net/url"
 	"reflect"
+	"strings"
 )
 
 const (
@@ -137,6 +138,8 @@ type CallParams struct {
 	Method             string
 	MaxAttempts        uint
 	Headers            http.Header
+	BodyProperties     map[string]interface{}
+	QueryParameters    url.Values
 	Client             HTTPClient
 	Request            interface{}
 	Response           interface{}
@@ -146,7 +149,15 @@ type CallParams struct {
 
 // Call issues an API call according to the given call parameters.
 func (c *Caller) Call(ctx context.Context, params *CallParams) error {
-	req, err := newRequest(ctx, params.URL, params.Method, params.Headers, params.Request)
+	url := buildURL(params.URL, params.QueryParameters)
+	req, err := newRequest(
+		ctx,
+		url,
+		params.Method,
+		params.Headers,
+		params.Request,
+		params.BodyProperties,
+	)
 	if err != nil {
 		return err
 	}
@@ -213,6 +224,23 @@ func (c *Caller) Call(ctx context.Context, params *CallParams) error {
 	return nil
 }
 
+// buildURL constructs the final URL by appending the given query parameters (if any).
+func buildURL(
+	url string,
+	queryParameters url.Values,
+) string {
+	if len(queryParameters) == 0 {
+		return url
+	}
+	if strings.ContainsRune(url, '?') {
+		url += "&"
+	} else {
+		url += "?"
+	}
+	url += queryParameters.Encode()
+	return url
+}
+
 // newRequest returns a new *http.Request with all of the fields
 // required to issue the call.
 func newRequest(
@@ -221,8 +249,9 @@ func newRequest(
 	method string,
 	endpointHeaders http.Header,
 	request interface{},
+	bodyProperties map[string]interface{},
 ) (*http.Request, error) {
-	requestBody, err := newRequestBody(request)
+	requestBody, err := newRequestBody(request, bodyProperties)
 	if err != nil {
 		return nil, err
 	}
@@ -239,20 +268,25 @@ func newRequest(
 }
 
 // newRequestBody returns a new io.Reader that represents the HTTP request body.
-func newRequestBody(request interface{}) (io.Reader, error) {
-	var requestBody io.Reader
-	if !isNil(request) {
-		if body, ok := request.(io.Reader); ok {
-			requestBody = body
-		} else {
-			requestBytes, err := json.Marshal(request)
-			if err != nil {
-				return nil, err
-			}
-			requestBody = bytes.NewReader(requestBytes)
+func newRequestBody(request interface{}, bodyProperties map[string]interface{}) (io.Reader, error) {
+	if isNil(request) {
+		if len(bodyProperties) == 0 {
+			return nil, nil
 		}
+		requestBytes, err := json.Marshal(bodyProperties)
+		if err != nil {
+			return nil, err
+		}
+		return bytes.NewReader(requestBytes), nil
 	}
-	return requestBody, nil
+	if body, ok := request.(io.Reader); ok {
+		return body, nil
+	}
+	requestBytes, err := MarshalJSONWithExtraProperties(request, bodyProperties)
+	if err != nil {
+		return nil, err
+	}
+	return bytes.NewReader(requestBytes), nil
 }
 
 // decodeError decodes the error from the given HTTP response. Note that
