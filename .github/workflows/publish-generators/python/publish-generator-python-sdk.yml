@@ -1,12 +1,12 @@
 # Generators are registered within seed.yml, once their tests are passing
-name: publish-and-register-postman
+name: publish-and-register-python-sdk
 
 on:
   push:
     branches:
       - main
     paths:
-      - "generators/postman/versions.yml"
+      - "generators/python/sdk/versions.yml"
   workflow_dispatch:
     inputs:
       version:
@@ -40,16 +40,16 @@ jobs:
           DOCKER_USERNAME: fernapi
           DOCKER_PASSWORD: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
         run: |
-          VERSIONS_FILE="generators/postman/versions.yml"
+          VERSIONS_FILE="generators/python/sdk/versions.yml"
           git show HEAD~1:${VERSIONS_FILE} > tmp_previous_versions.yml
 
           if [ $? -eq 0 ]; then
-            pnpm seed:local publish generator postman--changelog $VERSIONS_FILE --previous-changelog tmp_previous_versions.yml --log-level debug
+            pnpm seed:local publish generator python-sdk--changelog $VERSIONS_FILE --previous-changelog tmp_previous_versions.yml --log-level debug
           else
             echo "No previous versions found, skipping publish."
           fi
 
-          pnpm seed:local register generator --generators postman
+          pnpm seed:local register generator --generators python-sdk
 
   # Manually publish and register generators
   # The logic is identical to the step above, but could not find a good way to work with the matrix AND manual trigger in one job
@@ -70,11 +70,11 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
-        - name: Run publish
+      - name: Run publish
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
           DOCKER_USERNAME: fernapi
           DOCKER_PASSWORD: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
         run: |
-          pnpm seed:local publish generator postman --ver ${{ inputs.version }} --log-level debug
-          pnpm seed:local register generator --generators postman
+          pnpm seed:local publish generator python-sdk --ver ${{ inputs.version }} --log-level debug
+          pnpm seed:local register generator --generators python-sdk

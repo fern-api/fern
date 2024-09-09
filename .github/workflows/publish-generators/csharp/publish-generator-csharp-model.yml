@@ -1,12 +1,12 @@
 # Generators are registered within seed.yml, once their tests are passing
-name: publish-and-register-go-fiber
+name: publish-and-register-csharp-model
 
 on:
   push:
     branches:
       - main
     paths:
-      - "generators/go/fiber/versions.yml"
+      - "generators/csharp/model/versions.yml"
   workflow_dispatch:
     inputs:
       version:
@@ -40,16 +40,16 @@ jobs:
           DOCKER_USERNAME: fernapi
           DOCKER_PASSWORD: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
         run: |
-          VERSIONS_FILE="generators/go/fiber/versions.yml"
+          VERSIONS_FILE="generators/csharp/model/versions.yml"
           git show HEAD~1:${VERSIONS_FILE} > tmp_previous_versions.yml
 
           if [ $? -eq 0 ]; then
-            pnpm seed:local publish generator go-fiber--changelog $VERSIONS_FILE --previous-changelog tmp_previous_versions.yml --log-level debug
+            pnpm seed:local publish generator csharp-model--changelog $VERSIONS_FILE --previous-changelog tmp_previous_versions.yml --log-level debug
           else
             echo "No previous versions found, skipping publish."
           fi
 
-          pnpm seed:local register generator --generators go-fiber
+          pnpm seed:local register generator --generators csharp-model
 
   # Manually publish and register generators
   # The logic is identical to the step above, but could not find a good way to work with the matrix AND manual trigger in one job
@@ -70,11 +70,11 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
-        - name: Run publish
+      - name: Run publish
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
           DOCKER_USERNAME: fernapi
           DOCKER_PASSWORD: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
         run: |
-          pnpm seed:local publish generator go-fiber --ver ${{ inputs.version }} --log-level debug
-          pnpm seed:local register generator --generators go-fiber
+          pnpm seed:local publish generator csharp-model --ver ${{ inputs.version }} --log-level debug
+          pnpm seed:local register generator --generators csharp-model
