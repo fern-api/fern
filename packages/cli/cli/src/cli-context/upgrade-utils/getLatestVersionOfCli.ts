@@ -1,4 +1,4 @@
-import latestVersion from "latest-version";
+import { FernRegistry, FernRegistryClient as GeneratorsClient } from "@fern-fern/generators-sdk";
 import { CliEnvironment } from "../CliEnvironment";
 
 export async function getLatestVersionOfCli({
@@ -13,7 +13,18 @@ export async function getLatestVersionOfCli({
     if (cliEnvironment.packageVersion === "0.0.0") {
         return cliEnvironment.packageVersion;
     }
-    return latestVersion(cliEnvironment.packageName, {
-        version: includePreReleases ? "prerelease" : "latest"
+    const client = new GeneratorsClient({
+        environment: process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com"
     });
+
+    const latestReleaseResponse = await client.generators.cli.getLatestCliRelease({
+        releaseTypes: [
+            includePreReleases ? FernRegistry.generators.ReleaseType.Rc : FernRegistry.generators.ReleaseType.Ga
+        ]
+    });
+
+    if (latestReleaseResponse.ok) {
+        return latestReleaseResponse.body.version;
+    }
+    throw new Error(`Failed to get latest version of CLI: ${JSON.stringify(latestReleaseResponse.error)}`);
 }

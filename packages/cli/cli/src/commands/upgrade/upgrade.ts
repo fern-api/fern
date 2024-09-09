@@ -73,52 +73,18 @@ export async function upgrade({
                   includePreReleases
               });
 
-    if (!fernCliUpgradeInfo.isUpgradeAvailable) {
-        const previousVersion = process.env[PREVIOUS_VERSION_ENV_VAR];
-        if (previousVersion == null) {
-            cliContext.logger.info("No upgrade available.");
-            return;
-        }
-
-        await cliContext.runTask(async (context) => {
-            await runMigrations({
-                fromVersion: previousVersion,
-                toVersion: fernCliUpgradeInfo.latestVersion,
-                context
-            });
-        });
-        await cliContext.exitIfFailed();
-    } else {
-        const fernDirectory = await getFernDirectory();
-        if (fernDirectory == null) {
-            return cliContext.failAndThrow(`Directory "${FERN_DIRECTORY}" not found.`);
-        }
-        const projectConfig = await cliContext.runTask((context) =>
-            fernConfigJson.loadProjectConfig({ directory: fernDirectory, context })
-        );
-        const newProjectConfig = produce(projectConfig.rawConfig, (draft) => {
-            draft.version = fernCliUpgradeInfo.latestVersion;
-        });
-        await writeFile(projectConfig._absolutePath, JSON.stringify(newProjectConfig, undefined, 2));
-
-        cliContext.logger.info(
-            `Upgrading from ${chalk.dim(cliContext.environment.packageVersion)} → ${chalk.green(
-                fernCliUpgradeInfo.latestVersion
-            )}`
-        );
-
-        await loggingExeca(cliContext.logger, "npm", [
-            "install",
-            "-g",
-            `${cliContext.environment.packageName}@${fernCliUpgradeInfo.latestVersion}`
-        ]);
-
-        await rerunFernCliAtVersion({
-            version: fernCliUpgradeInfo.latestVersion,
-            cliContext,
-            env: {
-                [PREVIOUS_VERSION_ENV_VAR]: cliContext.environment.packageVersion
-            }
-        });
+    const previousVersion = process.env[PREVIOUS_VERSION_ENV_VAR];
+    if (previousVersion == null) {
+        cliContext.logger.info("No upgrade available.");
+        return;
     }
+
+    await cliContext.runTask(async (context) => {
+        await runMigrations({
+            fromVersion: previousVersion,
+            toVersion: fernCliUpgradeInfo.latestVersion,
+            context
+        });
+    });
+    await cliContext.exitIfFailed();
 }
