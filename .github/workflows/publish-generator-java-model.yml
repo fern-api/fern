@@ -1,12 +1,12 @@
 # Generators are registered within seed.yml, once their tests are passing
-name: publish-and-register-go-sdk
+name: publish-and-register-java-model
 
 on:
   push:
     branches:
       - main
     paths:
-      - "generators/go/sdk/versions.yml"
+      - "generators/java/model/versions.yml"
   workflow_dispatch:
     inputs:
       version:
@@ -40,16 +40,16 @@ jobs:
           DOCKER_USERNAME: fernapi
           DOCKER_PASSWORD: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
         run: |
-          VERSIONS_FILE="generators/go/sdk/versions.yml"
+          VERSIONS_FILE="generators/java/model/versions.yml"
           git show HEAD~1:${VERSIONS_FILE} > tmp_previous_versions.yml
 
           if [ $? -eq 0 ]; then
-            pnpm seed:local publish generator go-sdk --changelog $VERSIONS_FILE --previous-changelog tmp_previous_versions.yml --log-level debug
+            pnpm seed:local publish generator java-model --changelog $VERSIONS_FILE --previous-changelog tmp_previous_versions.yml --log-level debug
           else
             echo "No previous versions found, skipping publish."
           fi
 
-          pnpm seed:local register generator --generators go-sdk
+          pnpm seed:local register generator --generators java-model
 
   # Manually publish and register generators
   # The logic is identical to the step above, but could not find a good way to work with the matrix AND manual trigger in one job
@@ -76,5 +76,5 @@ jobs:
           DOCKER_USERNAME: fernapi
           DOCKER_PASSWORD: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
         run: |
-          pnpm seed:local publish generator go-sdk --ver ${{ inputs.version }} --log-level debug
-          pnpm seed:local register generator --generators go-sdk
+          pnpm seed:local publish generator java-model --ver ${{ inputs.version }} --log-level debug
+          pnpm seed:local register generator --generators java-model
