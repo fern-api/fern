@@ -1,5 +1,7 @@
 ## Publish and Register New Generator Versions
 
+> NOTE: all generators starting with `publish-generator-*` are publish and register workflows
+
 These github actions are all the same, except they publish a specific generator.
 
 They are independent in order to reflect more explicitly within the Github Actions UI which generator is being released and when.
