@@ -1,0 +1,25 @@
+- version: 0.0.31
+  createdAt: '2024-03-22'
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Update open api generator to v2 urls.
+    - type: internal
+      summary: >-
+        Shared generator notification and config parsing logic.
+  irVersion: 23
+
+- version: 0.0.31-rc0
+  createdAt: '2024-03-20'
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Update open api generator to v2 urls.
+  irVersion: 23
+
+- version: 0.0.30
+  createdAt: '2024-01-21'
+  changelogEntry:
+    - type: internal
+      summary: Release 0.0.30
+  irVersion: 23

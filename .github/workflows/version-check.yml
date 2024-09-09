@@ -27,8 +27,6 @@ jobs:
           const path = require("path");
 
           const paths = [
-            "generators/openapi",
-            "generators/postman",
             "generators/java/sdk",
             "generators/java/model",
             "generators/java/spring",

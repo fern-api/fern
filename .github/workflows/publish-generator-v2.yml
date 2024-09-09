@@ -16,9 +16,8 @@ on:
       - "generators/python/sdk/versions.yml"
       - "generators/ruby/model/versions.yml"
       - "generators/ruby/sdk/versions.yml"
-
-      # - "generators/openapi/versions.yml"
-      # - "generators/postman/versions.yml"
+      - "generators/openapi/versions.yml"
+      - "generators/postman/versions.yml"
       # - "generators/java/sdk/versions.yml"
       # - "generators/java/model/versions.yml"
       # - "generators/java/spring/versions.yml"
@@ -45,9 +44,8 @@ on:
           - python-sdk
           - ruby-model
           - ruby-sdk
-
-          # - openapi
-          # - postman
+          - openapi
+          - postman
           # - java-sdk
           # - java-model
           # - java-spring
@@ -78,9 +76,8 @@ jobs:
             python-sdk: 'generators/python/sdk/versions.yml'
             ruby-model: 'generators/ruby/model/versions.yml'
             ruby-sdk: 'generators/ruby/sdk/versions.yml'
-
-          # openapi: 'generators/openapi/versions.yml'
-          # postman: 'generators/postman/versions.yml'
+            openapi: 'generators/openapi/versions.yml'
+            postman: 'generators/postman/versions.yml'
           # java-sdk: 'generators/java/sdk/versions.yml'
           # java-model: 'generators/java/model/versions.yml'
           # spring: 'generators/java/spring/versions.yml'
@@ -142,6 +139,10 @@ jobs:
               VERSIONS_FILE="generators/ruby/model/versions.yml"
           elif [ ${{ matrix.generator }} = "ruby-sdk" ]; then
               VERSIONS_FILE="generators/ruby/sdk/versions.yml"
+          elif [ ${{ matrix.generator }} = "postman" ]; then
+              VERSIONS_FILE="generators/postman/versions.yml"
+          elif [ ${{ matrix.generator }} = "openapi" ]; then
+              VERSIONS_FILE="generators/openapi/versions.yml"
           fi
 
           git show HEAD~1:${VERSIONS_FILE} > tmp_${{ matrix.generator }}_previous_versions.yml
