@@ -8,7 +8,6 @@ interface String_ {
     type: "string";
 }
 
-/* A C# parameter to a method */
 export class Type extends AstNode {
     private constructor(public readonly internalType: InternalType) {
         super();
