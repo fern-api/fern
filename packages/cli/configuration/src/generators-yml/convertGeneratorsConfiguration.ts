@@ -13,7 +13,7 @@ import {
     GeneratorsConfiguration
 } from "./GeneratorsConfiguration";
 import { isRawProtobufAPIDefinitionSchema } from "./isRawProtobufAPIDefinitionSchema";
-import { APIConfigurationSchemaInternal } from "./schemas/APIConfigurationSchema";
+import { APIConfigurationSchemaInternal, APIConfigurationV2Schema } from "./schemas/APIConfigurationSchema";
 import { GeneratorGroupSchema } from "./schemas/GeneratorGroupSchema";
 import { GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
 import { GeneratorOutputSchema } from "./schemas/GeneratorOutputSchema";
@@ -240,55 +240,88 @@ async function parseAPIConfigurationToApiLocations(
     return apiDefinitions;
 }
 
+async function parseApiConfigurationV2Schema({
+    apiConfiguration,
+    rawConfiguration
+}: {
+    apiConfiguration: APIConfigurationV2Schema;
+    rawConfiguration: GeneratorsConfigurationSchema;
+}): Promise<APIDefinition> {
+    const rootDefinitions: APIDefinitionLocation[] = [];
+    const namespacedDefinitions: Record<string, APIDefinitionLocation[]> = {};
+
+    for (const spec of apiConfiguration.specs) {
+        if (isOpenAPISchema(spec)) {
+            const definitionLocation: APIDefinitionLocation = {
+                schema: {
+                    type: "oss",
+                    path: spec.openapi
+                },
+                origin: undefined,
+                overrides: spec.overrides,
+                audiences: [],
+                settings: {
+                    shouldUseTitleAsName: undefined,
+                    shouldUseUndiscriminatedUnionsWithLiterals: undefined,
+                    asyncApiMessageNaming: undefined
+                }
+            };
+            if (spec.namespace == null) {
+                rootDefinitions.push(definitionLocation);
+            } else {
+                namespacedDefinitions[spec.namespace] ??= [];
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                namespacedDefinitions[spec.namespace]!.push(definitionLocation);
+            }
+        }
+    }
+
+    const partialConfig = {
+        "auth-schemes":
+            apiConfiguration.auth != null
+                ? Object.fromEntries(
+                      Object.entries(rawConfiguration["auth-schemes"] ?? {}).filter(([name, _]) => {
+                          if (apiConfiguration.auth == null) {
+                              return false;
+                          }
+                          return visitRawApiAuth(apiConfiguration.auth, {
+                              any: (any) => {
+                                  return any.any.includes(name);
+                              },
+                              single: (single) => {
+                                  return single === name;
+                              }
+                          });
+                      })
+                  )
+                : undefined,
+        ...apiConfiguration
+    };
+
+    // No namespaces
+    if (Object.keys(namespacedDefinitions).length === 0) {
+        return {
+            type: "singleNamespace",
+            definitions: rootDefinitions,
+            ...partialConfig
+        };
+    }
+    // Yes namespaces
+    return {
+        type: "multiNamespace",
+        rootDefinitions,
+        definitions: namespacedDefinitions,
+        ...partialConfig
+    };
+}
+
 async function parseAPIConfiguration(
     rawGeneratorsConfiguration: GeneratorsConfigurationSchema
 ): Promise<APIDefinition> {
     const apiConfiguration = rawGeneratorsConfiguration.api;
 
     if (apiConfiguration != null && isApiConfigurationV2Schema(apiConfiguration)) {
-        return {
-            type: "singleNamespace",
-            "auth-schemes":
-                apiConfiguration.auth != null
-                    ? Object.fromEntries(
-                          Object.entries(rawGeneratorsConfiguration["auth-schemes"] ?? {}).filter(([name, _]) => {
-                              if (apiConfiguration.auth == null) {
-                                  return false;
-                              }
-                              return visitRawApiAuth(apiConfiguration.auth, {
-                                  any: (any) => {
-                                      return any.any.includes(name);
-                                  },
-                                  single: (single) => {
-                                      return single === name;
-                                  }
-                              });
-                          })
-                      )
-                    : undefined,
-            ...apiConfiguration,
-            definitions: apiConfiguration.specs
-                .map((spec): APIDefinitionLocation | undefined => {
-                    if (isOpenAPISchema(spec)) {
-                        return {
-                            schema: {
-                                type: "oss",
-                                path: spec.openapi
-                            },
-                            origin: undefined,
-                            overrides: spec.overrides,
-                            audiences: [],
-                            settings: {
-                                shouldUseTitleAsName: undefined,
-                                shouldUseUndiscriminatedUnionsWithLiterals: undefined,
-                                asyncApiMessageNaming: undefined
-                            }
-                        };
-                    }
-                    return undefined;
-                })
-                .filter(isNonNullish)
-        };
+        return parseApiConfigurationV2Schema({ apiConfiguration, rawConfiguration: rawGeneratorsConfiguration });
     }
 
     if (isPlainObject(apiConfiguration) && "namespaces" in apiConfiguration) {
@@ -301,6 +334,7 @@ async function parseAPIConfiguration(
         }
         return {
             type: "multiNamespace",
+            rootDefinitions: undefined,
             definitions: namespacedDefinitions
         };
     }

@@ -119,8 +119,19 @@ types:
       url: string
       audiences: optional<list<string>>
 
+  Namespace:
+    properties:
+      type: literal<"namespace">
+      name: string
+
+  SdkGroup:
+    discriminated: false
+    union:
+      - string
+      - Namespace
+
   SdkGroupName:
-    type: list<string>
+    type: list<SdkGroup>
     docs: This is populated by `x-fern-sdk-method-name`
 
   WithSdkGroupName:

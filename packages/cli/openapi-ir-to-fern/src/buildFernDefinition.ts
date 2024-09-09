@@ -14,6 +14,7 @@ import { FernDefinition } from "./FernDefnitionBuilder";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { getDeclarationFileForSchema } from "./utils/getDeclarationFileForSchema";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
+import { convertSdkGroupNameToFile } from "./utils/convertSdkGroupName";
 
 export const ROOT_PREFIX = "root";
 export const EXTERNAL_AUDIENCE = "external";
@@ -40,7 +41,7 @@ export function buildFernDefinition(context: OpenApiIrConverterContext): FernDef
 
     // Add Channels
     for (const channel of context.ir.channel) {
-        const declarationFile = RelativeFilePath.of(`${channel.groupName.join("/")}.yml`);
+        const declarationFile = convertSdkGroupNameToFile(channel.groupName);
         buildChannel({ channel, context, declarationFile });
     }
 

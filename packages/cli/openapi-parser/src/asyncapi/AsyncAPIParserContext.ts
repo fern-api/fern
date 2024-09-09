@@ -1,4 +1,5 @@
 import { Logger } from "@fern-api/logger";
+import { Namespace, SdkGroup, SdkGroupName } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
 import { ParseOpenAPIOptions } from "../options";
@@ -37,11 +38,28 @@ export abstract class AbstractAsyncAPIV2ParserContext implements SchemaParserCon
         this.namespace = namespace;
     }
 
-    public resolveTags(operationTags: string[] | undefined, fallback?: string): string[] {
+    public resolveGroupName(groupName: SdkGroupName): SdkGroupName {
+        if (this.namespace != null) {
+            return [{ type: "namespace", name: this.namespace }, ...groupName];
+        }
+
+        return groupName;
+    }
+
+    public resolveTags(operationTags: string[] | undefined, fallback?: string): SdkGroup[] {
         if (this.namespace == null && operationTags == null && fallback != null) {
             return [fallback];
         }
-        const tags = this.namespace ? [this.namespace] : [];
+
+        const tags: SdkGroup[] = [];
+        if (this.namespace != null) {
+            const namespaceSegment: Namespace = {
+                type: "namespace",
+                name: this.namespace
+            };
+
+            tags.push(namespaceSegment);
+        }
         return tags.concat(operationTags ?? []);
     }
 

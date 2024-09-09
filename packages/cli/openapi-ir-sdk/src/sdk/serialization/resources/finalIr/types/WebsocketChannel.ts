@@ -10,6 +10,7 @@ import { WebsocketHandshake } from "./WebsocketHandshake";
 import { WebsocketSessionExample } from "./WebsocketSessionExample";
 import { WithDescription } from "../../commons/types/WithDescription";
 import { WithSource } from "../../commons/types/WithSource";
+import { SdkGroup } from "../../commons/types/SdkGroup";
 
 export const WebsocketChannel: core.serialization.ObjectSchema<
     serializers.WebsocketChannel.Raw,

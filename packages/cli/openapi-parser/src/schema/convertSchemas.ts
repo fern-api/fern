@@ -8,6 +8,7 @@ import {
     ReferencedSchema,
     Schema,
     SchemaWithExample,
+    SdkGroupName,
     Source
 } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
@@ -160,10 +161,8 @@ export function convertSchemaObject(
     const mixedGroupName =
         getExtension(schema, FernOpenAPIExtension.SDK_GROUP_NAME) ??
         getExtension<string[]>(schema, OpenAPIExtension.TAGS)?.[0];
-    let groupName = (typeof mixedGroupName === "string" ? [mixedGroupName] : mixedGroupName) ?? [];
-    if (namespace != null) {
-        groupName = [namespace, ...groupName];
-    }
+    let groupName: SdkGroupName = (typeof mixedGroupName === "string" ? [mixedGroupName] : mixedGroupName) ?? [];
+    groupName = context.resolveGroupName(groupName);
 
     const generatedName = getGeneratedTypeName(breadcrumbs);
     const description = schema.description;
@@ -937,7 +936,7 @@ function isListOfStrings(x: unknown): x is string[] {
 function maybeInjectDescriptionOrGroupName(
     schema: SchemaWithExample,
     description: string | undefined,
-    groupName: string[] | undefined
+    groupName: SdkGroupName | undefined
 ): SchemaWithExample {
     if (schema.type === "reference") {
         return SchemaWithExample.reference({
@@ -1001,7 +1000,7 @@ export function wrapLiteral({
     wrapAsNullable: boolean;
     description: string | undefined;
     availability: Availability | undefined;
-    groupName: string[] | undefined;
+    groupName: SdkGroupName | undefined;
     nameOverride: string | undefined;
     generatedName: string;
 }): SchemaWithExample {
@@ -1043,7 +1042,7 @@ export function wrapPrimitive({
 }: {
     primitive: PrimitiveSchemaValueWithExample;
     wrapAsNullable: boolean;
-    groupName: string[] | undefined;
+    groupName: SdkGroupName | undefined;
     description: string | undefined;
     availability: Availability | undefined;
     nameOverride: string | undefined;

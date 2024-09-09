@@ -2,6 +2,7 @@ import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Endpoint, HttpMethod } from "@fern-api/openapi-ir-sdk";
 import { camelCase, compact, isEqual } from "lodash-es";
+import { convertSdkGroupNameToFileWithoutExtension } from "./convertSdkGroupName";
 
 export interface EndpointLocation {
     file: RelativeFilePath;
@@ -12,17 +13,7 @@ export interface EndpointLocation {
 export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
     const tag = endpoint.tags[0];
     if (endpoint.sdkName != null) {
-        const filenameWithoutExtension =
-            endpoint.sdkName.groupName.length === 0
-                ? "__package__"
-                : `${endpoint.sdkName.groupName
-                      .map((part) => {
-                          if (part.includes(" ")) {
-                              return camelCase(part);
-                          }
-                          return part;
-                      })
-                      .join("/")}`;
+        const filenameWithoutExtension = convertSdkGroupNameToFileWithoutExtension(endpoint.sdkName.groupName);
         const filename = `${filenameWithoutExtension}.yml`;
         // only if the tag lines up with `x-fern-sdk-group-name` do we use it
         const isTagApplicable = filenameWithoutExtension.toLowerCase() === tag?.toLowerCase().replaceAll(" ", "");

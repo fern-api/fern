@@ -1,5 +1,5 @@
 import { Logger } from "@fern-api/logger";
-import { SchemaId, Source } from "@fern-api/openapi-ir-sdk";
+import { Namespace, SchemaId, SdkGroup, SdkGroupName, Source } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
 import { ParseOpenAPIOptions } from "../../options";
@@ -64,9 +64,33 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         return this.refOccurrences[schema.$ref] ?? 0;
     }
 
-    public resolveTags(operationTags: string[] | undefined): string[] {
-        const tags = this.namespace ? [this.namespace] : [];
+    public resolveTagsToTagIds(operationTags: string[] | undefined): string[] {
+        const tags: string[] = [];
+        if (this.namespace != null) {
+            tags.push(this.namespace);
+        }
         return tags.concat(operationTags ?? []);
+    }
+
+    public resolveTags(operationTags: string[] | undefined): SdkGroup[] {
+        const tags: SdkGroup[] = [];
+        if (this.namespace != null) {
+            const namespaceSegment: Namespace = {
+                type: "namespace",
+                name: this.namespace
+            };
+
+            tags.push(namespaceSegment);
+        }
+        return tags.concat(operationTags ?? []);
+    }
+
+    public resolveGroupName(groupName: SdkGroupName): SdkGroupName {
+        if (this.namespace != null) {
+            return [{ type: "namespace", name: this.namespace }, ...groupName];
+        }
+
+        return groupName;
     }
 
     public resolveSchemaReference(schema: OpenAPIV3.ReferenceObject): OpenAPIV3.SchemaObject {

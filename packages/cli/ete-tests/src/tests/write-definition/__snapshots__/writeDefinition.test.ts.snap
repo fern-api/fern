@@ -110,11 +110,11 @@ exports[`validate namespaced API > namespaced 1`] = `
     source:
       openapi: openapi/trains/openapi.yml
 imports:
-  trains: trains.yml
+  root: trains/__package__.yml
 errors:
   BadRequestError:
     status-code: 400
-    type: trains.Problem
+    type: root.Problem
     docs: Bad Request
     examples:
       - value:
@@ -124,7 +124,7 @@ errors:
           detail: The request is invalid or missing required parameters.
   UnauthorizedError:
     status-code: 401
-    type: trains.Problem
+    type: root.Problem
     docs: Unauthorized
     examples:
       - value:
@@ -134,7 +134,7 @@ errors:
           detail: You do not have the necessary permissions.
   ForbiddenError:
     status-code: 403
-    type: trains.Problem
+    type: root.Problem
     docs: Forbidden
     examples:
       - value:
@@ -144,7 +144,7 @@ errors:
           detail: Access is forbidden with the provided credentials.
   TooManyRequestsError:
     status-code: 429
-    type: trains.Problem
+    type: root.Problem
     docs: Too Many Requests
     examples:
       - value:
@@ -154,7 +154,7 @@ errors:
           detail: You have exceeded the rate limit.
   InternalServerError:
     status-code: 500
-    type: trains.Problem
+    type: root.Problem
     docs: Internal Server Error
     examples:
       - value:
@@ -164,7 +164,7 @@ errors:
           detail: An unexpected error occurred.
   NotFoundError:
     status-code: 404
-    type: trains.Problem
+    type: root.Problem
     docs: Not Found
     examples:
       - value:
@@ -174,7 +174,7 @@ errors:
           detail: The requested resource was not found.
   ConflictError:
     status-code: 409
-    type: trains.Problem
+    type: root.Problem
     docs: Conflict
     examples:
       - value:
@@ -203,7 +203,35 @@ auth: BearerAuthScheme
     "type": "file",
   },
   {
-    "contents": "service:
+    "contents": [
+      {
+        "contents": "types:
+  Pet:
+    properties:
+      id: long
+      name: string
+      tag: optional<string>
+    source:
+      openapi: openapi/petstore/openapi.yml
+  Pets: list<Pet>
+  Error:
+    properties:
+      code: integer
+      message: string
+    source:
+      openapi: openapi/petstore/openapi.yml
+",
+        "name": "__package__.yml",
+        "type": "file",
+      },
+    ],
+    "name": "neopets",
+    "type": "directory",
+  },
+  {
+    "contents": "imports:
+  root: neopets/__package__.yml
+service:
   auth: false
   base-path: ''
   endpoints:
@@ -220,7 +248,7 @@ auth: BearerAuthScheme
             docs: How many items to return at one time (max 100)
       response:
         docs: A paged array of pets
-        type: Pets
+        type: root.Pets
       examples:
         - response:
             body:
@@ -245,7 +273,7 @@ auth: BearerAuthScheme
       display-name: Info for a specific pet
       response:
         docs: Expected response to a valid request
-        type: Pet
+        type: root.Pet
       examples:
         - path-parameters:
             petId: petId
@@ -256,27 +284,14 @@ auth: BearerAuthScheme
               tag: tag
   source:
     openapi: openapi/petstore/openapi.yml
-types:
-  Pet:
-    properties:
-      id: long
-      name: string
-      tag: optional<string>
-    source:
-      openapi: openapi/petstore/openapi.yml
-  Pets: list<Pet>
-  Error:
-    properties:
-      code: integer
-      message: string
-    source:
-      openapi: openapi/petstore/openapi.yml
 ",
     "name": "neopets.yml",
     "type": "file",
   },
   {
-    "contents": "channel:
+    "contents": [
+      {
+        "contents": "channel:
   path: marketDataV1
   auth: false
   path-parameters:
@@ -425,85 +440,17 @@ types:
       occurred.
     type: list<EventsItem>
 ",
-    "name": "stream.yml",
-    "type": "file",
+        "name": "__package__.yml",
+        "type": "file",
+      },
+    ],
+    "name": "stream",
+    "type": "directory",
   },
   {
-    "contents": "types:
-  GetStationsResponseLinks:
-    properties: {}
-    extends:
-      - LinksSelf
-      - LinksPagination
-    source:
-      openapi: openapi/trains/openapi.yml
-  GetStationsResponse:
-    properties:
-      data: optional<list<Station>>
-      links: optional<GetStationsResponseLinks>
-    source:
-      openapi: openapi/trains/openapi.yml
-  GetTripsResponseLinks:
-    properties: {}
-    extends:
-      - LinksSelf
-      - LinksPagination
-    source:
-      openapi: openapi/trains/openapi.yml
-  GetTripsResponse:
-    properties:
-      data: optional<list<Trip>>
-      links: optional<GetTripsResponseLinks>
-    source:
-      openapi: openapi/trains/openapi.yml
-  GetBookingsResponseLinks:
-    properties: {}
-    extends:
-      - LinksSelf
-      - LinksPagination
-    source:
-      openapi: openapi/trains/openapi.yml
-  GetBookingsResponse:
-    properties:
-      data: optional<list<Booking>>
-      links: optional<GetBookingsResponseLinks>
-    source:
-      openapi: openapi/trains/openapi.yml
-  CreateBookingResponse:
-    properties:
-      links: optional<LinksSelf>
-    extends:
-      - Booking
-    source:
-      openapi: openapi/trains/openapi.yml
-  GetBookingResponse:
-    properties:
-      links: optional<LinksSelf>
-    extends:
-      - Booking
-    source:
-      openapi: openapi/trains/openapi.yml
-  CreateBookingPaymentResponse:
-    properties:
-      links: optional<LinksBooking>
-    extends:
-      - BookingPayment
-    source:
-      openapi: openapi/trains/openapi.yml
-  NewBookingPayloadLinks:
-    properties: {}
-    extends:
-      - LinksSelf
-      - LinksPagination
-    source:
-      openapi: openapi/trains/openapi.yml
-  NewBookingPayload:
-    properties:
-      links: optional<NewBookingPayloadLinks>
-    extends:
-      - Booking
-    source:
-      openapi: openapi/trains/openapi.yml
+    "contents": [
+      {
+        "contents": "types:
   Station:
     properties:
       id:
@@ -784,8 +731,92 @@ types:
           format: uri
     source:
       openapi: openapi/trains/openapi.yml
-imports:
-  root: __package__.yml
+",
+        "name": "__package__.yml",
+        "type": "file",
+      },
+    ],
+    "name": "trains",
+    "type": "directory",
+  },
+  {
+    "contents": "imports:
+  root: trains/__package__.yml
+types:
+  GetStationsResponseLinks:
+    properties: {}
+    extends:
+      - root.LinksSelf
+      - root.LinksPagination
+    source:
+      openapi: openapi/trains/openapi.yml
+  GetStationsResponse:
+    properties:
+      data: optional<list<root.Station>>
+      links: optional<GetStationsResponseLinks>
+    source:
+      openapi: openapi/trains/openapi.yml
+  GetTripsResponseLinks:
+    properties: {}
+    extends:
+      - root.LinksSelf
+      - root.LinksPagination
+    source:
+      openapi: openapi/trains/openapi.yml
+  GetTripsResponse:
+    properties:
+      data: optional<list<root.Trip>>
+      links: optional<GetTripsResponseLinks>
+    source:
+      openapi: openapi/trains/openapi.yml
+  GetBookingsResponseLinks:
+    properties: {}
+    extends:
+      - root.LinksSelf
+      - root.LinksPagination
+    source:
+      openapi: openapi/trains/openapi.yml
+  GetBookingsResponse:
+    properties:
+      data: optional<list<root.Booking>>
+      links: optional<GetBookingsResponseLinks>
+    source:
+      openapi: openapi/trains/openapi.yml
+  CreateBookingResponse:
+    properties:
+      links: optional<root.LinksSelf>
+    extends:
+      - root.Booking
+    source:
+      openapi: openapi/trains/openapi.yml
+  GetBookingResponse:
+    properties:
+      links: optional<root.LinksSelf>
+    extends:
+      - root.Booking
+    source:
+      openapi: openapi/trains/openapi.yml
+  CreateBookingPaymentResponse:
+    properties:
+      links: optional<root.LinksBooking>
+    extends:
+      - root.BookingPayment
+    source:
+      openapi: openapi/trains/openapi.yml
+  NewBookingPayloadLinks:
+    properties: {}
+    extends:
+      - root.LinksSelf
+      - root.LinksPagination
+    source:
+      openapi: openapi/trains/openapi.yml
+  NewBookingPayload:
+    properties:
+      links: optional<NewBookingPayloadLinks>
+    extends:
+      - root.Booking
+    source:
+      openapi: openapi/trains/openapi.yml
 service:
   auth: false
   base-path: ''
@@ -935,7 +966,7 @@ service:
         payment is processed.
       display-name: Create a booking
       request:
-        body: Booking
+        body: root.Booking
       response:
         docs: Booking successful
         type: CreateBookingResponse
@@ -1024,7 +1055,7 @@ service:
           docs: The ID of the booking to pay for.
       display-name: Pay for a Booking
       request:
-        body: BookingPayment
+        body: root.BookingPayment
       response:
         docs: Payment successful
         type: CreateBookingPaymentResponse

@@ -28,6 +28,7 @@ export interface SingleNamespaceAPIDefinition extends RawSchemas.WithEnvironment
 
 export interface MultiNamespaceAPIDefinition extends RawSchemas.WithEnvironmentsSchema, RawSchemas.WithAuthSchema {
     type: "multiNamespace";
+    rootDefinitions: APIDefinitionLocation[] | undefined;
     definitions: Record<string, APIDefinitionLocation[]>;
 }
 

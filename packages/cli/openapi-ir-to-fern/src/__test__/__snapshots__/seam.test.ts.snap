@@ -3,7 +3,7 @@
 exports[`seam > seam > docs 1`] = `
 {
   "definitionFiles": {
-    "access_codes.yml": {
+    "accessCodes.yml": {
       "imports": {
         "root": "__package__.yml",
       },
@@ -873,7 +873,7 @@ exports[`seam > seam > docs 1`] = `
         },
       },
     },
-    "access_codes/simulate.yml": {
+    "accessCodes/simulate.yml": {
       "imports": {
         "root": "../__package__.yml",
       },
@@ -976,7 +976,7 @@ exports[`seam > seam > docs 1`] = `
         },
       },
     },
-    "access_codes/unmanaged.yml": {
+    "accessCodes/unmanaged.yml": {
       "imports": {
         "root": "../__package__.yml",
       },
@@ -1342,7 +1342,7 @@ exports[`seam > seam > docs 1`] = `
         },
       },
     },
-    "acs/access_groups.yml": {
+    "acs/accessGroups.yml": {
       "imports": {
         "root": "../__package__.yml",
       },
@@ -1717,7 +1717,7 @@ exports[`seam > seam > docs 1`] = `
         },
       },
     },
-    "acs/credential_pools.yml": {
+    "acs/credentialPools.yml": {
       "imports": {
         "root": "../__package__.yml",
       },
@@ -1801,7 +1801,7 @@ exports[`seam > seam > docs 1`] = `
         },
       },
     },
-    "acs/credential_provisioning_automations.yml": {
+    "acs/credentialProvisioningAutomations.yml": {
       "imports": {
         "root": "../__package__.yml",
       },
@@ -4221,7 +4221,7 @@ exports[`seam > seam > docs 1`] = `
         },
       },
     },
-    "action_attempts.yml": {
+    "actionAttempts.yml": {
       "imports": {
         "root": "__package__.yml",
       },
@@ -4361,7 +4361,7 @@ exports[`seam > seam > docs 1`] = `
         },
       },
     },
-    "client_sessions.yml": {
+    "clientSessions.yml": {
       "imports": {
         "root": "__package__.yml",
       },
@@ -4841,7 +4841,7 @@ exports[`seam > seam > docs 1`] = `
         },
       },
     },
-    "connect_webviews.yml": {
+    "connectWebviews.yml": {
       "imports": {
         "root": "__package__.yml",
       },
@@ -5270,7 +5270,7 @@ exports[`seam > seam > docs 1`] = `
         },
       },
     },
-    "connected_accounts.yml": {
+    "connectedAccounts.yml": {
       "imports": {
         "root": "__package__.yml",
       },
@@ -8979,7 +8979,7 @@ exports[`seam > seam > docs 1`] = `
         },
       },
     },
-    "noise_sensors/noise_thresholds.yml": {
+    "noiseSensors/noiseThresholds.yml": {
       "imports": {
         "root": "../__package__.yml",
       },
@@ -9374,7 +9374,7 @@ exports[`seam > seam > docs 1`] = `
         },
       },
     },
-    "noise_sensors/simulate.yml": {
+    "noiseSensors/simulate.yml": {
       "imports": {
         "root": "../__package__.yml",
       },
@@ -10856,7 +10856,7 @@ exports[`seam > seam > docs 1`] = `
         },
       },
     },
-    "thermostats/climate_setting_schedules.yml": {
+    "thermostats/climateSettingSchedules.yml": {
       "imports": {
         "root": "../__package__.yml",
       },
@@ -11284,7 +11284,7 @@ exports[`seam > seam > docs 1`] = `
         },
       },
     },
-    "user_identities.yml": {
+    "userIdentities.yml": {
       "imports": {
         "root": "__package__.yml",
       },
@@ -12270,7 +12270,7 @@ exports[`seam > seam > docs 1`] = `
         },
       },
     },
-    "user_identities/enrollment_automations.yml": {
+    "userIdentities/enrollmentAutomations.yml": {
       "imports": {
         "root": "../__package__.yml",
       },
@@ -18916,7 +18916,7 @@ exports[`seam > seam > docs 1`] = `
 exports[`seam > seam > simple 1`] = `
 {
   "definitionFiles": {
-    "access_codes.yml": {
+    "accessCodes.yml": {
       "imports": {
         "root": "__package__.yml",
       },
@@ -19786,7 +19786,7 @@ exports[`seam > seam > simple 1`] = `
         },
       },
     },
-    "access_codes/simulate.yml": {
+    "accessCodes/simulate.yml": {
       "imports": {
         "root": "../__package__.yml",
       },
@@ -19889,7 +19889,7 @@ exports[`seam > seam > simple 1`] = `
         },
       },
     },
-    "access_codes/unmanaged.yml": {
+    "accessCodes/unmanaged.yml": {
       "imports": {
         "root": "../__package__.yml",
       },
@@ -20255,7 +20255,7 @@ exports[`seam > seam > simple 1`] = `
         },
       },
     },
-    "acs/access_groups.yml": {
+    "acs/accessGroups.yml": {
       "imports": {
         "root": "../__package__.yml",
       },
@@ -20630,7 +20630,7 @@ exports[`seam > seam > simple 1`] = `
         },
       },
     },
-    "acs/credential_pools.yml": {
+    "acs/credentialPools.yml": {
       "imports": {
         "root": "../__package__.yml",
       },
@@ -20714,7 +20714,7 @@ exports[`seam > seam > simple 1`] = `
         },
       },
     },
-    "acs/credential_provisioning_automations.yml": {
+    "acs/credentialProvisioningAutomations.yml": {
       "imports": {
         "root": "../__package__.yml",
       },
@@ -23134,7 +23134,7 @@ exports[`seam > seam > simple 1`] = `
         },
       },
     },
-    "action_attempts.yml": {
+    "actionAttempts.yml": {
       "imports": {
         "root": "__package__.yml",
       },
@@ -23274,7 +23274,7 @@ exports[`seam > seam > simple 1`] = `
         },
       },
     },
-    "client_sessions.yml": {
+    "clientSessions.yml": {
       "imports": {
         "root": "__package__.yml",
       },
@@ -23754,7 +23754,7 @@ exports[`seam > seam > simple 1`] = `
         },
       },
     },
-    "connect_webviews.yml": {
+    "connectWebviews.yml": {
       "imports": {
         "root": "__package__.yml",
       },
@@ -24183,7 +24183,7 @@ exports[`seam > seam > simple 1`] = `
         },
       },
     },
-    "connected_accounts.yml": {
+    "connectedAccounts.yml": {
       "imports": {
         "root": "__package__.yml",
       },
@@ -27892,7 +27892,7 @@ exports[`seam > seam > simple 1`] = `
         },
       },
     },
-    "noise_sensors/noise_thresholds.yml": {
+    "noiseSensors/noiseThresholds.yml": {
       "imports": {
         "root": "../__package__.yml",
       },
@@ -28287,7 +28287,7 @@ exports[`seam > seam > simple 1`] = `
         },
       },
     },
-    "noise_sensors/simulate.yml": {
+    "noiseSensors/simulate.yml": {
       "imports": {
         "root": "../__package__.yml",
       },
@@ -29769,7 +29769,7 @@ exports[`seam > seam > simple 1`] = `
         },
       },
     },
-    "thermostats/climate_setting_schedules.yml": {
+    "thermostats/climateSettingSchedules.yml": {
       "imports": {
         "root": "../__package__.yml",
       },
@@ -30197,7 +30197,7 @@ exports[`seam > seam > simple 1`] = `
         },
       },
     },
-    "user_identities.yml": {
+    "userIdentities.yml": {
       "imports": {
         "root": "__package__.yml",
       },
@@ -31183,7 +31183,7 @@ exports[`seam > seam > simple 1`] = `
         },
       },
     },
-    "user_identities/enrollment_automations.yml": {
+    "userIdentities/enrollmentAutomations.yml": {
       "imports": {
         "root": "../__package__.yml",
       },

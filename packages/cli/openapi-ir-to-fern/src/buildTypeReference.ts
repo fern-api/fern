@@ -15,6 +15,7 @@ import {
     PrimitiveSchemaValue,
     ReferencedSchema,
     Schema,
+    SdkGroupName,
     StringSchema
 } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
@@ -33,6 +34,7 @@ import {
     getTypeFromTypeReference,
     getValidationFromTypeReference
 } from "./utils/getTypeFromTypeReference";
+import { convertSdkGroupNameToFile } from "./utils/convertSdkGroupName";
 
 const MIN_INT_32 = -2147483648;
 const MAX_INT_32 = 2147483647;
@@ -393,10 +395,7 @@ export function buildReferenceTypeReference({
     const typeWithPrefix = getPrefixedType({
         context,
         fileContainingReference,
-        declarationFile:
-            groupName != null && groupName.length > 0
-                ? RelativeFilePath.of(`${groupName.map(camelCase).join("/")}.yml`)
-                : RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
+        declarationFile: convertSdkGroupNameToFile(groupName),
         type: schemaName
     });
     const type = resolvedSchema.type === "nullable" ? `optional<${typeWithPrefix}>` : typeWithPrefix;
