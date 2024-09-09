@@ -3,10 +3,8 @@
 from __future__ import annotations
 from ...core.pydantic_utilities import UniversalBaseModel
 import typing
-import typing_extensions
-from ...core.serialization import FieldMetadata
-from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class Exception_Generic(UniversalBaseModel):
@@ -23,9 +21,9 @@ class Exception_Generic(UniversalBaseModel):
     """
 
     type: typing.Literal["generic"] = "generic"
-    exception_type: typing_extensions.Annotated[str, FieldMetadata(alias="exceptionType")]
-    exception_message: typing_extensions.Annotated[str, FieldMetadata(alias="exceptionMessage")]
-    exception_stacktrace: typing_extensions.Annotated[str, FieldMetadata(alias="exceptionStacktrace")]
+    exception_type: str = pydantic.Field(alias="exceptionType")
+    exception_message: str = pydantic.Field(alias="exceptionMessage")
+    exception_stacktrace: str = pydantic.Field(alias="exceptionStacktrace")
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

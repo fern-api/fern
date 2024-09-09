@@ -3,20 +3,16 @@
 from __future__ import annotations
 from .......core.pydantic_utilities import UniversalBaseModel
 import typing
-import typing_extensions
 from .parameter_id import ParameterId
-from .......core.serialization import FieldMetadata
-from .......core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from .......core.pydantic_utilities import IS_PYDANTIC_V2
 from .parameter import Parameter
 from .function_implementation_for_multiple_languages import FunctionImplementationForMultipleLanguages
 
 
 class AssertCorrectnessCheck_DeepEquality(UniversalBaseModel):
     type: typing.Literal["deepEquality"] = "deepEquality"
-    expected_value_parameter_id: typing_extensions.Annotated[
-        ParameterId, FieldMetadata(alias="expectedValueParameterId")
-    ]
+    expected_value_parameter_id: ParameterId = pydantic.Field(alias="expectedValueParameterId")
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
@@ -28,9 +24,7 @@ class AssertCorrectnessCheck_DeepEquality(UniversalBaseModel):
 
 class AssertCorrectnessCheck_Custom(UniversalBaseModel):
     type: typing.Literal["custom"] = "custom"
-    additional_parameters: typing_extensions.Annotated[
-        typing.List[Parameter], FieldMetadata(alias="additionalParameters")
-    ]
+    additional_parameters: typing.List[Parameter] = pydantic.Field(alias="additionalParameters")
     code: FunctionImplementationForMultipleLanguages
 
     if IS_PYDANTIC_V2:
