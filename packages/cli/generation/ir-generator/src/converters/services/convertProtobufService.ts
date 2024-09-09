@@ -1,6 +1,6 @@
 import { ProtobufService } from "@fern-api/ir-sdk";
 import { ResolvedSource } from "../../resolvers/ResolvedSource";
-import { CASINGS_GENERATOR } from "../../utils/getAllPropertiesForObject";
+import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 import { convertProtobufFile } from "../convertProtobufFile";
 
 export function convertProtobufService({

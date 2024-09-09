@@ -1,7 +1,7 @@
 import { ProtobufType, WellKnownProtobufType } from "@fern-api/ir-sdk";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { ResolvedSource } from "../resolvers/ResolvedSource";
-import { CASINGS_GENERATOR } from "../utils/getAllPropertiesForObject";
+import { CASINGS_GENERATOR } from "../utils/casingsGenerator";
 import { convertProtobufFile } from "./convertProtobufFile";
 
 export function convertSourceToProtobufType({

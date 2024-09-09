@@ -39,6 +39,57 @@ types:
           type2: cat
           randomProperty: hello
 
+  LoudAnimal:
+    discriminant: type2
+    base-properties:
+      sound: string
+    union:
+      dog: Dog
+      person:
+        type: Name
+        key: value2
+      cat: {}
+    examples:
+      - value:
+          type2: dog
+          name: Fido
+          sound: Woof
+      - value:
+          type2: person
+          value2: Jane
+          sound: Meow
+      - value:
+          type2: cat
+          sound: Meow
+
+      - value:
+          type2: dog
+          sound: Woof
+      - value:
+          type2: dog
+          name: 42
+          sound: Woof
+      - value:
+          type2: dog
+          name: Fido
+          randomProperty: hello
+          sound: Woof
+      - value:
+          type2: person
+          sound: Hello
+      - value:
+          type2: person
+          value2: 42
+          sound: Hello
+      - value:
+          type2: person
+          randomProperty: hello
+          sound: Hello
+      - value:
+          type2: cat
+          randomProperty: hello
+          sound: Meow
+
   Dog:
     properties:
       name: string

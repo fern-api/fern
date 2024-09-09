@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+      Fix an issue where union base properties were not recognized in example validation.
+    type: fix
+  irVersion: 53
+  version: 0.41.9
+
+- changelogEntry:
+  - summary: |
       The Fern generators.yml configuration now supports a new format for namespacing APIs for additional flexibility:
 
       ```yml

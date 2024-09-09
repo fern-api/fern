@@ -9,6 +9,9 @@ import { ExampleViolation } from "./exampleViolation";
 import { getViolationsForMisshapenExample } from "./getViolationsForMisshapenExample";
 import { validateObjectExample } from "./validateObjectExample";
 import { validateTypeReferenceExample } from "./validateTypeReferenceExample";
+import { keyBy } from "lodash-es";
+import { getAllPropertiesForObject } from "../utils/getAllPropertiesForObject";
+import { validateObjectProperties } from "./validateObjectProperties";
 
 export function validateUnionExample({
     typeName,
@@ -61,11 +64,24 @@ export function validateUnionExample({
         ];
     }
 
+    const unionBaseProperties = {
+        ...rawUnion["base-properties"]
+    };
+
     const type =
         typeof singleUnionTypeDefinition === "string" ? singleUnionTypeDefinition : singleUnionTypeDefinition.type;
 
     if (typeof type !== "string") {
-        return getRuleViolationForExtraProperties(nonDiscriminantPropertyExamples);
+        return validateUnionBaseProperties({
+            typeName,
+            unionBaseProperties,
+            nonDiscriminantPropertyExamples,
+            typeResolver,
+            exampleResolver,
+            file,
+            workspace,
+            breadcrumbs
+        });
     }
 
     const resolvedType = typeResolver.resolveType({
@@ -79,10 +95,14 @@ export function validateUnionExample({
     }
 
     if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
-        return validateObjectExample({
+        const objectProperties = {
+            ...unionBaseProperties,
+            ...resolvedType.declaration.properties
+        };
+        return validateObjectProperties({
             typeName,
-            typeNameForBreadcrumb: typeName,
-            rawObject: resolvedType.declaration,
+            objectProperties,
+            extendedTypes: resolvedType.declaration.extends,
             file: resolvedType.file,
             example: nonDiscriminantPropertyExamples,
             typeResolver,
@@ -123,9 +143,55 @@ export function validateUnionExample({
         );
     }
 
-    violations.push(...getRuleViolationForExtraProperties(extraProperties));
+    violations.push(
+        ...validateUnionBaseProperties({
+            typeName,
+            unionBaseProperties,
+            nonDiscriminantPropertyExamples: extraProperties,
+            typeResolver,
+            exampleResolver,
+            file,
+            workspace,
+            breadcrumbs
+        })
+    );
 
     return violations;
+}
+
+export function validateUnionBaseProperties({
+    typeName,
+    unionBaseProperties,
+    nonDiscriminantPropertyExamples,
+    typeResolver,
+    exampleResolver,
+    file,
+    workspace,
+    breadcrumbs
+}: {
+    typeName: string;
+    unionBaseProperties: Record<string, RawSchemas.ObjectPropertySchema> | undefined;
+    nonDiscriminantPropertyExamples: Record<string, unknown>;
+    typeResolver: TypeResolver;
+    exampleResolver: ExampleResolver;
+    file: FernFileContext;
+    workspace: FernWorkspace;
+    breadcrumbs: string[];
+}): ExampleViolation[] {
+    if (unionBaseProperties == null) {
+        return getRuleViolationForExtraProperties(nonDiscriminantPropertyExamples);
+    }
+    return validateObjectProperties({
+        typeName,
+        objectProperties: unionBaseProperties,
+        extendedTypes: undefined,
+        file,
+        example: nonDiscriminantPropertyExamples,
+        typeResolver,
+        exampleResolver,
+        workspace,
+        breadcrumbs
+    });
 }
 
 function getRuleViolationForExtraProperties(extraProperties: Record<string, unknown>): ExampleViolation[] {
