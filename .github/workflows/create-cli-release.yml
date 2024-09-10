@@ -35,7 +35,7 @@ jobs:
         run: |
           git show HEAD~1:packages/cli/cli/versions.yml > tmp_cli_previous_versions.yml
 
-          pnpm seed:local latest cli -o "version.txt" --changelog packages/cli/cli/versions.yml --previous-changelog tmp_cli_previous_versions.yml
+          pnpm seed:local latest cli -o "version.txt"  --changelog packages/cli/cli/versions.yml --previous-changelog tmp_cli_previous_versions.yml
 
           if [ ! -f version.txt ]; then
               echo "File not found! Skipping release."
