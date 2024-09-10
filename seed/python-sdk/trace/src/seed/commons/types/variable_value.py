@@ -93,6 +93,9 @@ class VariableValue_MapValue(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from .map_value import MapValue  # noqa: E402
+
+
 class VariableValue_ListValue(UniversalBaseModel):
     value: typing.List["VariableValue"]
     type: typing.Literal["listValue"] = "listValue"

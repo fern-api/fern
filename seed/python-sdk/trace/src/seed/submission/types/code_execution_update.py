@@ -11,6 +11,7 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 from .running_submission_state import RunningSubmissionState
 from .error_info import ErrorInfo
+from .test_case_result_with_stdout import TestCaseResultWithStdout
 from ...v_2.problem.types.test_case_id import TestCaseId
 from .test_case_grade import TestCaseGrade
 from .workspace_run_details import WorkspaceRunDetails
@@ -18,7 +19,6 @@ from .lightweight_stackframe_information import LightweightStackframeInformation
 from .traced_file import TracedFile
 from .submission_request import SubmissionRequest
 from .invalid_request_cause import InvalidRequestCause
-from ...core.pydantic_utilities import update_forward_refs
 
 
 class CodeExecutionUpdate_BuildingExecutor(UniversalBaseModel):
@@ -84,7 +84,7 @@ class CodeExecutionUpdate_Graded(UniversalBaseModel):
     type: typing.Literal["graded"] = "graded"
     submission_id: typing_extensions.Annotated[SubmissionId, FieldMetadata(alias="submissionId")]
     test_cases: typing_extensions.Annotated[
-        typing.Dict[str, "TestCaseResultWithStdout"], FieldMetadata(alias="testCases")
+        typing.Dict[str, TestCaseResultWithStdout], FieldMetadata(alias="testCases")
     ]
 
     if IS_PYDANTIC_V2:
@@ -95,9 +95,6 @@ class CodeExecutionUpdate_Graded(UniversalBaseModel):
             frozen = True
             smart_union = True
             extra = pydantic.Extra.allow
-
-
-from .test_case_result_with_stdout import TestCaseResultWithStdout  # noqa: E402
 
 
 class CodeExecutionUpdate_GradedV2(UniversalBaseModel):
@@ -208,4 +205,3 @@ CodeExecutionUpdate = typing.Union[
     CodeExecutionUpdate_InvalidRequest,
     CodeExecutionUpdate_Finished,
 ]
-update_forward_refs(CodeExecutionUpdate_Graded)

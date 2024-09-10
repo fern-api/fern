@@ -8,8 +8,11 @@ from .parameter_id import ParameterId
 from .....core.serialization import FieldMetadata
 from .....core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from .....commons.types.list_type import ListType
+from .....commons.types.map_type import MapType
+from .....commons.types.variable_type import VariableType
+from .parameter import Parameter
 from .function_implementation_for_multiple_languages import FunctionImplementationForMultipleLanguages
-from .....core.pydantic_utilities import update_forward_refs
 
 
 class AssertCorrectnessCheck_DeepEquality(UniversalBaseModel):
@@ -31,7 +34,7 @@ class AssertCorrectnessCheck_DeepEquality(UniversalBaseModel):
 class AssertCorrectnessCheck_Custom(UniversalBaseModel):
     type: typing.Literal["custom"] = "custom"
     additional_parameters: typing_extensions.Annotated[
-        typing.List["Parameter"], FieldMetadata(alias="additionalParameters")
+        typing.List[Parameter], FieldMetadata(alias="additionalParameters")
     ]
     code: FunctionImplementationForMultipleLanguages
 
@@ -45,7 +48,4 @@ class AssertCorrectnessCheck_Custom(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .parameter import Parameter  # noqa: E402
-
 AssertCorrectnessCheck = typing.Union[AssertCorrectnessCheck_DeepEquality, AssertCorrectnessCheck_Custom]
-update_forward_refs(AssertCorrectnessCheck_Custom)

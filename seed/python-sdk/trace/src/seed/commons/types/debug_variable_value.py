@@ -95,6 +95,9 @@ class DebugVariableValue_MapValue(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from .debug_map_value import DebugMapValue  # noqa: E402
+
+
 class DebugVariableValue_ListValue(UniversalBaseModel):
     value: typing.List["DebugVariableValue"]
     type: typing.Literal["listValue"] = "listValue"
