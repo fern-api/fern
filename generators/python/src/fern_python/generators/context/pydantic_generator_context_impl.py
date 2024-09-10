@@ -55,10 +55,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
 
         self._non_union_types_with_self_referencing_dependencies = set()
         for id, type in self.ir.types.items():
-            if (
-                type.shape.get_as_union().type != "union"
-                and type.shape.get_as_union().type != "undiscriminatedUnion"
-            ):
+            if type.shape.get_as_union().type != "union" and type.shape.get_as_union().type != "undiscriminatedUnion":
                 for referenced_id in type.referenced_types:
                     referenced_type = self.ir.types[referenced_id]
                     # This referenced type is self-referential
@@ -158,7 +155,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
 
     def get_non_union_circular_references(self) -> Set[ir_types.TypeId]:
         return self._non_union_self_referencing_type_ids
-    
+
     def get_non_union_types_with_self_referencing_dependencies(self) -> Set[ir_types.TypeId]:
         return self._non_union_types_with_self_referencing_dependencies
 
