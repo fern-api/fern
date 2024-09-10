@@ -1,5 +1,6 @@
 irVersion: v53
 changelogLocation: ../../generators/typescript/express/versions.yml
+image: fernapi/fern-typescript-express
 publish:
   versionSubstitution: "$VERSION"
   command: 
