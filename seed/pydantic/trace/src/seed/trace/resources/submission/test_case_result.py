@@ -26,3 +26,5 @@ class TestCaseResult(UniversalBaseModel):
 
 update_forward_refs(KeyValuePair)
 update_forward_refs(MapValue)
+update_forward_refs(KeyValuePair)
+update_forward_refs(MapValue)

@@ -152,11 +152,6 @@ class FernAwarePydanticModel:
                 # We update the current model's forward refs independently
                 if self._type_name and dependency == self._type_name.type_id:
                     continue
-                # We already know we should do this import at the bottom since the update_forward_refs call will be at the bottom
-                # We add a ghost reference here so that we're not string referncing this class reference, e.g.
-                # 1. create the class reference as if it's a normal import (non-string reference) with must_import_after_current_declaration=lambda _: False
-                # 2. add the ghost reference to the pydantic model to move the import to the bottom of the file
-                self.add_ghost_reference(dependency)
                 class_reference = self._context.get_class_reference_for_type_id(
                     dependency, as_request=False, must_import_after_current_declaration=lambda _: False
                 )

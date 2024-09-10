@@ -21,5 +21,5 @@ class DebugMapValue(UniversalBaseModel):
 
 from .debug_key_value_pairs import DebugKeyValuePairs  # noqa: E402
 
-update_forward_refs(DebugMapValue)
 update_forward_refs(DebugKeyValuePairs)
+update_forward_refs(DebugMapValue)

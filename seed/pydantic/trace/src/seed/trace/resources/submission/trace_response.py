@@ -9,8 +9,8 @@ from .expression_location import ExpressionLocation
 from .stack_information import StackInformation
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.pydantic_utilities import update_forward_refs
-from ..commons.debug_key_value_pairs import DebugKeyValuePairs
 from ..commons.debug_map_value import DebugMapValue
+from ..commons.debug_key_value_pairs import DebugKeyValuePairs
 
 
 class TraceResponse(UniversalBaseModel):
@@ -29,5 +29,7 @@ class TraceResponse(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+update_forward_refs(DebugMapValue)
 update_forward_refs(DebugKeyValuePairs)
 update_forward_refs(DebugMapValue)
+update_forward_refs(DebugKeyValuePairs)

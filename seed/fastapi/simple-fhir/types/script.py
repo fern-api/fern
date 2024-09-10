@@ -4,11 +4,6 @@ from .base_resource import BaseResource
 import typing
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
-from ..core.pydantic_utilities import update_forward_refs
-from .account import Account
-from .memo import Memo
-from .patient import Patient
-from .practitioner import Practitioner
 
 
 class Script(BaseResource):
@@ -23,10 +18,3 @@ class Script(BaseResource):
 
         class Config:
             extra = pydantic.Extra.forbid
-
-
-update_forward_refs(Account)
-update_forward_refs(BaseResource)
-update_forward_refs(Memo)
-update_forward_refs(Patient)
-update_forward_refs(Practitioner)

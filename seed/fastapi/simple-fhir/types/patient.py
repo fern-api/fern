@@ -6,9 +6,9 @@ import typing
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 from ..core.pydantic_utilities import update_forward_refs
+from .practitioner import Practitioner
 from .account import Account
 from .memo import Memo
-from .practitioner import Practitioner
 
 
 class Patient(BaseResource):
@@ -28,9 +28,9 @@ class Patient(BaseResource):
 
 from .script import Script  # noqa: E402
 
-update_forward_refs(Patient)
-update_forward_refs(Account)
-update_forward_refs(BaseResource)
-update_forward_refs(Memo)
 update_forward_refs(Practitioner)
 update_forward_refs(Script)
+update_forward_refs(BaseResource)
+update_forward_refs(Account)
+update_forward_refs(Memo)
+update_forward_refs(Patient)

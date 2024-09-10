@@ -39,3 +39,5 @@ class TraceResponse(UniversalBaseModel):
 
 update_forward_refs(DebugKeyValuePairs)
 update_forward_refs(DebugMapValue)
+update_forward_refs(DebugKeyValuePairs)
+update_forward_refs(DebugMapValue)

@@ -12,6 +12,7 @@ from .binary_tree_node_value import BinaryTreeNodeValue
 from .singly_linked_list_node_value import SinglyLinkedListNodeValue
 from .doubly_linked_list_node_value import DoublyLinkedListNodeValue
 from ...core.pydantic_utilities import update_forward_refs
+from .map_value import MapValue
 
 
 class VariableValue_IntegerValue(UniversalBaseModel):
@@ -179,5 +180,7 @@ VariableValue = typing.Union[
 ]
 from .key_value_pair import KeyValuePair  # noqa: E402
 
+update_forward_refs(MapValue)
+update_forward_refs(KeyValuePair)
 update_forward_refs(VariableValue_MapValue)
 update_forward_refs(VariableValue_ListValue)

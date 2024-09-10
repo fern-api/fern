@@ -8,6 +8,9 @@ from ....core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 from .test_case_implementation_description import TestCaseImplementationDescription
 from .test_case_function import TestCaseFunction
+from ....core.pydantic_utilities import update_forward_refs
+from ....commons.types.list_type import ListType
+from ....commons.types.map_type import MapType
 
 
 class TestCaseImplementationReference_TemplateId(UniversalBaseModel):
@@ -41,3 +44,5 @@ class TestCaseImplementationReference_Implementation(UniversalBaseModel):
 TestCaseImplementationReference = typing.Union[
     TestCaseImplementationReference_TemplateId, TestCaseImplementationReference_Implementation
 ]
+update_forward_refs(ListType)
+update_forward_refs(MapType)

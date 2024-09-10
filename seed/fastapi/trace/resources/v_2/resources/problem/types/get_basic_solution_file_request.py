@@ -6,8 +6,8 @@ from .non_void_function_signature import NonVoidFunctionSignature
 from ......core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
 from ......core.pydantic_utilities import update_forward_refs
-from .....commons.types.list_type import ListType
 from .....commons.types.map_type import MapType
+from .....commons.types.list_type import ListType
 
 
 class GetBasicSolutionFileRequest(UniversalBaseModel):
@@ -24,5 +24,5 @@ class GetBasicSolutionFileRequest(UniversalBaseModel):
             extra = pydantic.Extra.forbid
 
 
-update_forward_refs(ListType)
 update_forward_refs(MapType)
+update_forward_refs(ListType)

@@ -11,9 +11,9 @@ from ......commons.language import Language
 from .......core.pydantic_utilities import IS_PYDANTIC_V2
 from .......core.pydantic_utilities import update_forward_refs
 from ......commons.key_value_pair import KeyValuePair
+from ......commons.map_value import MapValue
 from ......commons.list_type import ListType
 from ......commons.map_type import MapType
-from ......commons.map_value import MapValue
 
 
 class CreateProblemRequestV2(UniversalBaseModel):
@@ -34,6 +34,12 @@ class CreateProblemRequestV2(UniversalBaseModel):
 
 
 update_forward_refs(KeyValuePair)
+update_forward_refs(MapValue)
 update_forward_refs(ListType)
 update_forward_refs(MapType)
+update_forward_refs(ListType)
+update_forward_refs(MapType)
+update_forward_refs(KeyValuePair)
 update_forward_refs(MapValue)
+update_forward_refs(ListType)
+update_forward_refs(MapType)

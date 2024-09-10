@@ -6,9 +6,6 @@ import pydantic
 import typing
 from .test_case_result_with_stdout import TestCaseResultWithStdout
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
-from ....core.pydantic_utilities import update_forward_refs
-from ...commons.types.key_value_pair import KeyValuePair
-from ...commons.types.map_value import MapValue
 
 
 class GradedResponse(UniversalBaseModel):
@@ -25,7 +22,3 @@ class GradedResponse(UniversalBaseModel):
 
         class Config:
             extra = pydantic.Extra.forbid
-
-
-update_forward_refs(KeyValuePair)
-update_forward_refs(MapValue)

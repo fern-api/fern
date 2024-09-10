@@ -56,7 +56,8 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
 
         self._types_with_non_union_self_referencing_dependencies: Dict[ir_types.TypeId, Set[ir_types.TypeId]] = dict()
         for id, type in self.ir.types.items():
-            for referenced_id in type.referenced_types:
+            ordered_reference_types = OrderedSet(list(sorted(type.referenced_types)))
+            for referenced_id in ordered_reference_types:
                 referenced_type = self.ir.types[referenced_id]
                 if (
                     referenced_type.shape.get_as_union().type != "union"

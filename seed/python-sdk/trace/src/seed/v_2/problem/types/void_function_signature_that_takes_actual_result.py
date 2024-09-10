@@ -29,3 +29,5 @@ class VoidFunctionSignatureThatTakesActualResult(UniversalBaseModel):
 
 update_forward_refs(ListType)
 update_forward_refs(MapType)
+update_forward_refs(ListType)
+update_forward_refs(MapType)

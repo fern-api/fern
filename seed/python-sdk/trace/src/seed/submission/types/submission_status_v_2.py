@@ -11,6 +11,11 @@ from ...v_2.problem.types.problem_info_v_2 import ProblemInfoV2
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 from .workspace_submission_update import WorkspaceSubmissionUpdate
+from ...core.pydantic_utilities import update_forward_refs
+from ...commons.types.map_value import MapValue
+from ...commons.types.key_value_pair import KeyValuePair
+from ...commons.types.map_type import MapType
+from ...commons.types.list_type import ListType
 
 
 class SubmissionStatusV2_Test(UniversalBaseModel):
@@ -45,3 +50,9 @@ class SubmissionStatusV2_Workspace(UniversalBaseModel):
 
 
 SubmissionStatusV2 = typing.Union[SubmissionStatusV2_Test, SubmissionStatusV2_Workspace]
+update_forward_refs(MapValue)
+update_forward_refs(KeyValuePair)
+update_forward_refs(MapType)
+update_forward_refs(ListType)
+update_forward_refs(KeyValuePair)
+update_forward_refs(MapValue)

@@ -6,6 +6,9 @@ import pydantic
 import typing
 from ...submission.types.trace_response import TraceResponse
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
+from ....core.pydantic_utilities import update_forward_refs
+from ...commons.types.debug_map_value import DebugMapValue
+from ...commons.types.debug_key_value_pairs import DebugKeyValuePairs
 
 
 class StoreTracedWorkspaceRequest(UniversalBaseModel):
@@ -22,3 +25,7 @@ class StoreTracedWorkspaceRequest(UniversalBaseModel):
 
         class Config:
             extra = pydantic.Extra.forbid
+
+
+update_forward_refs(DebugMapValue)
+update_forward_refs(DebugKeyValuePairs)

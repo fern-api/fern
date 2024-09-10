@@ -6,8 +6,8 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
 import pydantic
 from ...core.pydantic_utilities import update_forward_refs
-from ...commons.types.key_value_pair import KeyValuePair
 from ...commons.types.map_value import MapValue
+from ...commons.types.key_value_pair import KeyValuePair
 
 
 class TestCaseResultWithStdout(UniversalBaseModel):
@@ -24,5 +24,5 @@ class TestCaseResultWithStdout(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-update_forward_refs(KeyValuePair)
 update_forward_refs(MapValue)
+update_forward_refs(KeyValuePair)
