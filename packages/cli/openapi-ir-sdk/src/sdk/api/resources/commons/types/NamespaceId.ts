@@ -4,6 +4,4 @@
 
 import * as FernOpenapiIr from "../../../index";
 
-export interface WithSchemaId {
-    schemaId: FernOpenapiIr.SchemaId;
-}
+export type NamespaceId = FernOpenapiIr.NoNamespaceSentinel | string;

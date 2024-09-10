@@ -166,7 +166,6 @@ types:
   ArraySchemaWithExample:
     extends:
       - commons.WithSdkGroupName
-      - commons.WithSchemaId
       - commons.WithName
       - commons.WithDescription
       - commons.WithAvailability
@@ -178,7 +177,6 @@ types:
   MapSchemaWithExample:
     extends:
       - commons.WithSdkGroupName
-      - commons.WithSchemaId
       - commons.WithName
       - commons.WithDescription
       - commons.WithAvailability
@@ -192,7 +190,6 @@ types:
   OptionalSchemaWithExample:
     extends:
       - commons.WithSdkGroupName
-      - commons.WithSchemaId
       - commons.WithName
       - commons.WithDescription
       - commons.WithAvailability
@@ -203,7 +200,6 @@ types:
   NullableSchemaWithExample:
     extends:
       - commons.WithSdkGroupName
-      - commons.WithSchemaId
       - commons.WithName
       - commons.WithDescription
       - commons.WithAvailability
@@ -216,7 +212,6 @@ types:
       - commons.WithDescription
       - commons.WithName
       - commons.WithSdkGroupName
-      - commons.WithSchemaId
       - commons.WithAvailability
       - commons.WithSource
       - commons.WithTitle
@@ -228,7 +223,6 @@ types:
   UnknownSchemaWithExample:
     extends:
       - commons.WithSdkGroupName
-      - commons.WithSchemaId
       - commons.WithName
       - commons.WithDescription
       - commons.WithAvailability
@@ -241,7 +235,6 @@ types:
       - commons.WithDescription
       - commons.WithName
       - commons.WithSdkGroupName
-      - commons.WithSchemaId
       - commons.WithAvailability
       - commons.WithSource
       - commons.WithTitle
@@ -281,7 +274,6 @@ types:
       - commons.WithDescription
       - commons.WithName
       - commons.WithSdkGroupName
-      - commons.WithSchemaId
       - commons.WithAvailability
       - commons.WithEncoding
       - commons.WithSource
@@ -301,7 +293,6 @@ types:
       - commons.WithDescription
       - commons.WithName
       - commons.WithSdkGroupName
-      - commons.WithSchemaId
       - commons.WithAvailability
       - commons.WithEncoding
       - commons.WithSource
@@ -314,7 +305,6 @@ types:
       - commons.WithDescription
       - commons.WithName
       - commons.WithSdkGroupName
-      - commons.WithSchemaId
       - commons.WithAvailability
       - commons.WithTitle
     properties:

@@ -46,7 +46,9 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
                               buildTypeReference({
                                   schema: header.schema,
                                   context,
-                                  fileContainingReference: RelativeFilePath.of("api.yml")
+                                  fileContainingReference: RelativeFilePath.of("api.yml"),
+                                  // TODO: how are we namespacing global headers
+                                  namespace: undefined
                               })
                           ) ?? "optional<string>"
                         : "optional<string>"
@@ -75,7 +77,9 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
                             name: predefinedHeader?.name ?? header.name
                         },
                         fileContainingReference: RelativeFilePath.of(ROOT_API_FILENAME),
-                        context
+                        context,
+                        // TODO: how are we namespacing global headers
+                        namespace: undefined
                     });
                     headerWithCount = new HeaderWithCount(convertedHeader);
                     globalHeaders[header.name] = headerWithCount;

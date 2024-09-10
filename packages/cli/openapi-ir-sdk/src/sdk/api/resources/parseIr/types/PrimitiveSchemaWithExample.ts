@@ -8,8 +8,12 @@ export interface PrimitiveSchemaWithExample
     extends FernOpenapiIr.WithDescription,
         FernOpenapiIr.WithName,
         FernOpenapiIr.WithSdkGroupName,
+<<<<<<< HEAD
         FernOpenapiIr.WithSchemaId,
         FernOpenapiIr.WithAvailability,
         FernOpenapiIr.WithTitle {
+=======
+        FernOpenapiIr.WithAvailability {
+>>>>>>> cafb0600e0 (not fully working)
     schema: FernOpenapiIr.PrimitiveSchemaValueWithExample;
 }

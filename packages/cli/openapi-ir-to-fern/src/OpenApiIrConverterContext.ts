@@ -1,6 +1,6 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { Logger } from "@fern-api/logger";
-import { OpenApiIntermediateRepresentation, Schema, SchemaId } from "@fern-api/openapi-ir-sdk";
+import { NoNamespaceSentinel, OpenApiIntermediateRepresentation, Schema, SchemaId } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { FernDefinitionBuilder, FernDefinitionBuilderImpl } from "./FernDefnitionBuilder";
 
@@ -52,9 +52,11 @@ export class OpenApiIrConverterContext {
         this.authOverrides = authOverrides;
     }
 
-    public getSchema(id: SchemaId): Schema | undefined {
-        const schema = this.ir.schemas[id];
-        return schema;
+    public getSchema(id: SchemaId, namespace: string | undefined): Schema | undefined {
+        const noNamespaceSentinel: NoNamespaceSentinel = "__no_namespace__";
+        const namespaceKey = namespace == null ? noNamespaceSentinel : namespace;
+        const namespaceSchemas = this.ir.schemas[namespaceKey];
+        return namespaceSchemas?.[id];
     }
 
     /**

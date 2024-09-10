@@ -46,26 +46,31 @@ export function buildFernDefinition(context: OpenApiIrConverterContext): FernDef
     }
 
     // Add Schemas
-    for (const [id, schema] of Object.entries(context.ir.schemas)) {
-        if (schemaIdsToExclude.includes(id)) {
-            continue;
-        }
-
-        const declarationFile = getDeclarationFileForSchema(schema);
-        const typeDeclaration = buildTypeDeclaration({ schema, context, declarationFile });
-
-        // HACKHACK: Skip self-referencing schemas. I'm not sure if this is the right way to do this.
-        if (isRawAliasDefinition(typeDeclaration.schema)) {
-            const aliasType = getTypeFromTypeReference(typeDeclaration.schema);
-            if (aliasType === (typeDeclaration.name ?? id) || aliasType === `optional<${typeDeclaration.name ?? id}>`) {
+    for (const [namespace, schemas] of Object.entries(context.ir.schemas)) {
+        for (const [id, schema] of Object.entries(schemas)) {
+            if (schemaIdsToExclude.includes(id)) {
                 continue;
             }
-        }
 
-        context.builder.addType(declarationFile, {
-            name: typeDeclaration.name ?? id,
-            schema: typeDeclaration.schema
-        });
+            const declarationFile = getDeclarationFileForSchema(schema);
+            const typeDeclaration = buildTypeDeclaration({ schema, context, declarationFile, namespace });
+
+            // HACKHACK: Skip self-referencing schemas. I'm not sure if this is the right way to do this.
+            if (isRawAliasDefinition(typeDeclaration.schema)) {
+                const aliasType = getTypeFromTypeReference(typeDeclaration.schema);
+                if (
+                    aliasType === (typeDeclaration.name ?? id) ||
+                    aliasType === `optional<${typeDeclaration.name ?? id}>`
+                ) {
+                    continue;
+                }
+            }
+
+            context.builder.addType(declarationFile, {
+                name: typeDeclaration.name ?? id,
+                schema: typeDeclaration.schema
+            });
+        }
     }
 
     if (context.ir.tags.orderedTagIds != null && context.ir.tags.orderedTagIds.length > 0) {

@@ -7,7 +7,6 @@ import * as FernOpenapiIr from "../../../index";
 export interface LiteralSchema
     extends FernOpenapiIr.WithDescription,
         FernOpenapiIr.WithName,
-        FernOpenapiIr.WithSchemaId,
         FernOpenapiIr.WithSdkGroupName,
         FernOpenapiIr.WithAvailability,
         FernOpenapiIr.WithTitle {

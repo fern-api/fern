@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, join, relative, RelativeFilePath } from "@fern-api/fs-utils";
-import { OpenApiIntermediateRepresentation, Source as OpenApiIrSource } from "@fern-api/openapi-ir-sdk";
+import { OpenApiIntermediateRepresentation, Schema, Source as OpenApiIrSource } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -84,7 +84,7 @@ export async function parse({
         endpoints: [],
         webhooks: [],
         channel: [],
-        schemas: [],
+        schemas: {},
         variables: {},
         nonRequestReferencedSchemas: new Set(),
         securitySchemes: {},
@@ -148,7 +148,7 @@ export async function parse({
                 ir.channel.push(parsedAsyncAPI.channel);
             }
             if (parsedAsyncAPI.schemas != null) {
-                ir.schemas = [...ir.schemas, ...parsedAsyncAPI.schemas];
+                ir.schemas = mergeSchemaMaps(ir.schemas, parsedAsyncAPI.schemas);
             }
             if (parsedAsyncAPI.basePath != null) {
                 ir.basePath = parsedAsyncAPI.basePath;
@@ -222,7 +222,7 @@ function merge(
         endpoints: [...ir1.endpoints, ...ir2.endpoints],
         webhooks: [...ir1.webhooks, ...ir2.webhooks],
         channel: [...ir1.channel, ...ir2.channel],
-        schemas: [...ir1.schemas, ...ir2.schemas],
+        schemas: mergeSchemaMaps(ir1.schemas, ir2.schemas),
         variables: {
             ...ir1.variables,
             ...ir2.variables
@@ -240,6 +240,23 @@ function merge(
             ...ir2.groups
         }
     };
+}
+
+function mergeSchemaMaps(
+    schemas1: Record<string, Record<string, Schema>>,
+    schemas2: Record<string, Record<string, Schema>>
+): Record<string, Record<string, Schema>> {
+    for (const [namespace, namespaceSchemas] of Object.entries(schemas2)) {
+        // If both share the namespace, merge the schemas within that namespace
+        if (schemas1[namespace] != null) {
+            schemas1[namespace] = { ...schemas1[namespace], ...namespaceSchemas };
+        } else {
+            // Otherwise, just add the namespace to the schemas
+            schemas1[namespace] = namespaceSchemas;
+        }
+    }
+
+    return schemas1;
 }
 
 async function loadAsyncAPI({

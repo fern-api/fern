@@ -10,7 +10,9 @@ export function buildVariables(context: OpenApiIrConverterContext): void {
         const typeReference = buildTypeReference({
             schema: Schema.primitive(variableSchema),
             context,
-            fileContainingReference: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME)
+            fileContainingReference: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
+            // TODO: how are we namespacing variables
+            namespace: undefined
         });
         context.builder.addVariable({
             name: variable,

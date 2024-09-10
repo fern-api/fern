@@ -22,7 +22,13 @@ export interface OpenApiIntermediateRepresentation {
     endpoints: FernOpenapiIr.Endpoint[];
     webhooks: FernOpenapiIr.Webhook[];
     channel: FernOpenapiIr.WebsocketChannel[];
-    schemas: FernOpenapiIr.Schema[];
+    /**
+     * The schemas are organized by namespace and schema name.
+     * The schema name is the key in the inner map.
+     * Note that this also includes un-namespaced schemas with a static sentinel key of `__no_namespace__`,
+     * as even when namespacing we allow for root, unnamespaced APIs, and this allows for the most flexibility.
+     */
+    schemas: Record<FernOpenapiIr.NamespaceId, Record<FernOpenapiIr.SchemaId, FernOpenapiIr.Schema>>;
     variables: Record<string, FernOpenapiIr.PrimitiveSchema>;
     /** Whether the schema is directly referenced from a response, parameters, or other schemas */
     nonRequestReferencedSchemas: Set<FernOpenapiIr.SchemaId>;

@@ -8,7 +8,6 @@ import * as core from "../../../../core";
 import { SchemaId } from "../../commons/types/SchemaId";
 import { WithDescription } from "../../commons/types/WithDescription";
 import { WithName } from "../../commons/types/WithName";
-import { WithSchemaId } from "../../commons/types/WithSchemaId";
 import { WithSdkGroupName } from "../../commons/types/WithSdkGroupName";
 import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithSource } from "../../commons/types/WithSource";
@@ -23,7 +22,6 @@ export const ReferencedSchema: core.serialization.ObjectSchema<
     })
     .extend(WithDescription)
     .extend(WithName)
-    .extend(WithSchemaId)
     .extend(WithSdkGroupName)
     .extend(WithAvailability)
     .extend(WithSource)
@@ -33,7 +31,6 @@ export declare namespace ReferencedSchema {
     interface Raw
         extends WithDescription.Raw,
             WithName.Raw,
-            WithSchemaId.Raw,
             WithSdkGroupName.Raw,
             WithAvailability.Raw,
             WithSource.Raw,

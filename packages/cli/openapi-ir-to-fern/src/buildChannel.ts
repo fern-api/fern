@@ -7,6 +7,7 @@ import { buildQueryParameter } from "./buildQueryParameter";
 import { buildTypeReference } from "./buildTypeReference";
 import { buildWebsocketSessionExample } from "./buildWebsocketSessionExample";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { getNamespaceFromGroup } from "./utils/getNamespaceFromGroup";
 
 export function buildChannel({
     channel,
@@ -27,13 +28,16 @@ export function buildChannel({
         convertedChannel["display-name"] = channel.summary;
     }
 
+    const maybeChannelNamespace = getNamespaceFromGroup(channel.groupName);
+
     const pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> = {};
     if (channel.handshake.pathParameters.length > 0) {
         for (const pathParameter of channel.handshake.pathParameters) {
             pathParameters[pathParameter.name] = buildPathParameter({
                 pathParameter,
                 context,
-                fileContainingReference: declarationFile
+                fileContainingReference: declarationFile,
+                namespace: maybeChannelNamespace
             });
         }
     }
@@ -47,7 +51,8 @@ export function buildChannel({
             const convertedQueryParameter = buildQueryParameter({
                 queryParameter,
                 context,
-                fileContainingReference: declarationFile
+                fileContainingReference: declarationFile,
+                namespace: maybeChannelNamespace
             });
             if (convertedQueryParameter == null) {
                 // TODO(dsinghvi): HACKHACK we are just excluding certain query params from the SDK
@@ -63,7 +68,12 @@ export function buildChannel({
     const headers: Record<string, RawSchemas.HttpHeaderSchema> = {};
     if (channel.handshake.headers.length > 0) {
         for (const header of channel.handshake.headers) {
-            const headerSchema = buildHeader({ header, context, fileContainingReference: declarationFile });
+            const headerSchema = buildHeader({
+                header,
+                context,
+                fileContainingReference: declarationFile,
+                namespace: maybeChannelNamespace
+            });
             headers[header.name] = headerSchema;
         }
     }
@@ -83,7 +93,8 @@ export function buildChannel({
                 body: buildTypeReference({
                     schema: channel.subscribe,
                     context,
-                    fileContainingReference: declarationFile
+                    fileContainingReference: declarationFile,
+                    namespace: maybeChannelNamespace
                 })
             }
         });
@@ -97,7 +108,8 @@ export function buildChannel({
                 body: buildTypeReference({
                     schema: channel.publish,
                     context,
-                    fileContainingReference: declarationFile
+                    fileContainingReference: declarationFile,
+                    namespace: maybeChannelNamespace
                 })
             }
         });

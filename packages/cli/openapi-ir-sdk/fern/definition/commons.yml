@@ -18,10 +18,6 @@ types:
     properties:
       description: optional<string>
 
-  WithSchemaId:
-    properties:
-      schemaId: SchemaId
-  
   WithAvailability:
     properties:
       availability: optional<finalIr.Availability>
@@ -126,6 +122,15 @@ types:
         docs: Populated by `X-Server-Name`
       url: string
       audiences: optional<list<string>>
+
+  NoNamespaceSentinel:
+    type: literal<"__no_namespace__">
+
+  NamespaceId:
+    discriminated: false
+    union:
+      - NoNamespaceSentinel
+      - string
 
   Namespace:
     properties:

@@ -6,7 +6,6 @@ import * as serializers from "../../../index";
 import * as FernOpenapiIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { WithSdkGroupName } from "../../commons/types/WithSdkGroupName";
-import { WithSchemaId } from "../../commons/types/WithSchemaId";
 import { WithName } from "../../commons/types/WithName";
 import { WithDescription } from "../../commons/types/WithDescription";
 import { WithAvailability } from "../../commons/types/WithAvailability";
@@ -21,13 +20,13 @@ export const ArraySchemaWithExample: core.serialization.ObjectSchema<
         example: core.serialization.list(core.serialization.unknown()).optional(),
     })
     .extend(WithSdkGroupName)
-    .extend(WithSchemaId)
     .extend(WithName)
     .extend(WithDescription)
     .extend(WithAvailability)
     .extend(WithTitle);
 
 export declare namespace ArraySchemaWithExample {
+<<<<<<< HEAD
     interface Raw
         extends WithSdkGroupName.Raw,
             WithSchemaId.Raw,
@@ -35,6 +34,9 @@ export declare namespace ArraySchemaWithExample {
             WithDescription.Raw,
             WithAvailability.Raw,
             WithTitle.Raw {
+=======
+    interface Raw extends WithSdkGroupName.Raw, WithName.Raw, WithDescription.Raw, WithAvailability.Raw {
+>>>>>>> cafb0600e0 (not fully working)
         value: serializers.SchemaWithExample.Raw;
         example?: unknown[] | null;
     }

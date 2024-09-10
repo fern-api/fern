@@ -1,5 +1,7 @@
 import {
     HeaderWithExample,
+    NamespaceId,
+    NoNamespaceSentinel,
     PathParameterWithExample,
     PrimitiveSchemaValueWithExample,
     QueryParameterWithExample,
@@ -27,7 +29,7 @@ import { ParseAsyncAPIOptions } from "./options";
 import { AsyncAPIV2 } from "./v2";
 
 export interface AsyncAPIIntermediateRepresentation {
-    schemas: Schema[];
+    schemas: Record<NamespaceId, Record<SchemaId, Schema>>;
     channel: WebsocketChannel | undefined;
     basePath: string | undefined;
 }
@@ -260,10 +262,15 @@ export function parseAsyncAPI({
         }
     }
 
-    return {
-        schemas: Object.fromEntries(
+    // TODO: It'd be better if I could reference the sentinel directly, but cannot as it's just a type
+    const NoNamespaceSentinelValue: NoNamespaceSentinel = "__no_namespace__";
+    const namespacedSchemas: Record<NamespaceId, Record<string, Schema>> = {
+        [namespace ?? NoNamespaceSentinelValue]: Object.fromEntries(
             Object.entries(schemas).map(([id, schema]) => [id, convertSchemaWithExampleToSchema(schema)])
-        ),
+        )
+    };
+    return {
+        schemas: namespacedSchemas,
         channel: parsedChannel,
         basePath: getExtension<string | undefined>(document, FernAsyncAPIExtension.BASE_PATH)
     };

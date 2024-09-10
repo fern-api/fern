@@ -6,7 +6,6 @@ import * as FernOpenapiIr from "../../../index";
 
 export interface UnknownSchemaWithExample
     extends FernOpenapiIr.WithSdkGroupName,
-        FernOpenapiIr.WithSchemaId,
         FernOpenapiIr.WithName,
         FernOpenapiIr.WithDescription,
         FernOpenapiIr.WithAvailability,

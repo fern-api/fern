@@ -18,11 +18,7 @@ exports[`overrides > petstore 1`] = `
       x-fern-sdk-method-name: showPetById
 components:
   schemas:
-    Pet:
-      x-fern-type-name: Pet
-    Pets:
-      x-fern-type-name: Pets
-    Error:
-      x-fern-type-name: Error
+    __no_namespace__:
+      x-fern-type-name: __no_namespace__
 "
 `;

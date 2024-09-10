@@ -9,7 +9,6 @@ import { PrimitiveSchemaValueWithExample } from "./PrimitiveSchemaValueWithExamp
 import { WithDescription } from "../../commons/types/WithDescription";
 import { WithName } from "../../commons/types/WithName";
 import { WithSdkGroupName } from "../../commons/types/WithSdkGroupName";
-import { WithSchemaId } from "../../commons/types/WithSchemaId";
 import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithTitle } from "../../commons/types/WithTitle";
 
@@ -23,6 +22,7 @@ export const PrimitiveSchemaWithExample: core.serialization.ObjectSchema<
     .extend(WithDescription)
     .extend(WithName)
     .extend(WithSdkGroupName)
+<<<<<<< HEAD
     .extend(WithSchemaId)
     .extend(WithAvailability)
     .extend(WithTitle);
@@ -35,6 +35,12 @@ export declare namespace PrimitiveSchemaWithExample {
             WithSchemaId.Raw,
             WithAvailability.Raw,
             WithTitle.Raw {
+=======
+    .extend(WithAvailability);
+
+export declare namespace PrimitiveSchemaWithExample {
+    interface Raw extends WithDescription.Raw, WithName.Raw, WithSdkGroupName.Raw, WithAvailability.Raw {
+>>>>>>> cafb0600e0 (not fully working)
         schema: PrimitiveSchemaValueWithExample.Raw;
     }
 }

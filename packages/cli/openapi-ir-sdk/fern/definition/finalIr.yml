@@ -24,7 +24,13 @@ types:
       endpoints: list<Endpoint>
       webhooks: list<Webhook>
       channel: list<WebsocketChannel>
-      schemas: list<Schema>
+      schemas: 
+        type: map<commons.NamespaceId, map<commons.SchemaId, Schema>>
+        docs: |
+          The schemas are organized by namespace and schema name.
+          The schema name is the key in the inner map.
+          Note that this also includes un-namespaced schemas with a static sentinel key of `__no_namespace__`,
+          as even when namespacing we allow for root, unnamespaced APIs, and this allows for the most flexibility.
       variables: map<string, PrimitiveSchema>
       nonRequestReferencedSchemas:
         type: set<commons.SchemaId>
@@ -455,7 +461,6 @@ types:
   PrimitiveSchema:
     extends:
       - commons.WithDescription
-      - commons.WithSchemaId
       - commons.WithName
       - commons.WithSdkGroupName
       - commons.WithAvailability
@@ -534,7 +539,6 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
-      - commons.WithSchemaId
       - commons.WithSdkGroupName
       - commons.WithAvailability
       - commons.WithTitle
@@ -550,7 +554,6 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
-      - commons.WithSchemaId
       - commons.WithSdkGroupName
       - commons.WithAvailability
       - commons.WithSource
@@ -601,7 +604,6 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
-      - commons.WithSchemaId
       - commons.WithSdkGroupName
       - commons.WithAvailability
       - commons.WithTitle
@@ -612,7 +614,6 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
-      - commons.WithSchemaId
       - commons.WithSdkGroupName
       - commons.WithAvailability
       - commons.WithEncoding
@@ -625,7 +626,6 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
-      - commons.WithSchemaId
       - commons.WithSdkGroupName
       - commons.WithAvailability
       - commons.WithTitle
@@ -636,7 +636,6 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
-      - commons.WithSchemaId
       - commons.WithSdkGroupName
       - commons.WithAvailability
       - commons.WithTitle
@@ -647,7 +646,6 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
-      - commons.WithSchemaId
       - commons.WithSdkGroupName
       - commons.WithAvailability
       - commons.WithSource
@@ -683,7 +681,6 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
-      - commons.WithSchemaId
       - commons.WithSdkGroupName
       - commons.WithAvailability
       - commons.WithSource
@@ -700,7 +697,6 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
-      - commons.WithSchemaId
       - commons.WithSdkGroupName
       - commons.WithAvailability
       - commons.WithEncoding
@@ -720,7 +716,6 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
-      - commons.WithSchemaId
       - commons.WithSdkGroupName
       - commons.WithAvailability
       - commons.WithEncoding
