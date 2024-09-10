@@ -9,6 +9,7 @@ import { PrimitiveSchemaValueWithExample } from "./PrimitiveSchemaValueWithExamp
 import { WithDescription } from "../../commons/types/WithDescription";
 import { WithName } from "../../commons/types/WithName";
 import { WithSdkGroupName } from "../../commons/types/WithSdkGroupName";
+import { WithSchemaId } from "../../commons/types/WithSchemaId";
 import { WithAvailability } from "../../commons/types/WithAvailability";
 
 export const PrimitiveSchemaWithExample: core.serialization.ObjectSchema<
@@ -21,10 +22,16 @@ export const PrimitiveSchemaWithExample: core.serialization.ObjectSchema<
     .extend(WithDescription)
     .extend(WithName)
     .extend(WithSdkGroupName)
+    .extend(WithSchemaId)
     .extend(WithAvailability);
 
 export declare namespace PrimitiveSchemaWithExample {
-    interface Raw extends WithDescription.Raw, WithName.Raw, WithSdkGroupName.Raw, WithAvailability.Raw {
+    interface Raw
+        extends WithDescription.Raw,
+            WithName.Raw,
+            WithSdkGroupName.Raw,
+            WithSchemaId.Raw,
+            WithAvailability.Raw {
         schema: PrimitiveSchemaValueWithExample.Raw;
     }
 }

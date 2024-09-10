@@ -8,6 +8,7 @@ export interface DiscriminatedOneOfSchemaWithExample
     extends FernOpenapiIr.WithDescription,
         FernOpenapiIr.WithName,
         FernOpenapiIr.WithSdkGroupName,
+        FernOpenapiIr.WithSchemaId,
         FernOpenapiIr.WithAvailability,
         FernOpenapiIr.WithEncoding,
         FernOpenapiIr.WithSource {

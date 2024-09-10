@@ -8,6 +8,7 @@ import * as core from "../../../../core";
 import { EnumValue } from "./EnumValue";
 import { WithDescription } from "../../commons/types/WithDescription";
 import { WithName } from "../../commons/types/WithName";
+import { WithSchemaId } from "../../commons/types/WithSchemaId";
 import { WithSdkGroupName } from "../../commons/types/WithSdkGroupName";
 import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithSource } from "../../commons/types/WithSource";
@@ -20,6 +21,7 @@ export const EnumSchema: core.serialization.ObjectSchema<serializers.EnumSchema.
         })
         .extend(WithDescription)
         .extend(WithName)
+        .extend(WithSchemaId)
         .extend(WithSdkGroupName)
         .extend(WithAvailability)
         .extend(WithSource);
@@ -28,6 +30,7 @@ export declare namespace EnumSchema {
     interface Raw
         extends WithDescription.Raw,
             WithName.Raw,
+            WithSchemaId.Raw,
             WithSdkGroupName.Raw,
             WithAvailability.Raw,
             WithSource.Raw {

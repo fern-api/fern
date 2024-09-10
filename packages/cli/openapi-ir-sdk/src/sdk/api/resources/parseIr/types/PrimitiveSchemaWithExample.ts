@@ -8,6 +8,7 @@ export interface PrimitiveSchemaWithExample
     extends FernOpenapiIr.WithDescription,
         FernOpenapiIr.WithName,
         FernOpenapiIr.WithSdkGroupName,
+        FernOpenapiIr.WithSchemaId,
         FernOpenapiIr.WithAvailability {
     schema: FernOpenapiIr.PrimitiveSchemaValueWithExample;
 }

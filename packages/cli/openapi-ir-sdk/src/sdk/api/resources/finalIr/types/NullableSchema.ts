@@ -7,6 +7,7 @@ import * as FernOpenapiIr from "../../../index";
 export interface NullableSchema
     extends FernOpenapiIr.WithDescription,
         FernOpenapiIr.WithName,
+        FernOpenapiIr.WithSchemaId,
         FernOpenapiIr.WithSdkGroupName,
         FernOpenapiIr.WithAvailability {
     value: FernOpenapiIr.Schema;

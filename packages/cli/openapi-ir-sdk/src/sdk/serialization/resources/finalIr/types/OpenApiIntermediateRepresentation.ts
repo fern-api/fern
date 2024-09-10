@@ -11,8 +11,8 @@ import { Tags } from "./Tags";
 import { Endpoint } from "./Endpoint";
 import { Webhook } from "./Webhook";
 import { WebsocketChannel } from "./WebsocketChannel";
-import { SchemaId } from "../../commons/types/SchemaId";
 import { PrimitiveSchema } from "./PrimitiveSchema";
+import { SchemaId } from "../../commons/types/SchemaId";
 import { SecuritySchemeId } from "../../commons/types/SecuritySchemeId";
 import { SecurityScheme } from "../../commons/types/SecurityScheme";
 import { GlobalHeader } from "./GlobalHeader";
@@ -33,10 +33,7 @@ export const OpenApiIntermediateRepresentation: core.serialization.ObjectSchema<
     endpoints: core.serialization.list(Endpoint),
     webhooks: core.serialization.list(Webhook),
     channel: core.serialization.list(WebsocketChannel),
-    schemas: core.serialization.record(
-        SchemaId,
-        core.serialization.lazy(() => serializers.Schema)
-    ),
+    schemas: core.serialization.list(core.serialization.lazy(() => serializers.Schema)),
     variables: core.serialization.record(core.serialization.string(), PrimitiveSchema),
     nonRequestReferencedSchemas: core.serialization.set(SchemaId),
     securitySchemes: core.serialization.record(SecuritySchemeId, SecurityScheme),
@@ -57,7 +54,7 @@ export declare namespace OpenApiIntermediateRepresentation {
         endpoints: Endpoint.Raw[];
         webhooks: Webhook.Raw[];
         channel: WebsocketChannel.Raw[];
-        schemas: Record<SchemaId.Raw, serializers.Schema.Raw>;
+        schemas: serializers.Schema.Raw[];
         variables: Record<string, PrimitiveSchema.Raw>;
         nonRequestReferencedSchemas: SchemaId.Raw[];
         securitySchemes: Record<SecuritySchemeId.Raw, SecurityScheme.Raw>;

@@ -7,6 +7,7 @@ import * as FernOpenapiIr from "../../../index";
 export interface ReferencedSchema
     extends FernOpenapiIr.WithDescription,
         FernOpenapiIr.WithName,
+        FernOpenapiIr.WithSchemaId,
         FernOpenapiIr.WithSdkGroupName,
         FernOpenapiIr.WithAvailability,
         FernOpenapiIr.WithSource {
