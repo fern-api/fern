@@ -284,7 +284,7 @@ class FernAwarePydanticModel:
         # Now take any transitive circular dependencies and add them as ghost references and update their forward refs
         if self._type_name is not None:
             for referenced_type in self._context.get_referenced_types(self._type_name.type_id):
-                self._add_update_forward_ref_for_transitive_circular_dependency(referenced_type.type_id)
+                self._add_update_forward_ref_for_transitive_circular_dependency(referenced_type)
 
         self._pydantic_model.finish()
 

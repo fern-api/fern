@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 from ...core.pydantic_utilities import UniversalBaseModel
-from ...commons.types.key_value_pair import KeyValuePair
-from ...commons.types.map_value import MapValue
 import typing
 from .test_case_result import TestCaseResult
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
@@ -12,7 +10,6 @@ from .test_case_grade import TestCaseGrade
 from .test_case_result_with_stdout import TestCaseResultWithStdout
 import typing_extensions
 from ...core.serialization import FieldMetadata
-from ...core.pydantic_utilities import update_forward_refs
 
 
 class SubmissionStatusForTestCase_Graded(UniversalBaseModel):
@@ -61,7 +58,3 @@ class SubmissionStatusForTestCase_Traced(UniversalBaseModel):
 SubmissionStatusForTestCase = typing.Union[
     SubmissionStatusForTestCase_Graded, SubmissionStatusForTestCase_GradedV2, SubmissionStatusForTestCase_Traced
 ]
-update_forward_refs(KeyValuePair)
-update_forward_refs(MapValue)
-update_forward_refs(KeyValuePair)
-update_forward_refs(MapValue)

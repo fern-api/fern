@@ -118,7 +118,7 @@ function getGeneratorGroup({
     for (const group of groups ?? []) {
         for (const generator of group.generators) {
             if (generator.name === image) {
-                const invocation = { ...generator, absolutePathToLocalOutput: absolutePathToOutput };
+                const invocation = { ...generator, absolutePathToLocalOutput: absolutePathToOutput, version: "latest" };
                 return {
                     group: {
                         ...group,
