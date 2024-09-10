@@ -6,6 +6,9 @@ from .test_case_function import TestCaseFunction
 from .....core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
 import pydantic
+from .....core.pydantic_utilities import update_forward_refs
+from .....commons.types.list_type import ListType
+from .....commons.types.map_type import MapType
 
 
 class TestCaseImplementation(UniversalBaseModel):
@@ -20,3 +23,7 @@ class TestCaseImplementation(UniversalBaseModel):
             frozen = True
             smart_union = True
             extra = pydantic.Extra.allow
+
+
+update_forward_refs(ListType)
+update_forward_refs(MapType)

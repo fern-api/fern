@@ -7,6 +7,9 @@ import pydantic
 from ...commons.types.language import Language
 from .submission_type_state import SubmissionTypeState
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
+from ....core.pydantic_utilities import update_forward_refs
+from ...commons.types.key_value_pair import KeyValuePair
+from ...commons.types.map_value import MapValue
 
 
 class GetSubmissionStateResponse(UniversalBaseModel):
@@ -27,3 +30,7 @@ class GetSubmissionStateResponse(UniversalBaseModel):
 
         class Config:
             extra = pydantic.Extra.forbid
+
+
+update_forward_refs(KeyValuePair)
+update_forward_refs(MapValue)

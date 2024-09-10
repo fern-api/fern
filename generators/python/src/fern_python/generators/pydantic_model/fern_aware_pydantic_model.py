@@ -76,15 +76,6 @@ class FernAwarePydanticModel:
             if extends is not None
             else []
         )
-        # Acknowledge forward refs for extended models as well
-        for extended_type in extends:
-            type_id_to_reference = self._type_id_for_forward_ref()
-            if type_id_to_reference is not None and context.does_type_reference_other_type(
-                type_id=extended_type.type_id, other_type_id=type_id_to_reference
-            ):
-                # While we don't want to string reference the extended model, we still want to rebuild the model
-                self._model_contains_forward_refs = True
-                break
 
         models_to_extend.extend(extends_crs)
         self._pydantic_model = PydanticModel(
@@ -144,6 +135,18 @@ class FernAwarePydanticModel:
 
         return field
 
+    def _add_update_forward_ref_for_transitive_circular_dependency(self, type_id: ir_types.TypeId) -> None:
+        # Get self-referencing types, if the type you're viewing is self-referencing (and not a union), then we need to update the forward refs
+        if type_id in self._context.get_non_union_circular_references():
+            # We update the current model's forward refs independently
+            if self._type_name is not None and type_id == self._type_name.type_id:
+                return
+
+            class_reference = self._context.get_class_reference_for_type_id(
+                type_id, as_request=False, must_import_after_current_declaration=lambda _: False
+            )
+            self._pydantic_model.update_forward_refs_for_given_model(class_reference)
+
     def add_private_instance_field_unsafe(
         self, name: str, type_hint: AST.TypeHint, default_factory: AST.Expression
     ) -> None:
@@ -191,10 +194,6 @@ class FernAwarePydanticModel:
             should_import_after = self._context.does_type_reference_other_type(
                 type_id=type_name.type_id, other_type_id=type_id_to_reference
             )
-
-        is_referencing_circular_reference = type_name.type_id in self._context.get_non_union_circular_references()
-        if is_referencing_circular_reference:
-            should_import_after = is_referencing_circular_reference
 
         if should_import_after:
             self._model_contains_forward_refs = True
@@ -267,6 +266,21 @@ class FernAwarePydanticModel:
             self._get_validators_generator().add_validators()
         if self._model_contains_forward_refs or self._force_update_forward_refs:
             self._pydantic_model.update_forward_refs()
+
+        # Acknowledge forward refs for extended models as well
+        for extended_type in self._extends:
+            type_id_to_reference = self._type_id_for_forward_ref()
+            if type_id_to_reference is not None and self._context.does_type_reference_other_type(
+                type_id=extended_type.type_id, other_type_id=type_id_to_reference
+            ):
+                # While we don't want to string reference the extended model, we still want to rebuild the model
+                self._model_contains_forward_refs = True
+                break
+
+        # Now take any transitive circular dependencies and add them as ghost references and update their forward refs
+        if self._type_name is not None:
+            for referenced_type in self._context.get_referenced_types_ordered(self._type_name.type_id):
+                self._add_update_forward_ref_for_transitive_circular_dependency(referenced_type)
 
         self._pydantic_model.finish()
 

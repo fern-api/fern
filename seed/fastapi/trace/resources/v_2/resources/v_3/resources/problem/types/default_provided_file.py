@@ -6,6 +6,9 @@ import typing
 from .......commons.types.variable_type import VariableType
 import pydantic
 from ........core.pydantic_utilities import IS_PYDANTIC_V2
+from ........core.pydantic_utilities import update_forward_refs
+from .......commons.types.list_type import ListType
+from .......commons.types.map_type import MapType
 
 
 class DefaultProvidedFile(UniversalBaseModel):
@@ -20,3 +23,7 @@ class DefaultProvidedFile(UniversalBaseModel):
 
         class Config:
             extra = pydantic.Extra.forbid
+
+
+update_forward_refs(ListType)
+update_forward_refs(MapType)

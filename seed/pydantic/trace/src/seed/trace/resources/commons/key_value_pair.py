@@ -6,6 +6,7 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
 import pydantic
 from ...core.pydantic_utilities import update_forward_refs
+from .map_value import MapValue
 
 
 class KeyValuePair(UniversalBaseModel):
@@ -23,3 +24,4 @@ class KeyValuePair(UniversalBaseModel):
 from .variable_value import VariableValue  # noqa: E402
 
 update_forward_refs(KeyValuePair)
+update_forward_refs(MapValue)

@@ -7,6 +7,9 @@ import typing
 from ...commons.types.test_case import TestCase
 from .test_submission_status import TestSubmissionStatus
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
+from ....core.pydantic_utilities import update_forward_refs
+from ...commons.types.key_value_pair import KeyValuePair
+from ...commons.types.map_value import MapValue
 
 
 class TestSubmissionState(UniversalBaseModel):
@@ -23,3 +26,7 @@ class TestSubmissionState(UniversalBaseModel):
 
         class Config:
             extra = pydantic.Extra.forbid
+
+
+update_forward_refs(KeyValuePair)
+update_forward_refs(MapValue)

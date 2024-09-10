@@ -9,6 +9,8 @@ import typing
 import typing_extensions
 import pydantic
 from ....core.pydantic_utilities import update_forward_refs
+from ...commons.types.key_value_pair import KeyValuePair
+from ...commons.types.map_value import MapValue
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -102,3 +104,5 @@ class _SubmissionTypeState:
 
 
 update_forward_refs(SubmissionTypeState)
+update_forward_refs(KeyValuePair)
+update_forward_refs(MapValue)

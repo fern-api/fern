@@ -1,4 +1,13 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.0.0-rc5
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: | 
+        Pydantic models now call update forward refs on non-uion circular references. This 
+        prevents runtime errors in certain cases where types self reference itself through 
+        a union. 
+
 - version: 4.0.0-rc4
   irVersion: 53
   changelogEntry:

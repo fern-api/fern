@@ -6,6 +6,9 @@ from .parameter import Parameter
 import pydantic
 from .function_implementation_for_multiple_languages import FunctionImplementationForMultipleLanguages
 from .......core.pydantic_utilities import IS_PYDANTIC_V2
+from .......core.pydantic_utilities import update_forward_refs
+from ......commons.list_type import ListType
+from ......commons.map_type import MapType
 
 
 class VoidFunctionDefinitionThatTakesActualResult(UniversalBaseModel):
@@ -22,3 +25,7 @@ class VoidFunctionDefinitionThatTakesActualResult(UniversalBaseModel):
 
         class Config:
             extra = pydantic.Extra.allow
+
+
+update_forward_refs(ListType)
+update_forward_refs(MapType)

@@ -7,6 +7,11 @@ from ...commons.types.problem_id import ProblemId
 import pydantic
 from ...v_2.resources.problem.types.problem_info_v_2 import ProblemInfoV2
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
+from ....core.pydantic_utilities import update_forward_refs
+from ...commons.types.key_value_pair import KeyValuePair
+from ...commons.types.list_type import ListType
+from ...commons.types.map_type import MapType
+from ...commons.types.map_value import MapValue
 
 
 class TestSubmissionStatusV2(UniversalBaseModel):
@@ -23,3 +28,9 @@ class TestSubmissionStatusV2(UniversalBaseModel):
 
         class Config:
             extra = pydantic.Extra.forbid
+
+
+update_forward_refs(KeyValuePair)
+update_forward_refs(ListType)
+update_forward_refs(MapType)
+update_forward_refs(MapValue)

@@ -8,6 +8,7 @@ import typing
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.pydantic_utilities import update_forward_refs
+from .map_type import MapType
 
 
 class ListType(UniversalBaseModel):
@@ -32,3 +33,4 @@ class ListType(UniversalBaseModel):
 from .variable_type import VariableType  # noqa: E402
 
 update_forward_refs(ListType)
+update_forward_refs(MapType)

@@ -5,6 +5,9 @@ import typing
 from .parameter import Parameter
 from .....core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from .....core.pydantic_utilities import update_forward_refs
+from ....commons.list_type import ListType
+from ....commons.map_type import MapType
 
 
 class VoidFunctionSignature(UniversalBaseModel):
@@ -16,3 +19,7 @@ class VoidFunctionSignature(UniversalBaseModel):
 
         class Config:
             extra = pydantic.Extra.allow
+
+
+update_forward_refs(ListType)
+update_forward_refs(MapType)

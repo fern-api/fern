@@ -5,6 +5,9 @@ import typing
 import pydantic
 from .trace_response import TraceResponse
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
+from ....core.pydantic_utilities import update_forward_refs
+from ...commons.types.debug_key_value_pairs import DebugKeyValuePairs
+from ...commons.types.debug_map_value import DebugMapValue
 
 
 class TraceResponsesPage(UniversalBaseModel):
@@ -24,3 +27,7 @@ class TraceResponsesPage(UniversalBaseModel):
 
         class Config:
             extra = pydantic.Extra.forbid
+
+
+update_forward_refs(DebugKeyValuePairs)
+update_forward_refs(DebugMapValue)

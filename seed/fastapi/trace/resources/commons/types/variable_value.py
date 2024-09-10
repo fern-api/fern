@@ -350,3 +350,5 @@ class _VariableValue:
 update_forward_refs(_VariableValue.MapValue)
 update_forward_refs(_VariableValue.ListValue)
 update_forward_refs(VariableValue)
+update_forward_refs(KeyValuePair)
+update_forward_refs(resources_commons_types_map_value_MapValue)

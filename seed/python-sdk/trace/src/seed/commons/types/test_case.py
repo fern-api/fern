@@ -5,6 +5,9 @@ import typing
 from .variable_value import VariableValue
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from ...core.pydantic_utilities import update_forward_refs
+from .key_value_pair import KeyValuePair
+from .map_value import MapValue
 
 
 class TestCase(UniversalBaseModel):
@@ -19,3 +22,7 @@ class TestCase(UniversalBaseModel):
             frozen = True
             smart_union = True
             extra = pydantic.Extra.allow
+
+
+update_forward_refs(KeyValuePair)
+update_forward_refs(MapValue)

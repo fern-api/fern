@@ -7,6 +7,9 @@ import typing_extensions
 from .trace_response_v_2 import TraceResponseV2
 from ...core.serialization import FieldMetadata
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
+from ...core.pydantic_utilities import update_forward_refs
+from ...commons.types.debug_key_value_pairs import DebugKeyValuePairs
+from ...commons.types.debug_map_value import DebugMapValue
 
 
 class TraceResponsesPageV2(UniversalBaseModel):
@@ -26,3 +29,7 @@ class TraceResponsesPageV2(UniversalBaseModel):
             frozen = True
             smart_union = True
             extra = pydantic.Extra.allow
+
+
+update_forward_refs(DebugKeyValuePairs)
+update_forward_refs(DebugMapValue)

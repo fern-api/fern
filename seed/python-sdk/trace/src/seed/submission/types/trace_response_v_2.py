@@ -11,6 +11,9 @@ from .expression_location import ExpressionLocation
 from .stack_information import StackInformation
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from ...core.pydantic_utilities import update_forward_refs
+from ...commons.types.debug_key_value_pairs import DebugKeyValuePairs
+from ...commons.types.debug_map_value import DebugMapValue
 
 
 class TraceResponseV2(UniversalBaseModel):
@@ -34,3 +37,7 @@ class TraceResponseV2(UniversalBaseModel):
             frozen = True
             smart_union = True
             extra = pydantic.Extra.allow
+
+
+update_forward_refs(DebugKeyValuePairs)
+update_forward_refs(DebugMapValue)

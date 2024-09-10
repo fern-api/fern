@@ -6,6 +6,9 @@ import pydantic
 from .actual_result import ActualResult
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
+from ...core.pydantic_utilities import update_forward_refs
+from ..commons.key_value_pair import KeyValuePair
+from ..commons.map_value import MapValue
 
 
 class TestCaseResult(UniversalBaseModel):
@@ -19,3 +22,7 @@ class TestCaseResult(UniversalBaseModel):
 
         class Config:
             extra = pydantic.Extra.allow
+
+
+update_forward_refs(KeyValuePair)
+update_forward_refs(MapValue)

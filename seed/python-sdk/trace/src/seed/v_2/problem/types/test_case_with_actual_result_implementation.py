@@ -8,6 +8,9 @@ from .assert_correctness_check import AssertCorrectnessCheck
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
 import pydantic
+from ....core.pydantic_utilities import update_forward_refs
+from ....commons.types.list_type import ListType
+from ....commons.types.map_type import MapType
 
 
 class TestCaseWithActualResultImplementation(UniversalBaseModel):
@@ -24,3 +27,7 @@ class TestCaseWithActualResultImplementation(UniversalBaseModel):
             frozen = True
             smart_union = True
             extra = pydantic.Extra.allow
+
+
+update_forward_refs(ListType)
+update_forward_refs(MapType)

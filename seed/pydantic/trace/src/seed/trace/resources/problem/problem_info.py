@@ -11,6 +11,11 @@ from .variable_type_and_name import VariableTypeAndName
 from ..commons.variable_type import VariableType
 from ..commons.test_case_with_expected_result import TestCaseWithExpectedResult
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
+from ...core.pydantic_utilities import update_forward_refs
+from ..commons.key_value_pair import KeyValuePair
+from ..commons.list_type import ListType
+from ..commons.map_type import MapType
+from ..commons.map_value import MapValue
 
 
 class ProblemInfo(UniversalBaseModel):
@@ -31,3 +36,9 @@ class ProblemInfo(UniversalBaseModel):
 
         class Config:
             extra = pydantic.Extra.allow
+
+
+update_forward_refs(KeyValuePair)
+update_forward_refs(ListType)
+update_forward_refs(MapType)
+update_forward_refs(MapValue)
