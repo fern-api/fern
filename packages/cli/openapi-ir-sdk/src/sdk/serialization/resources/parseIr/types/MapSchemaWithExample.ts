@@ -7,6 +7,7 @@ import * as FernOpenapiIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { PrimitiveSchemaWithExample } from "./PrimitiveSchemaWithExample";
 import { WithSdkGroupName } from "../../commons/types/WithSdkGroupName";
+import { WithSchemaId } from "../../commons/types/WithSchemaId";
 import { WithName } from "../../commons/types/WithName";
 import { WithDescription } from "../../commons/types/WithDescription";
 import { WithAvailability } from "../../commons/types/WithAvailability";
@@ -23,6 +24,7 @@ export const MapSchemaWithExample: core.serialization.ObjectSchema<
         example: core.serialization.unknown().optional(),
     })
     .extend(WithSdkGroupName)
+    .extend(WithSchemaId)
     .extend(WithName)
     .extend(WithDescription)
     .extend(WithAvailability)
@@ -32,6 +34,7 @@ export const MapSchemaWithExample: core.serialization.ObjectSchema<
 export declare namespace MapSchemaWithExample {
     interface Raw
         extends WithSdkGroupName.Raw,
+            WithSchemaId.Raw,
             WithName.Raw,
             WithDescription.Raw,
             WithAvailability.Raw,

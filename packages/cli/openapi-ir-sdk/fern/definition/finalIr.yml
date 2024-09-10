@@ -24,7 +24,7 @@ types:
       endpoints: list<Endpoint>
       webhooks: list<Webhook>
       channel: list<WebsocketChannel>
-      schemas: map<commons.SchemaId, Schema>
+      schemas: list<Schema>
       variables: map<string, PrimitiveSchema>
       nonRequestReferencedSchemas:
         type: set<commons.SchemaId>
@@ -455,6 +455,7 @@ types:
   PrimitiveSchema:
     extends:
       - commons.WithDescription
+      - commons.WithSchemaId
       - commons.WithName
       - commons.WithSdkGroupName
       - commons.WithAvailability
@@ -533,6 +534,7 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
+      - commons.WithSchemaId
       - commons.WithSdkGroupName
       - commons.WithAvailability
       - commons.WithTitle
@@ -548,6 +550,7 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
+      - commons.WithSchemaId
       - commons.WithSdkGroupName
       - commons.WithAvailability
       - commons.WithSource
@@ -598,6 +601,7 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
+      - commons.WithSchemaId
       - commons.WithSdkGroupName
       - commons.WithAvailability
       - commons.WithTitle
@@ -608,6 +612,7 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
+      - commons.WithSchemaId
       - commons.WithSdkGroupName
       - commons.WithAvailability
       - commons.WithEncoding
@@ -620,6 +625,7 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
+      - commons.WithSchemaId
       - commons.WithSdkGroupName
       - commons.WithAvailability
       - commons.WithTitle
@@ -630,6 +636,7 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
+      - commons.WithSchemaId
       - commons.WithSdkGroupName
       - commons.WithAvailability
       - commons.WithTitle
@@ -640,6 +647,7 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
+      - commons.WithSchemaId
       - commons.WithSdkGroupName
       - commons.WithAvailability
       - commons.WithSource
@@ -675,6 +683,7 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
+      - commons.WithSchemaId
       - commons.WithSdkGroupName
       - commons.WithAvailability
       - commons.WithSource
@@ -691,6 +700,7 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
+      - commons.WithSchemaId
       - commons.WithSdkGroupName
       - commons.WithAvailability
       - commons.WithEncoding
@@ -710,6 +720,7 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
+      - commons.WithSchemaId
       - commons.WithSdkGroupName
       - commons.WithAvailability
       - commons.WithEncoding

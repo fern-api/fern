@@ -23,6 +23,7 @@ types:
           The timezone of the station in the [IANA Time Zone Database
           format](https://www.iana.org/time-zones).
       messages: optional<root.V2ChatMessages>
+      pet: optional<root.Pet>
     source:
       openapi: openapi/trains/openapi.yml
   LinksSelf:

@@ -7,6 +7,7 @@ import * as FernOpenapiIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { PrimitiveSchemaValue } from "./PrimitiveSchemaValue";
 import { WithDescription } from "../../commons/types/WithDescription";
+import { WithSchemaId } from "../../commons/types/WithSchemaId";
 import { WithName } from "../../commons/types/WithName";
 import { WithSdkGroupName } from "../../commons/types/WithSdkGroupName";
 import { WithAvailability } from "../../commons/types/WithAvailability";
@@ -20,13 +21,20 @@ export const PrimitiveSchema: core.serialization.ObjectSchema<
         schema: PrimitiveSchemaValue,
     })
     .extend(WithDescription)
+    .extend(WithSchemaId)
     .extend(WithName)
     .extend(WithSdkGroupName)
     .extend(WithAvailability)
     .extend(WithTitle);
 
 export declare namespace PrimitiveSchema {
-    interface Raw extends WithDescription.Raw, WithName.Raw, WithSdkGroupName.Raw, WithAvailability.Raw, WithTitle.Raw {
+    interface Raw
+        extends WithDescription.Raw,
+            WithSchemaId.Raw,
+            WithName.Raw,
+            WithSdkGroupName.Raw,
+            WithAvailability.Raw,
+            WithTitle.Raw {
         schema: PrimitiveSchemaValue.Raw;
     }
 }

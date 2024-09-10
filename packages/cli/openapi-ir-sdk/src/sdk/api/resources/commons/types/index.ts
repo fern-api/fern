@@ -2,6 +2,7 @@ export * from "./WithTitle";
 export * from "./WithSource";
 export * from "./WithEncoding";
 export * from "./WithDescription";
+export * from "./WithSchemaId";
 export * from "./WithAvailability";
 export * from "./WithName";
 export * from "./Source";

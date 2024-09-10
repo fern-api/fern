@@ -206,6 +206,14 @@ auth: BearerAuthScheme
     "contents": [
       {
         "contents": "types:
+  Pet:
+    properties:
+      id: long
+      name: string
+      tag: optional<string>
+      messages: optional<V2ChatMessages>
+    source:
+      openapi: openapi/petstore/openapi.yml
   V2ChatMessages:
     docs: >
       A list of chat messages in chronological order, representing a
@@ -216,14 +224,6 @@ auth: BearerAuthScheme
       more about messages and roles in [the Chat API
       guide](https://docs.cohere.com/docs/chat-api).
     type: list<unknown>
-  Pet:
-    properties:
-      id: long
-      name: string
-      tag: optional<string>
-      messages: optional<V2ChatMessages>
-    source:
-      openapi: openapi/petstore/openapi.yml
   Pets: list<Pet>
   Error:
     properties:
@@ -490,6 +490,7 @@ types:
           The timezone of the station in the [IANA Time Zone Database
           format](https://www.iana.org/time-zones).
       messages: optional<root.V2ChatMessages>
+      pet: optional<root.Pet>
     source:
       openapi: openapi/trains/openapi.yml
   LinksSelf:
@@ -874,11 +875,17 @@ service:
                   address: Invalidenstraße 10557 Berlin, Germany
                   country_code: DE
                   timezone: Europe/Berlin
+                  pet:
+                    id: 1000000
+                    name: name
                 - id: b2e783e1-c824-4d63-b37a-d8d698862f1d
                   name: Paris Gare du Nord
                   address: 18 Rue de Dunkerque 75010 Paris, France
                   country_code: FR
                   timezone: Europe/Paris
+                  pet:
+                    id: 1000000
+                    name: name
               links:
                 next: https://api.example.com/stations?page=3
                 prev: https://api.example.com/stations?page=1

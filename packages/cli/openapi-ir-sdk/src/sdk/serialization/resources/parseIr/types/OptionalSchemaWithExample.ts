@@ -6,6 +6,7 @@ import * as serializers from "../../../index";
 import * as FernOpenapiIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { WithSdkGroupName } from "../../commons/types/WithSdkGroupName";
+import { WithSchemaId } from "../../commons/types/WithSchemaId";
 import { WithName } from "../../commons/types/WithName";
 import { WithDescription } from "../../commons/types/WithDescription";
 import { WithAvailability } from "../../commons/types/WithAvailability";
@@ -19,13 +20,20 @@ export const OptionalSchemaWithExample: core.serialization.ObjectSchema<
         value: core.serialization.lazy(() => serializers.SchemaWithExample),
     })
     .extend(WithSdkGroupName)
+    .extend(WithSchemaId)
     .extend(WithName)
     .extend(WithDescription)
     .extend(WithAvailability)
     .extend(WithTitle);
 
 export declare namespace OptionalSchemaWithExample {
-    interface Raw extends WithSdkGroupName.Raw, WithName.Raw, WithDescription.Raw, WithAvailability.Raw, WithTitle.Raw {
+    interface Raw
+        extends WithSdkGroupName.Raw,
+            WithSchemaId.Raw,
+            WithName.Raw,
+            WithDescription.Raw,
+            WithAvailability.Raw,
+            WithTitle.Raw {
         value: serializers.SchemaWithExample.Raw;
     }
 }

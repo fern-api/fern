@@ -18,6 +18,10 @@ types:
     properties:
       description: optional<string>
 
+  WithSchemaId:
+    properties:
+      schemaId: SchemaId
+  
   WithAvailability:
     properties:
       availability: optional<finalIr.Availability>

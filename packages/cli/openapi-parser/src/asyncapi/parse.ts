@@ -27,7 +27,7 @@ import { ParseAsyncAPIOptions } from "./options";
 import { AsyncAPIV2 } from "./v2";
 
 export interface AsyncAPIIntermediateRepresentation {
-    schemas: Record<SchemaId, Schema>;
+    schemas: Schema[];
     channel: WebsocketChannel | undefined;
     basePath: string | undefined;
 }

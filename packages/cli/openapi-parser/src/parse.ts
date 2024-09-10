@@ -84,7 +84,7 @@ export async function parse({
         endpoints: [],
         webhooks: [],
         channel: [],
-        schemas: {},
+        schemas: [],
         variables: {},
         nonRequestReferencedSchemas: new Set(),
         securitySchemes: {},
@@ -148,10 +148,7 @@ export async function parse({
                 ir.channel.push(parsedAsyncAPI.channel);
             }
             if (parsedAsyncAPI.schemas != null) {
-                ir.schemas = {
-                    ...ir.schemas,
-                    ...parsedAsyncAPI.schemas
-                };
+                ir.schemas = [...ir.schemas, ...parsedAsyncAPI.schemas];
             }
             if (parsedAsyncAPI.basePath != null) {
                 ir.basePath = parsedAsyncAPI.basePath;
@@ -225,10 +222,7 @@ function merge(
         endpoints: [...ir1.endpoints, ...ir2.endpoints],
         webhooks: [...ir1.webhooks, ...ir2.webhooks],
         channel: [...ir1.channel, ...ir2.channel],
-        schemas: {
-            ...ir1.schemas,
-            ...ir2.schemas
-        },
+        schemas: [...ir1.schemas, ...ir2.schemas],
         variables: {
             ...ir1.variables,
             ...ir2.variables
