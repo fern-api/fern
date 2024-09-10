@@ -73,7 +73,7 @@ class PydanticGeneratorContext(ABC):
         ...
 
     @abstractmethod
-    def get_self_referencing_dependencies_from_non_union_types(self) -> Dict[ir_types.TypeId, Set[ir_types.TypeId]]:
+    def get_non_union_self_referencing_dependencies_from_types(self) -> Dict[ir_types.TypeId, Set[ir_types.TypeId]]:
         ...
 
     @abstractmethod

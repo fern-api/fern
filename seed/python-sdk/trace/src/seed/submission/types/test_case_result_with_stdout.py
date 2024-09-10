@@ -3,11 +3,11 @@
 from ...core.pydantic_utilities import UniversalBaseModel
 from ...commons.types.key_value_pair import KeyValuePair
 from ...commons.types.map_value import MapValue
-from ...commons.types.variable_value import VariableValue
 from .test_case_result import TestCaseResult
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
 import pydantic
+from ...core.pydantic_utilities import update_forward_refs
 
 
 class TestCaseResultWithStdout(UniversalBaseModel):
@@ -22,3 +22,7 @@ class TestCaseResultWithStdout(UniversalBaseModel):
             frozen = True
             smart_union = True
             extra = pydantic.Extra.allow
+
+
+update_forward_refs(KeyValuePair)
+update_forward_refs(MapValue)
