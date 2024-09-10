@@ -9,6 +9,7 @@ import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertFullExample } from "./utils/convertFullExample";
 import { tokenizeString } from "./utils/getEndpointLocation";
 import { convertSdkGroupNameToFile } from "./utils/convertSdkGroupName";
+import { getEndpointNamespace } from "./utils/getNamespaceFromGroup";
 
 export function buildWebhooks(context: OpenApiIrConverterContext): void {
     for (const webhook of context.ir.webhooks) {
@@ -16,9 +17,17 @@ export function buildWebhooks(context: OpenApiIrConverterContext): void {
         if (webhookLocation == null) {
             continue;
         }
+
+        const maybeWebhookNamespace = getEndpointNamespace(webhook.sdkName);
+
         const headers: Record<string, RawSchemas.HttpHeaderSchema> = {};
         for (const header of webhook.headers) {
-            headers[header.name] = buildHeader({ header, context, fileContainingReference: webhookLocation.file });
+            headers[header.name] = buildHeader({
+                header,
+                context,
+                fileContainingReference: webhookLocation.file,
+                namespace: maybeWebhookNamespace
+            });
         }
 
         const webhookDefinition: RawSchemas.WebhookSchema = {
@@ -28,7 +37,8 @@ export function buildWebhooks(context: OpenApiIrConverterContext): void {
             payload: buildTypeReference({
                 schema: webhook.payload,
                 context,
-                fileContainingReference: webhookLocation.file
+                fileContainingReference: webhookLocation.file,
+                namespace: maybeWebhookNamespace
             }),
             examples:
                 webhook.examples != null

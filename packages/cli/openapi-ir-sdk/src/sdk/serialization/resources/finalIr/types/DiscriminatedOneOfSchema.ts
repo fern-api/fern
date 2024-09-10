@@ -7,7 +7,6 @@ import * as FernOpenapiIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { WithDescription } from "../../commons/types/WithDescription";
 import { WithName } from "../../commons/types/WithName";
-import { WithSchemaId } from "../../commons/types/WithSchemaId";
 import { WithSdkGroupName } from "../../commons/types/WithSdkGroupName";
 import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithEncoding } from "../../commons/types/WithEncoding";
@@ -27,7 +26,6 @@ export const DiscriminatedOneOfSchema: core.serialization.ObjectSchema<
     })
     .extend(WithDescription)
     .extend(WithName)
-    .extend(WithSchemaId)
     .extend(WithSdkGroupName)
     .extend(WithAvailability)
     .extend(WithEncoding)
@@ -37,7 +35,6 @@ export declare namespace DiscriminatedOneOfSchema {
     interface Raw
         extends WithDescription.Raw,
             WithName.Raw,
-            WithSchemaId.Raw,
             WithSdkGroupName.Raw,
             WithAvailability.Raw,
             WithEncoding.Raw,

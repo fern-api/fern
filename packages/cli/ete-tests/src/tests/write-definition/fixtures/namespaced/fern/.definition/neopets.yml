@@ -1,5 +1,3 @@
-imports:
-  root: neopets/__package__.yml
 service:
   auth: false
   base-path: ''
@@ -17,7 +15,7 @@ service:
             docs: How many items to return at one time (max 100)
       response:
         docs: A paged array of pets
-        type: root.Pets
+        type: unknown
       examples:
         - response:
             body:
@@ -44,7 +42,7 @@ service:
       display-name: Info for a specific pet
       response:
         docs: Expected response to a valid request
-        type: root.Pet
+        type: unknown
       examples:
         - path-parameters:
             petId: petId

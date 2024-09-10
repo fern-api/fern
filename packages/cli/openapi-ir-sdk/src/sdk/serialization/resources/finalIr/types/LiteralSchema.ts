@@ -8,7 +8,6 @@ import * as core from "../../../../core";
 import { LiteralSchemaValue } from "./LiteralSchemaValue";
 import { WithDescription } from "../../commons/types/WithDescription";
 import { WithName } from "../../commons/types/WithName";
-import { WithSchemaId } from "../../commons/types/WithSchemaId";
 import { WithSdkGroupName } from "../../commons/types/WithSdkGroupName";
 import { WithAvailability } from "../../commons/types/WithAvailability";
 
@@ -21,17 +20,11 @@ export const LiteralSchema: core.serialization.ObjectSchema<
     })
     .extend(WithDescription)
     .extend(WithName)
-    .extend(WithSchemaId)
     .extend(WithSdkGroupName)
     .extend(WithAvailability);
 
 export declare namespace LiteralSchema {
-    interface Raw
-        extends WithDescription.Raw,
-            WithName.Raw,
-            WithSchemaId.Raw,
-            WithSdkGroupName.Raw,
-            WithAvailability.Raw {
+    interface Raw extends WithDescription.Raw, WithName.Raw, WithSdkGroupName.Raw, WithAvailability.Raw {
         value: LiteralSchemaValue.Raw;
     }
 }

@@ -9,16 +9,19 @@ import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 export function buildPathParameter({
     pathParameter,
     context,
-    fileContainingReference
+    fileContainingReference,
+    namespace
 }: {
     pathParameter: PathParameter;
     context: OpenApiIrConverterContext;
     fileContainingReference: RelativeFilePath;
+    namespace: string | undefined;
 }): RawSchemas.HttpPathParameterSchema {
     const typeReference = buildTypeReference({
         schema: pathParameter.schema,
         context,
-        fileContainingReference
+        fileContainingReference,
+        namespace
     });
     if (
         pathParameter.variableReference == null &&

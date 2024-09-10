@@ -8,7 +8,6 @@ import * as core from "../../../../core";
 import { WithDescription } from "../../commons/types/WithDescription";
 import { WithName } from "../../commons/types/WithName";
 import { WithSdkGroupName } from "../../commons/types/WithSdkGroupName";
-import { WithSchemaId } from "../../commons/types/WithSchemaId";
 import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithEncoding } from "../../commons/types/WithEncoding";
 import { WithSource } from "../../commons/types/WithSource";
@@ -23,7 +22,6 @@ export const UnDiscriminatedOneOfSchemaWithExample: core.serialization.ObjectSch
     .extend(WithDescription)
     .extend(WithName)
     .extend(WithSdkGroupName)
-    .extend(WithSchemaId)
     .extend(WithAvailability)
     .extend(WithEncoding)
     .extend(WithSource);
@@ -33,7 +31,6 @@ export declare namespace UnDiscriminatedOneOfSchemaWithExample {
         extends WithDescription.Raw,
             WithName.Raw,
             WithSdkGroupName.Raw,
-            WithSchemaId.Raw,
             WithAvailability.Raw,
             WithEncoding.Raw,
             WithSource.Raw {

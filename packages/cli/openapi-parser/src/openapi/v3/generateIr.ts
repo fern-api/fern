@@ -6,6 +6,7 @@ import {
     ErrorExample,
     HttpError,
     LiteralSchemaValue,
+    NamespaceId,
     ObjectPropertyWithExample,
     ObjectSchema,
     OpenApiIntermediateRepresentation,
@@ -16,6 +17,7 @@ import {
     Source,
     Webhook
 } from "@fern-api/openapi-ir-sdk";
+import { NoNamespaceSentinel } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { mapValues } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
@@ -286,6 +288,11 @@ export function generateIr({
 
     const groupInfo = getFernGroups({ document: openApi, context });
 
+    // TODO: It'd be better if I could reference the sentinel directly, but cannot as it's just a type
+    const NoNamespaceSentinelValue: NoNamespaceSentinel = "__no_namespace__";
+    const namespacedSchemas: Record<NamespaceId, Record<string, Schema>> = {
+        [namespace ?? NoNamespaceSentinelValue]: schemas
+    };
     const ir: OpenApiIntermediateRepresentation = {
         apiVersion: getFernVersion({
             context,
@@ -311,7 +318,7 @@ export function generateIr({
         endpoints,
         webhooks,
         channel: [],
-        schemas,
+        schemas: namespacedSchemas,
         securitySchemes,
         hasEndpointsMarkedInternal: endpoints.some((endpoint) => endpoint.internal),
         nonRequestReferencedSchemas: context.getReferencedSchemas(),

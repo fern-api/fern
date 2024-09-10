@@ -6,7 +6,6 @@ import * as FernOpenapiIr from "../../../index";
 
 export interface PrimitiveSchema
     extends FernOpenapiIr.WithDescription,
-        FernOpenapiIr.WithSchemaId,
         FernOpenapiIr.WithName,
         FernOpenapiIr.WithSdkGroupName,
         FernOpenapiIr.WithAvailability {

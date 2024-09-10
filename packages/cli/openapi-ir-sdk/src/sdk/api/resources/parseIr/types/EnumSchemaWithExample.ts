@@ -8,7 +8,6 @@ export interface EnumSchemaWithExample
     extends FernOpenapiIr.WithDescription,
         FernOpenapiIr.WithName,
         FernOpenapiIr.WithSdkGroupName,
-        FernOpenapiIr.WithSchemaId,
         FernOpenapiIr.WithAvailability,
         FernOpenapiIr.WithSource {
     default: FernOpenapiIr.EnumValue | undefined;

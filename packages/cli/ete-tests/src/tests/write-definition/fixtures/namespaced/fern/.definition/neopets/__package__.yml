@@ -7,6 +7,13 @@ types:
       messages: optional<V2ChatMessages>
     source:
       openapi: openapi/petstore/openapi.yml
+  Pets: list<Pet>
+  Error:
+    properties:
+      code: integer
+      message: string
+    source:
+      openapi: openapi/petstore/openapi.yml
   V2ChatMessages:
     docs: >
       A list of chat messages in chronological order, representing a
@@ -17,10 +24,3 @@ types:
       more about messages and roles in [the Chat API
       guide](https://docs.cohere.com/docs/chat-api).
     type: list<unknown>
-  Pets: list<Pet>
-  Error:
-    properties:
-      code: integer
-      message: string
-    source:
-      openapi: openapi/petstore/openapi.yml

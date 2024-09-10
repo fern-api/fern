@@ -1,7 +1,6 @@
 export * from "./WithSource";
 export * from "./WithEncoding";
 export * from "./WithDescription";
-export * from "./WithSchemaId";
 export * from "./WithAvailability";
 export * from "./WithName";
 export * from "./Source";
@@ -21,6 +20,8 @@ export * from "./QuerySecurityScheme";
 export * from "./OauthSecurityScheme";
 export * from "./StatusCode";
 export * from "./Server";
+export * from "./NoNamespaceSentinel";
+export * from "./NamespaceId";
 export * from "./Namespace";
 export * from "./SdkGroup";
 export * from "./SdkGroupName";

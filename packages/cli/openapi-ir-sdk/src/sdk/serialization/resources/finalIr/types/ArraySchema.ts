@@ -7,7 +7,6 @@ import * as FernOpenapiIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { WithDescription } from "../../commons/types/WithDescription";
 import { WithName } from "../../commons/types/WithName";
-import { WithSchemaId } from "../../commons/types/WithSchemaId";
 import { WithSdkGroupName } from "../../commons/types/WithSdkGroupName";
 import { WithAvailability } from "../../commons/types/WithAvailability";
 
@@ -18,17 +17,11 @@ export const ArraySchema: core.serialization.ObjectSchema<serializers.ArraySchem
         })
         .extend(WithDescription)
         .extend(WithName)
-        .extend(WithSchemaId)
         .extend(WithSdkGroupName)
         .extend(WithAvailability);
 
 export declare namespace ArraySchema {
-    interface Raw
-        extends WithDescription.Raw,
-            WithName.Raw,
-            WithSchemaId.Raw,
-            WithSdkGroupName.Raw,
-            WithAvailability.Raw {
+    interface Raw extends WithDescription.Raw, WithName.Raw, WithSdkGroupName.Raw, WithAvailability.Raw {
         value: serializers.Schema.Raw;
     }
 }

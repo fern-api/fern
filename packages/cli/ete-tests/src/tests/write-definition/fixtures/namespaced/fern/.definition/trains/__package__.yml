@@ -1,6 +1,10 @@
-imports:
-  root: ../neopets/__package__.yml
 types:
+  Pet:
+    properties:
+      id: long
+      name: string
+    source:
+      openapi: openapi/trains/openapi.yml
   Station:
     properties:
       id:
@@ -22,8 +26,8 @@ types:
         docs: >-
           The timezone of the station in the [IANA Time Zone Database
           format](https://www.iana.org/time-zones).
-      messages: optional<root.V2ChatMessages>
-      pet: optional<root.Pet>
+      messages: optional<V2ChatMessages>
+      pet: optional<Pet>
     source:
       openapi: openapi/trains/openapi.yml
   LinksSelf:
@@ -283,3 +287,13 @@ types:
           format: uri
     source:
       openapi: openapi/trains/openapi.yml
+  V2ChatMessages:
+    docs: >
+      A list of chat messages in chronological order, representing a
+      conversation between the user and the model.
+
+
+      Messages can be from `User`, `Assistant`, `Tool` and `System` roles. Learn
+      more about messages and roles in [the Chat API
+      guide](https://docs.cohere.com/docs/chat-api).
+    type: list<unknown>

@@ -33,7 +33,9 @@ export function buildIdempotencyHeaders(context: OpenApiIrConverterContext): voi
                 source: undefined
             },
             fileContainingReference: RelativeFilePath.of(ROOT_API_FILENAME),
-            context
+            context,
+            // TODO: how are we namespacing idempotency headers
+            namespace: undefined
         });
         context.builder.addIdempotencyHeader({
             name: header.header,
