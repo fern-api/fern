@@ -5,18 +5,18 @@ from ....core.pydantic_utilities import UniversalBaseModel
 import typing
 import typing_extensions
 from ....core.serialization import FieldMetadata
-from .non_void_function_signature import NonVoidFunctionSignature
 from ....commons.types.language import Language
 from .files import Files
 from .basic_test_case_template import BasicTestCaseTemplate
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from ....core.pydantic_utilities import update_forward_refs
 
 
 class CustomFiles_Basic(UniversalBaseModel):
     type: typing.Literal["basic"] = "basic"
     method_name: typing_extensions.Annotated[str, FieldMetadata(alias="methodName")]
-    signature: NonVoidFunctionSignature
+    signature: "NonVoidFunctionSignature"
     additional_files: typing_extensions.Annotated[typing.Dict[Language, Files], FieldMetadata(alias="additionalFiles")]
     basic_test_case_template: typing_extensions.Annotated[
         BasicTestCaseTemplate, FieldMetadata(alias="basicTestCaseTemplate")
@@ -30,6 +30,9 @@ class CustomFiles_Basic(UniversalBaseModel):
             frozen = True
             smart_union = True
             extra = pydantic.Extra.allow
+
+
+from .non_void_function_signature import NonVoidFunctionSignature  # noqa: E402
 
 
 class CustomFiles_Custom(UniversalBaseModel):
@@ -46,3 +49,4 @@ class CustomFiles_Custom(UniversalBaseModel):
 
 
 CustomFiles = typing.Union[CustomFiles_Basic, CustomFiles_Custom]
+update_forward_refs(CustomFiles_Basic)

@@ -4,18 +4,17 @@ from __future__ import annotations
 from .....core.pydantic_utilities import UniversalBaseModel
 import typing
 import typing_extensions
-from .non_void_function_definition import NonVoidFunctionDefinition
 from .....core.serialization import FieldMetadata
 from .assert_correctness_check import AssertCorrectnessCheck
 from .....core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
-from .parameter import Parameter
 from .function_implementation_for_multiple_languages import FunctionImplementationForMultipleLanguages
+from .....core.pydantic_utilities import update_forward_refs
 
 
 class TestCaseFunction_WithActualResult(UniversalBaseModel):
     type: typing.Literal["withActualResult"] = "withActualResult"
-    get_actual_result: typing_extensions.Annotated[NonVoidFunctionDefinition, FieldMetadata(alias="getActualResult")]
+    get_actual_result: typing_extensions.Annotated["NonVoidFunctionDefinition", FieldMetadata(alias="getActualResult")]
     assert_correctness_check: typing_extensions.Annotated[
         AssertCorrectnessCheck, FieldMetadata(alias="assertCorrectnessCheck")
     ]
@@ -30,9 +29,12 @@ class TestCaseFunction_WithActualResult(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from .non_void_function_definition import NonVoidFunctionDefinition  # noqa: E402
+
+
 class TestCaseFunction_Custom(UniversalBaseModel):
     type: typing.Literal["custom"] = "custom"
-    parameters: typing.List[Parameter]
+    parameters: typing.List["Parameter"]
     code: FunctionImplementationForMultipleLanguages
 
     if IS_PYDANTIC_V2:
@@ -45,4 +47,8 @@ class TestCaseFunction_Custom(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from .parameter import Parameter  # noqa: E402
+
 TestCaseFunction = typing.Union[TestCaseFunction_WithActualResult, TestCaseFunction_Custom]
+update_forward_refs(TestCaseFunction_WithActualResult)
+update_forward_refs(TestCaseFunction_Custom)
