@@ -35,7 +35,7 @@
             enable-public-constructors: true # default false
       ```
     type: improvement
-  irVersion: 48
+  irVersion: 46
   createdAt: '2024-09-04'
   version: 0.9.3
 
