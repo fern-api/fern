@@ -69,6 +69,11 @@ class PydanticGeneratorContext(ABC):
         ...
 
     @abstractmethod
+    def get_non_union_circular_references(self) -> Set[ir_types.TypeId]:
+        ...
+    
+
+    @abstractmethod
     def do_types_reference_each_other(self, a: ir_types.TypeId, b: ir_types.TypeId) -> bool:
         ...
 

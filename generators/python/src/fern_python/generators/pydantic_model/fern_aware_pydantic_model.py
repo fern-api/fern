@@ -186,15 +186,20 @@ class FernAwarePydanticModel:
 
     def _must_import_after_current_declaration(self, type_name: ir_types.DeclaredTypeName) -> bool:
         type_id_to_reference = self._type_id_for_forward_ref()
-        is_circular_reference = False
+        should_import_after = False
         if type_id_to_reference is not None:
-            is_circular_reference = self._context.does_type_reference_other_type(
+            should_import_after = self._context.does_type_reference_other_type(
                 type_id=type_name.type_id, other_type_id=type_id_to_reference
             )
+        
+        is_referencing_circular_reference = type_name.type_id in self._context.get_non_union_circular_references()
+        if is_referencing_circular_reference: 
+            should_import_after = is_referencing_circular_reference
 
-        if is_circular_reference:
+        if should_import_after:
             self._model_contains_forward_refs = True
-        return is_circular_reference
+
+        return should_import_after
 
     def add_method(
         self,
