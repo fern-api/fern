@@ -31,20 +31,7 @@ jobs:
   generator-validate:
     strategy:
       matrix:
-        generator:
-          [
-            fastapi,
-            pydantic,
-            python-sdk,
-            go-sdk,
-            ruby-sdk,
-            postman,
-            openapi,
-            java-spring,
-            java-model,
-            java-sdk,
-            ts-express
-          ]
+        generator: [fastapi, pydantic, python-sdk, go-sdk, ruby-sdk, postman, openapi]
 
     runs-on: ubuntu-latest
     steps:

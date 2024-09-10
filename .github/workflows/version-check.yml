@@ -27,7 +27,11 @@ jobs:
           const path = require("path");
 
           const paths = [
+            "generators/java/sdk",
+            "generators/java/model",
+            "generators/java/spring",
             "generators/typescript/sdk",
+            "generators/typescript/express",
           ];
 
           const semverRegex = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-[\da-z\-]+(?:\.[\da-z\-]+)*)?(?:\+[\da-z\-]+(?:\.[\da-z\-]+)*)?$/i;

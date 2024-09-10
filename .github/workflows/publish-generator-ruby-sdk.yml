@@ -44,7 +44,7 @@ jobs:
           git show HEAD~1:${VERSIONS_FILE} > tmp_previous_versions.yml
 
           if [ $? -eq 0 ]; then
-            pnpm seed:local publish generator ruby-sdk --changelog $VERSIONS_FILE --previous-changelog tmp_previous_versions.yml --log-level debug
+            pnpm seed:local publish generator ruby-sdk--changelog $VERSIONS_FILE --previous-changelog tmp_previous_versions.yml --log-level debug
           else
             echo "No previous versions found, skipping publish."
           fi
