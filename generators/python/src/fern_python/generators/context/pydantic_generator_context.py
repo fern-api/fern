@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Callable, List, Optional, Set
+from typing import Callable, Dict, List, Optional, Set
 
 import fern.ir.resources as ir_types
 from fern.generator_exec import GeneratorConfig
@@ -70,6 +70,10 @@ class PydanticGeneratorContext(ABC):
 
     @abstractmethod
     def get_non_union_circular_references(self) -> Set[ir_types.TypeId]:
+        ...
+
+    @abstractmethod
+    def get_self_referencing_dependencies_from_non_union_types(self) -> Dict[ir_types.TypeId, Set[ir_types.TypeId]]:
         ...
 
     @abstractmethod

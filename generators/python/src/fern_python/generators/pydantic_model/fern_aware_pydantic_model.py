@@ -192,11 +192,13 @@ class FernAwarePydanticModel:
                 type_id=type_name.type_id, other_type_id=type_id_to_reference
             )
 
-        is_referencing_circular_reference = (
-            type_name.type_id in self._context.get_non_union_types_with_self_referencing_dependencies()
-        )
-        if is_referencing_circular_reference:
-            should_import_after = is_referencing_circular_reference
+        # Get self-referencing dependencies of the type you are trying to add
+        # And add them as ghost references at the bottom of the file
+        self_referencing_dependencies_from_non_union_types = self._context.get_self_referencing_dependencies_from_non_union_types()
+        if type_name.type_id in self_referencing_dependencies_from_non_union_types:
+            self_referencing_dependencies = self_referencing_dependencies_from_non_union_types[type_name.type_id]
+            for dependency in self_referencing_dependencies:
+                self.add_ghost_reference(dependency)
 
         if should_import_after:
             self._model_contains_forward_refs = True

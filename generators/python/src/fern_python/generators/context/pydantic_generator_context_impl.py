@@ -1,4 +1,4 @@
-from typing import Callable, List, Optional, Set
+from typing import Callable, Dict, List, Optional, Set
 
 import fern.ir.resources as ir_types
 from fern.generator_exec import GeneratorConfig
@@ -53,14 +53,16 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
             ):
                 self._non_union_self_referencing_type_ids.add(id)
 
-        self._non_union_types_with_self_referencing_dependencies = set()
+        self._non_union_types_with_self_referencing_dependencies: Dict[str, Set[str]] = dict()
         for id, type in self.ir.types.items():
             if type.shape.get_as_union().type != "union" and type.shape.get_as_union().type != "undiscriminatedUnion":
                 for referenced_id in type.referenced_types:
                     referenced_type = self.ir.types[referenced_id]
                     # This referenced type is self-referential
                     if referenced_id in referenced_type.referenced_types:
-                        self._non_union_types_with_self_referencing_dependencies.add(id)
+                        if self._non_union_types_with_self_referencing_dependencies.get(id) is None:
+                            self._non_union_types_with_self_referencing_dependencies[id] = set()
+                        self._non_union_types_with_self_referencing_dependencies[id].add(referenced_id)
 
     def get_module_path_in_project(self, module_path: AST.ModulePath) -> AST.ModulePath:
         return self._project_module_path + module_path
@@ -156,7 +158,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
     def get_non_union_circular_references(self) -> Set[ir_types.TypeId]:
         return self._non_union_self_referencing_type_ids
 
-    def get_non_union_types_with_self_referencing_dependencies(self) -> Set[ir_types.TypeId]:
+    def get_self_referencing_dependencies_from_non_union_types(self) -> Dict[ir_types.TypeId, Set[ir_types.TypeId]]:
         return self._non_union_types_with_self_referencing_dependencies
 
     def do_types_reference_each_other(self, a: ir_types.TypeId, b: ir_types.TypeId) -> bool:
