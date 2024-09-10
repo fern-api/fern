@@ -1,7 +1,20 @@
 import { DEFINITION_DIRECTORY } from "@fern-api/configuration";
+import {
+    GeneratorGroup,
+    GeneratorInvocation,
+    GeneratorsConfiguration
+} from "@fern-api/configuration/src/generators-yml";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { LogLevel } from "@fern-api/logger";
+import { TaskContext } from "@fern-api/task-context";
+import {
+    APIWorkspace,
+    FernWorkspace,
+    getOSSWorkspaceSettingsFromGeneratorInvocation,
+    OSSWorkspace
+} from "@fern-api/workspace-loader";
 import tmp from "tmp-promise";
+import { group } from "yargs";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
 import { Semaphore } from "../../Semaphore";
 import { convertGeneratorWorkspaceToFernWorkspace } from "../../utils/convertSeedWorkspaceToFernWorkspace";
@@ -40,37 +53,47 @@ export async function runWithCustomFixture({
         scriptRunner: new ScriptRunner(workspace, false)
     });
 
-    const fernWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
+    const apiWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
         absolutePathToAPIDefinition: pathToFixture,
         taskContext,
         fixture: "custom"
     });
-    if (fernWorkspace == null) {
+    if (apiWorkspace == null) {
         taskContext.logger.error("Failed to load API definition.");
         return;
     }
 
+    const generatorGroup = getGeneratorGroup({
+        apiWorkspace,
+        image: workspace.workspaceConfig.image,
+        absolutePathToOutput
+    });
+    if (generatorGroup == null) {
+        taskContext.logger.error(`Found no generators configuration for the generator ${workspace.workspaceName}`);
+        return;
+    }
+
     try {
+        let fernWorkspace: FernWorkspace;
+        if (apiWorkspace instanceof OSSWorkspace) {
+            fernWorkspace = await apiWorkspace.toFernWorkspace(
+                { context: taskContext },
+                getOSSWorkspaceSettingsFromGeneratorInvocation(generatorGroup.invocation)
+            );
+        } else {
+            fernWorkspace = await apiWorkspace.toFernWorkspace(
+                {},
+                getOSSWorkspaceSettingsFromGeneratorInvocation(generatorGroup.invocation)
+            );
+        }
+
         await dockerGeneratorRunner.build();
-        await dockerGeneratorRunner.runGenerator({
+        await dockerGeneratorRunner.runGeneratorFromGroup({
             fernWorkspace,
             absolutePathToFernDefinition: join(pathToFixture, RelativeFilePath.of(DEFINITION_DIRECTORY)),
-            absolutePathToWorkspace: pathToFixture,
-            irVersion: workspace.workspaceConfig.irVersion,
-            outputVersion: customFixtureConfig?.outputVersion,
-            language: workspace.workspaceConfig.language,
-            fixture: "custom",
-            customConfig: customFixtureConfig?.customConfig,
-            publishConfig: customFixtureConfig?.publishConfig,
-            publishMetadata: customFixtureConfig?.publishMetadata,
-            selectAudiences: audience != null ? [audience] : customFixtureConfig?.audiences,
             taskContext,
-            outputDir: absolutePathToOutput,
-            outputMode: customFixtureConfig?.outputMode ?? workspace.workspaceConfig.defaultOutputMode,
-            outputFolder: customFixtureConfig?.outputFolder ?? "custom",
-            id: "custom",
-            keepDocker: true,
-            readme: customFixtureConfig?.readmeConfig
+            irVersion: workspace.workspaceConfig.irVersion,
+            group: generatorGroup.group
         });
         await writeDotMock({
             absolutePathToDotMockDirectory: absolutePathToOutput,
@@ -80,4 +103,31 @@ export async function runWithCustomFixture({
     } catch (error) {
         taskContext.logger.error(`Encountered error while running generator. ${(error as Error)?.message}`);
     }
+}
+
+function getGeneratorGroup({
+    apiWorkspace,
+    image,
+    absolutePathToOutput
+}: {
+    apiWorkspace: APIWorkspace;
+    image: string;
+    absolutePathToOutput: AbsoluteFilePath;
+}): { group: GeneratorGroup; invocation: GeneratorInvocation } | undefined {
+    const groups = apiWorkspace.generatorsConfiguration?.groups;
+    for (const group of groups ?? []) {
+        for (const generator of group.generators) {
+            if (generator.name === image) {
+                const invocation = { ...generator, absolutePathToLocalOutput: absolutePathToOutput };
+                return {
+                    group: {
+                        ...group,
+                        generators: [invocation]
+                    },
+                    invocation: invocation
+                };
+            }
+        }
+    }
+    return undefined;
 }

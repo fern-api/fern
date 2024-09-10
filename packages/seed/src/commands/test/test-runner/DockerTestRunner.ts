@@ -1,6 +1,9 @@
 import { generatorsYml } from "@fern-api/configuration";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { runLocalGenerationForSeed } from "@fern-api/local-workspace-runner";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
+import { TaskContext } from "@fern-api/task-context";
+import { FernWorkspace } from "@fern-api/workspace-loader";
 import path from "path";
 import { runScript } from "../../../runScript";
 import { ALL_AUDIENCES, DUMMY_ORGANIZATION } from "../../../utils/constants";
@@ -72,6 +75,31 @@ export class DockerTestRunner extends TestRunner {
             context: taskContext,
             irVersionOverride: irVersion,
             outputVersionOverride: outputVersion
+        });
+    }
+
+    async runGeneratorFromGroup({
+        absolutePathToFernDefinition,
+        fernWorkspace,
+        taskContext,
+        irVersion,
+        group
+    }: {
+        absolutePathToFernDefinition: AbsoluteFilePath;
+        fernWorkspace: FernWorkspace;
+        taskContext: TaskContext;
+        irVersion: string;
+        group: generatorsYml.GeneratorGroup;
+    }): Promise<void> {
+        await runLocalGenerationForSeed({
+            organization: DUMMY_ORGANIZATION,
+            absolutePathToFernConfig: absolutePathToFernDefinition,
+            workspace: fernWorkspace,
+            generatorGroup: { ...group },
+            keepDocker: true,
+            context: taskContext,
+            irVersionOverride: irVersion,
+            outputVersionOverride: undefined
         });
     }
 }
