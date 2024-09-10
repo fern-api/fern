@@ -8,6 +8,8 @@ from .exception_v_2 import (
     ExceptionV2 as resources_submission_types_exception_v_2_ExceptionV2,
 )
 from ....core.pydantic_utilities import UniversalRootModel
+from ...commons.types.map_value import MapValue
+from ...commons.types.key_value_pair import KeyValuePair
 import typing
 import typing_extensions
 import pydantic
@@ -124,3 +126,5 @@ class _ActualResult:
 
 
 update_forward_refs(ActualResult)
+update_forward_refs(MapValue)
+update_forward_refs(KeyValuePair)

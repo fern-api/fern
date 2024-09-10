@@ -397,3 +397,5 @@ class _DebugVariableValue:
 update_forward_refs(_DebugVariableValue.MapValue)
 update_forward_refs(_DebugVariableValue.ListValue)
 update_forward_refs(DebugVariableValue)
+update_forward_refs(DebugMapValue)
+update_forward_refs(DebugKeyValuePairs)

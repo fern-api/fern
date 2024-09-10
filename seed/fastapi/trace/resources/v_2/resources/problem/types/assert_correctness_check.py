@@ -7,6 +7,8 @@ from .void_function_definition_that_takes_actual_result import (
     VoidFunctionDefinitionThatTakesActualResult,
 )
 from ......core.pydantic_utilities import UniversalRootModel
+from .....commons.types.list_type import ListType
+from .....commons.types.map_type import MapType
 import typing
 import typing_extensions
 import pydantic
@@ -118,3 +120,5 @@ class _AssertCorrectnessCheck:
 
 
 update_forward_refs(AssertCorrectnessCheck)
+update_forward_refs(ListType)
+update_forward_refs(MapType)

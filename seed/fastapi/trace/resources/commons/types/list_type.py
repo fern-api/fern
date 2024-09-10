@@ -27,6 +27,8 @@ class ListType(UniversalBaseModel):
             extra = pydantic.Extra.forbid
 
 
+from .map_type import MapType  # noqa: E402
 from .variable_type import VariableType  # noqa: E402
 
 update_forward_refs(ListType)
+update_forward_refs(MapType)

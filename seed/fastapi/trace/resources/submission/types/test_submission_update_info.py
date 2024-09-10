@@ -7,6 +7,8 @@ from .error_info import ErrorInfo
 from .graded_test_case_update import GradedTestCaseUpdate
 from .recorded_test_case_update import RecordedTestCaseUpdate
 from ....core.pydantic_utilities import UniversalRootModel
+from ...commons.types.map_value import MapValue
+from ...commons.types.key_value_pair import KeyValuePair
 import typing
 import typing_extensions
 import pydantic
@@ -201,3 +203,5 @@ class _TestSubmissionUpdateInfo:
 
 
 update_forward_refs(TestSubmissionUpdateInfo)
+update_forward_refs(MapValue)
+update_forward_refs(KeyValuePair)

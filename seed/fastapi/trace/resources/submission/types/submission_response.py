@@ -9,6 +9,8 @@ from .code_execution_update import (
 )
 from .terminated_response import TerminatedResponse
 from ....core.pydantic_utilities import UniversalRootModel
+from ...commons.types.map_value import MapValue
+from ...commons.types.key_value_pair import KeyValuePair
 import typing
 import typing_extensions
 import pydantic
@@ -219,3 +221,5 @@ class _SubmissionResponse:
 
 
 update_forward_refs(SubmissionResponse)
+update_forward_refs(MapValue)
+update_forward_refs(KeyValuePair)

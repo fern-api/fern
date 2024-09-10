@@ -5,6 +5,8 @@ from .test_case_template_id import TestCaseTemplateId
 from ........core.pydantic_utilities import IS_PYDANTIC_V2
 from .test_case_implementation import TestCaseImplementation
 from ........core.pydantic_utilities import UniversalRootModel
+from .......commons.types.list_type import ListType
+from .......commons.types.map_type import MapType
 import typing
 import typing_extensions
 import pydantic
@@ -114,3 +116,5 @@ class _TestCaseImplementationReference:
 
 
 update_forward_refs(TestCaseImplementationReference)
+update_forward_refs(ListType)
+update_forward_refs(MapType)

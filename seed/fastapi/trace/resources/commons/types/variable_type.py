@@ -265,3 +265,5 @@ class _VariableType:
 update_forward_refs(_VariableType.ListType)
 update_forward_refs(_VariableType.MapType)
 update_forward_refs(VariableType)
+update_forward_refs(resources_commons_types_list_type_ListType)
+update_forward_refs(resources_commons_types_map_type_MapType)
