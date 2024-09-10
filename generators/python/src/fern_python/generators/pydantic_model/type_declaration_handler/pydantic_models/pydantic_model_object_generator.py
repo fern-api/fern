@@ -42,10 +42,6 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
         )
 
     def generate(self) -> None:
-        print(
-            f"{self._class_name} found {self._context.get_referenced_types(self._name.type_id)}, {self._name.type_id}, {self._context.get_non_union_circular_references()}"
-        )
-
         with FernAwarePydanticModel(
             class_name=self._class_name,
             type_name=self._name,
