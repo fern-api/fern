@@ -44,6 +44,15 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         self._allow_leveraging_defaults = allow_leveraging_defaults
         self._reserved_names: Set[str] = reserved_names or set()
 
+        self._non_union_self_referencing_type_ids = set()
+        for id, type in self.ir.types.items():
+            if (
+                id in type.referenced_types
+                and type.shape.get_as_union().type != "union"
+                and type.shape.get_as_union().type != "undiscriminatedUnion"
+            ):
+                self._non_union_self_referencing_type_ids.add(id)
+
     def get_module_path_in_project(self, module_path: AST.ModulePath) -> AST.ModulePath:
         return self._project_module_path + module_path
 
@@ -134,6 +143,9 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
 
     def does_circularly_reference_itself(self, type_id: ir_types.TypeId) -> bool:
         return self.does_type_reference_other_type(type_id, type_id)
+
+    def get_non_union_circular_references(self) -> Set[ir_types.TypeId]:
+        return self._non_union_self_referencing_type_ids
 
     def do_types_reference_each_other(self, a: ir_types.TypeId, b: ir_types.TypeId) -> bool:
         return self.does_type_reference_other_type(a, b) and self.does_type_reference_other_type(b, a)
