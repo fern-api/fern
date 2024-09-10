@@ -45,8 +45,12 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         self._reserved_names: Set[str] = reserved_names or set()
 
         self._non_union_self_referencing_type_ids = set()
-        for id, type in self.ir.types.items(): 
-            if id in type.referenced_types and type.shape.get_as_union().type != "union" and type.shape.get_as_union().type != "undiscriminatedUnion": 
+        for id, type in self.ir.types.items():
+            if (
+                id in type.referenced_types
+                and type.shape.get_as_union().type != "union"
+                and type.shape.get_as_union().type != "undiscriminatedUnion"
+            ):
                 self._non_union_self_referencing_type_ids.add(id)
 
     def get_module_path_in_project(self, module_path: AST.ModulePath) -> AST.ModulePath:

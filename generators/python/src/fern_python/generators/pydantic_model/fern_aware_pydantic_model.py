@@ -191,9 +191,9 @@ class FernAwarePydanticModel:
             should_import_after = self._context.does_type_reference_other_type(
                 type_id=type_name.type_id, other_type_id=type_id_to_reference
             )
-        
+
         is_referencing_circular_reference = type_name.type_id in self._context.get_non_union_circular_references()
-        if is_referencing_circular_reference: 
+        if is_referencing_circular_reference:
             should_import_after = is_referencing_circular_reference
 
         if should_import_after:
