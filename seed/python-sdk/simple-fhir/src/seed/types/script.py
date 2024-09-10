@@ -6,8 +6,8 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 from ..core.pydantic_utilities import update_forward_refs
 from .account import Account
-from .patient import Patient
 from .memo import Memo
+from .patient import Patient
 from .practitioner import Practitioner
 
 
@@ -25,8 +25,8 @@ class Script(BaseResource):
             extra = pydantic.Extra.allow
 
 
-update_forward_refs(Account)
-update_forward_refs(Patient)
-update_forward_refs(Memo)
-update_forward_refs(Practitioner)
 update_forward_refs(BaseResource)
+update_forward_refs(Account)
+update_forward_refs(Memo)
+update_forward_refs(Patient)
+update_forward_refs(Practitioner)

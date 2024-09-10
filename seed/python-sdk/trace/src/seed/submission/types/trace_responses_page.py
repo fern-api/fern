@@ -8,8 +8,8 @@ from .trace_response import TraceResponse
 from ...core.serialization import FieldMetadata
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.pydantic_utilities import update_forward_refs
-from ...commons.types.debug_key_value_pairs import DebugKeyValuePairs
 from ...commons.types.debug_map_value import DebugMapValue
+from ...commons.types.debug_key_value_pairs import DebugKeyValuePairs
 
 
 class TraceResponsesPage(UniversalBaseModel):
@@ -31,5 +31,5 @@ class TraceResponsesPage(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-update_forward_refs(DebugKeyValuePairs)
 update_forward_refs(DebugMapValue)
+update_forward_refs(DebugKeyValuePairs)

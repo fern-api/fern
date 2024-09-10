@@ -8,13 +8,13 @@ from .exception_v_2 import (
     ExceptionV2 as resources_submission_types_exception_v_2_ExceptionV2,
 )
 from ....core.pydantic_utilities import UniversalRootModel
-from ...commons.types.map_value import MapValue
-from ...commons.types.key_value_pair import KeyValuePair
 import typing
 import typing_extensions
 import pydantic
 from ....core.pydantic_utilities import UniversalBaseModel
 from ....core.pydantic_utilities import update_forward_refs
+from ...commons.types.key_value_pair import KeyValuePair
+from ...commons.types.map_value import MapValue
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -126,5 +126,5 @@ class _ActualResult:
 
 
 update_forward_refs(ActualResult)
-update_forward_refs(MapValue)
 update_forward_refs(KeyValuePair)
+update_forward_refs(MapValue)

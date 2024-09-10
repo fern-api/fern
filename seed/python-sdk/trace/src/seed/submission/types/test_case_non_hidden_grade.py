@@ -9,8 +9,8 @@ from .exception_v_2 import ExceptionV2
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 from ...core.pydantic_utilities import update_forward_refs
-from ...commons.types.map_value import MapValue
 from ...commons.types.key_value_pair import KeyValuePair
+from ...commons.types.map_value import MapValue
 
 
 class TestCaseNonHiddenGrade(UniversalBaseModel):
@@ -31,5 +31,5 @@ class TestCaseNonHiddenGrade(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-update_forward_refs(MapValue)
 update_forward_refs(KeyValuePair)
+update_forward_refs(MapValue)

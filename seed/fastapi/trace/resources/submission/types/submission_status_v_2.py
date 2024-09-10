@@ -5,14 +5,14 @@ from .test_submission_status_v_2 import TestSubmissionStatusV2
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from .workspace_submission_status_v_2 import WorkspaceSubmissionStatusV2
 from ....core.pydantic_utilities import UniversalRootModel
-from ...commons.types.list_type import ListType
-from ...commons.types.map_type import MapType
-from ...commons.types.map_value import MapValue
-from ...commons.types.key_value_pair import KeyValuePair
 import typing
 import typing_extensions
 import pydantic
 from ....core.pydantic_utilities import update_forward_refs
+from ...commons.types.list_type import ListType
+from ...commons.types.map_value import MapValue
+from ...commons.types.map_type import MapType
+from ...commons.types.key_value_pair import KeyValuePair
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -107,6 +107,6 @@ class _SubmissionStatusV2:
 
 update_forward_refs(SubmissionStatusV2)
 update_forward_refs(ListType)
-update_forward_refs(MapType)
 update_forward_refs(MapValue)
+update_forward_refs(MapType)
 update_forward_refs(KeyValuePair)

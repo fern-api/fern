@@ -7,12 +7,12 @@ from .running_submission_state import RunningSubmissionState
 import typing
 from .submission_status_for_test_case import SubmissionStatusForTestCase
 from ....core.pydantic_utilities import UniversalRootModel
-from ...commons.types.map_value import MapValue
-from ...commons.types.key_value_pair import KeyValuePair
 import typing_extensions
 import pydantic
 from ....core.pydantic_utilities import UniversalBaseModel
 from ....core.pydantic_utilities import update_forward_refs
+from ...commons.types.map_value import MapValue
+from ...commons.types.key_value_pair import KeyValuePair
 
 T_Result = typing.TypeVar("T_Result")
 

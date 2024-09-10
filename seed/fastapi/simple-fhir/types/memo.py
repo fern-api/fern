@@ -6,6 +6,10 @@ import typing
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 from ..core.pydantic_utilities import update_forward_refs
+from .patient import Patient
+from .base_resource import BaseResource
+from .practitioner import Practitioner
+from .script import Script
 
 
 class Memo(UniversalBaseModel):
@@ -22,15 +26,11 @@ class Memo(UniversalBaseModel):
             extra = pydantic.Extra.forbid
 
 
-from .practitioner import Practitioner  # noqa: E402
 from .account import Account  # noqa: E402
-from .base_resource import BaseResource  # noqa: E402
-from .patient import Patient  # noqa: E402
-from .script import Script  # noqa: E402
 
 update_forward_refs(Memo)
-update_forward_refs(Practitioner)
-update_forward_refs(Account)
-update_forward_refs(BaseResource)
 update_forward_refs(Patient)
+update_forward_refs(BaseResource)
+update_forward_refs(Account)
+update_forward_refs(Practitioner)
 update_forward_refs(Script)

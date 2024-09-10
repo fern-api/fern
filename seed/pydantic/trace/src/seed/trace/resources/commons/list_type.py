@@ -6,6 +6,7 @@ import pydantic
 import typing
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.pydantic_utilities import update_forward_refs
+from .map_type import MapType
 
 
 class ListType(UniversalBaseModel):
@@ -23,7 +24,6 @@ class ListType(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .map_type import MapType  # noqa: E402
 from .variable_type import VariableType  # noqa: E402
 
 update_forward_refs(ListType)
