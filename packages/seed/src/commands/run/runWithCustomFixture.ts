@@ -7,7 +7,12 @@ import {
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { LogLevel } from "@fern-api/logger";
 import { TaskContext } from "@fern-api/task-context";
-import { FernWorkspace } from "@fern-api/workspace-loader";
+import {
+    APIWorkspace,
+    FernWorkspace,
+    getOSSWorkspaceSettingsFromGeneratorInvocation,
+    OSSWorkspace
+} from "@fern-api/workspace-loader";
 import tmp from "tmp-promise";
 import { group } from "yargs";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
@@ -48,18 +53,18 @@ export async function runWithCustomFixture({
         scriptRunner: new ScriptRunner(workspace, false)
     });
 
-    const fernWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
+    const apiWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
         absolutePathToAPIDefinition: pathToFixture,
         taskContext,
         fixture: "custom"
     });
-    if (fernWorkspace == null) {
+    if (apiWorkspace == null) {
         taskContext.logger.error("Failed to load API definition.");
         return;
     }
 
     const generatorGroup = getGeneratorGroup({
-        fernWorkspace,
+        apiWorkspace,
         image: workspace.workspaceConfig.image,
         absolutePathToOutput
     });
@@ -69,13 +74,26 @@ export async function runWithCustomFixture({
     }
 
     try {
+        let fernWorkspace: FernWorkspace;
+        if (apiWorkspace instanceof OSSWorkspace) {
+            fernWorkspace = await apiWorkspace.toFernWorkspace(
+                { context: taskContext },
+                getOSSWorkspaceSettingsFromGeneratorInvocation(generatorGroup.invocation)
+            );
+        } else {
+            fernWorkspace = await apiWorkspace.toFernWorkspace(
+                {},
+                getOSSWorkspaceSettingsFromGeneratorInvocation(generatorGroup.invocation)
+            );
+        }
+
         await dockerGeneratorRunner.build();
         await dockerGeneratorRunner.runGeneratorFromGroup({
             fernWorkspace,
             absolutePathToFernDefinition: join(pathToFixture, RelativeFilePath.of(DEFINITION_DIRECTORY)),
             taskContext,
             irVersion: workspace.workspaceConfig.irVersion,
-            group: generatorGroup
+            group: generatorGroup.group
         });
         await writeDotMock({
             absolutePathToDotMockDirectory: absolutePathToOutput,
@@ -88,19 +106,26 @@ export async function runWithCustomFixture({
 }
 
 function getGeneratorGroup({
-    fernWorkspace,
+    apiWorkspace,
     image,
     absolutePathToOutput
 }: {
-    fernWorkspace: FernWorkspace;
+    apiWorkspace: APIWorkspace;
     image: string;
     absolutePathToOutput: AbsoluteFilePath;
-}): GeneratorGroup | undefined {
-    const groups = fernWorkspace.generatorsConfiguration?.groups;
+}): { group: GeneratorGroup; invocation: GeneratorInvocation } | undefined {
+    const groups = apiWorkspace.generatorsConfiguration?.groups;
     for (const group of groups ?? []) {
         for (const generator of group.generators) {
             if (generator.name === image) {
-                return { ...group, generators: [{ ...generator, absolutePathToLocalOutput: absolutePathToOutput }] };
+                const invocation = { ...generator, absolutePathToLocalOutput: absolutePathToOutput };
+                return {
+                    group: {
+                        ...group,
+                        generators: [invocation]
+                    },
+                    invocation: invocation
+                };
             }
         }
     }
