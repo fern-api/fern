@@ -6,6 +6,7 @@ from fern.generator_exec import GeneratorConfig
 from fern_python.codegen import AST, Filepath
 from fern_python.declaration_referencer import AbstractDeclarationReferencer
 from fern_python.generators.pydantic_model.custom_config import UnionNamingVersions
+from ordered_set import OrderedSet
 
 from .pydantic_generator_context import PydanticGeneratorContext
 from .type_reference_to_type_hint_converter import TypeReferenceToTypeHintConverter
@@ -180,6 +181,10 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
     def get_referenced_types(self, type_id: ir_types.TypeId) -> Set[ir_types.TypeId]:
         declaration = self.ir.types[type_id]
         return self.get_referenced_types_of_type_declaration(declaration)
+    
+    def get_referenced_types_ordered(self, type_id: ir_types.TypeId) -> OrderedSet[ir_types.TypeId]:
+        declaration = self.ir.types[type_id]
+        return OrderedSet(list(sorted(self.get_referenced_types_of_type_declaration(declaration))))
 
     def get_declaration_for_type_id(
         self,

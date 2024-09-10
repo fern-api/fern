@@ -25,8 +25,8 @@ class Script(BaseResource):
             extra = pydantic.Extra.allow
 
 
-update_forward_refs(BaseResource)
 update_forward_refs(Account)
+update_forward_refs(BaseResource)
 update_forward_refs(Memo)
 update_forward_refs(Patient)
 update_forward_refs(Practitioner)

@@ -10,6 +10,7 @@ from fern_python.codegen import AST, Filepath
 from fern_python.declaration_referencer import AbstractDeclarationReferencer
 from fern_python.generators.pydantic_model.custom_config import UnionNamingVersions
 from fern_python.source_file_factory.source_file_factory import SourceFileFactory
+from ordered_set import OrderedSet
 
 from ..core_utilities import CoreUtilities
 
@@ -92,6 +93,10 @@ class PydanticGeneratorContext(ABC):
 
     @abstractmethod
     def get_referenced_types(self, type_id: ir_types.TypeId) -> Set[ir_types.TypeId]:
+        ...
+
+    @abstractmethod
+    def get_referenced_types_ordered(self, type_id: ir_types.TypeId) -> OrderedSet[ir_types.TypeId]:
         ...
 
     @abstractmethod
