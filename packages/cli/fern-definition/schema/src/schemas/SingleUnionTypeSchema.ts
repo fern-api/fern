@@ -2,11 +2,12 @@ import { z } from "zod";
 import { SingleUnionTypeKeySchema } from "./SingleUnionTypeKeySchema";
 import { WithNameAndDocsSchema } from "./WithNameAndDocsSchema";
 import { WithAvailabilitySchema } from "./WithAvailabilitySchema";
+import { WithDisplayNameSchema } from "./WithDisplayNameSchema";
 
 export const SingleUnionTypeSchema = z.union([
     z.string(),
-    WithAvailabilitySchema.extend(
-        WithNameAndDocsSchema.extend({
+    z
+        .strictObject({
             type: z.optional(
                 z.union([
                     z.string(),
@@ -14,10 +15,11 @@ export const SingleUnionTypeSchema = z.union([
                     z.record(z.never())
                 ])
             ),
-            key: z.optional(z.union([z.string(), SingleUnionTypeKeySchema])),
-            "display-name": z.optional(z.string())
-        }).shape
-    )
+            key: z.optional(z.union([z.string(), SingleUnionTypeKeySchema]))
+        })
+        .extend(WithAvailabilitySchema.shape)
+        .extend(WithNameAndDocsSchema.shape)
+        .extend(WithDisplayNameSchema.shape)
 ]);
 
 export type SingleUnionTypeSchema = z.infer<typeof SingleUnionTypeSchema>;
