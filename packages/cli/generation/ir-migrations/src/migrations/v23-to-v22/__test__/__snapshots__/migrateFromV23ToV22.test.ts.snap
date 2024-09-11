@@ -15099,6 +15099,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         "type": "union",
         "types": [
           {
+            "availability": undefined,
             "discriminantValue": {
               "name": {
                 "camelCase": {
@@ -15121,6 +15122,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
               "wireValue": "dog",
             },
+            "displayName": undefined,
             "docs": undefined,
             "shape": {
               "_type": "samePropertiesAsObject",
@@ -15234,6 +15236,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             },
           },
           {
+            "availability": undefined,
             "discriminantValue": {
               "name": {
                 "camelCase": {
@@ -15256,6 +15259,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
               "wireValue": "cat",
             },
+            "displayName": undefined,
             "docs": undefined,
             "shape": {
               "_type": "samePropertiesAsObject",
