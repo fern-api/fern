@@ -1,7 +1,7 @@
 - changelogEntry:
-    - summary: |
-        We no longer non-null constraints for Object type properties in builders.
-      type: improvement
+  - summary: |
+      We no longer enforce non-null constraints for Object type properties in builders.
+    type: improvement
   createdAt: '2024-09-11'
   irVersion: 46
   version: 1.1.0
