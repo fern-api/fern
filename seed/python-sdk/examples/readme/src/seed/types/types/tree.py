@@ -40,4 +40,5 @@ class Tree(UniversalBaseModel):
 
 from .node import Node  # noqa: E402
 
+update_forward_refs(Node)
 update_forward_refs(Tree)

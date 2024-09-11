@@ -364,6 +364,16 @@ class PydanticModel:
             )
         )
 
+    def update_forward_refs_for_given_model(self, given_model: AST.ClassReference) -> None:
+        self._source_file.add_footer_expression(
+            AST.Expression(
+                AST.FunctionInvocation(
+                    function_definition=self._update_forward_ref_function_reference,
+                    args=[AST.Expression(given_model)],
+                )
+            )
+        )
+
     def _get_config_class(self) -> Optional[AST.ClassDeclaration]:
         config = AST.ClassDeclaration(name="Config")
 
