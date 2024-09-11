@@ -1,7 +1,7 @@
 - changelogEntry:
   - summary: |
       We no longer enforce non-null constraints for Object type properties in builders.
-    type: improvement
+    type: feat
   createdAt: '2024-09-11'
   irVersion: 46
   version: 1.1.0
@@ -28,7 +28,7 @@
             return this;
         }
         ```
-    type: improvement
+    type: feat
   createdAt: '2024-09-05'
   irVersion: 46
   version: 1.0.0
@@ -42,14 +42,14 @@
           config:
             enable-public-constructors: true # default false
       ```
-    type: improvement
+    type: feat
   irVersion: 46
   createdAt: '2024-09-04'
   version: 0.9.3
 
 - changelogEntry:
   - summary: Generated builder methods for optional fields can now accept null directly.
-    type: improvement
+    type: feat
   irVersion: 46
   createdAt: '2024-07-23'
   version: 0.9.2
@@ -65,7 +65,7 @@
           config:
             json-include: non-empty # default non-absent
       ```
-    type: improvement
+    type: feat
   irVersion: 46
   createdAt: '2024-07-02'
   version: 0.9.1-rc0
