@@ -53,7 +53,10 @@ export abstract class AbstractCsharpGeneratorContext<
         this.namespace =
             this.customConfig.namespace ??
             upperFirst(camelCase(`${this.config.organization}_${this.ir.apiName.pascalCase.unsafeName}`));
-        this.project = new CsharpProject(this, this.namespace);
+        this.project = new CsharpProject({
+            context: this,
+            name: this.namespace
+        });
         this.csharpTypeMapper = new CsharpTypeMapper(this);
         this.csharpProtobufTypeMapper = new CsharpProtobufTypeMapper(this);
         this.protobufResolver = new ProtobufResolver(this, this.csharpTypeMapper);
@@ -98,15 +101,6 @@ export abstract class AbstractCsharpGeneratorContext<
 
     public getMockServerTestNamespace(): string {
         return `${this.getTestNamespace()}.Unit.MockServer`;
-    }
-
-    public getVersion(): string | undefined {
-        return this.config.output?.mode._visit({
-            downloadFiles: () => undefined,
-            github: (github) => github.version,
-            publish: (publish) => publish.version,
-            _other: () => undefined
-        });
     }
 
     public hasGrpcEndpoints(): boolean {

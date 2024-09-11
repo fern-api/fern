@@ -1060,7 +1060,7 @@ export class SdkGenerator {
             filepath: this.versionDeclarationReferencer.getExportedFilepath(),
             run: ({ sourceFile, importsManager }) => {
                 const context = this.generateSdkContext({ sourceFile, importsManager });
-                const generatedVersion = context.version.getGeneratedVersion();
+                const generatedVersion = context.versionContext.getGeneratedVersion();
                 if (generatedVersion != null) {
                     generatedVersion.writeToFile(context);
                 }
@@ -1217,6 +1217,7 @@ export class SdkGenerator {
     ): SdkContextImpl {
         return new SdkContextImpl({
             logger: this.context.logger,
+            version: this.context.version,
             config: this.rawConfig,
             ir: this.intermediateRepresentation,
             npmPackage: this.npmPackage,

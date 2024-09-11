@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { SourceFetcher, File } from "@fern-api/generator-commons";
+import { SourceFetcher, File, AbstractProject } from "@fern-api/generator-commons";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { template } from "lodash-es";
@@ -19,8 +19,8 @@ export const PUBLIC_CORE_DIRECTORY_NAME = "Public";
 /**
  * In memory representation of a C# project.
  */
-export class CsharpProject {
-    private rawFiles: File[] = [];
+export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>> {
+    private name: string;
     private sourceFiles: CSharpFile[] = [];
     private testFiles: CSharpFile[] = [];
     private coreFiles: File[] = [];
@@ -28,15 +28,18 @@ export class CsharpProject {
     private publicCoreFiles: File[] = [];
     private publicCoreTestFiles: File[] = [];
     private testUtilFiles: File[] = [];
-    private absolutePathToOutputDirectory: AbsoluteFilePath;
     private sourceFetcher: SourceFetcher;
     public readonly filepaths: CsharpProjectFilepaths;
 
-    public constructor(
-        private readonly context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>,
-        private readonly name: string
-    ) {
-        this.absolutePathToOutputDirectory = AbsoluteFilePath.of(this.context.config.output.path);
+    public constructor({
+        context,
+        name
+    }: {
+        context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
+        name: string;
+    }) {
+        super(context);
+        this.name = name;
         this.filepaths = new CsharpProjectFilepaths(name);
         this.sourceFetcher = new SourceFetcher({
             context: this.context,
@@ -46,10 +49,6 @@ export class CsharpProject {
 
     public getProjectDirectory(): RelativeFilePath {
         return this.filepaths.getProjectDirectory();
-    }
-
-    public addRawFiles(file: File): void {
-        this.rawFiles.push(file);
     }
 
     public addCoreFiles(file: File): void {
@@ -92,9 +91,7 @@ export class CsharpProject {
             cwd: this.absolutePathToOutputDirectory
         });
 
-        for (const file of this.rawFiles) {
-            await file.write(this.absolutePathToOutputDirectory);
-        }
+        await this.writeRawFiles();
 
         for (const file of this.sourceFiles) {
             await file.write(absolutePathToProjectDirectory);
@@ -192,7 +189,6 @@ export class CsharpProject {
         const protobufSourceFilePaths = await this.sourceFetcher.copyProtobufSources(absolutePathToProtoDirectory);
 
         const csproj = new CsProj({
-            version: this.context.getVersion(),
             license: this.context.config.license?._visit({
                 custom: (val) => {
                     return val.filename;
@@ -452,15 +448,13 @@ declare namespace CsProj {
 const FOUR_SPACES = "    ";
 
 class CsProj {
-    private version: string | undefined;
     private license: string | undefined;
     private githubUrl: string | undefined;
     private packageId: string | undefined;
     private context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
     private protobufSourceFilePaths: RelativeFilePath[];
 
-    public constructor({ version, license, githubUrl, context, protobufSourceFilePaths }: CsProj.Args) {
-        this.version = version;
+    public constructor({ license, githubUrl, context, protobufSourceFilePaths }: CsProj.Args) {
         this.license = license;
         this.githubUrl = githubUrl;
         this.context = context;
@@ -585,8 +579,8 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
 
     private getPropertyGroups(): string[] {
         const result: string[] = [];
-        if (this.version != null) {
-            result.push(`<Version>${this.version}</Version>`);
+        if (this.context.version != null) {
+            result.push(`<Version>${this.context.version}</Version>`);
         }
 
         result.push("<PackageReadmeFile>README.md</PackageReadmeFile>");

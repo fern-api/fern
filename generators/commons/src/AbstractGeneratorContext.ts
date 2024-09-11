@@ -10,6 +10,7 @@ const LOG_LEVEL_CONVERSIONS: Record<LogLevel, FernGeneratorExec.logging.LogLevel
 
 export abstract class AbstractGeneratorContext {
     public readonly logger: Logger;
+    public readonly version: string | undefined;
 
     public constructor(
         public readonly config: FernGeneratorExec.config.GeneratorConfig,
@@ -29,6 +30,13 @@ export abstract class AbstractGeneratorContext {
                 // eslint-disable-next-line no-console
                 console.warn("Encountered error when sending update", e);
             }
+        });
+
+        this.version = this.config.output?.mode._visit({
+            downloadFiles: () => undefined,
+            github: (github) => github.version,
+            publish: (publish) => publish.version,
+            _other: () => undefined
         });
     }
 }

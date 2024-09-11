@@ -550,6 +550,9 @@ importers:
       '@fern-api/php-codegen':
         specifier: workspace:*
         version: link:../codegen
+      '@fern-api/php-model':
+        specifier: workspace:*
+        version: link:../model
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.898
         version: 0.0.898
@@ -3287,6 +3290,8 @@ importers:
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  packages/cli/cli/dist/dev: {}
 
   packages/cli/configuration:
     dependencies:
