@@ -54,7 +54,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
             ):
                 self._non_union_self_referencing_type_ids.add(id)
 
-        self._types_with_non_union_self_referencing_dependencies: Dict[ir_types.TypeId, Set[ir_types.TypeId]] = dict()
+        self._types_with_non_union_self_referencing_dependencies: Dict[ir_types.TypeId, OrderedSet[ir_types.TypeId]] = dict()
         for id, type in self.ir.types.items():
             ordered_reference_types = OrderedSet(list(sorted(type.referenced_types)))
             for referenced_id in ordered_reference_types:

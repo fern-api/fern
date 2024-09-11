@@ -12,8 +12,8 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 from .workspace_submission_status import WorkspaceSubmissionStatus
 from ...core.pydantic_utilities import update_forward_refs
-from ...commons.types.map_value import MapValue
 from ...commons.types.key_value_pair import KeyValuePair
+from ...commons.types.map_value import MapValue
 
 
 class SubmissionTypeState_Test(UniversalBaseModel):
@@ -48,9 +48,9 @@ class SubmissionTypeState_Workspace(UniversalBaseModel):
 
 
 SubmissionTypeState = typing.Union[SubmissionTypeState_Test, SubmissionTypeState_Workspace]
-update_forward_refs(MapValue)
 update_forward_refs(KeyValuePair)
 update_forward_refs(MapValue)
 update_forward_refs(KeyValuePair)
 update_forward_refs(MapValue)
 update_forward_refs(KeyValuePair)
+update_forward_refs(MapValue)

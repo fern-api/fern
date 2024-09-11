@@ -6,8 +6,8 @@ import typing
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 from ...core.pydantic_utilities import update_forward_refs
-from .list_type import ListType
 from .map_type import MapType
+from .list_type import ListType
 
 
 class VariableType_IntegerType(UniversalBaseModel):
@@ -136,11 +136,11 @@ VariableType = typing.Union[
     VariableType_SinglyLinkedListType,
     VariableType_DoublyLinkedListType,
 ]
-update_forward_refs(ListType)
 update_forward_refs(MapType)
+update_forward_refs(ListType)
 update_forward_refs(VariableType_ListType)
-update_forward_refs(ListType)
 update_forward_refs(MapType)
 update_forward_refs(ListType)
 update_forward_refs(MapType)
+update_forward_refs(ListType)
 update_forward_refs(VariableType_MapType)

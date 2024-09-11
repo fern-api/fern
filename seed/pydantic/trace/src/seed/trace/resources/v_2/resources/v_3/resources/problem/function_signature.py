@@ -8,8 +8,8 @@ from .......core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 from ......commons.variable_type import VariableType
 from .......core.pydantic_utilities import update_forward_refs
-from ......commons.list_type import ListType
 from ......commons.map_type import MapType
+from ......commons.list_type import ListType
 
 
 class FunctionSignature_Void(UniversalBaseModel):
@@ -53,7 +53,6 @@ class FunctionSignature_VoidThatTakesActualResult(UniversalBaseModel):
 FunctionSignature = typing.Union[
     FunctionSignature_Void, FunctionSignature_NonVoid, FunctionSignature_VoidThatTakesActualResult
 ]
-update_forward_refs(ListType)
 update_forward_refs(MapType)
 update_forward_refs(ListType)
 update_forward_refs(MapType)
@@ -63,3 +62,4 @@ update_forward_refs(ListType)
 update_forward_refs(MapType)
 update_forward_refs(ListType)
 update_forward_refs(MapType)
+update_forward_refs(ListType)

@@ -10,8 +10,8 @@ import typing_extensions
 from ....commons.types.variable_type import VariableType
 from ....core.serialization import FieldMetadata
 from ....core.pydantic_utilities import update_forward_refs
-from ....commons.types.list_type import ListType
 from ....commons.types.map_type import MapType
+from ....commons.types.list_type import ListType
 
 
 class FunctionSignature_Void(UniversalBaseModel):
@@ -61,7 +61,6 @@ class FunctionSignature_VoidThatTakesActualResult(UniversalBaseModel):
 FunctionSignature = typing.Union[
     FunctionSignature_Void, FunctionSignature_NonVoid, FunctionSignature_VoidThatTakesActualResult
 ]
-update_forward_refs(ListType)
 update_forward_refs(MapType)
 update_forward_refs(ListType)
 update_forward_refs(MapType)
@@ -71,3 +70,4 @@ update_forward_refs(ListType)
 update_forward_refs(MapType)
 update_forward_refs(ListType)
 update_forward_refs(MapType)
+update_forward_refs(ListType)

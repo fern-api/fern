@@ -7,8 +7,8 @@ from ...submission.types.trace_response import TraceResponse
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.pydantic_utilities import update_forward_refs
-from ...commons.types.map_value import MapValue
 from ...commons.types.key_value_pair import KeyValuePair
+from ...commons.types.map_value import MapValue
 from ...commons.types.debug_map_value import DebugMapValue
 from ...commons.types.debug_key_value_pairs import DebugKeyValuePairs
 
@@ -27,7 +27,7 @@ class StoreTracedTestCaseRequest(UniversalBaseModel):
             extra = pydantic.Extra.forbid
 
 
-update_forward_refs(MapValue)
 update_forward_refs(KeyValuePair)
+update_forward_refs(MapValue)
 update_forward_refs(DebugMapValue)
 update_forward_refs(DebugKeyValuePairs)

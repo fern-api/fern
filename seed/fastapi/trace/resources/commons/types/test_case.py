@@ -6,8 +6,8 @@ from .variable_value import VariableValue
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 from ....core.pydantic_utilities import update_forward_refs
-from .map_value import MapValue
 from .key_value_pair import KeyValuePair
+from .map_value import MapValue
 
 
 class TestCase(UniversalBaseModel):
@@ -24,5 +24,5 @@ class TestCase(UniversalBaseModel):
             extra = pydantic.Extra.forbid
 
 
-update_forward_refs(MapValue)
 update_forward_refs(KeyValuePair)
+update_forward_refs(MapValue)

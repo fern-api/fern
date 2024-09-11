@@ -7,8 +7,8 @@ from ......commons.variable_type import VariableType
 from .......core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
 from .......core.pydantic_utilities import update_forward_refs
-from ......commons.list_type import ListType
 from ......commons.map_type import MapType
+from ......commons.list_type import ListType
 
 
 class Parameter(UniversalBaseModel):
@@ -24,5 +24,5 @@ class Parameter(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-update_forward_refs(ListType)
 update_forward_refs(MapType)
+update_forward_refs(ListType)

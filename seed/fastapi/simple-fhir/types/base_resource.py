@@ -6,10 +6,10 @@ import typing
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 from ..core.pydantic_utilities import update_forward_refs
-from .practitioner import Practitioner
+from .account import Account
 from .script import Script
 from .patient import Patient
-from .account import Account
+from .practitioner import Practitioner
 
 
 class BaseResource(UniversalBaseModel):
@@ -30,14 +30,14 @@ class BaseResource(UniversalBaseModel):
 from .resource_list import ResourceList  # noqa: E402
 from .memo import Memo  # noqa: E402
 
-update_forward_refs(Practitioner)
+update_forward_refs(Account)
 update_forward_refs(Script)
 update_forward_refs(Patient)
-update_forward_refs(Account)
 update_forward_refs(Memo)
 update_forward_refs(Practitioner)
+update_forward_refs(Account)
 update_forward_refs(Script)
 update_forward_refs(Patient)
-update_forward_refs(Account)
 update_forward_refs(Memo)
+update_forward_refs(Practitioner)
 update_forward_refs(BaseResource)
