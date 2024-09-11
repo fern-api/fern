@@ -4,6 +4,7 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
+import { generateModels } from "@fern-api/php-model";
 
 export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -20,19 +21,31 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
         return new SdkGeneratorContext(ir, generatorConfig, customConfig, generatorNotificationService);
     }
 
-    protected async parseCustomConfigOrThrow(customConfig: unknown): Promise<SdkCustomConfigSchema> {
+    protected parseCustomConfigOrThrow(customConfig: unknown): SdkCustomConfigSchema {
+        const parsed = customConfig != null ? SdkCustomConfigSchema.parse(customConfig) : undefined;
+        if (parsed != null) {
+            return parsed;
+        }
         return {};
     }
 
     protected async publishPackage(context: SdkGeneratorContext): Promise<void> {
-        return undefined;
+        throw new Error("Method not implemented.");
     }
 
     protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {
-        return undefined;
+        await this.generate(context);
     }
 
     protected async writeForDownload(context: SdkGeneratorContext): Promise<void> {
-        return undefined;
+        await this.generate(context);
+    }
+
+    protected async generate(context: SdkGeneratorContext): Promise<void> {
+        const models = generateModels({ context });
+        for (const file of models) {
+            context.project.addSourceFiles(file);
+        }
+        await context.project.persist();
     }
 }
