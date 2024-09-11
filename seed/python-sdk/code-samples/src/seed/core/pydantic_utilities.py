@@ -79,14 +79,34 @@ def to_jsonable_with_fallback(
 class UniversalBaseModel(pydantic.BaseModel):
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            # Allow fields begining with `model_` to be used in the model
             protected_namespaces=(),
-            json_encoders={dt.datetime: serialize_datetime},
         )  # type: ignore # Pydantic v2
+
+        @pydantic.model_serializer()
+        def serialize_model(self, handler) -> typing.Any:
+            serialized = handler(self)
+            data = {k: serialize_datetime(v) if isinstance(v, dt.datetime) else v for k, v in serialized.items()}
+            return data
+
     else:
 
         class Config:
             smart_union = True
-            json_encoders = {dt.datetime: serialize_datetime}
+
+    @classmethod
+    def model_construct(
+        cls: type[Model], _fields_set: typing.Optional[typing.Set[str]] = None, **values: typing.Any
+    ) -> Model:
+        dealiased_object = convert_and_respect_annotation_metadata(object_=values, annotation=cls, direction="read")
+        return super().model_construct(_fields_set, **dealiased_object)
+
+    @classmethod
+    def construct(
+        cls: type[Model], _fields_set: typing.Optional[typing.Set[str]] = None, **values: typing.Any
+    ) -> Model:
+        dealiased_object = convert_and_respect_annotation_metadata(object_=values, annotation=cls, direction="read")
+        return super().model_construct(_fields_set, **dealiased_object)
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {
@@ -110,21 +130,23 @@ class UniversalBaseModel(pydantic.BaseModel):
         # We'd ideally do the same for Pydantic V2, but it shells out to a library to serialize models
         # that we have less control over, and this is less intrusive than custom serializers for now.
         if IS_PYDANTIC_V2:
-<<<<<<< HEAD
             kwargs_with_defaults_exclude_unset: typing.Any = {
+                **kwargs,
                 "by_alias": True,
                 "exclude_unset": True,
-                **kwargs,
+                "exclude_none": False,
             }
             kwargs_with_defaults_exclude_none: typing.Any = {
+                **kwargs,
                 "by_alias": True,
                 "exclude_none": True,
-                **kwargs,
+                "exclude_unset": False,
             }
             dict_dump = deep_union_pydantic_dicts(
                 super().model_dump(**kwargs_with_defaults_exclude_unset),  # type: ignore # Pydantic v2
                 super().model_dump(**kwargs_with_defaults_exclude_none),  # type: ignore # Pydantic v2
             )
+
         else:
             _fields_set = self.__fields_set__
 
@@ -162,13 +184,6 @@ def deep_union_pydantic_dicts(
             destination[key] = value
 
     return destination
-=======
-            dict_dump = super().model_dump(**kwargs_with_defaults_exclude_unset)  # type: ignore # Pydantic v2
-        else:
-            dict_dump = super().dict(**kwargs_with_defaults_exclude_unset)
-
-        return convert_and_respect_annotation_metadata(object_=dict_dump, annotation=self.__class__, direction="write")
->>>>>>> main
 
 
 if IS_PYDANTIC_V2:
