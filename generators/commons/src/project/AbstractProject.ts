@@ -15,9 +15,7 @@ export abstract class AbstractProject<GeneratorContext extends AbstractGenerator
     }
 
     public async writeRawFiles(): Promise<void> {
-        for (const file of this.rawFiles) {
-            await file.write(this.absolutePathToOutputDirectory);
-        }
+        await Promise.all(this.rawFiles.map(async (file) => await file.write(this.absolutePathToOutputDirectory)));
     }
 
     /**
