@@ -7,6 +7,8 @@ import { getGeneratorList } from "./commands/generator-list/getGeneratorList";
 import { getGeneratorMetadata } from "./commands/generator-metadata/getGeneratorMetadata";
 import { getOrganziation } from "./commands/organization/getOrganization";
 import { upgradeGenerator } from "./commands/upgrade/upgradeGenerator";
+import { getProjectGeneratorUpgrades } from "./cli-context/upgrade-utils/getGeneratorVersions";
+import { getGeneratorUpgradeMessage } from "./cli-context/upgrade-utils/getFernUpgradeMessage";
 
 export function addGetOrganizationCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext): void {
     cli.command(
@@ -126,6 +128,11 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                         .option("channel", {
                             demandOption: false,
                             choices: Object.values(FernRegistry.generators.ReleaseType)
+                        })
+                        .option("list", {
+                            demandOption: false,
+                            boolean: true,
+                            default: false
                         }),
                 async (argv) => {
                     await cliContext.instrumentPostHogEvent({
@@ -139,17 +146,37 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                             rc: argv.rc
                         }
                     });
-                    await upgradeGenerator({
-                        cliContext,
-                        generator: argv.generator,
-                        group: argv.group,
-                        project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                            commandLineApiWorkspace: argv.api,
-                            defaultToAllApiWorkspaces: true
-                        }),
-                        includeMajor: argv.includeMajor,
-                        channel: argv.channel
+
+                    const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                        commandLineApiWorkspace: argv.api,
+                        defaultToAllApiWorkspaces: true
                     });
+
+                    if (argv.list) {
+                        const upgrades = await getProjectGeneratorUpgrades({
+                            cliContext,
+                            project,
+                            generatorFilter: argv.generator,
+                            groupFilter: argv.group
+                        });
+
+                        getGeneratorUpgradeMessage({
+                            generatorUpgradeInfo: upgrades,
+                            includeBoxen: true
+                        });
+                    } else {
+                        await upgradeGenerator({
+                            cliContext,
+                            generator: argv.generator,
+                            group: argv.group,
+                            project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                                commandLineApiWorkspace: argv.api,
+                                defaultToAllApiWorkspaces: true
+                            }),
+                            includeMajor: argv.includeMajor,
+                            channel: argv.channel
+                        });
+                    }
                 }
             )
             .command(
