@@ -48,5 +48,5 @@ class TestCaseGrade_NonHidden(UniversalBaseModel):
 
 
 TestCaseGrade = typing.Union[TestCaseGrade_Hidden, TestCaseGrade_NonHidden]
-update_forward_refs(KeyValuePair)
-update_forward_refs(MapValue)
+update_forward_refs(KeyValuePair, TestCaseGrade_NonHidden=TestCaseGrade_NonHidden)
+update_forward_refs(MapValue, TestCaseGrade_NonHidden=TestCaseGrade_NonHidden)

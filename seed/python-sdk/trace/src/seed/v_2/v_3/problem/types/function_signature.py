@@ -61,13 +61,9 @@ class FunctionSignature_VoidThatTakesActualResult(UniversalBaseModel):
 FunctionSignature = typing.Union[
     FunctionSignature_Void, FunctionSignature_NonVoid, FunctionSignature_VoidThatTakesActualResult
 ]
-update_forward_refs(ListType)
-update_forward_refs(MapType)
-update_forward_refs(ListType)
-update_forward_refs(MapType)
-update_forward_refs(ListType)
-update_forward_refs(MapType)
-update_forward_refs(ListType)
-update_forward_refs(MapType)
-update_forward_refs(ListType)
-update_forward_refs(MapType)
+update_forward_refs(ListType, FunctionSignature_Void=FunctionSignature_Void)
+update_forward_refs(MapType, FunctionSignature_Void=FunctionSignature_Void)
+update_forward_refs(ListType, FunctionSignature_NonVoid=FunctionSignature_NonVoid)
+update_forward_refs(MapType, FunctionSignature_NonVoid=FunctionSignature_NonVoid)
+update_forward_refs(ListType, FunctionSignature_VoidThatTakesActualResult=FunctionSignature_VoidThatTakesActualResult)
+update_forward_refs(MapType, FunctionSignature_VoidThatTakesActualResult=FunctionSignature_VoidThatTakesActualResult)

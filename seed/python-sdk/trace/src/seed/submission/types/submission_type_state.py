@@ -48,9 +48,5 @@ class SubmissionTypeState_Workspace(UniversalBaseModel):
 
 
 SubmissionTypeState = typing.Union[SubmissionTypeState_Test, SubmissionTypeState_Workspace]
-update_forward_refs(KeyValuePair)
-update_forward_refs(MapValue)
-update_forward_refs(KeyValuePair)
-update_forward_refs(MapValue)
-update_forward_refs(KeyValuePair)
-update_forward_refs(MapValue)
+update_forward_refs(KeyValuePair, SubmissionTypeState_Test=SubmissionTypeState_Test)
+update_forward_refs(MapValue, SubmissionTypeState_Test=SubmissionTypeState_Test)

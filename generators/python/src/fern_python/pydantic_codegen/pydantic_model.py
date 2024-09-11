@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 from types import TracebackType
-from typing import Callable, List, Literal, Optional, Sequence, Tuple, Type, Union
+from typing import Callable, Iterable, List, Literal, Optional, Sequence, Tuple, Type, Union
 
 from fern_python.codegen import AST, ClassParent, LocalClassReference, SourceFile
 from fern_python.external_dependencies import Pydantic, PydanticVersionCompatibility
@@ -370,6 +370,7 @@ class PydanticModel:
                 AST.FunctionInvocation(
                     function_definition=self._update_forward_ref_function_reference,
                     args=[AST.Expression(given_model)],
+                    kwargs=[(get_named_import_or_throw(self._local_class_reference), AST.Expression(self._local_class_reference))]
                 )
             )
         )
