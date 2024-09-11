@@ -93,12 +93,16 @@ class UniversalBaseModel(pydantic.BaseModel):
             smart_union = True
 
     @classmethod
-    def model_construct(cls: type[Model], _fields_set: typing.Optional[typing.Set[str]] = None, **values: typing.Any) -> Model:
+    def model_construct(
+        cls: type[Model], _fields_set: typing.Optional[typing.Set[str]] = None, **values: typing.Any
+    ) -> Model:
         dealiased_object = convert_and_respect_annotation_metadata(object_=values, annotation=cls, direction="read")
         return super().model_construct(_fields_set, **dealiased_object)
-    
+
     @classmethod
-    def construct(cls: type[Model], _fields_set: typing.Optional[typing.Set[str]] = None, **values: typing.Any) -> Model:
+    def construct(
+        cls: type[Model], _fields_set: typing.Optional[typing.Set[str]] = None, **values: typing.Any
+    ) -> Model:
         dealiased_object = convert_and_respect_annotation_metadata(object_=values, annotation=cls, direction="read")
         return super().model_construct(_fields_set, **dealiased_object)
 
