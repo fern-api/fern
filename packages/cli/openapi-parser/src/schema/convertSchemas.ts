@@ -117,6 +117,7 @@ export function convertReferenceObject(
         : SchemaWithExample.reference(convertToReferencedSchema(schema, breadcrumbs, source));
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
+            title: undefined,
             nameOverride: undefined,
             generatedName: getGeneratedTypeName(breadcrumbs),
             value: referenceSchema,
@@ -165,6 +166,7 @@ export function convertSchemaObject(
     groupName = context.resolveGroupName(groupName);
 
     const generatedName = getGeneratedTypeName(breadcrumbs);
+    const title = schema.title;
     const description = schema.description;
     const availability = convertAvailability(schema);
 
@@ -264,6 +266,7 @@ export function convertSchemaObject(
             return SchemaWithExample.nullable({
                 nameOverride,
                 generatedName,
+                title,
                 value: convertSchemaObject(
                     {
                         ...schema,
@@ -287,6 +290,7 @@ export function convertSchemaObject(
             return SchemaWithExample.nullable({
                 nameOverride,
                 generatedName,
+                title,
                 value: convertSchemaObject(
                     {
                         ...schema,
@@ -435,6 +439,7 @@ export function convertSchemaObject(
             return SchemaWithExample.unknown({
                 nameOverride,
                 generatedName,
+                title,
                 description,
                 availability,
                 groupName,

@@ -490,8 +490,8 @@ export function buildOneOfTypeDeclaration({
                     literal: (value) => value.title,
                     oneOf: (value) => value.title,
                     nullable: (value) => value.title,
-                    unknown: (value) => undefined,
-                    _other: (value) => undefined
+                    unknown: () => undefined,
+                    _other: () => undefined
                 });
                 maybeSingleUnionTypeSchema["display-name"] = maybeDisplayName;
             }
