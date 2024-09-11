@@ -239,6 +239,8 @@
                                 "inline": null
                             }
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     },
                     {
@@ -357,6 +359,8 @@
                                 "inline": null
                             }
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     }
                 ]
@@ -584,6 +588,8 @@
                                 "inline": null
                             }
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": "This is a Foo field."
                     },
                     {
@@ -702,6 +708,8 @@
                                 "inline": null
                             }
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     }
                 ]
@@ -872,6 +880,8 @@
                                 }
                             }
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     },
                     {
@@ -933,6 +943,8 @@
                                 }
                             }
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     }
                 ]
@@ -1130,6 +1142,8 @@
                             },
                             "typeId": "type_types:Foo"
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     },
                     {
@@ -1221,6 +1235,8 @@
                             },
                             "typeId": "type_types:Bar"
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": "This is a bar field."
                     }
                 ]
@@ -1421,6 +1437,8 @@
                             },
                             "typeId": "type_types:Foo"
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     },
                     {
@@ -1449,6 +1467,8 @@
                         "shape": {
                             "_type": "noProperties"
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     }
                 ]
@@ -1654,6 +1674,8 @@
                                 }
                             }
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     }
                 ]
@@ -1859,6 +1881,8 @@
                                 }
                             }
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     },
                     {
@@ -1920,6 +1944,8 @@
                                 }
                             }
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     },
                     {
@@ -2011,6 +2037,8 @@
                             },
                             "typeId": "type_types:Foo"
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     }
                 ]
@@ -2180,6 +2208,8 @@
                                 }
                             }
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     },
                     {
@@ -2237,6 +2267,8 @@
                                 }
                             }
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     },
                     {
@@ -2294,6 +2326,8 @@
                                 }
                             }
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     }
                 ]
@@ -2463,6 +2497,8 @@
                                 }
                             }
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     },
                     {
@@ -2526,6 +2562,8 @@
                                 }
                             }
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     }
                 ]
@@ -2723,6 +2761,8 @@
                             },
                             "typeId": "type_types:Foo"
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     }
                 ]
@@ -3326,6 +3366,8 @@
                             },
                             "typeId": "type_union:Circle"
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     },
                     {
@@ -3417,6 +3459,8 @@
                             },
                             "typeId": "type_union:Square"
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     }
                 ]
