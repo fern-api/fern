@@ -64,6 +64,7 @@ const ROOT_CLIENT_VARIABLE_NAME = "client";
 export declare namespace SdkContextImpl {
     export interface Init {
         logger: Logger;
+        version: string | undefined;
         ir: IntermediateRepresentation;
         config: FernGeneratorExec.GeneratorConfig;
         sourceFile: SourceFile;
@@ -131,7 +132,7 @@ export class SdkContextImpl implements SdkContext {
     public readonly rootClientVariableName: string;
     public readonly sdkInstanceReferenceForSnippet: ts.Identifier;
 
-    public readonly version: VersionContextImpl;
+    public readonly versionContext: VersionContextImpl;
     public readonly sdkError: SdkErrorContextImpl;
     public readonly sdkErrorSchema: SdkErrorSchemaContextImpl;
     public readonly endpointErrorUnion: EndpointErrorUnionContextImpl;
@@ -224,7 +225,7 @@ export class SdkContextImpl implements SdkContext {
         });
         this.fernConstants = fernConstants;
 
-        this.version = new VersionContextImpl({
+        this.versionContext = new VersionContextImpl({
             intermediateRepresentation,
             versionGenerator,
             versionDeclarationReferencer,
@@ -330,4 +331,5 @@ export class SdkContextImpl implements SdkContext {
             timeoutSdkErrorGenerator
         });
     }
+    version: string | undefined;
 }
