@@ -4,7 +4,8 @@
 
 import * as FernIr from "../../../index";
 
-export interface SingleUnionType extends FernIr.WithDocs {
+export interface SingleUnionType extends FernIr.Declaration {
     discriminantValue: FernIr.NameAndWireValue;
     shape: FernIr.SingleUnionTypeProperties;
+    displayName: string | undefined;
 }

@@ -7,19 +7,21 @@ import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { NameAndWireValue } from "../../commons/types/NameAndWireValue";
 import { SingleUnionTypeProperties } from "./SingleUnionTypeProperties";
-import { WithDocs } from "../../commons/types/WithDocs";
+import { Declaration } from "../../commons/types/Declaration";
 
 export const SingleUnionType: core.serialization.ObjectSchema<serializers.SingleUnionType.Raw, FernIr.SingleUnionType> =
     core.serialization
         .objectWithoutOptionalProperties({
             discriminantValue: NameAndWireValue,
             shape: SingleUnionTypeProperties,
+            displayName: core.serialization.string().optional(),
         })
-        .extend(WithDocs);
+        .extend(Declaration);
 
 export declare namespace SingleUnionType {
-    interface Raw extends WithDocs.Raw {
+    interface Raw extends Declaration.Raw {
         discriminantValue: NameAndWireValue.Raw;
         shape: SingleUnionTypeProperties.Raw;
+        displayName?: string | null;
     }
 }
