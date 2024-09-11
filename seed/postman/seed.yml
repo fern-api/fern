@@ -1,4 +1,6 @@
 irVersion: v53
+image: fernapi/fern-postman
+changelogLocation: ../../generators/postman/versions.yml
 publish:
   preBuildCommands:
     - pnpm --filter @fern-api/postman-generator dist:cli

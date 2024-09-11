@@ -877,10 +877,16 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
         "docs dev",
         "Run a local development server to preview your docs",
         (yargs) =>
-            yargs.option("port", {
-                number: true,
-                description: "Run the development server on the following port"
-            }),
+            yargs
+                .option("port", {
+                    number: true,
+                    description: "Run the development server on the following port"
+                })
+                .option("bundle-path", {
+                    string: true,
+                    hidden: true,
+                    description: "Path of the local docs bundle to use"
+                }),
         async (argv) => {
             let port: number;
             if (argv.port != null) {
@@ -888,6 +894,7 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
             } else {
                 port = await getPort({ port: [3000, 3001, 3002, 3003, 3004, 3005, 3006, 3007, 3008, 3009, 3010] });
             }
+            const bundlePath: string | undefined = argv.bundlePath;
             await previewDocsWorkspace({
                 loadProject: () =>
                     loadProjectAndRegisterWorkspacesWithContext(cliContext, {
@@ -895,7 +902,8 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                         commandLineApiWorkspace: undefined
                     }),
                 cliContext,
-                port
+                port,
+                bundlePath
             });
         }
     );

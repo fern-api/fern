@@ -1,4 +1,6 @@
 irVersion: v46
+changelogLocation: ../../generators/java/sdk/versions.yml
+image: fernapi/fern-java-sdk
 publish:
   workingDirectory: generators/java
   preBuildCommands:

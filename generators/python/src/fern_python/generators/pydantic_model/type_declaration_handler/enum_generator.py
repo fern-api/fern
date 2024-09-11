@@ -39,7 +39,7 @@ class EnumGenerator(AbstractTypeGenerator):
         self._enum = enum
 
     def generate(self) -> None:
-        if self._enum_type == "literals":
+        if self._use_str_enums:
             self._source_file.add_declaration(
                 AST.TypeAliasDeclaration(
                     type_hint=AST.TypeHint.union(

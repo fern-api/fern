@@ -139,11 +139,13 @@ export abstract class TestRunner {
         const irVersion = this.generator.workspaceConfig.irVersion;
         const publishMetadata = configuration?.publishMetadata ?? undefined;
         const readme = configuration?.readmeConfig ?? undefined;
-        const fernWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
-            absolutePathToAPIDefinition,
-            taskContext,
-            fixture
-        });
+        const fernWorkspace = await (
+            await convertGeneratorWorkspaceToFernWorkspace({
+                absolutePathToAPIDefinition,
+                taskContext,
+                fixture
+            })
+        )?.toFernWorkspace({ context: taskContext });
         if (fernWorkspace == null) {
             return {
                 type: "failure",

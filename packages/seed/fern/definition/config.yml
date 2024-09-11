@@ -13,6 +13,7 @@ types:
 
   SeedWorkspaceConfiguration:
     properties:
+      image: string
       irVersion: string
       test: TestConfiguration
       publish: PublishConfiguration

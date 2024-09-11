@@ -3,7 +3,7 @@ name: changelog
 on:
   push:
     branches:
-      - main  
+      - main
   pull_request:
     branches:
       - main
@@ -28,7 +28,11 @@ jobs:
         run: |
           pnpm seed:local validate cli --log-level debug
 
-  fastapi:
+  generator-validate:
+    strategy:
+      matrix:
+        generator: [fastapi, pydantic, python-sdk, go-sdk, ruby-sdk, postman, openapi]
+
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo at current ref
@@ -41,64 +45,4 @@ jobs:
 
       - name: Validate changelog
         run: |
-          pnpm seed:local validate generator fastapi --log-level debug
-
-  pydantic:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo at current ref
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Install
-        uses: ./.github/actions/install
-
-      - name: Validate changelog
-        run: |
-          pnpm seed:local validate generator pydantic --log-level debug
-
-  python-sdk:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo at current ref
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Install
-        uses: ./.github/actions/install
-
-      - name: Validate changelog
-        run: |
-          pnpm seed:local validate generator python-sdk --log-level debug
-
-  go-sdk:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo at current ref
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Install
-        uses: ./.github/actions/install
-
-      - name: Validate changelog
-        run: |
-          pnpm seed:local validate generator go-sdk --log-level debug
-
-  ruby-sdk:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo at current ref
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Install
-        uses: ./.github/actions/install
-
-      - name: Validate changelog
-        run: |
-          pnpm seed:local validate generator ruby-sdk --log-level debug
+          pnpm seed:local validate generator ${{ matrix.generator }} --log-level debug

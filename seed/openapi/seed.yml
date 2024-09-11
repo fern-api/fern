@@ -1,4 +1,6 @@
 irVersion: v23
+image: fernapi/fern-openapi
+changelogLocation: ../../generators/openapi/versions.yml
 publish:
   preBuildCommands:
     - pnpm --filter @fern-api/openapi-generator dist:cli
