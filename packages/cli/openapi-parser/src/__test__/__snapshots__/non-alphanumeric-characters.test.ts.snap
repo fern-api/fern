@@ -95,7 +95,10 @@ exports[`non alphanumeric characters > non-alphanumeric-characters > parse open 
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "non-alphanumeric-characters/openapi.yml",
@@ -114,6 +117,7 @@ exports[`non alphanumeric characters > non-alphanumeric-characters > parse open 
     "DocumentIDSeparators",
   ],
   "schemas": {
+<<<<<<< HEAD
     "DocumentIDSeparators": {
       "availability": null,
       "default": null,
@@ -140,109 +144,151 @@ exports[`non alphanumeric characters > non-alphanumeric-characters > parse open 
           "generatedName": "SLASH",
           "nameOverride": null,
           "value": "/",
+=======
+    "__no_namespace__": {
+      "DocumentIDSeparators": {
+        "availability": null,
+        "default": null,
+        "description": null,
+        "generatedName": "DocumentIdSeparators",
+        "groupName": [],
+        "nameOverride": null,
+        "source": {
+          "file": "non-alphanumeric-characters/openapi.yml",
+          "type": "openapi",
+>>>>>>> 30dc3ebe9d (working, need to polish)
         },
-        {
-          "availability": null,
-          "casing": {
-            "camel": null,
-            "pascal": null,
-            "screamingSnake": null,
-            "snake": null,
-          },
-          "description": null,
-          "generatedName": "HYPHEN",
-          "nameOverride": null,
-          "value": "-",
-        },
-        {
-          "availability": null,
-          "casing": {
-            "camel": null,
-            "pascal": null,
-            "screamingSnake": null,
-            "snake": null,
-          },
-          "description": null,
-          "generatedName": "PIPE",
-          "nameOverride": null,
-          "value": "|",
-        },
-        {
-          "availability": null,
-          "casing": {
-            "camel": null,
-            "pascal": null,
-            "screamingSnake": null,
-            "snake": null,
-          },
-          "description": null,
-          "generatedName": "DOT",
-          "nameOverride": null,
-          "value": ".",
-        },
-        {
-          "availability": null,
-          "casing": {
-            "camel": null,
-            "pascal": null,
-            "screamingSnake": null,
-            "snake": null,
-          },
-          "description": null,
-          "generatedName": "EMPTY",
-          "nameOverride": null,
-          "value": "",
-        },
-      ],
-    },
-    "Settings": {
-      "additionalProperties": false,
-      "allOf": [],
-      "allOfPropertyConflicts": [],
-      "availability": null,
-      "description": null,
-      "generatedName": "Settings",
-      "groupName": [],
-      "nameOverride": null,
-      "properties": [
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "settingsSeparator",
-          "key": "separator",
-          "nameOverride": null,
-          "schema": {
+        "type": "enum",
+        "values": [
+          {
             "availability": null,
+            "casing": {
+              "camel": null,
+              "pascal": null,
+              "screamingSnake": null,
+              "snake": null,
+            },
             "description": null,
-            "generatedName": "settingsSeparator",
-            "groupName": [],
+            "generatedName": "SLASH",
             "nameOverride": null,
+<<<<<<< HEAD
             "title": null,
             "type": "optional",
             "value": {
+=======
+            "value": "/",
+          },
+          {
+            "availability": null,
+            "casing": {
+              "camel": null,
+              "pascal": null,
+              "screamingSnake": null,
+              "snake": null,
+            },
+            "description": null,
+            "generatedName": "HYPHEN",
+            "nameOverride": null,
+            "value": "-",
+          },
+          {
+            "availability": null,
+            "casing": {
+              "camel": null,
+              "pascal": null,
+              "screamingSnake": null,
+              "snake": null,
+            },
+            "description": null,
+            "generatedName": "PIPE",
+            "nameOverride": null,
+            "value": "|",
+          },
+          {
+            "availability": null,
+            "casing": {
+              "camel": null,
+              "pascal": null,
+              "screamingSnake": null,
+              "snake": null,
+            },
+            "description": null,
+            "generatedName": "DOT",
+            "nameOverride": null,
+            "value": ".",
+          },
+          {
+            "availability": null,
+            "casing": {
+              "camel": null,
+              "pascal": null,
+              "screamingSnake": null,
+              "snake": null,
+            },
+            "description": null,
+            "generatedName": "EMPTY",
+            "nameOverride": null,
+            "value": "",
+          },
+        ],
+      },
+      "Settings": {
+        "additionalProperties": false,
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "availability": null,
+        "description": null,
+        "generatedName": "Settings",
+        "groupName": [],
+        "nameOverride": null,
+        "properties": [
+          {
+            "audiences": [],
+            "availability": null,
+            "conflict": {},
+            "generatedName": "settingsSeparator",
+            "key": "separator",
+            "nameOverride": null,
+            "schema": {
+>>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
-              "generatedName": "SettingsSeparator",
-              "groupName": null,
+              "generatedName": "settingsSeparator",
+              "groupName": [],
               "nameOverride": null,
-              "schema": "DocumentIDSeparators",
-              "source": {
-                "file": "non-alphanumeric-characters/openapi.yml",
-                "type": "openapi",
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "SettingsSeparator",
+                "groupName": null,
+                "nameOverride": null,
+                "schema": "DocumentIDSeparators",
+                "source": {
+                  "file": "non-alphanumeric-characters/openapi.yml",
+                  "type": "openapi",
+                },
+                "type": "reference",
               },
+<<<<<<< HEAD
               "title": null,
               "type": "reference",
+=======
+>>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
+        ],
+        "source": {
+          "file": "non-alphanumeric-characters/openapi.yml",
+          "type": "openapi",
         },
-      ],
-      "source": {
-        "file": "non-alphanumeric-characters/openapi.yml",
-        "type": "openapi",
+        "type": "object",
       },
+<<<<<<< HEAD
       "title": null,
       "type": "object",
+=======
+>>>>>>> 30dc3ebe9d (working, need to polish)
     },
   },
   "securitySchemes": {},

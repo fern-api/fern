@@ -13,26 +13,29 @@ exports[`x-fern-type > x-fern-type > parse open api 1`] = `
   "idempotencyHeaders": [],
   "nonRequestReferencedSchemas": [],
   "schemas": {
-    "BaseUser": {
-      "availability": null,
-      "description": null,
-      "encoding": null,
-      "generatedName": "BaseUser",
-      "groupName": null,
-      "key": {
+    "__no_namespace__": {
+      "BaseUser": {
         "availability": null,
         "description": null,
+        "encoding": null,
         "generatedName": "BaseUser",
         "groupName": null,
-        "nameOverride": null,
-        "schema": {
-          "default": null,
-          "format": null,
-          "maxLength": null,
-          "minLength": null,
-          "pattern": null,
-          "type": "string",
+        "key": {
+          "availability": null,
+          "description": null,
+          "generatedName": "BaseUser",
+          "groupName": null,
+          "nameOverride": null,
+          "schema": {
+            "default": null,
+            "format": null,
+            "maxLength": null,
+            "minLength": null,
+            "pattern": null,
+            "type": "string",
+          },
         },
+<<<<<<< HEAD
         "title": null,
       },
       "nameOverride": null,
@@ -43,17 +46,31 @@ exports[`x-fern-type > x-fern-type > parse open api 1`] = `
         "description": null,
         "generatedName": "BaseUser",
         "groupName": null,
+=======
+>>>>>>> 30dc3ebe9d (working, need to polish)
         "nameOverride": null,
-        "schema": {
-          "default": null,
-          "format": null,
-          "maxLength": null,
-          "minLength": null,
-          "pattern": null,
-          "type": "string",
+        "type": "map",
+        "value": {
+          "availability": null,
+          "description": null,
+          "generatedName": "BaseUser",
+          "groupName": null,
+          "nameOverride": null,
+          "schema": {
+            "default": null,
+            "format": null,
+            "maxLength": null,
+            "minLength": null,
+            "pattern": null,
+            "type": "string",
+          },
+          "type": "primitive",
         },
+<<<<<<< HEAD
         "title": null,
         "type": "primitive",
+=======
+>>>>>>> 30dc3ebe9d (working, need to polish)
       },
     },
   },

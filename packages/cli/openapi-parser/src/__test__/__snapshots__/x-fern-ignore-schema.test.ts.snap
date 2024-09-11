@@ -13,57 +13,72 @@ exports[`x-fern-ignore-schema > x-fern-ignore-schema > parse open api 1`] = `
   "idempotencyHeaders": [],
   "nonRequestReferencedSchemas": [],
   "schemas": {
-    "SchemaToKeep": {
-      "additionalProperties": false,
-      "allOf": [],
-      "allOfPropertyConflicts": [],
-      "availability": null,
-      "description": null,
-      "generatedName": "SchemaToKeep",
-      "groupName": [],
-      "nameOverride": null,
-      "properties": [
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "schemaToKeepId",
-          "key": "id",
-          "nameOverride": null,
-          "schema": {
+    "__no_namespace__": {
+      "SchemaToKeep": {
+        "additionalProperties": false,
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "availability": null,
+        "description": null,
+        "generatedName": "SchemaToKeep",
+        "groupName": [],
+        "nameOverride": null,
+        "properties": [
+          {
+            "audiences": [],
             "availability": null,
-            "description": null,
+            "conflict": {},
             "generatedName": "schemaToKeepId",
-            "groupName": [],
+            "key": "id",
             "nameOverride": null,
+<<<<<<< HEAD
             "title": null,
             "type": "optional",
             "value": {
+=======
+            "schema": {
+>>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
-              "generatedName": "SchemaToKeepId",
+              "generatedName": "schemaToKeepId",
               "groupName": [],
               "nameOverride": null,
-              "schema": {
-                "default": null,
-                "format": "uuid",
-                "maxLength": null,
-                "minLength": null,
-                "pattern": null,
-                "type": "string",
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "SchemaToKeepId",
+                "groupName": [],
+                "nameOverride": null,
+                "schema": {
+                  "default": null,
+                  "format": "uuid",
+                  "maxLength": null,
+                  "minLength": null,
+                  "pattern": null,
+                  "type": "string",
+                },
+                "type": "primitive",
               },
+<<<<<<< HEAD
               "title": null,
               "type": "primitive",
+=======
+>>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
+        ],
+        "source": {
+          "file": "x-fern-ignore-schema/openapi.yml",
+          "type": "openapi",
         },
-      ],
-      "source": {
-        "file": "x-fern-ignore-schema/openapi.yml",
-        "type": "openapi",
+        "type": "object",
       },
+<<<<<<< HEAD
       "title": null,
       "type": "object",
+=======
+>>>>>>> 30dc3ebe9d (working, need to polish)
     },
   },
   "securitySchemes": {},

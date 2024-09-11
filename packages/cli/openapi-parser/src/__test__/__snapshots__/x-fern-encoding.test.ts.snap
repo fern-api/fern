@@ -16,29 +16,32 @@ exports[`x-fern-encoding > x-fern-encoding > parse open api 1`] = `
     "Value",
   ],
   "schemas": {
-    "Metadata": {
-      "availability": null,
-      "description": null,
-      "encoding": {
-        "type": "protobuf",
-        "typeName": "google.protobuf.Struct",
-      },
-      "generatedName": "Metadata",
-      "groupName": [],
-      "key": {
+    "__no_namespace__": {
+      "Metadata": {
         "availability": null,
         "description": null,
-        "generatedName": "MetadataKey",
-        "groupName": [],
-        "nameOverride": null,
-        "schema": {
-          "default": null,
-          "format": null,
-          "maxLength": null,
-          "minLength": null,
-          "pattern": null,
-          "type": "string",
+        "encoding": {
+          "type": "protobuf",
+          "typeName": "google.protobuf.Struct",
         },
+        "generatedName": "Metadata",
+        "groupName": [],
+        "key": {
+          "availability": null,
+          "description": null,
+          "generatedName": "MetadataKey",
+          "groupName": [],
+          "nameOverride": null,
+          "schema": {
+            "default": null,
+            "format": null,
+            "maxLength": null,
+            "minLength": null,
+            "pattern": null,
+            "type": "string",
+          },
+        },
+<<<<<<< HEAD
         "title": null,
       },
       "nameOverride": null,
@@ -69,16 +72,17 @@ exports[`x-fern-encoding > x-fern-encoding > parse open api 1`] = `
       "type": "nullable",
       "value": {
         "type": "oneOf",
+=======
+        "nameOverride": null,
+        "type": "map",
+>>>>>>> 30dc3ebe9d (working, need to polish)
         "value": {
           "availability": null,
           "description": null,
-          "encoding": {
-            "type": "protobuf",
-            "typeName": "google.protobuf.Value",
-          },
           "generatedName": "MetadataValue",
-          "groupName": [],
+          "groupName": null,
           "nameOverride": null,
+<<<<<<< HEAD
           "schemas": [
             {
               "availability": null,
@@ -152,12 +156,114 @@ exports[`x-fern-encoding > x-fern-encoding > parse open api 1`] = `
               },
             },
           ],
+=======
+          "schema": "MetadataValue",
+>>>>>>> 30dc3ebe9d (working, need to polish)
           "source": {
             "file": "x-fern-encoding/openapi.yml",
             "type": "openapi",
           },
+<<<<<<< HEAD
           "title": null,
           "type": "undisciminated",
+=======
+          "type": "reference",
+        },
+      },
+      "MetadataValue": {
+        "availability": null,
+        "description": null,
+        "generatedName": "MetadataValue",
+        "groupName": [],
+        "nameOverride": null,
+        "type": "nullable",
+        "value": {
+          "type": "oneOf",
+          "value": {
+            "availability": null,
+            "description": null,
+            "encoding": {
+              "type": "protobuf",
+              "typeName": "google.protobuf.Value",
+            },
+            "generatedName": "MetadataValue",
+            "groupName": [],
+            "nameOverride": null,
+            "schemas": [
+              {
+                "availability": null,
+                "description": null,
+                "generatedName": "MetadataValue",
+                "groupName": [],
+                "nameOverride": null,
+                "schema": {
+                  "default": null,
+                  "exclusiveMaximum": null,
+                  "exclusiveMinimum": null,
+                  "maximum": null,
+                  "minimum": null,
+                  "multipleOf": null,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+              {
+                "availability": null,
+                "description": null,
+                "generatedName": "MetadataValue",
+                "groupName": [],
+                "nameOverride": null,
+                "schema": {
+                  "default": null,
+                  "format": null,
+                  "maxLength": null,
+                  "minLength": null,
+                  "pattern": null,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              {
+                "availability": null,
+                "description": null,
+                "generatedName": "MetadataValue",
+                "groupName": [],
+                "nameOverride": null,
+                "schema": {
+                  "default": null,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              {
+                "availability": null,
+                "description": null,
+                "generatedName": "MetadataValue",
+                "groupName": [],
+                "nameOverride": null,
+                "type": "array",
+                "value": {
+                  "availability": null,
+                  "description": null,
+                  "generatedName": "MetadataValueItem",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "Value",
+                  "source": {
+                    "file": "x-fern-encoding/openapi.yml",
+                    "type": "openapi",
+                  },
+                  "type": "reference",
+                },
+              },
+            ],
+            "source": {
+              "file": "x-fern-encoding/openapi.yml",
+              "type": "openapi",
+            },
+            "type": "undisciminated",
+          },
+>>>>>>> 30dc3ebe9d (working, need to polish)
         },
       },
     },

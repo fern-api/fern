@@ -34,7 +34,10 @@ exports[`open api parser > audio-mpeg-content-type > parse open api 1`] = `
         },
         "type": "file",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "audio-mpeg-content-type/openapi.yml",
@@ -51,7 +54,9 @@ exports[`open api parser > audio-mpeg-content-type > parse open api 1`] = `
   "hasEndpointsMarkedInternal": false,
   "idempotencyHeaders": [],
   "nonRequestReferencedSchemas": [],
-  "schemas": {},
+  "schemas": {
+    "__no_namespace__": {},
+  },
   "securitySchemes": {},
   "servers": [],
   "tags": {

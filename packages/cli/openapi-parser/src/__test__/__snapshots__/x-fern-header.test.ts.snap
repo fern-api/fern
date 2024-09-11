@@ -340,63 +340,68 @@ exports[`x-fern-header > x-fern-header > parse open api 1`] = `
     "User",
   ],
   "schemas": {
-    "StreamUser": {
-      "additionalProperties": false,
-      "allOf": [],
-      "allOfPropertyConflicts": [],
-      "availability": null,
-      "description": null,
-      "generatedName": "StreamUser",
-      "groupName": [],
-      "nameOverride": null,
-      "properties": [
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "streamUserId",
-          "key": "id",
-          "nameOverride": null,
-          "schema": {
+    "__no_namespace__": {
+      "StreamUser": {
+        "additionalProperties": false,
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "availability": null,
+        "description": null,
+        "generatedName": "StreamUser",
+        "groupName": [],
+        "nameOverride": null,
+        "properties": [
+          {
+            "audiences": [],
             "availability": null,
-            "description": null,
+            "conflict": {},
             "generatedName": "streamUserId",
-            "groupName": [],
+            "key": "id",
             "nameOverride": null,
+<<<<<<< HEAD
             "title": null,
             "type": "optional",
             "value": {
+=======
+            "schema": {
+>>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
-              "generatedName": "StreamUserId",
+              "generatedName": "streamUserId",
               "groupName": [],
               "nameOverride": null,
-              "schema": {
-                "default": null,
-                "format": "uuid",
-                "maxLength": null,
-                "minLength": null,
-                "pattern": null,
-                "type": "string",
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "StreamUserId",
+                "groupName": [],
+                "nameOverride": null,
+                "schema": {
+                  "default": null,
+                  "format": "uuid",
+                  "maxLength": null,
+                  "minLength": null,
+                  "pattern": null,
+                  "type": "string",
+                },
+                "type": "primitive",
               },
+<<<<<<< HEAD
               "title": null,
               "type": "primitive",
+=======
+>>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
-        },
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "streamUserStreamed",
-          "key": "streamed",
-          "nameOverride": null,
-          "schema": {
+          {
+            "audiences": [],
             "availability": null,
-            "description": null,
+            "conflict": {},
             "generatedName": "streamUserStreamed",
-            "groupName": [],
+            "key": "streamed",
             "nameOverride": null,
+<<<<<<< HEAD
             "title": null,
             "type": "optional",
             "value": {
@@ -451,58 +456,134 @@ exports[`x-fern-header > x-fern-header > parse open api 1`] = `
               "availability": null,
               "description": null,
               "generatedName": "UserId",
+=======
+            "schema": {
+              "availability": null,
+              "description": null,
+              "generatedName": "streamUserStreamed",
+>>>>>>> 30dc3ebe9d (working, need to polish)
               "groupName": [],
               "nameOverride": null,
-              "schema": {
-                "default": null,
-                "format": "uuid",
-                "maxLength": null,
-                "minLength": null,
-                "pattern": null,
-                "type": "string",
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "StreamUserStreamed",
+                "groupName": null,
+                "nameOverride": null,
+                "type": "literal",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
               },
+<<<<<<< HEAD
               "title": null,
               "type": "primitive",
+=======
+>>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
+        ],
+        "source": {
+          "file": "x-fern-header/openapi.yml",
+          "type": "openapi",
         },
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "userStreamed",
-          "key": "streamed",
-          "nameOverride": null,
-          "schema": {
+        "type": "object",
+      },
+      "User": {
+        "additionalProperties": false,
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "availability": null,
+        "description": null,
+        "generatedName": "User",
+        "groupName": [],
+        "nameOverride": null,
+        "properties": [
+          {
+            "audiences": [],
             "availability": null,
-            "description": null,
-            "generatedName": "userStreamed",
-            "groupName": [],
+            "conflict": {},
+            "generatedName": "userId",
+            "key": "id",
             "nameOverride": null,
+<<<<<<< HEAD
             "title": null,
             "type": "optional",
             "value": {
+=======
+            "schema": {
+>>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
-              "generatedName": "UserStreamed",
-              "groupName": null,
+              "generatedName": "userId",
+              "groupName": [],
               "nameOverride": null,
+<<<<<<< HEAD
               "title": null,
               "type": "literal",
+=======
+              "type": "optional",
+>>>>>>> 30dc3ebe9d (working, need to polish)
               "value": {
-                "type": "boolean",
-                "value": false,
+                "availability": null,
+                "description": null,
+                "generatedName": "UserId",
+                "groupName": [],
+                "nameOverride": null,
+                "schema": {
+                  "default": null,
+                  "format": "uuid",
+                  "maxLength": null,
+                  "minLength": null,
+                  "pattern": null,
+                  "type": "string",
+                },
+                "type": "primitive",
               },
             },
           },
+          {
+            "audiences": [],
+            "availability": null,
+            "conflict": {},
+            "generatedName": "userStreamed",
+            "key": "streamed",
+            "nameOverride": null,
+            "schema": {
+              "availability": null,
+              "description": null,
+              "generatedName": "userStreamed",
+              "groupName": [],
+              "nameOverride": null,
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "UserStreamed",
+                "groupName": null,
+                "nameOverride": null,
+                "type": "literal",
+                "value": {
+                  "type": "boolean",
+                  "value": false,
+                },
+              },
+            },
+          },
+        ],
+        "source": {
+          "file": "x-fern-header/openapi.yml",
+          "type": "openapi",
         },
-      ],
-      "source": {
-        "file": "x-fern-header/openapi.yml",
-        "type": "openapi",
+        "type": "object",
       },
+<<<<<<< HEAD
       "title": null,
       "type": "object",
+=======
+>>>>>>> 30dc3ebe9d (working, need to polish)
     },
   },
   "securitySchemes": {

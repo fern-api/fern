@@ -1,5 +1,5 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Webhook } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { camelCase, isEqual } from "lodash-es";
@@ -8,7 +8,7 @@ import { buildTypeReference } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertFullExample } from "./utils/convertFullExample";
 import { tokenizeString } from "./utils/getEndpointLocation";
-import { convertSdkGroupNameToFile } from "./utils/convertSdkGroupName";
+import { convertEndpointSdkNameToFile } from "./utils/convertSdkGroupName";
 import { getEndpointNamespace } from "./utils/getNamespaceFromGroup";
 
 export function buildWebhooks(context: OpenApiIrConverterContext): void {
@@ -18,7 +18,7 @@ export function buildWebhooks(context: OpenApiIrConverterContext): void {
             continue;
         }
 
-        const maybeWebhookNamespace = getEndpointNamespace(webhook.sdkName);
+        const maybeWebhookNamespace = getEndpointNamespace(webhook.sdkName, webhook.namespace);
 
         const headers: Record<string, RawSchemas.HttpHeaderSchema> = {};
         for (const header of webhook.headers) {
@@ -68,20 +68,32 @@ export interface WebhookLocation {
     tag?: string;
 }
 
-function getWebhookLocation({
+function resolveWebhookLocationWithNamespaceOverride({
+    location,
+    namespaceOverride
+}: {
+    location: WebhookLocation | undefined;
+    namespaceOverride: string | undefined;
+}): WebhookLocation | undefined {
+    if (location == null) {
+        return undefined;
+    }
+    if (namespaceOverride != null) {
+        return {
+            ...location,
+            file: join(RelativeFilePath.of(namespaceOverride), location.file)
+        };
+    }
+    return location;
+}
+
+function getUnresolvedWebhookLocation({
     webhook,
     context
 }: {
     webhook: Webhook;
     context: OpenApiIrConverterContext;
 }): WebhookLocation | undefined {
-    if (webhook.sdkName != null) {
-        return {
-            file: convertSdkGroupNameToFile(webhook.sdkName.groupName),
-            endpointId: webhook.sdkName.methodName
-        };
-    }
-
     const tag = webhook.tags[0];
     const operationId = webhook.operationId;
 
@@ -131,4 +143,24 @@ function getWebhookLocation({
         endpointId: camelCase(operationIdTokens.slice(fileParts.length).join("_")),
         tag
     };
+}
+
+function getWebhookLocation({
+    webhook,
+    context
+}: {
+    webhook: Webhook;
+    context: OpenApiIrConverterContext;
+}): WebhookLocation | undefined {
+    if (webhook.sdkName != null) {
+        return {
+            file: convertEndpointSdkNameToFile({ sdkName: webhook.sdkName, namespaceOverride: webhook.namespace }),
+            endpointId: webhook.sdkName.methodName
+        };
+    }
+
+    return resolveWebhookLocationWithNamespaceOverride({
+        namespaceOverride: webhook.namespace,
+        location: getUnresolvedWebhookLocation({ webhook, context })
+    });
 }

@@ -4,6 +4,13 @@ export function getNamespaceFromGroup(groupName: SdkGroupName): string | undefin
     return groupName.find((group): group is Namespace => typeof group != "string" && group.type == "namespace")?.name;
 }
 
-export function getEndpointNamespace(sdkName: EndpointSdkName | undefined): string | undefined {
-    return sdkName?.groupName != null ? getNamespaceFromGroup(sdkName.groupName) : undefined;
+export function getEndpointNamespace(
+    sdkName: EndpointSdkName | undefined,
+    namespaceOverride: string | undefined
+): string | undefined {
+    return namespaceOverride != undefined
+        ? namespaceOverride
+        : sdkName?.groupName != null
+        ? getNamespaceFromGroup(sdkName.groupName)
+        : undefined;
 }

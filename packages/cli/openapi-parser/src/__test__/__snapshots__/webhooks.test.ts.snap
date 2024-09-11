@@ -13,30 +13,26 @@ exports[`open api parser > webhooks > parse open api 1`] = `
   "idempotencyHeaders": [],
   "nonRequestReferencedSchemas": [],
   "schemas": {
-    "Pet": {
-      "additionalProperties": false,
-      "allOf": [],
-      "allOfPropertyConflicts": [],
-      "availability": null,
-      "description": null,
-      "generatedName": "Pet",
-      "groupName": [],
-      "nameOverride": null,
-      "properties": [
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "petId",
-          "key": "id",
-          "nameOverride": null,
-          "schema": {
+    "__no_namespace__": {
+      "Pet": {
+        "additionalProperties": false,
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "availability": null,
+        "description": null,
+        "generatedName": "Pet",
+        "groupName": [],
+        "nameOverride": null,
+        "properties": [
+          {
+            "audiences": [],
             "availability": null,
-            "description": null,
-            "generatedName": "PetId",
-            "groupName": [],
+            "conflict": {},
+            "generatedName": "petId",
+            "key": "id",
             "nameOverride": null,
             "schema": {
+<<<<<<< HEAD
               "default": null,
               "type": "int64",
             },
@@ -85,9 +81,31 @@ exports[`open api parser > webhooks > parse open api 1`] = `
             "title": null,
             "type": "optional",
             "value": {
+=======
+>>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
-              "generatedName": "PetTag",
+              "generatedName": "PetId",
+              "groupName": [],
+              "nameOverride": null,
+              "schema": {
+                "default": null,
+                "type": "int64",
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "audiences": [],
+            "availability": null,
+            "conflict": {},
+            "generatedName": "petName",
+            "key": "name",
+            "nameOverride": null,
+            "schema": {
+              "availability": null,
+              "description": null,
+              "generatedName": "PetName",
               "groupName": [],
               "nameOverride": null,
               "schema": {
@@ -102,14 +120,50 @@ exports[`open api parser > webhooks > parse open api 1`] = `
               "type": "primitive",
             },
           },
+          {
+            "audiences": [],
+            "availability": null,
+            "conflict": {},
+            "generatedName": "petTag",
+            "key": "tag",
+            "nameOverride": null,
+            "schema": {
+              "availability": null,
+              "description": null,
+              "generatedName": "petTag",
+              "groupName": [],
+              "nameOverride": null,
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "PetTag",
+                "groupName": [],
+                "nameOverride": null,
+                "schema": {
+                  "default": null,
+                  "format": null,
+                  "maxLength": null,
+                  "minLength": null,
+                  "pattern": null,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          },
+        ],
+        "source": {
+          "file": "webhooks/openapi.yml",
+          "type": "openapi",
         },
-      ],
-      "source": {
-        "file": "webhooks/openapi.yml",
-        "type": "openapi",
+        "type": "object",
       },
+<<<<<<< HEAD
       "title": null,
       "type": "object",
+=======
+>>>>>>> 30dc3ebe9d (working, need to polish)
     },
   },
   "securitySchemes": {},
@@ -191,7 +245,10 @@ exports[`open api parser > webhooks > parse open api 1`] = `
         "title": null,
         "type": "reference",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "source": {
         "file": "webhooks/openapi.yml",
         "type": "openapi",

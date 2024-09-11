@@ -370,12 +370,15 @@ class PydanticModel:
                 AST.FunctionInvocation(
                     function_definition=self._update_forward_ref_function_reference,
                     args=[AST.Expression(given_model)],
+<<<<<<< HEAD
                     kwargs=[
                         (
                             get_named_import_or_throw(self._local_class_reference),
                             AST.Expression(self._local_class_reference),
                         )
                     ],
+=======
+>>>>>>> 30dc3ebe9d (working, need to polish)
                 )
             )
         )

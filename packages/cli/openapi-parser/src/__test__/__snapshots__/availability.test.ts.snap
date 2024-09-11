@@ -515,7 +515,10 @@ exports[`open api parser > availability > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "availability/openapi.yml",
@@ -615,7 +618,10 @@ exports[`open api parser > availability > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "availability/openapi.yml",
@@ -779,7 +785,10 @@ exports[`open api parser > availability > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "availability/openapi.yml",
@@ -913,7 +922,10 @@ exports[`open api parser > availability > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "availability/openapi.yml",
@@ -1047,7 +1059,10 @@ exports[`open api parser > availability > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "availability/openapi.yml",
@@ -1067,20 +1082,24 @@ exports[`open api parser > availability > parse open api 1`] = `
     "NotDeprecatedSettings",
   ],
   "schemas": {
-    "DeprecatedParam": {
-      "availability": "Deprecated",
-      "description": null,
-      "generatedName": "DeprecatedParam",
-      "groupName": [],
-      "nameOverride": null,
-      "schema": {
-        "default": null,
-        "format": null,
-        "maxLength": null,
-        "minLength": null,
-        "pattern": null,
-        "type": "string",
+    "__no_namespace__": {
+      "DeprecatedParam": {
+        "availability": "Deprecated",
+        "description": null,
+        "generatedName": "DeprecatedParam",
+        "groupName": [],
+        "nameOverride": null,
+        "schema": {
+          "default": null,
+          "format": null,
+          "maxLength": null,
+          "minLength": null,
+          "pattern": null,
+          "type": "string",
+        },
+        "type": "primitive",
       },
+<<<<<<< HEAD
       "title": null,
       "type": "primitive",
     },
@@ -1102,33 +1121,65 @@ exports[`open api parser > availability > parse open api 1`] = `
           "key": "not_deprecated_setting",
           "nameOverride": null,
           "schema": {
+=======
+      "NotDeprecatedSettings": {
+        "additionalProperties": false,
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "availability": null,
+        "description": null,
+        "generatedName": "NotDeprecatedSettings",
+        "groupName": [],
+        "nameOverride": null,
+        "properties": [
+          {
+            "audiences": [],
+>>>>>>> 30dc3ebe9d (working, need to polish)
             "availability": null,
-            "description": null,
+            "conflict": {},
             "generatedName": "notDeprecatedSettingsNotDeprecatedSetting",
-            "groupName": [],
+            "key": "not_deprecated_setting",
             "nameOverride": null,
+<<<<<<< HEAD
             "title": null,
             "type": "optional",
             "value": {
+=======
+            "schema": {
+>>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
-              "generatedName": "NotDeprecatedSettingsNotDeprecatedSetting",
+              "generatedName": "notDeprecatedSettingsNotDeprecatedSetting",
               "groupName": [],
               "nameOverride": null,
-              "schema": {
-                "default": null,
-                "type": "boolean",
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "NotDeprecatedSettingsNotDeprecatedSetting",
+                "groupName": [],
+                "nameOverride": null,
+                "schema": {
+                  "default": null,
+                  "type": "boolean",
+                },
+                "type": "primitive",
               },
+<<<<<<< HEAD
               "title": null,
               "type": "primitive",
+=======
+>>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
+        ],
+        "source": {
+          "file": "availability/openapi.yml",
+          "type": "openapi",
         },
-      ],
-      "source": {
-        "file": "availability/openapi.yml",
-        "type": "openapi",
+        "type": "object",
       },
+<<<<<<< HEAD
       "title": null,
       "type": "object",
     },
@@ -1150,63 +1201,104 @@ exports[`open api parser > availability > parse open api 1`] = `
           "key": "deprecated_setting",
           "nameOverride": null,
           "schema": {
+=======
+      "Settings": {
+        "additionalProperties": false,
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "availability": null,
+        "description": null,
+        "generatedName": "Settings",
+        "groupName": [],
+        "nameOverride": null,
+        "properties": [
+          {
+            "audiences": [],
+>>>>>>> 30dc3ebe9d (working, need to polish)
             "availability": "Deprecated",
-            "description": null,
+            "conflict": {},
             "generatedName": "settingsDeprecatedSetting",
-            "groupName": [],
+            "key": "deprecated_setting",
             "nameOverride": null,
+<<<<<<< HEAD
             "title": null,
             "type": "optional",
             "value": {
+=======
+            "schema": {
+>>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": "Deprecated",
               "description": null,
-              "generatedName": "SettingsDeprecatedSetting",
+              "generatedName": "settingsDeprecatedSetting",
               "groupName": [],
               "nameOverride": null,
-              "schema": {
-                "default": null,
-                "type": "boolean",
+              "type": "optional",
+              "value": {
+                "availability": "Deprecated",
+                "description": null,
+                "generatedName": "SettingsDeprecatedSetting",
+                "groupName": [],
+                "nameOverride": null,
+                "schema": {
+                  "default": null,
+                  "type": "boolean",
+                },
+                "type": "primitive",
               },
+<<<<<<< HEAD
               "title": null,
               "type": "primitive",
+=======
+>>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
-        },
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "settingsNewSetting",
-          "key": "new_setting",
-          "nameOverride": null,
-          "schema": {
+          {
+            "audiences": [],
             "availability": null,
-            "description": null,
+            "conflict": {},
             "generatedName": "settingsNewSetting",
-            "groupName": [],
+            "key": "new_setting",
             "nameOverride": null,
+<<<<<<< HEAD
             "title": null,
             "type": "optional",
             "value": {
+=======
+            "schema": {
+>>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
-              "generatedName": "SettingsNewSetting",
+              "generatedName": "settingsNewSetting",
               "groupName": [],
               "nameOverride": null,
-              "schema": {
-                "default": null,
-                "type": "boolean",
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "SettingsNewSetting",
+                "groupName": [],
+                "nameOverride": null,
+                "schema": {
+                  "default": null,
+                  "type": "boolean",
+                },
+                "type": "primitive",
               },
+<<<<<<< HEAD
               "title": null,
               "type": "primitive",
+=======
+>>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
+        ],
+        "source": {
+          "file": "availability/openapi.yml",
+          "type": "openapi",
         },
-      ],
-      "source": {
-        "file": "availability/openapi.yml",
-        "type": "openapi",
+        "type": "object",
       },
+<<<<<<< HEAD
       "title": null,
       "type": "object",
     },
@@ -1228,35 +1320,69 @@ exports[`open api parser > availability > parse open api 1`] = `
           "key": "fine_setting",
           "nameOverride": null,
           "schema": {
+=======
+      "WholeDeprecatedSettings": {
+        "additionalProperties": false,
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "availability": "Deprecated",
+        "description": null,
+        "generatedName": "WholeDeprecatedSettings",
+        "groupName": [],
+        "nameOverride": null,
+        "properties": [
+          {
+            "audiences": [],
+>>>>>>> 30dc3ebe9d (working, need to polish)
             "availability": null,
-            "description": null,
+            "conflict": {},
             "generatedName": "wholeDeprecatedSettingsFineSetting",
-            "groupName": [],
+            "key": "fine_setting",
             "nameOverride": null,
+<<<<<<< HEAD
             "title": null,
             "type": "optional",
             "value": {
+=======
+            "schema": {
+>>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
-              "generatedName": "WholeDeprecatedSettingsFineSetting",
+              "generatedName": "wholeDeprecatedSettingsFineSetting",
               "groupName": [],
               "nameOverride": null,
-              "schema": {
-                "default": null,
-                "type": "boolean",
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "WholeDeprecatedSettingsFineSetting",
+                "groupName": [],
+                "nameOverride": null,
+                "schema": {
+                  "default": null,
+                  "type": "boolean",
+                },
+                "type": "primitive",
               },
+<<<<<<< HEAD
               "title": null,
               "type": "primitive",
+=======
+>>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
+        ],
+        "source": {
+          "file": "availability/openapi.yml",
+          "type": "openapi",
         },
-      ],
-      "source": {
-        "file": "availability/openapi.yml",
-        "type": "openapi",
+        "type": "object",
       },
+<<<<<<< HEAD
       "title": null,
       "type": "object",
+=======
+>>>>>>> 30dc3ebe9d (working, need to polish)
     },
   },
   "securitySchemes": {},

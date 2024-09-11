@@ -150,3 +150,7 @@ types:
   WithSdkGroupName:
     properties:
       groupName: optional<SdkGroupName>
+
+  WithNamespace:
+    properties:
+      namespace: optional<string>

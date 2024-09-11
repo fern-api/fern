@@ -105,7 +105,10 @@ exports[`float > float > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "float/openapi.yml",
@@ -123,51 +126,64 @@ exports[`float > float > parse open api 1`] = `
     "Response",
   ],
   "schemas": {
-    "Request": {
-      "additionalProperties": false,
-      "allOf": [],
-      "allOfPropertyConflicts": [],
-      "availability": null,
-      "description": "A generic request type used throughout the API.
+    "__no_namespace__": {
+      "Request": {
+        "additionalProperties": false,
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "availability": null,
+        "description": "A generic request type used throughout the API.
 ",
-      "generatedName": "Request",
-      "groupName": [],
-      "nameOverride": null,
-      "properties": [
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "requestId",
-          "key": "id",
-          "nameOverride": null,
-          "schema": {
+        "generatedName": "Request",
+        "groupName": [],
+        "nameOverride": null,
+        "properties": [
+          {
+            "audiences": [],
             "availability": null,
-            "description": null,
+            "conflict": {},
             "generatedName": "requestId",
-            "groupName": [],
+            "key": "id",
             "nameOverride": null,
+<<<<<<< HEAD
             "title": null,
             "type": "optional",
             "value": {
+=======
+            "schema": {
+>>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
-              "generatedName": "RequestId",
+              "generatedName": "requestId",
               "groupName": [],
               "nameOverride": null,
-              "schema": {
-                "type": "float",
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "RequestId",
+                "groupName": [],
+                "nameOverride": null,
+                "schema": {
+                  "type": "float",
+                },
+                "type": "primitive",
               },
+<<<<<<< HEAD
               "title": null,
               "type": "primitive",
+=======
+>>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
+        ],
+        "source": {
+          "file": "float/openapi.yml",
+          "type": "openapi",
         },
-      ],
-      "source": {
-        "file": "float/openapi.yml",
-        "type": "openapi",
+        "type": "object",
       },
+<<<<<<< HEAD
       "title": null,
       "type": "object",
     },
@@ -177,76 +193,107 @@ exports[`float > float > parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "availability": null,
       "description": "A generic response type used throughout the API.
+=======
+      "Response": {
+        "additionalProperties": false,
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "availability": null,
+        "description": "A generic response type used throughout the API.
+>>>>>>> 30dc3ebe9d (working, need to polish)
 ",
-      "generatedName": "Response",
-      "groupName": [],
-      "nameOverride": null,
-      "properties": [
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "responseId",
-          "key": "id",
-          "nameOverride": null,
-          "schema": {
+        "generatedName": "Response",
+        "groupName": [],
+        "nameOverride": null,
+        "properties": [
+          {
+            "audiences": [],
             "availability": null,
-            "description": null,
+            "conflict": {},
             "generatedName": "responseId",
-            "groupName": [],
+            "key": "id",
             "nameOverride": null,
+<<<<<<< HEAD
             "title": null,
             "type": "optional",
             "value": {
+=======
+            "schema": {
+>>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
-              "generatedName": "ResponseId",
+              "generatedName": "responseId",
               "groupName": [],
               "nameOverride": null,
-              "schema": {
-                "type": "float",
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "ResponseId",
+                "groupName": [],
+                "nameOverride": null,
+                "schema": {
+                  "type": "float",
+                },
+                "type": "primitive",
               },
+<<<<<<< HEAD
               "title": null,
               "type": "primitive",
+=======
+>>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
-        },
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "responseValue",
-          "key": "value",
-          "nameOverride": null,
-          "schema": {
+          {
+            "audiences": [],
             "availability": null,
-            "description": null,
+            "conflict": {},
             "generatedName": "responseValue",
-            "groupName": [],
+            "key": "value",
             "nameOverride": null,
+<<<<<<< HEAD
             "title": null,
             "type": "optional",
             "value": {
+=======
+            "schema": {
+>>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
-              "generatedName": "ResponseValue",
+              "generatedName": "responseValue",
               "groupName": [],
               "nameOverride": null,
-              "schema": {
-                "type": "float",
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "ResponseValue",
+                "groupName": [],
+                "nameOverride": null,
+                "schema": {
+                  "type": "float",
+                },
+                "type": "primitive",
               },
+<<<<<<< HEAD
               "title": null,
               "type": "primitive",
+=======
+>>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
+        ],
+        "source": {
+          "file": "float/openapi.yml",
+          "type": "openapi",
         },
-      ],
-      "source": {
-        "file": "float/openapi.yml",
-        "type": "openapi",
+        "type": "object",
       },
+<<<<<<< HEAD
       "title": null,
       "type": "object",
+=======
+>>>>>>> 30dc3ebe9d (working, need to polish)
     },
   },
   "securitySchemes": {},

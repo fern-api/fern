@@ -49,7 +49,10 @@ exports[`open api parser > undiscriminated-enums > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "undiscriminated-enums/openapi.yml",
@@ -69,29 +72,95 @@ exports[`open api parser > undiscriminated-enums > parse open api 1`] = `
     "FarewellEnum",
   ],
   "schemas": {
-    "Conversation": {
-      "type": "oneOf",
-      "value": {
+    "__no_namespace__": {
+      "Conversation": {
+        "type": "oneOf",
+        "value": {
+          "availability": null,
+          "commonProperties": [],
+          "description": null,
+          "discriminantProperty": "type",
+          "encoding": null,
+          "generatedName": "Conversation",
+          "groupName": [],
+          "nameOverride": null,
+          "schemas": {
+            "goodbye": {
+              "availability": null,
+              "description": null,
+              "generatedName": "ComponentsSchemasFarewell",
+              "groupName": null,
+              "nameOverride": null,
+              "schema": "Farewell",
+              "source": {
+                "file": "undiscriminated-enums/openapi.yml",
+                "type": "openapi",
+              },
+              "type": "reference",
+            },
+            "hello": {
+              "availability": null,
+              "description": null,
+              "generatedName": "ComponentsSchemasGreeting",
+              "groupName": null,
+              "nameOverride": null,
+              "schema": "Greeting",
+              "source": {
+                "file": "undiscriminated-enums/openapi.yml",
+                "type": "openapi",
+              },
+              "type": "reference",
+            },
+          },
+          "source": {
+            "file": "undiscriminated-enums/openapi.yml",
+            "type": "openapi",
+          },
+          "type": "discriminated",
+        },
+      },
+      "Farewell": {
+        "additionalProperties": false,
+        "allOf": [],
+        "allOfPropertyConflicts": [],
         "availability": null,
-        "commonProperties": [],
         "description": null,
-        "discriminantProperty": "type",
-        "encoding": null,
-        "generatedName": "Conversation",
+        "generatedName": "Farewell",
         "groupName": [],
         "nameOverride": null,
-        "schemas": {
-          "goodbye": {
+        "properties": [
+          {
+            "audiences": [],
             "availability": null,
-            "description": null,
-            "generatedName": "ComponentsSchemasFarewell",
-            "groupName": null,
+            "conflict": {},
+            "generatedName": "farewellMessage",
+            "key": "message",
             "nameOverride": null,
-            "schema": "Farewell",
-            "source": {
-              "file": "undiscriminated-enums/openapi.yml",
-              "type": "openapi",
+            "schema": {
+              "availability": null,
+              "description": null,
+              "generatedName": "farewellMessage",
+              "groupName": [],
+              "nameOverride": null,
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "FarewellMessage",
+                "groupName": [],
+                "nameOverride": null,
+                "schema": {
+                  "default": null,
+                  "format": null,
+                  "maxLength": null,
+                  "minLength": null,
+                  "pattern": null,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
             },
+<<<<<<< HEAD
             "title": null,
             "type": "reference",
           },
@@ -110,33 +179,37 @@ exports[`open api parser > undiscriminated-enums > parse open api 1`] = `
             "type": "reference",
           },
         },
+=======
+          },
+        ],
+>>>>>>> 30dc3ebe9d (working, need to polish)
         "source": {
           "file": "undiscriminated-enums/openapi.yml",
           "type": "openapi",
         },
+<<<<<<< HEAD
         "title": null,
         "type": "discriminated",
+=======
+        "type": "object",
+>>>>>>> 30dc3ebe9d (working, need to polish)
       },
-    },
-    "Farewell": {
-      "additionalProperties": false,
-      "allOf": [],
-      "allOfPropertyConflicts": [],
-      "availability": null,
-      "description": null,
-      "generatedName": "Farewell",
-      "groupName": [],
-      "nameOverride": null,
-      "properties": [
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "farewellMessage",
-          "key": "message",
-          "nameOverride": null,
-          "schema": {
+      "FarewellEnum": {
+        "availability": null,
+        "default": null,
+        "description": null,
+        "generatedName": "FarewellEnum",
+        "groupName": [],
+        "nameOverride": null,
+        "source": {
+          "file": "undiscriminated-enums/openapi.yml",
+          "type": "openapi",
+        },
+        "type": "enum",
+        "values": [
+          {
             "availability": null,
+<<<<<<< HEAD
             "description": null,
             "generatedName": "farewellMessage",
             "groupName": [],
@@ -231,36 +304,95 @@ exports[`open api parser > undiscriminated-enums > parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+=======
+            "casing": {
+              "camel": null,
+              "pascal": null,
+              "screamingSnake": null,
+              "snake": null,
+            },
+>>>>>>> 30dc3ebe9d (working, need to polish)
             "description": null,
-            "generatedName": "greetingMessage",
-            "groupName": [],
+            "generatedName": "goodbye",
             "nameOverride": null,
+            "value": "goodbye",
+          },
+          {
+            "availability": null,
+            "casing": {
+              "camel": null,
+              "pascal": null,
+              "screamingSnake": null,
+              "snake": null,
+            },
+            "description": null,
+            "generatedName": "GOODBYE",
+            "nameOverride": null,
+            "value": "GOODBYE",
+          },
+        ],
+      },
+      "Greeting": {
+        "additionalProperties": false,
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "availability": null,
+        "description": null,
+        "generatedName": "Greeting",
+        "groupName": [],
+        "nameOverride": null,
+        "properties": [
+          {
+            "audiences": [],
+            "availability": null,
+            "conflict": {},
+            "generatedName": "greetingMessage",
+            "key": "message",
+            "nameOverride": null,
+<<<<<<< HEAD
             "title": null,
             "type": "optional",
             "value": {
+=======
+            "schema": {
+>>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
-              "generatedName": "GreetingMessage",
+              "generatedName": "greetingMessage",
               "groupName": [],
               "nameOverride": null,
-              "schema": {
-                "default": null,
-                "format": null,
-                "maxLength": null,
-                "minLength": null,
-                "pattern": null,
-                "type": "string",
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "GreetingMessage",
+                "groupName": [],
+                "nameOverride": null,
+                "schema": {
+                  "default": null,
+                  "format": null,
+                  "maxLength": null,
+                  "minLength": null,
+                  "pattern": null,
+                  "type": "string",
+                },
+                "type": "primitive",
               },
+<<<<<<< HEAD
               "title": null,
               "type": "primitive",
+=======
+>>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
+        ],
+        "source": {
+          "file": "undiscriminated-enums/openapi.yml",
+          "type": "openapi",
         },
-      ],
-      "source": {
-        "file": "undiscriminated-enums/openapi.yml",
-        "type": "openapi",
+        "type": "object",
       },
+<<<<<<< HEAD
       "title": null,
       "type": "object",
     },
@@ -305,6 +437,49 @@ exports[`open api parser > undiscriminated-enums > parse open api 1`] = `
           "value": "HELLO",
         },
       ],
+=======
+      "GreetingEnum": {
+        "availability": null,
+        "default": null,
+        "description": null,
+        "generatedName": "GreetingEnum",
+        "groupName": [],
+        "nameOverride": null,
+        "source": {
+          "file": "undiscriminated-enums/openapi.yml",
+          "type": "openapi",
+        },
+        "type": "enum",
+        "values": [
+          {
+            "availability": null,
+            "casing": {
+              "camel": null,
+              "pascal": null,
+              "screamingSnake": null,
+              "snake": null,
+            },
+            "description": null,
+            "generatedName": "hello",
+            "nameOverride": null,
+            "value": "hello",
+          },
+          {
+            "availability": null,
+            "casing": {
+              "camel": null,
+              "pascal": null,
+              "screamingSnake": null,
+              "snake": null,
+            },
+            "description": null,
+            "generatedName": "HELLO",
+            "nameOverride": null,
+            "value": "HELLO",
+          },
+        ],
+      },
+>>>>>>> 30dc3ebe9d (working, need to polish)
     },
   },
   "securitySchemes": {},

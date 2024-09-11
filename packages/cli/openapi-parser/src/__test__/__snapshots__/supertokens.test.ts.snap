@@ -540,7 +540,10 @@ exports[`open api parser > supertokens > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -1049,7 +1052,10 @@ exports[`open api parser > supertokens > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -1618,7 +1624,10 @@ exports[`open api parser > supertokens > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -2092,7 +2101,10 @@ exports[`open api parser > supertokens > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -2640,7 +2652,10 @@ exports[`open api parser > supertokens > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -3240,7 +3255,10 @@ exports[`open api parser > supertokens > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -3786,7 +3804,10 @@ exports[`open api parser > supertokens > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -4385,7 +4406,10 @@ exports[`open api parser > supertokens > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -4926,7 +4950,10 @@ exports[`open api parser > supertokens > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -5443,7 +5470,10 @@ exports[`open api parser > supertokens > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -6292,7 +6322,10 @@ exports[`open api parser > supertokens > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -7249,7 +7282,10 @@ Passing the optional deviceId signifies a resend code flow.
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -7651,7 +7687,10 @@ Passing the optional deviceId signifies a resend code flow.
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -8538,7 +8577,10 @@ Passing the optional deviceId signifies a resend code flow.
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -8999,7 +9041,10 @@ Passing the optional deviceId signifies a resend code flow.
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -9649,7 +9694,10 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -10165,7 +10213,10 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -10637,7 +10688,10 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -11112,7 +11166,10 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -11695,7 +11752,10 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -12198,7 +12258,10 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -12639,7 +12702,10 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -13236,7 +13302,10 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -13744,7 +13813,10 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -14128,7 +14200,10 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -14731,7 +14806,10 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -15309,7 +15387,10 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -15948,7 +16029,10 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -16388,7 +16472,10 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -16998,7 +17085,10 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -17383,7 +17473,10 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -17792,7 +17885,10 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -18159,7 +18255,10 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -18633,7 +18732,10 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -19138,7 +19240,10 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -19505,7 +19610,10 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -19997,7 +20105,10 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -20550,7 +20661,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -20953,7 +21067,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -21421,7 +21538,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -21889,7 +22009,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -22322,7 +22445,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -22750,7 +22876,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -23232,7 +23361,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -23663,7 +23795,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -24114,7 +24249,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -24550,7 +24688,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -24989,7 +25130,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -25386,7 +25530,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -25973,7 +26120,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -26722,7 +26872,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -27236,7 +27389,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -27886,7 +28042,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -28601,7 +28760,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -29034,7 +29196,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -29544,7 +29709,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -29976,7 +30144,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -30420,7 +30591,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -30966,7 +31140,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -31203,7 +31380,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -31635,7 +31815,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -32079,7 +32262,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -32828,7 +33014,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -33675,7 +33864,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -34148,7 +34340,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -34704,7 +34899,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -35171,7 +35369,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -35561,7 +35762,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -36097,7 +36301,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -36666,7 +36873,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -36941,7 +37151,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -37317,7 +37530,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -37414,7 +37630,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -37511,7 +37730,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -37608,7 +37830,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -37705,7 +37930,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -37802,7 +38030,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -38204,7 +38435,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -38589,7 +38823,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -38966,7 +39203,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -39892,7 +40132,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -40224,7 +40467,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -40574,7 +40820,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -41000,7 +41249,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -41315,7 +41567,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -41676,7 +41931,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -41947,7 +42205,10 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -42014,6 +42275,7 @@ e.g.:
     "emailVerificationVerifyTokenRequest",
   ],
   "schemas": {
+<<<<<<< HEAD
     "codeId": {
       "availability": null,
       "description": "Uniquely identifies a code",
@@ -42180,9 +42442,13 @@ e.g.:
       "generatedName": "CreateJwtPayload",
       "groupName": [],
       "key": {
+=======
+    "__no_namespace__": {
+      "codeId": {
+>>>>>>> 30dc3ebe9d (working, need to polish)
         "availability": null,
-        "description": null,
-        "generatedName": "CreateJwtPayloadKey",
+        "description": "Uniquely identifies a code",
+        "generatedName": "CodeId",
         "groupName": [],
         "nameOverride": null,
         "schema": {
@@ -42193,6 +42459,7 @@ e.g.:
           "pattern": null,
           "type": "string",
         },
+<<<<<<< HEAD
         "title": null,
       },
       "nameOverride": null,
@@ -42278,20 +42545,45 @@ e.g.:
               "type": "reference",
             },
           },
+=======
+        "type": "primitive",
+      },
+      "codeLifetime": {
+        "availability": null,
+        "description": "The maximum lifetime of the code in milliseconds",
+        "generatedName": "CodeLifetime",
+        "groupName": [],
+        "nameOverride": null,
+        "schema": {
+          "default": null,
+          "exclusiveMaximum": null,
+          "exclusiveMinimum": null,
+          "maximum": null,
+          "minimum": null,
+          "multipleOf": null,
+          "type": "double",
+>>>>>>> 30dc3ebe9d (working, need to polish)
         },
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "emailVerificationVerifyTokenRequestEmail",
-          "key": "email",
-          "nameOverride": null,
-          "schema": {
+        "type": "primitive",
+      },
+      "cookieInfo": {
+        "additionalProperties": false,
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "availability": null,
+        "description": null,
+        "generatedName": "CookieInfo",
+        "groupName": [],
+        "nameOverride": null,
+        "properties": [
+          {
+            "audiences": [],
             "availability": null,
-            "description": null,
-            "generatedName": "emailVerificationVerifyTokenRequestEmail",
-            "groupName": [],
+            "conflict": {},
+            "generatedName": "cookieInfoToken",
+            "key": "token",
             "nameOverride": null,
+<<<<<<< HEAD
             "title": null,
             "type": "optional",
             "value": {
@@ -42588,10 +42880,397 @@ e.g.:
               "nameOverride": null,
               "title": null,
               "type": "array",
+=======
+            "schema": {
+              "availability": null,
+              "description": null,
+              "generatedName": "cookieInfoToken",
+              "groupName": [],
+              "nameOverride": null,
+              "type": "optional",
+>>>>>>> 30dc3ebe9d (working, need to polish)
               "value": {
                 "availability": null,
                 "description": null,
-                "generatedName": "JwkX5CItem",
+                "generatedName": "CookieInfoToken",
+                "groupName": null,
+                "nameOverride": null,
+                "schema": "token",
+                "source": {
+                  "file": "supertokens/openapi.yml",
+                  "type": "openapi",
+                },
+                "type": "reference",
+              },
+            },
+          },
+          {
+            "audiences": [],
+            "availability": null,
+            "conflict": {},
+            "generatedName": "cookieInfoExpiry",
+            "key": "expiry",
+            "nameOverride": null,
+            "schema": {
+              "availability": null,
+              "description": null,
+              "generatedName": "cookieInfoExpiry",
+              "groupName": [],
+              "nameOverride": null,
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "CookieInfoExpiry",
+                "groupName": null,
+                "nameOverride": null,
+                "schema": "expiry",
+                "source": {
+                  "file": "supertokens/openapi.yml",
+                  "type": "openapi",
+                },
+                "type": "reference",
+              },
+            },
+          },
+          {
+            "audiences": [],
+            "availability": null,
+            "conflict": {},
+            "generatedName": "cookieInfoCreatedTime",
+            "key": "createdTime",
+            "nameOverride": null,
+            "schema": {
+              "availability": null,
+              "description": null,
+              "generatedName": "cookieInfoCreatedTime",
+              "groupName": [],
+              "nameOverride": null,
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "CookieInfoCreatedTime",
+                "groupName": null,
+                "nameOverride": null,
+                "schema": "timeCreated",
+                "source": {
+                  "file": "supertokens/openapi.yml",
+                  "type": "openapi",
+                },
+                "type": "reference",
+              },
+            },
+          },
+        ],
+        "source": {
+          "file": "supertokens/openapi.yml",
+          "type": "openapi",
+        },
+        "type": "object",
+      },
+      "createJWTAlgorithm": {
+        "availability": null,
+        "description": "The algorithm to use when creating the JWT.",
+        "generatedName": "CreateJwtAlgorithm",
+        "groupName": [],
+        "nameOverride": null,
+        "type": "literal",
+        "value": {
+          "type": "string",
+          "value": "RS256",
+        },
+      },
+      "createJWTPayload": {
+        "availability": null,
+        "description": "The payload of the JWT, should be a JSON object.",
+        "encoding": null,
+        "generatedName": "CreateJwtPayload",
+        "groupName": [],
+        "key": {
+          "availability": null,
+          "description": null,
+          "generatedName": "CreateJwtPayloadKey",
+          "groupName": [],
+          "nameOverride": null,
+          "schema": {
+            "default": null,
+            "format": null,
+            "maxLength": null,
+            "minLength": null,
+            "pattern": null,
+            "type": "string",
+          },
+        },
+        "nameOverride": null,
+        "type": "map",
+        "value": {
+          "generatedName": "CreateJwtPayloadValue",
+          "nameOverride": null,
+          "type": "unknown",
+        },
+      },
+      "deviceId": {
+        "availability": null,
+        "description": "A random identifier that should be stored on the device that started the sign in process.",
+        "generatedName": "DeviceId",
+        "groupName": [],
+        "nameOverride": null,
+        "schema": {
+          "default": null,
+          "format": null,
+          "maxLength": null,
+          "minLength": null,
+          "pattern": null,
+          "type": "string",
+        },
+        "type": "primitive",
+      },
+      "email": {
+        "availability": null,
+        "description": null,
+        "generatedName": "Email",
+        "groupName": [],
+        "nameOverride": null,
+        "schema": {
+          "default": null,
+          "format": null,
+          "maxLength": null,
+          "minLength": null,
+          "pattern": null,
+          "type": "string",
+        },
+        "type": "primitive",
+      },
+      "emailVerificationVerifyTokenRequest": {
+        "additionalProperties": false,
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "availability": null,
+        "description": null,
+        "generatedName": "EmailVerificationVerifyTokenRequest",
+        "groupName": [],
+        "nameOverride": null,
+        "properties": [
+          {
+            "audiences": [],
+            "availability": null,
+            "conflict": {},
+            "generatedName": "emailVerificationVerifyTokenRequestUserId",
+            "key": "userId",
+            "nameOverride": null,
+            "schema": {
+              "availability": null,
+              "description": null,
+              "generatedName": "emailVerificationVerifyTokenRequestUserId",
+              "groupName": [],
+              "nameOverride": null,
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "EmailVerificationVerifyTokenRequestUserId",
+                "groupName": null,
+                "nameOverride": null,
+                "schema": "userId",
+                "source": {
+                  "file": "supertokens/openapi.yml",
+                  "type": "openapi",
+                },
+                "type": "reference",
+              },
+            },
+          },
+          {
+            "audiences": [],
+            "availability": null,
+            "conflict": {},
+            "generatedName": "emailVerificationVerifyTokenRequestEmail",
+            "key": "email",
+            "nameOverride": null,
+            "schema": {
+              "availability": null,
+              "description": null,
+              "generatedName": "emailVerificationVerifyTokenRequestEmail",
+              "groupName": [],
+              "nameOverride": null,
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "EmailVerificationVerifyTokenRequestEmail",
+                "groupName": null,
+                "nameOverride": null,
+                "schema": "email",
+                "source": {
+                  "file": "supertokens/openapi.yml",
+                  "type": "openapi",
+                },
+                "type": "reference",
+              },
+            },
+          },
+        ],
+        "source": {
+          "file": "supertokens/openapi.yml",
+          "type": "openapi",
+        },
+        "type": "object",
+      },
+      "enableAntiCsrf": {
+        "availability": null,
+        "description": null,
+        "generatedName": "EnableAntiCsrf",
+        "groupName": [],
+        "nameOverride": null,
+        "schema": {
+          "default": null,
+          "type": "boolean",
+        },
+        "type": "primitive",
+      },
+      "expiry": {
+        "availability": null,
+        "description": null,
+        "generatedName": "Expiry",
+        "groupName": [],
+        "nameOverride": null,
+        "schema": {
+          "default": null,
+          "exclusiveMaximum": null,
+          "exclusiveMinimum": null,
+          "maximum": null,
+          "minimum": null,
+          "multipleOf": null,
+          "type": "double",
+        },
+        "type": "primitive",
+      },
+      "handle": {
+        "availability": null,
+        "description": null,
+        "generatedName": "Handle",
+        "groupName": [],
+        "nameOverride": null,
+        "schema": {
+          "default": null,
+          "format": null,
+          "maxLength": null,
+          "minLength": null,
+          "pattern": null,
+          "type": "string",
+        },
+        "type": "primitive",
+      },
+      "helloResponse": {
+        "availability": null,
+        "description": null,
+        "generatedName": "HelloResponse",
+        "groupName": [],
+        "nameOverride": null,
+        "type": "literal",
+        "value": {
+          "type": "string",
+          "value": "Hello",
+        },
+      },
+      "internalError": {
+        "availability": null,
+        "description": null,
+        "generatedName": "InternalError",
+        "groupName": [],
+        "nameOverride": null,
+        "type": "literal",
+        "value": {
+          "type": "string",
+          "value": "Internal Error",
+        },
+      },
+      "invalidJSON": {
+        "availability": null,
+        "description": null,
+        "generatedName": "InvalidJson",
+        "groupName": [],
+        "nameOverride": null,
+        "schema": {
+          "default": null,
+          "format": null,
+          "maxLength": null,
+          "minLength": null,
+          "pattern": null,
+          "type": "string",
+        },
+        "type": "primitive",
+      },
+      "isVerified": {
+        "availability": null,
+        "description": null,
+        "generatedName": "IsVerified",
+        "groupName": [],
+        "nameOverride": null,
+        "schema": {
+          "default": null,
+          "type": "boolean",
+        },
+        "type": "primitive",
+      },
+      "jwk": {
+        "additionalProperties": false,
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "availability": null,
+        "description": "A JWK that can be used to verify a JWT",
+        "generatedName": "Jwk",
+        "groupName": [],
+        "nameOverride": null,
+        "properties": [
+          {
+            "audiences": [],
+            "availability": null,
+            "conflict": {},
+            "generatedName": "jwkAlg",
+            "key": "alg",
+            "nameOverride": null,
+            "schema": {
+              "availability": null,
+              "description": null,
+              "generatedName": "jwkAlg",
+              "groupName": [],
+              "nameOverride": null,
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "JwkAlg",
+                "groupName": null,
+                "nameOverride": null,
+                "schema": "createJWTAlgorithm",
+                "source": {
+                  "file": "supertokens/openapi.yml",
+                  "type": "openapi",
+                },
+                "type": "reference",
+              },
+            },
+          },
+          {
+            "audiences": [],
+            "availability": null,
+            "conflict": {},
+            "generatedName": "jwkKty",
+            "key": "kty",
+            "nameOverride": null,
+            "schema": {
+              "availability": null,
+              "description": null,
+              "generatedName": "jwkKty",
+              "groupName": [],
+              "nameOverride": null,
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "JwkKty",
                 "groupName": [],
                 "nameOverride": null,
                 "schema": {
@@ -42607,6 +43286,7 @@ e.g.:
               },
             },
           },
+<<<<<<< HEAD
         },
       ],
       "source": {
@@ -42763,86 +43443,139 @@ e.g.:
           "key": "id",
           "nameOverride": null,
           "schema": {
+=======
+          {
+            "audiences": [],
+>>>>>>> 30dc3ebe9d (working, need to polish)
             "availability": null,
-            "description": null,
-            "generatedName": "passwordlessUserId",
-            "groupName": [],
+            "conflict": {},
+            "generatedName": "jwkUse",
+            "key": "use",
             "nameOverride": null,
+<<<<<<< HEAD
             "title": null,
             "type": "optional",
             "value": {
+=======
+            "schema": {
+>>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
-              "generatedName": "PasswordlessUserId",
-              "groupName": null,
+              "generatedName": "jwkUse",
+              "groupName": [],
               "nameOverride": null,
-              "schema": "userId",
-              "source": {
-                "file": "supertokens/openapi.yml",
-                "type": "openapi",
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "JwkUse",
+                "groupName": [],
+                "nameOverride": null,
+                "schema": {
+                  "default": null,
+                  "format": null,
+                  "maxLength": null,
+                  "minLength": null,
+                  "pattern": null,
+                  "type": "string",
+                },
+                "type": "primitive",
               },
+<<<<<<< HEAD
               "title": null,
               "type": "reference",
+=======
+>>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
-        },
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "passwordlessUserEmail",
-          "key": "email",
-          "nameOverride": null,
-          "schema": {
+          {
+            "audiences": [],
             "availability": null,
-            "description": null,
-            "generatedName": "passwordlessUserEmail",
-            "groupName": [],
+            "conflict": {},
+            "generatedName": "jwkKid",
+            "key": "kid",
             "nameOverride": null,
+<<<<<<< HEAD
             "title": null,
             "type": "optional",
             "value": {
+=======
+            "schema": {
+>>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
-              "generatedName": "PasswordlessUserEmail",
-              "groupName": null,
+              "generatedName": "jwkKid",
+              "groupName": [],
               "nameOverride": null,
-              "schema": "email",
-              "source": {
-                "file": "supertokens/openapi.yml",
-                "type": "openapi",
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": "Unique identifier for the JWK",
+                "generatedName": "JwkKid",
+                "groupName": [],
+                "nameOverride": null,
+                "schema": {
+                  "default": null,
+                  "format": null,
+                  "maxLength": null,
+                  "minLength": null,
+                  "pattern": null,
+                  "type": "string",
+                },
+                "type": "primitive",
               },
+<<<<<<< HEAD
               "title": null,
               "type": "reference",
+=======
+>>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
-        },
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "passwordlessUserPhoneNumber",
-          "key": "phoneNumber",
-          "nameOverride": null,
-          "schema": {
+          {
+            "audiences": [],
             "availability": null,
-            "description": null,
-            "generatedName": "passwordlessUserPhoneNumber",
-            "groupName": [],
+            "conflict": {},
+            "generatedName": "jwkX5C",
+            "key": "x5c",
             "nameOverride": null,
+<<<<<<< HEAD
             "title": null,
             "type": "optional",
             "value": {
+=======
+            "schema": {
+>>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
-              "generatedName": "PasswordlessUserPhoneNumber",
-              "groupName": null,
+              "generatedName": "jwkX5C",
+              "groupName": [],
               "nameOverride": null,
-              "schema": "phoneNumber",
-              "source": {
-                "file": "supertokens/openapi.yml",
-                "type": "openapi",
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": "X.509 Certificate Chain",
+                "generatedName": "JwkX5C",
+                "groupName": [],
+                "nameOverride": null,
+                "type": "array",
+                "value": {
+                  "availability": null,
+                  "description": null,
+                  "generatedName": "JwkX5CItem",
+                  "groupName": [],
+                  "nameOverride": null,
+                  "schema": {
+                    "default": null,
+                    "format": null,
+                    "maxLength": null,
+                    "minLength": null,
+                    "pattern": null,
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
               },
+<<<<<<< HEAD
               "title": null,
               "type": "reference",
             },
@@ -43077,10 +43810,16 @@ e.g.:
         "groupName": null,
         "nameOverride": null,
         "schema": "handle",
+=======
+            },
+          },
+        ],
+>>>>>>> 30dc3ebe9d (working, need to polish)
         "source": {
           "file": "supertokens/openapi.yml",
           "type": "openapi",
         },
+<<<<<<< HEAD
         "title": null,
         "type": "reference",
       },
@@ -43155,12 +43894,27 @@ e.g.:
               "type": "reference",
             },
           },
-        },
-      ],
-      "source": {
-        "file": "supertokens/openapi.yml",
-        "type": "openapi",
+=======
+        "type": "object",
       },
+      "jwksDomain": {
+        "availability": null,
+        "description": "This is used as the value for the issuer claim in the JWT payload.",
+        "generatedName": "JwksDomain",
+        "groupName": [],
+        "nameOverride": null,
+        "schema": {
+          "default": null,
+          "format": null,
+          "maxLength": null,
+          "minLength": null,
+          "pattern": null,
+          "type": "string",
+>>>>>>> 30dc3ebe9d (working, need to polish)
+        },
+        "type": "primitive",
+      },
+<<<<<<< HEAD
       "title": null,
       "type": "object",
     },
@@ -43283,109 +44037,753 @@ e.g.:
               "type": "reference",
             },
           },
+=======
+      "jwtValidity": {
+        "availability": null,
+        "description": "Duration in seconds, used to calculate JWT expiry",
+        "generatedName": "JwtValidity",
+        "groupName": [],
+        "nameOverride": null,
+        "schema": {
+          "default": null,
+          "exclusiveMaximum": null,
+          "exclusiveMinimum": null,
+          "maximum": null,
+          "minimum": null,
+          "multipleOf": null,
+          "type": "double",
         },
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "thirdPartyUserThirdParty",
-          "key": "thirdParty",
-          "nameOverride": null,
-          "schema": {
+        "type": "primitive",
+      },
+      "linkCode": {
+        "availability": null,
+        "description": "URL-safe string that can be used to authenticate the user, without the deviceId",
+        "generatedName": "LinkCode",
+        "groupName": [],
+        "nameOverride": null,
+        "schema": {
+          "default": null,
+          "format": null,
+          "maxLength": null,
+          "minLength": null,
+          "pattern": null,
+          "type": "string",
+        },
+        "type": "primitive",
+      },
+      "message": {
+        "availability": null,
+        "description": null,
+        "generatedName": "Message",
+        "groupName": [],
+        "nameOverride": null,
+        "schema": {
+          "default": null,
+          "format": null,
+          "maxLength": null,
+          "minLength": null,
+          "pattern": null,
+          "type": "string",
+        },
+        "type": "primitive",
+      },
+      "methodNotSupported": {
+        "availability": null,
+        "description": null,
+        "generatedName": "MethodNotSupported",
+        "groupName": [],
+        "nameOverride": null,
+        "type": "literal",
+        "value": {
+          "type": "string",
+          "value": "Method not supported",
+>>>>>>> 30dc3ebe9d (working, need to polish)
+        },
+      },
+      "notFound": {
+        "availability": null,
+        "description": null,
+        "generatedName": "NotFound",
+        "groupName": [],
+        "nameOverride": null,
+        "type": "literal",
+        "value": {
+          "type": "string",
+          "value": "Not Found",
+        },
+      },
+      "paginationToken": {
+        "availability": null,
+        "description": null,
+        "generatedName": "PaginationToken",
+        "groupName": [],
+        "nameOverride": null,
+        "schema": {
+          "default": null,
+          "format": null,
+          "maxLength": null,
+          "minLength": null,
+          "pattern": null,
+          "type": "string",
+        },
+        "type": "primitive",
+      },
+      "password": {
+        "availability": null,
+        "description": null,
+        "generatedName": "Password",
+        "groupName": [],
+        "nameOverride": null,
+        "schema": {
+          "default": null,
+          "format": null,
+          "maxLength": null,
+          "minLength": null,
+          "pattern": null,
+          "type": "string",
+        },
+        "type": "primitive",
+      },
+      "passwordlessUser": {
+        "additionalProperties": false,
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "availability": null,
+        "description": null,
+        "generatedName": "PasswordlessUser",
+        "groupName": [],
+        "nameOverride": null,
+        "properties": [
+          {
+            "audiences": [],
             "availability": null,
-            "description": null,
-            "generatedName": "thirdPartyUserThirdParty",
-            "groupName": [],
+            "conflict": {},
+            "generatedName": "passwordlessUserId",
+            "key": "id",
             "nameOverride": null,
+<<<<<<< HEAD
             "title": null,
             "type": "optional",
             "value": {
               "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
+=======
+            "schema": {
+>>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
-              "generatedName": "ThirdPartyUserThirdParty",
+              "generatedName": "passwordlessUserId",
               "groupName": [],
               "nameOverride": null,
-              "properties": [
-                {
-                  "audiences": [],
-                  "availability": null,
-                  "conflict": {},
-                  "generatedName": "thirdPartyUserThirdPartyId",
-                  "key": "id",
-                  "nameOverride": null,
-                  "schema": {
-                    "availability": null,
-                    "description": null,
-                    "generatedName": "thirdPartyUserThirdPartyId",
-                    "groupName": [],
-                    "nameOverride": null,
-                    "title": null,
-                    "type": "optional",
-                    "value": {
-                      "availability": null,
-                      "description": null,
-                      "generatedName": "ThirdPartyUserThirdPartyId",
-                      "groupName": null,
-                      "nameOverride": null,
-                      "schema": "thirdPartyId",
-                      "source": {
-                        "file": "supertokens/openapi.yml",
-                        "type": "openapi",
-                      },
-                      "title": null,
-                      "type": "reference",
-                    },
-                  },
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "PasswordlessUserId",
+                "groupName": null,
+                "nameOverride": null,
+                "schema": "userId",
+                "source": {
+                  "file": "supertokens/openapi.yml",
+                  "type": "openapi",
                 },
-                {
-                  "audiences": [],
-                  "availability": null,
-                  "conflict": {},
-                  "generatedName": "thirdPartyUserThirdPartyUserId",
-                  "key": "userId",
-                  "nameOverride": null,
-                  "schema": {
-                    "availability": null,
-                    "description": null,
-                    "generatedName": "thirdPartyUserThirdPartyUserId",
-                    "groupName": [],
-                    "nameOverride": null,
-                    "title": null,
-                    "type": "optional",
-                    "value": {
-                      "availability": null,
-                      "description": null,
-                      "generatedName": "ThirdPartyUserThirdPartyUserId",
-                      "groupName": null,
-                      "nameOverride": null,
-                      "schema": "thirdPartyUserId",
-                      "source": {
-                        "file": "supertokens/openapi.yml",
-                        "type": "openapi",
-                      },
-                      "title": null,
-                      "type": "reference",
-                    },
-                  },
-                },
-              ],
-              "source": {
-                "file": "supertokens/openapi.yml",
-                "type": "openapi",
+                "type": "reference",
               },
-              "title": null,
-              "type": "object",
             },
           },
+          {
+            "audiences": [],
+            "availability": null,
+            "conflict": {},
+            "generatedName": "passwordlessUserEmail",
+            "key": "email",
+            "nameOverride": null,
+            "schema": {
+              "availability": null,
+              "description": null,
+              "generatedName": "passwordlessUserEmail",
+              "groupName": [],
+              "nameOverride": null,
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "PasswordlessUserEmail",
+                "groupName": null,
+                "nameOverride": null,
+                "schema": "email",
+                "source": {
+                  "file": "supertokens/openapi.yml",
+                  "type": "openapi",
+                },
+                "type": "reference",
+              },
+            },
+          },
+          {
+            "audiences": [],
+            "availability": null,
+            "conflict": {},
+            "generatedName": "passwordlessUserPhoneNumber",
+            "key": "phoneNumber",
+            "nameOverride": null,
+            "schema": {
+              "availability": null,
+              "description": null,
+              "generatedName": "passwordlessUserPhoneNumber",
+              "groupName": [],
+              "nameOverride": null,
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "PasswordlessUserPhoneNumber",
+                "groupName": null,
+                "nameOverride": null,
+                "schema": "phoneNumber",
+                "source": {
+                  "file": "supertokens/openapi.yml",
+                  "type": "openapi",
+                },
+                "type": "reference",
+              },
+            },
+          },
+          {
+            "audiences": [],
+            "availability": null,
+            "conflict": {},
+            "generatedName": "passwordlessUserTimeJoined",
+            "key": "timeJoined",
+            "nameOverride": null,
+            "schema": {
+              "availability": null,
+              "description": null,
+              "generatedName": "passwordlessUserTimeJoined",
+              "groupName": [],
+              "nameOverride": null,
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "PasswordlessUserTimeJoined",
+                "groupName": null,
+                "nameOverride": null,
+                "schema": "timeJoined",
+                "source": {
+                  "file": "supertokens/openapi.yml",
+                  "type": "openapi",
+                },
+                "type": "reference",
+              },
+            },
+          },
+        ],
+        "source": {
+          "file": "supertokens/openapi.yml",
+          "type": "openapi",
         },
-      ],
-      "source": {
-        "file": "supertokens/openapi.yml",
-        "type": "openapi",
+        "type": "object",
       },
+      "phoneNumber": {
+        "availability": null,
+        "description": null,
+        "generatedName": "PhoneNumber",
+        "groupName": [],
+        "nameOverride": null,
+        "schema": {
+          "default": null,
+          "format": null,
+          "maxLength": null,
+          "minLength": null,
+          "pattern": null,
+          "type": "string",
+        },
+        "type": "primitive",
+      },
+      "preAuthSessionId": {
+        "availability": null,
+        "description": "A random identifier that can be used to identify the login attempt/device.",
+        "generatedName": "PreAuthSessionId",
+        "groupName": [],
+        "nameOverride": null,
+        "schema": {
+          "default": null,
+          "format": null,
+          "maxLength": null,
+          "minLength": null,
+          "pattern": null,
+          "type": "string",
+        },
+        "type": "primitive",
+      },
+      "requestUnauthorised": {
+        "availability": null,
+        "description": null,
+        "generatedName": "RequestUnauthorised",
+        "groupName": [],
+        "nameOverride": null,
+        "type": "literal",
+        "value": {
+          "type": "string",
+          "value": "Invalid API key",
+        },
+      },
+      "role": {
+        "availability": null,
+        "description": null,
+        "generatedName": "Role",
+        "groupName": [],
+        "nameOverride": null,
+        "schema": {
+          "default": null,
+          "format": null,
+          "maxLength": null,
+          "minLength": null,
+          "pattern": null,
+          "type": "string",
+        },
+        "type": "primitive",
+      },
+      "session": {
+        "additionalProperties": false,
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "availability": null,
+        "description": null,
+        "generatedName": "Session",
+        "groupName": [],
+        "nameOverride": null,
+        "properties": [
+          {
+            "audiences": [],
+            "availability": null,
+            "conflict": {},
+            "generatedName": "sessionHandle",
+            "key": "handle",
+            "nameOverride": null,
+            "schema": {
+              "availability": null,
+              "description": null,
+              "generatedName": "sessionHandle",
+              "groupName": [],
+              "nameOverride": null,
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "SessionHandle",
+                "groupName": null,
+                "nameOverride": null,
+                "schema": "handle",
+                "source": {
+                  "file": "supertokens/openapi.yml",
+                  "type": "openapi",
+                },
+                "type": "reference",
+              },
+            },
+          },
+          {
+            "audiences": [],
+            "availability": null,
+            "conflict": {},
+            "generatedName": "sessionUserId",
+            "key": "userId",
+            "nameOverride": null,
+            "schema": {
+              "availability": null,
+              "description": null,
+              "generatedName": "sessionUserId",
+              "groupName": [],
+              "nameOverride": null,
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "SessionUserId",
+                "groupName": null,
+                "nameOverride": null,
+                "schema": "userId",
+                "source": {
+                  "file": "supertokens/openapi.yml",
+                  "type": "openapi",
+                },
+                "type": "reference",
+              },
+            },
+          },
+          {
+            "audiences": [],
+            "availability": null,
+            "conflict": {},
+            "generatedName": "sessionUserDataInJwt",
+            "key": "userDataInJWT",
+            "nameOverride": null,
+            "schema": {
+              "availability": null,
+              "description": null,
+              "generatedName": "sessionUserDataInJwt",
+              "groupName": [],
+              "nameOverride": null,
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "SessionUserDataInJwt",
+                "groupName": null,
+                "nameOverride": null,
+                "schema": "userDataInJWT",
+                "source": {
+                  "file": "supertokens/openapi.yml",
+                  "type": "openapi",
+                },
+                "type": "reference",
+              },
+            },
+          },
+        ],
+        "source": {
+          "file": "supertokens/openapi.yml",
+          "type": "openapi",
+        },
+        "type": "object",
+      },
+      "sessionHandles": {
+        "availability": null,
+        "description": null,
+        "generatedName": "SessionHandles",
+        "groupName": [],
+        "nameOverride": null,
+        "type": "array",
+        "value": {
+          "availability": null,
+          "description": null,
+          "generatedName": "SessionHandlesItem",
+          "groupName": null,
+          "nameOverride": null,
+          "schema": "handle",
+          "source": {
+            "file": "supertokens/openapi.yml",
+            "type": "openapi",
+          },
+          "type": "reference",
+        },
+      },
+      "statusOK": {
+        "availability": null,
+        "description": null,
+        "generatedName": "StatusOk",
+        "groupName": [],
+        "nameOverride": null,
+        "type": "literal",
+        "value": {
+          "type": "string",
+          "value": "OK",
+        },
+      },
+      "statusOKResponse": {
+        "additionalProperties": false,
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "availability": null,
+        "description": null,
+        "generatedName": "StatusOkResponse",
+        "groupName": [],
+        "nameOverride": null,
+        "properties": [],
+        "source": {
+          "file": "supertokens/openapi.yml",
+          "type": "openapi",
+        },
+        "type": "object",
+      },
+      "thirdPartyEmail": {
+        "additionalProperties": false,
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "availability": null,
+        "description": null,
+        "generatedName": "ThirdPartyEmail",
+        "groupName": [],
+        "nameOverride": null,
+        "properties": [
+          {
+            "audiences": [],
+            "availability": null,
+            "conflict": {},
+            "generatedName": "thirdPartyEmailId",
+            "key": "id",
+            "nameOverride": null,
+            "schema": {
+              "availability": null,
+              "description": null,
+              "generatedName": "thirdPartyEmailId",
+              "groupName": [],
+              "nameOverride": null,
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "ThirdPartyEmailId",
+                "groupName": null,
+                "nameOverride": null,
+                "schema": "email",
+                "source": {
+                  "file": "supertokens/openapi.yml",
+                  "type": "openapi",
+                },
+                "type": "reference",
+              },
+            },
+          },
+        ],
+        "source": {
+          "file": "supertokens/openapi.yml",
+          "type": "openapi",
+        },
+        "type": "object",
+      },
+      "thirdPartyId": {
+        "availability": null,
+        "description": null,
+        "generatedName": "ThirdPartyId",
+        "groupName": [],
+        "nameOverride": null,
+        "schema": {
+          "default": null,
+          "format": null,
+          "maxLength": null,
+          "minLength": null,
+          "pattern": null,
+          "type": "string",
+        },
+        "type": "primitive",
+      },
+      "thirdPartyUser": {
+        "additionalProperties": false,
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "availability": null,
+        "description": null,
+        "generatedName": "ThirdPartyUser",
+        "groupName": [],
+        "nameOverride": null,
+        "properties": [
+          {
+            "audiences": [],
+            "availability": null,
+            "conflict": {},
+            "generatedName": "thirdPartyUserId",
+            "key": "id",
+            "nameOverride": null,
+            "schema": {
+              "availability": null,
+              "description": null,
+              "generatedName": "thirdPartyUserId",
+              "groupName": [],
+              "nameOverride": null,
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "ThirdPartyUserId",
+                "groupName": null,
+                "nameOverride": null,
+                "schema": "userId",
+                "source": {
+                  "file": "supertokens/openapi.yml",
+                  "type": "openapi",
+                },
+                "type": "reference",
+              },
+            },
+          },
+          {
+            "audiences": [],
+            "availability": null,
+            "conflict": {},
+            "generatedName": "thirdPartyUserTimeJoined",
+            "key": "timeJoined",
+            "nameOverride": null,
+            "schema": {
+              "availability": null,
+              "description": null,
+              "generatedName": "thirdPartyUserTimeJoined",
+              "groupName": [],
+              "nameOverride": null,
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "ThirdPartyUserTimeJoined",
+                "groupName": null,
+                "nameOverride": null,
+                "schema": "timeJoined",
+                "source": {
+                  "file": "supertokens/openapi.yml",
+                  "type": "openapi",
+                },
+                "type": "reference",
+              },
+            },
+          },
+          {
+            "audiences": [],
+            "availability": null,
+            "conflict": {},
+            "generatedName": "thirdPartyUserEmail",
+            "key": "email",
+            "nameOverride": null,
+            "schema": {
+              "availability": null,
+              "description": null,
+              "generatedName": "thirdPartyUserEmail",
+              "groupName": [],
+              "nameOverride": null,
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "ThirdPartyUserEmail",
+                "groupName": null,
+                "nameOverride": null,
+                "schema": "email",
+                "source": {
+                  "file": "supertokens/openapi.yml",
+                  "type": "openapi",
+                },
+                "type": "reference",
+              },
+            },
+          },
+          {
+            "audiences": [],
+            "availability": null,
+            "conflict": {},
+            "generatedName": "thirdPartyUserThirdParty",
+            "key": "thirdParty",
+            "nameOverride": null,
+            "schema": {
+              "availability": null,
+              "description": null,
+              "generatedName": "thirdPartyUserThirdParty",
+              "groupName": [],
+              "nameOverride": null,
+              "type": "optional",
+              "value": {
+                "additionalProperties": false,
+                "allOf": [],
+                "allOfPropertyConflicts": [],
+                "availability": null,
+                "description": null,
+                "generatedName": "ThirdPartyUserThirdParty",
+                "groupName": [],
+                "nameOverride": null,
+                "properties": [
+                  {
+                    "audiences": [],
+                    "availability": null,
+                    "conflict": {},
+                    "generatedName": "thirdPartyUserThirdPartyId",
+                    "key": "id",
+                    "nameOverride": null,
+<<<<<<< HEAD
+                    "title": null,
+                    "type": "optional",
+                    "value": {
+=======
+                    "schema": {
+>>>>>>> 30dc3ebe9d (working, need to polish)
+                      "availability": null,
+                      "description": null,
+                      "generatedName": "thirdPartyUserThirdPartyId",
+                      "groupName": [],
+                      "nameOverride": null,
+                      "type": "optional",
+                      "value": {
+                        "availability": null,
+                        "description": null,
+                        "generatedName": "ThirdPartyUserThirdPartyId",
+                        "groupName": null,
+                        "nameOverride": null,
+                        "schema": "thirdPartyId",
+                        "source": {
+                          "file": "supertokens/openapi.yml",
+                          "type": "openapi",
+                        },
+                        "type": "reference",
+                      },
+<<<<<<< HEAD
+                      "title": null,
+                      "type": "reference",
+=======
+>>>>>>> 30dc3ebe9d (working, need to polish)
+                    },
+                  },
+                  {
+                    "audiences": [],
+                    "availability": null,
+                    "conflict": {},
+                    "generatedName": "thirdPartyUserThirdPartyUserId",
+                    "key": "userId",
+                    "nameOverride": null,
+<<<<<<< HEAD
+                    "title": null,
+                    "type": "optional",
+                    "value": {
+=======
+                    "schema": {
+>>>>>>> 30dc3ebe9d (working, need to polish)
+                      "availability": null,
+                      "description": null,
+                      "generatedName": "thirdPartyUserThirdPartyUserId",
+                      "groupName": [],
+                      "nameOverride": null,
+                      "type": "optional",
+                      "value": {
+                        "availability": null,
+                        "description": null,
+                        "generatedName": "ThirdPartyUserThirdPartyUserId",
+                        "groupName": null,
+                        "nameOverride": null,
+                        "schema": "thirdPartyUserId",
+                        "source": {
+                          "file": "supertokens/openapi.yml",
+                          "type": "openapi",
+                        },
+                        "type": "reference",
+                      },
+<<<<<<< HEAD
+                      "title": null,
+                      "type": "reference",
+=======
+>>>>>>> 30dc3ebe9d (working, need to polish)
+                    },
+                  },
+                ],
+                "source": {
+                  "file": "supertokens/openapi.yml",
+                  "type": "openapi",
+                },
+                "type": "object",
+              },
+<<<<<<< HEAD
+              "title": null,
+              "type": "object",
+=======
+>>>>>>> 30dc3ebe9d (working, need to polish)
+            },
+          },
+        ],
+        "source": {
+          "file": "supertokens/openapi.yml",
+          "type": "openapi",
+        },
+        "type": "object",
+      },
+<<<<<<< HEAD
       "title": null,
       "type": "object",
     },
@@ -43483,54 +44881,156 @@ e.g.:
       "value": {
         "type": "string",
         "value": "TRY_REFRESH_TOKEN",
+=======
+      "thirdPartyUserId": {
+        "availability": null,
+        "description": null,
+        "generatedName": "ThirdPartyUserId",
+        "groupName": [],
+        "nameOverride": null,
+        "schema": {
+          "default": null,
+          "format": null,
+          "maxLength": null,
+          "minLength": null,
+          "pattern": null,
+          "type": "string",
+        },
+        "type": "primitive",
       },
-    },
-    "unauthorisedMessageResponse": {
-      "additionalProperties": false,
-      "allOf": [],
-      "allOfPropertyConflicts": [],
-      "availability": null,
-      "description": null,
-      "generatedName": "UnauthorisedMessageResponse",
-      "groupName": [],
-      "nameOverride": null,
-      "properties": [
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "unauthorisedMessageResponseMessage",
-          "key": "message",
-          "nameOverride": null,
-          "schema": {
+      "timeCreated": {
+        "availability": null,
+        "description": null,
+        "generatedName": "TimeCreated",
+        "groupName": [],
+        "nameOverride": null,
+        "schema": {
+          "default": null,
+          "exclusiveMaximum": null,
+          "exclusiveMinimum": null,
+          "maximum": null,
+          "minimum": null,
+          "multipleOf": null,
+          "type": "double",
+        },
+        "type": "primitive",
+      },
+      "timeJoined": {
+        "availability": null,
+        "description": null,
+        "generatedName": "TimeJoined",
+        "groupName": [],
+        "nameOverride": null,
+        "schema": {
+          "default": null,
+          "exclusiveMaximum": null,
+          "exclusiveMinimum": null,
+          "maximum": null,
+          "minimum": null,
+          "multipleOf": null,
+          "type": "double",
+        },
+        "type": "primitive",
+      },
+      "token": {
+        "availability": null,
+        "description": null,
+        "generatedName": "Token",
+        "groupName": [],
+        "nameOverride": null,
+        "schema": {
+          "default": null,
+          "format": null,
+          "maxLength": null,
+          "minLength": null,
+          "pattern": null,
+          "type": "string",
+        },
+        "type": "primitive",
+      },
+      "tokenTheftResponse": {
+        "availability": null,
+        "description": null,
+        "generatedName": "TokenTheftResponse",
+        "groupName": [],
+        "nameOverride": null,
+        "type": "literal",
+        "value": {
+          "type": "string",
+          "value": "TOKEN_THEFT_DETECTED",
+        },
+      },
+      "tryRefreshTokenResponse": {
+        "availability": null,
+        "description": null,
+        "generatedName": "TryRefreshTokenResponse",
+        "groupName": [],
+        "nameOverride": null,
+        "type": "literal",
+        "value": {
+          "type": "string",
+          "value": "TRY_REFRESH_TOKEN",
+        },
+>>>>>>> 30dc3ebe9d (working, need to polish)
+      },
+      "unauthorisedMessageResponse": {
+        "additionalProperties": false,
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "availability": null,
+        "description": null,
+        "generatedName": "UnauthorisedMessageResponse",
+        "groupName": [],
+        "nameOverride": null,
+        "properties": [
+          {
+            "audiences": [],
             "availability": null,
-            "description": null,
+            "conflict": {},
             "generatedName": "unauthorisedMessageResponseMessage",
-            "groupName": [],
+            "key": "message",
             "nameOverride": null,
+<<<<<<< HEAD
             "title": null,
             "type": "optional",
             "value": {
+=======
+            "schema": {
+>>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
-              "generatedName": "UnauthorisedMessageResponseMessage",
-              "groupName": null,
+              "generatedName": "unauthorisedMessageResponseMessage",
+              "groupName": [],
               "nameOverride": null,
-              "schema": "message",
-              "source": {
-                "file": "supertokens/openapi.yml",
-                "type": "openapi",
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "UnauthorisedMessageResponseMessage",
+                "groupName": null,
+                "nameOverride": null,
+                "schema": "message",
+                "source": {
+                  "file": "supertokens/openapi.yml",
+                  "type": "openapi",
+                },
+                "type": "reference",
               },
+<<<<<<< HEAD
               "title": null,
               "type": "reference",
+=======
+>>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
+        ],
+        "source": {
+          "file": "supertokens/openapi.yml",
+          "type": "openapi",
         },
-      ],
-      "source": {
-        "file": "supertokens/openapi.yml",
-        "type": "openapi",
+        "type": "object",
       },
+<<<<<<< HEAD
       "title": null,
       "type": "object",
     },
@@ -43545,22 +45045,37 @@ e.g.:
       "value": {
         "type": "string",
         "value": "UNAUTHORISED",
+=======
+      "unauthorisedResponse": {
+        "availability": null,
+        "description": null,
+        "generatedName": "UnauthorisedResponse",
+        "groupName": [],
+        "nameOverride": null,
+        "type": "literal",
+        "value": {
+          "type": "string",
+          "value": "UNAUTHORISED",
+        },
+>>>>>>> 30dc3ebe9d (working, need to polish)
       },
-    },
-    "unknownRoleResponse": {
-      "additionalProperties": false,
-      "allOf": [],
-      "allOfPropertyConflicts": [],
-      "availability": null,
-      "description": null,
-      "generatedName": "UnknownRoleResponse",
-      "groupName": [],
-      "nameOverride": null,
-      "properties": [],
-      "source": {
-        "file": "supertokens/openapi.yml",
-        "type": "openapi",
+      "unknownRoleResponse": {
+        "additionalProperties": false,
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "availability": null,
+        "description": null,
+        "generatedName": "UnknownRoleResponse",
+        "groupName": [],
+        "nameOverride": null,
+        "properties": [],
+        "source": {
+          "file": "supertokens/openapi.yml",
+          "type": "openapi",
+        },
+        "type": "object",
       },
+<<<<<<< HEAD
       "title": null,
       "type": "object",
     },
@@ -43599,68 +45114,164 @@ e.g.:
           "key": "id",
           "nameOverride": null,
           "schema": {
+=======
+      "unknownUserIdResponse": {
+        "additionalProperties": false,
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "availability": null,
+        "description": null,
+        "generatedName": "UnknownUserIdResponse",
+        "groupName": [],
+        "nameOverride": null,
+        "properties": [],
+        "source": {
+          "file": "supertokens/openapi.yml",
+          "type": "openapi",
+        },
+        "type": "object",
+      },
+      "user": {
+        "additionalProperties": false,
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "availability": null,
+        "description": null,
+        "generatedName": "User",
+        "groupName": [],
+        "nameOverride": null,
+        "properties": [
+          {
+            "audiences": [],
+>>>>>>> 30dc3ebe9d (working, need to polish)
             "availability": null,
-            "description": null,
+            "conflict": {},
             "generatedName": "userId",
-            "groupName": [],
+            "key": "id",
             "nameOverride": null,
+<<<<<<< HEAD
             "title": null,
             "type": "optional",
             "value": {
+=======
+            "schema": {
+>>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
-              "generatedName": "UserId",
-              "groupName": null,
+              "generatedName": "userId",
+              "groupName": [],
               "nameOverride": null,
-              "schema": "userId",
-              "source": {
-                "file": "supertokens/openapi.yml",
-                "type": "openapi",
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "UserId",
+                "groupName": null,
+                "nameOverride": null,
+                "schema": "userId",
+                "source": {
+                  "file": "supertokens/openapi.yml",
+                  "type": "openapi",
+                },
+                "type": "reference",
               },
+<<<<<<< HEAD
               "title": null,
               "type": "reference",
+=======
+>>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
-        },
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "userEmail",
-          "key": "email",
-          "nameOverride": null,
-          "schema": {
+          {
+            "audiences": [],
             "availability": null,
-            "description": null,
+            "conflict": {},
             "generatedName": "userEmail",
-            "groupName": [],
+            "key": "email",
             "nameOverride": null,
+<<<<<<< HEAD
             "title": null,
             "type": "optional",
             "value": {
+=======
+            "schema": {
+>>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
-              "generatedName": "UserEmail",
-              "groupName": null,
+              "generatedName": "userEmail",
+              "groupName": [],
               "nameOverride": null,
-              "schema": "email",
-              "source": {
-                "file": "supertokens/openapi.yml",
-                "type": "openapi",
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "UserEmail",
+                "groupName": null,
+                "nameOverride": null,
+                "schema": "email",
+                "source": {
+                  "file": "supertokens/openapi.yml",
+                  "type": "openapi",
+                },
+                "type": "reference",
               },
+<<<<<<< HEAD
               "title": null,
               "type": "reference",
+=======
+>>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
+          {
+            "audiences": [],
+            "availability": null,
+            "conflict": {},
+            "generatedName": "userTimeJoined",
+            "key": "timeJoined",
+            "nameOverride": null,
+            "schema": {
+              "availability": null,
+              "description": null,
+              "generatedName": "userTimeJoined",
+              "groupName": [],
+              "nameOverride": null,
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "UserTimeJoined",
+                "groupName": null,
+                "nameOverride": null,
+                "schema": "timeJoined",
+                "source": {
+                  "file": "supertokens/openapi.yml",
+                  "type": "openapi",
+                },
+                "type": "reference",
+              },
+            },
+          },
+        ],
+        "source": {
+          "file": "supertokens/openapi.yml",
+          "type": "openapi",
         },
-        {
-          "audiences": [],
+        "type": "object",
+      },
+      "userDataInDatabase": {
+        "availability": null,
+        "description": "should be a JSON object (not a JSON literal nor an array)",
+        "encoding": null,
+        "generatedName": "UserDataInDatabase",
+        "groupName": [],
+        "key": {
           "availability": null,
-          "conflict": {},
-          "generatedName": "userTimeJoined",
-          "key": "timeJoined",
+          "description": null,
+          "generatedName": "UserDataInDatabaseKey",
+          "groupName": [],
           "nameOverride": null,
           "schema": {
+<<<<<<< HEAD
             "availability": null,
             "description": null,
             "generatedName": "userTimeJoined",
@@ -43682,13 +45293,25 @@ e.g.:
               "title": null,
               "type": "reference",
             },
+=======
+            "default": null,
+            "format": null,
+            "maxLength": null,
+            "minLength": null,
+            "pattern": null,
+            "type": "string",
+>>>>>>> 30dc3ebe9d (working, need to polish)
           },
         },
-      ],
-      "source": {
-        "file": "supertokens/openapi.yml",
-        "type": "openapi",
+        "nameOverride": null,
+        "type": "map",
+        "value": {
+          "generatedName": "UserDataInDatabaseValue",
+          "nameOverride": null,
+          "type": "unknown",
+        },
       },
+<<<<<<< HEAD
       "title": null,
       "type": "object",
     },
@@ -43699,9 +45322,41 @@ e.g.:
       "generatedName": "UserDataInDatabase",
       "groupName": [],
       "key": {
+=======
+      "userDataInJWT": {
+        "availability": null,
+        "description": "should be a JSON object (not a JSON literal nor an array)",
+        "encoding": null,
+        "generatedName": "UserDataInJwt",
+        "groupName": [],
+        "key": {
+          "availability": null,
+          "description": null,
+          "generatedName": "UserDataInJwtKey",
+          "groupName": [],
+          "nameOverride": null,
+          "schema": {
+            "default": null,
+            "format": null,
+            "maxLength": null,
+            "minLength": null,
+            "pattern": null,
+            "type": "string",
+          },
+        },
+        "nameOverride": null,
+        "type": "map",
+        "value": {
+          "generatedName": "UserDataInJwtValue",
+          "nameOverride": null,
+          "type": "unknown",
+        },
+      },
+      "userId": {
+>>>>>>> 30dc3ebe9d (working, need to polish)
         "availability": null,
         "description": null,
-        "generatedName": "UserDataInDatabaseKey",
+        "generatedName": "UserId",
         "groupName": [],
         "nameOverride": null,
         "schema": {
@@ -43712,6 +45367,7 @@ e.g.:
           "pattern": null,
           "type": "string",
         },
+<<<<<<< HEAD
         "title": null,
       },
       "nameOverride": null,
@@ -43730,9 +45386,14 @@ e.g.:
       "generatedName": "UserDataInJwt",
       "groupName": [],
       "key": {
+=======
+        "type": "primitive",
+      },
+      "userInputCode": {
+>>>>>>> 30dc3ebe9d (working, need to polish)
         "availability": null,
-        "description": null,
-        "generatedName": "UserDataInJwtKey",
+        "description": "This can be used to authenticate the user when paired with the deviceId",
+        "generatedName": "UserInputCode",
         "groupName": [],
         "nameOverride": null,
         "schema": {
@@ -43743,6 +45404,7 @@ e.g.:
           "pattern": null,
           "type": "string",
         },
+<<<<<<< HEAD
         "title": null,
       },
       "nameOverride": null,
@@ -43795,21 +45457,41 @@ e.g.:
       "generatedName": "UserMetadata",
       "groupName": [],
       "key": {
+=======
+        "type": "primitive",
+      },
+      "userMetadata": {
+>>>>>>> 30dc3ebe9d (working, need to polish)
         "availability": null,
-        "description": null,
-        "generatedName": "UserMetadataKey",
+        "description": "should be a JSON object (not a JSON literal nor an array)",
+        "encoding": null,
+        "generatedName": "UserMetadata",
         "groupName": [],
+        "key": {
+          "availability": null,
+          "description": null,
+          "generatedName": "UserMetadataKey",
+          "groupName": [],
+          "nameOverride": null,
+          "schema": {
+            "default": null,
+            "format": null,
+            "maxLength": null,
+            "minLength": null,
+            "pattern": null,
+            "type": "string",
+          },
+        },
         "nameOverride": null,
-        "schema": {
-          "default": null,
-          "format": null,
-          "maxLength": null,
-          "minLength": null,
-          "pattern": null,
-          "type": "string",
+        "type": "map",
+        "value": {
+          "generatedName": "UserMetadataValue",
+          "nameOverride": null,
+          "type": "unknown",
         },
         "title": null,
       },
+<<<<<<< HEAD
       "nameOverride": null,
       "title": null,
       "type": "map",
@@ -43826,30 +45508,64 @@ e.g.:
       "generatedName": "UserMetadataUpdate",
       "groupName": [],
       "key": {
+=======
+      "userMetadataUpdate": {
+>>>>>>> 30dc3ebe9d (working, need to polish)
         "availability": null,
-        "description": null,
-        "generatedName": "UserMetadataUpdateKey",
+        "description": "should be a JSON object (not a JSON literal nor an array)",
+        "encoding": null,
+        "generatedName": "UserMetadataUpdate",
         "groupName": [],
+        "key": {
+          "availability": null,
+          "description": null,
+          "generatedName": "UserMetadataUpdateKey",
+          "groupName": [],
+          "nameOverride": null,
+          "schema": {
+            "default": null,
+            "format": null,
+            "maxLength": null,
+            "minLength": null,
+            "pattern": null,
+            "type": "string",
+          },
+        },
         "nameOverride": null,
-        "schema": {
-          "default": null,
-          "format": null,
-          "maxLength": null,
-          "minLength": null,
-          "pattern": null,
-          "type": "string",
+        "type": "map",
+        "value": {
+          "generatedName": "UserMetadataUpdateValue",
+          "nameOverride": null,
+          "type": "unknown",
         },
         "title": null,
       },
+<<<<<<< HEAD
       "nameOverride": null,
       "title": null,
       "type": "map",
       "value": {
         "generatedName": "UserMetadataUpdateValue",
+=======
+      "wrongCredentialsResponse": {
+        "additionalProperties": false,
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "availability": null,
+        "description": null,
+        "generatedName": "WrongCredentialsResponse",
+        "groupName": [],
+>>>>>>> 30dc3ebe9d (working, need to polish)
         "nameOverride": null,
-        "type": "unknown",
+        "properties": [],
+        "source": {
+          "file": "supertokens/openapi.yml",
+          "type": "openapi",
+        },
+        "type": "object",
       },
     },
+<<<<<<< HEAD
     "wrongCredentialsResponse": {
       "additionalProperties": false,
       "allOf": [],
@@ -43867,6 +45583,8 @@ e.g.:
       "title": null,
       "type": "object",
     },
+=======
+>>>>>>> 30dc3ebe9d (working, need to polish)
   },
   "securitySchemes": {},
   "servers": [],
