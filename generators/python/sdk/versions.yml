@@ -1,4 +1,12 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.0.0-rc7
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        The generator now respects the old use_str_enums flag again, a regression was introduced where only the new flag `enum_type`
+        was respected.
+
 - version: 4.0.0-rc6
   irVersion: 53
   changelogEntry:
