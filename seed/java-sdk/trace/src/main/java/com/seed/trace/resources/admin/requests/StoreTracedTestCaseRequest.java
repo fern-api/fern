@@ -115,7 +115,7 @@ public final class StoreTracedTestCaseRequest {
         @java.lang.Override
         @JsonSetter("result")
         public _FinalStage result(@NotNull TestCaseResultWithStdout result) {
-            this.result = Objects.requireNonNull(result, "result must not be null");
+            this.result = result;
             return this;
         }
 

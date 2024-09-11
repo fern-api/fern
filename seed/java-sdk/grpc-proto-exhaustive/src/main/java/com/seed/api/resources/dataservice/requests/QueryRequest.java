@@ -242,7 +242,7 @@ public final class QueryRequest {
         @java.lang.Override
         @JsonSetter("topK")
         public _FinalStage topK(int topK) {
-            this.topK = topK;
+            this.topK = Objects.requireNonNull(topK, "topK must not be null");
             return this;
         }
 

@@ -215,28 +215,28 @@ public final class CreateProblemRequest {
         @java.lang.Override
         @JsonSetter("problemName")
         public ProblemDescriptionStage problemName(@NotNull String problemName) {
-            this.problemName = Objects.requireNonNull(problemName, "problemName must not be null");
+            this.problemName = problemName;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("problemDescription")
         public OutputTypeStage problemDescription(@NotNull ProblemDescription problemDescription) {
-            this.problemDescription = Objects.requireNonNull(problemDescription, "problemDescription must not be null");
+            this.problemDescription = problemDescription;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("outputType")
         public MethodNameStage outputType(@NotNull VariableType outputType) {
-            this.outputType = Objects.requireNonNull(outputType, "outputType must not be null");
+            this.outputType = outputType;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("methodName")
         public _FinalStage methodName(@NotNull String methodName) {
-            this.methodName = Objects.requireNonNull(methodName, "methodName must not be null");
+            this.methodName = methodName;
             return this;
         }
 

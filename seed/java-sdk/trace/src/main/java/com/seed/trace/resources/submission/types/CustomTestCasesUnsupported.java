@@ -106,14 +106,14 @@ public final class CustomTestCasesUnsupported {
         @java.lang.Override
         @JsonSetter("problemId")
         public SubmissionIdStage problemId(@NotNull String problemId) {
-            this.problemId = Objects.requireNonNull(problemId, "problemId must not be null");
+            this.problemId = problemId;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("submissionId")
         public _FinalStage submissionId(@NotNull UUID submissionId) {
-            this.submissionId = Objects.requireNonNull(submissionId, "submissionId must not be null");
+            this.submissionId = submissionId;
             return this;
         }
 

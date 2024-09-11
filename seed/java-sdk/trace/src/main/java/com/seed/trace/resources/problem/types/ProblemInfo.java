@@ -276,49 +276,50 @@ public final class ProblemInfo {
         @java.lang.Override
         @JsonSetter("problemId")
         public ProblemDescriptionStage problemId(@NotNull String problemId) {
-            this.problemId = Objects.requireNonNull(problemId, "problemId must not be null");
+            this.problemId = problemId;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("problemDescription")
         public ProblemNameStage problemDescription(@NotNull ProblemDescription problemDescription) {
-            this.problemDescription = Objects.requireNonNull(problemDescription, "problemDescription must not be null");
+            this.problemDescription = problemDescription;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("problemName")
         public ProblemVersionStage problemName(@NotNull String problemName) {
-            this.problemName = Objects.requireNonNull(problemName, "problemName must not be null");
+            this.problemName = problemName;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("problemVersion")
         public OutputTypeStage problemVersion(int problemVersion) {
-            this.problemVersion = problemVersion;
+            this.problemVersion = Objects.requireNonNull(problemVersion, "problemVersion must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("outputType")
         public MethodNameStage outputType(@NotNull VariableType outputType) {
-            this.outputType = Objects.requireNonNull(outputType, "outputType must not be null");
+            this.outputType = outputType;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("methodName")
         public SupportsCustomTestCasesStage methodName(@NotNull String methodName) {
-            this.methodName = Objects.requireNonNull(methodName, "methodName must not be null");
+            this.methodName = methodName;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("supportsCustomTestCases")
         public _FinalStage supportsCustomTestCases(boolean supportsCustomTestCases) {
-            this.supportsCustomTestCases = supportsCustomTestCases;
+            this.supportsCustomTestCases =
+                    Objects.requireNonNull(supportsCustomTestCases, "supportsCustomTestCases must not be null");
             return this;
         }
 

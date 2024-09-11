@@ -106,14 +106,14 @@ public final class ErroredResponse {
         @java.lang.Override
         @JsonSetter("submissionId")
         public ErrorInfoStage submissionId(@NotNull UUID submissionId) {
-            this.submissionId = Objects.requireNonNull(submissionId, "submissionId must not be null");
+            this.submissionId = submissionId;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("errorInfo")
         public _FinalStage errorInfo(@NotNull ErrorInfo errorInfo) {
-            this.errorInfo = Objects.requireNonNull(errorInfo, "errorInfo must not be null");
+            this.errorInfo = errorInfo;
             return this;
         }
 

@@ -105,14 +105,14 @@ public final class FileInfo {
         @java.lang.Override
         @JsonSetter("filename")
         public ContentsStage filename(@NotNull String filename) {
-            this.filename = Objects.requireNonNull(filename, "filename must not be null");
+            this.filename = filename;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("contents")
         public _FinalStage contents(@NotNull String contents) {
-            this.contents = Objects.requireNonNull(contents, "contents must not be null");
+            this.contents = contents;
             return this;
         }
 

@@ -108,7 +108,7 @@ public final class Record {
         @java.lang.Override
         @JsonSetter("3d")
         public _FinalStage _3D(int _3D) {
-            this._3D = _3D;
+            this._3D = Objects.requireNonNull(_3D, "_3D must not be null");
             return this;
         }
 

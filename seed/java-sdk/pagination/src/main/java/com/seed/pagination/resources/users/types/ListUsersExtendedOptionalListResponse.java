@@ -133,7 +133,7 @@ public final class ListUsersExtendedOptionalListResponse implements IUserOptiona
         @java.lang.Override
         @JsonSetter("data")
         public TotalCountStage data(@NotNull UserOptionalListContainer data) {
-            this.data = Objects.requireNonNull(data, "data must not be null");
+            this.data = data;
             return this;
         }
 
@@ -144,7 +144,7 @@ public final class ListUsersExtendedOptionalListResponse implements IUserOptiona
         @java.lang.Override
         @JsonSetter("total_count")
         public _FinalStage totalCount(int totalCount) {
-            this.totalCount = totalCount;
+            this.totalCount = Objects.requireNonNull(totalCount, "totalCount must not be null");
             return this;
         }
 

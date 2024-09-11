@@ -146,14 +146,14 @@ public final class TestCaseNonHiddenGrade {
         @java.lang.Override
         @JsonSetter("passed")
         public StdoutStage passed(boolean passed) {
-            this.passed = passed;
+            this.passed = Objects.requireNonNull(passed, "passed must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("stdout")
         public _FinalStage stdout(@NotNull String stdout) {
-            this.stdout = Objects.requireNonNull(stdout, "stdout must not be null");
+            this.stdout = stdout;
             return this;
         }
 

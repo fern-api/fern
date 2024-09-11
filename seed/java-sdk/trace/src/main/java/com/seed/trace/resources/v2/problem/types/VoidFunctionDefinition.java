@@ -113,7 +113,7 @@ public final class VoidFunctionDefinition {
         @java.lang.Override
         @JsonSetter("code")
         public _FinalStage code(@NotNull FunctionImplementationForMultipleLanguages code) {
-            this.code = Objects.requireNonNull(code, "code must not be null");
+            this.code = code;
             return this;
         }
 

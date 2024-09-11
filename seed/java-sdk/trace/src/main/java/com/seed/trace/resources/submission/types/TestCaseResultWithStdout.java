@@ -105,14 +105,14 @@ public final class TestCaseResultWithStdout {
         @java.lang.Override
         @JsonSetter("result")
         public StdoutStage result(@NotNull TestCaseResult result) {
-            this.result = Objects.requireNonNull(result, "result must not be null");
+            this.result = result;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("stdout")
         public _FinalStage stdout(@NotNull String stdout) {
-            this.stdout = Objects.requireNonNull(stdout, "stdout must not be null");
+            this.stdout = stdout;
             return this;
         }
 

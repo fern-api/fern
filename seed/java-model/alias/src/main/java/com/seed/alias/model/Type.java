@@ -89,14 +89,14 @@ public final class Type {
         @java.lang.Override
         @JsonSetter("id")
         public NameStage id(String id) {
-            this.id = Objects.requireNonNull(id, "id must not be null");
+            this.id = id;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
         public _FinalStage name(String name) {
-            this.name = Objects.requireNonNull(name, "name must not be null");
+            this.name = name;
             return this;
         }
 

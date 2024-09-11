@@ -90,7 +90,7 @@ public final class GetPresignedUrlRequest {
         @java.lang.Override
         @JsonSetter("s3Key")
         public _FinalStage s3Key(@NotNull String s3Key) {
-            this.s3Key = Objects.requireNonNull(s3Key, "s3Key must not be null");
+            this.s3Key = s3Key;
             return this;
         }
 

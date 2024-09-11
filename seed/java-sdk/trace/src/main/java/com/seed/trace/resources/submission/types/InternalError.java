@@ -90,7 +90,7 @@ public final class InternalError {
         @java.lang.Override
         @JsonSetter("exceptionInfo")
         public _FinalStage exceptionInfo(@NotNull ExceptionInfo exceptionInfo) {
-            this.exceptionInfo = Objects.requireNonNull(exceptionInfo, "exceptionInfo must not be null");
+            this.exceptionInfo = exceptionInfo;
             return this;
         }
 

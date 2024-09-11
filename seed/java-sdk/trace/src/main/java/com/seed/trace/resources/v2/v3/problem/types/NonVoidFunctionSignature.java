@@ -112,7 +112,7 @@ public final class NonVoidFunctionSignature {
         @java.lang.Override
         @JsonSetter("returnType")
         public _FinalStage returnType(@NotNull VariableType returnType) {
-            this.returnType = Objects.requireNonNull(returnType, "returnType must not be null");
+            this.returnType = returnType;
             return this;
         }
 

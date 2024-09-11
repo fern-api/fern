@@ -90,7 +90,7 @@ public final class MyObject {
         @java.lang.Override
         @JsonSetter("foo")
         public _FinalStage foo(@NotNull String foo) {
-            this.foo = Objects.requireNonNull(foo, "foo must not be null");
+            this.foo = foo;
             return this;
         }
 

@@ -276,49 +276,49 @@ public final class ProblemInfoV2 {
         @java.lang.Override
         @JsonSetter("problemId")
         public ProblemDescriptionStage problemId(@NotNull String problemId) {
-            this.problemId = Objects.requireNonNull(problemId, "problemId must not be null");
+            this.problemId = problemId;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("problemDescription")
         public ProblemNameStage problemDescription(@NotNull ProblemDescription problemDescription) {
-            this.problemDescription = Objects.requireNonNull(problemDescription, "problemDescription must not be null");
+            this.problemDescription = problemDescription;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("problemName")
         public ProblemVersionStage problemName(@NotNull String problemName) {
-            this.problemName = Objects.requireNonNull(problemName, "problemName must not be null");
+            this.problemName = problemName;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("problemVersion")
         public CustomFilesStage problemVersion(int problemVersion) {
-            this.problemVersion = problemVersion;
+            this.problemVersion = Objects.requireNonNull(problemVersion, "problemVersion must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("customFiles")
         public GeneratedFilesStage customFiles(@NotNull CustomFiles customFiles) {
-            this.customFiles = Objects.requireNonNull(customFiles, "customFiles must not be null");
+            this.customFiles = customFiles;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("generatedFiles")
         public IsPublicStage generatedFiles(@NotNull GeneratedFiles generatedFiles) {
-            this.generatedFiles = Objects.requireNonNull(generatedFiles, "generatedFiles must not be null");
+            this.generatedFiles = generatedFiles;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("isPublic")
         public _FinalStage isPublic(boolean isPublic) {
-            this.isPublic = isPublic;
+            this.isPublic = Objects.requireNonNull(isPublic, "isPublic must not be null");
             return this;
         }
 

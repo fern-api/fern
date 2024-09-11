@@ -89,14 +89,14 @@ public final class CreateMovieRequest {
         @java.lang.Override
         @JsonSetter("title")
         public RatingStage title(String title) {
-            this.title = Objects.requireNonNull(title, "title must not be null");
+            this.title = title;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("rating")
         public _FinalStage rating(double rating) {
-            this.rating = rating;
+            this.rating = Objects.requireNonNull(rating, "rating must not be null");
             return this;
         }
 

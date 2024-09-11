@@ -104,14 +104,14 @@ public final class ExpressionLocation {
         @java.lang.Override
         @JsonSetter("start")
         public OffsetStage start(int start) {
-            this.start = start;
+            this.start = Objects.requireNonNull(start, "start must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("offset")
         public _FinalStage offset(int offset) {
-            this.offset = offset;
+            this.offset = Objects.requireNonNull(offset, "offset must not be null");
             return this;
         }
 

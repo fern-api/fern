@@ -105,14 +105,14 @@ public final class MapType {
         @java.lang.Override
         @JsonSetter("keyType")
         public ValueTypeStage keyType(@NotNull VariableType keyType) {
-            this.keyType = Objects.requireNonNull(keyType, "keyType must not be null");
+            this.keyType = keyType;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("valueType")
         public _FinalStage valueType(@NotNull VariableType valueType) {
-            this.valueType = Objects.requireNonNull(valueType, "valueType must not be null");
+            this.valueType = valueType;
             return this;
         }
 

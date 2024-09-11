@@ -105,14 +105,14 @@ public final class GetWithQuery {
         @java.lang.Override
         @JsonSetter("query")
         public NumberStage query(@NotNull String query) {
-            this.query = Objects.requireNonNull(query, "query must not be null");
+            this.query = query;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("number")
         public _FinalStage number(int number) {
-            this.number = number;
+            this.number = Objects.requireNonNull(number, "number must not be null");
             return this;
         }
 

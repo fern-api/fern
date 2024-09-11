@@ -109,14 +109,14 @@ public final class WorkspaceSubmissionUpdate {
         @java.lang.Override
         @JsonSetter("updateTime")
         public UpdateInfoStage updateTime(@NotNull OffsetDateTime updateTime) {
-            this.updateTime = Objects.requireNonNull(updateTime, "updateTime must not be null");
+            this.updateTime = updateTime;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("updateInfo")
         public _FinalStage updateInfo(@NotNull WorkspaceSubmissionUpdateInfo updateInfo) {
-            this.updateInfo = Objects.requireNonNull(updateInfo, "updateInfo must not be null");
+            this.updateInfo = updateInfo;
             return this;
         }
 

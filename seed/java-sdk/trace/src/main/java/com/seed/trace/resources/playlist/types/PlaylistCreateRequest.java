@@ -112,7 +112,7 @@ public final class PlaylistCreateRequest implements IPlaylistCreateRequest {
         @java.lang.Override
         @JsonSetter("name")
         public _FinalStage name(@NotNull String name) {
-            this.name = Objects.requireNonNull(name, "name must not be null");
+            this.name = name;
             return this;
         }
 

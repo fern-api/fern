@@ -89,7 +89,7 @@ public final class WorkspaceTracedUpdate {
         @java.lang.Override
         @JsonSetter("traceResponsesSize")
         public _FinalStage traceResponsesSize(int traceResponsesSize) {
-            this.traceResponsesSize = traceResponsesSize;
+            this.traceResponsesSize = Objects.requireNonNull(traceResponsesSize, "traceResponsesSize must not be null");
             return this;
         }
 

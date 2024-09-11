@@ -14,7 +14,6 @@ import com.seed.trace.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = LangServerRequest.Builder.class)
@@ -63,7 +62,7 @@ public final class LangServerRequest {
     }
 
     public interface RequestStage {
-        _FinalStage request(@NotNull Object request);
+        _FinalStage request(Object request);
 
         Builder from(LangServerRequest other);
     }
@@ -89,7 +88,7 @@ public final class LangServerRequest {
 
         @java.lang.Override
         @JsonSetter("request")
-        public _FinalStage request(@NotNull Object request) {
+        public _FinalStage request(Object request) {
             this.request = Objects.requireNonNull(request, "request must not be null");
             return this;
         }

@@ -105,14 +105,14 @@ public final class NestedUser {
         @java.lang.Override
         @JsonSetter("Name")
         public NestedUserStage name(@NotNull String name) {
-            this.name = Objects.requireNonNull(name, "name must not be null");
+            this.name = name;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("NestedUser")
         public _FinalStage nestedUser(@NotNull User nestedUser) {
-            this.nestedUser = Objects.requireNonNull(nestedUser, "nestedUser must not be null");
+            this.nestedUser = nestedUser;
             return this;
         }
 

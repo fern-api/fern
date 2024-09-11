@@ -206,28 +206,28 @@ public final class TraceResponseV2 {
         @java.lang.Override
         @JsonSetter("submissionId")
         public LineNumberStage submissionId(@NotNull UUID submissionId) {
-            this.submissionId = Objects.requireNonNull(submissionId, "submissionId must not be null");
+            this.submissionId = submissionId;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("lineNumber")
         public FileStage lineNumber(int lineNumber) {
-            this.lineNumber = lineNumber;
+            this.lineNumber = Objects.requireNonNull(lineNumber, "lineNumber must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("file")
         public StackStage file(@NotNull TracedFile file) {
-            this.file = Objects.requireNonNull(file, "file must not be null");
+            this.file = file;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("stack")
         public _FinalStage stack(@NotNull StackInformation stack) {
-            this.stack = Objects.requireNonNull(stack, "stack must not be null");
+            this.stack = stack;
             return this;
         }
 

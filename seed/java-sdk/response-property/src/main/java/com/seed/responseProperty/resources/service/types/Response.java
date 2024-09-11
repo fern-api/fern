@@ -127,14 +127,14 @@ public final class Response implements IWithMetadata, IWithDocs {
         @java.lang.Override
         @JsonSetter("docs")
         public DataStage docs(@NotNull String docs) {
-            this.docs = Objects.requireNonNull(docs, "docs must not be null");
+            this.docs = docs;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("data")
         public _FinalStage data(@NotNull Movie data) {
-            this.data = Objects.requireNonNull(data, "data must not be null");
+            this.data = data;
             return this;
         }
 

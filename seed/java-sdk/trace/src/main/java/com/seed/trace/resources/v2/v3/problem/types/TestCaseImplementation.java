@@ -108,14 +108,14 @@ public final class TestCaseImplementation {
         @java.lang.Override
         @JsonSetter("description")
         public FunctionStage description(@NotNull TestCaseImplementationDescription description) {
-            this.description = Objects.requireNonNull(description, "description must not be null");
+            this.description = description;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("function")
         public _FinalStage function(@NotNull TestCaseFunction function) {
-            this.function = Objects.requireNonNull(function, "function must not be null");
+            this.function = function;
             return this;
         }
 

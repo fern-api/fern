@@ -126,14 +126,14 @@ public final class StackFrame {
         @java.lang.Override
         @JsonSetter("methodName")
         public LineNumberStage methodName(@NotNull String methodName) {
-            this.methodName = Objects.requireNonNull(methodName, "methodName must not be null");
+            this.methodName = methodName;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("lineNumber")
         public _FinalStage lineNumber(int lineNumber) {
-            this.lineNumber = lineNumber;
+            this.lineNumber = Objects.requireNonNull(lineNumber, "lineNumber must not be null");
             return this;
         }
 

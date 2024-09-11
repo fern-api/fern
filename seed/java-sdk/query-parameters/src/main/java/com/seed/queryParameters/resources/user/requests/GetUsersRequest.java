@@ -350,63 +350,63 @@ public final class GetUsersRequest {
         @java.lang.Override
         @JsonSetter("limit")
         public IdStage limit(int limit) {
-            this.limit = limit;
+            this.limit = Objects.requireNonNull(limit, "limit must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("id")
         public DateStage id(@NotNull UUID id) {
-            this.id = Objects.requireNonNull(id, "id must not be null");
+            this.id = id;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("date")
         public DeadlineStage date(@NotNull String date) {
-            this.date = Objects.requireNonNull(date, "date must not be null");
+            this.date = date;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("deadline")
         public BytesStage deadline(@NotNull OffsetDateTime deadline) {
-            this.deadline = Objects.requireNonNull(deadline, "deadline must not be null");
+            this.deadline = deadline;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("bytes")
         public UserStage bytes(@NotNull byte[] bytes) {
-            this.bytes = Objects.requireNonNull(bytes, "bytes must not be null");
+            this.bytes = bytes;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("user")
         public NestedUserStage user(@NotNull User user) {
-            this.user = Objects.requireNonNull(user, "user must not be null");
+            this.user = user;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("nestedUser")
         public ExcludeUserStage nestedUser(@NotNull NestedUser nestedUser) {
-            this.nestedUser = Objects.requireNonNull(nestedUser, "nestedUser must not be null");
+            this.nestedUser = nestedUser;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("excludeUser")
         public FilterStage excludeUser(@NotNull User excludeUser) {
-            this.excludeUser = Objects.requireNonNull(excludeUser, "excludeUser must not be null");
+            this.excludeUser = excludeUser;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("filter")
         public _FinalStage filter(@NotNull String filter) {
-            this.filter = Objects.requireNonNull(filter, "filter must not be null");
+            this.filter = filter;
             return this;
         }
 

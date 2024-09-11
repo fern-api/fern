@@ -115,8 +115,7 @@ public final class StoreTracedWorkspaceRequest {
         @java.lang.Override
         @JsonSetter("workspaceRunDetails")
         public _FinalStage workspaceRunDetails(@NotNull WorkspaceRunDetails workspaceRunDetails) {
-            this.workspaceRunDetails =
-                    Objects.requireNonNull(workspaceRunDetails, "workspaceRunDetails must not be null");
+            this.workspaceRunDetails = workspaceRunDetails;
             return this;
         }
 

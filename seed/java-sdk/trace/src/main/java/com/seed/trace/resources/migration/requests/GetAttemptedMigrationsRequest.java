@@ -90,7 +90,7 @@ public final class GetAttemptedMigrationsRequest {
         @java.lang.Override
         @JsonSetter("admin-key-header")
         public _FinalStage adminKeyHeader(@NotNull String adminKeyHeader) {
-            this.adminKeyHeader = Objects.requireNonNull(adminKeyHeader, "adminKeyHeader must not be null");
+            this.adminKeyHeader = adminKeyHeader;
             return this;
         }
 

@@ -260,7 +260,7 @@ public final class BuilderGenerator {
             EnrichedObjectPropertyWithField enrichedObjectProperty, ClassName returnClass) {
         MethodSpec.Builder methodBuilder = getRequiredFieldSetter(enrichedObjectProperty, returnClass)
                 .addAnnotation(ClassName.get("", "java.lang.Override"));
-        if (enrichedObjectProperty.enrichedObjectProperty.poetTypeName().isPrimitive()
+        if (isNotNullableType(enrichedObjectProperty.enrichedObjectProperty.poetTypeName())
                 || disableRequiredPropertyBuilderChecks) {
             methodBuilder.addStatement(
                     "this.$L = $L", enrichedObjectProperty.fieldSpec.name, enrichedObjectProperty.fieldSpec.name);
@@ -293,11 +293,16 @@ public final class BuilderGenerator {
         return methodBuilder.build();
     }
 
+    // primitives are already not nullable, and we should allow null for Objects, as they represent "unknown"
+    private static boolean isNotNullableType(TypeName typeName) {
+        return !typeName.isPrimitive() && !typeName.equals(ClassName.OBJECT);
+    }
+
     private MethodSpec.Builder getRequiredFieldSetter(
             EnrichedObjectPropertyWithField enrichedObjectProperty, ClassName returnClass) {
         Builder parameterSpecBuilder = ParameterSpec.builder(
                 enrichedObjectProperty.enrichedObjectProperty.poetTypeName(), enrichedObjectProperty.fieldSpec.name);
-        if (!enrichedObjectProperty.enrichedObjectProperty.poetTypeName().isPrimitive() && builderNotNullChecks) {
+        if (isNotNullableType(enrichedObjectProperty.enrichedObjectProperty.poetTypeName()) && builderNotNullChecks) {
             parameterSpecBuilder.addAnnotation(ClassName.get("org.jetbrains.annotations", "NotNull"));
         }
         return MethodSpec.methodBuilder(enrichedObjectProperty.fieldSpec.name)

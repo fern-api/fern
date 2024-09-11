@@ -108,7 +108,7 @@ public final class InitializeProblemRequest {
         @java.lang.Override
         @JsonSetter("problemId")
         public _FinalStage problemId(@NotNull String problemId) {
-            this.problemId = Objects.requireNonNull(problemId, "problemId must not be null");
+            this.problemId = problemId;
             return this;
         }
 

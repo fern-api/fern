@@ -111,7 +111,7 @@ public final class WorkspaceFiles {
         @java.lang.Override
         @JsonSetter("mainFile")
         public _FinalStage mainFile(@NotNull FileInfo mainFile) {
-            this.mainFile = Objects.requireNonNull(mainFile, "mainFile must not be null");
+            this.mainFile = mainFile;
             return this;
         }
 

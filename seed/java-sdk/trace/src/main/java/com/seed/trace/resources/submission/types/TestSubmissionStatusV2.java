@@ -149,21 +149,21 @@ public final class TestSubmissionStatusV2 {
         @java.lang.Override
         @JsonSetter("problemId")
         public ProblemVersionStage problemId(@NotNull String problemId) {
-            this.problemId = Objects.requireNonNull(problemId, "problemId must not be null");
+            this.problemId = problemId;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("problemVersion")
         public ProblemInfoStage problemVersion(int problemVersion) {
-            this.problemVersion = problemVersion;
+            this.problemVersion = Objects.requireNonNull(problemVersion, "problemVersion must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("problemInfo")
         public _FinalStage problemInfo(@NotNull ProblemInfoV2 problemInfo) {
-            this.problemInfo = Objects.requireNonNull(problemInfo, "problemInfo must not be null");
+            this.problemInfo = problemInfo;
             return this;
         }
 

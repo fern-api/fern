@@ -120,21 +120,21 @@ public final class File {
         @java.lang.Override
         @JsonSetter("name")
         public ContentsStage name(@NotNull String name) {
-            this.name = Objects.requireNonNull(name, "name must not be null");
+            this.name = name;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("contents")
         public InfoStage contents(@NotNull String contents) {
-            this.contents = Objects.requireNonNull(contents, "contents must not be null");
+            this.contents = contents;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("info")
         public _FinalStage info(@NotNull FileInfo info) {
-            this.info = Objects.requireNonNull(info, "info must not be null");
+            this.info = info;
             return this;
         }
 

@@ -151,14 +151,14 @@ public final class WorkspaceSubmitRequest {
         @java.lang.Override
         @JsonSetter("submissionId")
         public LanguageStage submissionId(@NotNull UUID submissionId) {
-            this.submissionId = Objects.requireNonNull(submissionId, "submissionId must not be null");
+            this.submissionId = submissionId;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("language")
         public _FinalStage language(@NotNull Language language) {
-            this.language = Objects.requireNonNull(language, "language must not be null");
+            this.language = language;
             return this;
         }
 

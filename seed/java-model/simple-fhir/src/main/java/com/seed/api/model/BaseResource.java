@@ -112,14 +112,14 @@ public final class BaseResource implements IBaseResource {
         @java.lang.Override
         @JsonSetter("id")
         public MemoStage id(String id) {
-            this.id = Objects.requireNonNull(id, "id must not be null");
+            this.id = id;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("memo")
         public _FinalStage memo(Memo memo) {
-            this.memo = Objects.requireNonNull(memo, "memo must not be null");
+            this.memo = memo;
             return this;
         }
 

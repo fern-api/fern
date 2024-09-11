@@ -106,14 +106,14 @@ public final class VariableTypeAndName {
         @java.lang.Override
         @JsonSetter("variableType")
         public NameStage variableType(@NotNull VariableType variableType) {
-            this.variableType = Objects.requireNonNull(variableType, "variableType must not be null");
+            this.variableType = variableType;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
         public _FinalStage name(@NotNull String name) {
-            this.name = Objects.requireNonNull(name, "name must not be null");
+            this.name = name;
             return this;
         }
 

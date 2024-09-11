@@ -77,7 +77,7 @@ public final class Metadata {
     }
 
     public interface ValueStage {
-        _FinalStage value(@NotNull Object value);
+        _FinalStage value(Object value);
     }
 
     public interface _FinalStage {
@@ -105,13 +105,13 @@ public final class Metadata {
         @java.lang.Override
         @JsonSetter("id")
         public ValueStage id(@NotNull String id) {
-            this.id = Objects.requireNonNull(id, "id must not be null");
+            this.id = id;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("value")
-        public _FinalStage value(@NotNull Object value) {
+        public _FinalStage value(Object value) {
             this.value = Objects.requireNonNull(value, "value must not be null");
             return this;
         }

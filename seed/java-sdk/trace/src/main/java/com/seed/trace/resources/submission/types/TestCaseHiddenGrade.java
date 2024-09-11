@@ -89,7 +89,7 @@ public final class TestCaseHiddenGrade {
         @java.lang.Override
         @JsonSetter("passed")
         public _FinalStage passed(boolean passed) {
-            this.passed = passed;
+            this.passed = Objects.requireNonNull(passed, "passed must not be null");
             return this;
         }
 

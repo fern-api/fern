@@ -144,29 +144,28 @@ public final class BasicTestCaseTemplate {
         @java.lang.Override
         @JsonSetter("templateId")
         public NameStage templateId(@NotNull String templateId) {
-            this.templateId = Objects.requireNonNull(templateId, "templateId must not be null");
+            this.templateId = templateId;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
         public DescriptionStage name(@NotNull String name) {
-            this.name = Objects.requireNonNull(name, "name must not be null");
+            this.name = name;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("description")
         public ExpectedValueParameterIdStage description(@NotNull TestCaseImplementationDescription description) {
-            this.description = Objects.requireNonNull(description, "description must not be null");
+            this.description = description;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("expectedValueParameterId")
         public _FinalStage expectedValueParameterId(@NotNull String expectedValueParameterId) {
-            this.expectedValueParameterId =
-                    Objects.requireNonNull(expectedValueParameterId, "expectedValueParameterId must not be null");
+            this.expectedValueParameterId = expectedValueParameterId;
             return this;
         }
 

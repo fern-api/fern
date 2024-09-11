@@ -74,7 +74,7 @@ public final class Square {
         @java.lang.Override
         @JsonSetter("length")
         public _FinalStage length(double length) {
-            this.length = length;
+            this.length = Objects.requireNonNull(length, "length must not be null");
             return this;
         }
 

@@ -126,7 +126,7 @@ public final class GetMetadataRequest {
         @java.lang.Override
         @JsonSetter("X-API-Version")
         public _FinalStage xApiVersion(@NotNull String xApiVersion) {
-            this.xApiVersion = Objects.requireNonNull(xApiVersion, "xApiVersion must not be null");
+            this.xApiVersion = xApiVersion;
             return this;
         }
 

@@ -91,8 +91,7 @@ public final class SubmissionIdNotFound {
         @java.lang.Override
         @JsonSetter("missingSubmissionId")
         public _FinalStage missingSubmissionId(@NotNull UUID missingSubmissionId) {
-            this.missingSubmissionId =
-                    Objects.requireNonNull(missingSubmissionId, "missingSubmissionId must not be null");
+            this.missingSubmissionId = missingSubmissionId;
             return this;
         }
 

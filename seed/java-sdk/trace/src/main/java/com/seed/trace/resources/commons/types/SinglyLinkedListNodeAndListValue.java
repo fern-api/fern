@@ -106,14 +106,14 @@ public final class SinglyLinkedListNodeAndListValue {
         @java.lang.Override
         @JsonSetter("nodeId")
         public FullListStage nodeId(@NotNull String nodeId) {
-            this.nodeId = Objects.requireNonNull(nodeId, "nodeId must not be null");
+            this.nodeId = nodeId;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("fullList")
         public _FinalStage fullList(@NotNull SinglyLinkedListValue fullList) {
-            this.fullList = Objects.requireNonNull(fullList, "fullList must not be null");
+            this.fullList = fullList;
             return this;
         }
 

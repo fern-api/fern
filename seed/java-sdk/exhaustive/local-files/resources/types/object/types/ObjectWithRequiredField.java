@@ -98,7 +98,7 @@ public final class ObjectWithRequiredField {
     @java.lang.Override
     @JsonSetter("string")
     public _FinalStage string(@NotNull String string) {
-      this.string = Objects.requireNonNull(string, "string must not be null");
+      this.string = string;
       return this;
     }
 

@@ -89,14 +89,14 @@ public final class TokenResponse {
         @java.lang.Override
         @JsonSetter("access_token")
         public ExpiresInStage accessToken(String accessToken) {
-            this.accessToken = Objects.requireNonNull(accessToken, "accessToken must not be null");
+            this.accessToken = accessToken;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("expires_in")
         public _FinalStage expiresIn(int expiresIn) {
-            this.expiresIn = expiresIn;
+            this.expiresIn = Objects.requireNonNull(expiresIn, "expiresIn must not be null");
             return this;
         }
 

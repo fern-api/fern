@@ -136,7 +136,7 @@ public final class ListUsersPaginationResponse {
         @java.lang.Override
         @JsonSetter("total_count")
         public _FinalStage totalCount(int totalCount) {
-            this.totalCount = totalCount;
+            this.totalCount = Objects.requireNonNull(totalCount, "totalCount must not be null");
             return this;
         }
 

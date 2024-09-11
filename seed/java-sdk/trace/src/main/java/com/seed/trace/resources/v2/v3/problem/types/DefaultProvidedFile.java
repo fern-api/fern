@@ -112,7 +112,7 @@ public final class DefaultProvidedFile {
         @java.lang.Override
         @JsonSetter("file")
         public _FinalStage file(@NotNull FileInfoV2 file) {
-            this.file = Objects.requireNonNull(file, "file must not be null");
+            this.file = file;
             return this;
         }
 

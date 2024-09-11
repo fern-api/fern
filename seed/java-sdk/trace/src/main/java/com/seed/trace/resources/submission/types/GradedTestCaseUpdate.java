@@ -105,14 +105,14 @@ public final class GradedTestCaseUpdate {
         @java.lang.Override
         @JsonSetter("testCaseId")
         public GradeStage testCaseId(@NotNull String testCaseId) {
-            this.testCaseId = Objects.requireNonNull(testCaseId, "testCaseId must not be null");
+            this.testCaseId = testCaseId;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("grade")
         public _FinalStage grade(@NotNull TestCaseGrade grade) {
-            this.grade = Objects.requireNonNull(grade, "grade must not be null");
+            this.grade = grade;
             return this;
         }
 

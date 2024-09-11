@@ -106,14 +106,14 @@ public final class TestCaseWithExpectedResult {
         @java.lang.Override
         @JsonSetter("testCase")
         public ExpectedResultStage testCase(@NotNull TestCase testCase) {
-            this.testCase = Objects.requireNonNull(testCase, "testCase must not be null");
+            this.testCase = testCase;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("expectedResult")
         public _FinalStage expectedResult(@NotNull VariableValue expectedResult) {
-            this.expectedResult = Objects.requireNonNull(expectedResult, "expectedResult must not be null");
+            this.expectedResult = expectedResult;
             return this;
         }
 

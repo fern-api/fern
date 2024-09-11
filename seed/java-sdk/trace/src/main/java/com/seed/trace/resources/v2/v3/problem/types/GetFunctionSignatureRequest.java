@@ -90,7 +90,7 @@ public final class GetFunctionSignatureRequest {
         @java.lang.Override
         @JsonSetter("functionSignature")
         public _FinalStage functionSignature(@NotNull FunctionSignature functionSignature) {
-            this.functionSignature = Objects.requireNonNull(functionSignature, "functionSignature must not be null");
+            this.functionSignature = functionSignature;
             return this;
         }
 

@@ -155,21 +155,21 @@ public final class RefreshTokenRequest {
         @java.lang.Override
         @JsonSetter("client_id")
         public ClientSecretStage clientId(@NotNull String clientId) {
-            this.clientId = Objects.requireNonNull(clientId, "clientId must not be null");
+            this.clientId = clientId;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("client_secret")
         public RefreshTokenStage clientSecret(@NotNull String clientSecret) {
-            this.clientSecret = Objects.requireNonNull(clientSecret, "clientSecret must not be null");
+            this.clientSecret = clientSecret;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("refresh_token")
         public _FinalStage refreshToken(@NotNull String refreshToken) {
-            this.refreshToken = Objects.requireNonNull(refreshToken, "refreshToken must not be null");
+            this.refreshToken = refreshToken;
             return this;
         }
 

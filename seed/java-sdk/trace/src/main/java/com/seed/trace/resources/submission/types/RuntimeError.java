@@ -90,7 +90,7 @@ public final class RuntimeError {
         @java.lang.Override
         @JsonSetter("message")
         public _FinalStage message(@NotNull String message) {
-            this.message = Objects.requireNonNull(message, "message must not be null");
+            this.message = message;
             return this;
         }
 

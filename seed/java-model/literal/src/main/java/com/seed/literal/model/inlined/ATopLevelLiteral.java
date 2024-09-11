@@ -74,7 +74,7 @@ public final class ATopLevelLiteral {
         @java.lang.Override
         @JsonSetter("nestedLiteral")
         public _FinalStage nestedLiteral(ANestedLiteral nestedLiteral) {
-            this.nestedLiteral = Objects.requireNonNull(nestedLiteral, "nestedLiteral must not be null");
+            this.nestedLiteral = nestedLiteral;
             return this;
         }
 

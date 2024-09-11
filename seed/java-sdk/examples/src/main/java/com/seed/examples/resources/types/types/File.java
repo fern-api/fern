@@ -105,14 +105,14 @@ public final class File {
         @java.lang.Override
         @JsonSetter("name")
         public ContentsStage name(@NotNull String name) {
-            this.name = Objects.requireNonNull(name, "name must not be null");
+            this.name = name;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("contents")
         public _FinalStage contents(@NotNull String contents) {
-            this.contents = Objects.requireNonNull(contents, "contents must not be null");
+            this.contents = contents;
             return this;
         }
 

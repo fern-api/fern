@@ -89,14 +89,14 @@ public final class NextPage {
         @java.lang.Override
         @JsonSetter("page")
         public StartingAfterStage page(int page) {
-            this.page = page;
+            this.page = Objects.requireNonNull(page, "page must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("starting_after")
         public _FinalStage startingAfter(String startingAfter) {
-            this.startingAfter = Objects.requireNonNull(startingAfter, "startingAfter must not be null");
+            this.startingAfter = startingAfter;
             return this;
         }
 

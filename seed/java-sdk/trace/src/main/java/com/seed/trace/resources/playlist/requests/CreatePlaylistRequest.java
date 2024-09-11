@@ -130,14 +130,14 @@ public final class CreatePlaylistRequest {
         @java.lang.Override
         @JsonSetter("datetime")
         public BodyStage datetime(@NotNull OffsetDateTime datetime) {
-            this.datetime = Objects.requireNonNull(datetime, "datetime must not be null");
+            this.datetime = datetime;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("body")
         public _FinalStage body(@NotNull PlaylistCreateRequest body) {
-            this.body = Objects.requireNonNull(body, "body must not be null");
+            this.body = body;
             return this;
         }
 

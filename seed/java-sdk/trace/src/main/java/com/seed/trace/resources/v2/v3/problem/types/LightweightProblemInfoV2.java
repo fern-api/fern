@@ -149,21 +149,21 @@ public final class LightweightProblemInfoV2 {
         @java.lang.Override
         @JsonSetter("problemId")
         public ProblemNameStage problemId(@NotNull String problemId) {
-            this.problemId = Objects.requireNonNull(problemId, "problemId must not be null");
+            this.problemId = problemId;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("problemName")
         public ProblemVersionStage problemName(@NotNull String problemName) {
-            this.problemName = Objects.requireNonNull(problemName, "problemName must not be null");
+            this.problemName = problemName;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("problemVersion")
         public _FinalStage problemVersion(int problemVersion) {
-            this.problemVersion = problemVersion;
+            this.problemVersion = Objects.requireNonNull(problemVersion, "problemVersion must not be null");
             return this;
         }
 

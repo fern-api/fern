@@ -163,7 +163,7 @@ public final class ScoredColumn {
         @java.lang.Override
         @JsonSetter("id")
         public _FinalStage id(@NotNull String id) {
-            this.id = Objects.requireNonNull(id, "id must not be null");
+            this.id = id;
             return this;
         }
 

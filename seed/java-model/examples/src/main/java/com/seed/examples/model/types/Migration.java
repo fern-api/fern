@@ -89,14 +89,14 @@ public final class Migration {
         @java.lang.Override
         @JsonSetter("name")
         public StatusStage name(String name) {
-            this.name = Objects.requireNonNull(name, "name must not be null");
+            this.name = name;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("status")
         public _FinalStage status(MigrationStatus status) {
-            this.status = Objects.requireNonNull(status, "status must not be null");
+            this.status = status;
             return this;
         }
 

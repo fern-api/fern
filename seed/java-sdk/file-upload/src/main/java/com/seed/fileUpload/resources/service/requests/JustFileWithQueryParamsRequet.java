@@ -163,14 +163,14 @@ public final class JustFileWithQueryParamsRequet {
         @java.lang.Override
         @JsonSetter("integer")
         public ListOfStringsStage integer(int integer) {
-            this.integer = integer;
+            this.integer = Objects.requireNonNull(integer, "integer must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("listOfStrings")
         public _FinalStage listOfStrings(@NotNull String listOfStrings) {
-            this.listOfStrings = Objects.requireNonNull(listOfStrings, "listOfStrings must not be null");
+            this.listOfStrings = listOfStrings;
             return this;
         }
 

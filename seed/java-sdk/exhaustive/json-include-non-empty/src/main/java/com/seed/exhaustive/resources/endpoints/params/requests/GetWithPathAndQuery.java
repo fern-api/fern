@@ -90,7 +90,7 @@ public final class GetWithPathAndQuery {
         @java.lang.Override
         @JsonSetter("query")
         public _FinalStage query(@NotNull String query) {
-            this.query = Objects.requireNonNull(query, "query must not be null");
+            this.query = query;
             return this;
         }
 

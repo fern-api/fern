@@ -74,7 +74,7 @@ public final class ImportingType {
         @java.lang.Override
         @JsonSetter("imported")
         public _FinalStage imported(String imported) {
-            this.imported = Objects.requireNonNull(imported, "imported must not be null");
+            this.imported = imported;
             return this;
         }
 

@@ -120,21 +120,21 @@ public final class User {
         @java.lang.Override
         @JsonSetter("id")
         public NameStage id(@NotNull String id) {
-            this.id = Objects.requireNonNull(id, "id must not be null");
+            this.id = id;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
         public AgeStage name(@NotNull String name) {
-            this.name = Objects.requireNonNull(name, "name must not be null");
+            this.name = name;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("age")
         public _FinalStage age(int age) {
-            this.age = age;
+            this.age = Objects.requireNonNull(age, "age must not be null");
             return this;
         }
 

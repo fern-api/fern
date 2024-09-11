@@ -90,7 +90,7 @@ public final class GetFileRequest {
         @java.lang.Override
         @JsonSetter("X-File-API-Version")
         public _FinalStage xFileApiVersion(@NotNull String xFileApiVersion) {
-            this.xFileApiVersion = Objects.requireNonNull(xFileApiVersion, "xFileApiVersion must not be null");
+            this.xFileApiVersion = xFileApiVersion;
             return this;
         }
 

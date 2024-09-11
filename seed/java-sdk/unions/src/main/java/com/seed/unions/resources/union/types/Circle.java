@@ -89,7 +89,7 @@ public final class Circle {
         @java.lang.Override
         @JsonSetter("radius")
         public _FinalStage radius(double radius) {
-            this.radius = radius;
+            this.radius = Objects.requireNonNull(radius, "radius must not be null");
             return this;
         }
 

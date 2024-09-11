@@ -107,7 +107,7 @@ public final class FilteredType {
         @java.lang.Override
         @JsonSetter("private_property")
         public _FinalStage privateProperty(int privateProperty) {
-            this.privateProperty = privateProperty;
+            this.privateProperty = Objects.requireNonNull(privateProperty, "privateProperty must not be null");
             return this;
         }
 

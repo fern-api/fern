@@ -151,14 +151,14 @@ public final class TestSubmissionState {
         @java.lang.Override
         @JsonSetter("problemId")
         public StatusStage problemId(@NotNull String problemId) {
-            this.problemId = Objects.requireNonNull(problemId, "problemId must not be null");
+            this.problemId = problemId;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("status")
         public _FinalStage status(@NotNull TestSubmissionStatus status) {
-            this.status = Objects.requireNonNull(status, "status must not be null");
+            this.status = status;
             return this;
         }
 

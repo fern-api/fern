@@ -92,7 +92,7 @@ public final class GetGeneratedTestCaseTemplateFileRequest {
         @java.lang.Override
         @JsonSetter("template")
         public _FinalStage template(@NotNull TestCaseTemplate template) {
-            this.template = Objects.requireNonNull(template, "template must not be null");
+            this.template = template;
             return this;
         }
 

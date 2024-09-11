@@ -124,21 +124,21 @@ public final class Parameter {
         @java.lang.Override
         @JsonSetter("parameterId")
         public NameStage parameterId(@NotNull String parameterId) {
-            this.parameterId = Objects.requireNonNull(parameterId, "parameterId must not be null");
+            this.parameterId = parameterId;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
         public VariableTypeStage name(@NotNull String name) {
-            this.name = Objects.requireNonNull(name, "name must not be null");
+            this.name = name;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("variableType")
         public _FinalStage variableType(@NotNull VariableType variableType) {
-            this.variableType = Objects.requireNonNull(variableType, "variableType must not be null");
+            this.variableType = variableType;
             return this;
         }
 

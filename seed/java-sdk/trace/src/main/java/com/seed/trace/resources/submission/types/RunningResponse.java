@@ -106,14 +106,14 @@ public final class RunningResponse {
         @java.lang.Override
         @JsonSetter("submissionId")
         public StateStage submissionId(@NotNull UUID submissionId) {
-            this.submissionId = Objects.requireNonNull(submissionId, "submissionId must not be null");
+            this.submissionId = submissionId;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("state")
         public _FinalStage state(@NotNull RunningSubmissionState state) {
-            this.state = Objects.requireNonNull(state, "state must not be null");
+            this.state = state;
             return this;
         }
 

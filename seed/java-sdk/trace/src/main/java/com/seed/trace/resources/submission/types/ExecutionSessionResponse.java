@@ -146,21 +146,21 @@ public final class ExecutionSessionResponse {
         @java.lang.Override
         @JsonSetter("sessionId")
         public LanguageStage sessionId(@NotNull String sessionId) {
-            this.sessionId = Objects.requireNonNull(sessionId, "sessionId must not be null");
+            this.sessionId = sessionId;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("language")
         public StatusStage language(@NotNull Language language) {
-            this.language = Objects.requireNonNull(language, "language must not be null");
+            this.language = language;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("status")
         public _FinalStage status(@NotNull ExecutionSessionStatus status) {
-            this.status = Objects.requireNonNull(status, "status must not be null");
+            this.status = status;
             return this;
         }
 

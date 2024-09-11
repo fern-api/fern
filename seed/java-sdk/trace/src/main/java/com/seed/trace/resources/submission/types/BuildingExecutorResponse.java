@@ -107,14 +107,14 @@ public final class BuildingExecutorResponse {
         @java.lang.Override
         @JsonSetter("submissionId")
         public StatusStage submissionId(@NotNull UUID submissionId) {
-            this.submissionId = Objects.requireNonNull(submissionId, "submissionId must not be null");
+            this.submissionId = submissionId;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("status")
         public _FinalStage status(@NotNull ExecutionSessionStatus status) {
-            this.status = Objects.requireNonNull(status, "status must not be null");
+            this.status = status;
             return this;
         }
 

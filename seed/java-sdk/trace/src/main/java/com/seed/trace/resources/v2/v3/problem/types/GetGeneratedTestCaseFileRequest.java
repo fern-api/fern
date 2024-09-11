@@ -108,7 +108,7 @@ public final class GetGeneratedTestCaseFileRequest {
         @java.lang.Override
         @JsonSetter("testCase")
         public _FinalStage testCase(@NotNull TestCaseV2 testCase) {
-            this.testCase = Objects.requireNonNull(testCase, "testCase must not be null");
+            this.testCase = testCase;
             return this;
         }
 

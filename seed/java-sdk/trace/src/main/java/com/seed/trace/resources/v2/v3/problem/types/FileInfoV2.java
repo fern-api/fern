@@ -144,28 +144,28 @@ public final class FileInfoV2 {
         @java.lang.Override
         @JsonSetter("filename")
         public DirectoryStage filename(@NotNull String filename) {
-            this.filename = Objects.requireNonNull(filename, "filename must not be null");
+            this.filename = filename;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("directory")
         public ContentsStage directory(@NotNull String directory) {
-            this.directory = Objects.requireNonNull(directory, "directory must not be null");
+            this.directory = directory;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("contents")
         public EditableStage contents(@NotNull String contents) {
-            this.contents = Objects.requireNonNull(contents, "contents must not be null");
+            this.contents = contents;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("editable")
         public _FinalStage editable(boolean editable) {
-            this.editable = editable;
+            this.editable = Objects.requireNonNull(editable, "editable must not be null");
             return this;
         }
 

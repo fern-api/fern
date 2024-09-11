@@ -113,7 +113,7 @@ public final class UpdatePlaylistRequest {
         @java.lang.Override
         @JsonSetter("name")
         public _FinalStage name(@NotNull String name) {
-            this.name = Objects.requireNonNull(name, "name must not be null");
+            this.name = name;
             return this;
         }
 

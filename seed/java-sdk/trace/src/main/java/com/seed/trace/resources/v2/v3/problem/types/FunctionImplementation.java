@@ -107,7 +107,7 @@ public final class FunctionImplementation {
         @java.lang.Override
         @JsonSetter("impl")
         public _FinalStage impl(@NotNull String impl) {
-            this.impl = Objects.requireNonNull(impl, "impl must not be null");
+            this.impl = impl;
             return this;
         }
 

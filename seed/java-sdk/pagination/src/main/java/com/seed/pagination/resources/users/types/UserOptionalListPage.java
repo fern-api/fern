@@ -111,7 +111,7 @@ public final class UserOptionalListPage implements IUserOptionalListPage {
         @java.lang.Override
         @JsonSetter("data")
         public _FinalStage data(@NotNull UserOptionalListContainer data) {
-            this.data = Objects.requireNonNull(data, "data must not be null");
+            this.data = data;
             return this;
         }
 
