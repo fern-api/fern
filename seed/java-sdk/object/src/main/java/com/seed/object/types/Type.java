@@ -350,7 +350,7 @@ public final class Type {
     }
 
     public interface FourteenStage {
-        NineteenStage fourteen(@NotNull Object fourteen);
+        NineteenStage fourteen(Object fourteen);
     }
 
     public interface NineteenStage {
@@ -576,8 +576,8 @@ public final class Type {
 
         @java.lang.Override
         @JsonSetter("fourteen")
-        public NineteenStage fourteen(@NotNull Object fourteen) {
-            this.fourteen = Objects.requireNonNull(fourteen, "fourteen must not be null");
+        public NineteenStage fourteen(Object fourteen) {
+            this.fourteen = fourteen;
             return this;
         }
 

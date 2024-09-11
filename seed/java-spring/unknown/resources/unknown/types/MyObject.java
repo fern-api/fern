@@ -13,7 +13,6 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
@@ -56,7 +55,7 @@ public final class MyObject {
   }
 
   public interface UnknownStage {
-    _FinalStage unknown(@NotNull Object unknown);
+    _FinalStage unknown(Object unknown);
 
     Builder from(MyObject other);
   }
@@ -82,8 +81,8 @@ public final class MyObject {
 
     @java.lang.Override
     @JsonSetter("unknown")
-    public _FinalStage unknown(@NotNull Object unknown) {
-      this.unknown = Objects.requireNonNull(unknown, "unknown must not be null");
+    public _FinalStage unknown(Object unknown) {
+      this.unknown = unknown;
       return this;
     }
 
