@@ -80,5 +80,5 @@ TestSubmissionUpdateInfo = typing.Union[
     TestSubmissionUpdateInfo_RecordedTestCase,
     TestSubmissionUpdateInfo_Finished,
 ]
-update_forward_refs(KeyValuePair)
-update_forward_refs(MapValue)
+update_forward_refs(KeyValuePair, TestSubmissionUpdateInfo_GradedTestCase=TestSubmissionUpdateInfo_GradedTestCase)
+update_forward_refs(MapValue, TestSubmissionUpdateInfo_GradedTestCase=TestSubmissionUpdateInfo_GradedTestCase)

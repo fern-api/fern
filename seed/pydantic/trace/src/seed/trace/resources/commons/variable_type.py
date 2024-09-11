@@ -138,11 +138,9 @@ VariableType = typing.Union[
     VariableType_SinglyLinkedListType,
     VariableType_DoublyLinkedListType,
 ]
-update_forward_refs(ListType)
-update_forward_refs(MapType)
+update_forward_refs(ListType, VariableType_ListType=VariableType_ListType)
+update_forward_refs(MapType, VariableType_ListType=VariableType_ListType)
 update_forward_refs(VariableType_ListType)
-update_forward_refs(ListType)
-update_forward_refs(MapType)
-update_forward_refs(ListType)
-update_forward_refs(MapType)
+update_forward_refs(ListType, VariableType_MapType=VariableType_MapType)
+update_forward_refs(MapType, VariableType_MapType=VariableType_MapType)
 update_forward_refs(VariableType_MapType)

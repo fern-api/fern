@@ -35,5 +35,5 @@ class CustomFiles_Custom(UniversalBaseModel):
 
 
 CustomFiles = typing.Union[CustomFiles_Basic, CustomFiles_Custom]
-update_forward_refs(ListType)
-update_forward_refs(MapType)
+update_forward_refs(ListType, CustomFiles_Basic=CustomFiles_Basic)
+update_forward_refs(MapType, CustomFiles_Basic=CustomFiles_Basic)
