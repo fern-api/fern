@@ -371,7 +371,7 @@ await client.endpoints.container.getAndReturnOptional({
 <dd>
 
 ```typescript
-await client.endpoints.enum.getAndReturnEnum(SeedExhaustive.WeatherReport.Sunny);
+await client.endpoints.enum.getAndReturnEnum("SUNNY");
 ```
 
 </dd>

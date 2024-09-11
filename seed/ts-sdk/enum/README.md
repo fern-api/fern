@@ -16,12 +16,12 @@ npm i -s @fern/enum
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedEnumClient, SeedEnum } from "@fern/enum";
+import { SeedEnumClient } from "@fern/enum";
 
 const client = new SeedEnumClient({ environment: "YOUR_BASE_URL" });
 await client.inlinedRequest.send({
-    operand: SeedEnum.Operand.GreaterThan,
-    operandOrColor: SeedEnum.Color.Red,
+    operand: ">",
+    operandOrColor: "red",
 });
 ```
 

@@ -9,7 +9,7 @@ import * as SeedPagination from "../../../../index";
  *     {
  *         page: 1,
  *         limit: 1,
- *         order: SeedPagination.Order.Asc
+ *         order: "asc"
  *     }
  */
 export interface ListWithOffsetPaginationHasNextPageRequest {
