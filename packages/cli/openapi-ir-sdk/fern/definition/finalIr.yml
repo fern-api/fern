@@ -458,6 +458,7 @@ types:
       - commons.WithName
       - commons.WithSdkGroupName
       - commons.WithAvailability
+      - commons.WithTitle
     properties:
       schema: PrimitiveSchemaValue
 
@@ -534,6 +535,7 @@ types:
       - commons.WithName
       - commons.WithSdkGroupName
       - commons.WithAvailability
+      - commons.WithTitle
     properties:
       value: LiteralSchemaValue
 
@@ -549,6 +551,7 @@ types:
       - commons.WithSdkGroupName
       - commons.WithAvailability
       - commons.WithSource
+      - commons.WithTitle
     properties:
       allOf: list<ReferencedSchema>
       properties: list<ObjectProperty>
@@ -597,6 +600,7 @@ types:
       - commons.WithName
       - commons.WithSdkGroupName
       - commons.WithAvailability
+      - commons.WithTitle
     properties:
       value: Schema
 
@@ -607,6 +611,7 @@ types:
       - commons.WithSdkGroupName
       - commons.WithAvailability
       - commons.WithEncoding
+      - commons.WithTitle
     properties:
       key: PrimitiveSchema
       value: Schema
@@ -617,6 +622,7 @@ types:
       - commons.WithName
       - commons.WithSdkGroupName
       - commons.WithAvailability
+      - commons.WithTitle
     properties:
       value: Schema
 
@@ -626,6 +632,7 @@ types:
       - commons.WithName
       - commons.WithSdkGroupName
       - commons.WithAvailability
+      - commons.WithTitle
     properties:
       value: Schema
 
@@ -636,6 +643,7 @@ types:
       - commons.WithSdkGroupName
       - commons.WithAvailability
       - commons.WithSource
+      - commons.WithTitle
     properties:
       default: optional<EnumValue>
       values: list<EnumValue>
@@ -670,6 +678,7 @@ types:
       - commons.WithSdkGroupName
       - commons.WithAvailability
       - commons.WithSource
+      - commons.WithTitle
     properties:
       schema: commons.SchemaId
 
@@ -686,6 +695,7 @@ types:
       - commons.WithAvailability
       - commons.WithEncoding
       - commons.WithSource
+      - commons.WithTitle
     properties:
       discriminantProperty: string
       commonProperties: list<CommonProperty>
@@ -704,5 +714,6 @@ types:
       - commons.WithAvailability
       - commons.WithEncoding
       - commons.WithSource
+      - commons.WithTitle
     properties:
       schemas: list<Schema>

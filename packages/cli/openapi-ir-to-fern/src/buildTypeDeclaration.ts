@@ -31,6 +31,7 @@ import { convertAvailability } from "./utils/convertAvailability";
 import { convertToEncodingSchema } from "./utils/convertToEncodingSchema";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
+import { noop } from "lodash-es";
 
 export interface ConvertedTypeDeclaration {
     name: string | undefined;
@@ -476,6 +477,48 @@ export function buildOneOfTypeDeclaration({
                 context,
                 fileContainingReference: declarationFile
             });
+            const maybeSingleUnionTypeSchema = union[discriminantValue];
+            if (maybeSingleUnionTypeSchema && typeof maybeSingleUnionTypeSchema !== "string") {
+                subSchema._visit({
+                    object: (value) => {
+                        value;
+                    },
+                    reference: (value) => {
+                        value;
+                    },
+                    primitive: (value) => {
+                        value;
+                    },
+                    array: (value) => {
+                        throw new Error("Function not implemented.");
+                    },
+                    map: (value) => {
+                        throw new Error("Function not implemented.");
+                    },
+                    optional: (value) => {
+                        throw new Error("Function not implemented.");
+                    },
+                    enum: (value) => {
+                        throw new Error("Function not implemented.");
+                    },
+                    literal: (value) => {
+                        throw new Error("Function not implemented.");
+                    },
+                    oneOf: (value) => {
+                        throw new Error("Function not implemented.");
+                    },
+                    nullable: (value) => {
+                        throw new Error("Function not implemented.");
+                    },
+                    unknown: (value) => {
+                        throw new Error("Function not implemented.");
+                    },
+                    _other: (value) => {
+                        throw new Error("Function not implemented.");
+                    }
+                });
+                maybeSingleUnionTypeSchema["display-name"] = subSchema;
+            }
         }
         return {
             name: schema.nameOverride ?? schema.generatedName,
@@ -483,6 +526,7 @@ export function buildOneOfTypeDeclaration({
                 discriminant: schema.discriminantProperty,
                 "base-properties": baseProperties,
                 docs: schema.description ?? undefined,
+                availability: schema.availability != null ? convertAvailability(schema.availability) : undefined,
                 union,
                 encoding,
                 source: schema.source != null ? convertToSourceSchema(schema.source) : undefined
