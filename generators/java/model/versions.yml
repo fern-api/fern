@@ -1,5 +1,13 @@
 - changelogEntry:
   - summary: |
+      We no longer enforce non-null constraints for Object type properties in builders.
+    type: improvement
+  createdAt: '2024-09-11'
+  irVersion: 46
+  version: 1.1.0
+
+- changelogEntry:
+  - summary: |
       The Java Model generator is now on major version 1. To take this upgrade without any breaks, please add the below
       configuration to your `generators.yml` file:
       ```yaml

@@ -1,4 +1,29 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.0.0-rc8
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: | 
+        Pydantic models that call `update_forward_refs` on non-union circular reference dependencies now pass in `localns` for
+        the current member, a field in Pydantic V1 that provides object contexts to models in the event objects are not fully rebuilt.
+
+- version: 4.0.0-rc7
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        The generator now respects the old use_str_enums flag again, a regression was introduced where only the new flag `enum_type`
+        was respected.
+
+- version: 4.0.0-rc6
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: | 
+        Pydantic models now call update forward refs on non-uion circular references. This 
+        prevents runtime errors in certain cases where types self reference itself through 
+        a union. 
+
 - version: 4.0.0-rc5
   irVersion: 53
   changelogEntry:

@@ -54,9 +54,12 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
             ):
                 self._non_union_self_referencing_type_ids.add(id)
 
-        self._types_with_non_union_self_referencing_dependencies: Dict[ir_types.TypeId, Set[ir_types.TypeId]] = dict()
+        self._types_with_non_union_self_referencing_dependencies: Dict[
+            ir_types.TypeId, OrderedSet[ir_types.TypeId]
+        ] = dict()
         for id, type in self.ir.types.items():
-            for referenced_id in type.referenced_types:
+            ordered_reference_types = OrderedSet(list(sorted(type.referenced_types)))
+            for referenced_id in ordered_reference_types:
                 referenced_type = self.ir.types[referenced_id]
                 if (
                     referenced_type.shape.get_as_union().type != "union"
@@ -65,7 +68,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
                     # This referenced type is self-referential
                     if referenced_id in referenced_type.referenced_types:
                         if self._types_with_non_union_self_referencing_dependencies.get(id) is None:
-                            self._types_with_non_union_self_referencing_dependencies[id] = set()
+                            self._types_with_non_union_self_referencing_dependencies[id] = OrderedSet()
                         self._types_with_non_union_self_referencing_dependencies[id].add(referenced_id)
 
     def get_module_path_in_project(self, module_path: AST.ModulePath) -> AST.ModulePath:
@@ -163,7 +166,9 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         return self._non_union_self_referencing_type_ids
 
     # This map goes from every non union type to a list of referenced types that circularly reference themselves
-    def get_non_union_self_referencing_dependencies_from_types(self) -> Dict[ir_types.TypeId, Set[ir_types.TypeId]]:
+    def get_non_union_self_referencing_dependencies_from_types(
+        self,
+    ) -> Dict[ir_types.TypeId, OrderedSet[ir_types.TypeId]]:
         return self._types_with_non_union_self_referencing_dependencies
 
     def do_types_reference_each_other(self, a: ir_types.TypeId, b: ir_types.TypeId) -> bool:

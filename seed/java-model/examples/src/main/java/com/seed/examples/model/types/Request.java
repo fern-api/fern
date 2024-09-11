@@ -74,7 +74,7 @@ public final class Request {
         @java.lang.Override
         @JsonSetter("request")
         public _FinalStage request(Object request) {
-            this.request = Objects.requireNonNull(request, "request must not be null");
+            this.request = request;
             return this;
         }
 

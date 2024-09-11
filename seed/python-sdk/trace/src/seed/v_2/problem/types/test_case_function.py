@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 from ....core.pydantic_utilities import UniversalBaseModel
+from ....commons.types.list_type import ListType
+from ....commons.types.map_type import MapType
 import typing
 import typing_extensions
 from .non_void_function_definition import NonVoidFunctionDefinition
@@ -11,6 +13,7 @@ from ....core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 from .parameter import Parameter
 from .function_implementation_for_multiple_languages import FunctionImplementationForMultipleLanguages
+from ....core.pydantic_utilities import update_forward_refs
 
 
 class TestCaseFunction_WithActualResult(UniversalBaseModel):
@@ -46,3 +49,7 @@ class TestCaseFunction_Custom(UniversalBaseModel):
 
 
 TestCaseFunction = typing.Union[TestCaseFunction_WithActualResult, TestCaseFunction_Custom]
+update_forward_refs(ListType, TestCaseFunction_WithActualResult=TestCaseFunction_WithActualResult)
+update_forward_refs(MapType, TestCaseFunction_WithActualResult=TestCaseFunction_WithActualResult)
+update_forward_refs(ListType, TestCaseFunction_Custom=TestCaseFunction_Custom)
+update_forward_refs(MapType, TestCaseFunction_Custom=TestCaseFunction_Custom)

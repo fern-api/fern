@@ -96,7 +96,7 @@ public final class Metadata {
         @java.lang.Override
         @JsonSetter("value")
         public _FinalStage value(Object value) {
-            this.value = Objects.requireNonNull(value, "value must not be null");
+            this.value = value;
             return this;
         }
 

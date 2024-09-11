@@ -49,6 +49,9 @@ class VariableValue_MapValue(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from .map_value import MapValue  # noqa: E402
+
+
 class VariableValue_ListValue(UniversalBaseModel):
     value: typing.List["VariableValue"]
     type: typing.Literal["listValue"] = "listValue"
@@ -119,5 +122,7 @@ VariableValue = typing.Union[
 ]
 from .key_value_pair import KeyValuePair  # noqa: E402
 
+update_forward_refs(KeyValuePair, VariableValue_MapValue=VariableValue_MapValue)
+update_forward_refs(MapValue, VariableValue_MapValue=VariableValue_MapValue)
 update_forward_refs(VariableValue_MapValue)
 update_forward_refs(VariableValue_ListValue)

@@ -6,7 +6,6 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
 import pydantic
 from ...core.pydantic_utilities import update_forward_refs
-from .debug_map_value import DebugMapValue
 
 
 class DebugKeyValuePairs(UniversalBaseModel):
@@ -21,7 +20,8 @@ class DebugKeyValuePairs(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from .debug_map_value import DebugMapValue  # noqa: E402
 from .debug_variable_value import DebugVariableValue  # noqa: E402
 
+update_forward_refs(DebugMapValue, DebugKeyValuePairs=DebugKeyValuePairs)
 update_forward_refs(DebugKeyValuePairs)
-update_forward_refs(DebugMapValue)
