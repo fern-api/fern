@@ -164,7 +164,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         return self._non_union_self_referencing_type_ids
 
     # This map goes from every non union type to a list of referenced types that circularly reference themselves
-    def get_non_union_self_referencing_dependencies_from_types(self) -> Dict[ir_types.TypeId, Set[ir_types.TypeId]]:
+    def get_non_union_self_referencing_dependencies_from_types(self) -> Dict[ir_types.TypeId, OrderedSet[ir_types.TypeId]]:
         return self._types_with_non_union_self_referencing_dependencies
 
     def do_types_reference_each_other(self, a: ir_types.TypeId, b: ir_types.TypeId) -> bool:
