@@ -61,7 +61,7 @@ class SubmissionStatusForTestCase_Traced(UniversalBaseModel):
 SubmissionStatusForTestCase = typing.Union[
     SubmissionStatusForTestCase_Graded, SubmissionStatusForTestCase_GradedV2, SubmissionStatusForTestCase_Traced
 ]
-update_forward_refs(KeyValuePair)
-update_forward_refs(MapValue)
-update_forward_refs(KeyValuePair)
-update_forward_refs(MapValue)
+update_forward_refs(KeyValuePair, SubmissionStatusForTestCase_Graded=SubmissionStatusForTestCase_Graded)
+update_forward_refs(MapValue, SubmissionStatusForTestCase_Graded=SubmissionStatusForTestCase_Graded)
+update_forward_refs(KeyValuePair, SubmissionStatusForTestCase_Traced=SubmissionStatusForTestCase_Traced)
+update_forward_refs(MapValue, SubmissionStatusForTestCase_Traced=SubmissionStatusForTestCase_Traced)

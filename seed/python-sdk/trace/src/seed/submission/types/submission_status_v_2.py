@@ -50,9 +50,7 @@ class SubmissionStatusV2_Workspace(UniversalBaseModel):
 
 
 SubmissionStatusV2 = typing.Union[SubmissionStatusV2_Test, SubmissionStatusV2_Workspace]
-update_forward_refs(KeyValuePair)
-update_forward_refs(MapValue)
-update_forward_refs(KeyValuePair)
-update_forward_refs(ListType)
-update_forward_refs(MapType)
-update_forward_refs(MapValue)
+update_forward_refs(KeyValuePair, SubmissionStatusV2_Test=SubmissionStatusV2_Test)
+update_forward_refs(MapValue, SubmissionStatusV2_Test=SubmissionStatusV2_Test)
+update_forward_refs(ListType, SubmissionStatusV2_Test=SubmissionStatusV2_Test)
+update_forward_refs(MapType, SubmissionStatusV2_Test=SubmissionStatusV2_Test)

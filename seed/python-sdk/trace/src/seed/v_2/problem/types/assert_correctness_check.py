@@ -49,5 +49,5 @@ class AssertCorrectnessCheck_Custom(UniversalBaseModel):
 
 
 AssertCorrectnessCheck = typing.Union[AssertCorrectnessCheck_DeepEquality, AssertCorrectnessCheck_Custom]
-update_forward_refs(ListType)
-update_forward_refs(MapType)
+update_forward_refs(ListType, AssertCorrectnessCheck_Custom=AssertCorrectnessCheck_Custom)
+update_forward_refs(MapType, AssertCorrectnessCheck_Custom=AssertCorrectnessCheck_Custom)

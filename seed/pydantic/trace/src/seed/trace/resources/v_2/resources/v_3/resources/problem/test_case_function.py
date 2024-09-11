@@ -41,9 +41,7 @@ class TestCaseFunction_Custom(UniversalBaseModel):
 
 
 TestCaseFunction = typing.Union[TestCaseFunction_WithActualResult, TestCaseFunction_Custom]
-update_forward_refs(ListType)
-update_forward_refs(MapType)
-update_forward_refs(ListType)
-update_forward_refs(MapType)
-update_forward_refs(ListType)
-update_forward_refs(MapType)
+update_forward_refs(ListType, TestCaseFunction_WithActualResult=TestCaseFunction_WithActualResult)
+update_forward_refs(MapType, TestCaseFunction_WithActualResult=TestCaseFunction_WithActualResult)
+update_forward_refs(ListType, TestCaseFunction_Custom=TestCaseFunction_Custom)
+update_forward_refs(MapType, TestCaseFunction_Custom=TestCaseFunction_Custom)

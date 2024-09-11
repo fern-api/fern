@@ -28,9 +28,9 @@ from .memo import Memo  # noqa: E402
 from .practitioner import Practitioner  # noqa: E402
 from .script import Script  # noqa: E402
 
-update_forward_refs(Account)
-update_forward_refs(BaseResource)
-update_forward_refs(Memo)
-update_forward_refs(Practitioner)
-update_forward_refs(Script)
+update_forward_refs(Account, Patient=Patient)
+update_forward_refs(BaseResource, Patient=Patient)
+update_forward_refs(Memo, Patient=Patient)
+update_forward_refs(Practitioner, Patient=Patient)
+update_forward_refs(Script, Patient=Patient)
 update_forward_refs(Patient)

@@ -34,5 +34,9 @@ class TestCaseImplementationReference_Implementation(UniversalBaseModel):
 TestCaseImplementationReference = typing.Union[
     TestCaseImplementationReference_TemplateId, TestCaseImplementationReference_Implementation
 ]
-update_forward_refs(ListType)
-update_forward_refs(MapType)
+update_forward_refs(
+    ListType, TestCaseImplementationReference_Implementation=TestCaseImplementationReference_Implementation
+)
+update_forward_refs(
+    MapType, TestCaseImplementationReference_Implementation=TestCaseImplementationReference_Implementation
+)

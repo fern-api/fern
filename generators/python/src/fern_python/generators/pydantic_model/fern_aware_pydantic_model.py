@@ -103,6 +103,7 @@ class FernAwarePydanticModel:
         )
 
         self._force_update_forward_refs = force_update_forward_refs
+        self._forward_referenced_models: set[ir_types.TypeId] = set()
 
     def to_reference(self) -> LocalClassReference:
         return self._pydantic_model.to_reference()
@@ -150,7 +151,9 @@ class FernAwarePydanticModel:
             self_referencing_dependencies = self_referencing_dependencies_from_non_union_types[type_id]
             for dependency in self_referencing_dependencies:
                 # We update the current model's forward refs independently
-                if self._type_name and dependency == self._type_name.type_id:
+                if (
+                    self._type_name and dependency == self._type_name.type_id
+                ) or dependency in self._forward_referenced_models:
                     continue
                 class_reference = self._context.get_class_reference_for_type_id(
                     dependency, as_request=False, must_import_after_current_declaration=lambda _: False
@@ -161,6 +164,7 @@ class FernAwarePydanticModel:
                 # 2. add the ghost reference to the pydantic model to move the import to the bottom of the file
                 self.add_ghost_reference(dependency)
                 self._pydantic_model.update_forward_refs_for_given_model(class_reference)
+                self._forward_referenced_models.add(dependency)
 
     def add_private_instance_field_unsafe(
         self, name: str, type_hint: AST.TypeHint, default_factory: AST.Expression
