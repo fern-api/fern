@@ -196,21 +196,21 @@ public final class SendLiteralsInlinedRequest {
         @java.lang.Override
         @JsonSetter("query")
         public AliasedContextStage query(@NotNull String query) {
-            this.query = query;
+            this.query = Objects.requireNonNull(query, "query must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("aliasedContext")
         public ObjectWithLiteralStage aliasedContext(@NotNull String aliasedContext) {
-            this.aliasedContext = aliasedContext;
+            this.aliasedContext = Objects.requireNonNull(aliasedContext, "aliasedContext must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("objectWithLiteral")
         public _FinalStage objectWithLiteral(@NotNull ATopLevelLiteral objectWithLiteral) {
-            this.objectWithLiteral = objectWithLiteral;
+            this.objectWithLiteral = Objects.requireNonNull(objectWithLiteral, "objectWithLiteral must not be null");
             return this;
         }
 

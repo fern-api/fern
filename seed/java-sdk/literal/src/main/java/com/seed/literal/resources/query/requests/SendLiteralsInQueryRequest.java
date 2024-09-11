@@ -100,7 +100,7 @@ public final class SendLiteralsInQueryRequest {
         @java.lang.Override
         @JsonSetter("query")
         public _FinalStage query(@NotNull String query) {
-            this.query = query;
+            this.query = Objects.requireNonNull(query, "query must not be null");
             return this;
         }
 

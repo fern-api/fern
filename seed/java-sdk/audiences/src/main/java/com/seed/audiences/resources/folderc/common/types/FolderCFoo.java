@@ -91,7 +91,7 @@ public final class FolderCFoo {
         @java.lang.Override
         @JsonSetter("bar_property")
         public _FinalStage barProperty(@NotNull UUID barProperty) {
-            this.barProperty = barProperty;
+            this.barProperty = Objects.requireNonNull(barProperty, "barProperty must not be null");
             return this;
         }
 

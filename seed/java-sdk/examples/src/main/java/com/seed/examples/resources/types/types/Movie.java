@@ -261,21 +261,21 @@ public final class Movie implements IMovie {
         @java.lang.Override
         @JsonSetter("id")
         public TitleStage id(@NotNull String id) {
-            this.id = id;
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("title")
         public FromStage title(@NotNull String title) {
-            this.title = title;
+            this.title = Objects.requireNonNull(title, "title must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("from")
         public RatingStage from(@NotNull String from) {
-            this.from = from;
+            this.from = Objects.requireNonNull(from, "from must not be null");
             return this;
         }
 
@@ -286,21 +286,21 @@ public final class Movie implements IMovie {
         @java.lang.Override
         @JsonSetter("rating")
         public TagStage rating(double rating) {
-            this.rating = Objects.requireNonNull(rating, "rating must not be null");
+            this.rating = rating;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("tag")
         public RevenueStage tag(@NotNull String tag) {
-            this.tag = tag;
+            this.tag = Objects.requireNonNull(tag, "tag must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("revenue")
         public _FinalStage revenue(long revenue) {
-            this.revenue = Objects.requireNonNull(revenue, "revenue must not be null");
+            this.revenue = revenue;
             return this;
         }
 

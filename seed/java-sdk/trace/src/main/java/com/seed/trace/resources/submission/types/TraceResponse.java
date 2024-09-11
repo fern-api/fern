@@ -182,21 +182,21 @@ public final class TraceResponse {
         @java.lang.Override
         @JsonSetter("submissionId")
         public LineNumberStage submissionId(@NotNull UUID submissionId) {
-            this.submissionId = submissionId;
+            this.submissionId = Objects.requireNonNull(submissionId, "submissionId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("lineNumber")
         public StackStage lineNumber(int lineNumber) {
-            this.lineNumber = Objects.requireNonNull(lineNumber, "lineNumber must not be null");
+            this.lineNumber = lineNumber;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("stack")
         public _FinalStage stack(@NotNull StackInformation stack) {
-            this.stack = stack;
+            this.stack = Objects.requireNonNull(stack, "stack must not be null");
             return this;
         }
 

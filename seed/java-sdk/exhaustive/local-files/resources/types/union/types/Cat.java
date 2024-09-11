@@ -113,14 +113,14 @@ public final class Cat {
     @java.lang.Override
     @JsonSetter("name")
     public LikesToMeowStage name(@NotNull String name) {
-      this.name = name;
+      this.name = Objects.requireNonNull(name, "name must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("likesToMeow")
     public _FinalStage likesToMeow(boolean likesToMeow) {
-      this.likesToMeow = Objects.requireNonNull(likesToMeow, "likesToMeow must not be null");
+      this.likesToMeow = likesToMeow;
       return this;
     }
 

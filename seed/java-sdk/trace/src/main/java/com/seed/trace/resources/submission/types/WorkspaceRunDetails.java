@@ -128,7 +128,7 @@ public final class WorkspaceRunDetails {
         @java.lang.Override
         @JsonSetter("stdout")
         public _FinalStage stdout(@NotNull String stdout) {
-            this.stdout = stdout;
+            this.stdout = Objects.requireNonNull(stdout, "stdout must not be null");
             return this;
         }
 

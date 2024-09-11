@@ -126,21 +126,21 @@ public final class TestCaseTemplate {
         @java.lang.Override
         @JsonSetter("templateId")
         public NameStage templateId(@NotNull String templateId) {
-            this.templateId = templateId;
+            this.templateId = Objects.requireNonNull(templateId, "templateId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
         public ImplementationStage name(@NotNull String name) {
-            this.name = name;
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("implementation")
         public _FinalStage implementation(@NotNull TestCaseImplementation implementation) {
-            this.implementation = implementation;
+            this.implementation = Objects.requireNonNull(implementation, "implementation must not be null");
             return this;
         }
 

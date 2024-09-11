@@ -149,14 +149,14 @@ public final class TestCaseV2 {
         @java.lang.Override
         @JsonSetter("metadata")
         public ImplementationStage metadata(@NotNull TestCaseMetadata metadata) {
-            this.metadata = metadata;
+            this.metadata = Objects.requireNonNull(metadata, "metadata must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("implementation")
         public _FinalStage implementation(@NotNull TestCaseImplementationReference implementation) {
-            this.implementation = implementation;
+            this.implementation = Objects.requireNonNull(implementation, "implementation must not be null");
             return this;
         }
 

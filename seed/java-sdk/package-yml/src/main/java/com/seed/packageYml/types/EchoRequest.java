@@ -105,14 +105,14 @@ public final class EchoRequest {
         @java.lang.Override
         @JsonSetter("name")
         public SizeStage name(@NotNull String name) {
-            this.name = name;
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("size")
         public _FinalStage size(int size) {
-            this.size = Objects.requireNonNull(size, "size must not be null");
+            this.size = size;
             return this;
         }
 

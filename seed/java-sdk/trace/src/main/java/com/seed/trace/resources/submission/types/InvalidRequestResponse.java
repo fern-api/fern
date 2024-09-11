@@ -106,14 +106,14 @@ public final class InvalidRequestResponse {
         @java.lang.Override
         @JsonSetter("request")
         public CauseStage request(@NotNull SubmissionRequest request) {
-            this.request = request;
+            this.request = Objects.requireNonNull(request, "request must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("cause")
         public _FinalStage cause(@NotNull InvalidRequestCause cause) {
-            this.cause = cause;
+            this.cause = Objects.requireNonNull(cause, "cause must not be null");
             return this;
         }
 

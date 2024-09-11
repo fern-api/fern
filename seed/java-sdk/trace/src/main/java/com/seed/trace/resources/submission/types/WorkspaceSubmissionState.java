@@ -90,7 +90,7 @@ public final class WorkspaceSubmissionState {
         @java.lang.Override
         @JsonSetter("status")
         public _FinalStage status(@NotNull WorkspaceSubmissionStatus status) {
-            this.status = status;
+            this.status = Objects.requireNonNull(status, "status must not be null");
             return this;
         }
 

@@ -127,21 +127,21 @@ public final class TestCaseResult {
         @java.lang.Override
         @JsonSetter("expectedResult")
         public ActualResultStage expectedResult(@NotNull VariableValue expectedResult) {
-            this.expectedResult = expectedResult;
+            this.expectedResult = Objects.requireNonNull(expectedResult, "expectedResult must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("actualResult")
         public PassedStage actualResult(@NotNull ActualResult actualResult) {
-            this.actualResult = actualResult;
+            this.actualResult = Objects.requireNonNull(actualResult, "actualResult must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("passed")
         public _FinalStage passed(boolean passed) {
-            this.passed = Objects.requireNonNull(passed, "passed must not be null");
+            this.passed = passed;
             return this;
         }
 

@@ -108,7 +108,7 @@ public final class GenericValue {
         @java.lang.Override
         @JsonSetter("stringifiedValue")
         public _FinalStage stringifiedValue(@NotNull String stringifiedValue) {
-            this.stringifiedValue = stringifiedValue;
+            this.stringifiedValue = Objects.requireNonNull(stringifiedValue, "stringifiedValue must not be null");
             return this;
         }
 

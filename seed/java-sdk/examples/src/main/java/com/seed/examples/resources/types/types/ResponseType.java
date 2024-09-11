@@ -91,7 +91,7 @@ public final class ResponseType {
         @java.lang.Override
         @JsonSetter("type")
         public _FinalStage type(@NotNull Type type) {
-            this.type = type;
+            this.type = Objects.requireNonNull(type, "type must not be null");
             return this;
         }
 

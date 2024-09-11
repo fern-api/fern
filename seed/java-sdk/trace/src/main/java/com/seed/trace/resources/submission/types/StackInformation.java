@@ -107,7 +107,7 @@ public final class StackInformation {
         @java.lang.Override
         @JsonSetter("numStackFrames")
         public _FinalStage numStackFrames(int numStackFrames) {
-            this.numStackFrames = Objects.requireNonNull(numStackFrames, "numStackFrames must not be null");
+            this.numStackFrames = numStackFrames;
             return this;
         }
 

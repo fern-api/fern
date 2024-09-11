@@ -260,7 +260,7 @@ public final class BuilderGenerator {
             EnrichedObjectPropertyWithField enrichedObjectProperty, ClassName returnClass) {
         MethodSpec.Builder methodBuilder = getRequiredFieldSetter(enrichedObjectProperty, returnClass)
                 .addAnnotation(ClassName.get("", "java.lang.Override"));
-        if (isNotNullableType(enrichedObjectProperty.enrichedObjectProperty.poetTypeName())
+        if (!isNotNullableType(enrichedObjectProperty.enrichedObjectProperty.poetTypeName())
                 || disableRequiredPropertyBuilderChecks) {
             methodBuilder.addStatement(
                     "this.$L = $L", enrichedObjectProperty.fieldSpec.name, enrichedObjectProperty.fieldSpec.name);

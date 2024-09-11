@@ -106,14 +106,14 @@ public final class CreatePaymentRequest {
         @java.lang.Override
         @JsonSetter("amount")
         public CurrencyStage amount(int amount) {
-            this.amount = Objects.requireNonNull(amount, "amount must not be null");
+            this.amount = amount;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("currency")
         public _FinalStage currency(@NotNull Currency currency) {
-            this.currency = currency;
+            this.currency = Objects.requireNonNull(currency, "currency must not be null");
             return this;
         }
 

@@ -105,14 +105,14 @@ public final class ObjectFieldValue {
         @java.lang.Override
         @JsonSetter("name")
         public ValueStage name(@NotNull String name) {
-            this.name = name;
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("value")
         public _FinalStage value(@NotNull FieldValue value) {
-            this.value = value;
+            this.value = Objects.requireNonNull(value, "value must not be null");
             return this;
         }
 

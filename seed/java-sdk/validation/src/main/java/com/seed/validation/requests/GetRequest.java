@@ -120,21 +120,21 @@ public final class GetRequest {
         @java.lang.Override
         @JsonSetter("decimal")
         public EvenStage decimal(double decimal) {
-            this.decimal = Objects.requireNonNull(decimal, "decimal must not be null");
+            this.decimal = decimal;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("even")
         public NameStage even(int even) {
-            this.even = Objects.requireNonNull(even, "even must not be null");
+            this.even = even;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
         public _FinalStage name(@NotNull String name) {
-            this.name = name;
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 

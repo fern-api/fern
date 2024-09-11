@@ -75,7 +75,7 @@ public final class WithDocs implements IWithDocs {
         @java.lang.Override
         @JsonSetter("docs")
         public _FinalStage docs(String docs) {
-            this.docs = docs;
+            this.docs = Objects.requireNonNull(docs, "docs must not be null");
             return this;
         }
 

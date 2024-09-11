@@ -127,21 +127,22 @@ public final class ReqWithHeaders {
         @java.lang.Override
         @JsonSetter("X-TEST-SERVICE-HEADER")
         public XTestEndpointHeaderStage xTestServiceHeader(@NotNull String xTestServiceHeader) {
-            this.xTestServiceHeader = xTestServiceHeader;
+            this.xTestServiceHeader = Objects.requireNonNull(xTestServiceHeader, "xTestServiceHeader must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("X-TEST-ENDPOINT-HEADER")
         public BodyStage xTestEndpointHeader(@NotNull String xTestEndpointHeader) {
-            this.xTestEndpointHeader = xTestEndpointHeader;
+            this.xTestEndpointHeader =
+                    Objects.requireNonNull(xTestEndpointHeader, "xTestEndpointHeader must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("body")
         public _FinalStage body(@NotNull String body) {
-            this.body = body;
+            this.body = Objects.requireNonNull(body, "body must not be null");
             return this;
         }
 

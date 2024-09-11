@@ -97,7 +97,7 @@ public final class HeaderAuthRequest {
         @java.lang.Override
         @JsonSetter("X-Endpoint-Header")
         public _FinalStage xEndpointHeader(@NotNull String xEndpointHeader) {
-            this.xEndpointHeader = xEndpointHeader;
+            this.xEndpointHeader = Objects.requireNonNull(xEndpointHeader, "xEndpointHeader must not be null");
             return this;
         }
 

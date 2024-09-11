@@ -105,14 +105,14 @@ public final class TracedFile {
         @java.lang.Override
         @JsonSetter("filename")
         public DirectoryStage filename(@NotNull String filename) {
-            this.filename = filename;
+            this.filename = Objects.requireNonNull(filename, "filename must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("directory")
         public _FinalStage directory(@NotNull String directory) {
-            this.directory = directory;
+            this.directory = Objects.requireNonNull(directory, "directory must not be null");
             return this;
         }
 

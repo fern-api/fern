@@ -156,21 +156,21 @@ public final class Practitioner implements IBaseResource {
         @java.lang.Override
         @JsonSetter("id")
         public MemoStage id(@NotNull String id) {
-            this.id = id;
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("memo")
         public NameStage memo(@NotNull Memo memo) {
-            this.memo = memo;
+            this.memo = Objects.requireNonNull(memo, "memo must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
         public _FinalStage name(@NotNull String name) {
-            this.name = name;
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 

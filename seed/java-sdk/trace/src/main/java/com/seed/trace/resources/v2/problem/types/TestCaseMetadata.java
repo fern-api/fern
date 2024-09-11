@@ -120,21 +120,21 @@ public final class TestCaseMetadata {
         @java.lang.Override
         @JsonSetter("id")
         public NameStage id(@NotNull String id) {
-            this.id = id;
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
         public HiddenStage name(@NotNull String name) {
-            this.name = name;
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("hidden")
         public _FinalStage hidden(boolean hidden) {
-            this.hidden = Objects.requireNonNull(hidden, "hidden must not be null");
+            this.hidden = hidden;
             return this;
         }
 

@@ -89,14 +89,14 @@ public final class Actor {
         @java.lang.Override
         @JsonSetter("name")
         public IdStage name(String name) {
-            this.name = name;
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("id")
         public _FinalStage id(String id) {
-            this.id = id;
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 

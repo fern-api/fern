@@ -165,21 +165,22 @@ public final class RecordingResponseNotification {
         @java.lang.Override
         @JsonSetter("submissionId")
         public LineNumberStage submissionId(@NotNull UUID submissionId) {
-            this.submissionId = submissionId;
+            this.submissionId = Objects.requireNonNull(submissionId, "submissionId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("lineNumber")
         public LightweightStackInfoStage lineNumber(int lineNumber) {
-            this.lineNumber = Objects.requireNonNull(lineNumber, "lineNumber must not be null");
+            this.lineNumber = lineNumber;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("lightweightStackInfo")
         public _FinalStage lightweightStackInfo(@NotNull LightweightStackframeInformation lightweightStackInfo) {
-            this.lightweightStackInfo = lightweightStackInfo;
+            this.lightweightStackInfo =
+                    Objects.requireNonNull(lightweightStackInfo, "lightweightStackInfo must not be null");
             return this;
         }
 

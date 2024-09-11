@@ -90,7 +90,7 @@ public final class StringResponse {
         @java.lang.Override
         @JsonSetter("data")
         public _FinalStage data(@NotNull String data) {
-            this.data = data;
+            this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }
 

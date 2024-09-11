@@ -107,14 +107,14 @@ public final class UnexpectedLanguageError {
         @java.lang.Override
         @JsonSetter("expectedLanguage")
         public ActualLanguageStage expectedLanguage(@NotNull Language expectedLanguage) {
-            this.expectedLanguage = expectedLanguage;
+            this.expectedLanguage = Objects.requireNonNull(expectedLanguage, "expectedLanguage must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("actualLanguage")
         public _FinalStage actualLanguage(@NotNull Language actualLanguage) {
-            this.actualLanguage = actualLanguage;
+            this.actualLanguage = Objects.requireNonNull(actualLanguage, "actualLanguage must not be null");
             return this;
         }
 

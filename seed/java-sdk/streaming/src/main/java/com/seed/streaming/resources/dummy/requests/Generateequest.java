@@ -94,7 +94,7 @@ public final class Generateequest {
         @java.lang.Override
         @JsonSetter("num_events")
         public _FinalStage numEvents(int numEvents) {
-            this.numEvents = Objects.requireNonNull(numEvents, "numEvents must not be null");
+            this.numEvents = numEvents;
             return this;
         }
 

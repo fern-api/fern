@@ -89,14 +89,14 @@ public final class Metadata {
         @java.lang.Override
         @JsonSetter("id")
         public ValueStage id(String id) {
-            this.id = id;
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("value")
         public _FinalStage value(Object value) {
-            this.value = Objects.requireNonNull(value, "value must not be null");
+            this.value = value;
             return this;
         }
 

@@ -114,14 +114,14 @@ public final class NestedObjectWithRequiredField {
     @java.lang.Override
     @JsonSetter("string")
     public NestedObjectStage string(@NotNull String string) {
-      this.string = string;
+      this.string = Objects.requireNonNull(string, "string must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("NestedObject")
     public _FinalStage nestedObject(@NotNull ObjectWithOptionalField nestedObject) {
-      this.nestedObject = nestedObject;
+      this.nestedObject = Objects.requireNonNull(nestedObject, "nestedObject must not be null");
       return this;
     }
 

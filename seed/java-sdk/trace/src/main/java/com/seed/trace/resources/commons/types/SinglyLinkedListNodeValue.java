@@ -123,14 +123,14 @@ public final class SinglyLinkedListNodeValue {
         @java.lang.Override
         @JsonSetter("nodeId")
         public ValStage nodeId(@NotNull String nodeId) {
-            this.nodeId = nodeId;
+            this.nodeId = Objects.requireNonNull(nodeId, "nodeId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("val")
         public _FinalStage val(double val) {
-            this.val = Objects.requireNonNull(val, "val must not be null");
+            this.val = val;
             return this;
         }
 

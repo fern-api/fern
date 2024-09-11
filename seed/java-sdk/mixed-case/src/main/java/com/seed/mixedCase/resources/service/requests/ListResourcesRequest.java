@@ -105,14 +105,14 @@ public final class ListResourcesRequest {
         @java.lang.Override
         @JsonSetter("page_limit")
         public BeforeDateStage pageLimit(int pageLimit) {
-            this.pageLimit = Objects.requireNonNull(pageLimit, "pageLimit must not be null");
+            this.pageLimit = pageLimit;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("beforeDate")
         public _FinalStage beforeDate(@NotNull String beforeDate) {
-            this.beforeDate = beforeDate;
+            this.beforeDate = Objects.requireNonNull(beforeDate, "beforeDate must not be null");
             return this;
         }
 

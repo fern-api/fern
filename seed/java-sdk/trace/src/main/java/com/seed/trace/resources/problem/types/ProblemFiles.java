@@ -112,7 +112,7 @@ public final class ProblemFiles {
         @java.lang.Override
         @JsonSetter("solutionFile")
         public _FinalStage solutionFile(@NotNull FileInfo solutionFile) {
-            this.solutionFile = solutionFile;
+            this.solutionFile = Objects.requireNonNull(solutionFile, "solutionFile must not be null");
             return this;
         }
 

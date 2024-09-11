@@ -150,21 +150,21 @@ public final class Playlist implements IPlaylistCreateRequest {
         @java.lang.Override
         @JsonSetter("name")
         public PlaylistIdStage name(@NotNull String name) {
-            this.name = name;
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("playlist_id")
         public OwnerIdStage playlistId(@NotNull String playlistId) {
-            this.playlistId = playlistId;
+            this.playlistId = Objects.requireNonNull(playlistId, "playlistId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("owner-id")
         public _FinalStage ownerId(@NotNull String ownerId) {
-            this.ownerId = ownerId;
+            this.ownerId = Objects.requireNonNull(ownerId, "ownerId must not be null");
             return this;
         }
 

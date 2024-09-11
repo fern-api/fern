@@ -106,14 +106,15 @@ public final class LightweightStackframeInformation {
         @java.lang.Override
         @JsonSetter("numStackFrames")
         public TopStackFrameMethodNameStage numStackFrames(int numStackFrames) {
-            this.numStackFrames = Objects.requireNonNull(numStackFrames, "numStackFrames must not be null");
+            this.numStackFrames = numStackFrames;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("topStackFrameMethodName")
         public _FinalStage topStackFrameMethodName(@NotNull String topStackFrameMethodName) {
-            this.topStackFrameMethodName = topStackFrameMethodName;
+            this.topStackFrameMethodName =
+                    Objects.requireNonNull(topStackFrameMethodName, "topStackFrameMethodName must not be null");
             return this;
         }
 

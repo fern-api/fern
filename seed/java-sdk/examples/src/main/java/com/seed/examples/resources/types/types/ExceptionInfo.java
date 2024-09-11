@@ -127,21 +127,22 @@ public final class ExceptionInfo {
         @java.lang.Override
         @JsonSetter("exceptionType")
         public ExceptionMessageStage exceptionType(@NotNull String exceptionType) {
-            this.exceptionType = exceptionType;
+            this.exceptionType = Objects.requireNonNull(exceptionType, "exceptionType must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("exceptionMessage")
         public ExceptionStacktraceStage exceptionMessage(@NotNull String exceptionMessage) {
-            this.exceptionMessage = exceptionMessage;
+            this.exceptionMessage = Objects.requireNonNull(exceptionMessage, "exceptionMessage must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("exceptionStacktrace")
         public _FinalStage exceptionStacktrace(@NotNull String exceptionStacktrace) {
-            this.exceptionStacktrace = exceptionStacktrace;
+            this.exceptionStacktrace =
+                    Objects.requireNonNull(exceptionStacktrace, "exceptionStacktrace must not be null");
             return this;
         }
 

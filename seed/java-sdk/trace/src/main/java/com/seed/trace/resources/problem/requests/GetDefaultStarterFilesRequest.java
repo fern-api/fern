@@ -143,7 +143,7 @@ public final class GetDefaultStarterFilesRequest {
         @java.lang.Override
         @JsonSetter("outputType")
         public MethodNameStage outputType(@NotNull VariableType outputType) {
-            this.outputType = outputType;
+            this.outputType = Objects.requireNonNull(outputType, "outputType must not be null");
             return this;
         }
 
@@ -161,7 +161,7 @@ public final class GetDefaultStarterFilesRequest {
         @java.lang.Override
         @JsonSetter("methodName")
         public _FinalStage methodName(@NotNull String methodName) {
-            this.methodName = methodName;
+            this.methodName = Objects.requireNonNull(methodName, "methodName must not be null");
             return this;
         }
 

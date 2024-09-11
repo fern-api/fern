@@ -129,7 +129,7 @@ public final class ListUsersExtendedResponse implements IUserPage {
         @java.lang.Override
         @JsonSetter("data")
         public TotalCountStage data(@NotNull UserListContainer data) {
-            this.data = data;
+            this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }
 
@@ -140,7 +140,7 @@ public final class ListUsersExtendedResponse implements IUserPage {
         @java.lang.Override
         @JsonSetter("total_count")
         public _FinalStage totalCount(int totalCount) {
-            this.totalCount = Objects.requireNonNull(totalCount, "totalCount must not be null");
+            this.totalCount = totalCount;
             return this;
         }
 

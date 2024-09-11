@@ -149,21 +149,22 @@ public final class BasicCustomFiles {
         @java.lang.Override
         @JsonSetter("methodName")
         public SignatureStage methodName(@NotNull String methodName) {
-            this.methodName = methodName;
+            this.methodName = Objects.requireNonNull(methodName, "methodName must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("signature")
         public BasicTestCaseTemplateStage signature(@NotNull NonVoidFunctionSignature signature) {
-            this.signature = signature;
+            this.signature = Objects.requireNonNull(signature, "signature must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("basicTestCaseTemplate")
         public _FinalStage basicTestCaseTemplate(@NotNull BasicTestCaseTemplate basicTestCaseTemplate) {
-            this.basicTestCaseTemplate = basicTestCaseTemplate;
+            this.basicTestCaseTemplate =
+                    Objects.requireNonNull(basicTestCaseTemplate, "basicTestCaseTemplate must not be null");
             return this;
         }
 

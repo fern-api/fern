@@ -111,7 +111,7 @@ public final class ListType {
         @java.lang.Override
         @JsonSetter("valueType")
         public _FinalStage valueType(@NotNull VariableType valueType) {
-            this.valueType = valueType;
+            this.valueType = Objects.requireNonNull(valueType, "valueType must not be null");
             return this;
         }
 

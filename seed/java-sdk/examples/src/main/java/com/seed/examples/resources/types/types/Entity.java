@@ -106,14 +106,14 @@ public final class Entity {
         @java.lang.Override
         @JsonSetter("type")
         public NameStage type(@NotNull Type type) {
-            this.type = type;
+            this.type = Objects.requireNonNull(type, "type must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
         public _FinalStage name(@NotNull String name) {
-            this.name = name;
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 

@@ -111,7 +111,7 @@ public final class GradedResponseV2 {
         @java.lang.Override
         @JsonSetter("submissionId")
         public _FinalStage submissionId(@NotNull UUID submissionId) {
-            this.submissionId = submissionId;
+            this.submissionId = Objects.requireNonNull(submissionId, "submissionId must not be null");
             return this;
         }
 

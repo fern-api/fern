@@ -89,7 +89,7 @@ public final class UpdateProblemResponse {
         @java.lang.Override
         @JsonSetter("problemVersion")
         public _FinalStage problemVersion(int problemVersion) {
-            this.problemVersion = Objects.requireNonNull(problemVersion, "problemVersion must not be null");
+            this.problemVersion = problemVersion;
             return this;
         }
 

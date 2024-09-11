@@ -110,14 +110,14 @@ public final class SendResponse {
         @java.lang.Override
         @JsonSetter("message")
         public StatusStage message(@NotNull String message) {
-            this.message = message;
+            this.message = Objects.requireNonNull(message, "message must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("status")
         public _FinalStage status(int status) {
-            this.status = Objects.requireNonNull(status, "status must not be null");
+            this.status = status;
             return this;
         }
 

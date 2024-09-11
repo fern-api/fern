@@ -107,14 +107,14 @@ public final class WorkspaceRanResponse {
         @java.lang.Override
         @JsonSetter("submissionId")
         public RunDetailsStage submissionId(@NotNull UUID submissionId) {
-            this.submissionId = submissionId;
+            this.submissionId = Objects.requireNonNull(submissionId, "submissionId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("runDetails")
         public _FinalStage runDetails(@NotNull WorkspaceRunDetails runDetails) {
-            this.runDetails = runDetails;
+            this.runDetails = Objects.requireNonNull(runDetails, "runDetails must not be null");
             return this;
         }
 

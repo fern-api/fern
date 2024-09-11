@@ -107,7 +107,7 @@ public final class Memo {
         @java.lang.Override
         @JsonSetter("description")
         public _FinalStage description(@NotNull String description) {
-            this.description = description;
+            this.description = Objects.requireNonNull(description, "description must not be null");
             return this;
         }
 

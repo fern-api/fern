@@ -113,7 +113,7 @@ public final class VoidFunctionSignatureThatTakesActualResult {
         @java.lang.Override
         @JsonSetter("actualResultType")
         public _FinalStage actualResultType(@NotNull VariableType actualResultType) {
-            this.actualResultType = actualResultType;
+            this.actualResultType = Objects.requireNonNull(actualResultType, "actualResultType must not be null");
             return this;
         }
 

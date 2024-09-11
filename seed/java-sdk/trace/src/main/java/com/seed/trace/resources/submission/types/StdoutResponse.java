@@ -106,14 +106,14 @@ public final class StdoutResponse {
         @java.lang.Override
         @JsonSetter("submissionId")
         public StdoutStage submissionId(@NotNull UUID submissionId) {
-            this.submissionId = submissionId;
+            this.submissionId = Objects.requireNonNull(submissionId, "submissionId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("stdout")
         public _FinalStage stdout(@NotNull String stdout) {
-            this.stdout = stdout;
+            this.stdout = Objects.requireNonNull(stdout, "stdout must not be null");
             return this;
         }
 

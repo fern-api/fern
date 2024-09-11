@@ -121,21 +121,21 @@ public final class GenericCreateProblemError {
         @java.lang.Override
         @JsonSetter("message")
         public TypeStage message(@NotNull String message) {
-            this.message = message;
+            this.message = Objects.requireNonNull(message, "message must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("type")
         public StacktraceStage type(@NotNull String type) {
-            this.type = type;
+            this.type = Objects.requireNonNull(type, "type must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("stacktrace")
         public _FinalStage stacktrace(@NotNull String stacktrace) {
-            this.stacktrace = stacktrace;
+            this.stacktrace = Objects.requireNonNull(stacktrace, "stacktrace must not be null");
             return this;
         }
 

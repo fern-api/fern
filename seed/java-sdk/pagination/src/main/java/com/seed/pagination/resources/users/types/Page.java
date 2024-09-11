@@ -147,21 +147,21 @@ public final class Page {
         @java.lang.Override
         @JsonSetter("page")
         public PerPageStage page(int page) {
-            this.page = Objects.requireNonNull(page, "page must not be null");
+            this.page = page;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("per_page")
         public TotalPageStage perPage(int perPage) {
-            this.perPage = Objects.requireNonNull(perPage, "perPage must not be null");
+            this.perPage = perPage;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("total_page")
         public _FinalStage totalPage(int totalPage) {
-            this.totalPage = Objects.requireNonNull(totalPage, "totalPage must not be null");
+            this.totalPage = totalPage;
             return this;
         }
 

@@ -110,14 +110,15 @@ public final class TestCaseWithActualResultImplementation {
         @java.lang.Override
         @JsonSetter("getActualResult")
         public AssertCorrectnessCheckStage getActualResult(@NotNull NonVoidFunctionDefinition getActualResult) {
-            this.getActualResult = getActualResult;
+            this.getActualResult = Objects.requireNonNull(getActualResult, "getActualResult must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("assertCorrectnessCheck")
         public _FinalStage assertCorrectnessCheck(@NotNull AssertCorrectnessCheck assertCorrectnessCheck) {
-            this.assertCorrectnessCheck = assertCorrectnessCheck;
+            this.assertCorrectnessCheck =
+                    Objects.requireNonNull(assertCorrectnessCheck, "assertCorrectnessCheck must not be null");
             return this;
         }
 

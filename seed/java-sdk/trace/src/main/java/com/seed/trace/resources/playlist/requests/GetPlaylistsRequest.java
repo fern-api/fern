@@ -174,7 +174,7 @@ public final class GetPlaylistsRequest {
         @java.lang.Override
         @JsonSetter("otherField")
         public MultiLineDocsStage otherField(@NotNull String otherField) {
-            this.otherField = otherField;
+            this.otherField = Objects.requireNonNull(otherField, "otherField must not be null");
             return this;
         }
 
@@ -186,14 +186,14 @@ public final class GetPlaylistsRequest {
         @java.lang.Override
         @JsonSetter("multiLineDocs")
         public MultipleFieldStage multiLineDocs(@NotNull String multiLineDocs) {
-            this.multiLineDocs = multiLineDocs;
+            this.multiLineDocs = Objects.requireNonNull(multiLineDocs, "multiLineDocs must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("multipleField")
         public _FinalStage multipleField(@NotNull String multipleField) {
-            this.multipleField = multipleField;
+            this.multipleField = Objects.requireNonNull(multipleField, "multipleField must not be null");
             return this;
         }
 

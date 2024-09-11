@@ -106,14 +106,14 @@ public final class DoublyLinkedListNodeAndListValue {
         @java.lang.Override
         @JsonSetter("nodeId")
         public FullListStage nodeId(@NotNull String nodeId) {
-            this.nodeId = nodeId;
+            this.nodeId = Objects.requireNonNull(nodeId, "nodeId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("fullList")
         public _FinalStage fullList(@NotNull DoublyLinkedListValue fullList) {
-            this.fullList = fullList;
+            this.fullList = Objects.requireNonNull(fullList, "fullList must not be null");
             return this;
         }
 

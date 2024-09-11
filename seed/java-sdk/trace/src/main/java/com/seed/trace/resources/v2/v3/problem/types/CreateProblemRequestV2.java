@@ -215,28 +215,28 @@ public final class CreateProblemRequestV2 {
         @java.lang.Override
         @JsonSetter("problemName")
         public ProblemDescriptionStage problemName(@NotNull String problemName) {
-            this.problemName = problemName;
+            this.problemName = Objects.requireNonNull(problemName, "problemName must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("problemDescription")
         public CustomFilesStage problemDescription(@NotNull ProblemDescription problemDescription) {
-            this.problemDescription = problemDescription;
+            this.problemDescription = Objects.requireNonNull(problemDescription, "problemDescription must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("customFiles")
         public IsPublicStage customFiles(@NotNull CustomFiles customFiles) {
-            this.customFiles = customFiles;
+            this.customFiles = Objects.requireNonNull(customFiles, "customFiles must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("isPublic")
         public _FinalStage isPublic(boolean isPublic) {
-            this.isPublic = Objects.requireNonNull(isPublic, "isPublic must not be null");
+            this.isPublic = isPublic;
             return this;
         }
 

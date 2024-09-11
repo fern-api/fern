@@ -147,21 +147,22 @@ public final class GetSubmissionStateResponse {
         @java.lang.Override
         @JsonSetter("submission")
         public LanguageStage submission(@NotNull String submission) {
-            this.submission = submission;
+            this.submission = Objects.requireNonNull(submission, "submission must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("language")
         public SubmissionTypeStateStage language(@NotNull Language language) {
-            this.language = language;
+            this.language = Objects.requireNonNull(language, "language must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("submissionTypeState")
         public _FinalStage submissionTypeState(@NotNull SubmissionTypeState submissionTypeState) {
-            this.submissionTypeState = submissionTypeState;
+            this.submissionTypeState =
+                    Objects.requireNonNull(submissionTypeState, "submissionTypeState must not be null");
             return this;
         }
 

@@ -226,7 +226,7 @@ public final class MyRequest {
         @java.lang.Override
         @JsonSetter("integer")
         public _FinalStage integer(int integer) {
-            this.integer = Objects.requireNonNull(integer, "integer must not be null");
+            this.integer = integer;
             return this;
         }
 

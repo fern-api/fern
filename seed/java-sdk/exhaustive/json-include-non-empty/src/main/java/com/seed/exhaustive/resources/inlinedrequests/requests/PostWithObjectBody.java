@@ -125,21 +125,21 @@ public final class PostWithObjectBody {
         @java.lang.Override
         @JsonSetter("string")
         public IntegerStage string(@NotNull String string) {
-            this.string = string;
+            this.string = Objects.requireNonNull(string, "string must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("integer")
         public NestedObjectStage integer(int integer) {
-            this.integer = Objects.requireNonNull(integer, "integer must not be null");
+            this.integer = integer;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("NestedObject")
         public _FinalStage nestedObject(@NotNull ObjectWithOptionalField nestedObject) {
-            this.nestedObject = nestedObject;
+            this.nestedObject = Objects.requireNonNull(nestedObject, "nestedObject must not be null");
             return this;
         }
 

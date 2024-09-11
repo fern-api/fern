@@ -108,14 +108,14 @@ public final class NonVoidFunctionDefinition {
         @java.lang.Override
         @JsonSetter("signature")
         public CodeStage signature(@NotNull NonVoidFunctionSignature signature) {
-            this.signature = signature;
+            this.signature = Objects.requireNonNull(signature, "signature must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("code")
         public _FinalStage code(@NotNull FunctionImplementationForMultipleLanguages code) {
-            this.code = code;
+            this.code = Objects.requireNonNull(code, "code must not be null");
             return this;
         }
 

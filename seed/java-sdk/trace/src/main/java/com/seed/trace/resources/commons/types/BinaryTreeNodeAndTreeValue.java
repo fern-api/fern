@@ -106,14 +106,14 @@ public final class BinaryTreeNodeAndTreeValue {
         @java.lang.Override
         @JsonSetter("nodeId")
         public FullTreeStage nodeId(@NotNull String nodeId) {
-            this.nodeId = nodeId;
+            this.nodeId = Objects.requireNonNull(nodeId, "nodeId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("fullTree")
         public _FinalStage fullTree(@NotNull BinaryTreeValue fullTree) {
-            this.fullTree = fullTree;
+            this.fullTree = Objects.requireNonNull(fullTree, "fullTree must not be null");
             return this;
         }
 

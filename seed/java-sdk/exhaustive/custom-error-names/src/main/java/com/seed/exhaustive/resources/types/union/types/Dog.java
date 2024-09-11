@@ -105,14 +105,14 @@ public final class Dog {
         @java.lang.Override
         @JsonSetter("name")
         public LikesToWoofStage name(@NotNull String name) {
-            this.name = name;
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("likesToWoof")
         public _FinalStage likesToWoof(boolean likesToWoof) {
-            this.likesToWoof = Objects.requireNonNull(likesToWoof, "likesToWoof must not be null");
+            this.likesToWoof = likesToWoof;
             return this;
         }
 

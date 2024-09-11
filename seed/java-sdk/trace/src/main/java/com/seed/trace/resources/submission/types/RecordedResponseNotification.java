@@ -129,14 +129,14 @@ public final class RecordedResponseNotification {
         @java.lang.Override
         @JsonSetter("submissionId")
         public TraceResponsesSizeStage submissionId(@NotNull UUID submissionId) {
-            this.submissionId = submissionId;
+            this.submissionId = Objects.requireNonNull(submissionId, "submissionId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("traceResponsesSize")
         public _FinalStage traceResponsesSize(int traceResponsesSize) {
-            this.traceResponsesSize = Objects.requireNonNull(traceResponsesSize, "traceResponsesSize must not be null");
+            this.traceResponsesSize = traceResponsesSize;
             return this;
         }
 

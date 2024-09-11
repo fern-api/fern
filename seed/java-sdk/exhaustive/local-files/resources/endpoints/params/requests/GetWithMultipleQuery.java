@@ -113,14 +113,14 @@ public final class GetWithMultipleQuery {
     @java.lang.Override
     @JsonSetter("query")
     public NumerStage query(@NotNull String query) {
-      this.query = query;
+      this.query = Objects.requireNonNull(query, "query must not be null");
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("numer")
     public _FinalStage numer(int numer) {
-      this.numer = Objects.requireNonNull(numer, "numer must not be null");
+      this.numer = numer;
       return this;
     }
 

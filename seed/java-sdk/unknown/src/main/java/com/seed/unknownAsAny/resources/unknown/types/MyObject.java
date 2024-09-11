@@ -89,7 +89,7 @@ public final class MyObject {
         @java.lang.Override
         @JsonSetter("unknown")
         public _FinalStage unknown(Object unknown) {
-            this.unknown = Objects.requireNonNull(unknown, "unknown must not be null");
+            this.unknown = unknown;
             return this;
         }
 

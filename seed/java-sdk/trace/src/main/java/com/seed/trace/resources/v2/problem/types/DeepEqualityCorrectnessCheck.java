@@ -90,7 +90,8 @@ public final class DeepEqualityCorrectnessCheck {
         @java.lang.Override
         @JsonSetter("expectedValueParameterId")
         public _FinalStage expectedValueParameterId(@NotNull String expectedValueParameterId) {
-            this.expectedValueParameterId = expectedValueParameterId;
+            this.expectedValueParameterId =
+                    Objects.requireNonNull(expectedValueParameterId, "expectedValueParameterId must not be null");
             return this;
         }
 

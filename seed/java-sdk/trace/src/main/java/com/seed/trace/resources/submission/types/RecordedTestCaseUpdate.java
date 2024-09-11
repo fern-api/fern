@@ -106,14 +106,14 @@ public final class RecordedTestCaseUpdate {
         @java.lang.Override
         @JsonSetter("testCaseId")
         public TraceResponsesSizeStage testCaseId(@NotNull String testCaseId) {
-            this.testCaseId = testCaseId;
+            this.testCaseId = Objects.requireNonNull(testCaseId, "testCaseId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("traceResponsesSize")
         public _FinalStage traceResponsesSize(int traceResponsesSize) {
-            this.traceResponsesSize = Objects.requireNonNull(traceResponsesSize, "traceResponsesSize must not be null");
+            this.traceResponsesSize = traceResponsesSize;
             return this;
         }
 

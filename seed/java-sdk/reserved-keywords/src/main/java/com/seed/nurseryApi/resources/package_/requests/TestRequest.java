@@ -90,7 +90,7 @@ public final class TestRequest {
         @java.lang.Override
         @JsonSetter("for")
         public _FinalStage for_(@NotNull String for_) {
-            this.for_ = for_;
+            this.for_ = Objects.requireNonNull(for_, "for_ must not be null");
             return this;
         }
 

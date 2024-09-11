@@ -133,14 +133,14 @@ public final class SendRequest {
         @java.lang.Override
         @JsonSetter("query")
         public ContextStage query(@NotNull String query) {
-            this.query = query;
+            this.query = Objects.requireNonNull(query, "query must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("context")
         public _FinalStage context(@NotNull String context) {
-            this.context = context;
+            this.context = Objects.requireNonNull(context, "context must not be null");
             return this;
         }
 

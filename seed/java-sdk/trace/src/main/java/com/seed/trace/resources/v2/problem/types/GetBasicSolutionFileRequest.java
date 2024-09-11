@@ -106,14 +106,14 @@ public final class GetBasicSolutionFileRequest {
         @java.lang.Override
         @JsonSetter("methodName")
         public SignatureStage methodName(@NotNull String methodName) {
-            this.methodName = methodName;
+            this.methodName = Objects.requireNonNull(methodName, "methodName must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("signature")
         public _FinalStage signature(@NotNull NonVoidFunctionSignature signature) {
-            this.signature = signature;
+            this.signature = Objects.requireNonNull(signature, "signature must not be null");
             return this;
         }
 

@@ -105,14 +105,14 @@ public final class KeyValuePair {
         @java.lang.Override
         @JsonSetter("key")
         public ValueStage key(@NotNull VariableValue key) {
-            this.key = key;
+            this.key = Objects.requireNonNull(key, "key must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("value")
         public _FinalStage value(@NotNull VariableValue value) {
-            this.value = value;
+            this.value = Objects.requireNonNull(value, "value must not be null");
             return this;
         }
 

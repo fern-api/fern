@@ -106,14 +106,14 @@ public final class StderrResponse {
         @java.lang.Override
         @JsonSetter("submissionId")
         public StderrStage submissionId(@NotNull UUID submissionId) {
-            this.submissionId = submissionId;
+            this.submissionId = Objects.requireNonNull(submissionId, "submissionId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("stderr")
         public _FinalStage stderr(@NotNull String stderr) {
-            this.stderr = stderr;
+            this.stderr = Objects.requireNonNull(stderr, "stderr must not be null");
             return this;
         }
 
