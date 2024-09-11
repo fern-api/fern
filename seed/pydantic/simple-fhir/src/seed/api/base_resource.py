@@ -21,21 +21,21 @@ class BaseResource(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .script import Script  # noqa: E402
-from .practitioner import Practitioner  # noqa: E402
-from .patient import Patient  # noqa: E402
 from .account import Account  # noqa: E402
 from .memo import Memo  # noqa: E402
+from .patient import Patient  # noqa: E402
+from .practitioner import Practitioner  # noqa: E402
+from .script import Script  # noqa: E402
 from .resource_list import ResourceList  # noqa: E402
 
-update_forward_refs(Script)
-update_forward_refs(Practitioner)
-update_forward_refs(Patient)
 update_forward_refs(Account)
 update_forward_refs(Memo)
-update_forward_refs(Script)
-update_forward_refs(Practitioner)
 update_forward_refs(Patient)
+update_forward_refs(Practitioner)
+update_forward_refs(Script)
 update_forward_refs(Account)
 update_forward_refs(Memo)
+update_forward_refs(Patient)
+update_forward_refs(Practitioner)
+update_forward_refs(Script)
 update_forward_refs(BaseResource)

@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 from ...core.pydantic_utilities import UniversalBaseModel
-from ...commons.types.map_value import MapValue
 from ...commons.types.key_value_pair import KeyValuePair
+from ...commons.types.map_value import MapValue
 from ...commons.types.list_type import ListType
 from ...commons.types.map_type import MapType
 import typing
@@ -50,9 +50,9 @@ class SubmissionStatusV2_Workspace(UniversalBaseModel):
 
 
 SubmissionStatusV2 = typing.Union[SubmissionStatusV2_Test, SubmissionStatusV2_Workspace]
-update_forward_refs(MapValue)
 update_forward_refs(KeyValuePair)
 update_forward_refs(MapValue)
 update_forward_refs(KeyValuePair)
 update_forward_refs(ListType)
 update_forward_refs(MapType)
+update_forward_refs(MapValue)

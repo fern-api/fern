@@ -68,7 +68,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
                     # This referenced type is self-referential
                     if referenced_id in referenced_type.referenced_types:
                         if self._types_with_non_union_self_referencing_dependencies.get(id) is None:
-                            self._types_with_non_union_self_referencing_dependencies[id] = set()
+                            self._types_with_non_union_self_referencing_dependencies[id] = OrderedSet()
                         self._types_with_non_union_self_referencing_dependencies[id].add(referenced_id)
 
     def get_module_path_in_project(self, module_path: AST.ModulePath) -> AST.ModulePath:
