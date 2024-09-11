@@ -10,7 +10,6 @@ from .binary_tree_value import BinaryTreeValue
 from .singly_linked_list_value import SinglyLinkedListValue
 from .doubly_linked_list_value import DoublyLinkedListValue
 from ...core.pydantic_utilities import update_forward_refs
-from .debug_map_value import DebugMapValue
 
 
 class DebugVariableValue_IntegerValue(UniversalBaseModel):
@@ -48,6 +47,9 @@ class DebugVariableValue_MapValue(UniversalBaseModel):
 
         class Config:
             extra = pydantic.Extra.allow
+
+
+from .debug_map_value import DebugMapValue  # noqa: E402
 
 
 class DebugVariableValue_ListValue(UniversalBaseModel):
@@ -146,7 +148,7 @@ DebugVariableValue = typing.Union[
 ]
 from .debug_key_value_pairs import DebugKeyValuePairs  # noqa: E402
 
-update_forward_refs(DebugKeyValuePairs)
 update_forward_refs(DebugMapValue)
+update_forward_refs(DebugKeyValuePairs)
 update_forward_refs(DebugVariableValue_MapValue)
 update_forward_refs(DebugVariableValue_ListValue)

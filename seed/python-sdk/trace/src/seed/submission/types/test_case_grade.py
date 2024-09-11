@@ -5,13 +5,13 @@ from ...core.pydantic_utilities import UniversalBaseModel
 import typing
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from ...commons.types.map_value import MapValue
+from ...commons.types.key_value_pair import KeyValuePair
 import typing_extensions
 from ...commons.types.variable_value import VariableValue
 from ...core.serialization import FieldMetadata
 from .exception_v_2 import ExceptionV2
 from ...core.pydantic_utilities import update_forward_refs
-from ...commons.types.key_value_pair import KeyValuePair
-from ...commons.types.map_value import MapValue
 
 
 class TestCaseGrade_Hidden(UniversalBaseModel):
@@ -48,5 +48,5 @@ class TestCaseGrade_NonHidden(UniversalBaseModel):
 
 
 TestCaseGrade = typing.Union[TestCaseGrade_Hidden, TestCaseGrade_NonHidden]
-update_forward_refs(KeyValuePair)
 update_forward_refs(MapValue)
+update_forward_refs(KeyValuePair)

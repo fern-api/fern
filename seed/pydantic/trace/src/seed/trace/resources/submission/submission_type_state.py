@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 from ...core.pydantic_utilities import UniversalBaseModel
+from ..commons.key_value_pair import KeyValuePair
+from ..commons.map_value import MapValue
 import typing
 from ..commons.problem_id import ProblemId
 import pydantic
@@ -10,8 +12,6 @@ from .test_submission_status import TestSubmissionStatus
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from .workspace_submission_status import WorkspaceSubmissionStatus
 from ...core.pydantic_utilities import update_forward_refs
-from ..commons.key_value_pair import KeyValuePair
-from ..commons.map_value import MapValue
 
 
 class SubmissionTypeState_Test(UniversalBaseModel):
