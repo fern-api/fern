@@ -2,7 +2,9 @@ import { SingleUnionType, SingleUnionTypeProperties, Type, TypeReference } from 
 import { isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
+import { getAvailability } from "../../utils/getAvailability";
 import { getDocs } from "../../utils/getDocs";
+import { getDisplayName } from "../../utils/getDisplayName";
 import { parseTypeName } from "../../utils/parseTypeName";
 import { convertDeclaration } from "../convertDeclaration";
 import { getExtensionsAsList, getPropertyName } from "./convertObjectTypeDeclaration";
@@ -57,7 +59,9 @@ export async function convertDiscriminatedUnionTypeDeclaration({
                 return {
                     discriminantValue,
                     docs,
-                    shape: SingleUnionTypeProperties.noProperties()
+                    shape: SingleUnionTypeProperties.noProperties(),
+                    displayName: undefined,
+                    availability: undefined
                 };
             }
 
@@ -72,7 +76,9 @@ export async function convertDiscriminatedUnionTypeDeclaration({
                     file,
                     typeResolver
                 }),
-                docs: getDocs(rawSingleUnionType)
+                docs: getDocs(rawSingleUnionType),
+                displayName: getDisplayName(rawSingleUnionType),
+                availability: getAvailability(rawSingleUnionType)
             };
         })
     });

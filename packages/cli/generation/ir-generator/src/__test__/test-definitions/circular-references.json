@@ -625,6 +625,8 @@
                                 "inline": null
                             }
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     },
                     {
@@ -716,6 +718,8 @@
                             },
                             "typeId": "type_ast:ObjectValue"
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     },
                     {
@@ -834,6 +838,8 @@
                                 "inline": null
                             }
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     }
                 ]
@@ -1069,6 +1075,8 @@
                                 }
                             }
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     },
                     {
@@ -1193,6 +1201,8 @@
                                 }
                             }
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     }
                 ]
