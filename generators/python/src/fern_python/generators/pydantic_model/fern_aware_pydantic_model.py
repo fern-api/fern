@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from ast import Set
 from types import TracebackType
 from typing import List, Optional, Sequence, Tuple, Type
 
@@ -152,7 +151,9 @@ class FernAwarePydanticModel:
             self_referencing_dependencies = self_referencing_dependencies_from_non_union_types[type_id]
             for dependency in self_referencing_dependencies:
                 # We update the current model's forward refs independently
-                if (self._type_name and dependency == self._type_name.type_id) or dependency in self._forward_referenced_models:
+                if (
+                    self._type_name and dependency == self._type_name.type_id
+                ) or dependency in self._forward_referenced_models:
                     continue
                 class_reference = self._context.get_class_reference_for_type_id(
                     dependency, as_request=False, must_import_after_current_declaration=lambda _: False
