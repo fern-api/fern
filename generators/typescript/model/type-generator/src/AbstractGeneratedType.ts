@@ -60,7 +60,7 @@ export abstract class AbstractGeneratedType<Shape, Context> implements BaseGener
         }
         for (const example of this.examples) {
             const exampleStr =
-                "@example\n" + getTextOfTsNode(this.buildExample(example.shape, context, { isForComment: true }));
+                "@example\n" + getTextOfTsNode(this.buildExample(example.shape, context, { isForComment: true, isForTypeDeclarationComment: true }));
             groups.push(exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`));
         }
         if (groups.length === 0) {

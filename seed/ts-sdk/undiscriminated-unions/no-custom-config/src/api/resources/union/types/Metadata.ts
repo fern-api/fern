@@ -11,8 +11,8 @@ import * as SeedUndiscriminatedUnions from "../../../index";
  *
  * @example
  *     {
- *         ["name"]: "exampleName",
- *         ["value"]: "exampleValue",
+ *         [SeedUndiscriminatedUnions.KeyType.Name]: "exampleName",
+ *         [SeedUndiscriminatedUnions.KeyType.Value]: "exampleValue",
  *         "default": "exampleDefault"
  *     }
  */

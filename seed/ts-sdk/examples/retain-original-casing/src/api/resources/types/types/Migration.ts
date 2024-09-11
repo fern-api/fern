@@ -8,7 +8,7 @@ import * as SeedExamples from "../../../index";
  * @example
  *     {
  *         name: "001_init",
- *         status: "RUNNING"
+ *         status: SeedExamples.MigrationStatus.Running
  *     }
  */
 export interface Migration {

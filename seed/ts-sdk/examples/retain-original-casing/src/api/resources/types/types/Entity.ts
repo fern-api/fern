@@ -7,7 +7,7 @@ import * as SeedExamples from "../../../index";
 /**
  * @example
  *     {
- *         type: "unknown",
+ *         type: SeedExamples.ComplexType.Unknown,
  *         name: "unknown"
  *     }
  */

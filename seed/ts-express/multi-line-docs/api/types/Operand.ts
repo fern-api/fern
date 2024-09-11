@@ -7,10 +7,10 @@
  * different.
  *
  * @example
- *     ">"
+ *     SeedMultiLineDocs.Operand.GreaterThan
  *
  * @example
- *     "less_than"
+ *     SeedMultiLineDocs.Operand.LessThan
  */
 export type Operand =
     | ">"

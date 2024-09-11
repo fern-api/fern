@@ -229,7 +229,14 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
         if (enumValue == null) {
             throw new Error("No enum with wire value: " + example.value.wireValue);
         }
-        return ts.factory.createStringLiteral(example.value.wireValue);
+        if (opts.isForTypeDeclarationComment) {
+            return ts.factory.createPropertyAccessExpression(
+                this.getReferenceToSelf(context).getExpression(opts),
+                this.getEnumValueName(enumValue)
+            );
+        } else {
+            return ts.factory.createStringLiteral(example.value.wireValue);
+        }
     }
 
     private getEnumValueName(enumValue: EnumValue): string {

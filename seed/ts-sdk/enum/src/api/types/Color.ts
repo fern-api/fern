@@ -4,7 +4,7 @@
 
 /**
  * @example
- *     "red"
+ *     SeedEnum.Color.Red
  */
 export type Color = "red" | "blue";
 
