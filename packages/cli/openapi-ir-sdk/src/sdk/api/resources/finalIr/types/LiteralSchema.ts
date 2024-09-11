@@ -8,6 +8,7 @@ export interface LiteralSchema
     extends FernOpenapiIr.WithDescription,
         FernOpenapiIr.WithName,
         FernOpenapiIr.WithSdkGroupName,
-        FernOpenapiIr.WithAvailability {
+        FernOpenapiIr.WithAvailability,
+        FernOpenapiIr.WithTitle {
     value: FernOpenapiIr.LiteralSchemaValue;
 }

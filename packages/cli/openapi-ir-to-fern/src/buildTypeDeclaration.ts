@@ -479,45 +479,21 @@ export function buildOneOfTypeDeclaration({
             });
             const maybeSingleUnionTypeSchema = union[discriminantValue];
             if (maybeSingleUnionTypeSchema && typeof maybeSingleUnionTypeSchema !== "string") {
-                subSchema._visit({
-                    object: (value) => {
-                        value;
-                    },
-                    reference: (value) => {
-                        value;
-                    },
-                    primitive: (value) => {
-                        value;
-                    },
-                    array: (value) => {
-                        throw new Error("Function not implemented.");
-                    },
-                    map: (value) => {
-                        throw new Error("Function not implemented.");
-                    },
-                    optional: (value) => {
-                        throw new Error("Function not implemented.");
-                    },
-                    enum: (value) => {
-                        throw new Error("Function not implemented.");
-                    },
-                    literal: (value) => {
-                        throw new Error("Function not implemented.");
-                    },
-                    oneOf: (value) => {
-                        throw new Error("Function not implemented.");
-                    },
-                    nullable: (value) => {
-                        throw new Error("Function not implemented.");
-                    },
-                    unknown: (value) => {
-                        throw new Error("Function not implemented.");
-                    },
-                    _other: (value) => {
-                        throw new Error("Function not implemented.");
-                    }
+                const maybeDisplayName = subSchema._visit({
+                    object: (value) => value.title,
+                    reference: (value) => value.title,
+                    primitive: (value) => value.title,
+                    array: (value) => value.title,
+                    map: (value) => value.title,
+                    optional: (value) => value.title,
+                    enum: (value) => value.title,
+                    literal: (value) => value.title,
+                    oneOf: (value) => value.title,
+                    nullable: (value) => value.title,
+                    unknown: (value) => undefined,
+                    _other: (value) => undefined
                 });
-                maybeSingleUnionTypeSchema["display-name"] = subSchema;
+                maybeSingleUnionTypeSchema["display-name"] = maybeDisplayName;
             }
         }
         return {
