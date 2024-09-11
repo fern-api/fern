@@ -821,7 +821,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             });
         }
 
-        const generatedVersion = context.version.getGeneratedVersion();
+        const generatedVersion = context.versionContext.getGeneratedVersion();
         if (generatedVersion != null) {
             const header = generatedVersion.getHeader();
             const headerName = this.getOptionKeyForHeader(header);
@@ -929,7 +929,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             ]
         };
 
-        const generatedVersion = context.version.getGeneratedVersion();
+        const generatedVersion = context.versionContext.getGeneratedVersion();
         if (generatedVersion != null) {
             const header = generatedVersion.getHeader();
             requestOptions.properties.push({
@@ -1051,7 +1051,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             }
         }
 
-        const generatedVersion = context.version.getGeneratedVersion();
+        const generatedVersion = context.versionContext.getGeneratedVersion();
         if (generatedVersion != null && !generatedVersion.hasDefaultVersion()) {
             const header = generatedVersion.getHeader();
             properties.push(
@@ -1242,7 +1242,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             }
         }
 
-        const generatedVersion = context.version.getGeneratedVersion();
+        const generatedVersion = context.versionContext.getGeneratedVersion();
         if (generatedVersion != null) {
             const header = generatedVersion.getHeader();
             properties.push({

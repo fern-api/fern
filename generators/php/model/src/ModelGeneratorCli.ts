@@ -3,6 +3,7 @@ import { AbstractPhpGeneratorCli } from "@fern-api/php-codegen";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
+import { generateModels } from "./generateModels";
 
 export class ModelGeneratorCLI extends AbstractPhpGeneratorCli<ModelCustomConfigSchema, ModelGeneratorContext> {
     protected constructContext({
@@ -19,19 +20,27 @@ export class ModelGeneratorCLI extends AbstractPhpGeneratorCli<ModelCustomConfig
         return new ModelGeneratorContext(ir, generatorConfig, customConfig, generatorNotificationService);
     }
 
-    protected async parseCustomConfigOrThrow(customConfig: unknown): Promise<void> {
-        return undefined;
+    protected parseCustomConfigOrThrow(customConfig: unknown): ModelCustomConfigSchema {
+        return {};
     }
 
     protected async publishPackage(context: ModelGeneratorContext): Promise<void> {
-        return undefined;
+        throw new Error("Method not implemented.");
     }
 
     protected async writeForGithub(context: ModelGeneratorContext): Promise<void> {
-        return undefined;
+        await this.generate(context);
     }
 
     protected async writeForDownload(context: ModelGeneratorContext): Promise<void> {
-        return undefined;
+        await this.generate(context);
+    }
+
+    protected async generate(context: ModelGeneratorContext): Promise<void> {
+        const generatedTypes = generateModels({ context });
+        for (const file of generatedTypes) {
+            context.project.addSourceFiles(file);
+        }
+        await context.project.persist();
     }
 }
