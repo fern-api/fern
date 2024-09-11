@@ -116,11 +116,12 @@ types:
       types: list<SingleUnionType>
       baseProperties: list<ObjectProperty>
   SingleUnionType:
-    extends: commons.Declaration
+    extends: commons.WithDocs
     properties:
       discriminantValue: commons.NameAndWireValue
       shape: SingleUnionTypeProperties
       displayName: optional<string>
+      availability: optional<commons.Availability>
   SingleUnionTypeProperties:
     discriminant:
       value: _type

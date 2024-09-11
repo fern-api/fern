@@ -23269,6 +23269,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "inline": null
                             }
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     },
                     {
@@ -23360,6 +23362,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                             },
                             "typeId": "type_director:Director"
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     },
                     {
@@ -23388,6 +23392,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "shape": {
                             "_type": "noProperties"
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     },
                     {
@@ -23416,6 +23422,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "shape": {
                             "_type": "noProperties"
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": "i am docs"
                     }
                 ]
