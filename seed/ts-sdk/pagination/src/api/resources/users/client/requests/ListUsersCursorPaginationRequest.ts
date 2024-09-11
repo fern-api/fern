@@ -9,7 +9,7 @@ import * as SeedPagination from "../../../../index";
  *     {
  *         page: 1,
  *         perPage: 1,
- *         order: SeedPagination.Order.Asc,
+ *         order: "asc",
  *         startingAfter: "string"
  *     }
  */

@@ -61,9 +61,9 @@
                                         "imports": [],
                                         "isOptional": true,
                                         "values": {
-                                            ">": "SeedEnum.Operand.GreaterThan",
-                                            "=": "SeedEnum.Operand.EqualTo",
-                                            "less_than": "SeedEnum.Operand.LessThan"
+                                            ">": "\">\"",
+                                            "=": "\"=\"",
+                                            "less_than": "\"less_than\""
                                         },
                                         "templateString": "operand: $FERN_INPUT",
                                         "templateInput": {
@@ -80,9 +80,9 @@
                                         "imports": [],
                                         "isOptional": true,
                                         "values": {
-                                            ">": "SeedEnum.Operand.GreaterThan",
-                                            "=": "SeedEnum.Operand.EqualTo",
-                                            "less_than": "SeedEnum.Operand.LessThan"
+                                            ">": "\">\"",
+                                            "=": "\"=\"",
+                                            "less_than": "\"less_than\""
                                         },
                                         "templateString": "maybeOperand: $FERN_INPUT",
                                         "templateInput": {
@@ -105,8 +105,8 @@
                                                     "imports": [],
                                                     "isOptional": true,
                                                     "values": {
-                                                        "red": "SeedEnum.Color.Red",
-                                                        "blue": "SeedEnum.Color.Blue"
+                                                        "red": "\"red\"",
+                                                        "blue": "\"blue\""
                                                     },
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
@@ -125,9 +125,9 @@
                                                     "imports": [],
                                                     "isOptional": true,
                                                     "values": {
-                                                        ">": "SeedEnum.Operand.GreaterThan",
-                                                        "=": "SeedEnum.Operand.EqualTo",
-                                                        "less_than": "SeedEnum.Operand.LessThan"
+                                                        ">": "\">\"",
+                                                        "=": "\"=\"",
+                                                        "less_than": "\"less_than\""
                                                     },
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
@@ -162,8 +162,8 @@
                                                     "imports": [],
                                                     "isOptional": true,
                                                     "values": {
-                                                        "red": "SeedEnum.Color.Red",
-                                                        "blue": "SeedEnum.Color.Blue"
+                                                        "red": "\"red\"",
+                                                        "blue": "\"blue\""
                                                     },
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
@@ -182,9 +182,9 @@
                                                     "imports": [],
                                                     "isOptional": true,
                                                     "values": {
-                                                        ">": "SeedEnum.Operand.GreaterThan",
-                                                        "=": "SeedEnum.Operand.EqualTo",
-                                                        "less_than": "SeedEnum.Operand.LessThan"
+                                                        ">": "\">\"",
+                                                        "=": "\"=\"",
+                                                        "less_than": "\"less_than\""
                                                     },
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
@@ -281,9 +281,9 @@
                                         "imports": [],
                                         "isOptional": true,
                                         "values": {
-                                            ">": "SeedEnum.Operand.GreaterThan",
-                                            "=": "SeedEnum.Operand.EqualTo",
-                                            "less_than": "SeedEnum.Operand.LessThan"
+                                            ">": "\">\"",
+                                            "=": "\"=\"",
+                                            "less_than": "\"less_than\""
                                         },
                                         "templateString": "$FERN_INPUT",
                                         "templateInput": {
@@ -300,9 +300,9 @@
                                         "imports": [],
                                         "isOptional": true,
                                         "values": {
-                                            ">": "SeedEnum.Operand.GreaterThan",
-                                            "=": "SeedEnum.Operand.EqualTo",
-                                            "less_than": "SeedEnum.Operand.LessThan"
+                                            ">": "\">\"",
+                                            "=": "\"=\"",
+                                            "less_than": "\"less_than\""
                                         },
                                         "templateString": "$FERN_INPUT",
                                         "templateInput": {
@@ -325,8 +325,8 @@
                                                     "imports": [],
                                                     "isOptional": true,
                                                     "values": {
-                                                        "red": "SeedEnum.Color.Red",
-                                                        "blue": "SeedEnum.Color.Blue"
+                                                        "red": "\"red\"",
+                                                        "blue": "\"blue\""
                                                     },
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
@@ -345,9 +345,9 @@
                                                     "imports": [],
                                                     "isOptional": true,
                                                     "values": {
-                                                        ">": "SeedEnum.Operand.GreaterThan",
-                                                        "=": "SeedEnum.Operand.EqualTo",
-                                                        "less_than": "SeedEnum.Operand.LessThan"
+                                                        ">": "\">\"",
+                                                        "=": "\"=\"",
+                                                        "less_than": "\"less_than\""
                                                     },
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
@@ -382,8 +382,8 @@
                                                     "imports": [],
                                                     "isOptional": true,
                                                     "values": {
-                                                        "red": "SeedEnum.Color.Red",
-                                                        "blue": "SeedEnum.Color.Blue"
+                                                        "red": "\"red\"",
+                                                        "blue": "\"blue\""
                                                     },
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
@@ -402,9 +402,9 @@
                                                     "imports": [],
                                                     "isOptional": true,
                                                     "values": {
-                                                        ">": "SeedEnum.Operand.GreaterThan",
-                                                        "=": "SeedEnum.Operand.EqualTo",
-                                                        "less_than": "SeedEnum.Operand.LessThan"
+                                                        ">": "\">\"",
+                                                        "=": "\"=\"",
+                                                        "less_than": "\"less_than\""
                                                     },
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
@@ -501,9 +501,9 @@
                                         "imports": [],
                                         "isOptional": true,
                                         "values": {
-                                            ">": "SeedEnum.Operand.GreaterThan",
-                                            "=": "SeedEnum.Operand.EqualTo",
-                                            "less_than": "SeedEnum.Operand.LessThan"
+                                            ">": "\">\"",
+                                            "=": "\"=\"",
+                                            "less_than": "\"less_than\""
                                         },
                                         "templateString": "operand: $FERN_INPUT",
                                         "templateInput": {
@@ -520,9 +520,9 @@
                                         "imports": [],
                                         "isOptional": true,
                                         "values": {
-                                            ">": "SeedEnum.Operand.GreaterThan",
-                                            "=": "SeedEnum.Operand.EqualTo",
-                                            "less_than": "SeedEnum.Operand.LessThan"
+                                            ">": "\">\"",
+                                            "=": "\"=\"",
+                                            "less_than": "\"less_than\""
                                         },
                                         "templateString": "maybeOperand: $FERN_INPUT",
                                         "templateInput": {
@@ -545,8 +545,8 @@
                                                     "imports": [],
                                                     "isOptional": true,
                                                     "values": {
-                                                        "red": "SeedEnum.Color.Red",
-                                                        "blue": "SeedEnum.Color.Blue"
+                                                        "red": "\"red\"",
+                                                        "blue": "\"blue\""
                                                     },
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
@@ -565,9 +565,9 @@
                                                     "imports": [],
                                                     "isOptional": true,
                                                     "values": {
-                                                        ">": "SeedEnum.Operand.GreaterThan",
-                                                        "=": "SeedEnum.Operand.EqualTo",
-                                                        "less_than": "SeedEnum.Operand.LessThan"
+                                                        ">": "\">\"",
+                                                        "=": "\"=\"",
+                                                        "less_than": "\"less_than\""
                                                     },
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
@@ -602,8 +602,8 @@
                                                     "imports": [],
                                                     "isOptional": true,
                                                     "values": {
-                                                        "red": "SeedEnum.Color.Red",
-                                                        "blue": "SeedEnum.Color.Blue"
+                                                        "red": "\"red\"",
+                                                        "blue": "\"blue\""
                                                     },
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
@@ -622,9 +622,9 @@
                                                     "imports": [],
                                                     "isOptional": true,
                                                     "values": {
-                                                        ">": "SeedEnum.Operand.GreaterThan",
-                                                        "=": "SeedEnum.Operand.EqualTo",
-                                                        "less_than": "SeedEnum.Operand.LessThan"
+                                                        ">": "\">\"",
+                                                        "=": "\"=\"",
+                                                        "less_than": "\"less_than\""
                                                     },
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
@@ -721,9 +721,9 @@
                                         "imports": [],
                                         "isOptional": true,
                                         "values": {
-                                            ">": "SeedEnum.Operand.GreaterThan",
-                                            "=": "SeedEnum.Operand.EqualTo",
-                                            "less_than": "SeedEnum.Operand.LessThan"
+                                            ">": "\">\"",
+                                            "=": "\"=\"",
+                                            "less_than": "\"less_than\""
                                         },
                                         "templateString": "operand: $FERN_INPUT",
                                         "templateInput": {
@@ -740,9 +740,9 @@
                                         "imports": [],
                                         "isOptional": true,
                                         "values": {
-                                            ">": "SeedEnum.Operand.GreaterThan",
-                                            "=": "SeedEnum.Operand.EqualTo",
-                                            "less_than": "SeedEnum.Operand.LessThan"
+                                            ">": "\">\"",
+                                            "=": "\"=\"",
+                                            "less_than": "\"less_than\""
                                         },
                                         "templateString": "maybeOperand: $FERN_INPUT",
                                         "templateInput": {
@@ -765,8 +765,8 @@
                                                     "imports": [],
                                                     "isOptional": true,
                                                     "values": {
-                                                        "red": "SeedEnum.Color.Red",
-                                                        "blue": "SeedEnum.Color.Blue"
+                                                        "red": "\"red\"",
+                                                        "blue": "\"blue\""
                                                     },
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
@@ -785,9 +785,9 @@
                                                     "imports": [],
                                                     "isOptional": true,
                                                     "values": {
-                                                        ">": "SeedEnum.Operand.GreaterThan",
-                                                        "=": "SeedEnum.Operand.EqualTo",
-                                                        "less_than": "SeedEnum.Operand.LessThan"
+                                                        ">": "\">\"",
+                                                        "=": "\"=\"",
+                                                        "less_than": "\"less_than\""
                                                     },
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
@@ -822,8 +822,8 @@
                                                     "imports": [],
                                                     "isOptional": true,
                                                     "values": {
-                                                        "red": "SeedEnum.Color.Red",
-                                                        "blue": "SeedEnum.Color.Blue"
+                                                        "red": "\"red\"",
+                                                        "blue": "\"blue\""
                                                     },
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {
@@ -842,9 +842,9 @@
                                                     "imports": [],
                                                     "isOptional": true,
                                                     "values": {
-                                                        ">": "SeedEnum.Operand.GreaterThan",
-                                                        "=": "SeedEnum.Operand.EqualTo",
-                                                        "less_than": "SeedEnum.Operand.LessThan"
+                                                        ">": "\">\"",
+                                                        "=": "\"=\"",
+                                                        "less_than": "\"less_than\""
                                                     },
                                                     "templateString": "$FERN_INPUT",
                                                     "templateInput": {

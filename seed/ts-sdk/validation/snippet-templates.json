@@ -109,9 +109,9 @@
                                         "imports": [],
                                         "isOptional": true,
                                         "values": {
-                                            "SQUARE": "SeedValidation.Shape.Square",
-                                            "CIRCLE": "SeedValidation.Shape.Circle",
-                                            "TRIANGLE": "SeedValidation.Shape.Triangle"
+                                            "SQUARE": "\"SQUARE\"",
+                                            "CIRCLE": "\"CIRCLE\"",
+                                            "TRIANGLE": "\"TRIANGLE\""
                                         },
                                         "templateString": "shape: $FERN_INPUT",
                                         "templateInput": {

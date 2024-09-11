@@ -914,10 +914,10 @@
                                         "imports": [],
                                         "isOptional": true,
                                         "values": {
-                                            "SUNNY": "Fiddle.WeatherReport.Sunny",
-                                            "CLOUDY": "Fiddle.WeatherReport.Cloudy",
-                                            "RAINING": "Fiddle.WeatherReport.Raining",
-                                            "SNOWING": "Fiddle.WeatherReport.Snowing"
+                                            "SUNNY": "\"SUNNY\"",
+                                            "CLOUDY": "\"CLOUDY\"",
+                                            "RAINING": "\"RAINING\"",
+                                            "SNOWING": "\"SNOWING\""
                                         },
                                         "templateString": "$FERN_INPUT",
                                         "templateInput": {

@@ -9,14 +9,14 @@ import * as SeedObjectsWithImports from "../../../index";
  *     {
  *         name: "file.txt",
  *         contents: "...",
- *         info: SeedObjectsWithImports.FileInfo.Regular
+ *         info: "REGULAR"
  *     }
  *
  * @example
  *     {
  *         name: "another_file.txt",
  *         contents: "...",
- *         info: SeedObjectsWithImports.FileInfo.Regular
+ *         info: "REGULAR"
  *     }
  */
 export interface File_ {

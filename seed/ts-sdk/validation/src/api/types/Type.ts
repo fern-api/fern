@@ -12,7 +12,7 @@ import * as SeedValidation from "../index";
  *         decimal: 1.1,
  *         even: 2,
  *         name: "rules",
- *         shape: SeedValidation.Shape.Square
+ *         shape: "SQUARE"
  *     }
  */
 export interface Type {

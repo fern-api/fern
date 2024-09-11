@@ -108,7 +108,7 @@ export class Admin {
      *         updateTime: "2024-01-15T09:30:00Z",
      *         updateInfo: {
      *             type: "running",
-     *             value: SeedTrace.RunningSubmissionState.QueueingSubmission
+     *             value: "QUEUEING_SUBMISSION"
      *         }
      *     })
      */
@@ -246,7 +246,7 @@ export class Admin {
      *         updateTime: "2024-01-15T09:30:00Z",
      *         updateInfo: {
      *             type: "running",
-     *             value: SeedTrace.RunningSubmissionState.QueueingSubmission
+     *             value: "QUEUEING_SUBMISSION"
      *         }
      *     })
      */

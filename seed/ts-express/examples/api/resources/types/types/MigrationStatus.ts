@@ -4,10 +4,10 @@
 
 /**
  * @example
- *     SeedExamples.MigrationStatus.Running
+ *     "RUNNING"
  *
  * @example
- *     SeedExamples.MigrationStatus.Failed
+ *     "FAILED"
  */
 export type MigrationStatus =
     /**

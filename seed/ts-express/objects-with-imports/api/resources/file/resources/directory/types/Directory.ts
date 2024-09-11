@@ -11,14 +11,14 @@ import * as SeedObjectsWithImports from "../../../../../index";
  *         files: [{
  *                 name: "file.txt",
  *                 contents: "...",
- *                 info: SeedObjectsWithImports.FileInfo.Regular
+ *                 info: "REGULAR"
  *             }],
  *         directories: [{
  *                 name: "tmp",
  *                 files: [{
  *                         name: "another_file.txt",
  *                         contents: "...",
- *                         info: SeedObjectsWithImports.FileInfo.Regular
+ *                         info: "REGULAR"
  *                     }]
  *             }]
  *     }

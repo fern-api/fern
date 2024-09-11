@@ -7,10 +7,10 @@
  * different.
  *
  * @example
- *     SeedEnum.Operand.GreaterThan
+ *     ">"
  *
  * @example
- *     SeedEnum.Operand.LessThan
+ *     "less_than"
  */
 export type Operand =
     | ">"

@@ -9,11 +9,11 @@ import * as SeedExamples from "../../../index";
  *     {
  *         response: "Initializing...",
  *         identifiers: [{
- *                 type: SeedExamples.BasicType.Primitive,
+ *                 type: "primitive",
  *                 value: "example",
  *                 label: "Primitive"
  *             }, {
- *                 type: SeedExamples.ComplexType.Unknown,
+ *                 type: "unknown",
  *                 value: "{}",
  *                 label: "Unknown"
  *             }]

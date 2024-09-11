@@ -4,10 +4,10 @@
 
 /**
  * @example
- *     SeedObjectsWithImports.FileInfo.Regular
+ *     "REGULAR"
  *
  * @example
- *     SeedObjectsWithImports.FileInfo.Directory
+ *     "DIRECTORY"
  */
 export type FileInfo =
     /**

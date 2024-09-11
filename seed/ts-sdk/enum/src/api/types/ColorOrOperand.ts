@@ -6,6 +6,6 @@ import * as SeedEnum from "../index";
 
 /**
  * @example
- *     SeedEnum.Color.Red
+ *     "red"
  */
 export type ColorOrOperand = SeedEnum.Color | SeedEnum.Operand;
