@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 from .....core.pydantic_utilities import UniversalBaseModel
+from .....commons.types.list_type import ListType
+from .....commons.types.map_type import MapType
 import typing
 import typing_extensions
 from .....core.serialization import FieldMetadata
@@ -11,6 +13,7 @@ from .files import Files
 from .basic_test_case_template import BasicTestCaseTemplate
 from .....core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from .....core.pydantic_utilities import update_forward_refs
 
 
 class CustomFiles_Basic(UniversalBaseModel):
@@ -46,3 +49,5 @@ class CustomFiles_Custom(UniversalBaseModel):
 
 
 CustomFiles = typing.Union[CustomFiles_Basic, CustomFiles_Custom]
+update_forward_refs(ListType)
+update_forward_refs(MapType)
