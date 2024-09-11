@@ -109,77 +109,8 @@ exports[`validate namespaced API > namespaced 1`] = `
         docs: Write access
     source:
       openapi: openapi/trains/openapi.yml
-errors:
-  BadRequestError:
-    status-code: 400
-    type: unknown
-    docs: Bad Request
-    examples:
-      - value:
-          type: https://example.com/errors/bad-request
-          title: Bad Request
-          status: 400
-          detail: The request is invalid or missing required parameters.
-  UnauthorizedError:
-    status-code: 401
-    type: unknown
-    docs: Unauthorized
-    examples:
-      - value:
-          type: https://example.com/errors/unauthorized
-          title: Unauthorized
-          status: 401
-          detail: You do not have the necessary permissions.
-  ForbiddenError:
-    status-code: 403
-    type: unknown
-    docs: Forbidden
-    examples:
-      - value:
-          type: https://example.com/errors/forbidden
-          title: Forbidden
-          status: 403
-          detail: Access is forbidden with the provided credentials.
-  TooManyRequestsError:
-    status-code: 429
-    type: unknown
-    docs: Too Many Requests
-    examples:
-      - value:
-          type: https://example.com/errors/too-many-requests
-          title: Too Many Requests
-          status: 429
-          detail: You have exceeded the rate limit.
-  InternalServerError:
-    status-code: 500
-    type: unknown
-    docs: Internal Server Error
-    examples:
-      - value:
-          type: https://example.com/errors/internal-server-error
-          title: Internal Server Error
-          status: 500
-          detail: An unexpected error occurred.
-  NotFoundError:
-    status-code: 404
-    type: unknown
-    docs: Not Found
-    examples:
-      - value:
-          type: https://example.com/errors/not-found
-          title: Not Found
-          status: 404
-          detail: The requested resource was not found.
-  ConflictError:
-    status-code: 409
-    type: unknown
-    docs: Conflict
-    examples:
-      - value:
-          type: https://example.com/errors/conflict
-          title: Conflict
-          status: 409
-          detail: There is a conflict with an existing resource.
+imports:
+  root: trains/__package__.yml
 ",
     "name": "__package__.yml",
     "type": "file",
@@ -233,12 +164,10 @@ auth: BearerAuthScheme
         "name": "__package__.yml",
         "type": "file",
       },
-    ],
-    "name": "neopets",
-    "type": "directory",
-  },
-  {
-    "contents": "service:
+      {
+        "contents": "imports:
+  root: __package__.yml
+service:
   auth: false
   base-path: ''
   endpoints:
@@ -255,7 +184,7 @@ auth: BearerAuthScheme
             docs: How many items to return at one time (max 100)
       response:
         docs: A paged array of pets
-        type: unknown
+        type: root.Pets
       examples:
         - response:
             body:
@@ -282,7 +211,7 @@ auth: BearerAuthScheme
       display-name: Info for a specific pet
       response:
         docs: Expected response to a valid request
-        type: unknown
+        type: root.Pet
       examples:
         - path-parameters:
             petId: petId
@@ -296,8 +225,12 @@ auth: BearerAuthScheme
   source:
     openapi: openapi/petstore/openapi.yml
 ",
-    "name": "neopets.yml",
-    "type": "file",
+        "name": "neopets.yml",
+        "type": "file",
+      },
+    ],
+    "name": "neopets",
+    "type": "directory",
   },
   {
     "contents": [
@@ -461,7 +394,78 @@ types:
   {
     "contents": [
       {
-        "contents": "types:
+        "contents": "errors:
+  BadRequestError:
+    status-code: 400
+    type: root.Problem
+    docs: Bad Request
+    examples:
+      - value:
+          type: https://example.com/errors/bad-request
+          title: Bad Request
+          status: 400
+          detail: The request is invalid or missing required parameters.
+  UnauthorizedError:
+    status-code: 401
+    type: root.Problem
+    docs: Unauthorized
+    examples:
+      - value:
+          type: https://example.com/errors/unauthorized
+          title: Unauthorized
+          status: 401
+          detail: You do not have the necessary permissions.
+  ForbiddenError:
+    status-code: 403
+    type: root.Problem
+    docs: Forbidden
+    examples:
+      - value:
+          type: https://example.com/errors/forbidden
+          title: Forbidden
+          status: 403
+          detail: Access is forbidden with the provided credentials.
+  TooManyRequestsError:
+    status-code: 429
+    type: root.Problem
+    docs: Too Many Requests
+    examples:
+      - value:
+          type: https://example.com/errors/too-many-requests
+          title: Too Many Requests
+          status: 429
+          detail: You have exceeded the rate limit.
+  InternalServerError:
+    status-code: 500
+    type: root.Problem
+    docs: Internal Server Error
+    examples:
+      - value:
+          type: https://example.com/errors/internal-server-error
+          title: Internal Server Error
+          status: 500
+          detail: An unexpected error occurred.
+  NotFoundError:
+    status-code: 404
+    type: root.Problem
+    docs: Not Found
+    examples:
+      - value:
+          type: https://example.com/errors/not-found
+          title: Not Found
+          status: 404
+          detail: The requested resource was not found.
+  ConflictError:
+    status-code: 409
+    type: root.Problem
+    docs: Conflict
+    examples:
+      - value:
+          type: https://example.com/errors/conflict
+          title: Conflict
+          status: 409
+          detail: There is a conflict with an existing resource.
+types:
   Pet:
     properties:
       id: long
@@ -764,68 +768,84 @@ types:
         "name": "__package__.yml",
         "type": "file",
       },
-    ],
-    "name": "trains",
-    "type": "directory",
-  },
-  {
-    "contents": "types:
+      {
+        "contents": "imports:
+  root: __package__.yml
+types:
   GetStationsResponseLinks:
     properties: {}
+    extends:
+      - root.LinksSelf
+      - root.LinksPagination
     source:
       openapi: openapi/trains/openapi.yml
   GetStationsResponse:
     properties:
-      data: optional<list<unknown>>
+      data: optional<list<root.Station>>
       links: optional<GetStationsResponseLinks>
     source:
       openapi: openapi/trains/openapi.yml
   GetTripsResponseLinks:
     properties: {}
+    extends:
+      - root.LinksSelf
+      - root.LinksPagination
     source:
       openapi: openapi/trains/openapi.yml
   GetTripsResponse:
     properties:
-      data: optional<list<unknown>>
+      data: optional<list<root.Trip>>
       links: optional<GetTripsResponseLinks>
     source:
       openapi: openapi/trains/openapi.yml
   GetBookingsResponseLinks:
     properties: {}
+    extends:
+      - root.LinksSelf
+      - root.LinksPagination
     source:
       openapi: openapi/trains/openapi.yml
   GetBookingsResponse:
     properties:
-      data: optional<list<unknown>>
+      data: optional<list<root.Booking>>
       links: optional<GetBookingsResponseLinks>
     source:
       openapi: openapi/trains/openapi.yml
   CreateBookingResponse:
     properties:
-      links: optional<unknown>
+      links: optional<root.LinksSelf>
+    extends:
+      - root.Booking
     source:
       openapi: openapi/trains/openapi.yml
   GetBookingResponse:
     properties:
-      links: optional<unknown>
+      links: optional<root.LinksSelf>
+    extends:
+      - root.Booking
     source:
       openapi: openapi/trains/openapi.yml
   CreateBookingPaymentResponse:
     properties:
-      links: optional<unknown>
+      links: optional<root.LinksBooking>
+    extends:
+      - root.BookingPayment
     source:
       openapi: openapi/trains/openapi.yml
   NewBookingPayloadLinks:
     properties: {}
+    extends:
+      - root.LinksSelf
+      - root.LinksPagination
     source:
       openapi: openapi/trains/openapi.yml
   NewBookingPayload:
     properties:
       links: optional<NewBookingPayloadLinks>
+    extends:
+      - root.Booking
     source:
       openapi: openapi/trains/openapi.yml
-imports:
-  root: __package__.yml
 service:
   auth: false
   base-path: ''
@@ -981,7 +1001,7 @@ service:
         payment is processed.
       display-name: Create a booking
       request:
-        body: unknown
+        body: root.Booking
       response:
         docs: Booking successful
         type: CreateBookingResponse
@@ -1070,7 +1090,7 @@ service:
           docs: The ID of the booking to pay for.
       display-name: Pay for a Booking
       request:
-        body: unknown
+        body: root.BookingPayment
       response:
         docs: Payment successful
         type: CreateBookingPaymentResponse
@@ -1251,8 +1271,12 @@ webhooks:
       Subscribe to new bookings being created, to update integrations for your
       users.  Related data is available via the links provided in the request.
 ",
-    "name": "trains.yml",
-    "type": "file",
+        "name": "trains.yml",
+        "type": "file",
+      },
+    ],
+    "name": "trains",
+    "type": "directory",
   },
 ]
 `;

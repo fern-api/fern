@@ -77,6 +77,7 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithSource
+      - commons.WithNamespace
     properties:
       sdkName: optional<EndpointSdkName>
       method: WebhookHttpMethod
@@ -148,6 +149,7 @@ types:
       - commons.WithDescription
       - commons.WithAvailability
       - commons.WithSource
+      - commons.WithNamespace
     properties:
       authed: boolean
       internal: optional<boolean>

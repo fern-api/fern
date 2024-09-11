@@ -103,7 +103,10 @@ exports[`float > float > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "float/openapi.yml",
@@ -121,122 +124,124 @@ exports[`float > float > parse open api 1`] = `
     "Response",
   ],
   "schemas": {
-    "Request": {
-      "additionalProperties": false,
-      "allOf": [],
-      "allOfPropertyConflicts": [],
-      "availability": null,
-      "description": "A generic request type used throughout the API.
+    "__no_namespace__": {
+      "Request": {
+        "additionalProperties": false,
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "availability": null,
+        "description": "A generic request type used throughout the API.
 ",
-      "generatedName": "Request",
-      "groupName": [],
-      "nameOverride": null,
-      "properties": [
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "requestId",
-          "key": "id",
-          "nameOverride": null,
-          "schema": {
+        "generatedName": "Request",
+        "groupName": [],
+        "nameOverride": null,
+        "properties": [
+          {
+            "audiences": [],
             "availability": null,
-            "description": null,
+            "conflict": {},
             "generatedName": "requestId",
-            "groupName": [],
+            "key": "id",
             "nameOverride": null,
-            "type": "optional",
-            "value": {
+            "schema": {
               "availability": null,
               "description": null,
-              "generatedName": "RequestId",
+              "generatedName": "requestId",
               "groupName": [],
               "nameOverride": null,
-              "schema": {
-                "type": "float",
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "RequestId",
+                "groupName": [],
+                "nameOverride": null,
+                "schema": {
+                  "type": "float",
+                },
+                "type": "primitive",
               },
-              "type": "primitive",
             },
           },
+        ],
+        "source": {
+          "file": "float/openapi.yml",
+          "type": "openapi",
         },
-      ],
-      "source": {
-        "file": "float/openapi.yml",
-        "type": "openapi",
+        "type": "object",
       },
-      "type": "object",
-    },
-    "Response": {
-      "additionalProperties": false,
-      "allOf": [],
-      "allOfPropertyConflicts": [],
-      "availability": null,
-      "description": "A generic response type used throughout the API.
+      "Response": {
+        "additionalProperties": false,
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "availability": null,
+        "description": "A generic response type used throughout the API.
 ",
-      "generatedName": "Response",
-      "groupName": [],
-      "nameOverride": null,
-      "properties": [
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "responseId",
-          "key": "id",
-          "nameOverride": null,
-          "schema": {
+        "generatedName": "Response",
+        "groupName": [],
+        "nameOverride": null,
+        "properties": [
+          {
+            "audiences": [],
             "availability": null,
-            "description": null,
+            "conflict": {},
             "generatedName": "responseId",
-            "groupName": [],
+            "key": "id",
             "nameOverride": null,
-            "type": "optional",
-            "value": {
+            "schema": {
               "availability": null,
               "description": null,
-              "generatedName": "ResponseId",
+              "generatedName": "responseId",
               "groupName": [],
               "nameOverride": null,
-              "schema": {
-                "type": "float",
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "ResponseId",
+                "groupName": [],
+                "nameOverride": null,
+                "schema": {
+                  "type": "float",
+                },
+                "type": "primitive",
               },
-              "type": "primitive",
             },
           },
-        },
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "responseValue",
-          "key": "value",
-          "nameOverride": null,
-          "schema": {
+          {
+            "audiences": [],
             "availability": null,
-            "description": null,
+            "conflict": {},
             "generatedName": "responseValue",
-            "groupName": [],
+            "key": "value",
             "nameOverride": null,
-            "type": "optional",
-            "value": {
+            "schema": {
               "availability": null,
               "description": null,
-              "generatedName": "ResponseValue",
+              "generatedName": "responseValue",
               "groupName": [],
               "nameOverride": null,
-              "schema": {
-                "type": "float",
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "ResponseValue",
+                "groupName": [],
+                "nameOverride": null,
+                "schema": {
+                  "type": "float",
+                },
+                "type": "primitive",
               },
-              "type": "primitive",
             },
           },
+        ],
+        "source": {
+          "file": "float/openapi.yml",
+          "type": "openapi",
         },
-      ],
-      "source": {
-        "file": "float/openapi.yml",
-        "type": "openapi",
+        "type": "object",
       },
-      "type": "object",
     },
   },
   "securitySchemes": {},

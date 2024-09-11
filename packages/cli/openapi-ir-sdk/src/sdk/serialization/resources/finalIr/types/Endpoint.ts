@@ -21,6 +21,7 @@ import { Pagination } from "./Pagination";
 import { WithDescription } from "../../commons/types/WithDescription";
 import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithSource } from "../../commons/types/WithSource";
+import { WithNamespace } from "../../commons/types/WithNamespace";
 
 export const Endpoint: core.serialization.ObjectSchema<serializers.Endpoint.Raw, FernOpenapiIr.Endpoint> =
     core.serialization
@@ -49,10 +50,11 @@ export const Endpoint: core.serialization.ObjectSchema<serializers.Endpoint.Raw,
         })
         .extend(WithDescription)
         .extend(WithAvailability)
-        .extend(WithSource);
+        .extend(WithSource)
+        .extend(WithNamespace);
 
 export declare namespace Endpoint {
-    interface Raw extends WithDescription.Raw, WithAvailability.Raw, WithSource.Raw {
+    interface Raw extends WithDescription.Raw, WithAvailability.Raw, WithSource.Raw, WithNamespace.Raw {
         authed: boolean;
         internal?: boolean | null;
         idempotent?: boolean | null;

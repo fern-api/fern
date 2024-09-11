@@ -56,6 +56,7 @@ export class OpenApiIrConverterContext {
         const noNamespaceSentinel: NoNamespaceSentinel = "__no_namespace__";
         const namespaceKey = namespace == null ? noNamespaceSentinel : namespace;
         const namespaceSchemas = this.ir.schemas[namespaceKey];
+        this.logger.info(`Looking for schema ${id} in namespace ${namespaceKey}`);
         return namespaceSchemas?.[id];
     }
 

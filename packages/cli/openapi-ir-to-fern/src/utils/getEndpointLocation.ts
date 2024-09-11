@@ -1,8 +1,11 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Endpoint, HttpMethod } from "@fern-api/openapi-ir-sdk";
 import { camelCase, compact, isEqual } from "lodash-es";
-import { convertSdkGroupNameToFileWithoutExtension } from "./convertSdkGroupName";
+import {
+    convertEndpointSdkNameToFileWithoutExtension,
+    convertSdkGroupNameToFileWithoutExtension
+} from "./convertSdkGroupName";
 
 export interface EndpointLocation {
     file: RelativeFilePath;
@@ -10,20 +13,24 @@ export interface EndpointLocation {
     tag?: string;
 }
 
-export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
-    const tag = endpoint.tags[0];
-    if (endpoint.sdkName != null) {
-        const filenameWithoutExtension = convertSdkGroupNameToFileWithoutExtension(endpoint.sdkName.groupName);
-        const filename = `${filenameWithoutExtension}.yml`;
-        // only if the tag lines up with `x-fern-sdk-group-name` do we use it
-        const isTagApplicable = filenameWithoutExtension.toLowerCase() === tag?.toLowerCase().replaceAll(" ", "");
+function resolveEndpointLocationWithNamespaceOverride({
+    location,
+    namespaceOverride
+}: {
+    location: EndpointLocation;
+    namespaceOverride: string | undefined;
+}): EndpointLocation {
+    if (namespaceOverride != null) {
         return {
-            file: RelativeFilePath.of(filename),
-            endpointId: endpoint.sdkName.methodName,
-            // only if the tag lines up with `x-fern-sdk-group-name` do we use it
-            tag: isTagApplicable ? tag : undefined
+            ...location,
+            file: join(RelativeFilePath.of(namespaceOverride), location.file)
         };
     }
+    return location;
+}
+
+function getUnresolvedEndpointLocation(endpoint: Endpoint): EndpointLocation {
+    const tag = endpoint.tags[0];
     const operationId = endpoint.operationId;
 
     if (operationId == null) {
@@ -108,6 +115,30 @@ export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
         endpointId: camelCase(operationIdTokens.slice(fileParts.length).join("_")),
         tag
     };
+}
+
+export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
+    const tag = endpoint.tags[0];
+    if (endpoint.sdkName != null) {
+        const filenameWithoutExtension = convertEndpointSdkNameToFileWithoutExtension({
+            sdkName: endpoint.sdkName,
+            namespaceOverride: endpoint.namespace
+        });
+        const filename = `${filenameWithoutExtension}.yml`;
+        // only if the tag lines up with `x-fern-sdk-group-name` do we use it
+        const isTagApplicable = filenameWithoutExtension.toLowerCase() === tag?.toLowerCase().replaceAll(" ", "");
+        return {
+            file: RelativeFilePath.of(filename),
+            endpointId: endpoint.sdkName.methodName,
+            // only if the tag lines up with `x-fern-sdk-group-name` do we use it
+            tag: isTagApplicable ? tag : undefined
+        };
+    }
+
+    return resolveEndpointLocationWithNamespaceOverride({
+        namespaceOverride: endpoint.namespace,
+        location: getUnresolvedEndpointLocation(endpoint)
+    });
 }
 
 export function tokenizeString(input: string): string[] {

@@ -13,74 +13,76 @@ exports[`open api parser > gen-yml-make-undisc-unions > parse open api 1`] = `
   "idempotencyHeaders": [],
   "nonRequestReferencedSchemas": [],
   "schemas": {
-    "UnionJob": {
-      "type": "oneOf",
-      "value": {
-        "availability": null,
-        "description": null,
-        "encoding": null,
-        "generatedName": "UnionJob",
-        "groupName": [],
-        "nameOverride": null,
-        "schemas": [
-          {
-            "availability": null,
-            "description": null,
-            "generatedName": "ComponentsSchemasUnionJobJobEmbeddingGeneration",
-            "groupName": null,
-            "nameOverride": null,
-            "schema": "UnionJob_Job<EmbeddingGeneration>",
-            "source": {
-              "file": "gen-yml-make-undisc-unions/openapi.json",
-              "type": "openapi",
+    "__no_namespace__": {
+      "UnionJob": {
+        "type": "oneOf",
+        "value": {
+          "availability": null,
+          "description": null,
+          "encoding": null,
+          "generatedName": "UnionJob",
+          "groupName": [],
+          "nameOverride": null,
+          "schemas": [
+            {
+              "availability": null,
+              "description": null,
+              "generatedName": "ComponentsSchemasUnionJobJobEmbeddingGeneration",
+              "groupName": null,
+              "nameOverride": null,
+              "schema": "UnionJob_Job<EmbeddingGeneration>",
+              "source": {
+                "file": "gen-yml-make-undisc-unions/openapi.json",
+                "type": "openapi",
+              },
+              "type": "reference",
             },
-            "type": "reference",
-          },
-          {
-            "availability": null,
-            "description": null,
-            "generatedName": "ComponentsSchemasUnionJobJobInference",
-            "groupName": null,
-            "nameOverride": null,
-            "schema": "UnionJob_Job<Inference>",
-            "source": {
-              "file": "gen-yml-make-undisc-unions/openapi.json",
-              "type": "openapi",
+            {
+              "availability": null,
+              "description": null,
+              "generatedName": "ComponentsSchemasUnionJobJobInference",
+              "groupName": null,
+              "nameOverride": null,
+              "schema": "UnionJob_Job<Inference>",
+              "source": {
+                "file": "gen-yml-make-undisc-unions/openapi.json",
+                "type": "openapi",
+              },
+              "type": "reference",
             },
-            "type": "reference",
-          },
-          {
-            "availability": null,
-            "description": null,
-            "generatedName": "ComponentsSchemasUnionJobJobTlInference",
-            "groupName": null,
-            "nameOverride": null,
-            "schema": "UnionJob_Job<TlInference>",
-            "source": {
-              "file": "gen-yml-make-undisc-unions/openapi.json",
-              "type": "openapi",
+            {
+              "availability": null,
+              "description": null,
+              "generatedName": "ComponentsSchemasUnionJobJobTlInference",
+              "groupName": null,
+              "nameOverride": null,
+              "schema": "UnionJob_Job<TlInference>",
+              "source": {
+                "file": "gen-yml-make-undisc-unions/openapi.json",
+                "type": "openapi",
+              },
+              "type": "reference",
             },
-            "type": "reference",
-          },
-          {
-            "availability": null,
-            "description": null,
-            "generatedName": "ComponentsSchemasUnionJobJobTraining",
-            "groupName": null,
-            "nameOverride": null,
-            "schema": "UnionJob_Job<Training>",
-            "source": {
-              "file": "gen-yml-make-undisc-unions/openapi.json",
-              "type": "openapi",
+            {
+              "availability": null,
+              "description": null,
+              "generatedName": "ComponentsSchemasUnionJobJobTraining",
+              "groupName": null,
+              "nameOverride": null,
+              "schema": "UnionJob_Job<Training>",
+              "source": {
+                "file": "gen-yml-make-undisc-unions/openapi.json",
+                "type": "openapi",
+              },
+              "type": "reference",
             },
-            "type": "reference",
+          ],
+          "source": {
+            "file": "gen-yml-make-undisc-unions/openapi.json",
+            "type": "openapi",
           },
-        ],
-        "source": {
-          "file": "gen-yml-make-undisc-unions/openapi.json",
-          "type": "openapi",
+          "type": "undisciminated",
         },
-        "type": "undisciminated",
       },
     },
   },

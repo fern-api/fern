@@ -26,3 +26,4 @@ export * from "./Namespace";
 export * from "./SdkGroup";
 export * from "./SdkGroupName";
 export * from "./WithSdkGroupName";
+export * from "./WithNamespace";

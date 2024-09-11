@@ -15,6 +15,7 @@ import { convertFullExample } from "./utils/convertFullExample";
 import { convertToHttpMethod } from "./utils/convertToHttpMethod";
 import { getDocsFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 import { getEndpointNamespace } from "./utils/getNamespaceFromGroup";
+import { resolveLocationWithNamespace } from "./utils/convertSdkGroupName";
 
 export interface ConvertedEndpoint {
     value: RawSchemas.HttpEndpointSchema;
@@ -38,7 +39,7 @@ export function buildEndpoint({
 
     let path = endpoint.path;
 
-    const maybeEndpointNamespace = getEndpointNamespace(endpoint.sdkName);
+    const maybeEndpointNamespace = getEndpointNamespace(endpoint.sdkName, endpoint.namespace);
 
     const pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> = {};
     for (const pathParameter of endpoint.pathParameters) {
@@ -273,7 +274,12 @@ export function buildEndpoint({
             errorDeclaration.docs = httpError.description;
         }
 
-        context.builder.addError(ERROR_DECLARATIONS_FILENAME, {
+        const errorDeclarationFile = resolveLocationWithNamespace({
+            location: ERROR_DECLARATIONS_FILENAME,
+            namespaceOverride: maybeEndpointNamespace
+        });
+
+        context.builder.addError(errorDeclarationFile, {
             name: errorName,
             schema: errorDeclaration
         });
@@ -283,7 +289,7 @@ export function buildEndpoint({
         }
         const prefix = context.builder.addImport({
             file: declarationFile,
-            fileToImport: ERROR_DECLARATIONS_FILENAME
+            fileToImport: errorDeclarationFile
         });
         convertedEndpoint.errors.push(prefix != null ? `${prefix}.${errorName}` : errorName);
 
@@ -296,7 +302,7 @@ export function buildEndpoint({
                     docs: example.description
                 };
 
-                context.builder.addErrorExample(ERROR_DECLARATIONS_FILENAME, {
+                context.builder.addErrorExample(errorDeclarationFile, {
                     name: errorName,
                     example: convertedExample
                 });

@@ -134,7 +134,10 @@ exports[`x-fern-audiences > x-fern-audiences > parse open api 1`] = `
       },
       "requestNameOverride": null,
       "response": null,
-      "sdkName": null,
+      "sdkName": {
+        "groupName": [],
+        "methodName": undefined,
+      },
       "server": [],
       "source": {
         "file": "x-fern-audiences/openapi.yml",
@@ -150,56 +153,58 @@ exports[`x-fern-audiences > x-fern-audiences > parse open api 1`] = `
   "idempotencyHeaders": [],
   "nonRequestReferencedSchemas": [],
   "schemas": {
-    "BaseUser": {
-      "additionalProperties": false,
-      "allOf": [],
-      "allOfPropertyConflicts": [],
-      "availability": null,
-      "description": null,
-      "generatedName": "BaseUser",
-      "groupName": [],
-      "nameOverride": null,
-      "properties": [
-        {
-          "audiences": [
-            "public",
-          ],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "baseUserId",
-          "key": "id",
-          "nameOverride": null,
-          "schema": {
+    "__no_namespace__": {
+      "BaseUser": {
+        "additionalProperties": false,
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "availability": null,
+        "description": null,
+        "generatedName": "BaseUser",
+        "groupName": [],
+        "nameOverride": null,
+        "properties": [
+          {
+            "audiences": [
+              "public",
+            ],
             "availability": null,
-            "description": null,
+            "conflict": {},
             "generatedName": "baseUserId",
-            "groupName": [],
+            "key": "id",
             "nameOverride": null,
-            "type": "optional",
-            "value": {
+            "schema": {
               "availability": null,
               "description": null,
-              "generatedName": "BaseUserId",
+              "generatedName": "baseUserId",
               "groupName": [],
               "nameOverride": null,
-              "schema": {
-                "default": null,
-                "format": "uuid",
-                "maxLength": null,
-                "minLength": null,
-                "pattern": null,
-                "type": "string",
+              "type": "optional",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "BaseUserId",
+                "groupName": [],
+                "nameOverride": null,
+                "schema": {
+                  "default": null,
+                  "format": "uuid",
+                  "maxLength": null,
+                  "minLength": null,
+                  "pattern": null,
+                  "type": "string",
+                },
+                "type": "primitive",
               },
-              "type": "primitive",
             },
           },
+        ],
+        "source": {
+          "file": "x-fern-audiences/openapi.yml",
+          "type": "openapi",
         },
-      ],
-      "source": {
-        "file": "x-fern-audiences/openapi.yml",
-        "type": "openapi",
+        "type": "object",
       },
-      "type": "object",
     },
   },
   "securitySchemes": {},
