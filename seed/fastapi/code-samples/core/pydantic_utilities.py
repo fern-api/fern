@@ -85,8 +85,10 @@ class UniversalBaseModel(pydantic.BaseModel):
             protected_namespaces=(),
         )  # type: ignore # Pydantic v2
 
-        @pydantic.model_serializer()
-        def serialize_model(self, handler) -> typing.Any:
+        @pydantic.model_serializer(mode="wrap")
+        def serialize_model(
+            self, handler: pydantic.SerializerFunctionWrapHandler
+        ) -> typing.Any:
             serialized = handler(self)
             data = {
                 k: serialize_datetime(v) if isinstance(v, dt.datetime) else v
@@ -227,11 +229,11 @@ def encode_by_type(o: typing.Any) -> typing.Any:
             return encoder(o)
 
 
-def update_forward_refs(model: typing.Type["Model"]) -> None:
+def update_forward_refs(model: typing.Type["Model"], **localns: typing.Any) -> None:
     if IS_PYDANTIC_V2:
         model.model_rebuild(raise_errors=False)  # type: ignore # Pydantic v2
     else:
-        model.update_forward_refs()
+        model.update_forward_refs(**localns)
 
 
 # Mirrors Pydantic's internal typing
