@@ -32,7 +32,7 @@ export abstract class AbstractGeneratorContext {
             }
         });
 
-        this.version = this.config.output?.mode._visit({
+        this.version = config?.output?.mode?._visit({
             downloadFiles: () => undefined,
             github: (github) => github.version,
             publish: (publish) => publish.version,
