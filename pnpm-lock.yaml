@@ -4245,8 +4245,8 @@ importers:
         specifier: workspace:*
         version: link:../../../../commons/logging-execa
       '@fern-api/sdk':
-        specifier: 0.12.2
-        version: 0.12.2
+        specifier: 0.12.3
+        version: 0.12.3
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../../task-context
@@ -6678,8 +6678,8 @@ packages:
   '@fern-api/fdr-sdk@0.108.0-dcb0f740c':
     resolution: {integrity: sha512-gqTfYDtwsgAcdmJYXS4+PA4kxjvgu5rClG2Tcv531UUM5Mia2fql82irSyFwOY1b8wGHJmDIHcsSiEyXVBc08Q==}
 
-  '@fern-api/sdk@0.12.2':
-    resolution: {integrity: sha512-uLb0eI6+n+leDw0GF4qM0vpmcRejP2CNEf5yf/Cd2si/uvq7/aLkdwsr3kX3QhvAyhiVaTuRR0ssQ8SNr9OQsA==}
+  '@fern-api/sdk@0.12.3':
+    resolution: {integrity: sha512-sexxpQEHBmsAXW3UHo5x7NW8Z9TrHWYLGo/J7eFqHYSH8Sq9LA3vRlR0ni9h4FNlKnPDu9Y55L0BhsQVXYqPKA==}
 
   '@fern-api/template-resolver@0.7.5':
     resolution: {integrity: sha512-hmvSxuhyWMjn1DxJJS/R+CIaZcF5c+UBEyFqFOw+laoBtdDvNgEyCu7XP5cILVMABPHmt7kkIO5KbrsCS5S2kw==}
@@ -13755,7 +13755,7 @@ snapshots:
       - encoding
       - typescript
 
-  '@fern-api/sdk@0.12.2':
+  '@fern-api/sdk@0.12.3':
     dependencies:
       '@fern-api/template-resolver': 0.7.5
       form-data: 4.0.0

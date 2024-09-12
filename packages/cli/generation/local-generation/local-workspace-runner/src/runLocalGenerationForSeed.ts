@@ -11,8 +11,7 @@ import chalk from "chalk";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator";
 import { getWorkspaceTempDir } from "./runLocalGenerationForWorkspace";
 import { readFile } from "fs/promises";
-import { SnippetRegistryEntry } from "@fern-api/sdk/api";
-import { Template } from "@fern-api/sdk/wrapper/Template";
+import { Fern, Template } from "@fern-api/sdk";
 import { HttpEndpoint } from "@fern-api/ir-sdk";
 import { writeFile } from "fs/promises";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
@@ -123,13 +122,13 @@ export async function writeResolvedSnippetsJson({
     ir: IntermediateRepresentation;
     generatorInvocation: generatorsYml.GeneratorInvocation;
 }): Promise<void> {
-    const endpointSnippetTemplates: Record<string, SnippetRegistryEntry> = {};
+    const endpointSnippetTemplates: Record<string, Fern.SnippetRegistryEntry> = {};
     if (absolutePathToLocalSnippetTemplateJSON != null) {
         const contents = (await readFile(absolutePathToLocalSnippetTemplateJSON)).toString();
         const parsed = JSON.parse(contents);
         if (Array.isArray(parsed)) {
             for (const template of parsed) {
-                const entry: SnippetRegistryEntry = template;
+                const entry: Fern.SnippetRegistryEntry = template;
                 if (entry.endpointId.identifierOverride != null) {
                     endpointSnippetTemplates[entry.endpointId.identifierOverride] = entry;
                 }
