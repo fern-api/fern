@@ -2,6 +2,7 @@
 
 namespace <%= namespace%>;
 
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Utils;
 use InvalidArgumentException;
@@ -12,10 +13,12 @@ use Psr\Http\Message\StreamInterface;
 class RawClient
 {
     /**
-     * @param ClientOptions $clientOptions The client options used to make requests.
+     * @param ClientInterface $client The HTTP client used to make requests.
+     * @param array<string, string> $headers The HTTP headers sent with the request.
      */
     public function __construct(
-        private readonly ClientOptions $clientOptions = new ClientOptions(),
+        private readonly ClientInterface $client,
+        private readonly array $headers = [],
     ) {
     }
 
@@ -26,7 +29,7 @@ class RawClient
         BaseApiRequest $request,
     ): ResponseInterface {
         $httpRequest = $this->buildRequest($request);
-        return $this->clientOptions->httpClient->send($httpRequest);
+        return $this->client->send($httpRequest);
     }
 
     private function buildRequest(
@@ -52,7 +55,7 @@ class RawClient
         return match (get_class($request)) {
             JsonApiRequest::class => array_merge(
                 ["Content-Type" => "application/json"],
-                $this->clientOptions->headers,
+                $this->headers,
                 $request->headers
             ),
             default => throw new InvalidArgumentException('Unsupported request type: ' . get_class($request)),

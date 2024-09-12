@@ -9,7 +9,6 @@ use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Seed\Core\BaseApiRequest;
-use Seed\Core\ClientOptions;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use Seed\Core\RawClient;
@@ -25,8 +24,7 @@ class RawClientTest extends TestCase
         $this->mockHandler = new MockHandler();
         $handlerStack = HandlerStack::create($this->mockHandler);
         $client = new Client(['handler' => $handlerStack]);
-        $clientOptions = new ClientOptions($client);
-        $this->rawClient = new RawClient($clientOptions);
+        $this->rawClient = new RawClient($client);
     }
 
     public function testHeaders(): void

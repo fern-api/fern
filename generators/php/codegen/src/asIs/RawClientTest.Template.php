@@ -9,10 +9,10 @@ use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use <%= coreNamespace%>\BaseApiRequest;
-use <%= coreNamespace%>\ClientOptions;
 use <%= coreNamespace%>\JsonApiRequest;
 use <%= coreNamespace%>\HttpMethod;
 use <%= coreNamespace%>\RawClient;
+
 
 class RawClientTest extends TestCase
 {
@@ -25,8 +25,7 @@ class RawClientTest extends TestCase
         $this->mockHandler = new MockHandler();
         $handlerStack = HandlerStack::create($this->mockHandler);
         $client = new Client(['handler' => $handlerStack]);
-        $clientOptions = new ClientOptions($client);
-        $this->rawClient = new RawClient($clientOptions);
+        $this->rawClient = new RawClient($client);
     }
 
     public function testHeaders(): void

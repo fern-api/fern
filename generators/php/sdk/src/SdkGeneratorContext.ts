@@ -20,13 +20,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     public getCoreAsIsFiles(): string[] {
-        return [
-            AsIsFiles.BaseApiRequest,
-            AsIsFiles.ClientOptions,
-            AsIsFiles.HttpMethod,
-            AsIsFiles.JsonApiRequest,
-            AsIsFiles.RawClient
-        ];
+        return [AsIsFiles.BaseApiRequest, AsIsFiles.HttpMethod, AsIsFiles.JsonApiRequest, AsIsFiles.RawClient];
     }
 
     public getCoreTestAsIsFiles(): string[] {
