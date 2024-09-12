@@ -862,6 +862,8 @@
                         "shape": {
                             "_type": "noProperties"
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     },
                     {
@@ -890,6 +892,8 @@
                         "shape": {
                             "_type": "noProperties"
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     }
                 ]

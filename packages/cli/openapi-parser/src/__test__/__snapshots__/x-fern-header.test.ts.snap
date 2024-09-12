@@ -42,6 +42,7 @@ exports[`x-fern-header > x-fern-header > parse open api 1`] = `
               "pattern": null,
               "type": "string",
             },
+            "title": null,
             "type": "primitive",
           },
           "source": {
@@ -81,6 +82,7 @@ exports[`x-fern-header > x-fern-header > parse open api 1`] = `
                 "generatedName": "UserGetStreamRequestStream",
                 "groupName": [],
                 "nameOverride": null,
+                "title": null,
                 "type": "literal",
                 "value": {
                   "type": "boolean",
@@ -93,6 +95,7 @@ exports[`x-fern-header > x-fern-header > parse open api 1`] = `
             "file": "x-fern-header/openapi.yml",
             "type": "openapi",
           },
+          "title": null,
           "type": "object",
         },
         "source": {
@@ -116,6 +119,7 @@ exports[`x-fern-header > x-fern-header > parse open api 1`] = `
             "file": "x-fern-header/openapi.yml",
             "type": "openapi",
           },
+          "title": null,
           "type": "reference",
         },
         "source": {
@@ -226,6 +230,7 @@ exports[`x-fern-header > x-fern-header > parse open api 1`] = `
               "pattern": null,
               "type": "string",
             },
+            "title": null,
             "type": "primitive",
           },
           "source": {
@@ -265,6 +270,7 @@ exports[`x-fern-header > x-fern-header > parse open api 1`] = `
                 "generatedName": "UserGetRequestStream",
                 "groupName": [],
                 "nameOverride": null,
+                "title": null,
                 "type": "literal",
                 "value": {
                   "type": "boolean",
@@ -277,6 +283,7 @@ exports[`x-fern-header > x-fern-header > parse open api 1`] = `
             "file": "x-fern-header/openapi.yml",
             "type": "openapi",
           },
+          "title": null,
           "type": "object",
         },
         "source": {
@@ -300,6 +307,7 @@ exports[`x-fern-header > x-fern-header > parse open api 1`] = `
             "file": "x-fern-header/openapi.yml",
             "type": "openapi",
           },
+          "title": null,
           "type": "reference",
         },
         "source": {
@@ -355,6 +363,7 @@ exports[`x-fern-header > x-fern-header > parse open api 1`] = `
             "generatedName": "streamUserId",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "availability": null,
@@ -370,6 +379,7 @@ exports[`x-fern-header > x-fern-header > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -387,6 +397,7 @@ exports[`x-fern-header > x-fern-header > parse open api 1`] = `
             "generatedName": "streamUserStreamed",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "availability": null,
@@ -394,6 +405,7 @@ exports[`x-fern-header > x-fern-header > parse open api 1`] = `
               "generatedName": "StreamUserStreamed",
               "groupName": null,
               "nameOverride": null,
+              "title": null,
               "type": "literal",
               "value": {
                 "type": "boolean",
@@ -407,6 +419,7 @@ exports[`x-fern-header > x-fern-header > parse open api 1`] = `
         "file": "x-fern-header/openapi.yml",
         "type": "openapi",
       },
+      "title": null,
       "type": "object",
     },
     "User": {
@@ -432,6 +445,7 @@ exports[`x-fern-header > x-fern-header > parse open api 1`] = `
             "generatedName": "userId",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "availability": null,
@@ -447,6 +461,7 @@ exports[`x-fern-header > x-fern-header > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -464,6 +479,7 @@ exports[`x-fern-header > x-fern-header > parse open api 1`] = `
             "generatedName": "userStreamed",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "availability": null,
@@ -471,6 +487,7 @@ exports[`x-fern-header > x-fern-header > parse open api 1`] = `
               "generatedName": "UserStreamed",
               "groupName": null,
               "nameOverride": null,
+              "title": null,
               "type": "literal",
               "value": {
                 "type": "boolean",
@@ -484,6 +501,7 @@ exports[`x-fern-header > x-fern-header > parse open api 1`] = `
         "file": "x-fern-header/openapi.yml",
         "type": "openapi",
       },
+      "title": null,
       "type": "object",
     },
   },

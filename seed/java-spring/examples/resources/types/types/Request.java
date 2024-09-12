@@ -13,7 +13,6 @@ import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
@@ -56,7 +55,7 @@ public final class Request {
   }
 
   public interface RequestStage {
-    _FinalStage request(@NotNull Object request);
+    _FinalStage request(Object request);
 
     Builder from(Request other);
   }
@@ -82,8 +81,8 @@ public final class Request {
 
     @java.lang.Override
     @JsonSetter("request")
-    public _FinalStage request(@NotNull Object request) {
-      this.request = Objects.requireNonNull(request, "request must not be null");
+    public _FinalStage request(Object request) {
+      this.request = request;
       return this;
     }
 

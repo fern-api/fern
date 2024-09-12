@@ -12442,6 +12442,7 @@ exports[`open api parser > deel > docs 1`] = `
         },
       },
       "HrisDirectEmployeeContract": {
+        "availability": undefined,
         "base-properties": {},
         "discriminant": "employment_type",
         "docs": undefined,
@@ -13884,6 +13885,7 @@ exports[`open api parser > deel > docs 1`] = `
         "docs": undefined,
         "properties": {
           "contract_id": {
+            "display-name": "The worker for the payment",
             "docs": "The worker's Deel contract Id.",
             "type": "optional<string>",
           },
@@ -25103,6 +25105,7 @@ exports[`open api parser > deel > simple 1`] = `
         },
       },
       "HrisDirectEmployeeContract": {
+        "availability": undefined,
         "base-properties": {},
         "discriminant": "employment_type",
         "docs": undefined,
@@ -26545,6 +26548,7 @@ exports[`open api parser > deel > simple 1`] = `
         "docs": undefined,
         "properties": {
           "contract_id": {
+            "display-name": "The worker for the payment",
             "docs": "The worker's Deel contract Id.",
             "type": "optional<string>",
           },

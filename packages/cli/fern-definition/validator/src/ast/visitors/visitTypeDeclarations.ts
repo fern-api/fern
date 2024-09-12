@@ -155,7 +155,9 @@ export async function visitTypeDeclaration({
                                     if (typeof type === "string") {
                                         await visitTypeReference(type, [...nodePathForType, "type"]);
                                     }
-                                }
+                                },
+                                ["display-name"]: noop,
+                                availability: noop
                             });
                         }
                     }

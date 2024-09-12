@@ -2322,6 +2322,8 @@
                             },
                             "typeId": "type_service:User"
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     },
                     {
@@ -2413,6 +2415,8 @@
                             },
                             "typeId": "type_service:Organization"
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     }
                 ]

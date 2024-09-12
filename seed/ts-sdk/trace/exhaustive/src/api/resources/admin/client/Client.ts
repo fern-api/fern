@@ -94,7 +94,7 @@ export class Admin {
      * @example
      *     await client.admin.sendTestSubmissionUpdate(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), {
      *         updateTime: "2024-01-15T09:30:00Z",
-     *         updateInfo: SeedTrace.TestSubmissionUpdateInfo.running(SeedTrace.RunningSubmissionState.QueueingSubmission)
+     *         updateInfo: SeedTrace.TestSubmissionUpdateInfo.running("QUEUEING_SUBMISSION")
      *     })
      */
     public async sendTestSubmissionUpdate(
@@ -207,7 +207,7 @@ export class Admin {
      * @example
      *     await client.admin.sendWorkspaceSubmissionUpdate(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), {
      *         updateTime: "2024-01-15T09:30:00Z",
-     *         updateInfo: SeedTrace.WorkspaceSubmissionUpdateInfo.running(SeedTrace.RunningSubmissionState.QueueingSubmission)
+     *         updateInfo: SeedTrace.WorkspaceSubmissionUpdateInfo.running("QUEUEING_SUBMISSION")
      *     })
      */
     public async sendWorkspaceSubmissionUpdate(

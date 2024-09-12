@@ -1,5 +1,27 @@
 - changelogEntry:
   - summary: |
+      Adds availability and display-names to discriminated union values. Now, in your docs, you can mark your union values
+      with custom names and show their availability. You can do so by adding the following to your API definition:
+      ```yml
+      MyUnionType:
+        union:
+          UnionValue1:
+            docs: The first union value
+            type: string
+            display-name: Union Value One
+            availability: beta
+          UnionValue2:
+            docs: The second union value
+            type: integer
+            display-name: Union Value Two
+            availability: deprecated
+      ```
+    type: feat
+  irVersion: 53
+  version: 0.41.10
+
+- changelogEntry:
+  - summary: |
       Adds a `bundle-path` hidden parameter for `fern docs dev` for use with `fern-platform` testing. You can pass the
       path on the command line as an optional parameter.
     type: internal

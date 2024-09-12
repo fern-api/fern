@@ -82,6 +82,7 @@ function getScopes(oauthSecurityScheme: OpenAPIV3.OAuth2SecurityScheme, source: 
         const schemaWithExample = convertEnum({
             nameOverride: undefined,
             generatedName: "OauthScope",
+            title: undefined,
             enumValues: Object.keys(scopes),
             fernEnum: Object.fromEntries(
                 Object.entries(scopes).map(([scope, description]) => {

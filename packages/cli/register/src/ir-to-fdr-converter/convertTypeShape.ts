@@ -55,6 +55,9 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
                     return {
                         description: variant.docs ?? undefined,
                         discriminantValue: variant.discriminantValue.wireValue,
+                        displayName: variant.displayName,
+                        availability:
+                            variant.availability != null ? convertIrAvailability(variant.availability) : undefined,
                         additionalProperties:
                             Ir.types.SingleUnionTypeProperties._visit<FdrCjsSdk.api.v1.register.ObjectType>(
                                 variant.shape,

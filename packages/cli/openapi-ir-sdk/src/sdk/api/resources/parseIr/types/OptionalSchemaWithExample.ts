@@ -8,6 +8,7 @@ export interface OptionalSchemaWithExample
     extends FernOpenapiIr.WithSdkGroupName,
         FernOpenapiIr.WithName,
         FernOpenapiIr.WithDescription,
-        FernOpenapiIr.WithAvailability {
+        FernOpenapiIr.WithAvailability,
+        FernOpenapiIr.WithTitle {
     value: FernOpenapiIr.SchemaWithExample;
 }

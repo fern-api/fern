@@ -38,7 +38,7 @@ export class Sysprop {
      * @param {Sysprop.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.sysprop.setNumWarmInstances(SeedTrace.Language.Java, 1)
+     *     await client.sysprop.setNumWarmInstances("JAVA", 1)
      */
     public async setNumWarmInstances(
         language: SeedTrace.Language,

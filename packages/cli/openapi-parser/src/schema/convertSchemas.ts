@@ -117,6 +117,7 @@ export function convertReferenceObject(
         : SchemaWithExample.reference(convertToReferencedSchema(schema, breadcrumbs, source));
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
+            title: undefined,
             nameOverride: undefined,
             generatedName: getGeneratedTypeName(breadcrumbs),
             value: referenceSchema,
@@ -165,6 +166,7 @@ export function convertSchemaObject(
     groupName = context.resolveGroupName(groupName);
 
     const generatedName = getGeneratedTypeName(breadcrumbs);
+    const title = schema.title;
     const description = schema.description;
     const availability = convertAvailability(schema);
 
@@ -182,7 +184,7 @@ export function convertSchemaObject(
         );
     }
 
-    const fernSchema = getFernTypeExtension({ schema, description, nameOverride, generatedName, availability });
+    const fernSchema = getFernTypeExtension({ schema, description, title, nameOverride, generatedName, availability });
     if (fernSchema != null) {
         return fernSchema;
     }
@@ -211,6 +213,7 @@ export function convertSchemaObject(
             return wrapPrimitive({
                 nameOverride,
                 generatedName,
+                title,
                 primitive: PrimitiveSchemaValueWithExample.string({
                     default: getDefaultAsString(schema),
                     minLength: schema.minLength,
@@ -232,6 +235,7 @@ export function convertSchemaObject(
             return convertLiteral({
                 nameOverride,
                 generatedName,
+                title,
                 wrapAsNullable,
                 value: schema.enum[0],
                 description,
@@ -243,6 +247,7 @@ export function convertSchemaObject(
         return convertEnum({
             nameOverride,
             generatedName,
+            title,
             fernEnum,
             enumVarNames: getExtension<string[]>(schema, [OpenAPIExtension.ENUM_VAR_NAMES]),
             enumValues: schema.enum,
@@ -264,6 +269,7 @@ export function convertSchemaObject(
             return SchemaWithExample.nullable({
                 nameOverride,
                 generatedName,
+                title,
                 value: convertSchemaObject(
                     {
                         ...schema,
@@ -287,6 +293,7 @@ export function convertSchemaObject(
             return SchemaWithExample.nullable({
                 nameOverride,
                 generatedName,
+                title,
                 value: convertSchemaObject(
                     {
                         ...schema,
@@ -324,6 +331,7 @@ export function convertSchemaObject(
         return convertUndiscriminatedOneOf({
             nameOverride,
             generatedName,
+            title,
             breadcrumbs,
             description,
             availability,
@@ -344,6 +352,7 @@ export function convertSchemaObject(
             return wrapLiteral({
                 nameOverride,
                 generatedName,
+                title,
                 literal: LiteralSchemaValue.boolean(literalValue),
                 wrapAsNullable,
                 description,
@@ -354,6 +363,7 @@ export function convertSchemaObject(
         return wrapPrimitive({
             nameOverride,
             generatedName,
+            title,
             primitive: PrimitiveSchemaValueWithExample.boolean({
                 default: schema.default,
                 example: getExampleAsBoolean({ schema, logger: context.logger, fallback })
@@ -368,6 +378,7 @@ export function convertSchemaObject(
         return convertNumber({
             nameOverride,
             generatedName,
+            title,
             format: schema.format,
             _default: schema.default,
             minimum: schema.minimum,
@@ -386,6 +397,7 @@ export function convertSchemaObject(
         return convertInteger({
             nameOverride,
             generatedName,
+            title,
             format: schema.format,
             _default: schema.default,
             minimum: schema.minimum,
@@ -404,6 +416,7 @@ export function convertSchemaObject(
         return convertNumber({
             nameOverride,
             generatedName,
+            title,
             format: "float",
             _default: schema.default,
             minimum: schema.minimum,
@@ -423,6 +436,7 @@ export function convertSchemaObject(
             return wrapPrimitive({
                 nameOverride,
                 generatedName,
+                title,
                 primitive: PrimitiveSchemaValueWithExample.datetime({
                     example: getExamplesString({ schema, logger: context.logger, fallback })
                 }),
@@ -435,6 +449,7 @@ export function convertSchemaObject(
             return SchemaWithExample.unknown({
                 nameOverride,
                 generatedName,
+                title,
                 description,
                 availability,
                 groupName,
@@ -447,6 +462,7 @@ export function convertSchemaObject(
             return wrapLiteral({
                 nameOverride,
                 generatedName,
+                title,
                 literal: LiteralSchemaValue.string(maybeConstValue),
                 wrapAsNullable,
                 description,
@@ -458,6 +474,7 @@ export function convertSchemaObject(
         return wrapPrimitive({
             nameOverride,
             generatedName,
+            title,
             primitive: PrimitiveSchemaValueWithExample.string({
                 default: getDefaultAsString(schema),
                 pattern: schema.pattern,
@@ -478,6 +495,7 @@ export function convertSchemaObject(
         return convertArray({
             nameOverride,
             generatedName,
+            title,
             breadcrumbs,
             item: schema.items,
             description,
@@ -496,6 +514,7 @@ export function convertSchemaObject(
         return convertAdditionalProperties({
             nameOverride,
             generatedName,
+            title,
             breadcrumbs,
             additionalProperties: schema.additionalProperties,
             description,
@@ -515,6 +534,7 @@ export function convertSchemaObject(
             return convertDiscriminatedOneOf({
                 nameOverride,
                 generatedName,
+                title,
                 breadcrumbs,
                 description,
                 availability,
@@ -532,6 +552,7 @@ export function convertSchemaObject(
             return convertUndiscriminatedOneOfWithDiscriminant({
                 nameOverride,
                 generatedName,
+                title,
                 description,
                 availability,
                 wrapAsNullable,
@@ -566,6 +587,7 @@ export function convertSchemaObject(
                 return convertUndiscriminatedOneOfWithDiscriminant({
                     nameOverride,
                     generatedName,
+                    title,
                     description,
                     availability,
                     wrapAsNullable,
@@ -580,6 +602,7 @@ export function convertSchemaObject(
                 return convertDiscriminatedOneOf({
                     nameOverride,
                     generatedName,
+                    title,
                     breadcrumbs,
                     description,
                     availability,
@@ -621,6 +644,7 @@ export function convertSchemaObject(
                 return convertEnum({
                     nameOverride,
                     generatedName,
+                    title,
                     fernEnum: undefined,
                     enumVarNames: undefined,
                     enumValues: maybeAllEnumValues,
@@ -639,6 +663,7 @@ export function convertSchemaObject(
                 return convertDiscriminatedOneOfWithVariants({
                     nameOverride,
                     generatedName,
+                    title,
                     breadcrumbs,
                     properties: schema.properties ?? {},
                     required: schema.required,
@@ -662,6 +687,7 @@ export function convertSchemaObject(
             return convertUndiscriminatedOneOf({
                 nameOverride,
                 generatedName,
+                title,
                 breadcrumbs,
                 description,
                 availability,
@@ -714,6 +740,7 @@ export function convertSchemaObject(
             return convertDiscriminatedOneOfWithVariants({
                 nameOverride,
                 generatedName,
+                title,
                 breadcrumbs,
                 properties: schema.properties ?? {},
                 required: schema.required,
@@ -737,6 +764,7 @@ export function convertSchemaObject(
         return convertUndiscriminatedOneOf({
             nameOverride,
             generatedName,
+            title,
             breadcrumbs,
             description,
             availability,
@@ -810,6 +838,7 @@ export function convertSchemaObject(
         return convertObject({
             nameOverride,
             generatedName,
+            title,
             breadcrumbs,
             properties: schema.properties ?? {},
             description,
@@ -833,12 +862,14 @@ export function convertSchemaObject(
         return wrapMap({
             nameOverride,
             generatedName,
+            title,
             description,
             availability,
             wrapAsNullable,
             keySchema: {
                 nameOverride: undefined,
                 generatedName: `${generatedName}Key`,
+                title: undefined,
                 description: undefined,
                 availability: undefined,
                 schema: PrimitiveSchemaValueWithExample.string({
@@ -854,6 +885,7 @@ export function convertSchemaObject(
             valueSchema: SchemaWithExample.unknown({
                 nameOverride: undefined,
                 generatedName: `${generatedName}Value`,
+                title: undefined,
                 description: undefined,
                 availability: undefined,
                 example: undefined,
@@ -870,6 +902,7 @@ export function convertSchemaObject(
         return SchemaWithExample.unknown({
             nameOverride,
             generatedName,
+            title,
             description,
             availability,
             groupName,
@@ -909,6 +942,7 @@ export function convertToReferencedSchema(
         // TODO(dsinghvi): references may contain files
         generatedName,
         nameOverride,
+        title: undefined,
         schema: schemaId,
         description: description ?? undefined,
         availability,
@@ -948,6 +982,7 @@ function maybeInjectDescriptionOrGroupName(
         return SchemaWithExample.optional({
             nameOverride: schema.nameOverride,
             generatedName: schema.generatedName,
+            title: schema.title,
             value: schema.value,
             description,
             availability: schema.availability,
@@ -957,6 +992,7 @@ function maybeInjectDescriptionOrGroupName(
         return SchemaWithExample.nullable({
             nameOverride: schema.nameOverride,
             generatedName: schema.generatedName,
+            title: schema.title,
             value: schema.value,
             description,
             availability: schema.availability,
@@ -994,7 +1030,8 @@ export function wrapLiteral({
     description,
     availability,
     nameOverride,
-    generatedName
+    generatedName,
+    title
 }: {
     literal: LiteralSchemaValue;
     wrapAsNullable: boolean;
@@ -1003,14 +1040,17 @@ export function wrapLiteral({
     groupName: SdkGroupName | undefined;
     nameOverride: string | undefined;
     generatedName: string;
+    title: string | undefined;
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
             nameOverride,
             generatedName,
+            title,
             value: SchemaWithExample.literal({
                 nameOverride,
                 generatedName,
+                title,
                 value: literal,
                 description,
                 availability,
@@ -1024,6 +1064,7 @@ export function wrapLiteral({
     return SchemaWithExample.literal({
         nameOverride,
         generatedName,
+        title,
         value: literal,
         groupName,
         description,
@@ -1038,7 +1079,8 @@ export function wrapPrimitive({
     description,
     availability,
     generatedName,
-    nameOverride
+    nameOverride,
+    title
 }: {
     primitive: PrimitiveSchemaValueWithExample;
     wrapAsNullable: boolean;
@@ -1047,15 +1089,18 @@ export function wrapPrimitive({
     availability: Availability | undefined;
     nameOverride: string | undefined;
     generatedName: string;
+    title: string | undefined;
 }): SchemaWithExample {
     groupName = typeof groupName === "string" ? [groupName] : groupName;
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
             nameOverride,
             generatedName,
+            title,
             value: SchemaWithExample.primitive({
                 nameOverride,
                 generatedName,
+                title,
                 schema: primitive,
                 description,
                 availability,
@@ -1069,6 +1114,7 @@ export function wrapPrimitive({
     return SchemaWithExample.primitive({
         nameOverride,
         generatedName,
+        title,
         schema: primitive,
         description,
         availability,

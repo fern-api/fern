@@ -64,6 +64,7 @@ export declare namespace ExpressGenerator {
         skipRequestValidation: boolean;
         skipResponseValidation: boolean;
         requestValidationStatusCode: number;
+        useBigInt: boolean;
     }
 }
 
@@ -506,7 +507,8 @@ export class ExpressGenerator {
             expressErrorSchemaDeclarationReferencer: this.expressErrorSchemaDeclarationReferencer,
             expressErrorSchemaGenerator: this.expressErrorSchemaGenerator,
             includeSerdeLayer: this.config.includeSerdeLayer,
-            retainOriginalCasing: this.config.retainOriginalCasing
+            retainOriginalCasing: this.config.retainOriginalCasing,
+            useBigInt: this.config.useBigInt
         });
     }
 }

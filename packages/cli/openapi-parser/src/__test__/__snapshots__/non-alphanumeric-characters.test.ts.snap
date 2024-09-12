@@ -62,6 +62,7 @@ exports[`non alphanumeric characters > non-alphanumeric-characters > parse open 
             "file": "non-alphanumeric-characters/openapi.yml",
             "type": "openapi",
           },
+          "title": null,
           "type": "reference",
         },
         "source": {
@@ -85,6 +86,7 @@ exports[`non alphanumeric characters > non-alphanumeric-characters > parse open 
             "file": "non-alphanumeric-characters/openapi.yml",
             "type": "openapi",
           },
+          "title": null,
           "type": "reference",
         },
         "source": {
@@ -123,6 +125,7 @@ exports[`non alphanumeric characters > non-alphanumeric-characters > parse open 
         "file": "non-alphanumeric-characters/openapi.yml",
         "type": "openapi",
       },
+      "title": null,
       "type": "enum",
       "values": [
         {
@@ -215,6 +218,7 @@ exports[`non alphanumeric characters > non-alphanumeric-characters > parse open 
             "generatedName": "settingsSeparator",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "availability": null,
@@ -227,6 +231,7 @@ exports[`non alphanumeric characters > non-alphanumeric-characters > parse open 
                 "file": "non-alphanumeric-characters/openapi.yml",
                 "type": "openapi",
               },
+              "title": null,
               "type": "reference",
             },
           },
@@ -236,6 +241,7 @@ exports[`non alphanumeric characters > non-alphanumeric-characters > parse open 
         "file": "non-alphanumeric-characters/openapi.yml",
         "type": "openapi",
       },
+      "title": null,
       "type": "object",
     },
   },

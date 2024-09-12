@@ -96,6 +96,7 @@ exports[`open api parser > availability > parse open api 1`] = `
             "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestXDeprecatedHeader",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "nullable",
             "value": {
               "availability": null,
@@ -111,6 +112,7 @@ exports[`open api parser > availability > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -131,6 +133,7 @@ exports[`open api parser > availability > parse open api 1`] = `
             "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestXActiveHeader",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "nullable",
             "value": {
               "availability": null,
@@ -146,6 +149,7 @@ exports[`open api parser > availability > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -166,6 +170,7 @@ exports[`open api parser > availability > parse open api 1`] = `
             "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestXDeprecatedRefHeader",
             "groupName": null,
             "nameOverride": null,
+            "title": null,
             "type": "nullable",
             "value": {
               "availability": null,
@@ -178,6 +183,7 @@ exports[`open api parser > availability > parse open api 1`] = `
                 "file": "availability/openapi.yml",
                 "type": "openapi",
               },
+              "title": null,
               "type": "reference",
             },
           },
@@ -198,6 +204,7 @@ exports[`open api parser > availability > parse open api 1`] = `
             "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestXFernAvailabilityHeader",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "nullable",
             "value": {
               "availability": null,
@@ -213,6 +220,7 @@ exports[`open api parser > availability > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -248,6 +256,7 @@ exports[`open api parser > availability > parse open api 1`] = `
               "pattern": null,
               "type": "string",
             },
+            "title": null,
             "type": "primitive",
           },
           "source": {
@@ -275,6 +284,7 @@ exports[`open api parser > availability > parse open api 1`] = `
               "pattern": null,
               "type": "string",
             },
+            "title": null,
             "type": "primitive",
           },
           "source": {
@@ -299,6 +309,7 @@ exports[`open api parser > availability > parse open api 1`] = `
               "file": "availability/openapi.yml",
               "type": "openapi",
             },
+            "title": null,
             "type": "reference",
           },
           "source": {
@@ -326,6 +337,7 @@ exports[`open api parser > availability > parse open api 1`] = `
               "pattern": null,
               "type": "string",
             },
+            "title": null,
             "type": "primitive",
           },
           "source": {
@@ -347,6 +359,7 @@ exports[`open api parser > availability > parse open api 1`] = `
             "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestDeprecatedLang",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "nullable",
             "value": {
               "availability": null,
@@ -362,6 +375,7 @@ exports[`open api parser > availability > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -381,6 +395,7 @@ exports[`open api parser > availability > parse open api 1`] = `
             "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestActiveLang",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "nullable",
             "value": {
               "availability": null,
@@ -396,6 +411,7 @@ exports[`open api parser > availability > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -415,6 +431,7 @@ exports[`open api parser > availability > parse open api 1`] = `
             "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestDeprecatedRefLang",
             "groupName": null,
             "nameOverride": null,
+            "title": null,
             "type": "nullable",
             "value": {
               "availability": null,
@@ -427,6 +444,7 @@ exports[`open api parser > availability > parse open api 1`] = `
                 "file": "availability/openapi.yml",
                 "type": "openapi",
               },
+              "title": null,
               "type": "reference",
             },
           },
@@ -446,6 +464,7 @@ exports[`open api parser > availability > parse open api 1`] = `
             "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestXFernAvailabilityQueryParam",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "nullable",
             "value": {
               "availability": null,
@@ -461,6 +480,7 @@ exports[`open api parser > availability > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -486,6 +506,7 @@ exports[`open api parser > availability > parse open api 1`] = `
             "file": "availability/openapi.yml",
             "type": "openapi",
           },
+          "title": null,
           "type": "reference",
         },
         "source": {
@@ -561,6 +582,7 @@ exports[`open api parser > availability > parse open api 1`] = `
             "file": "availability/openapi.yml",
             "type": "openapi",
           },
+          "title": null,
           "type": "reference",
         },
         "source": {
@@ -584,6 +606,7 @@ exports[`open api parser > availability > parse open api 1`] = `
             "file": "availability/openapi.yml",
             "type": "openapi",
           },
+          "title": null,
           "type": "reference",
         },
         "source": {
@@ -671,6 +694,7 @@ exports[`open api parser > availability > parse open api 1`] = `
                 "generatedName": "postSuccessInlinePropertyDeprecationRequestDeprecatedSetting",
                 "groupName": [],
                 "nameOverride": null,
+                "title": null,
                 "type": "optional",
                 "value": {
                   "availability": "Deprecated",
@@ -682,6 +706,7 @@ exports[`open api parser > availability > parse open api 1`] = `
                     "default": null,
                     "type": "boolean",
                   },
+                  "title": null,
                   "type": "primitive",
                 },
               },
@@ -699,6 +724,7 @@ exports[`open api parser > availability > parse open api 1`] = `
                 "generatedName": "postSuccessInlinePropertyDeprecationRequestNewSetting",
                 "groupName": [],
                 "nameOverride": null,
+                "title": null,
                 "type": "optional",
                 "value": {
                   "availability": null,
@@ -710,6 +736,7 @@ exports[`open api parser > availability > parse open api 1`] = `
                     "default": null,
                     "type": "boolean",
                   },
+                  "title": null,
                   "type": "primitive",
                 },
               },
@@ -719,6 +746,7 @@ exports[`open api parser > availability > parse open api 1`] = `
             "file": "availability/openapi.yml",
             "type": "openapi",
           },
+          "title": null,
           "type": "object",
         },
         "source": {
@@ -742,6 +770,7 @@ exports[`open api parser > availability > parse open api 1`] = `
             "file": "availability/openapi.yml",
             "type": "openapi",
           },
+          "title": null,
           "type": "reference",
         },
         "source": {
@@ -829,6 +858,7 @@ exports[`open api parser > availability > parse open api 1`] = `
                 "generatedName": "postSuccessInlineObjectDeprecationRequestFineSetting",
                 "groupName": [],
                 "nameOverride": null,
+                "title": null,
                 "type": "optional",
                 "value": {
                   "availability": null,
@@ -840,6 +870,7 @@ exports[`open api parser > availability > parse open api 1`] = `
                     "default": null,
                     "type": "boolean",
                   },
+                  "title": null,
                   "type": "primitive",
                 },
               },
@@ -849,6 +880,7 @@ exports[`open api parser > availability > parse open api 1`] = `
             "file": "availability/openapi.yml",
             "type": "openapi",
           },
+          "title": null,
           "type": "object",
         },
         "source": {
@@ -872,6 +904,7 @@ exports[`open api parser > availability > parse open api 1`] = `
             "file": "availability/openapi.yml",
             "type": "openapi",
           },
+          "title": null,
           "type": "reference",
         },
         "source": {
@@ -959,6 +992,7 @@ exports[`open api parser > availability > parse open api 1`] = `
                 "generatedName": "postSuccessInlineBetaBodyRequestFineSetting",
                 "groupName": [],
                 "nameOverride": null,
+                "title": null,
                 "type": "optional",
                 "value": {
                   "availability": null,
@@ -970,6 +1004,7 @@ exports[`open api parser > availability > parse open api 1`] = `
                     "default": null,
                     "type": "boolean",
                   },
+                  "title": null,
                   "type": "primitive",
                 },
               },
@@ -979,6 +1014,7 @@ exports[`open api parser > availability > parse open api 1`] = `
             "file": "availability/openapi.yml",
             "type": "openapi",
           },
+          "title": null,
           "type": "object",
         },
         "source": {
@@ -1002,6 +1038,7 @@ exports[`open api parser > availability > parse open api 1`] = `
             "file": "availability/openapi.yml",
             "type": "openapi",
           },
+          "title": null,
           "type": "reference",
         },
         "source": {
@@ -1044,6 +1081,7 @@ exports[`open api parser > availability > parse open api 1`] = `
         "pattern": null,
         "type": "string",
       },
+      "title": null,
       "type": "primitive",
     },
     "NotDeprecatedSettings": {
@@ -1069,6 +1107,7 @@ exports[`open api parser > availability > parse open api 1`] = `
             "generatedName": "notDeprecatedSettingsNotDeprecatedSetting",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "availability": null,
@@ -1080,6 +1119,7 @@ exports[`open api parser > availability > parse open api 1`] = `
                 "default": null,
                 "type": "boolean",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -1089,6 +1129,7 @@ exports[`open api parser > availability > parse open api 1`] = `
         "file": "availability/openapi.yml",
         "type": "openapi",
       },
+      "title": null,
       "type": "object",
     },
     "Settings": {
@@ -1114,6 +1155,7 @@ exports[`open api parser > availability > parse open api 1`] = `
             "generatedName": "settingsDeprecatedSetting",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "availability": "Deprecated",
@@ -1125,6 +1167,7 @@ exports[`open api parser > availability > parse open api 1`] = `
                 "default": null,
                 "type": "boolean",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -1142,6 +1185,7 @@ exports[`open api parser > availability > parse open api 1`] = `
             "generatedName": "settingsNewSetting",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "availability": null,
@@ -1153,6 +1197,7 @@ exports[`open api parser > availability > parse open api 1`] = `
                 "default": null,
                 "type": "boolean",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -1162,6 +1207,7 @@ exports[`open api parser > availability > parse open api 1`] = `
         "file": "availability/openapi.yml",
         "type": "openapi",
       },
+      "title": null,
       "type": "object",
     },
     "WholeDeprecatedSettings": {
@@ -1187,6 +1233,7 @@ exports[`open api parser > availability > parse open api 1`] = `
             "generatedName": "wholeDeprecatedSettingsFineSetting",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "availability": null,
@@ -1198,6 +1245,7 @@ exports[`open api parser > availability > parse open api 1`] = `
                 "default": null,
                 "type": "boolean",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -1207,6 +1255,7 @@ exports[`open api parser > availability > parse open api 1`] = `
         "file": "availability/openapi.yml",
         "type": "openapi",
       },
+      "title": null,
       "type": "object",
     },
   },

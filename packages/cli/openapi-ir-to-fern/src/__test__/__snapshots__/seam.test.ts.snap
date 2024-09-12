@@ -15014,6 +15014,7 @@ exports[`seam > seam > docs 1`] = `
         },
       },
       "AcsSystemErrorsItem": {
+        "availability": undefined,
         "base-properties": {},
         "discriminant": "error_code",
         "docs": undefined,
@@ -32667,6 +32668,7 @@ exports[`seam > seam > simple 1`] = `
         },
       },
       "AcsSystemErrorsItem": {
+        "availability": undefined,
         "base-properties": {},
         "discriminant": "error_code",
         "docs": undefined,

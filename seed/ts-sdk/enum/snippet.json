@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedEnumClient, SeedEnum } from \"@fern/enum\";\n\nconst client = new SeedEnumClient({ environment: \"YOUR_BASE_URL\" });\nawait client.inlinedRequest.send({\n    operand: SeedEnum.Operand.GreaterThan,\n    operandOrColor: SeedEnum.Color.Red\n});\n"
+                "client": "import { SeedEnumClient } from \"@fern/enum\";\n\nconst client = new SeedEnumClient({ environment: \"YOUR_BASE_URL\" });\nawait client.inlinedRequest.send({\n    operand: \">\",\n    operandOrColor: \"red\"\n});\n"
             }
         },
         {
@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedEnumClient, SeedEnum } from \"@fern/enum\";\n\nconst client = new SeedEnumClient({ environment: \"YOUR_BASE_URL\" });\nawait client.pathParam.send(SeedEnum.Operand.GreaterThan, SeedEnum.Operand.LessThan, SeedEnum.Color.Red, SeedEnum.Color.Red);\n"
+                "client": "import { SeedEnumClient } from \"@fern/enum\";\n\nconst client = new SeedEnumClient({ environment: \"YOUR_BASE_URL\" });\nawait client.pathParam.send(\">\", \"less_than\", \"red\", \"red\");\n"
             }
         },
         {
@@ -30,7 +30,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedEnumClient, SeedEnum } from \"@fern/enum\";\n\nconst client = new SeedEnumClient({ environment: \"YOUR_BASE_URL\" });\nawait client.queryParam.send({\n    operand: SeedEnum.Operand.GreaterThan,\n    operandOrColor: SeedEnum.Color.Red\n});\n"
+                "client": "import { SeedEnumClient } from \"@fern/enum\";\n\nconst client = new SeedEnumClient({ environment: \"YOUR_BASE_URL\" });\nawait client.queryParam.send({\n    operand: \">\",\n    operandOrColor: \"red\"\n});\n"
             }
         },
         {
@@ -41,7 +41,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedEnumClient, SeedEnum } from \"@fern/enum\";\n\nconst client = new SeedEnumClient({ environment: \"YOUR_BASE_URL\" });\nawait client.queryParam.sendList({\n    operand: SeedEnum.Operand.GreaterThan,\n    maybeOperand: SeedEnum.Operand.GreaterThan,\n    operandOrColor: SeedEnum.Color.Red,\n    maybeOperandOrColor: SeedEnum.Color.Red\n});\n"
+                "client": "import { SeedEnumClient } from \"@fern/enum\";\n\nconst client = new SeedEnumClient({ environment: \"YOUR_BASE_URL\" });\nawait client.queryParam.sendList({\n    operand: \">\",\n    maybeOperand: \">\",\n    operandOrColor: \"red\",\n    maybeOperandOrColor: \"red\"\n});\n"
             }
         }
     ],

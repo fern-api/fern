@@ -31,8 +31,8 @@ export class QueryParam {
      *
      * @example
      *     await client.queryParam.send({
-     *         operand: SeedEnum.Operand.GreaterThan,
-     *         operandOrColor: SeedEnum.Color.Red
+     *         operand: ">",
+     *         operandOrColor: "red"
      *     })
      */
     public async send(
@@ -103,10 +103,10 @@ export class QueryParam {
      *
      * @example
      *     await client.queryParam.sendList({
-     *         operand: SeedEnum.Operand.GreaterThan,
-     *         maybeOperand: SeedEnum.Operand.GreaterThan,
-     *         operandOrColor: SeedEnum.Color.Red,
-     *         maybeOperandOrColor: SeedEnum.Color.Red
+     *         operand: ">",
+     *         maybeOperand: ">",
+     *         operandOrColor: "red",
+     *         maybeOperandOrColor: "red"
      *     })
      */
     public async sendList(

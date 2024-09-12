@@ -30,6 +30,7 @@ export declare namespace TypeContextImpl {
         treatUnknownAsAny: boolean;
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
+        useBigInt: boolean;
     }
 }
 
@@ -58,7 +59,8 @@ export class TypeContextImpl implements TypeContext {
         typeReferenceExampleGenerator,
         treatUnknownAsAny,
         includeSerdeLayer,
-        retainOriginalCasing
+        retainOriginalCasing,
+        useBigInt
     }: TypeContextImpl.Init) {
         this.npmPackage = npmPackage;
         this.isForSnippet = isForSnippet;
@@ -75,12 +77,14 @@ export class TypeContextImpl implements TypeContext {
             getReferenceToNamedType: (typeName) => this.getReferenceToNamedType(typeName).getEntityName(),
             typeResolver,
             treatUnknownAsAny,
-            includeSerdeLayer
+            includeSerdeLayer,
+            useBigInt
         });
         this.typeReferenceToStringExpressionConverter = new TypeReferenceToStringExpressionConverter({
             typeResolver,
             treatUnknownAsAny,
-            includeSerdeLayer
+            includeSerdeLayer,
+            useBigInt
         });
     }
 

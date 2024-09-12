@@ -30,7 +30,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.admin.sendTestSubmissionUpdate(SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"), {\n    updateTime: \"2024-01-15T09:30:00Z\",\n    updateInfo: SeedTrace.TestSubmissionUpdateInfo.running(SeedTrace.RunningSubmissionState.QueueingSubmission)\n});\n"
+                "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.admin.sendTestSubmissionUpdate(SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"), {\n    updateTime: \"2024-01-15T09:30:00Z\",\n    updateInfo: SeedTrace.TestSubmissionUpdateInfo.running(\"QUEUEING_SUBMISSION\")\n});\n"
             }
         },
         {
@@ -52,7 +52,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.admin.sendWorkspaceSubmissionUpdate(SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"), {\n    updateTime: \"2024-01-15T09:30:00Z\",\n    updateInfo: SeedTrace.WorkspaceSubmissionUpdateInfo.running(SeedTrace.RunningSubmissionState.QueueingSubmission)\n});\n"
+                "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.admin.sendWorkspaceSubmissionUpdate(SeedTrace.SubmissionId(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"), {\n    updateTime: \"2024-01-15T09:30:00Z\",\n    updateInfo: SeedTrace.WorkspaceSubmissionUpdateInfo.running(\"QUEUEING_SUBMISSION\")\n});\n"
             }
         },
         {
@@ -195,7 +195,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.problem.createProblem({\n    problemName: \"string\",\n    problemDescription: {\n        boards: [SeedTrace.ProblemDescriptionBoard.html(\"string\")]\n    },\n    files: {\n        [SeedTrace.Language.Java]: {\n            solutionFile: {\n                filename: \"string\",\n                contents: \"string\"\n            },\n            readOnlyFiles: [{\n                    filename: \"string\",\n                    contents: \"string\"\n                }]\n        }\n    },\n    inputParams: [{\n            variableType: SeedTrace.VariableType.integerType(),\n            name: \"string\"\n        }],\n    outputType: SeedTrace.VariableType.integerType(),\n    testcases: [{\n            testCase: {\n                id: \"string\",\n                params: [SeedTrace.VariableValue.integerValue(1)]\n            },\n            expectedResult: SeedTrace.VariableValue.integerValue(1)\n        }],\n    methodName: \"string\"\n});\n"
+                "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.problem.createProblem({\n    problemName: \"string\",\n    problemDescription: {\n        boards: [SeedTrace.ProblemDescriptionBoard.html(\"string\")]\n    },\n    files: {\n        [\"JAVA\"]: {\n            solutionFile: {\n                filename: \"string\",\n                contents: \"string\"\n            },\n            readOnlyFiles: [{\n                    filename: \"string\",\n                    contents: \"string\"\n                }]\n        }\n    },\n    inputParams: [{\n            variableType: SeedTrace.VariableType.integerType(),\n            name: \"string\"\n        }],\n    outputType: SeedTrace.VariableType.integerType(),\n    testcases: [{\n            testCase: {\n                id: \"string\",\n                params: [SeedTrace.VariableValue.integerValue(1)]\n            },\n            expectedResult: SeedTrace.VariableValue.integerValue(1)\n        }],\n    methodName: \"string\"\n});\n"
             }
         },
         {
@@ -206,7 +206,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.problem.updateProblem(SeedTrace.ProblemId(\"string\"), {\n    problemName: \"string\",\n    problemDescription: {\n        boards: [SeedTrace.ProblemDescriptionBoard.html(\"string\")]\n    },\n    files: {\n        [SeedTrace.Language.Java]: {\n            solutionFile: {\n                filename: \"string\",\n                contents: \"string\"\n            },\n            readOnlyFiles: [{\n                    filename: \"string\",\n                    contents: \"string\"\n                }]\n        }\n    },\n    inputParams: [{\n            variableType: SeedTrace.VariableType.integerType(),\n            name: \"string\"\n        }],\n    outputType: SeedTrace.VariableType.integerType(),\n    testcases: [{\n            testCase: {\n                id: \"string\",\n                params: [SeedTrace.VariableValue.integerValue(1)]\n            },\n            expectedResult: SeedTrace.VariableValue.integerValue(1)\n        }],\n    methodName: \"string\"\n});\n"
+                "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.problem.updateProblem(SeedTrace.ProblemId(\"string\"), {\n    problemName: \"string\",\n    problemDescription: {\n        boards: [SeedTrace.ProblemDescriptionBoard.html(\"string\")]\n    },\n    files: {\n        [\"JAVA\"]: {\n            solutionFile: {\n                filename: \"string\",\n                contents: \"string\"\n            },\n            readOnlyFiles: [{\n                    filename: \"string\",\n                    contents: \"string\"\n                }]\n        }\n    },\n    inputParams: [{\n            variableType: SeedTrace.VariableType.integerType(),\n            name: \"string\"\n        }],\n    outputType: SeedTrace.VariableType.integerType(),\n    testcases: [{\n            testCase: {\n                id: \"string\",\n                params: [SeedTrace.VariableValue.integerValue(1)]\n            },\n            expectedResult: SeedTrace.VariableValue.integerValue(1)\n        }],\n    methodName: \"string\"\n});\n"
             }
         },
         {
@@ -239,7 +239,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.submission.createExecutionSession(SeedTrace.Language.Java);\n"
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.submission.createExecutionSession(\"JAVA\");\n"
             }
         },
         {
@@ -283,7 +283,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedTraceClient, SeedTrace } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.sysprop.setNumWarmInstances(SeedTrace.Language.Java, 1);\n"
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.sysprop.setNumWarmInstances(\"JAVA\", 1);\n"
             }
         },
         {

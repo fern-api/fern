@@ -34,6 +34,7 @@ exports[`open api parser > gen-yml-make-undisc-unions > parse open api 1`] = `
               "file": "gen-yml-make-undisc-unions/openapi.json",
               "type": "openapi",
             },
+            "title": null,
             "type": "reference",
           },
           {
@@ -47,6 +48,7 @@ exports[`open api parser > gen-yml-make-undisc-unions > parse open api 1`] = `
               "file": "gen-yml-make-undisc-unions/openapi.json",
               "type": "openapi",
             },
+            "title": null,
             "type": "reference",
           },
           {
@@ -60,6 +62,7 @@ exports[`open api parser > gen-yml-make-undisc-unions > parse open api 1`] = `
               "file": "gen-yml-make-undisc-unions/openapi.json",
               "type": "openapi",
             },
+            "title": null,
             "type": "reference",
           },
           {
@@ -73,6 +76,7 @@ exports[`open api parser > gen-yml-make-undisc-unions > parse open api 1`] = `
               "file": "gen-yml-make-undisc-unions/openapi.json",
               "type": "openapi",
             },
+            "title": null,
             "type": "reference",
           },
         ],
@@ -80,6 +84,7 @@ exports[`open api parser > gen-yml-make-undisc-unions > parse open api 1`] = `
           "file": "gen-yml-make-undisc-unions/openapi.json",
           "type": "openapi",
         },
+        "title": null,
         "type": "undisciminated",
       },
     },

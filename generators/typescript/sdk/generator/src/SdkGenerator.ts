@@ -124,6 +124,7 @@ export declare namespace SdkGenerator {
         organization: string;
         apiName: string;
         packageJson: Record<string, unknown> | undefined;
+        useBigInt: boolean;
     }
 }
 
@@ -1060,7 +1061,7 @@ export class SdkGenerator {
             filepath: this.versionDeclarationReferencer.getExportedFilepath(),
             run: ({ sourceFile, importsManager }) => {
                 const context = this.generateSdkContext({ sourceFile, importsManager });
-                const generatedVersion = context.version.getGeneratedVersion();
+                const generatedVersion = context.versionContext.getGeneratedVersion();
                 if (generatedVersion != null) {
                     generatedVersion.writeToFile(context);
                 }
@@ -1217,6 +1218,7 @@ export class SdkGenerator {
     ): SdkContextImpl {
         return new SdkContextImpl({
             logger: this.context.logger,
+            version: this.context.version,
             config: this.rawConfig,
             ir: this.intermediateRepresentation,
             npmPackage: this.npmPackage,
@@ -1263,7 +1265,8 @@ export class SdkGenerator {
             targetRuntime: this.config.targetRuntime,
             inlineFileProperties: this.config.inlineFileProperties,
             generateOAuthClients: this.generateOAuthClients,
-            omitUndefined: this.config.omitUndefined
+            omitUndefined: this.config.omitUndefined,
+            useBigInt: this.config.useBigInt
         });
     }
 }

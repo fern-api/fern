@@ -3565,6 +3565,7 @@ This error response may have one of the following \`type\` values:
             },
           },
           "nextPage_url": {
+            "display-name": "Abstract Paged Body Fields (v1.1.0)",
             "docs": "The URL of the next page of resources. If this URL is omitted, there are no more resources in the collection.",
             "type": "optional<string>",
             "validation": {
@@ -3587,6 +3588,7 @@ This error response may have one of the following \`type\` values:
         ],
         "properties": {
           "allows": {
+            "display-name": "Full Account Permissions (v1.0.0)",
             "docs": "Flags which indicate the permissions the current authorized user has on this account resource.",
             "type": "FullAccountPermissions",
           },
@@ -3658,14 +3660,17 @@ This error response may have one of the following \`type\` values:
         "docs": "The current balances of the given account.",
         "properties": {
           "available": {
+            "display-name": "Account Balance (v1.0.0)",
             "docs": "The available balance: the funds available for use. This is the string representation of the exact decimal amount.",
             "type": "optional<CreditOrDebitValue>",
           },
           "current": {
+            "display-name": "Account Balance (v1.0.0)",
             "docs": "The current balance. This is the balance at the end of the previous business day. This is the string representation of the exact decimal amount.",
             "type": "optional<CreditOrDebitValue>",
           },
           "currentWithPending": {
+            "display-name": "Account Balance (v1.0.0)",
             "docs": "The current balance, with posted transactions. This is the string representation of the exact decimal amount.",
             "type": "optional<CreditOrDebitValue>",
           },
@@ -3678,6 +3683,7 @@ This error response may have one of the following \`type\` values:
             "type": "boolean",
           },
           "updatedAt": {
+            "display-name": "Account Balance (v1.0.0)",
             "docs": "The time when the balance values were last updated from the banking core.",
             "type": "optional<ReadOnlyTimestamp>",
           },
@@ -3719,25 +3725,39 @@ This error response may have one of the following \`type\` values:
             },
           },
           "location": {
+            "display-name": "Account Location (v1.0.0)",
             "docs": "Indicates where an account is held.",
             "type": "AccountLocation",
           },
-          "maskedNumber": "MaskedAccountNumber",
-          "nickname": "optional<AccountNickname>",
-          "product": "ProductReference",
+          "maskedNumber": {
+            "display-name": "Masked Account Number (v1.0.1)",
+            "type": "MaskedAccountNumber",
+          },
+          "nickname": {
+            "display-name": "Account Fields (v1.0.1)",
+            "type": "optional<AccountNickname>",
+          },
+          "product": {
+            "display-name": "Product Reference (v1.0.0)",
+            "type": "ProductReference",
+          },
         },
         "source": {
           "openapi": "apiture/openapi.yml",
         },
       },
       "AccountIds": {
+        "display-name": "Account IDs (v1.1.0)",
         "docs": "An array of account IDs.",
         "type": "list<ResourceId>",
       },
       "AccountItem": {
         "docs": "An account item in a list items in the \`accounts\` schema.",
         "properties": {
-          "allows": "AccountPermissions",
+          "allows": {
+            "display-name": "Account Permissions (v0.3.0)",
+            "type": "AccountPermissions",
+          },
           "id": {
             "docs": "The unique identifier for this account resource. This is an immutable opaque string.",
             "type": "optional<ReadOnlyResourceId>",
@@ -4086,6 +4106,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
           },
           "address2": {
+            "display-name": "Address Fields (v1.1.0)",
             "docs": "The second line of the street address. This should only be used if it has a value. Typical values include building numbers, suite numbers, and other identifying information beyond the first line of the postal address.",
             "type": "optional<string>",
             "validation": {
@@ -4134,32 +4155,39 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "docs": "API problem or error, as per [RFC 7807 application/problem+json](https://tools.ietf.org/html/rfc7807).",
         "properties": {
           "attributes": {
+            "display-name": "API Problem (v1.1.0)",
             "docs": "Additional optional attributes related to the problem. This data conforms to the schema associated with the error type.",
             "type": "optional<map<string, unknown>>",
           },
           "detail": {
+            "display-name": "API Problem (v1.1.0)",
             "docs": "A human-readable explanation specific to this occurrence of the problem.
 ",
             "type": "optional<string>",
           },
           "id": {
+            "display-name": "API Problem (v1.1.0)",
             "docs": "The unique identifier for this problem. This is an immutable opaque string.",
             "type": "optional<ReadOnlyResourceId>",
           },
           "instance": {
+            "display-name": "API Problem (v1.1.0)",
             "docs": "A URI reference that identifies the specific occurrence of the problem. This is the URI of an API resource that the problem is related to, with a unique error correlation ID URI fragment
 ",
             "type": "optional<string>",
           },
           "occurredAt": {
+            "display-name": "API Problem (v1.1.0)",
             "docs": "The timestamp when the problem occurred, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time \`YYYY-MM-DDThh:mm:ss.sssZ\` format, UTC.",
             "type": "optional<ReadOnlyTimestamp>",
           },
           "problems": {
+            "display-name": "API Problem (v1.1.0)",
             "docs": "Optional root-causes if there are multiple problems in the request or API call processing.",
             "type": "optional<list<ApiProblem>>",
           },
           "status": {
+            "display-name": "API Problem (v1.1.0)",
             "docs": "The [HTTP status code](https://datatracker.ietf.org/doc/html/rfc7231#section-6) for this occurrence of the problem.
 ",
             "type": "optional<integer>",
@@ -4172,11 +4200,13 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
           },
           "title": {
+            "display-name": "API Problem (v1.1.0)",
             "docs": "A short, human-readable summary of the problem type. The title is usually the same for all problem with the same \`type\`.
 ",
             "type": "optional<string>",
           },
           "type": {
+            "display-name": "API Problem (v1.1.0)",
             "docs": "A [URI reference (RFC3986)](https://tools.ietf.org/html/rfc3986) that identifies the problem type. If present, this is the URL of human-readable HTML documentation for the problem type. When this member is not present, its value is assumed to be \`"about:blank"\`.
 ",
             "type": "optional<string>",
@@ -4190,11 +4220,18 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "docs": "An challenge factor. See [\`requiredIdentityChallenge\`](#schema-requiredIdentityChallenge) for multiple examples.",
         "properties": {
           "labels": {
+            "display-name": "Challenge Factor (v1.0.0)",
             "docs": "A list of text label which identifies the channel(s) though which the user completes the challenge. For an \`sms\` or \`voice\` challenge, the only label item is the last four digits of the corresponding phone number. For an \`email\` challenge, each label is the masked email address.",
             "type": "optional<list<string>>",
           },
-          "securityQuestions": "optional<ChallengeSecurityQuestions>",
-          "type": "ChallengeFactorType",
+          "securityQuestions": {
+            "display-name": "Challenge Factor (v1.0.0)",
+            "type": "optional<ChallengeSecurityQuestions>",
+          },
+          "type": {
+            "display-name": "Challenge Factor Type (v1.0.0)",
+            "type": "ChallengeFactorType",
+          },
         },
         "source": {
           "openapi": "apiture/openapi.yml",
@@ -4259,6 +4296,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "docs": "A single security question within the \`questions\` array of the [\`challengeSecurityQuestions\`](#schema-challengeSecurityQuestions)",
         "properties": {
           "id": {
+            "display-name": "Challenge Prompt ID (v1.0.0)",
             "docs": "The unique ID of security question prompt. This should be included in the [\`challengeVerification\`](#schema-challengeVerification) response as the \`promptId\`.",
             "type": "ChallengePromptId",
           },
@@ -4300,6 +4338,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
       },
       "CheckNumberRange": {
+        "display-name": "Positive Integer Range (v1.1.0)",
         "docs": "A numeric range for a checking account check number.",
         "type": "PositiveIntegerRange",
       },
@@ -4326,7 +4365,10 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "pattern": "^(?<hour>[0-2][0-9]):(?<minute>[0-5][0-9])$",
             },
           },
-          "type": "CutoffTimeType",
+          "type": {
+            "display-name": "Cutoff type Type (v1.0.0)",
+            "type": "CutoffTimeType",
+          },
         },
         "source": {
           "openapi": "apiture/openapi.yml",
@@ -4393,6 +4435,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "type": "list<CutoffTime>",
           },
           "timeZoneId": {
+            "display-name": " (v1.0.0)",
             "docs": "The identifier of the time zone for which all of the \`items[].time\` are returned in.
 The client can use this value to localize the \`items[].time\` values to the local time zone of the customer, as well as for formatting to localized names, such as \`EST\` and \`EDT\`.",
             "type": "TimeZoneId",
@@ -4413,6 +4456,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       },
       "EligibleOverdraftAccountItem": {
+        "display-name": "Overdraft Account Fields (v1.0.0)",
         "docs": "An account that is eligible to be assigned as an overdraft protection account for another account.",
         "type": "OverdraftAccountFields",
       },
@@ -4542,6 +4586,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         ],
         "properties": {
           "incompleteAccounts": {
+            "display-name": "Account IDs (v1.1.0)",
             "docs": "Pass these values as the \`?accounts=\` query parameter on the next retry of the [\`listAccountBalances\`](#op-listAccountBalances) operation. This value is empty if the client has reached the retry limit.",
             "type": "AccountIds",
           },
@@ -4676,6 +4721,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "properties": {
           "disallowDebitCardAccess": {
             "default": false,
+            "display-name": "Joint Owner Invitation Fields (v1.0.0)",
             "docs": "If \`true\`, the invitee is not allowed to order or manage debit cards for the account.",
             "type": "optional<boolean>",
           },
@@ -4720,6 +4766,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "taxId": {
+            "display-name": "Joint Owner Invitation Fields (v1.0.0)",
             "docs": "The last 4 digits of the invitee's tax ID number (Social Security Number). This is not sent in the invitation email, but if the invitee enrolls in digital banking, this identification must match the last four digits of the tax ID they use to enroll.",
             "type": "optional<string>",
             "validation": {
@@ -4758,10 +4805,12 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "docs": "Fields of an overdraft protection account, used to compose other schemas.",
         "properties": {
           "id": {
+            "display-name": "Overdraft Account Fields (v1.0.0)",
             "docs": "The unique ID of the account resource. Use this as the \`{accountId}\` in [\`getAccount\`](#op-getAccount) or [\`listAccountBalances\`](#op-listAccountBalances).",
             "type": "optional<ResourceId>",
           },
           "label": {
+            "display-name": "Overdraft Account Fields (v1.0.0)",
             "docs": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
             "type": "optional<string>",
             "validation": {
@@ -4771,13 +4820,17 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "pattern": undefined,
             },
           },
-          "maskedNumber": "optional<MaskedAccountNumber>",
+          "maskedNumber": {
+            "display-name": "Overdraft Account Fields (v1.0.0)",
+            "type": "optional<MaskedAccountNumber>",
+          },
         },
         "source": {
           "openapi": "apiture/openapi.yml",
         },
       },
       "OverdraftAccountItem": {
+        "display-name": "Overdraft Account Fields (v1.0.0)",
         "docs": "An overdraft protection account linked to another protected account. The \`label\` and \`maskedNumber\` are informational only.",
         "type": "OverdraftAccountFields",
       },
@@ -4807,7 +4860,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "OverdraftProtectionFields": {
         "docs": "Fields used to compose other overdraft protection schemas.",
         "properties": {
-          "accounts": "optional<unknown>",
+          "accounts": {
+            "display-name": "Overdraft Protection Fields (v1.0.0)",
+            "type": "optional<unknown>",
+          },
         },
         "source": {
           "openapi": "apiture/openapi.yml",
@@ -4868,6 +4924,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "type": {
+            "display-name": "Product Type (v2.0.0)",
             "docs": "The type of account.",
             "type": "ProductType",
           },
@@ -4927,10 +4984,12 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       },
       "ReadOnlyResourceId": {
+        "display-name": "Resource Identifier (v1.0.0)",
         "docs": "The unique, opaque system-assigned identifier for a resource. This case-sensitive ID is also used in URLs as path parameters or in other properties or parameters that reference a resource by ID rather than URL. Resource IDs are immutable.",
         "type": "ResourceId",
       },
       "ReadOnlyTimestamp": {
+        "display-name": "Read-Only Timestamp (v1.0.0)",
         "docs": "A readonly or derived timestamp (an instant in time) formatted in [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date-time\` UTC format: \`YYYY-MM-DDThh:mm:ss.sssZ\`.<br>The schema \`readOnlyTimestamp\` was added on version \`0.4.0\` of the API.",
         "type": "datetime",
       },
@@ -4968,6 +5027,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "docs": "A simple representation of a financial institution.",
         "properties": {
           "address": {
+            "display-name": "Address (v1.1.0)",
             "docs": "The financial institution's postal mailing address.",
             "type": "Address",
           },
@@ -4982,6 +5042,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "locatorType": {
+            "display-name": "institution Locator Type (v1.0.0)",
             "docs": "Indicates the type of this institution's \`locator\`.",
             "type": "InstitutionLocatorType",
           },
@@ -5014,10 +5075,12 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "docs": "Timestamps which describe when a resource was created or last updated.",
         "properties": {
           "createdAt": {
+            "display-name": "Timestamp Fields (v1.0.0)",
             "docs": "The date-time when this resource was created, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time \`YYYY-MM-DDThh:mm:ss.sssZ\` format, UTC. This is derived and immutable.",
             "type": "optional<datetime>",
           },
           "updatedAt": {
+            "display-name": "Timestamp Fields (v1.0.0)",
             "docs": "The date-time when the resource was last updated, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time \`YYYY-MM-DDThh:mm:ss.sssZ\` format, UTC. This is derived and immutable.",
             "type": "optional<datetime>",
           },
@@ -5051,7 +5114,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "pattern": "^[-_:.~$a-zA-Z0-9]{1,32}$",
             },
           },
-          "label": "TransactionCategoryLabel",
+          "label": {
+            "display-name": "Transaction Category Label (v1.1.0)",
+            "type": "TransactionCategoryLabel",
+          },
         },
         "source": {
           "openapi": "apiture/openapi.yml",
@@ -5064,7 +5130,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "TransactionCategorization",
         ],
         "properties": {
-          "type": "TransactionCategoryType",
+          "type": {
+            "display-name": "Transaction Category (v1.0.0)",
+            "type": "TransactionCategoryType",
+          },
         },
         "source": {
           "openapi": "apiture/openapi.yml",
@@ -5114,6 +5183,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "docs": "Describes a check associated with a transaction for a checking account. This object is only present if the transaction \`type\` is \`debit\` and the \`subtype\` is \`check\`.",
         "properties": {
           "imageBack_url": {
+            "display-name": "Transaction Check (v2.0.0)",
             "docs": "The URL for downloading the image of the front of the check.",
             "type": "optional<string>",
             "validation": {
@@ -5124,6 +5194,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "imageFront_url": {
+            "display-name": "Transaction Check (v2.0.0)",
             "docs": "The URL for downloading the image of the front of the check.",
             "type": "optional<string>",
             "validation": {
@@ -5153,20 +5224,27 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "docs": "Common fields of the transaction resource used to build other model schemas.",
         "properties": {
           "amount": {
+            "display-name": "Credit Or Debit Value (v1.0.0)",
             "docs": "The transaction amount in dollars. This value is negative if the transaction is a debit and positive if it is a credit.",
             "type": "CreditOrDebitValue",
           },
           "balance": {
+            "display-name": "Transaction Fields (v2.1.1)",
             "docs": "The account's running current balance as of this transaction. The \`balance\` may be omitted if the request includes filters which preclude the inclusion of a running balance.",
             "type": "optional<CreditOrDebitValue>",
           },
           "category": {
+            "display-name": "Transaction Fields (v2.1.1)",
             "docs": "The transaction category, if assigned.",
             "type": "optional<TransactionCategorization>",
           },
-          "check": "optional<TransactionCheck>",
+          "check": {
+            "display-name": "Transaction Fields (v2.1.1)",
+            "type": "optional<TransactionCheck>",
+          },
           "createdOn": {
             "availability": "deprecated",
+            "display-name": "Transaction Fields (v2.1.1)",
             "docs": "The date when the transaction occurred in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived and immutable.<br>**Warning**: The property \`createdOn\` was deprecated on version \`v2.1.0\` of the schema. Use the \`occurredOn\` property instead. \`createdOn\` will be removed on version \`v3.0.0\` of the schema.",
             "type": "optional<string>",
             "validation": {
@@ -5177,6 +5255,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "description": {
+            "display-name": "Transaction Fields (v2.1.1)",
             "docs": "The transaction description assigned by the transaction cleansing service.",
             "type": "optional<string>",
             "validation": {
@@ -5197,6 +5276,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "memo": {
+            "display-name": "Transaction Fields (v2.1.1)",
             "docs": "The user-settable transaction memo.",
             "type": "optional<string>",
             "validation": {
@@ -5206,7 +5286,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "pattern": undefined,
             },
           },
-          "merchant": "optional<TransactionMerchant>",
+          "merchant": {
+            "display-name": "Transaction Fields (v2.1.1)",
+            "type": "optional<TransactionMerchant>",
+          },
           "occurredOn": {
             "docs": "The date of the transaction in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived and immutable.",
             "type": "string",
@@ -5218,11 +5301,13 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "posted": {
+            "display-name": "Transaction Fields (v2.1.1)",
             "docs": "If \`true\`, the transaction has been posted (cleared) and applied to the account. If \`false\`, the transaction is still pending and might be canceled. \`posted\` is only valid for credit and debit transactions and omitted for balance transactions.",
             "type": "optional<boolean>",
           },
           "postedOn": {
             "availability": "deprecated",
+            "display-name": "Transaction Fields (v2.1.1)",
             "docs": "The date when this transaction was posted (cleared and applied to the account balance) in [RFC 3339](https://tools.ietf.org/html/rfc3339) date \`YYYY-MM-DD\` format, UTC. This is derived and immutable and only present if \`posted\` is \`true\`.<br>**Warning**: The property \`postedOn\` was deprecated on version \`v2.1.0\` of the schema. Use the \`occurredOn\` property instead. \`postedOn\` will be removed on version \`v3.0.0\` of the schema.",
             "type": "optional<string>",
             "validation": {
@@ -5233,10 +5318,12 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "subtype": {
+            "display-name": "Transaction Subtype (v1.0.0)",
             "docs": "The transaction's kind of debit or credit.",
             "type": "TransactionSubType",
           },
           "type": {
+            "display-name": "Transaction Type (v2.0.0)",
             "docs": "The transaction type. If the \`type\` is \`debit\` or \`credit\`, the \`subtype\` conveys further transaction type details.",
             "type": "TransactionType",
           },
@@ -5260,6 +5347,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "docs": "Describes the merchant associated with a transaction.",
         "properties": {
           "logo_url": {
+            "display-name": "Transaction Merchant (v1.0.0)",
             "docs": "The optional URL of the merchant's logo. This image must be an image resource (SVG, PNG, GIF, JPEG image) that does not require any authentication. The URL may contain query parameters.",
             "type": "optional<string>",
             "validation": {
@@ -5270,6 +5358,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "name": {
+            "display-name": "Transaction Merchant (v1.0.0)",
             "docs": "The merchant\\'s name.",
             "type": "optional<string>",
             "validation": {
@@ -5280,6 +5369,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "website_url": {
+            "display-name": "Transaction Merchant (v1.0.0)",
             "docs": "The merchant's website URL.",
             "type": "optional<string>",
             "validation": {
@@ -5400,10 +5490,12 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "docs": "A reference to a banking account used within an account to account transfer. This object may be set from an account's \`account.reference\` object.",
         "properties": {
           "id": {
+            "display-name": "Resource Identifier (v1.0.0)",
             "docs": "The unique ID of a banking account.",
             "type": "ResourceId",
           },
           "label": {
+            "display-name": "Transfer Account Reference (v2.0.1)",
             "docs": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
             "type": "optional<string>",
             "validation": {
@@ -5414,10 +5506,12 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "location": {
+            "display-name": "Transfer Account Reference (v2.0.1)",
             "docs": "Indicates where an account is held.",
             "type": "optional<AccountLocation>",
           },
           "type": {
+            "display-name": "Transfer Account Reference (v2.0.1)",
             "docs": "The product type of the account.",
             "type": "optional<ProductType>",
           },
@@ -5430,6 +5524,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "docs": "A date where a transfer restriction occurs, and the \`reason\` it is restricted. If the \`reason\` is \`holiday\`, \`closure\` and the transfer is an ACH transfer, the object also contains either a \`debitOn\` or \`creditOn\` date or both.",
         "properties": {
           "creditOn": {
+            "display-name": "Transfer Date Restriction (v1.0.0)",
             "docs": "The date the local financial institution account is credited in [RFC 3339 \`YYYY-MM-DD\`](https://tools.ietf.org/html/rfc3339) date format. This is derived from the \`date\` based on the \`risk\` level. The credit-on date normally falls one business day after the restricted \`date\`. This property is only returned if the payment \`type\` is \`achDebit\` or \`ach\`.",
             "type": "optional<string>",
             "validation": {
@@ -5440,6 +5535,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "debitOn": {
+            "display-name": "Transfer Date Restriction (v1.0.0)",
             "docs": "The date the local financial institution account is debited in [RFC 3339 \`YYYY-MM-DD\`](https://tools.ietf.org/html/rfc3339) date format. This is derived from the \`date\` based on the \`risk\` level and the transfer direction (\`achDebit\` or \`achCredit\`). The debit-on date normally falls one to three business days before the restricted \`date\`. This property is only returned if the payment \`type\` is \`achCredit\` or \`ach\`.",
             "type": "optional<string>",
             "validation": {
@@ -5460,6 +5556,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "reason": {
+            "display-name": "Transfer Date Restriction Type (v1.0.0)",
             "docs": "Indicates why this date is restricted.",
             "type": "TransferDateRestrictionType",
           },
@@ -5548,10 +5645,12 @@ The response may include dates prior to requested the start date, as that is use
         "docs": "Common fields of the transfer resource used to build other model schemas.",
         "properties": {
           "amount": {
+            "display-name": "Transfer Fields (v3.0.1)",
             "docs": "The amount of money to transfer between accounts.",
             "type": "optional<MonetaryValue>",
           },
           "memo": {
+            "display-name": "Transfer Fields (v3.0.1)",
             "docs": "A customer-defined memo to describe the transfer.",
             "type": "optional<string>",
             "validation": {
@@ -5562,10 +5661,12 @@ The response may include dates prior to requested the start date, as that is use
             },
           },
           "sourceAccount": {
+            "display-name": "Transfer Fields (v3.0.1)",
             "docs": "The source account where the funds are withdrawn.",
             "type": "optional<TransferAccountReference>",
           },
           "targetAccount": {
+            "display-name": "Transfer Fields (v3.0.1)",
             "docs": "The target account where the funds are deposited.",
             "type": "optional<TransferAccountReference>",
           },
@@ -5675,10 +5776,12 @@ The response may include dates prior to requested the start date, as that is use
             "type": "optional<datetime>",
           },
           "schedule": {
+            "display-name": "Transfer Item Schedule (v1.0.0)",
             "docs": "When the transfer should occur and any recurrence.",
             "type": "TransferItemSchedule",
           },
           "state": {
+            "display-name": "Transfer State (v2.0.0)",
             "docs": "The state of this transfer resource.",
             "type": "TransferState",
           },
@@ -5764,11 +5867,13 @@ The response may include dates prior to requested the start date, as that is use
 For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are mutually exclusive.",
         "properties": {
           "amountLimit": {
+            "display-name": "Transfer Schedule (v2.0.0)",
             "docs": "For recurring schedules (\`frequency\` is not \`once\`), this is the total dollar amount limit including the first transfer. No transfers are scheduled if they would exceed this amount. This property is ignored if \`frequency\` is \`once\`.",
             "type": "optional<MonetaryValue>",
           },
           "count": {
             "default": 1,
+            "display-name": "Transfer Schedule (v2.0.0)",
             "docs": "For recurring schedules (\`frequency\` is not \`once\`), this is the total number of transfers to make, including the first transfer. This property is ignored if \`frequency\` is \`once\`.",
             "type": "optional<integer>",
             "validation": {
@@ -5780,6 +5885,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             },
           },
           "endsOn": {
+            "display-name": "Transfer Schedule (v2.0.0)",
             "docs": "The optional date when the recurring transfer schedule ends, in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. Subsequent recurring transfers may be scheduled up to and including this date, but not after. This property is ignored if \`frequency\` is \`once\`.",
             "type": "optional<string>",
             "validation": {
@@ -5789,9 +5895,16 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
               "pattern": undefined,
             },
           },
-          "frequency": "TransferFrequency",
-          "recurrenceType": "optional<TransferRecurrenceType>",
+          "frequency": {
+            "display-name": "Transfer Frequency (v1.0.0)",
+            "type": "TransferFrequency",
+          },
+          "recurrenceType": {
+            "display-name": "Transfer Schedule (v2.0.0)",
+            "type": "optional<TransferRecurrenceType>",
+          },
           "scheduledOn": {
+            "display-name": "Transfer Schedule (v2.0.0)",
             "docs": "The date the the customer scheduled the transfer to occur in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format.",
             "type": "optional<string>",
             "validation": {
@@ -7940,6 +8053,7 @@ This error response may have one of the following \`type\` values:
             },
           },
           "nextPage_url": {
+            "display-name": "Abstract Paged Body Fields (v1.1.0)",
             "docs": "The URL of the next page of resources. If this URL is omitted, there are no more resources in the collection.",
             "type": "optional<string>",
             "validation": {
@@ -7962,6 +8076,7 @@ This error response may have one of the following \`type\` values:
         ],
         "properties": {
           "allows": {
+            "display-name": "Full Account Permissions (v1.0.0)",
             "docs": "Flags which indicate the permissions the current authorized user has on this account resource.",
             "type": "FullAccountPermissions",
           },
@@ -8033,14 +8148,17 @@ This error response may have one of the following \`type\` values:
         "docs": "The current balances of the given account.",
         "properties": {
           "available": {
+            "display-name": "Account Balance (v1.0.0)",
             "docs": "The available balance: the funds available for use. This is the string representation of the exact decimal amount.",
             "type": "optional<CreditOrDebitValue>",
           },
           "current": {
+            "display-name": "Account Balance (v1.0.0)",
             "docs": "The current balance. This is the balance at the end of the previous business day. This is the string representation of the exact decimal amount.",
             "type": "optional<CreditOrDebitValue>",
           },
           "currentWithPending": {
+            "display-name": "Account Balance (v1.0.0)",
             "docs": "The current balance, with posted transactions. This is the string representation of the exact decimal amount.",
             "type": "optional<CreditOrDebitValue>",
           },
@@ -8053,6 +8171,7 @@ This error response may have one of the following \`type\` values:
             "type": "boolean",
           },
           "updatedAt": {
+            "display-name": "Account Balance (v1.0.0)",
             "docs": "The time when the balance values were last updated from the banking core.",
             "type": "optional<ReadOnlyTimestamp>",
           },
@@ -8094,25 +8213,39 @@ This error response may have one of the following \`type\` values:
             },
           },
           "location": {
+            "display-name": "Account Location (v1.0.0)",
             "docs": "Indicates where an account is held.",
             "type": "AccountLocation",
           },
-          "maskedNumber": "MaskedAccountNumber",
-          "nickname": "optional<AccountNickname>",
-          "product": "ProductReference",
+          "maskedNumber": {
+            "display-name": "Masked Account Number (v1.0.1)",
+            "type": "MaskedAccountNumber",
+          },
+          "nickname": {
+            "display-name": "Account Fields (v1.0.1)",
+            "type": "optional<AccountNickname>",
+          },
+          "product": {
+            "display-name": "Product Reference (v1.0.0)",
+            "type": "ProductReference",
+          },
         },
         "source": {
           "openapi": "apiture/openapi.yml",
         },
       },
       "AccountIds": {
+        "display-name": "Account IDs (v1.1.0)",
         "docs": "An array of account IDs.",
         "type": "list<ResourceId>",
       },
       "AccountItem": {
         "docs": "An account item in a list items in the \`accounts\` schema.",
         "properties": {
-          "allows": "AccountPermissions",
+          "allows": {
+            "display-name": "Account Permissions (v0.3.0)",
+            "type": "AccountPermissions",
+          },
           "id": {
             "docs": "The unique identifier for this account resource. This is an immutable opaque string.",
             "type": "optional<ReadOnlyResourceId>",
@@ -8461,6 +8594,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
           },
           "address2": {
+            "display-name": "Address Fields (v1.1.0)",
             "docs": "The second line of the street address. This should only be used if it has a value. Typical values include building numbers, suite numbers, and other identifying information beyond the first line of the postal address.",
             "type": "optional<string>",
             "validation": {
@@ -8509,32 +8643,39 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "docs": "API problem or error, as per [RFC 7807 application/problem+json](https://tools.ietf.org/html/rfc7807).",
         "properties": {
           "attributes": {
+            "display-name": "API Problem (v1.1.0)",
             "docs": "Additional optional attributes related to the problem. This data conforms to the schema associated with the error type.",
             "type": "optional<map<string, unknown>>",
           },
           "detail": {
+            "display-name": "API Problem (v1.1.0)",
             "docs": "A human-readable explanation specific to this occurrence of the problem.
 ",
             "type": "optional<string>",
           },
           "id": {
+            "display-name": "API Problem (v1.1.0)",
             "docs": "The unique identifier for this problem. This is an immutable opaque string.",
             "type": "optional<ReadOnlyResourceId>",
           },
           "instance": {
+            "display-name": "API Problem (v1.1.0)",
             "docs": "A URI reference that identifies the specific occurrence of the problem. This is the URI of an API resource that the problem is related to, with a unique error correlation ID URI fragment
 ",
             "type": "optional<string>",
           },
           "occurredAt": {
+            "display-name": "API Problem (v1.1.0)",
             "docs": "The timestamp when the problem occurred, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time \`YYYY-MM-DDThh:mm:ss.sssZ\` format, UTC.",
             "type": "optional<ReadOnlyTimestamp>",
           },
           "problems": {
+            "display-name": "API Problem (v1.1.0)",
             "docs": "Optional root-causes if there are multiple problems in the request or API call processing.",
             "type": "optional<list<ApiProblem>>",
           },
           "status": {
+            "display-name": "API Problem (v1.1.0)",
             "docs": "The [HTTP status code](https://datatracker.ietf.org/doc/html/rfc7231#section-6) for this occurrence of the problem.
 ",
             "type": "optional<integer>",
@@ -8547,11 +8688,13 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
           },
           "title": {
+            "display-name": "API Problem (v1.1.0)",
             "docs": "A short, human-readable summary of the problem type. The title is usually the same for all problem with the same \`type\`.
 ",
             "type": "optional<string>",
           },
           "type": {
+            "display-name": "API Problem (v1.1.0)",
             "docs": "A [URI reference (RFC3986)](https://tools.ietf.org/html/rfc3986) that identifies the problem type. If present, this is the URL of human-readable HTML documentation for the problem type. When this member is not present, its value is assumed to be \`"about:blank"\`.
 ",
             "type": "optional<string>",
@@ -8565,11 +8708,18 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "docs": "An challenge factor. See [\`requiredIdentityChallenge\`](#schema-requiredIdentityChallenge) for multiple examples.",
         "properties": {
           "labels": {
+            "display-name": "Challenge Factor (v1.0.0)",
             "docs": "A list of text label which identifies the channel(s) though which the user completes the challenge. For an \`sms\` or \`voice\` challenge, the only label item is the last four digits of the corresponding phone number. For an \`email\` challenge, each label is the masked email address.",
             "type": "optional<list<string>>",
           },
-          "securityQuestions": "optional<ChallengeSecurityQuestions>",
-          "type": "ChallengeFactorType",
+          "securityQuestions": {
+            "display-name": "Challenge Factor (v1.0.0)",
+            "type": "optional<ChallengeSecurityQuestions>",
+          },
+          "type": {
+            "display-name": "Challenge Factor Type (v1.0.0)",
+            "type": "ChallengeFactorType",
+          },
         },
         "source": {
           "openapi": "apiture/openapi.yml",
@@ -8634,6 +8784,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "docs": "A single security question within the \`questions\` array of the [\`challengeSecurityQuestions\`](#schema-challengeSecurityQuestions)",
         "properties": {
           "id": {
+            "display-name": "Challenge Prompt ID (v1.0.0)",
             "docs": "The unique ID of security question prompt. This should be included in the [\`challengeVerification\`](#schema-challengeVerification) response as the \`promptId\`.",
             "type": "ChallengePromptId",
           },
@@ -8675,6 +8826,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
       },
       "CheckNumberRange": {
+        "display-name": "Positive Integer Range (v1.1.0)",
         "docs": "A numeric range for a checking account check number.",
         "type": "PositiveIntegerRange",
       },
@@ -8701,7 +8853,10 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "pattern": "^(?<hour>[0-2][0-9]):(?<minute>[0-5][0-9])$",
             },
           },
-          "type": "CutoffTimeType",
+          "type": {
+            "display-name": "Cutoff type Type (v1.0.0)",
+            "type": "CutoffTimeType",
+          },
         },
         "source": {
           "openapi": "apiture/openapi.yml",
@@ -8768,6 +8923,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "type": "list<CutoffTime>",
           },
           "timeZoneId": {
+            "display-name": " (v1.0.0)",
             "docs": "The identifier of the time zone for which all of the \`items[].time\` are returned in.
 The client can use this value to localize the \`items[].time\` values to the local time zone of the customer, as well as for formatting to localized names, such as \`EST\` and \`EDT\`.",
             "type": "TimeZoneId",
@@ -8788,6 +8944,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       },
       "EligibleOverdraftAccountItem": {
+        "display-name": "Overdraft Account Fields (v1.0.0)",
         "docs": "An account that is eligible to be assigned as an overdraft protection account for another account.",
         "type": "OverdraftAccountFields",
       },
@@ -8917,6 +9074,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         ],
         "properties": {
           "incompleteAccounts": {
+            "display-name": "Account IDs (v1.1.0)",
             "docs": "Pass these values as the \`?accounts=\` query parameter on the next retry of the [\`listAccountBalances\`](#op-listAccountBalances) operation. This value is empty if the client has reached the retry limit.",
             "type": "AccountIds",
           },
@@ -9051,6 +9209,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "properties": {
           "disallowDebitCardAccess": {
             "default": false,
+            "display-name": "Joint Owner Invitation Fields (v1.0.0)",
             "docs": "If \`true\`, the invitee is not allowed to order or manage debit cards for the account.",
             "type": "optional<boolean>",
           },
@@ -9095,6 +9254,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "taxId": {
+            "display-name": "Joint Owner Invitation Fields (v1.0.0)",
             "docs": "The last 4 digits of the invitee's tax ID number (Social Security Number). This is not sent in the invitation email, but if the invitee enrolls in digital banking, this identification must match the last four digits of the tax ID they use to enroll.",
             "type": "optional<string>",
             "validation": {
@@ -9133,10 +9293,12 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "docs": "Fields of an overdraft protection account, used to compose other schemas.",
         "properties": {
           "id": {
+            "display-name": "Overdraft Account Fields (v1.0.0)",
             "docs": "The unique ID of the account resource. Use this as the \`{accountId}\` in [\`getAccount\`](#op-getAccount) or [\`listAccountBalances\`](#op-listAccountBalances).",
             "type": "optional<ResourceId>",
           },
           "label": {
+            "display-name": "Overdraft Account Fields (v1.0.0)",
             "docs": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
             "type": "optional<string>",
             "validation": {
@@ -9146,13 +9308,17 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "pattern": undefined,
             },
           },
-          "maskedNumber": "optional<MaskedAccountNumber>",
+          "maskedNumber": {
+            "display-name": "Overdraft Account Fields (v1.0.0)",
+            "type": "optional<MaskedAccountNumber>",
+          },
         },
         "source": {
           "openapi": "apiture/openapi.yml",
         },
       },
       "OverdraftAccountItem": {
+        "display-name": "Overdraft Account Fields (v1.0.0)",
         "docs": "An overdraft protection account linked to another protected account. The \`label\` and \`maskedNumber\` are informational only.",
         "type": "OverdraftAccountFields",
       },
@@ -9182,7 +9348,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "OverdraftProtectionFields": {
         "docs": "Fields used to compose other overdraft protection schemas.",
         "properties": {
-          "accounts": "optional<unknown>",
+          "accounts": {
+            "display-name": "Overdraft Protection Fields (v1.0.0)",
+            "type": "optional<unknown>",
+          },
         },
         "source": {
           "openapi": "apiture/openapi.yml",
@@ -9243,6 +9412,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "type": {
+            "display-name": "Product Type (v2.0.0)",
             "docs": "The type of account.",
             "type": "ProductType",
           },
@@ -9302,10 +9472,12 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       },
       "ReadOnlyResourceId": {
+        "display-name": "Resource Identifier (v1.0.0)",
         "docs": "The unique, opaque system-assigned identifier for a resource. This case-sensitive ID is also used in URLs as path parameters or in other properties or parameters that reference a resource by ID rather than URL. Resource IDs are immutable.",
         "type": "ResourceId",
       },
       "ReadOnlyTimestamp": {
+        "display-name": "Read-Only Timestamp (v1.0.0)",
         "docs": "A readonly or derived timestamp (an instant in time) formatted in [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date-time\` UTC format: \`YYYY-MM-DDThh:mm:ss.sssZ\`.<br>The schema \`readOnlyTimestamp\` was added on version \`0.4.0\` of the API.",
         "type": "datetime",
       },
@@ -9343,6 +9515,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "docs": "A simple representation of a financial institution.",
         "properties": {
           "address": {
+            "display-name": "Address (v1.1.0)",
             "docs": "The financial institution's postal mailing address.",
             "type": "Address",
           },
@@ -9357,6 +9530,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "locatorType": {
+            "display-name": "institution Locator Type (v1.0.0)",
             "docs": "Indicates the type of this institution's \`locator\`.",
             "type": "InstitutionLocatorType",
           },
@@ -9389,10 +9563,12 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "docs": "Timestamps which describe when a resource was created or last updated.",
         "properties": {
           "createdAt": {
+            "display-name": "Timestamp Fields (v1.0.0)",
             "docs": "The date-time when this resource was created, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time \`YYYY-MM-DDThh:mm:ss.sssZ\` format, UTC. This is derived and immutable.",
             "type": "optional<datetime>",
           },
           "updatedAt": {
+            "display-name": "Timestamp Fields (v1.0.0)",
             "docs": "The date-time when the resource was last updated, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time \`YYYY-MM-DDThh:mm:ss.sssZ\` format, UTC. This is derived and immutable.",
             "type": "optional<datetime>",
           },
@@ -9426,7 +9602,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "pattern": "^[-_:.~$a-zA-Z0-9]{1,32}$",
             },
           },
-          "label": "TransactionCategoryLabel",
+          "label": {
+            "display-name": "Transaction Category Label (v1.1.0)",
+            "type": "TransactionCategoryLabel",
+          },
         },
         "source": {
           "openapi": "apiture/openapi.yml",
@@ -9439,7 +9618,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "TransactionCategorization",
         ],
         "properties": {
-          "type": "TransactionCategoryType",
+          "type": {
+            "display-name": "Transaction Category (v1.0.0)",
+            "type": "TransactionCategoryType",
+          },
         },
         "source": {
           "openapi": "apiture/openapi.yml",
@@ -9489,6 +9671,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "docs": "Describes a check associated with a transaction for a checking account. This object is only present if the transaction \`type\` is \`debit\` and the \`subtype\` is \`check\`.",
         "properties": {
           "imageBack_url": {
+            "display-name": "Transaction Check (v2.0.0)",
             "docs": "The URL for downloading the image of the front of the check.",
             "type": "optional<string>",
             "validation": {
@@ -9499,6 +9682,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "imageFront_url": {
+            "display-name": "Transaction Check (v2.0.0)",
             "docs": "The URL for downloading the image of the front of the check.",
             "type": "optional<string>",
             "validation": {
@@ -9528,20 +9712,27 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "docs": "Common fields of the transaction resource used to build other model schemas.",
         "properties": {
           "amount": {
+            "display-name": "Credit Or Debit Value (v1.0.0)",
             "docs": "The transaction amount in dollars. This value is negative if the transaction is a debit and positive if it is a credit.",
             "type": "CreditOrDebitValue",
           },
           "balance": {
+            "display-name": "Transaction Fields (v2.1.1)",
             "docs": "The account's running current balance as of this transaction. The \`balance\` may be omitted if the request includes filters which preclude the inclusion of a running balance.",
             "type": "optional<CreditOrDebitValue>",
           },
           "category": {
+            "display-name": "Transaction Fields (v2.1.1)",
             "docs": "The transaction category, if assigned.",
             "type": "optional<TransactionCategorization>",
           },
-          "check": "optional<TransactionCheck>",
+          "check": {
+            "display-name": "Transaction Fields (v2.1.1)",
+            "type": "optional<TransactionCheck>",
+          },
           "createdOn": {
             "availability": "deprecated",
+            "display-name": "Transaction Fields (v2.1.1)",
             "docs": "The date when the transaction occurred in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived and immutable.<br>**Warning**: The property \`createdOn\` was deprecated on version \`v2.1.0\` of the schema. Use the \`occurredOn\` property instead. \`createdOn\` will be removed on version \`v3.0.0\` of the schema.",
             "type": "optional<string>",
             "validation": {
@@ -9552,6 +9743,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "description": {
+            "display-name": "Transaction Fields (v2.1.1)",
             "docs": "The transaction description assigned by the transaction cleansing service.",
             "type": "optional<string>",
             "validation": {
@@ -9572,6 +9764,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "memo": {
+            "display-name": "Transaction Fields (v2.1.1)",
             "docs": "The user-settable transaction memo.",
             "type": "optional<string>",
             "validation": {
@@ -9581,7 +9774,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "pattern": undefined,
             },
           },
-          "merchant": "optional<TransactionMerchant>",
+          "merchant": {
+            "display-name": "Transaction Fields (v2.1.1)",
+            "type": "optional<TransactionMerchant>",
+          },
           "occurredOn": {
             "docs": "The date of the transaction in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived and immutable.",
             "type": "string",
@@ -9593,11 +9789,13 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "posted": {
+            "display-name": "Transaction Fields (v2.1.1)",
             "docs": "If \`true\`, the transaction has been posted (cleared) and applied to the account. If \`false\`, the transaction is still pending and might be canceled. \`posted\` is only valid for credit and debit transactions and omitted for balance transactions.",
             "type": "optional<boolean>",
           },
           "postedOn": {
             "availability": "deprecated",
+            "display-name": "Transaction Fields (v2.1.1)",
             "docs": "The date when this transaction was posted (cleared and applied to the account balance) in [RFC 3339](https://tools.ietf.org/html/rfc3339) date \`YYYY-MM-DD\` format, UTC. This is derived and immutable and only present if \`posted\` is \`true\`.<br>**Warning**: The property \`postedOn\` was deprecated on version \`v2.1.0\` of the schema. Use the \`occurredOn\` property instead. \`postedOn\` will be removed on version \`v3.0.0\` of the schema.",
             "type": "optional<string>",
             "validation": {
@@ -9608,10 +9806,12 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "subtype": {
+            "display-name": "Transaction Subtype (v1.0.0)",
             "docs": "The transaction's kind of debit or credit.",
             "type": "TransactionSubType",
           },
           "type": {
+            "display-name": "Transaction Type (v2.0.0)",
             "docs": "The transaction type. If the \`type\` is \`debit\` or \`credit\`, the \`subtype\` conveys further transaction type details.",
             "type": "TransactionType",
           },
@@ -9635,6 +9835,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "docs": "Describes the merchant associated with a transaction.",
         "properties": {
           "logo_url": {
+            "display-name": "Transaction Merchant (v1.0.0)",
             "docs": "The optional URL of the merchant's logo. This image must be an image resource (SVG, PNG, GIF, JPEG image) that does not require any authentication. The URL may contain query parameters.",
             "type": "optional<string>",
             "validation": {
@@ -9645,6 +9846,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "name": {
+            "display-name": "Transaction Merchant (v1.0.0)",
             "docs": "The merchant\\'s name.",
             "type": "optional<string>",
             "validation": {
@@ -9655,6 +9857,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "website_url": {
+            "display-name": "Transaction Merchant (v1.0.0)",
             "docs": "The merchant's website URL.",
             "type": "optional<string>",
             "validation": {
@@ -9775,10 +9978,12 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "docs": "A reference to a banking account used within an account to account transfer. This object may be set from an account's \`account.reference\` object.",
         "properties": {
           "id": {
+            "display-name": "Resource Identifier (v1.0.0)",
             "docs": "The unique ID of a banking account.",
             "type": "ResourceId",
           },
           "label": {
+            "display-name": "Transfer Account Reference (v2.0.1)",
             "docs": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
             "type": "optional<string>",
             "validation": {
@@ -9789,10 +9994,12 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "location": {
+            "display-name": "Transfer Account Reference (v2.0.1)",
             "docs": "Indicates where an account is held.",
             "type": "optional<AccountLocation>",
           },
           "type": {
+            "display-name": "Transfer Account Reference (v2.0.1)",
             "docs": "The product type of the account.",
             "type": "optional<ProductType>",
           },
@@ -9805,6 +10012,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "docs": "A date where a transfer restriction occurs, and the \`reason\` it is restricted. If the \`reason\` is \`holiday\`, \`closure\` and the transfer is an ACH transfer, the object also contains either a \`debitOn\` or \`creditOn\` date or both.",
         "properties": {
           "creditOn": {
+            "display-name": "Transfer Date Restriction (v1.0.0)",
             "docs": "The date the local financial institution account is credited in [RFC 3339 \`YYYY-MM-DD\`](https://tools.ietf.org/html/rfc3339) date format. This is derived from the \`date\` based on the \`risk\` level. The credit-on date normally falls one business day after the restricted \`date\`. This property is only returned if the payment \`type\` is \`achDebit\` or \`ach\`.",
             "type": "optional<string>",
             "validation": {
@@ -9815,6 +10023,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "debitOn": {
+            "display-name": "Transfer Date Restriction (v1.0.0)",
             "docs": "The date the local financial institution account is debited in [RFC 3339 \`YYYY-MM-DD\`](https://tools.ietf.org/html/rfc3339) date format. This is derived from the \`date\` based on the \`risk\` level and the transfer direction (\`achDebit\` or \`achCredit\`). The debit-on date normally falls one to three business days before the restricted \`date\`. This property is only returned if the payment \`type\` is \`achCredit\` or \`ach\`.",
             "type": "optional<string>",
             "validation": {
@@ -9835,6 +10044,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "reason": {
+            "display-name": "Transfer Date Restriction Type (v1.0.0)",
             "docs": "Indicates why this date is restricted.",
             "type": "TransferDateRestrictionType",
           },
@@ -9923,10 +10133,12 @@ The response may include dates prior to requested the start date, as that is use
         "docs": "Common fields of the transfer resource used to build other model schemas.",
         "properties": {
           "amount": {
+            "display-name": "Transfer Fields (v3.0.1)",
             "docs": "The amount of money to transfer between accounts.",
             "type": "optional<MonetaryValue>",
           },
           "memo": {
+            "display-name": "Transfer Fields (v3.0.1)",
             "docs": "A customer-defined memo to describe the transfer.",
             "type": "optional<string>",
             "validation": {
@@ -9937,10 +10149,12 @@ The response may include dates prior to requested the start date, as that is use
             },
           },
           "sourceAccount": {
+            "display-name": "Transfer Fields (v3.0.1)",
             "docs": "The source account where the funds are withdrawn.",
             "type": "optional<TransferAccountReference>",
           },
           "targetAccount": {
+            "display-name": "Transfer Fields (v3.0.1)",
             "docs": "The target account where the funds are deposited.",
             "type": "optional<TransferAccountReference>",
           },
@@ -10050,10 +10264,12 @@ The response may include dates prior to requested the start date, as that is use
             "type": "optional<datetime>",
           },
           "schedule": {
+            "display-name": "Transfer Item Schedule (v1.0.0)",
             "docs": "When the transfer should occur and any recurrence.",
             "type": "TransferItemSchedule",
           },
           "state": {
+            "display-name": "Transfer State (v2.0.0)",
             "docs": "The state of this transfer resource.",
             "type": "TransferState",
           },
@@ -10139,11 +10355,13 @@ The response may include dates prior to requested the start date, as that is use
 For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are mutually exclusive.",
         "properties": {
           "amountLimit": {
+            "display-name": "Transfer Schedule (v2.0.0)",
             "docs": "For recurring schedules (\`frequency\` is not \`once\`), this is the total dollar amount limit including the first transfer. No transfers are scheduled if they would exceed this amount. This property is ignored if \`frequency\` is \`once\`.",
             "type": "optional<MonetaryValue>",
           },
           "count": {
             "default": 1,
+            "display-name": "Transfer Schedule (v2.0.0)",
             "docs": "For recurring schedules (\`frequency\` is not \`once\`), this is the total number of transfers to make, including the first transfer. This property is ignored if \`frequency\` is \`once\`.",
             "type": "optional<integer>",
             "validation": {
@@ -10155,6 +10373,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             },
           },
           "endsOn": {
+            "display-name": "Transfer Schedule (v2.0.0)",
             "docs": "The optional date when the recurring transfer schedule ends, in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. Subsequent recurring transfers may be scheduled up to and including this date, but not after. This property is ignored if \`frequency\` is \`once\`.",
             "type": "optional<string>",
             "validation": {
@@ -10164,9 +10383,16 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
               "pattern": undefined,
             },
           },
-          "frequency": "TransferFrequency",
-          "recurrenceType": "optional<TransferRecurrenceType>",
+          "frequency": {
+            "display-name": "Transfer Frequency (v1.0.0)",
+            "type": "TransferFrequency",
+          },
+          "recurrenceType": {
+            "display-name": "Transfer Schedule (v2.0.0)",
+            "type": "optional<TransferRecurrenceType>",
+          },
           "scheduledOn": {
+            "display-name": "Transfer Schedule (v2.0.0)",
             "docs": "The date the the customer scheduled the transfer to occur in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format.",
             "type": "optional<string>",
             "validation": {

@@ -5,6 +5,42 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.40.0] - 2024-09-12
+
+- Feat: A new configuration flag has now been added that will automatically generate
+  `BigInt` for `long` and `bigint` primitive types. To turn this flag on: 
+
+  ```yml
+  groups: 
+    ts-sdk: 
+      name: fernapi/fern-typescript-node-sdk
+      version: 0.40.0
+      config: 
+        useBigInt: true
+  ```  
+
+## [0.39.8] - 2024-09-11
+
+- Fix: The generated enum examples now reference the value of the enum directly instead 
+  of using the enum itself. 
+
+  ### Before
+
+  ```ts
+  {
+    "genre": Imdb.Genre.Humor,
+  }
+  ```
+
+  ### After
+
+  ```ts
+  {
+    "genre": "humor"
+  }
+  ```
+
+
 ## [0.39.7] - 2024-08-27
 
 - Chore: The SDK now produces a `version.ts` file where we export a constant called `SDK_VERSION`. 

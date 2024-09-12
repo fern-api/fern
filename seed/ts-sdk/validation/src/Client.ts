@@ -35,7 +35,7 @@ export class SeedValidationClient {
      *         decimal: 1.1,
      *         even: 1,
      *         name: "string",
-     *         shape: SeedValidation.Shape.Square
+     *         shape: "SQUARE"
      *     })
      */
     public async create(

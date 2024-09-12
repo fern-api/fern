@@ -29,4 +29,15 @@ export class TypeReferenceToRawTypeNodeConverter extends AbstractTypeReferenceTo
     protected override dateTime(): TypeReferenceNode {
         return this.string();
     }
+
+    protected override bigInteger(): TypeReferenceNode {
+        return this.string();
+    }
+
+    protected override long(): TypeReferenceNode {
+        if (this.useBigInt) {
+            return this.string();
+        }
+        return this.number();
+    }
 }

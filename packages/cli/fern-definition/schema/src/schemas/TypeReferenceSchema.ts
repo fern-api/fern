@@ -3,6 +3,7 @@ import { DeclarationSchema } from "./DeclarationSchema";
 import { DeclarationWithNameSchema } from "./DeclarationWithNameSchema";
 import { EncodingSchema } from "./EncodingSchema";
 import { ValidationSchema } from "./ValidationSchema";
+import { WithDisplayNameSchema } from "./WithDisplayNameSchema";
 import { WithDocsAndAvailabilitySchema } from "./WithDocsAndAvailability";
 import { WithDocsSchema } from "./WithDocsSchema";
 
@@ -32,6 +33,13 @@ export const TypeReferenceWithDocsAndAvailabilitySchema = extendTypeReferenceSch
     WithDocsAndAvailabilitySchema.shape
 );
 export type TypeReferenceWithDocsAndAvailabilitySchema = z.infer<typeof TypeReferenceWithDocsAndAvailabilitySchema>;
+
+export const TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema = extendTypeReferenceSchema(
+    WithDocsAndAvailabilitySchema.extend(WithDisplayNameSchema.shape).shape
+);
+export type TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema = z.infer<
+    typeof TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema
+>;
 
 export const TypeReferenceDeclarationSchema = extendTypeReferenceSchema(DeclarationSchema.shape);
 export type TypeReferenceDeclarationSchema = z.infer<typeof TypeReferenceDeclarationSchema>;
