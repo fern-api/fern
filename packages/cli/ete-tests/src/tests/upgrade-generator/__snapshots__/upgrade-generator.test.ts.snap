@@ -37,3 +37,13 @@ Options:
                    displayed, but no upgrade will be taken.
                                                       [boolean] [default: false]"
 `;
+
+exports[`fern generator upgrade > fern generator upgrade list 1`] = `
+"             ╭───────────────────────────────────────────────────╮
+             │                                                   │
+             │                Generator Upgrades                 │
+             │                                                   │
+             │   Python SDK (Group: python-sdk) 3.0.0 → 3.10.8   │
+             │                                                   │
+             ╰───────────────────────────────────────────────────╯"
+`;

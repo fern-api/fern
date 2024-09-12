@@ -55,14 +55,13 @@ export async function getLatestGeneratorVersions({
             cliContext,
             apiWorkspaces,
             perGeneratorAction: async (_, group, generator, context) => {
-                let groupVersions = versions.versions[group];
-                if (groupVersions == null) {
-                    groupVersions = {};
+                if (versions.versions[group] == null) {
+                    versions.versions[group] = {};
                 }
 
                 const normalizedGeneratorName = generatorsYml.getGeneratorNameOrThrow(generator.name, context);
 
-                await generatorsYml.getLatestGeneratorVersion({
+                const latestVersion = await generatorsYml.getLatestGeneratorVersion({
                     generatorName: normalizedGeneratorName,
                     cliVersion: cliContext.environment.packageVersion,
                     currentGeneratorVersion: generator.version,
@@ -71,11 +70,13 @@ export async function getLatestGeneratorVersions({
                     context
                 });
 
-                groupVersions[generator.name] = {
-                    previousVersion: generator.version,
-                    // TODO: get versions here
-                    latestVersion: "latest"
-                };
+                if (latestVersion != null) {
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    versions.versions[group]![generator.name] = {
+                        previousVersion: generator.version,
+                        latestVersion
+                    };
+                }
             },
             generatorFilter,
             groupFilter
@@ -91,19 +92,32 @@ export async function getLatestGeneratorVersions({
                     return;
                 }
 
-                let apiVersions = versions.versions[api];
-                if (apiVersions == null) {
-                    apiVersions = {};
+                if (versions.versions[api] == null) {
+                    versions.versions[api] = {};
                 }
-                let groupVersions = apiVersions[group];
-                if (groupVersions == null) {
-                    groupVersions = {};
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                if (versions.versions[api]![group] == null) {
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    versions.versions[api]![group] = {};
                 }
-                groupVersions[generator.name] = {
-                    previousVersion: generator.version,
-                    // TODO: get versions here
-                    latestVersion: "latest"
-                };
+
+                const normalizedGeneratorName = generatorsYml.getGeneratorNameOrThrow(generator.name, context);
+                const latestVersion = await generatorsYml.getLatestGeneratorVersion({
+                    generatorName: normalizedGeneratorName,
+                    cliVersion: cliContext.environment.packageVersion,
+                    currentGeneratorVersion: generator.version,
+                    channel,
+                    includeMajor,
+                    context
+                });
+
+                if (latestVersion != null) {
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    versions.versions[api]![group]![generator.name] = {
+                        previousVersion: generator.version,
+                        latestVersion
+                    };
+                }
             },
             generatorFilter,
             groupFilter

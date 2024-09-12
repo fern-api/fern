@@ -57,15 +57,17 @@ export function getFernUpgradeMessage({
 
 export function getGeneratorUpgradeMessage({
     generatorUpgradeInfo,
+    header,
     limit,
     includeBoxen = true
 }: {
     generatorUpgradeInfo: FernGeneratorUpgradeInfo[];
+    header?: string;
     limit?: number;
     includeBoxen?: boolean;
 }): string | undefined {
-    let message = "";
-    const generatorUpgradeNeeded = false;
+    let message = header ?? "";
+    let generatorUpgradeNeeded = false;
 
     let generatorsNeedingUpgrades = generatorUpgradeInfo.filter((gui) => gui.isUpgradeAvailable);
     if (limit != null) {
@@ -77,10 +79,12 @@ export function getGeneratorUpgradeMessage({
         message +=
             `\n${normalizeGeneratorName(generatorUpgrade.generatorName)} (${
                 generatorUpgrade.apiName != null ? "API:" + generatorUpgrade.apiName + ", " : ""
-            } Group: ${generatorUpgrade.generatorGroup})` +
+            }Group: ${generatorUpgrade.generatorGroup}) ` +
             chalk.dim(generatorUpgrade.currentVersion) +
             chalk.reset(" → ") +
             chalk.green(generatorUpgrade.latestVersion);
+
+        generatorUpgradeNeeded = true;
     }
 
     if (generatorUpgradeNeeded) {

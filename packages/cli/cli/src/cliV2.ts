@@ -9,6 +9,7 @@ import { getOrganziation } from "./commands/organization/getOrganization";
 import { upgradeGenerator } from "./commands/upgrade/upgradeGenerator";
 import { getProjectGeneratorUpgrades } from "./cli-context/upgrade-utils/getGeneratorVersions";
 import { getGeneratorUpgradeMessage } from "./cli-context/upgrade-utils/getFernUpgradeMessage";
+import { writeFile } from "fs/promises";
 
 export function addGetOrganizationCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext): void {
     cli.command(
@@ -155,6 +156,8 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                     });
 
                     if (argv.list) {
+                        // We're delivering a verbose upgrade message, so we should suppress the traditional upgrade message
+                        cliContext.suppressUpgradeMessage();
                         const upgrades = await getProjectGeneratorUpgrades({
                             cliContext,
                             project,
@@ -166,12 +169,11 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
 
                         const message = getGeneratorUpgradeMessage({
                             generatorUpgradeInfo: upgrades,
+                            header: "Generator Upgrades\n",
                             includeBoxen: true
                         });
-                        if (message) {
+                        if (message != null) {
                             cliContext.logger.info(message);
-                        } else {
-                            throw new Error(JSON.stringify(upgrades));
                         }
                     } else {
                         await upgradeGenerator({
@@ -194,6 +196,11 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                 false,
                 (yargs) =>
                     yargs
+                        .option("output", {
+                            string: true,
+                            alias: "o",
+                            description: "The location to output the list as a text file, defaults to standard out."
+                        })
                         .option("generator", {
                             string: true,
                             demandOption: true,
@@ -241,7 +248,19 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                         );
                     }
                     if (argv.version) {
-                        process.stdout.write(generator.version);
+                        if (argv.output == null) {
+                            process.stdout.write(generator.version);
+                            return;
+                        }
+
+                        try {
+                            await writeFile(argv.output, generator.version);
+                        } catch (error) {
+                            cliContext.failAndThrow(
+                                `Could not write file to the specified location: ${argv.output}`,
+                                error
+                            );
+                        }
                     }
                 }
             );
