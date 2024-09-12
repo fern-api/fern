@@ -8,10 +8,6 @@ export declare namespace TypeReferenceToParsedTypeNodeConverter {
 }
 
 export class TypeReferenceToParsedTypeNodeConverter extends AbstractTypeReferenceToTypeNodeConverter {
-    constructor(superInit: TypeReferenceToParsedTypeNodeConverter.Init) {
-        super(superInit);
-    }
-
     protected override set(itemType: TypeReference): TypeReferenceNode {
         if (this.includeSerdeLayer && this.isTypeReferencePrimitive(itemType)) {
             const itemTypeNode = this.convert(itemType).typeNode;
