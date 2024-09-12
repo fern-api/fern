@@ -39,6 +39,7 @@
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-fern/fiddle-sdk": "0.0.584",
     "@fern-fern/generator-exec-sdk": "^0.0.898",
+    "@fern-api/sdk": "0.12.2",
     "chalk": "^5.3.0",
     "decompress": "^4.2.1",
     "tmp-promise": "^3.0.3"
