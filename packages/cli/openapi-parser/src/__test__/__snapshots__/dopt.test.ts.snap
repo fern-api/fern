@@ -499,6 +499,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "findBlocks",
       "pagination": null,
       "path": "/v2/block/{uid}",
@@ -1221,10 +1222,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "dopt/openapi.json",
@@ -1561,6 +1559,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "blockTransitions",
       "pagination": null,
       "path": "/v2/block/{uid}/transition",
@@ -1719,10 +1718,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
       "request": null,
       "requestNameOverride": null,
       "response": null,
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "dopt/openapi.json",
@@ -2289,6 +2285,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getFlow",
       "pagination": null,
       "path": "/v2/flow/{sid}",
@@ -3314,10 +3311,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "dopt/openapi.json",
@@ -3707,6 +3701,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "flowIntent",
       "pagination": null,
       "path": "/v2/flow/{uid}/{intent}",
@@ -3909,10 +3904,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
       "request": null,
       "requestNameOverride": null,
       "response": null,
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "dopt/openapi.json",

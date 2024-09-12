@@ -361,6 +361,7 @@ exports[`open api parser > ada > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getEndUserById",
       "pagination": null,
       "path": "/end-users/v1/{end_user_id}",
@@ -418,10 +419,7 @@ exports[`open api parser > ada > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "ada/openapi.json",
@@ -895,6 +893,7 @@ exports[`open api parser > ada > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PATCH",
+      "namespace": null,
       "operationId": "updateEndUserById",
       "pagination": null,
       "path": "/end-users/v1/{end_user_id}",
@@ -974,10 +973,7 @@ exports[`open api parser > ada > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "ada/openapi.json",
@@ -1330,6 +1326,7 @@ exports[`open api parser > ada > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getEndUsers",
       "pagination": null,
       "path": "/end-users/v1",
@@ -1429,10 +1426,7 @@ exports[`open api parser > ada > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "ada/openapi.json",

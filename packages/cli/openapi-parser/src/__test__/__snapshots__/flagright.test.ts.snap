@@ -598,6 +598,7 @@ Here are some of the most used payload fields explained (you can find the full p
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "post-consumer-transaction",
       "pagination": null,
       "path": "/transactions",
@@ -767,10 +768,7 @@ Here are some of the most used payload fields explained (you can find the full p
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "flagright/openapi.yml",
@@ -1424,6 +1422,7 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get-consumer-transaction",
       "pagination": null,
       "path": "/transactions/{transactionId}",
@@ -1481,10 +1480,7 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "flagright/openapi.yml",
@@ -2245,6 +2241,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "idempotent": null,
       "internal": false,
       "method": "POST",
+      "namespace": null,
       "operationId": "post-transaction-event",
       "pagination": null,
       "path": "/events/transaction",
@@ -2296,10 +2293,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "flagright/openapi.yml",
@@ -2797,6 +2791,7 @@ Each consumer User entity needs three mandatory fields:
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "post-consumer-user",
       "pagination": null,
       "path": "/consumer/users",
@@ -2918,10 +2913,7 @@ Each consumer User entity needs three mandatory fields:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "flagright/openapi.yml",
@@ -3503,6 +3495,7 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get-consumer-user",
       "pagination": null,
       "path": "/consumer/users/{userId}",
@@ -3560,10 +3553,7 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "flagright/openapi.yml",
@@ -3808,6 +3798,7 @@ Each consumer Business entity needs three mandatory fields:
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "post-business-user",
       "pagination": null,
       "path": "/business/users",
@@ -3929,10 +3920,7 @@ Each consumer Business entity needs three mandatory fields:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "flagright/openapi.yml",
@@ -5329,6 +5317,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get-business-user-userId",
       "pagination": null,
       "path": "/business/users/{userId}",
@@ -5386,10 +5375,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "flagright/openapi.yml",
@@ -6124,6 +6110,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "idempotent": null,
       "internal": false,
       "method": "POST",
+      "namespace": null,
       "operationId": "post-user-event",
       "pagination": null,
       "path": "/events/consumer/user",
@@ -6175,10 +6162,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "flagright/openapi.yml",
@@ -7728,6 +7712,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "idempotent": null,
       "internal": false,
       "method": "POST",
+      "namespace": null,
       "operationId": "post-business-user-event",
       "pagination": null,
       "path": "/events/business/user",
@@ -7779,10 +7764,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "flagright/openapi.yml",

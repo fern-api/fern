@@ -205,6 +205,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getIssueTriggers",
       "pagination": null,
       "path": "/issue-triggers",
@@ -861,10 +862,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -1044,6 +1042,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "createIssueTrigger",
       "pagination": null,
       "path": "/issue-triggers",
@@ -1246,10 +1245,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -1436,6 +1432,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "upsertIssueTrigger",
       "pagination": null,
       "path": "/issue-triggers",
@@ -1630,10 +1627,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -1794,6 +1788,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getIssueTrigger",
       "pagination": null,
       "path": "/issue-triggers/{id}",
@@ -1851,10 +1846,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -2041,6 +2033,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "updateIssueTrigger",
       "pagination": null,
       "path": "/issue-triggers/{id}",
@@ -2293,10 +2286,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -2378,6 +2368,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "deleteIssueTrigger",
       "pagination": null,
       "path": "/issue-triggers/{id}",
@@ -2435,10 +2426,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -2599,6 +2587,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "disableIssueTrigger",
       "pagination": null,
       "path": "/issue-triggers/{id}/disable",
@@ -2656,10 +2645,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -2820,6 +2806,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "enableIssueTrigger",
       "pagination": null,
       "path": "/issue-triggers/{id}/enable",
@@ -2877,10 +2864,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -3148,6 +3132,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getAttempts",
       "pagination": null,
       "path": "/attempts",
@@ -3534,10 +3519,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -3740,6 +3722,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getAttempt",
       "pagination": null,
       "path": "/attempts/{id}",
@@ -3797,10 +3780,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -4015,6 +3995,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getBookmarks",
       "pagination": null,
       "path": "/bookmarks",
@@ -4945,10 +4926,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -5169,6 +5147,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "createBookmark",
       "pagination": null,
       "path": "/bookmarks",
@@ -5328,10 +5307,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -5516,6 +5492,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getBookmark",
       "pagination": null,
       "path": "/bookmarks/{id}",
@@ -5573,10 +5550,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -5810,6 +5784,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "updateBookmark",
       "pagination": null,
       "path": "/bookmarks/{id}",
@@ -6021,10 +5996,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -6106,6 +6078,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "deleteBookmark",
       "pagination": null,
       "path": "/bookmarks/{id}",
@@ -6163,10 +6136,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -6465,6 +6435,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "triggerBookmark",
       "pagination": null,
       "path": "/bookmarks/{id}/trigger",
@@ -6605,10 +6576,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -6822,6 +6790,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getDestinations",
       "pagination": null,
       "path": "/destinations",
@@ -7932,10 +7901,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -8106,6 +8072,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "createDestination",
       "pagination": null,
       "path": "/destinations",
@@ -8404,10 +8371,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -8578,6 +8542,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "upsertDestination",
       "pagination": null,
       "path": "/destinations",
@@ -8876,10 +8841,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -9028,6 +8990,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getDestination",
       "pagination": null,
       "path": "/destinations/{id}",
@@ -9085,10 +9048,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -9294,6 +9254,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "updateDestination",
       "pagination": null,
       "path": "/destinations/{id}",
@@ -9655,10 +9616,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -9807,6 +9765,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "archiveDestination",
       "pagination": null,
       "path": "/destinations/{id}/archive",
@@ -9864,10 +9823,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -10016,6 +9972,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "unarchiveDestination",
       "pagination": null,
       "path": "/destinations/{id}/unarchive",
@@ -10073,10 +10030,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -10351,6 +10305,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getEvents",
       "pagination": null,
       "path": "/events",
@@ -13021,10 +12976,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -13269,6 +13221,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getEvent",
       "pagination": null,
       "path": "/events/{id}",
@@ -13326,10 +13279,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -13411,6 +13361,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getRequestRawBody",
       "pagination": null,
       "path": "/events/{id}/raw_body",
@@ -13468,10 +13419,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -13854,6 +13802,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "retryEvent",
       "pagination": null,
       "path": "/events/{id}/retry",
@@ -13911,10 +13860,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -14159,6 +14105,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "muteEvent",
       "pagination": null,
       "path": "/events/{id}/mute",
@@ -14216,10 +14163,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -14478,6 +14422,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getEventBulkRetries",
       "pagination": null,
       "path": "/bulk/events/retry",
@@ -18307,10 +18252,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -18518,6 +18460,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "createEventBulkRetry",
       "pagination": null,
       "path": "/bulk/events/retry",
@@ -20870,10 +20813,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -20980,6 +20920,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "generateEventBulkRetryPlan",
       "pagination": null,
       "path": "/bulk/events/retry/plan",
@@ -23309,10 +23250,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -23506,6 +23444,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getEventBulkRetry",
       "pagination": null,
       "path": "/bulk/events/retry/{id}",
@@ -23563,10 +23502,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -23760,6 +23696,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "cancelEventBulkRetry",
       "pagination": null,
       "path": "/bulk/events/retry/{id}/cancel",
@@ -23817,10 +23754,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -24079,6 +24013,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getIgnoredEventBulkRetries",
       "pagination": null,
       "path": "/bulk/ignored-events/retry",
@@ -25460,10 +25395,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -25671,6 +25603,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "createIgnoredEventBulkRetry",
       "pagination": null,
       "path": "/bulk/ignored-events/retry",
@@ -25939,10 +25872,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -26049,6 +25979,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "generateIgnoredEventBulkRetryPlan",
       "pagination": null,
       "path": "/bulk/ignored-events/retry/plan",
@@ -26294,10 +26225,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -26491,6 +26419,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getIgnoredEventBulkRetry",
       "pagination": null,
       "path": "/bulk/ignored-events/retry/{id}",
@@ -26548,10 +26477,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -26745,6 +26671,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "cancelIgnoredEventBulkRetry",
       "pagination": null,
       "path": "/bulk/ignored-events/retry/{id}/cancel",
@@ -26802,10 +26729,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -27032,6 +26956,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getIntegrations",
       "pagination": null,
       "path": "/integrations",
@@ -27127,10 +27052,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -27354,6 +27276,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "createIntegration",
       "pagination": null,
       "path": "/integrations",
@@ -27574,10 +27497,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -27739,6 +27659,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getIntegration",
       "pagination": null,
       "path": "/integrations/{id}",
@@ -27796,10 +27717,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -28010,6 +27928,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "updateIntegration",
       "pagination": null,
       "path": "/integrations/{id}",
@@ -28290,10 +28209,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -28375,6 +28291,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "deleteIntegration",
       "pagination": null,
       "path": "/integrations/{id}",
@@ -28432,10 +28349,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -28551,6 +28465,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "attachIntegrationToSource",
       "pagination": null,
       "path": "/integrations/{id}/attach/{source_id}",
@@ -28635,10 +28550,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -28746,6 +28658,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "detachIntegrationToSource",
       "pagination": null,
       "path": "/integrations/{id}/detach/{source_id}",
@@ -28830,10 +28743,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -29219,6 +29129,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getIssues",
       "pagination": null,
       "path": "/issues",
@@ -31367,10 +31278,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -31471,6 +31379,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getIssueCount",
       "pagination": null,
       "path": "/issues/count",
@@ -33619,10 +33528,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -34083,6 +33989,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getIssue",
       "pagination": null,
       "path": "/issues/{id}",
@@ -34140,10 +34047,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -34380,6 +34284,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "updateIssue",
       "pagination": null,
       "path": "/issues/{id}",
@@ -34538,10 +34443,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -34747,6 +34649,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "dismissIssue",
       "pagination": null,
       "path": "/issues/{id}",
@@ -34804,10 +34707,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -35065,6 +34965,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getRequests",
       "pagination": null,
       "path": "/requests",
@@ -37237,10 +37138,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -37468,6 +37366,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getRequest",
       "pagination": null,
       "path": "/requests/{id}",
@@ -37525,10 +37424,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -37610,6 +37506,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getRequestRawBody",
       "pagination": null,
       "path": "/requests/{id}/raw_body",
@@ -37667,10 +37564,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -38110,6 +38004,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "retryRequest",
       "pagination": null,
       "path": "/requests/{id}/retry",
@@ -38225,10 +38120,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -38538,6 +38430,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getRequestEvents",
       "pagination": null,
       "path": "/requests/{id}/events",
@@ -41236,10 +41129,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -41464,6 +41354,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getRequestIgnoredEvents",
       "pagination": null,
       "path": "/requests/{id}/ignored_events",
@@ -41878,10 +41769,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -42140,6 +42028,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getRequestBulkRetries",
       "pagination": null,
       "path": "/bulk/requests/retry",
@@ -45451,10 +45340,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -45662,6 +45548,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "createRequestBulkRetry",
       "pagination": null,
       "path": "/bulk/requests/retry",
@@ -47521,10 +47408,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -47631,6 +47515,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "generateRequestBulkRetryPlan",
       "pagination": null,
       "path": "/bulk/requests/retry/plan",
@@ -49467,10 +49352,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -49664,6 +49546,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getRequestBulkRetry",
       "pagination": null,
       "path": "/bulk/requests/retry/{id}",
@@ -49721,10 +49604,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -49918,6 +49798,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "cancelRequestBulkRetry",
       "pagination": null,
       "path": "/bulk/requests/retry/{id}/cancel",
@@ -49975,10 +49856,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -50194,6 +50072,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getRulesets",
       "pagination": null,
       "path": "/rulesets",
@@ -51455,10 +51334,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -51631,6 +51507,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "createRuleset",
       "pagination": null,
       "path": "/rulesets",
@@ -51775,10 +51652,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -51951,6 +51825,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "upsertRuleset",
       "pagination": null,
       "path": "/rulesets",
@@ -52095,10 +51970,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -52249,6 +52121,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getRuleset",
       "pagination": null,
       "path": "/rulesets/{id}",
@@ -52306,10 +52179,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -52509,6 +52379,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "updateRuleset",
       "pagination": null,
       "path": "/rulesets/{id}",
@@ -52724,10 +52595,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -52878,6 +52746,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "archiveRuleset",
       "pagination": null,
       "path": "/rulesets/{id}/archive",
@@ -52935,10 +52804,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -53089,6 +52955,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "unarchiveRuleset",
       "pagination": null,
       "path": "/rulesets/{id}/unarchive",
@@ -53146,10 +53013,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -53377,6 +53241,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getSources",
       "pagination": null,
       "path": "/sources",
@@ -54395,10 +54260,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -54583,6 +54445,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "createSource",
       "pagination": null,
       "path": "/sources",
@@ -54662,10 +54525,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -54850,6 +54710,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "upsertSource",
       "pagination": null,
       "path": "/sources",
@@ -54929,10 +54790,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -55095,6 +54953,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getSource",
       "pagination": null,
       "path": "/sources/{id}",
@@ -55152,10 +55011,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -55367,6 +55223,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "updateSource",
       "pagination": null,
       "path": "/sources/{id}",
@@ -55517,10 +55374,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -55683,6 +55537,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "archiveSource",
       "pagination": null,
       "path": "/sources/{id}/archive",
@@ -55740,10 +55595,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -55906,6 +55758,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "unarchiveSource",
       "pagination": null,
       "path": "/sources/{id}/unarchive",
@@ -55963,10 +55816,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -56031,6 +55881,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "toggleWebhookNotifications",
       "pagination": null,
       "path": "/notifications/webhooks",
@@ -56183,10 +56034,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -56382,6 +56230,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getTransformations",
       "pagination": null,
       "path": "/transformations",
@@ -56860,10 +56709,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -57041,6 +56887,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "createTransformation",
       "pagination": null,
       "path": "/transformations",
@@ -57229,10 +57076,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -57410,6 +57254,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "upsertTransformation",
       "pagination": null,
       "path": "/transformations",
@@ -57598,10 +57443,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -57750,6 +57592,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getTransformation",
       "pagination": null,
       "path": "/transformations/{id}",
@@ -57807,10 +57650,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -58008,6 +57848,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "updateTransformation",
       "pagination": null,
       "path": "/transformations/{id}",
@@ -58240,10 +58081,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -58411,6 +58249,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "testTransformation",
       "pagination": null,
       "path": "/transformations/run",
@@ -58885,10 +58724,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -59152,6 +58988,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getTransformationExecutions",
       "pagination": null,
       "path": "/transformations/{id}/executions",
@@ -60034,10 +59871,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -60305,6 +60139,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getTransformationExecution",
       "pagination": null,
       "path": "/transformations/{id}/executions/{execution_id}",
@@ -60389,10 +60224,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -60796,6 +60628,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getConnections",
       "pagination": null,
       "path": "/webhooks",
@@ -62135,10 +61968,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -62591,6 +62421,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "createConnection",
       "pagination": null,
       "path": "/webhooks",
@@ -63282,10 +63113,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -63738,6 +63566,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "upsertConnection",
       "pagination": null,
       "path": "/webhooks",
@@ -64429,10 +64258,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -64863,6 +64689,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getConnection",
       "pagination": null,
       "path": "/webhooks/{id}",
@@ -64920,10 +64747,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -65403,6 +65227,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "updateConnection",
       "pagination": null,
       "path": "/webhooks/{id}",
@@ -65717,10 +65542,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -66151,6 +65973,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "archiveConnection",
       "pagination": null,
       "path": "/webhooks/{id}/archive",
@@ -66208,10 +66031,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -66642,6 +66462,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "unarchiveConnection",
       "pagination": null,
       "path": "/webhooks/{id}/unarchive",
@@ -66699,10 +66520,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -67133,6 +66951,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "pauseConnection",
       "pagination": null,
       "path": "/webhooks/{id}/pause",
@@ -67190,10 +67009,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",
@@ -67624,6 +67440,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "unpauseConnection",
       "pagination": null,
       "path": "/webhooks/{id}/unpause",
@@ -67681,10 +67498,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hookdeck/openapi.yml",

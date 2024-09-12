@@ -142,6 +142,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "list_numbers",
       "pagination": null,
       "path": "/v1/numbers/list",
@@ -242,10 +243,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "vocode/openapi.json",
@@ -565,6 +563,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_number",
       "pagination": null,
       "path": "/v1/numbers",
@@ -621,10 +620,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "vocode/openapi.json",
@@ -909,6 +905,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "buy_number",
       "pagination": null,
       "path": "/v1/numbers/buy",
@@ -938,10 +935,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "vocode/openapi.json",
@@ -1264,6 +1258,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "update_number",
       "pagination": null,
       "path": "/v1/numbers/update",
@@ -1342,10 +1337,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "vocode/openapi.json",
@@ -1665,6 +1657,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "cancel_number",
       "pagination": null,
       "path": "/v1/numbers/cancel",
@@ -1721,10 +1714,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "vocode/openapi.json",
@@ -1899,6 +1889,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "list_calls",
       "pagination": null,
       "path": "/v1/calls/list",
@@ -1999,10 +1990,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "vocode/openapi.json",
@@ -2361,6 +2349,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_call",
       "pagination": null,
       "path": "/v1/calls",
@@ -2417,10 +2406,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "vocode/openapi.json",
@@ -2779,6 +2765,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "end_call",
       "pagination": null,
       "path": "/v1/calls/end",
@@ -2835,10 +2822,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "vocode/openapi.json",
@@ -3211,6 +3195,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "create_call",
       "pagination": null,
       "path": "/v1/calls/create",
@@ -3262,10 +3247,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "vocode/openapi.json",
@@ -3352,6 +3334,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_recording",
       "pagination": null,
       "path": "/v1/calls/recording",
@@ -3400,10 +3383,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "vocode/openapi.json",
@@ -3467,6 +3447,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_usage",
       "pagination": null,
       "path": "/v1/usage",
@@ -3496,10 +3477,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "vocode/openapi.json",
@@ -3597,6 +3575,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_action",
       "pagination": null,
       "path": "/v1/actions",
@@ -3699,10 +3678,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "vocode/openapi.json",
@@ -3820,6 +3796,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "list_actions",
       "pagination": null,
       "path": "/v1/actions/list",
@@ -3920,10 +3897,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "vocode/openapi.json",
@@ -4024,6 +3998,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "create_action",
       "pagination": null,
       "path": "/v1/actions/create",
@@ -4121,10 +4096,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "vocode/openapi.json",
@@ -4236,6 +4208,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "update_action",
       "pagination": null,
       "path": "/v1/actions/update",
@@ -4360,10 +4333,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "vocode/openapi.json",
@@ -4643,6 +4613,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_agent",
       "pagination": null,
       "path": "/v1/agents",
@@ -4699,10 +4670,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "vocode/openapi.json",
@@ -4865,6 +4833,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "list_agents",
       "pagination": null,
       "path": "/v1/agents/list",
@@ -4965,10 +4934,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "vocode/openapi.json",
@@ -5255,6 +5221,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "create_agent",
       "pagination": null,
       "path": "/v1/agents/create",
@@ -5306,10 +5273,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "vocode/openapi.json",
@@ -5592,6 +5556,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "update_agent",
       "pagination": null,
       "path": "/v1/agents/update",
@@ -5670,10 +5635,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "vocode/openapi.json",
@@ -5792,6 +5754,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_voice",
       "pagination": null,
       "path": "/v1/voices",
@@ -5907,10 +5870,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "vocode/openapi.json",
@@ -6049,6 +6009,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "list_voices",
       "pagination": null,
       "path": "/v1/voices/list",
@@ -6149,10 +6110,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "vocode/openapi.json",
@@ -6295,6 +6253,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "create_voice",
       "pagination": null,
       "path": "/v1/voices/create",
@@ -6405,10 +6364,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "vocode/openapi.json",
@@ -6541,6 +6497,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "update_voice",
       "pagination": null,
       "path": "/v1/voices/update",
@@ -6678,10 +6635,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "vocode/openapi.json",
@@ -6789,6 +6743,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_webhook",
       "pagination": null,
       "path": "/v1/webhooks",
@@ -6845,10 +6800,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "vocode/openapi.json",
@@ -6976,6 +6928,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "list_webhooks",
       "pagination": null,
       "path": "/v1/webhooks/list",
@@ -7076,10 +7029,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "vocode/openapi.json",
@@ -7196,6 +7146,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "create_webhook",
       "pagination": null,
       "path": "/v1/webhooks/create",
@@ -7247,10 +7198,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "vocode/openapi.json",
@@ -7361,6 +7309,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "update_webhook",
       "pagination": null,
       "path": "/v1/webhooks/update",
@@ -7439,10 +7388,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "vocode/openapi.json",

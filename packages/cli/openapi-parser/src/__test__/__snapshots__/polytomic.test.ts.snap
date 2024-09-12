@@ -386,6 +386,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "api/v2.CreateConnection",
       "pagination": null,
       "path": "/api/connections",

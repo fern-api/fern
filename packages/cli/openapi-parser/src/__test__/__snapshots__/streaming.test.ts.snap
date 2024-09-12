@@ -19,6 +19,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "user_stream",
       "pagination": null,
       "path": "/v1/users",
@@ -126,10 +127,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
         },
         "type": "streamingJson",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": "undefined_stream",
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "streaming/openapi.yml",
@@ -184,6 +182,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "user",
       "pagination": null,
       "path": "/v1/users",
@@ -291,10 +290,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "streaming/openapi.yml",
@@ -315,6 +311,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "user_v2_stream",
       "pagination": null,
       "path": "/v2/users",
@@ -422,10 +419,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
         },
         "type": "streamingJson",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": "undefined_stream",
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "streaming/openapi.yml",
@@ -494,6 +488,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "user_v2",
       "pagination": null,
       "path": "/v2/users",
@@ -601,10 +596,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "streaming/openapi.yml",
@@ -625,6 +617,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "user_v3_stream",
       "pagination": null,
       "path": "/v3/users",
@@ -824,10 +817,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
         },
         "type": "streamingJson",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": "undefined_stream",
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "streaming/openapi.yml",
@@ -889,6 +879,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "user_v3",
       "pagination": null,
       "path": "/v3/users",
@@ -1060,10 +1051,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "streaming/openapi.yml",

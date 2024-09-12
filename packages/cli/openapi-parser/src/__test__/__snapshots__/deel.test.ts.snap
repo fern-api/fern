@@ -488,6 +488,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "createDirectEmployee",
       "pagination": null,
       "path": "/hris/direct-employees",
@@ -539,10 +540,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -929,6 +927,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getEorCountryValidations",
       "pagination": null,
       "path": "/eor/validations/{country_code}",
@@ -983,10 +982,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -1356,6 +1352,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "createEorContract",
       "pagination": null,
       "path": "/eor",
@@ -1407,10 +1404,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -2250,6 +2244,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": true,
       "method": "POST",
+      "namespace": null,
       "operationId": "createContractTimeBased",
       "pagination": null,
       "path": "/contracts/time-based",
@@ -2301,10 +2296,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -3133,6 +3125,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": true,
       "method": "POST",
+      "namespace": null,
       "operationId": "createContractTaskBased",
       "pagination": null,
       "path": "/contracts/task-based",
@@ -3184,10 +3177,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -4016,6 +4006,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": true,
       "method": "POST",
+      "namespace": null,
       "operationId": "createContractMilestoneBased",
       "pagination": null,
       "path": "/contracts/milestone-based",
@@ -4067,10 +4058,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -4910,6 +4898,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": true,
       "method": "POST",
+      "namespace": null,
       "operationId": "createContractFixedRate",
       "pagination": null,
       "path": "/contracts/fixed-rate",
@@ -4961,10 +4950,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -5315,6 +5301,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getContractList",
       "pagination": null,
       "path": "/contracts",
@@ -5703,10 +5690,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -6546,6 +6530,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "createContract",
       "pagination": null,
       "path": "/contracts",
@@ -6597,10 +6582,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -7335,6 +7317,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getContractById",
       "pagination": null,
       "path": "/contracts/{contract_id}",
@@ -7392,10 +7375,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -7636,6 +7616,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PATCH",
+      "namespace": null,
       "operationId": "attachExternalId",
       "pagination": null,
       "path": "/contracts/{contract_id}",
@@ -7715,10 +7696,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -7953,6 +7931,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "addContractDocument",
       "pagination": null,
       "path": "/contracts/{contract_id}/documents",
@@ -8029,10 +8008,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -8267,6 +8243,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "editContractDocument",
       "pagination": null,
       "path": "/contracts/{contract_id}/documents",
@@ -8343,10 +8320,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -8555,6 +8529,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getContractPreview",
       "pagination": null,
       "path": "/contracts/{contract_id}/preview",
@@ -8626,10 +8601,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "request": null,
       "requestNameOverride": null,
       "response": null,
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -8906,6 +8878,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getTasksByContract",
       "pagination": null,
       "path": "/contracts/{contract_id}/tasks",
@@ -8963,10 +8936,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -9214,6 +9184,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "createContractPgoTak",
       "pagination": null,
       "path": "/contracts/{contract_id}/tasks",
@@ -9293,10 +9264,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -9482,6 +9450,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getAlternateEmailsByContractId",
       "pagination": null,
       "path": "/contracts/{contract_id}/alternate_emails",
@@ -9539,10 +9508,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -9851,6 +9817,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "createTaskManyReview",
       "pagination": null,
       "path": "/contracts/{contract_id}/tasks/many/reviews",
@@ -9930,10 +9897,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -10234,6 +10198,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "createTaskReviewById",
       "pagination": null,
       "path": "/contracts/{contract_id}/tasks/{task_id}/reviews",
@@ -10340,10 +10305,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -10579,6 +10541,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "deleteContractPgoTak",
       "pagination": null,
       "path": "/contracts/{contract_id}/tasks/{task_id}",
@@ -10698,10 +10661,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -10934,6 +10894,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "amendContractDetails",
       "pagination": null,
       "path": "/contracts/{contract_id}/amendments",
@@ -11013,10 +10974,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -11256,6 +11214,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "terminateContract",
       "pagination": null,
       "path": "/contracts/{contract_id}/terminations",
@@ -11335,10 +11294,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -11579,6 +11535,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "signContract",
       "pagination": null,
       "path": "/contracts/{contract_id}/signatures",
@@ -11658,10 +11615,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -11840,6 +11794,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PATCH",
+      "namespace": null,
       "operationId": "archiveContract",
       "pagination": null,
       "path": "/contracts/{contract_id}/archive",
@@ -11897,10 +11852,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -12148,6 +12100,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "inviteToSignContract",
       "pagination": null,
       "path": "/contracts/{contract_id}/invitations",
@@ -12227,10 +12180,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -12455,6 +12405,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "uninviteToSignContract",
       "pagination": null,
       "path": "/contracts/{contract_id}/invitations",
@@ -12512,10 +12463,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -12961,6 +12909,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getTimesheetsByContract",
       "pagination": null,
       "path": "/contracts/{contract_id}/timesheets",
@@ -13238,10 +13187,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -13551,6 +13497,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getMilestonesByContract",
       "pagination": null,
       "path": "/contracts/{contract_id}/milestones",
@@ -13608,10 +13555,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -13866,6 +13810,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "createMilestone",
       "pagination": null,
       "path": "/contracts/{contract_id}/milestones",
@@ -13945,10 +13890,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -14264,6 +14206,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getMilestonesByContractAndId",
       "pagination": null,
       "path": "/contracts/{contract_id}/milestones/{milestone_id}",
@@ -14348,10 +14291,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -14587,6 +14527,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "deleteMilestoneById",
       "pagination": null,
       "path": "/contracts/{contract_id}/milestones/{milestone_id}",
@@ -14671,10 +14612,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -14923,6 +14861,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "createMilestoneReview",
       "pagination": null,
       "path": "/contracts/{contract_id}/milestones/{milestone_id}/reviews",
@@ -15029,10 +14968,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -15282,6 +15218,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "createMilestoneReviews",
       "pagination": null,
       "path": "/contracts/{contract_id}/milestones/many/reviews",
@@ -15361,10 +15298,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -15695,6 +15629,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getOffCyclePaymentsByContract",
       "pagination": null,
       "path": "/contracts/{contract_id}/off-cycle-payments",
@@ -15752,10 +15687,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -16003,6 +15935,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "createOffCyclePayment",
       "pagination": null,
       "path": "/contracts/{contract_id}/off-cycle-payments",
@@ -16082,10 +16015,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -16422,6 +16352,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getOffCyclePaymentByContractAndId",
       "pagination": null,
       "path": "/contracts/{contract_id}/off-cycle-payments/{offcycle_payment_id}",
@@ -16506,10 +16437,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -16752,6 +16680,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "addPremium",
       "pagination": null,
       "path": "/contracts/{contract_id}/premium",
@@ -16831,10 +16760,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -17059,6 +16985,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "removePremiumFromContract",
       "pagination": null,
       "path": "/contracts/{contract_id}/premium",
@@ -17151,10 +17078,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -17368,6 +17292,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": true,
       "method": "GET",
+      "namespace": null,
       "operationId": "calculateFinalPayment",
       "pagination": null,
       "path": "/contracts/{contract_id}/final-payments",
@@ -17610,10 +17535,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -17857,6 +17779,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "postContractEstimate",
       "pagination": null,
       "path": "/contracts/estimate",
@@ -17908,10 +17831,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -18362,6 +18282,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getEorTimeOffs",
       "pagination": null,
       "path": "/contracts/{contract_id}/time-offs",
@@ -18419,10 +18340,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -19034,6 +18952,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "createEorTimeOffs",
       "pagination": null,
       "path": "/contracts/{contract_id}/time-offs",
@@ -19113,10 +19032,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -19739,6 +19655,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "editEorTimeOffs",
       "pagination": null,
       "path": "/contracts/{contract_id}/time-offs/{timeoff_id}",
@@ -19845,10 +19762,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -20015,6 +19929,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "deleteEorTimeOffs",
       "pagination": null,
       "path": "/contracts/{contract_id}/time-offs/{timeoff_id}",
@@ -20099,10 +20014,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -20536,6 +20448,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getTimesheets",
       "pagination": null,
       "path": "/timesheets",
@@ -20819,10 +20732,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -21100,6 +21010,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "createTimesheet",
       "pagination": null,
       "path": "/timesheets",
@@ -21151,10 +21062,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -21633,6 +21541,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getTimesheetById",
       "pagination": null,
       "path": "/timesheets/{timesheet_id}",
@@ -21686,10 +21595,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -21914,6 +21820,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "deleteTimesheetById",
       "pagination": null,
       "path": "/timesheets/{timesheet_id}",
@@ -22002,10 +21909,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -22253,6 +22157,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PATCH",
+      "namespace": null,
       "operationId": "updateTimesheetById",
       "pagination": null,
       "path": "/timesheets/{timesheet_id}",
@@ -22328,10 +22233,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -22569,6 +22471,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "createTimesheetReview",
       "pagination": null,
       "path": "/timesheets/{timesheet_id}/reviews",
@@ -22644,10 +22547,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -22885,6 +22785,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "createTimesheetReviews",
       "pagination": null,
       "path": "/timesheets/many/reviews",
@@ -22936,10 +22837,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -23415,6 +23313,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getInvoiceAdjustmentsByContractId",
       "pagination": null,
       "path": "/contracts/{contract_id}/invoice-adjustments",
@@ -23758,10 +23657,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -24225,6 +24121,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getInvoiceAdjustments",
       "pagination": null,
       "path": "/invoice-adjustments",
@@ -24574,10 +24471,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -24852,6 +24746,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "createInvoiceAdjustment",
       "pagination": null,
       "path": "/invoice-adjustments",
@@ -24903,10 +24798,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -25131,6 +25023,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "deleteInvoiceAdjustmentById",
       "pagination": null,
       "path": "/invoice-adjustments/{invoice_adjustment_id}",
@@ -25224,10 +25117,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -25468,6 +25358,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PATCH",
+      "namespace": null,
       "operationId": "updateInvoiceAdjustmentById",
       "pagination": null,
       "path": "/invoice-adjustments/{invoice_adjustment_id}",
@@ -25548,10 +25439,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -25789,6 +25677,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "createInvoiceAdjustmentReview",
       "pagination": null,
       "path": "/invoice-adjustments/{invoice_adjustment_id}/reviews",
@@ -25869,10 +25758,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -26110,6 +25996,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "createInvoiceAdjustmentReviews",
       "pagination": null,
       "path": "/invoice-adjustments/many/reviews",
@@ -26161,10 +26048,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -26400,6 +26284,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getLegalEntityList",
       "pagination": null,
       "path": "/legal-entities",
@@ -26429,10 +26314,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -26702,6 +26584,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getCountries",
       "pagination": null,
       "path": "/lookups/countries",
@@ -26731,10 +26614,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -26959,6 +26839,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getCurrencies",
       "pagination": null,
       "path": "/lookups/currencies",
@@ -26988,10 +26869,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -27228,6 +27106,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getJobTitleList",
       "pagination": null,
       "path": "/lookups/job-titles",
@@ -27322,10 +27201,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -27557,6 +27433,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getSeniorityList",
       "pagination": null,
       "path": "/lookups/seniorities",
@@ -27617,10 +27494,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -27847,6 +27721,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getTimeoffTypeList",
       "pagination": null,
       "path": "/lookups/time-off-types",
@@ -27876,10 +27751,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -28105,6 +27977,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getOrganizations",
       "pagination": null,
       "path": "/organizations",
@@ -28134,10 +28007,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -28362,6 +28232,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getTeams",
       "pagination": null,
       "path": "/teams",
@@ -28391,10 +28262,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -28604,6 +28472,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": true,
       "method": "POST",
+      "namespace": null,
       "operationId": "createFileRef",
       "pagination": null,
       "path": "/attachments",
@@ -28655,10 +28524,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -28947,6 +28813,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": true,
       "method": "GET",
+      "namespace": null,
       "operationId": "getAgreements",
       "pagination": null,
       "path": "/agreements",
@@ -29073,10 +28940,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -29278,6 +29142,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": true,
       "method": "GET",
+      "namespace": null,
       "operationId": "getContractTemplates",
       "pagination": null,
       "path": "/contract-templates",
@@ -29307,10 +29172,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -29581,6 +29443,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getEorEntitlements",
       "pagination": null,
       "path": "/contracts/{contract_id}/entitlements",
@@ -29638,10 +29501,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -30082,6 +29942,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getEorClientTimeOffs",
       "pagination": null,
       "path": "/time-offs/",
@@ -30111,10 +29972,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -30355,6 +30213,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PATCH",
+      "namespace": null,
       "operationId": "reviewTimeoff",
       "pagination": null,
       "path": "/time-offs/{timeoff_id}/review",
@@ -30434,10 +30293,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -30686,6 +30542,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getInvoiceList",
       "pagination": null,
       "path": "/invoices",
@@ -30846,10 +30703,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -31088,6 +30942,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getInvoiceDownloadLink",
       "pagination": null,
       "path": "/invoices/{invoice_id}/download",
@@ -31141,10 +30996,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -31383,6 +31235,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getBillingInvoiceDownloadLink",
       "pagination": null,
       "path": "/billing/{invoice_id}/download",
@@ -31436,10 +31289,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -31688,6 +31538,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getPaymentList",
       "pagination": null,
       "path": "/payments",
@@ -31873,10 +31724,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -32386,6 +32234,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getPeopleList",
       "pagination": null,
       "path": "/people",
@@ -32481,10 +32330,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -32794,6 +32640,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getPeople",
       "pagination": null,
       "path": "/people/me",
@@ -32823,10 +32670,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -33116,6 +32960,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getAllWebhooks",
       "pagination": null,
       "path": "/webhooks",
@@ -33145,10 +32990,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -33467,6 +33309,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "createWebhook",
       "pagination": null,
       "path": "/webhooks",
@@ -33518,10 +33361,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -33818,6 +33658,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "WebhookController_getById",
       "pagination": null,
       "path": "/webhooks/{id}",
@@ -33875,10 +33716,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -34087,6 +33925,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "WebhookController_deleteById",
       "pagination": null,
       "path": "/webhooks/{id}",
@@ -34123,10 +33962,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "request": null,
       "requestNameOverride": null,
       "response": null,
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -34450,6 +34286,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PATCH",
+      "namespace": null,
       "operationId": "WebhookController_editById",
       "pagination": null,
       "path": "/webhooks/{id}",
@@ -34529,10 +34366,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",
@@ -34951,6 +34785,7 @@ exports[`open api parser > deel > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "GetPaymentsBreakDownById",
       "pagination": null,
       "path": "/payments/{payment_id}/breakdown",
@@ -35008,10 +34843,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "deel/openapi.yml",

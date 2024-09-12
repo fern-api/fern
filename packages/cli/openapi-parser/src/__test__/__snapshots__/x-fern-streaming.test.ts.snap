@@ -120,6 +120,7 @@ exports[`open api parser > x-fern-streaming > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "create_chat_completion_stream",
       "pagination": null,
       "path": "/v1/chat/completions",
@@ -983,10 +984,7 @@ exports[`open api parser > x-fern-streaming > parse open api 1`] = `
         },
         "type": "streamingSse",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": "undefined_stream",
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "x-fern-streaming/openapi.yml",
@@ -1044,6 +1042,7 @@ exports[`open api parser > x-fern-streaming > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "create_chat_completion",
       "pagination": null,
       "path": "/v1/chat/completions",
@@ -1907,10 +1906,7 @@ exports[`open api parser > x-fern-streaming > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "x-fern-streaming/openapi.yml",

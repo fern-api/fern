@@ -63,6 +63,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "close_menu_by_conn_id",
       "pagination": null,
       "path": "/action-menu/{conn_id}/close",
@@ -120,10 +121,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -252,6 +250,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "fetch_menu_by_conn_id",
       "pagination": null,
       "path": "/action-menu/{conn_id}/fetch",
@@ -309,10 +308,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -408,6 +404,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "perform_action_by_conn_id",
       "pagination": null,
       "path": "/action-menu/{conn_id}/perform",
@@ -487,10 +484,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -557,6 +551,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "request_menu_by_conn_id",
       "pagination": null,
       "path": "/action-menu/{conn_id}/request",
@@ -614,10 +609,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -717,6 +709,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "send_menu_to_conn_id",
       "pagination": null,
       "path": "/action-menu/{conn_id}/send-menu",
@@ -796,10 +789,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -1103,6 +1093,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_matching_connections",
       "pagination": null,
       "path": "/connections",
@@ -1631,10 +1622,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -1835,6 +1823,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "create_connection_invitation",
       "pagination": null,
       "path": "/connections/create-invitation",
@@ -2011,10 +2000,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -2278,6 +2264,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "create_static_connection",
       "pagination": null,
       "path": "/connections/create-static",
@@ -2329,10 +2316,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -2580,6 +2564,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "receive_connection_invitation",
       "pagination": null,
       "path": "/connections/receive-invitation",
@@ -2730,10 +2715,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -2909,6 +2891,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_connection_record",
       "pagination": null,
       "path": "/connections/{conn_id}",
@@ -2966,10 +2949,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -3036,6 +3016,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "delete_connection_record",
       "pagination": null,
       "path": "/connections/{conn_id}",
@@ -3093,10 +3074,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -3272,6 +3250,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "accept_connection_invitation",
       "pagination": null,
       "path": "/connections/{conn_id}/accept-invitation",
@@ -3432,10 +3411,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -3611,6 +3587,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "accept_connection_request",
       "pagination": null,
       "path": "/connections/{conn_id}/accept-request",
@@ -3703,10 +3680,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -3771,6 +3745,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_connection_endpoint",
       "pagination": null,
       "path": "/connections/{conn_id}/endpoints",
@@ -3828,10 +3803,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -3909,6 +3881,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "set_inbound_connection",
       "pagination": null,
       "path": "/connections/{conn_id}/establish-inbound/{ref_id}",
@@ -3993,10 +3966,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -4046,6 +4016,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_connection_metadata",
       "pagination": null,
       "path": "/connections/{conn_id}/metadata",
@@ -4138,10 +4109,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -4199,6 +4167,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "set_connection_metadata",
       "pagination": null,
       "path": "/connections/{conn_id}/metadata",
@@ -4278,10 +4247,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -4359,6 +4325,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "send_message",
       "pagination": null,
       "path": "/connections/{conn_id}/send-message",
@@ -4438,10 +4405,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -4510,6 +4474,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "send_ping",
       "pagination": null,
       "path": "/connections/{conn_id}/send-ping",
@@ -4589,10 +4554,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -4670,6 +4632,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "start_connection_introduction",
       "pagination": null,
       "path": "/connections/{conn_id}/start-introduction",
@@ -4788,10 +4751,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -5048,6 +5008,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "publish_credential_definition",
       "pagination": null,
       "path": "/credential-definitions",
@@ -5164,10 +5125,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -5225,6 +5183,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_created_cred_defs",
       "pagination": null,
       "path": "/credential-definitions/created",
@@ -5459,10 +5418,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -5687,6 +5643,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_credential_definition",
       "pagination": null,
       "path": "/credential-definitions/{cred_def_id}",
@@ -5744,10 +5701,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -5972,6 +5926,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "write_credential_definition",
       "pagination": null,
       "path": "/credential-definitions/{cred_def_id}/write_record",
@@ -6029,10 +5984,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -6101,6 +6053,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_credential_mime_types",
       "pagination": null,
       "path": "/credential/mime-types/{credential_id}",
@@ -6158,10 +6111,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -6219,6 +6169,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_revocation_status",
       "pagination": null,
       "path": "/credential/revoked/{credential_id}",
@@ -6345,10 +6296,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -6533,6 +6481,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_w3c_credential",
       "pagination": null,
       "path": "/credential/w3c/{credential_id}",
@@ -6590,10 +6539,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -6660,6 +6606,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "delete_w3c_credential",
       "pagination": null,
       "path": "/credential/w3c/{credential_id}",
@@ -6717,10 +6664,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -6824,6 +6768,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_credential_record",
       "pagination": null,
       "path": "/credential/{credential_id}",
@@ -6881,10 +6826,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -6951,6 +6893,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "delete_credential_record",
       "pagination": null,
       "path": "/credential/{credential_id}",
@@ -7008,10 +6951,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -7171,6 +7111,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_credentials",
       "pagination": null,
       "path": "/credentials",
@@ -7303,10 +7244,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -7766,6 +7704,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "get_w3c_credentials",
       "pagination": null,
       "path": "/credentials/w3c",
@@ -7920,10 +7859,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -8098,6 +8034,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "create_didex_request",
       "pagination": null,
       "path": "/didexchange/create-request",
@@ -8320,10 +8257,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -8625,6 +8559,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "receive_didex_request",
       "pagination": null,
       "path": "/didexchange/receive-request",
@@ -8809,10 +8744,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -8988,6 +8920,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "accept_didex_invitation",
       "pagination": null,
       "path": "/didexchange/{conn_id}/accept-invitation",
@@ -9114,10 +9047,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -9293,6 +9223,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "accept_didex_request",
       "pagination": null,
       "path": "/didexchange/{conn_id}/accept-request",
@@ -9419,10 +9350,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -9600,6 +9528,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_v20_features_queries",
       "pagination": null,
       "path": "/discover-features-2.0/queries",
@@ -9732,10 +9661,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -10015,6 +9941,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_v20_feature_records",
       "pagination": null,
       "path": "/discover-features-2.0/records",
@@ -10079,10 +10006,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -10239,6 +10163,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_v10_features_query",
       "pagination": null,
       "path": "/discover-features/query",
@@ -10371,10 +10296,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -10650,6 +10572,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_v10_feature_records",
       "pagination": null,
       "path": "/discover-features/records",
@@ -10714,10 +10637,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -11808,6 +11728,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "create_credential_record",
       "pagination": null,
       "path": "/issue-credential-2.0/create",
@@ -11859,10 +11780,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -12960,6 +12878,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "create_free_credential_offer",
       "pagination": null,
       "path": "/issue-credential-2.0/create-offer",
@@ -13011,10 +12930,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -15146,6 +15062,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_matching_cred_ex_records-v2",
       "pagination": null,
       "path": "/issue-credential-2.0/records",
@@ -15479,10 +15396,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -16600,6 +16514,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_cred_ex_record",
       "pagination": null,
       "path": "/issue-credential-2.0/records/{cred_ex_id}",
@@ -16657,10 +16572,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -16727,6 +16639,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "delete_cred_ex_record",
       "pagination": null,
       "path": "/issue-credential-2.0/records/{cred_ex_id}",
@@ -16784,10 +16697,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -17916,6 +17826,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "issue_credential_to_holder",
       "pagination": null,
       "path": "/issue-credential-2.0/records/{cred_ex_id}/issue",
@@ -17995,10 +17906,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -18076,6 +17984,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "report_cred_ex_problem",
       "pagination": null,
       "path": "/issue-credential-2.0/records/{cred_ex_id}/problem-report",
@@ -18155,10 +18064,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -19236,6 +19142,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "send_credential_offer",
       "pagination": null,
       "path": "/issue-credential-2.0/records/{cred_ex_id}/send-offer",
@@ -19315,10 +19222,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -20334,6 +20238,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "send_credential_request",
       "pagination": null,
       "path": "/issue-credential-2.0/records/{cred_ex_id}/send-request",
@@ -20413,10 +20318,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -21545,6 +21447,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "store_received_credential",
       "pagination": null,
       "path": "/issue-credential-2.0/records/{cred_ex_id}/store",
@@ -21624,10 +21527,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -22732,6 +22632,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "send_free_credential",
       "pagination": null,
       "path": "/issue-credential-2.0/send",
@@ -22783,10 +22684,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -23891,6 +23789,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "send_free_credential_offer",
       "pagination": null,
       "path": "/issue-credential-2.0/send-offer",
@@ -23942,10 +23841,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -25050,6 +24946,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "send_free_credential_proposal",
       "pagination": null,
       "path": "/issue-credential-2.0/send-proposal",
@@ -25101,10 +24998,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -26278,6 +26172,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "send_free_credential_request",
       "pagination": null,
       "path": "/issue-credential-2.0/send-request",
@@ -26329,10 +26224,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -27195,6 +27087,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "create_credential_record",
       "pagination": null,
       "path": "/issue-credential/create",
@@ -27246,10 +27139,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -28084,6 +27974,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "create_free_credential_offer",
       "pagination": null,
       "path": "/issue-credential/create-offer",
@@ -28135,10 +28026,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -29512,6 +29400,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_matching_cred_ex_records",
       "pagination": null,
       "path": "/issue-credential/records",
@@ -29845,10 +29734,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -30587,6 +30473,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_cred_ex_record",
       "pagination": null,
       "path": "/issue-credential/records/{cred_ex_id}",
@@ -30644,10 +30531,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -30714,6 +30598,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "delete_cred_ex_record",
       "pagination": null,
       "path": "/issue-credential/records/{cred_ex_id}",
@@ -30771,10 +30656,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -31524,6 +31406,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "issue_credential_to_holder",
       "pagination": null,
       "path": "/issue-credential/records/{cred_ex_id}/issue",
@@ -31603,10 +31486,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -31684,6 +31564,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "report_cred_ex_problem",
       "pagination": null,
       "path": "/issue-credential/records/{cred_ex_id}/problem-report",
@@ -31763,10 +31644,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -32508,6 +32386,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "send_credential_offer",
       "pagination": null,
       "path": "/issue-credential/records/{cred_ex_id}/send-offer",
@@ -32587,10 +32466,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -33329,6 +33205,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "send_credential_request",
       "pagination": null,
       "path": "/issue-credential/records/{cred_ex_id}/send-request",
@@ -33386,10 +33263,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -34139,6 +34013,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "store_received_credential",
       "pagination": null,
       "path": "/issue-credential/records/{cred_ex_id}/store",
@@ -34218,10 +34093,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -35091,6 +34963,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "send_free_credential",
       "pagination": null,
       "path": "/issue-credential/send",
@@ -35142,10 +35015,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -35987,6 +35857,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "send_free_credential_offer",
       "pagination": null,
       "path": "/issue-credential/send-offer",
@@ -36038,10 +35909,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -36911,6 +36779,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "send_free_credential_proposal",
       "pagination": null,
       "path": "/issue-credential/send-proposal",
@@ -36962,10 +36831,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -37050,6 +36916,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "sign",
       "pagination": null,
       "path": "/jsonld/sign",
@@ -37101,10 +36968,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -37192,6 +37056,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "verify",
       "pagination": null,
       "path": "/jsonld/verify",
@@ -37243,10 +37108,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -37303,6 +37165,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_published_did_endpoint",
       "pagination": null,
       "path": "/ledger/did-endpoint",
@@ -37431,10 +37294,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -37491,6 +37351,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_did_verkey",
       "pagination": null,
       "path": "/ledger/did-verkey",
@@ -37547,10 +37408,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -37604,6 +37462,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_did_nym_role",
       "pagination": null,
       "path": "/ledger/get-nym-role",
@@ -37660,10 +37519,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -37787,6 +37643,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_multiple_ledger_config",
       "pagination": null,
       "path": "/ledger/multiple/config",
@@ -37816,10 +37673,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -37865,6 +37719,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_write_ledger",
       "pagination": null,
       "path": "/ledger/multiple/get-write-ledger",
@@ -37894,10 +37749,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -38138,6 +37990,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "register_nym",
       "pagination": null,
       "path": "/ledger/register-nym",
@@ -38416,10 +38269,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -38474,6 +38324,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PATCH",
+      "namespace": null,
       "operationId": "rotate_public_did_keypair",
       "pagination": null,
       "path": "/ledger/rotate-public-did-keypair",
@@ -38503,10 +38354,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -38639,6 +38487,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_taa",
       "pagination": null,
       "path": "/ledger/taa",
@@ -38668,10 +38517,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -38751,6 +38597,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "accept_taa",
       "pagination": null,
       "path": "/ledger/taa/accept",
@@ -38802,10 +38649,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -38950,6 +38794,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_default_mediator",
       "pagination": null,
       "path": "/mediation/default-mediator",
@@ -38979,10 +38824,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -39127,6 +38969,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "clear_default_mediator",
       "pagination": null,
       "path": "/mediation/default-mediator",
@@ -39156,10 +38999,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -39325,6 +39165,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_keylists",
       "pagination": null,
       "path": "/mediation/keylists",
@@ -39460,10 +39301,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -39550,6 +39388,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "send_keylist_query_to_mediator",
       "pagination": null,
       "path": "/mediation/keylists/{mediation_id}/send-keylist-query",
@@ -39700,10 +39539,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -39846,6 +39682,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "send_keylist_update_to_mediator",
       "pagination": null,
       "path": "/mediation/keylists/{mediation_id}/send-keylist-update",
@@ -39925,10 +39762,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -40127,6 +39961,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "request_mediation_for_connection",
       "pagination": null,
       "path": "/mediation/request/{conn_id}",
@@ -40206,10 +40041,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -40475,6 +40307,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_matching_mediation_records",
       "pagination": null,
       "path": "/mediation/requests",
@@ -40695,10 +40528,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -40855,6 +40685,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_mediation_record",
       "pagination": null,
       "path": "/mediation/requests/{mediation_id}",
@@ -40912,10 +40743,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -41072,6 +40900,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "delete_mediation_record",
       "pagination": null,
       "path": "/mediation/requests/{mediation_id}",
@@ -41129,10 +40958,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -41277,6 +41103,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "deny_mediation_request",
       "pagination": null,
       "path": "/mediation/requests/{mediation_id}/deny",
@@ -41356,10 +41183,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -41450,6 +41274,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "grant_mediation_request",
       "pagination": null,
       "path": "/mediation/requests/{mediation_id}/grant",
@@ -41507,10 +41332,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -41623,6 +41445,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "update_keylist_for_conn_id",
       "pagination": null,
       "path": "/mediation/update-keylist/{conn_id}",
@@ -41702,10 +41525,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -41862,6 +41682,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "set_default_mediator",
       "pagination": null,
       "path": "/mediation/{mediation_id}/default-mediator",
@@ -41919,10 +41740,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -42070,6 +41888,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "create_wallet",
       "pagination": null,
       "path": "/multitenancy/wallet",
@@ -42121,10 +41940,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -42207,6 +42023,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_wallet_record",
       "pagination": null,
       "path": "/multitenancy/wallet/{wallet_id}",
@@ -42264,10 +42081,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -42391,6 +42205,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "update_wallet",
       "pagination": null,
       "path": "/multitenancy/wallet/{wallet_id}",
@@ -42470,10 +42285,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -42551,6 +42363,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "delete_wallet",
       "pagination": null,
       "path": "/multitenancy/wallet/{wallet_id}/remove",
@@ -42630,10 +42443,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -42702,6 +42512,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "get_auth_token",
       "pagination": null,
       "path": "/multitenancy/wallet/{wallet_id}/token",
@@ -42781,10 +42592,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -42902,6 +42710,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_matching_wallets",
       "pagination": null,
       "path": "/multitenancy/wallets",
@@ -42966,10 +42775,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -43603,6 +43409,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "create_oob_invitation",
       "pagination": null,
       "path": "/out-of-band/create-invitation",
@@ -43715,10 +43522,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -44720,6 +44524,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "receive_oob_invitation",
       "pagination": null,
       "path": "/out-of-band/receive-invitation",
@@ -44900,10 +44705,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -44961,6 +44763,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_loaded_plugins",
       "pagination": null,
       "path": "/plugins",
@@ -44990,10 +44793,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -45834,6 +45634,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "create_proof_request",
       "pagination": null,
       "path": "/present-proof-2.0/create-request",
@@ -45885,10 +45686,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -47062,6 +46860,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_matching_pres_ex_records-v2",
       "pagination": null,
       "path": "/present-proof-2.0/records",
@@ -47356,10 +47155,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -47998,6 +47794,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_pres_ex_record",
       "pagination": null,
       "path": "/present-proof-2.0/records/{pres_ex_id}",
@@ -48055,10 +47852,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -48125,6 +47919,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "delete_pres_ex_record",
       "pagination": null,
       "path": "/present-proof-2.0/records/{pres_ex_id}",
@@ -48182,10 +47977,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -48337,6 +48129,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_pres_ex_credentials-v2",
       "pagination": null,
       "path": "/present-proof-2.0/records/{pres_ex_id}/credentials",
@@ -48539,10 +48332,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -48620,6 +48410,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "report_pres_ex_problem",
       "pagination": null,
       "path": "/present-proof-2.0/records/{pres_ex_id}/problem-report",
@@ -48699,10 +48490,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -49442,6 +49230,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "send_proof_presentation",
       "pagination": null,
       "path": "/present-proof-2.0/records/{pres_ex_id}/send-presentation",
@@ -49521,10 +49310,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -50181,6 +49967,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "send_proof_presentation_request",
       "pagination": null,
       "path": "/present-proof-2.0/records/{pres_ex_id}/send-request",
@@ -50260,10 +50047,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -50902,6 +50686,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "verify_received_presentation",
       "pagination": null,
       "path": "/present-proof-2.0/records/{pres_ex_id}/verify-presentation",
@@ -50959,10 +50744,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -51810,6 +51592,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "send_presentation_proposal",
       "pagination": null,
       "path": "/present-proof-2.0/send-proposal",
@@ -51861,10 +51644,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -52712,6 +52492,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "send_free_presentation_request",
       "pagination": null,
       "path": "/present-proof-2.0/send-request",
@@ -52763,10 +52544,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -53706,6 +53484,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "create_free_proof_request",
       "pagination": null,
       "path": "/present-proof/create-request",
@@ -53757,10 +53536,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -55006,6 +54782,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_matching_pres_ex_records",
       "pagination": null,
       "path": "/present-proof/records",
@@ -55313,10 +55090,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -56059,6 +55833,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_pres_ex_record",
       "pagination": null,
       "path": "/present-proof/records/{pres_ex_id}",
@@ -56116,10 +55891,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -56186,6 +55958,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "delete_pres_ex_record",
       "pagination": null,
       "path": "/present-proof/records/{pres_ex_id}",
@@ -56243,10 +56016,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -56398,6 +56168,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_pres_ex_credentials",
       "pagination": null,
       "path": "/present-proof/records/{pres_ex_id}/credentials",
@@ -56600,10 +56371,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -56681,6 +56449,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "report_pres_ex_problem",
       "pagination": null,
       "path": "/present-proof/records/{pres_ex_id}/problem-report",
@@ -56760,10 +56529,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -57595,6 +57361,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "send_proof_presentation",
       "pagination": null,
       "path": "/present-proof/records/{pres_ex_id}/send-presentation",
@@ -57674,10 +57441,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -58438,6 +58202,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "send_proof_presentation_request",
       "pagination": null,
       "path": "/present-proof/records/{pres_ex_id}/send-request",
@@ -58517,10 +58282,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -59263,6 +59025,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "verify_received_presentation",
       "pagination": null,
       "path": "/present-proof/records/{pres_ex_id}/verify-presentation",
@@ -59320,10 +59083,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -60248,6 +60008,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "send_presentation_proposal",
       "pagination": null,
       "path": "/present-proof/send-proposal",
@@ -60299,10 +60060,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -61249,6 +61007,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "send_free_presentation_request",
       "pagination": null,
       "path": "/present-proof/send-request",
@@ -61300,10 +61059,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -61362,6 +61118,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_did_document",
       "pagination": null,
       "path": "/resolver/resolve/{did}",
@@ -61419,10 +61176,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -61685,6 +61439,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_active_registry_for_cred_def_id",
       "pagination": null,
       "path": "/revocation/active-registry/{cred_def_id}",
@@ -61742,10 +61497,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -61848,6 +61600,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "clear_pending_revocations",
       "pagination": null,
       "path": "/revocation/clear-pending-revocations",
@@ -61899,10 +61652,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -62171,6 +61921,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "create_revocation_registry",
       "pagination": null,
       "path": "/revocation/create-registry",
@@ -62222,10 +61973,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -62332,6 +62080,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_credential_revocation_record",
       "pagination": null,
       "path": "/revocation/credential-record",
@@ -62464,10 +62213,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -62749,6 +62495,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "publish_revocations",
       "pagination": null,
       "path": "/revocation/publish-revocations",
@@ -62800,10 +62547,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -62861,6 +62605,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_created_registries",
       "pagination": null,
       "path": "/revocation/registries/created",
@@ -63023,10 +62768,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -63072,6 +62814,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "delete_tails_file",
       "pagination": null,
       "path": "/revocation/registry/delete-tails-file",
@@ -63170,10 +62913,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -63436,6 +63176,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_revocation_registry",
       "pagination": null,
       "path": "/revocation/registry/{rev_reg_id}",
@@ -63493,10 +63234,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -63770,6 +63508,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PATCH",
+      "namespace": null,
       "operationId": "update_revocation_registry",
       "pagination": null,
       "path": "/revocation/registry/{rev_reg_id}",
@@ -63849,10 +63588,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -64242,6 +63978,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "publish_revocation_registry_definition",
       "pagination": null,
       "path": "/revocation/registry/{rev_reg_id}/definition",
@@ -64364,10 +64101,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -64630,6 +64364,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "publish_revocation_registry_entry",
       "pagination": null,
       "path": "/revocation/registry/{rev_reg_id}/entry",
@@ -64752,10 +64487,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -64816,6 +64548,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "update_revocation_entry_state",
       "pagination": null,
       "path": "/revocation/registry/{rev_reg_id}/fix-revocation-entry-state",
@@ -64896,10 +64629,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -64957,6 +64687,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_issued_credentials_count",
       "pagination": null,
       "path": "/revocation/registry/{rev_reg_id}/issued",
@@ -65014,10 +64745,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -65209,6 +64937,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_issued_credential_details",
       "pagination": null,
       "path": "/revocation/registry/{rev_reg_id}/issued/details",
@@ -65266,10 +64995,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -65319,6 +65045,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_published_credential_details",
       "pagination": null,
       "path": "/revocation/registry/{rev_reg_id}/issued/indy_recs",
@@ -65376,10 +65103,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -65650,6 +65374,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PATCH",
+      "namespace": null,
       "operationId": "set_revocation_registry_state",
       "pagination": null,
       "path": "/revocation/registry/{rev_reg_id}/set-state",
@@ -65798,10 +65523,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -65824,6 +65546,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "download_tails_file_sparse",
       "pagination": null,
       "path": "/revocation/registry/{rev_reg_id}/tails-file-less-deets",
@@ -65867,10 +65590,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "file",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -65893,6 +65613,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "download_tails_file",
       "pagination": null,
       "path": "/revocation/registry/{rev_reg_id}/tails-file",
@@ -65936,10 +65657,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "file",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -66006,6 +65724,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "upload_tails_file",
       "pagination": null,
       "path": "/revocation/registry/{rev_reg_id}/tails-file",
@@ -66063,10 +65782,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -66185,6 +65901,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "revoke_issued_credential",
       "pagination": null,
       "path": "/revocation/revoke",
@@ -66236,10 +65953,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -66560,6 +66274,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "publish_schema",
       "pagination": null,
       "path": "/schemas",
@@ -66676,10 +66391,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -66737,6 +66449,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_matching_created_schemas",
       "pagination": null,
       "path": "/schemas/created",
@@ -66903,10 +66616,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -67016,6 +66726,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_schema",
       "pagination": null,
       "path": "/schemas/{schema_id}",
@@ -67073,10 +66784,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -67186,6 +66894,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "write_schema_record_to_wallet",
       "pagination": null,
       "path": "/schemas/{schema_id}/write_record",
@@ -67243,10 +66952,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -67301,6 +67007,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "shutdown_server",
       "pagination": null,
       "path": "/shutdown",
@@ -67330,10 +67037,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -67386,6 +67090,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_status",
       "pagination": null,
       "path": "/status",
@@ -67415,10 +67120,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -67456,6 +67158,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_config",
       "pagination": null,
       "path": "/status/config",
@@ -67485,10 +67188,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -67534,6 +67234,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_liveliness",
       "pagination": null,
       "path": "/status/live",
@@ -67563,10 +67264,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -67612,6 +67310,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_readiness",
       "pagination": null,
       "path": "/status/ready",
@@ -67641,10 +67340,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -67699,6 +67395,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "reset_statistics",
       "pagination": null,
       "path": "/status/reset",
@@ -67728,10 +67425,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -67951,6 +67645,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "resend_transaction_request",
       "pagination": null,
       "path": "/transaction/{tran_id}/resend",
@@ -68008,10 +67703,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -68403,6 +68095,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_transaction_list",
       "pagination": null,
       "path": "/transactions",
@@ -68432,10 +68125,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -68665,6 +68355,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "create_transaction_request",
       "pagination": null,
       "path": "/transactions/create-request",
@@ -68773,10 +68464,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -68852,6 +68540,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "set_endorser_info_for_conn_id",
       "pagination": null,
       "path": "/transactions/{conn_id}/set-endorser-info",
@@ -68970,10 +68659,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -69032,6 +68718,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "set_endorser_role_for_conn_id",
       "pagination": null,
       "path": "/transactions/{conn_id}/set-endorser-role",
@@ -69162,10 +68849,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -69385,6 +69069,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_transaction_record",
       "pagination": null,
       "path": "/transactions/{tran_id}",
@@ -69442,10 +69127,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -69665,6 +69347,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "cancel_transaction_request",
       "pagination": null,
       "path": "/transactions/{tran_id}/cancel",
@@ -69722,10 +69405,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -69945,6 +69625,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "endorse_transaction",
       "pagination": null,
       "path": "/transactions/{tran_id}/endorse",
@@ -70037,10 +69718,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -70260,6 +69938,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "refuse_transaction",
       "pagination": null,
       "path": "/transactions/{tran_id}/refuse",
@@ -70317,10 +69996,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -70540,6 +70216,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "publish_endorsed_transaction",
       "pagination": null,
       "path": "/transactions/{tran_id}/write",
@@ -70597,10 +70274,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -70712,6 +70386,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_dids",
       "pagination": null,
       "path": "/wallet/did",
@@ -71000,10 +70675,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -71094,6 +70766,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "create_local_did",
       "pagination": null,
       "path": "/wallet/did/create",
@@ -71145,10 +70818,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -71214,6 +70884,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PATCH",
+      "namespace": null,
       "operationId": "rotate_keypair",
       "pagination": null,
       "path": "/wallet/did/local/rotate-keypair",
@@ -71270,10 +70941,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -71346,6 +71014,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_public_did",
       "pagination": null,
       "path": "/wallet/did/public",
@@ -71375,10 +71044,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -71462,6 +71128,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "set_public_did",
       "pagination": null,
       "path": "/wallet/did/public",
@@ -71616,10 +71283,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -71683,6 +71347,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_did_endpoint",
       "pagination": null,
       "path": "/wallet/get-did-endpoint",
@@ -71739,10 +71404,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",
@@ -71819,6 +71481,7 @@ exports[`open api parser > aries > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "set_did_endpoint",
       "pagination": null,
       "path": "/wallet/set-did-endpoint",
@@ -71935,10 +71598,7 @@ exports[`open api parser > aries > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "aries/openapi.yml",

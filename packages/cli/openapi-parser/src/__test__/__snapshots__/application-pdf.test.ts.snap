@@ -19,6 +19,7 @@ exports[`open api parser > application-pdf-content-type > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "pdf_get",
       "pagination": null,
       "path": "/pdf",
@@ -34,10 +35,7 @@ exports[`open api parser > application-pdf-content-type > parse open api 1`] = `
         },
         "type": "file",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "application-pdf-content-type/openapi.yml",

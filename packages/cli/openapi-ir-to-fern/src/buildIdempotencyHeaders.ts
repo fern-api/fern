@@ -3,10 +3,14 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { PrimitiveSchemaValue, Schema } from "@fern-api/openapi-ir-sdk";
 import { buildHeader } from "./buildHeader";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { getGroupNameForSchema } from "./utils/getGroupNameForSchema";
+import { getNamespaceFromGroup } from "./utils/getNamespaceFromGroup";
 import { wrapTypeReferenceAsOptional } from "./utils/wrapTypeReferenceAsOptional";
 
 export function buildIdempotencyHeaders(context: OpenApiIrConverterContext): void {
     for (const header of context.ir.idempotencyHeaders ?? []) {
+        const groupName = header.schema ? getGroupNameForSchema(header.schema) : undefined;
+        const namespace = groupName != null ? getNamespaceFromGroup(groupName) : undefined;
         const convertedHeader = buildHeader({
             header: {
                 ...header,
@@ -34,8 +38,7 @@ export function buildIdempotencyHeaders(context: OpenApiIrConverterContext): voi
             },
             fileContainingReference: RelativeFilePath.of(ROOT_API_FILENAME),
             context,
-            // TODO: how are we namespacing idempotency headers
-            namespace: undefined
+            namespace
         });
         context.builder.addIdempotencyHeader({
             name: header.header,

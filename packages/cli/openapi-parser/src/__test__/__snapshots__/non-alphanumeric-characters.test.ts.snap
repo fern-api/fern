@@ -42,6 +42,7 @@ exports[`non alphanumeric characters > non-alphanumeric-characters > parse open 
       "idempotent": null,
       "internal": null,
       "method": "PATCH",
+      "namespace": null,
       "operationId": null,
       "pagination": null,
       "path": "/settings",
@@ -93,10 +94,7 @@ exports[`non alphanumeric characters > non-alphanumeric-characters > parse open 
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "non-alphanumeric-characters/openapi.yml",

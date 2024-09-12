@@ -19,6 +19,7 @@ exports[`open api parser > audio-mpeg-content-type > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "audio_get",
       "pagination": null,
       "path": "/audio",
@@ -34,10 +35,7 @@ exports[`open api parser > audio-mpeg-content-type > parse open api 1`] = `
         },
         "type": "file",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "audio-mpeg-content-type/openapi.yml",

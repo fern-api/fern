@@ -50,6 +50,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "root_ping_get",
       "pagination": null,
       "path": "/ping",
@@ -71,10 +72,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -302,6 +300,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "organization_iam_list_members",
       "pagination": null,
       "path": "/org/{org_id}/iam/members",
@@ -432,10 +431,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -640,6 +636,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "organization_get_member",
       "pagination": null,
       "path": "/org/{org_id}/iam/members/{member}",
@@ -724,10 +721,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -1030,6 +1024,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "organization_iam_update_member_roles",
       "pagination": null,
       "path": "/org/{org_id}/iam/members/{member}",
@@ -1136,10 +1131,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -1407,6 +1399,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "organization_iam_test_permissions",
       "pagination": null,
       "path": "/org/{org_id}/iam/test",
@@ -1486,10 +1479,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -1565,6 +1555,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "org_list_org_get",
       "pagination": null,
       "path": "/org",
@@ -1687,10 +1678,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -1799,6 +1787,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "org_create_org_post",
       "pagination": null,
       "path": "/org",
@@ -1850,10 +1839,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -2035,6 +2021,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "org_get_org__org_id__get",
       "pagination": null,
       "path": "/org/{org_id}",
@@ -2092,10 +2079,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -2280,6 +2264,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "org_update_org__org_id__post",
       "pagination": null,
       "path": "/org/{org_id}",
@@ -2359,10 +2344,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -2556,6 +2538,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "org_join_org__org_id__join_post",
       "pagination": null,
       "path": "/org/{org_id}/join",
@@ -2613,10 +2596,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -2832,6 +2812,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "org_invites_list_org__org_id__invite_get",
       "pagination": null,
       "path": "/org/{org_id}/invite",
@@ -2990,10 +2971,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -3230,6 +3208,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "org_invites_create_org__org_id__invite_post",
       "pagination": null,
       "path": "/org/{org_id}/invite",
@@ -3309,10 +3288,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -3473,6 +3449,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "org_invites_delete_org__org_id__invite__org_invite_id__delete",
       "pagination": null,
       "path": "/org/{org_id}/invite/{org_invite_id}",
@@ -3536,10 +3513,7 @@ Brain Core API. 🚀
       "request": null,
       "requestNameOverride": null,
       "response": null,
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -3747,6 +3721,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "org_domains_list_org__org_id__domains_get",
       "pagination": null,
       "path": "/org/{org_id}/domains",
@@ -3804,10 +3779,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -3990,6 +3962,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "org_domains_post_org__org_id__domains_post",
       "pagination": null,
       "path": "/org/{org_id}/domains",
@@ -4069,10 +4042,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -4255,6 +4225,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "org_domain_delete_org__org_id__domains__domain_id__delete",
       "pagination": null,
       "path": "/org/{org_id}/domains/{domain_id}",
@@ -4339,10 +4310,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -4527,6 +4495,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "org_update_avatar_org__org_id__avatar_post",
       "pagination": null,
       "path": "/org/{org_id}/avatar",
@@ -4603,10 +4572,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -4704,6 +4670,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "user_get_user_get",
       "pagination": null,
       "path": "/user",
@@ -4733,10 +4700,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -4837,6 +4801,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "user_post_user_post",
       "pagination": null,
       "path": "/user",
@@ -4888,10 +4853,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -4992,6 +4954,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "user_update_avatar_user_avatar_post",
       "pagination": null,
       "path": "/user/avatar",
@@ -5040,10 +5003,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -5268,6 +5228,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "list_project_org__org_id__project_get",
       "pagination": null,
       "path": "/org/{org_id}/project",
@@ -5395,10 +5356,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -5598,6 +5556,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "create_project_org__org_id__project_post",
       "pagination": null,
       "path": "/org/{org_id}/project",
@@ -5677,10 +5636,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -5979,6 +5935,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_project_org__org_id__project__project_id__get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}",
@@ -6063,10 +6020,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -6269,6 +6223,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "update_project_org__org_id__project__project_id__post",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}",
@@ -6375,10 +6330,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -6537,6 +6489,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_project_config_org__org_id__project__project_id__config_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/config",
@@ -6621,10 +6574,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -6865,6 +6815,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "set_project_config_org__org_id__project__project_id__config_post",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/config",
@@ -6971,10 +6922,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -7177,6 +7125,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "project_update_avatar_org__org_id__project__project_id__avatar_post",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/avatar",
@@ -7280,10 +7229,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -7524,6 +7470,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "project_iam_list_members",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/iam/members",
@@ -7681,10 +7628,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -7900,6 +7844,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "project_get_member",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/iam/members/{member}",
@@ -8011,10 +7956,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -8328,6 +8270,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "project_iam_update_member_roles",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/iam/members/{member}",
@@ -8461,10 +8404,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -8743,6 +8683,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "project_iam_test_permissions",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/iam/test",
@@ -8849,10 +8790,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -9126,6 +9064,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "list_collections_org__org_id__project__project_id__collection_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/collection",
@@ -9314,10 +9253,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -9587,6 +9523,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "create_collection_org__org_id__project__project_id__collection_post",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/collection",
@@ -9693,10 +9630,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -9966,6 +9900,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_collection_org__org_id__project__project_id__collection__collection_id__get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/collection/{collection_id}",
@@ -10077,10 +10012,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -10361,6 +10293,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "collection_edit_org__org_id__project__project_id__collection__collection_id__post",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/collection/{collection_id}",
@@ -10494,10 +10427,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -10701,6 +10631,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "collection_stats_org__org_id__project__project_id__collection__collection_id__stats_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/collection/{collection_id}/stats",
@@ -10812,10 +10743,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -11090,6 +11018,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "list_chats_org__org_id__project__project_id__collection__collection_id__chat_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/collection/{collection_id}/chat",
@@ -11302,10 +11231,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -11505,6 +11431,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "query_collection_org__org_id__project__project_id__collection__collection_id__query_post",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/collection/{collection_id}/query",
@@ -11630,10 +11557,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -11828,6 +11752,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "update_summary_org__org_id__project__project_id__collection__collection_id__update_summary_post",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/collection/{collection_id}/update_summary",
@@ -11939,10 +11864,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -12228,6 +12150,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "collection_add_org__org_id__project__project_id__collection__collection_id__add_post",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/collection/{collection_id}/add",
@@ -12361,10 +12284,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -12650,6 +12570,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "collection_remove_org__org_id__project__project_id__collection__collection_id__remove_post",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/collection/{collection_id}/remove",
@@ -12783,10 +12704,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -13038,6 +12956,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "collection_iam_list_members",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/collection/{collection_id}/iam/members",
@@ -13222,10 +13141,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -13452,6 +13368,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "collection_get_member",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/collection/{collection_id}/iam/members/{member}",
@@ -13590,10 +13507,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -13918,6 +13832,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "collection_iam_update_member_roles",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/collection/{collection_id}/iam/members/{member}",
@@ -14078,10 +13993,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -14371,6 +14283,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "collection_iam_test_permissions",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/collection/{collection_id}/iam/test",
@@ -14504,10 +14417,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -14820,6 +14730,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "document_list_org__org_id__project__project_id__document_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/document",
@@ -15260,10 +15171,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -15495,6 +15403,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "document_create_org__org_id__project__project_id__document_post",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/document",
@@ -15621,10 +15530,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -15917,6 +15823,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "document_upload_org__org_id__project__project_id__document_upload_post",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/document/upload",
@@ -16051,10 +15958,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -16286,6 +16190,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "task_status_org__org_id__project__project_id__document_create_status__group_id__get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/document/create/status/{group_id}",
@@ -16397,10 +16302,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -16613,6 +16515,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "document_query_org__org_id__project__project_id__document__document_id__query_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/document/{document_id}/query",
@@ -16759,10 +16662,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -17071,6 +16971,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "document_fetch_org__org_id__project__project_id__document__document_id__get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/document/{document_id}",
@@ -17182,10 +17083,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -17505,6 +17403,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "document_update_org__org_id__project__project_id__document__document_id__post",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/document/{document_id}",
@@ -17638,10 +17537,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -17830,6 +17726,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "document_delete_org__org_id__project__project_id__document__document_id__delete",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/document/{document_id}",
@@ -17933,10 +17830,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -18162,6 +18056,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "document_embedding_query_org__org_id__project__project_id__document__document_id__embeddings_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/document/{document_id}/embeddings",
@@ -18343,10 +18238,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -18468,6 +18360,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "document_embedding_get_org__org_id__project__project_id__document__document_id__embedding__embedding_id__get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/document/{document_id}/embedding/{embedding_id}",
@@ -18606,10 +18499,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -18861,6 +18751,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "document_iam_list_members",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/document/{document_id}/iam/members",
@@ -19045,10 +18936,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -19275,6 +19163,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "document_get_member",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/document/{document_id}/iam/members/{member}",
@@ -19413,10 +19302,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -19741,6 +19627,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "document_iam_update_member_roles",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/document/{document_id}/iam/members/{member}",
@@ -19901,10 +19788,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -20194,6 +20078,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "document_iam_test_permissions",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/document/{document_id}/iam/test",
@@ -20327,10 +20212,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -20461,6 +20343,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_recent_chats_for_user_chat_recent_get",
       "pagination": null,
       "path": "/chat/recent",
@@ -20533,10 +20416,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -20753,6 +20633,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_chat_chat__chat_id__get",
       "pagination": null,
       "path": "/chat/{chat_id}",
@@ -20810,10 +20691,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -21041,6 +20919,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "update_chat_chat__chat_id__post",
       "pagination": null,
       "path": "/chat/{chat_id}",
@@ -21120,10 +20999,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -21350,6 +21226,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_chat_config_chat__chat_id__config_get",
       "pagination": null,
       "path": "/chat/{chat_id}/config",
@@ -21407,10 +21284,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -21640,6 +21514,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "set_chat_config_chat__chat_id__config_post",
       "pagination": null,
       "path": "/chat/{chat_id}/config",
@@ -21719,10 +21594,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -21938,6 +21810,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "create_chat_chat_post",
       "pagination": null,
       "path": "/chat",
@@ -21989,10 +21862,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -22183,6 +22053,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "query_chat_chat__chat_id__query_get",
       "pagination": null,
       "path": "/chat/{chat_id}/query",
@@ -22275,10 +22146,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -22508,6 +22376,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "chat_iam_list_members",
       "pagination": null,
       "path": "/chat/{chat_id}/iam/members",
@@ -22638,10 +22507,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -22846,6 +22712,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "chat_get_member",
       "pagination": null,
       "path": "/chat/{chat_id}/iam/members/{member}",
@@ -22930,10 +22797,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -23236,6 +23100,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "chat_iam_update_member_roles",
       "pagination": null,
       "path": "/chat/{chat_id}/iam/members/{member}",
@@ -23342,10 +23207,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -23613,6 +23475,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "chat_iam_test_permissions",
       "pagination": null,
       "path": "/chat/{chat_id}/iam/test",
@@ -23692,10 +23555,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -23859,6 +23719,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "list_files_org__org_id__project__project_id__datasource_box__connection_id__list_files_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/box/{connection_id}/list-files",
@@ -24005,10 +23866,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -24226,6 +24084,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "fetch_org__org_id__project__project_id__datasource_box__connection_id__fetch_post",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/box/{connection_id}/fetch",
@@ -24337,10 +24196,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -24501,6 +24357,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "authorize_org__org_id__project__project_id__datasource_box_authorize_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/box/authorize",
@@ -24633,10 +24490,7 @@ Brain Core API. 🚀
       "request": null,
       "requestNameOverride": null,
       "response": null,
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -24797,6 +24651,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "authorize_org__org_id__project__project_id__datasource_box__connection_id__authorize_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/box/{connection_id}/authorize",
@@ -24930,10 +24785,7 @@ Brain Core API. 🚀
       "request": null,
       "requestNameOverride": null,
       "response": null,
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -25122,6 +24974,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "delete_org__org_id__project__project_id__datasource_box__connection_id__delete",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/box/{connection_id}",
@@ -25225,10 +25078,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -25505,6 +25355,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "list_runs_org__org_id__project__project_id__datasource_box__connection_id__runs_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/box/{connection_id}/runs",
@@ -25686,10 +25537,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -25997,6 +25845,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "check_status_org__org_id__project__project_id__datasource_box__connection_id__run_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/box/{connection_id}/run",
@@ -26135,10 +25984,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -26335,6 +26181,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_configuration_org__org_id__project__project_id__datasource_box__connection_id__config_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/box/{connection_id}/config",
@@ -26446,10 +26293,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -26656,6 +26500,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "set_configuration_org__org_id__project__project_id__datasource_box__connection_id__config_post",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/box/{connection_id}/config",
@@ -26781,10 +26626,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -26860,6 +26702,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "callback_datasource_box_callback_get",
       "pagination": null,
       "path": "/datasource/box/callback",
@@ -26950,10 +26793,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -27117,6 +26957,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "list_files_org__org_id__project__project_id__datasource_confluence__connection_id__list_files_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/list-files",
@@ -27263,10 +27104,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -27484,6 +27322,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "fetch_org__org_id__project__project_id__datasource_confluence__connection_id__fetch_post",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/fetch",
@@ -27595,10 +27434,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -27759,6 +27595,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "authorize_org__org_id__project__project_id__datasource_confluence_authorize_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/confluence/authorize",
@@ -27891,10 +27728,7 @@ Brain Core API. 🚀
       "request": null,
       "requestNameOverride": null,
       "response": null,
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -28055,6 +27889,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "authorize_org__org_id__project__project_id__datasource_confluence__connection_id__authorize_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/authorize",
@@ -28188,10 +28023,7 @@ Brain Core API. 🚀
       "request": null,
       "requestNameOverride": null,
       "response": null,
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -28380,6 +28212,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "delete_org__org_id__project__project_id__datasource_confluence__connection_id__delete",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}",
@@ -28483,10 +28316,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -28763,6 +28593,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "list_runs_org__org_id__project__project_id__datasource_confluence__connection_id__runs_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/runs",
@@ -28944,10 +28775,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -29255,6 +29083,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "check_status_org__org_id__project__project_id__datasource_confluence__connection_id__run_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/run",
@@ -29393,10 +29222,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -29593,6 +29419,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_configuration_org__org_id__project__project_id__datasource_confluence__connection_id__config_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/config",
@@ -29704,10 +29531,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -29914,6 +29738,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "set_configuration_org__org_id__project__project_id__datasource_confluence__connection_id__config_post",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/config",
@@ -30039,10 +29864,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -30118,6 +29940,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "callback_datasource_confluence_callback_get",
       "pagination": null,
       "path": "/datasource/confluence/callback",
@@ -30208,10 +30031,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -30375,6 +30195,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "list_files_org__org_id__project__project_id__datasource_dropbox__connection_id__list_files_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/list-files",
@@ -30521,10 +30342,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -30742,6 +30560,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "fetch_org__org_id__project__project_id__datasource_dropbox__connection_id__fetch_post",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/fetch",
@@ -30853,10 +30672,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -31017,6 +30833,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "authorize_org__org_id__project__project_id__datasource_dropbox_authorize_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/dropbox/authorize",
@@ -31149,10 +30966,7 @@ Brain Core API. 🚀
       "request": null,
       "requestNameOverride": null,
       "response": null,
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -31313,6 +31127,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "authorize_org__org_id__project__project_id__datasource_dropbox__connection_id__authorize_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/authorize",
@@ -31446,10 +31261,7 @@ Brain Core API. 🚀
       "request": null,
       "requestNameOverride": null,
       "response": null,
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -31638,6 +31450,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "delete_org__org_id__project__project_id__datasource_dropbox__connection_id__delete",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}",
@@ -31741,10 +31554,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -32021,6 +31831,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "list_runs_org__org_id__project__project_id__datasource_dropbox__connection_id__runs_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/runs",
@@ -32202,10 +32013,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -32513,6 +32321,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "check_status_org__org_id__project__project_id__datasource_dropbox__connection_id__run_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/run",
@@ -32651,10 +32460,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -32851,6 +32657,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_configuration_org__org_id__project__project_id__datasource_dropbox__connection_id__config_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/config",
@@ -32962,10 +32769,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -33172,6 +32976,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "set_configuration_org__org_id__project__project_id__datasource_dropbox__connection_id__config_post",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/config",
@@ -33297,10 +33102,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -33376,6 +33178,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "callback_datasource_dropbox_callback_get",
       "pagination": null,
       "path": "/datasource/dropbox/callback",
@@ -33466,10 +33269,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -33633,6 +33433,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "list_files_org__org_id__project__project_id__datasource_gdrive__connection_id__list_files_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/list-files",
@@ -33779,10 +33580,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -34000,6 +33798,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "fetch_org__org_id__project__project_id__datasource_gdrive__connection_id__fetch_post",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/fetch",
@@ -34111,10 +33910,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -34275,6 +34071,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "authorize_org__org_id__project__project_id__datasource_gdrive_authorize_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/gdrive/authorize",
@@ -34407,10 +34204,7 @@ Brain Core API. 🚀
       "request": null,
       "requestNameOverride": null,
       "response": null,
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -34571,6 +34365,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "authorize_org__org_id__project__project_id__datasource_gdrive__connection_id__authorize_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/authorize",
@@ -34704,10 +34499,7 @@ Brain Core API. 🚀
       "request": null,
       "requestNameOverride": null,
       "response": null,
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -34896,6 +34688,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "delete_org__org_id__project__project_id__datasource_gdrive__connection_id__delete",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}",
@@ -34999,10 +34792,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -35279,6 +35069,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "list_runs_org__org_id__project__project_id__datasource_gdrive__connection_id__runs_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/runs",
@@ -35460,10 +35251,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -35771,6 +35559,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "check_status_org__org_id__project__project_id__datasource_gdrive__connection_id__run_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/run",
@@ -35909,10 +35698,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -36109,6 +35895,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_configuration_org__org_id__project__project_id__datasource_gdrive__connection_id__config_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/config",
@@ -36220,10 +36007,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -36430,6 +36214,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "set_configuration_org__org_id__project__project_id__datasource_gdrive__connection_id__config_post",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/config",
@@ -36555,10 +36340,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -36634,6 +36416,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "callback_datasource_gdrive_callback_get",
       "pagination": null,
       "path": "/datasource/gdrive/callback",
@@ -36724,10 +36507,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -36891,6 +36671,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "list_files_org__org_id__project__project_id__datasource_notion__connection_id__list_files_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/list-files",
@@ -37037,10 +36818,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -37258,6 +37036,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "fetch_org__org_id__project__project_id__datasource_notion__connection_id__fetch_post",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/fetch",
@@ -37369,10 +37148,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -37533,6 +37309,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "authorize_org__org_id__project__project_id__datasource_notion_authorize_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/notion/authorize",
@@ -37665,10 +37442,7 @@ Brain Core API. 🚀
       "request": null,
       "requestNameOverride": null,
       "response": null,
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -37829,6 +37603,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "authorize_org__org_id__project__project_id__datasource_notion__connection_id__authorize_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/authorize",
@@ -37962,10 +37737,7 @@ Brain Core API. 🚀
       "request": null,
       "requestNameOverride": null,
       "response": null,
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -38154,6 +37926,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "delete_org__org_id__project__project_id__datasource_notion__connection_id__delete",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/notion/{connection_id}",
@@ -38257,10 +38030,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -38537,6 +38307,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "list_runs_org__org_id__project__project_id__datasource_notion__connection_id__runs_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/runs",
@@ -38718,10 +38489,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -39029,6 +38797,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "check_status_org__org_id__project__project_id__datasource_notion__connection_id__run_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/run",
@@ -39167,10 +38936,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -39367,6 +39133,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_configuration_org__org_id__project__project_id__datasource_notion__connection_id__config_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/config",
@@ -39478,10 +39245,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -39688,6 +39452,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "set_configuration_org__org_id__project__project_id__datasource_notion__connection_id__config_post",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/config",
@@ -39813,10 +39578,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -39892,6 +39654,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "callback_datasource_notion_callback_get",
       "pagination": null,
       "path": "/datasource/notion/callback",
@@ -39982,10 +39745,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -40149,6 +39909,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "list_files_org__org_id__project__project_id__datasource_onedrive__connection_id__list_files_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/list-files",
@@ -40295,10 +40056,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -40516,6 +40274,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "fetch_org__org_id__project__project_id__datasource_onedrive__connection_id__fetch_post",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/fetch",
@@ -40627,10 +40386,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -40791,6 +40547,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "authorize_org__org_id__project__project_id__datasource_onedrive_authorize_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/onedrive/authorize",
@@ -40923,10 +40680,7 @@ Brain Core API. 🚀
       "request": null,
       "requestNameOverride": null,
       "response": null,
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -41087,6 +40841,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "authorize_org__org_id__project__project_id__datasource_onedrive__connection_id__authorize_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/authorize",
@@ -41220,10 +40975,7 @@ Brain Core API. 🚀
       "request": null,
       "requestNameOverride": null,
       "response": null,
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -41412,6 +41164,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "delete_org__org_id__project__project_id__datasource_onedrive__connection_id__delete",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}",
@@ -41515,10 +41268,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -41795,6 +41545,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "list_runs_org__org_id__project__project_id__datasource_onedrive__connection_id__runs_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/runs",
@@ -41976,10 +41727,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -42287,6 +42035,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "check_status_org__org_id__project__project_id__datasource_onedrive__connection_id__run_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/run",
@@ -42425,10 +42174,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -42625,6 +42371,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_configuration_org__org_id__project__project_id__datasource_onedrive__connection_id__config_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/config",
@@ -42736,10 +42483,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -42946,6 +42690,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "set_configuration_org__org_id__project__project_id__datasource_onedrive__connection_id__config_post",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/config",
@@ -43071,10 +42816,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -43150,6 +42892,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "callback_datasource_onedrive_callback_get",
       "pagination": null,
       "path": "/datasource/onedrive/callback",
@@ -43240,10 +42983,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -43407,6 +43147,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "list_files_org__org_id__project__project_id__datasource_sharepoint__connection_id__list_files_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/list-files",
@@ -43553,10 +43294,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -43774,6 +43512,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "fetch_org__org_id__project__project_id__datasource_sharepoint__connection_id__fetch_post",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/fetch",
@@ -43885,10 +43624,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -44049,6 +43785,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "authorize_org__org_id__project__project_id__datasource_sharepoint_authorize_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/sharepoint/authorize",
@@ -44181,10 +43918,7 @@ Brain Core API. 🚀
       "request": null,
       "requestNameOverride": null,
       "response": null,
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -44345,6 +44079,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "authorize_org__org_id__project__project_id__datasource_sharepoint__connection_id__authorize_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/authorize",
@@ -44478,10 +44213,7 @@ Brain Core API. 🚀
       "request": null,
       "requestNameOverride": null,
       "response": null,
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -44670,6 +44402,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "delete_org__org_id__project__project_id__datasource_sharepoint__connection_id__delete",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}",
@@ -44773,10 +44506,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -45053,6 +44783,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "list_runs_org__org_id__project__project_id__datasource_sharepoint__connection_id__runs_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/runs",
@@ -45234,10 +44965,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -45545,6 +45273,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "check_status_org__org_id__project__project_id__datasource_sharepoint__connection_id__run_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/run",
@@ -45683,10 +45412,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -45883,6 +45609,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_configuration_org__org_id__project__project_id__datasource_sharepoint__connection_id__config_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/config",
@@ -45994,10 +45721,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -46204,6 +45928,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "set_configuration_org__org_id__project__project_id__datasource_sharepoint__connection_id__config_post",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/config",
@@ -46329,10 +46054,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -46408,6 +46130,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "callback_datasource_sharepoint_callback_get",
       "pagination": null,
       "path": "/datasource/sharepoint/callback",
@@ -46498,10 +46221,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -46619,6 +46339,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "webhook_hydra_token_hook_internal_webhook_hydra_token_hook_post",
       "pagination": null,
       "path": "/internal/webhook/hydra/token_hook",
@@ -46662,10 +46383,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -46862,6 +46580,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "register_oauth_client_internal_project__project_id__register_oauth_client_post",
       "pagination": null,
       "path": "/internal/project/{project_id}/register_oauth_client",
@@ -46941,10 +46660,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -47084,6 +46800,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "webhook_kratos_signup_check_internal_webhook_kratos_signup_check_post",
       "pagination": null,
       "path": "/internal/webhook/kratos/signup_check",
@@ -47135,10 +46852,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -47278,6 +46992,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "webhook_kratos_signup_commit_internal_webhook_kratos_signup_commit_post",
       "pagination": null,
       "path": "/internal/webhook/kratos/signup_commit",
@@ -47329,10 +47044,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -47431,6 +47143,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "enable_org__org_id__project__project_id__scrape_post",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/scrape",
@@ -47507,10 +47220,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -47733,6 +47443,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "fetch_org__org_id__project__project_id__scrape_start_post",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/scrape/start",
@@ -47839,10 +47550,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -48060,6 +47768,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "check_status_org__org_id__project__project_id__scrape_run__sync_run_id__get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/scrape/run/{sync_run_id}",
@@ -48171,10 +47880,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -48361,6 +48067,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "list_runs_org__org_id__project__project_id__scrape_runs_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/scrape/runs",
@@ -48515,10 +48222,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -48707,6 +48411,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "initialise_org__org_id__project__project_id__compose_post",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/compose",
@@ -48805,10 +48510,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -49031,6 +48733,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "generate_org__org_id__project__project_id__compose_generate_post",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/compose/generate",
@@ -49129,10 +48832,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -49369,6 +49069,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "update_section_org__org_id__project__project_id__compose_update_section_post",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/compose/update_section",
@@ -49467,10 +49168,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -49688,6 +49386,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "section_talking_points_org__org_id__project__project_id__compose_section_talking_points_post",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/compose/section_talking_points",
@@ -49786,10 +49485,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -49978,6 +49674,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "topic_org__org_id__project__project_id__compose_topic_post",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/compose/topic",
@@ -50076,10 +49773,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -50439,6 +50133,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getAllTasks",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/task",
@@ -50627,10 +50322,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -51088,6 +50780,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "createTask",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/task",
@@ -51194,10 +50887,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -51565,6 +51255,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getTask",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/task/{task_id}",
@@ -51676,10 +51367,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -52050,6 +51738,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "editTask",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/task/{task_id}",
@@ -52183,10 +51872,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -52563,6 +52249,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getTaskRuns",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/task/{task_id}/run",
@@ -52778,10 +52465,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -52948,6 +52632,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "runTask",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/task/{task_id}/run",
@@ -53114,10 +52799,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -53369,6 +53051,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "task_iam_list_members",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/task/{task_id}/iam/members",
@@ -53553,10 +53236,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -53783,6 +53463,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "task_get_member",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/task/{task_id}/iam/members/{member}",
@@ -53921,10 +53602,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -54249,6 +53927,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "task_iam_update_member_roles",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/task/{task_id}/iam/members/{member}",
@@ -54409,10 +54088,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -54702,6 +54378,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "task_iam_test_permissions",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/task/{task_id}/iam/test",
@@ -54835,10 +54512,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -55108,6 +54782,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getAllTaskForwarders",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/task_forwarder",
@@ -55262,10 +54937,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -55541,6 +55213,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "createTaskForwarder",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/task_forwarder",
@@ -55647,10 +55320,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -55895,6 +55565,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getTaskForwarder",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/task_forwarder/{task_forwarder_id}",
@@ -56006,10 +55677,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -56257,6 +55925,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "updateTaskForwarder",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/task_forwarder/{task_forwarder_id}",
@@ -56390,10 +56059,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -56745,6 +56411,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getTaskRun",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/task/{task_id}/run/{task_run_id}",
@@ -56883,10 +56550,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -57106,6 +56770,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getAllModels",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/model",
@@ -57198,10 +56863,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -57314,6 +56976,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "list_available_guardrails_org__org_id__project__project_id__guardrail_get",
       "pagination": null,
       "path": "/org/{org_id}/project/{project_id}/guardrail",
@@ -57406,10 +57069,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",
@@ -57485,6 +57145,7 @@ Brain Core API. 🚀
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "whoami_whoami_get",
       "pagination": null,
       "path": "/whoami",
@@ -57506,10 +57167,7 @@ Brain Core API. 🚀
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "rightbrain/openapi.yml",

@@ -145,6 +145,7 @@ exports[`open api parser > hume > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "list_jobs",
       "pagination": null,
       "path": "/v0/batch/jobs",
@@ -380,10 +381,7 @@ exports[`open api parser > hume > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hume/openapi.yaml",
@@ -432,6 +430,7 @@ exports[`open api parser > hume > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "start_job",
       "pagination": null,
       "path": "/v0/batch/jobs",
@@ -483,10 +482,7 @@ exports[`open api parser > hume > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hume/openapi.yaml",
@@ -635,6 +631,7 @@ exports[`open api parser > hume > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_job_predictions",
       "pagination": null,
       "path": "/v0/batch/jobs/{id}/predictions",
@@ -700,10 +697,7 @@ exports[`open api parser > hume > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hume/openapi.yaml",
@@ -726,6 +720,7 @@ exports[`open api parser > hume > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_job_artifacts",
       "pagination": null,
       "path": "/v0/batch/jobs/{id}/artifacts",
@@ -769,10 +764,7 @@ exports[`open api parser > hume > parse open api 1`] = `
         },
         "type": "file",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hume/openapi.yaml",
@@ -984,6 +976,7 @@ exports[`open api parser > hume > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "get_job",
       "pagination": null,
       "path": "/v0/batch/jobs/{id}",
@@ -1041,10 +1034,7 @@ exports[`open api parser > hume > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hume/openapi.yaml",
