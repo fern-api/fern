@@ -2,7 +2,9 @@
 
 
 client = SeedStreaming(base_url="https://yourhost.com/path/to/api", )        
-undefined
+client.dummy.generate_stream(
+	num_events=1
+)
  
 ```                        
 
@@ -11,7 +13,9 @@ undefined
 
 
 client = SeedStreaming(base_url="https://yourhost.com/path/to/api", )        
-undefined
+client.dummy.generate(
+	num_events=5
+)
  
 ```                        
 
@@ -20,7 +24,9 @@ undefined
 
 
 client = SeedStreaming(base_url="https://yourhost.com/path/to/api", )        
-undefined
+client.dummy.generate(
+	num_events=5
+)
  
 ```                        
 

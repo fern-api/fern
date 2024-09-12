@@ -4,7 +4,7 @@ from seed.environment import SeedExhaustiveEnvironment
 
 client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
 client.echo(
-	request={"shape":{"primitive":{"string":{"original":"Hello world!\\n\\nwith\\n\\tnewlines"},"type":"string"},"type":"primitive"},"jsonExample":"Hello world!\\n\\nwith\\n\\tnewlines","type":"reference"}
+	request="Hello world!\\n\\nwith\\n\\tnewlines"
 )
  
 ```                        
@@ -16,7 +16,7 @@ from seed.environment import SeedExhaustiveEnvironment
 
 client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
 client.echo(
-	request={"shape":{"primitive":{"string":{"original":"Hello world!\\n\\nwith\\n\\tnewlines"},"type":"string"},"type":"primitive"},"jsonExample":"Hello world!\\n\\nwith\\n\\tnewlines","type":"reference"}
+	request="Hello world!\\n\\nwith\\n\\tnewlines"
 )
  
 ```                        
@@ -183,7 +183,20 @@ from seed import SeedExhaustive
 from seed.environment import SeedExhaustiveEnvironment
 
 client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
-undefined
+client.service.create_movie(
+	id="movie-c06a4ad7",
+	prequel="movie-cv9b914f",
+	title="The Boy and the Heron",
+	from_="Hayao Miyazaki",
+	rating=8,
+	tag="tag-wf9as23d",
+	metadata={
+		"actors": ["Christian Bale","Florence Pugh","Willem Dafoe"],
+		"releaseDate": "2023-12-08",
+		"ratings": {"rottenTomatoes":97,"imdb":7.6}
+	},
+	revenue=1000000
+)
  
 ```                        
 
@@ -193,7 +206,20 @@ from seed import SeedExhaustive
 from seed.environment import SeedExhaustiveEnvironment
 
 client = SeedExhaustive(environment=SeedExhaustiveEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
-undefined
+client.service.create_movie(
+	id="movie-c06a4ad7",
+	prequel="movie-cv9b914f",
+	title="The Boy and the Heron",
+	from_="Hayao Miyazaki",
+	rating=8,
+	tag="tag-wf9as23d",
+	metadata={
+		"actors": ["Christian Bale","Florence Pugh","Willem Dafoe"],
+		"releaseDate": "2023-12-08",
+		"ratings": {"rottenTomatoes":97,"imdb":7.6}
+	},
+	revenue=1000000
+)
  
 ```                        
 

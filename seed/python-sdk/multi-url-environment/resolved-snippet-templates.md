@@ -2,7 +2,9 @@
 from seed import SeedMultiUrlEnvironment
 
 client = SeedMultiUrlEnvironment(token="YOUR_TOKEN", )        
-undefined
+client.ec_2.boot_instance(
+	size="string"
+)
  
 ```                        
 
@@ -11,7 +13,9 @@ undefined
 from seed import SeedMultiUrlEnvironment
 
 client = SeedMultiUrlEnvironment(token="YOUR_TOKEN", )        
-undefined
+client.s_3.get_presigned_url(
+	s_3_key="string"
+)
  
 ```                        
 

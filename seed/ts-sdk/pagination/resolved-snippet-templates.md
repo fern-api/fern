@@ -21,7 +21,11 @@ const client = new SeedPaginationClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
-undefined;
+await client.users.listWithBodyCursorPagination({
+  pagination: {
+    cursor: "string",
+  },
+});
  
 ```                        
 
@@ -49,7 +53,11 @@ const client = new SeedPaginationClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
-undefined;
+await client.users.listWithBodyOffsetPagination({
+  pagination: {
+    page: 1,
+  },
+});
  
 ```                        
 

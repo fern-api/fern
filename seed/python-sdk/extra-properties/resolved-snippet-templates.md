@@ -2,7 +2,9 @@
 
 
 client = SeedExtraProperties(base_url="https://yourhost.com/path/to/api", )        
-undefined
+client.user.create_user(
+	name="string"
+)
  
 ```                        
 

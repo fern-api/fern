@@ -58,7 +58,7 @@ client.folder.service.endpoint(
 
 client = SeedApi(base_url="https://yourhost.com/path/to/api", )        
 client.folder.service.unknown_request(
-	request={"jsonExample":{"key":"value"},"shape":{"unknown":{"key":"value"},"type":"unknown"},"type":"reference"}
+	request={"key":"value"}
 )
  
 ```                        
@@ -69,7 +69,7 @@ client.folder.service.unknown_request(
 
 client = SeedApi(base_url="https://yourhost.com/path/to/api", )        
 client.folder.service.unknown_request(
-	request={"jsonExample":{"key":"value"},"shape":{"unknown":{"key":"value"},"type":"unknown"},"type":"reference"}
+	request={"key":"value"}
 )
  
 ```                        

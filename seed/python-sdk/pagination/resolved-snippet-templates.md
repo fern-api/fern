@@ -13,9 +13,14 @@ client.users.list_with_cursor_pagination(
 
 ```python
 from seed import SeedPagination
+from seed.users import WithCursor
 
 client = SeedPagination(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
-undefined
+client.users.list_with_body_cursor_pagination(
+	pagination=WithCursor(
+		cursor="string"
+	)
+)
  
 ```                        
 
@@ -35,9 +40,14 @@ client.users.list_with_offset_pagination(
 
 ```python
 from seed import SeedPagination
+from seed.users import WithPage
 
 client = SeedPagination(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
-undefined
+client.users.list_with_body_offset_pagination(
+	pagination=WithPage(
+		page=1
+	)
+)
  
 ```                        
 

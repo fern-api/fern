@@ -2,7 +2,9 @@
 import { SeedMultiUrlEnvironmentClient } from "@fern/multi-url-environment";
 
 const client = new SeedMultiUrlEnvironmentClient({ token: "YOUR_TOKEN" });
-undefined;
+await client.ec2.bootInstance({
+  size: "string",
+});
  
 ```                        
 
@@ -11,7 +13,9 @@ undefined;
 import { SeedMultiUrlEnvironmentClient } from "@fern/multi-url-environment";
 
 const client = new SeedMultiUrlEnvironmentClient({ token: "YOUR_TOKEN" });
-undefined;
+await client.s3.getPresignedUrl({
+  s3Key: "string",
+});
  
 ```                        
 

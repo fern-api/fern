@@ -25,7 +25,7 @@ from seed import SeedBasicAuth
 
 client = SeedBasicAuth(base_url="https://yourhost.com/path/to/api", username="YOUR_USERNAME",password="YOUR_PASSWORD", )        
 client.basic_auth.post_with_basic_auth(
-	request={"jsonExample":{"key":"value"},"shape":{"unknown":{"key":"value"},"type":"unknown"},"type":"reference"}
+	request={"key":"value"}
 )
  
 ```                        
@@ -36,7 +36,7 @@ from seed import SeedBasicAuth
 
 client = SeedBasicAuth(base_url="https://yourhost.com/path/to/api", username="YOUR_USERNAME",password="YOUR_PASSWORD", )        
 client.basic_auth.post_with_basic_auth(
-	request={"jsonExample":{"key":"value"},"shape":{"unknown":{"key":"value"},"type":"unknown"},"type":"reference"}
+	request={"key":"value"}
 )
  
 ```                        
@@ -47,7 +47,7 @@ from seed import SeedBasicAuth
 
 client = SeedBasicAuth(base_url="https://yourhost.com/path/to/api", username="YOUR_USERNAME",password="YOUR_PASSWORD", )        
 client.basic_auth.post_with_basic_auth(
-	request={"jsonExample":{"key":"value"},"shape":{"unknown":{"key":"value"},"type":"unknown"},"type":"reference"}
+	request={"key":"value"}
 )
  
 ```                        

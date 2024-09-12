@@ -3,7 +3,7 @@
 
 client = SeedUnknownAsAny(base_url="https://yourhost.com/path/to/api", )        
 client.unknown.post(
-	request={"jsonExample":{"key":"value"},"shape":{"unknown":{"key":"value"},"type":"unknown"},"type":"reference"}
+	request={"key":"value"}
 )
  
 ```                        

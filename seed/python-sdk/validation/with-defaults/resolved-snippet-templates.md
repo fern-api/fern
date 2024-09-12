@@ -2,7 +2,11 @@
 
 
 client = SeedValidation(base_url="https://yourhost.com/path/to/api", )        
-undefined
+client.create(
+	decimal=1.1,
+	even=1,
+	name="string"
+)
  
 ```                        
 

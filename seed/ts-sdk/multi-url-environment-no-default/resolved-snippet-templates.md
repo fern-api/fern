@@ -5,7 +5,9 @@ const client = new SeedMultiUrlEnvironmentNoDefaultClient({
   environment: SeedMultiUrlEnvironmentNoDefaultEnvironment.Production,
   token: "YOUR_TOKEN",
 });
-undefined;
+await client.ec2.bootInstance({
+  size: "string",
+});
  
 ```                        
 
@@ -17,7 +19,9 @@ const client = new SeedMultiUrlEnvironmentNoDefaultClient({
   environment: SeedMultiUrlEnvironmentNoDefaultEnvironment.Production,
   token: "YOUR_TOKEN",
 });
-undefined;
+await client.s3.getPresignedUrl({
+  s3Key: "string",
+});
  
 ```                        
 

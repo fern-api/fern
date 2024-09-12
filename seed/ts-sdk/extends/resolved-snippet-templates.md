@@ -2,7 +2,9 @@
 import { SeedExtendsClient } from "@fern/extends";
 
 const client = new SeedExtendsClient({ environment: "YOUR_BASE_URL" });
-undefined;
+await client.extendedInlineRequestBody({
+  unique: "string",
+});
  
 ```                        
 

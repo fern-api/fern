@@ -5,7 +5,11 @@ const client = new SeedApiClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
-undefined;
+await client.imdb.createMovie({
+  id: "string",
+  movieTitle: "string",
+  movieRating: 1.1,
+});
  
 ```                        
 

@@ -11,7 +11,10 @@ await client.user.getUser("string");
 import { SeedMultiLineDocsClient } from "@fern/multi-line-docs";
 
 const client = new SeedMultiLineDocsClient({ environment: "YOUR_BASE_URL" });
-undefined;
+await client.user.createUser({
+  name: "string",
+  age: 1,
+});
  
 ```                        
 

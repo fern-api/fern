@@ -2,7 +2,10 @@
 
 
 client = SeedPackageYml(base_url="https://yourhost.com/path/to/api", )        
-undefined
+client.echo(
+	name="Hello world!",
+	size=20
+)
  
 ```                        
 
@@ -11,7 +14,10 @@ undefined
 
 
 client = SeedPackageYml(base_url="https://yourhost.com/path/to/api", )        
-undefined
+client.echo(
+	name="Hello world!",
+	size=20
+)
  
 ```                        
 

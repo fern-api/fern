@@ -2,7 +2,9 @@
 from seed import SeedIdempotencyHeaders
 
 client = SeedIdempotencyHeaders(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
-undefined
+client.payment.create(
+	amount=1
+)
  
 ```                        
 

@@ -5,7 +5,9 @@ const client = new SeedIdempotencyHeadersClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
-undefined;
+await client.payment.create({
+  amount: 1,
+});
  
 ```                        
 

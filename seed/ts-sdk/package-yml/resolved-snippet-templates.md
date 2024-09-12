@@ -2,7 +2,10 @@
 import { SeedPackageYmlClient } from "@fern/package-yml";
 
 const client = new SeedPackageYmlClient({ environment: "YOUR_BASE_URL" });
-await client.echo("id-ksfd9c1");
+await client.echo("id-ksfd9c1", {
+  name: "Hello world!",
+  size: 20,
+});
  
 ```                        
 
@@ -11,7 +14,10 @@ await client.echo("id-ksfd9c1");
 import { SeedPackageYmlClient } from "@fern/package-yml";
 
 const client = new SeedPackageYmlClient({ environment: "YOUR_BASE_URL" });
-await client.echo("string");
+await client.echo("string", {
+  name: "Hello world!",
+  size: 20,
+});
  
 ```                        
 

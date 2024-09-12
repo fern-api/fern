@@ -2,7 +2,13 @@
 import { SeedApiClient } from "@fern/grpc-proto-exhaustive";
 
 const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
-undefined;
+await client.dataservice.upload({
+  columns: [
+    {
+      id: "id",
+    },
+  ],
+});
  
 ```                        
 
@@ -11,7 +17,13 @@ undefined;
 import { SeedApiClient } from "@fern/grpc-proto-exhaustive";
 
 const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
-undefined;
+await client.dataservice.upload({
+  columns: [
+    {
+      id: "id",
+    },
+  ],
+});
  
 ```                        
 
@@ -100,7 +112,9 @@ await client.dataservice.list({
 import { SeedApiClient } from "@fern/grpc-proto-exhaustive";
 
 const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
-undefined;
+await client.dataservice.query({
+  topK: 1,
+});
  
 ```                        
 
@@ -109,7 +123,9 @@ undefined;
 import { SeedApiClient } from "@fern/grpc-proto-exhaustive";
 
 const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
-undefined;
+await client.dataservice.query({
+  topK: 1,
+});
  
 ```                        
 
@@ -118,7 +134,9 @@ undefined;
 import { SeedApiClient } from "@fern/grpc-proto-exhaustive";
 
 const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
-undefined;
+await client.dataservice.update({
+  id: "id",
+});
  
 ```                        
 
@@ -127,7 +145,9 @@ undefined;
 import { SeedApiClient } from "@fern/grpc-proto-exhaustive";
 
 const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
-undefined;
+await client.dataservice.update({
+  id: "id",
+});
  
 ```                        
 

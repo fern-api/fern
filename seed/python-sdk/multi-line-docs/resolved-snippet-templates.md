@@ -13,7 +13,10 @@ client.user.get_user(
 
 
 client = SeedMultiLineDocs(base_url="https://yourhost.com/path/to/api", )        
-undefined
+client.user.create_user(
+	name="string",
+	age=1
+)
  
 ```                        
 

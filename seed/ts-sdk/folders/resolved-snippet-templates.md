@@ -49,7 +49,7 @@ import { SeedApiClient } from "@fern/folders";
 const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });        
 await client.folder.service.unknownRequest(
 	{
-		{"jsonExample":{"key":"value"},"shape":{"unknown":{"key":"value"},"type":"unknown"},"type":"reference"}
+		{"key":"value"}
 	}
 )
  
@@ -62,7 +62,7 @@ import { SeedApiClient } from "@fern/folders";
 const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });        
 await client.folder.service.unknownRequest(
 	{
-		{"jsonExample":{"key":"value"},"shape":{"unknown":{"key":"value"},"type":"unknown"},"type":"reference"}
+		{"key":"value"}
 	}
 )
  
