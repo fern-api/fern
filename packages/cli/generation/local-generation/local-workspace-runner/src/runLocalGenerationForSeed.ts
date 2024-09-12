@@ -194,7 +194,7 @@ export async function writeResolvedSnippetsJson({
             } catch (err) {}
         }
     }
-    let resovledMd: string = "";
+    let resovledMd = "";
     for (const snippet of snippets) {
         resovledMd += `\`\`\`${generatorInvocation.language}
 ${snippet} 
