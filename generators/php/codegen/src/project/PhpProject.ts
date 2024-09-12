@@ -36,7 +36,7 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
     }) {
         super(context);
         this.name = name;
-        this.filepaths = new PhpProjectFilepaths();
+        this.filepaths = new PhpProjectFilepaths(this.name);
     }
 
     public addSourceFiles(file: PhpFile): void {
@@ -97,7 +97,7 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
         return new File(
             filename.replace(".Template", ""),
             RelativeFilePath.of(""),
-            replaceTemplate({
+            this.replaceTemplate({
                 contents,
                 namespace
             })
@@ -155,7 +155,7 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
         }
         return await this.createPhpDirectory({
             absolutePathToDirectory: join(this.absolutePathToOutputDirectory, this.filepaths.getCoreTestsDirectory()),
-            files: this.coreFiles
+            files: this.coreTestFiles
         });
     }
 
@@ -167,7 +167,7 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
         files: File[];
     }): Promise<AbsoluteFilePath> {
         await this.mkdir(absolutePathToDirectory);
-        await Promise.all(files.map(async (file) => await file.write(this.absolutePathToOutputDirectory)));
+        await Promise.all(files.map(async (file) => await file.write(absolutePathToDirectory)));
         if (files.length > 0) {
             await loggingExeca(this.context.logger, "php-cs-fixer", ["fix", "."], {
                 doNotPipeOutput: true,
@@ -180,6 +180,13 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
     private async mkdir(absolutePathToDirectory: AbsoluteFilePath): Promise<void> {
         this.context.logger.debug(`mkdir ${absolutePathToDirectory}`);
         await mkdir(absolutePathToDirectory, { recursive: true });
+    }
+
+    private replaceTemplate({ contents, namespace }: { contents: string; namespace: string }): string {
+        return template(contents)({
+            namespace,
+            coreNamespace: this.context.getCoreNamespace()
+        });
     }
 }
 
@@ -270,12 +277,6 @@ class ComposerJson {
 }
 `;
     }
-}
-
-function replaceTemplate({ contents, namespace }: { contents: string; namespace: string }): string {
-    return template(contents)({
-        namespace
-    });
 }
 
 function getAsIsFilepath(filename: string): string {
