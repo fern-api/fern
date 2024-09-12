@@ -1,3 +1,4 @@
+export * from "./WithTitle";
 export * from "./WithSource";
 export * from "./WithEncoding";
 export * from "./WithDescription";

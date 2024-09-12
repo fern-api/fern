@@ -31,6 +31,7 @@ import { convertAvailability } from "./utils/convertAvailability";
 import { convertToEncodingSchema } from "./utils/convertToEncodingSchema";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
+import { noop } from "lodash-es";
 
 export interface ConvertedTypeDeclaration {
     name: string | undefined;
@@ -483,6 +484,7 @@ export function buildOneOfTypeDeclaration({
                 discriminant: schema.discriminantProperty,
                 "base-properties": baseProperties,
                 docs: schema.description ?? undefined,
+                availability: schema.availability != null ? convertAvailability(schema.availability) : undefined,
                 union,
                 encoding,
                 source: schema.source != null ? convertToSourceSchema(schema.source) : undefined

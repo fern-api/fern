@@ -27,6 +27,7 @@ export function getIdempotencyHeaders(document: OpenAPIV3.Document): Idempotency
                           description: undefined,
                           availability: undefined,
                           generatedName: header.name ?? header.header,
+                          title: undefined,
                           groupName: undefined,
                           nameOverride: undefined
                       })

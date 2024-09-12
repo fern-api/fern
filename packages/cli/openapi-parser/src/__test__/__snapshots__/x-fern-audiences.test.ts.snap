@@ -68,6 +68,7 @@ exports[`x-fern-audiences > x-fern-audiences > parse open api 1`] = `
                 "generatedName": "getV1UsersRequestPublicProperty",
                 "groupName": [],
                 "nameOverride": null,
+                "title": null,
                 "type": "optional",
                 "value": {
                   "availability": null,
@@ -83,6 +84,7 @@ exports[`x-fern-audiences > x-fern-audiences > parse open api 1`] = `
                     "pattern": null,
                     "type": "string",
                   },
+                  "title": null,
                   "type": "primitive",
                 },
               },
@@ -100,6 +102,7 @@ exports[`x-fern-audiences > x-fern-audiences > parse open api 1`] = `
                 "generatedName": "getV1UsersRequestPrivateProperty",
                 "groupName": [],
                 "nameOverride": null,
+                "title": null,
                 "type": "optional",
                 "value": {
                   "availability": null,
@@ -115,6 +118,7 @@ exports[`x-fern-audiences > x-fern-audiences > parse open api 1`] = `
                     "pattern": null,
                     "type": "string",
                   },
+                  "title": null,
                   "type": "primitive",
                 },
               },
@@ -124,6 +128,7 @@ exports[`x-fern-audiences > x-fern-audiences > parse open api 1`] = `
             "file": "x-fern-audiences/openapi.yml",
             "type": "openapi",
           },
+          "title": null,
           "type": "object",
         },
         "source": {
@@ -175,6 +180,7 @@ exports[`x-fern-audiences > x-fern-audiences > parse open api 1`] = `
             "generatedName": "baseUserId",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "availability": null,
@@ -190,6 +196,7 @@ exports[`x-fern-audiences > x-fern-audiences > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -199,6 +206,7 @@ exports[`x-fern-audiences > x-fern-audiences > parse open api 1`] = `
         "file": "x-fern-audiences/openapi.yml",
         "type": "openapi",
       },
+      "title": null,
       "type": "object",
     },
   },

@@ -9,7 +9,8 @@ export interface MapSchema
         FernOpenapiIr.WithName,
         FernOpenapiIr.WithSdkGroupName,
         FernOpenapiIr.WithAvailability,
-        FernOpenapiIr.WithEncoding {
+        FernOpenapiIr.WithEncoding,
+        FernOpenapiIr.WithTitle {
     key: FernOpenapiIr.PrimitiveSchema;
     value: FernOpenapiIr.Schema;
 }

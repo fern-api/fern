@@ -10,6 +10,7 @@ export interface UnDiscriminatedOneOfSchemaWithExample
         FernOpenapiIr.WithSdkGroupName,
         FernOpenapiIr.WithAvailability,
         FernOpenapiIr.WithEncoding,
-        FernOpenapiIr.WithSource {
+        FernOpenapiIr.WithSource,
+        FernOpenapiIr.WithTitle {
     schemas: FernOpenapiIr.SchemaWithExample[];
 }

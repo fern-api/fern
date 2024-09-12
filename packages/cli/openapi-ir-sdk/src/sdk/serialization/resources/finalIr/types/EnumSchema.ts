@@ -11,6 +11,7 @@ import { WithName } from "../../commons/types/WithName";
 import { WithSdkGroupName } from "../../commons/types/WithSdkGroupName";
 import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithSource } from "../../commons/types/WithSource";
+import { WithTitle } from "../../commons/types/WithTitle";
 
 export const EnumSchema: core.serialization.ObjectSchema<serializers.EnumSchema.Raw, FernOpenapiIr.EnumSchema> =
     core.serialization
@@ -22,7 +23,8 @@ export const EnumSchema: core.serialization.ObjectSchema<serializers.EnumSchema.
         .extend(WithName)
         .extend(WithSdkGroupName)
         .extend(WithAvailability)
-        .extend(WithSource);
+        .extend(WithSource)
+        .extend(WithTitle);
 
 export declare namespace EnumSchema {
     interface Raw
@@ -30,7 +32,8 @@ export declare namespace EnumSchema {
             WithName.Raw,
             WithSdkGroupName.Raw,
             WithAvailability.Raw,
-            WithSource.Raw {
+            WithSource.Raw,
+            WithTitle.Raw {
         default?: EnumValue.Raw | null;
         values: EnumValue.Raw[];
     }

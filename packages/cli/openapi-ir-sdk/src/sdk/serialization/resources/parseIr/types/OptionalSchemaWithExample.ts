@@ -9,6 +9,7 @@ import { WithSdkGroupName } from "../../commons/types/WithSdkGroupName";
 import { WithName } from "../../commons/types/WithName";
 import { WithDescription } from "../../commons/types/WithDescription";
 import { WithAvailability } from "../../commons/types/WithAvailability";
+import { WithTitle } from "../../commons/types/WithTitle";
 
 export const OptionalSchemaWithExample: core.serialization.ObjectSchema<
     serializers.OptionalSchemaWithExample.Raw,
@@ -20,10 +21,11 @@ export const OptionalSchemaWithExample: core.serialization.ObjectSchema<
     .extend(WithSdkGroupName)
     .extend(WithName)
     .extend(WithDescription)
-    .extend(WithAvailability);
+    .extend(WithAvailability)
+    .extend(WithTitle);
 
 export declare namespace OptionalSchemaWithExample {
-    interface Raw extends WithSdkGroupName.Raw, WithName.Raw, WithDescription.Raw, WithAvailability.Raw {
+    interface Raw extends WithSdkGroupName.Raw, WithName.Raw, WithDescription.Raw, WithAvailability.Raw, WithTitle.Raw {
         value: serializers.SchemaWithExample.Raw;
     }
 }

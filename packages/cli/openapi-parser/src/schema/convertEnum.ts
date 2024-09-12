@@ -9,6 +9,7 @@ export const VALID_ENUM_NAME_REGEX = /^[a-zA-Z][a-zA-Z0-9_]*$/;
 export function convertEnum({
     nameOverride,
     generatedName,
+    title,
     fernEnum,
     enumVarNames,
     enumValues,
@@ -22,6 +23,7 @@ export function convertEnum({
 }: {
     nameOverride: string | undefined;
     generatedName: string;
+    title: string | undefined;
     fernEnum: FernEnumConfig | undefined;
     enumVarNames: string[] | undefined;
     enumValues: string[];
@@ -69,6 +71,7 @@ export function convertEnum({
         wrapAsNullable,
         nameOverride,
         generatedName,
+        title,
         values,
         _default: _defaultEnumValue,
         description,
@@ -82,6 +85,7 @@ export function wrapEnum({
     wrapAsNullable,
     nameOverride,
     generatedName,
+    title,
     values,
     _default,
     description,
@@ -92,6 +96,7 @@ export function wrapEnum({
     wrapAsNullable: boolean;
     nameOverride: string | undefined;
     generatedName: string;
+    title: string | undefined;
     values: EnumValue[];
     _default: EnumValue | undefined;
     description: string | undefined;
@@ -103,9 +108,11 @@ export function wrapEnum({
         return SchemaWithExample.nullable({
             nameOverride,
             generatedName,
+            title,
             value: SchemaWithExample.enum({
                 nameOverride,
                 generatedName,
+                title,
                 values,
                 description,
                 default: _default,
@@ -122,6 +129,7 @@ export function wrapEnum({
     return SchemaWithExample.enum({
         nameOverride,
         generatedName,
+        title,
         values,
         description,
         availability,

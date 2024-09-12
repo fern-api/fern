@@ -11,6 +11,7 @@ import { WithName } from "../../commons/types/WithName";
 import { WithSdkGroupName } from "../../commons/types/WithSdkGroupName";
 import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithSource } from "../../commons/types/WithSource";
+import { WithTitle } from "../../commons/types/WithTitle";
 
 export const EnumSchemaWithExample: core.serialization.ObjectSchema<
     serializers.EnumSchemaWithExample.Raw,
@@ -25,7 +26,8 @@ export const EnumSchemaWithExample: core.serialization.ObjectSchema<
     .extend(WithName)
     .extend(WithSdkGroupName)
     .extend(WithAvailability)
-    .extend(WithSource);
+    .extend(WithSource)
+    .extend(WithTitle);
 
 export declare namespace EnumSchemaWithExample {
     interface Raw
@@ -33,7 +35,8 @@ export declare namespace EnumSchemaWithExample {
             WithName.Raw,
             WithSdkGroupName.Raw,
             WithAvailability.Raw,
-            WithSource.Raw {
+            WithSource.Raw,
+            WithTitle.Raw {
         default?: EnumValue.Raw | null;
         values: EnumValue.Raw[];
         example?: string | null;

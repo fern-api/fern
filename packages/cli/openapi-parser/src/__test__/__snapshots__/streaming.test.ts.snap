@@ -51,6 +51,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
                 "generatedName": "userStreamRequestId",
                 "groupName": [],
                 "nameOverride": null,
+                "title": null,
                 "type": "optional",
                 "value": {
                   "availability": null,
@@ -66,6 +67,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
                     "pattern": null,
                     "type": "string",
                   },
+                  "title": null,
                   "type": "primitive",
                 },
               },
@@ -83,6 +85,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
                 "generatedName": "UserStreamRequestStream",
                 "groupName": [],
                 "nameOverride": null,
+                "title": null,
                 "type": "literal",
                 "value": {
                   "type": "boolean",
@@ -95,6 +98,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
             "file": "streaming/openapi.yml",
             "type": "openapi",
           },
+          "title": null,
           "type": "object",
         },
         "source": {
@@ -118,6 +122,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
             "file": "streaming/openapi.yml",
             "type": "openapi",
           },
+          "title": null,
           "type": "reference",
         },
         "source": {
@@ -213,6 +218,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
                 "generatedName": "userRequestId",
                 "groupName": [],
                 "nameOverride": null,
+                "title": null,
                 "type": "optional",
                 "value": {
                   "availability": null,
@@ -228,6 +234,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
                     "pattern": null,
                     "type": "string",
                   },
+                  "title": null,
                   "type": "primitive",
                 },
               },
@@ -245,6 +252,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
                 "generatedName": "UserRequestStream",
                 "groupName": [],
                 "nameOverride": null,
+                "title": null,
                 "type": "literal",
                 "value": {
                   "type": "boolean",
@@ -257,6 +265,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
             "file": "streaming/openapi.yml",
             "type": "openapi",
           },
+          "title": null,
           "type": "object",
         },
         "source": {
@@ -280,6 +289,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
             "file": "streaming/openapi.yml",
             "type": "openapi",
           },
+          "title": null,
           "type": "reference",
         },
         "source": {
@@ -341,6 +351,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
                 "generatedName": "userV2StreamRequestId",
                 "groupName": [],
                 "nameOverride": null,
+                "title": null,
                 "type": "optional",
                 "value": {
                   "availability": null,
@@ -356,6 +367,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
                     "pattern": null,
                     "type": "string",
                   },
+                  "title": null,
                   "type": "primitive",
                 },
               },
@@ -373,6 +385,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
                 "generatedName": "UserV2StreamRequestStream",
                 "groupName": [],
                 "nameOverride": null,
+                "title": null,
                 "type": "literal",
                 "value": {
                   "type": "boolean",
@@ -385,6 +398,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
             "file": "streaming/openapi.yml",
             "type": "openapi",
           },
+          "title": null,
           "type": "object",
         },
         "source": {
@@ -408,6 +422,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
             "file": "streaming/openapi.yml",
             "type": "openapi",
           },
+          "title": null,
           "type": "reference",
         },
         "source": {
@@ -517,6 +532,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
                 "generatedName": "userV2RequestId",
                 "groupName": [],
                 "nameOverride": null,
+                "title": null,
                 "type": "optional",
                 "value": {
                   "availability": null,
@@ -532,6 +548,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
                     "pattern": null,
                     "type": "string",
                   },
+                  "title": null,
                   "type": "primitive",
                 },
               },
@@ -549,6 +566,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
                 "generatedName": "UserV2RequestStream",
                 "groupName": [],
                 "nameOverride": null,
+                "title": null,
                 "type": "literal",
                 "value": {
                   "type": "boolean",
@@ -561,6 +579,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
             "file": "streaming/openapi.yml",
             "type": "openapi",
           },
+          "title": null,
           "type": "object",
         },
         "source": {
@@ -584,6 +603,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
             "file": "streaming/openapi.yml",
             "type": "openapi",
           },
+          "title": null,
           "type": "reference",
         },
         "source": {
@@ -645,6 +665,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
                 "generatedName": "userV3StreamRequestId",
                 "groupName": [],
                 "nameOverride": null,
+                "title": null,
                 "type": "optional",
                 "value": {
                   "availability": null,
@@ -660,6 +681,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
                     "pattern": null,
                     "type": "string",
                   },
+                  "title": null,
                   "type": "primitive",
                 },
               },
@@ -677,6 +699,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
                 "generatedName": "UserV3StreamRequestStream",
                 "groupName": [],
                 "nameOverride": null,
+                "title": null,
                 "type": "literal",
                 "value": {
                   "type": "boolean",
@@ -689,6 +712,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
             "file": "streaming/openapi.yml",
             "type": "openapi",
           },
+          "title": null,
           "type": "object",
         },
         "source": {
@@ -724,6 +748,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
                 "generatedName": "userV3StreamResponseId",
                 "groupName": [],
                 "nameOverride": null,
+                "title": null,
                 "type": "optional",
                 "value": {
                   "availability": null,
@@ -739,6 +764,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
                     "pattern": null,
                     "type": "string",
                   },
+                  "title": null,
                   "type": "primitive",
                 },
               },
@@ -756,6 +782,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
                 "generatedName": "userV3StreamResponseInline",
                 "groupName": [],
                 "nameOverride": null,
+                "title": null,
                 "type": "optional",
                 "value": {
                   "availability": null,
@@ -767,6 +794,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
                     "default": null,
                     "type": "boolean",
                   },
+                  "title": null,
                   "type": "primitive",
                 },
               },
@@ -784,6 +812,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
                 "generatedName": "userV3StreamResponseStreamed",
                 "groupName": [],
                 "nameOverride": null,
+                "title": null,
                 "type": "optional",
                 "value": {
                   "availability": null,
@@ -795,6 +824,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
                     "default": null,
                     "type": "boolean",
                   },
+                  "title": null,
                   "type": "primitive",
                 },
               },
@@ -804,6 +834,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
             "file": "streaming/openapi.yml",
             "type": "openapi",
           },
+          "title": null,
           "type": "object",
         },
         "source": {
@@ -906,6 +937,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
                 "generatedName": "userV3RequestId",
                 "groupName": [],
                 "nameOverride": null,
+                "title": null,
                 "type": "optional",
                 "value": {
                   "availability": null,
@@ -921,6 +953,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
                     "pattern": null,
                     "type": "string",
                   },
+                  "title": null,
                   "type": "primitive",
                 },
               },
@@ -938,6 +971,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
                 "generatedName": "UserV3RequestStream",
                 "groupName": [],
                 "nameOverride": null,
+                "title": null,
                 "type": "literal",
                 "value": {
                   "type": "boolean",
@@ -950,6 +984,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
             "file": "streaming/openapi.yml",
             "type": "openapi",
           },
+          "title": null,
           "type": "object",
         },
         "source": {
@@ -985,6 +1020,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
                 "generatedName": "userV3ResponseId",
                 "groupName": [],
                 "nameOverride": null,
+                "title": null,
                 "type": "optional",
                 "value": {
                   "availability": null,
@@ -1000,6 +1036,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
                     "pattern": null,
                     "type": "string",
                   },
+                  "title": null,
                   "type": "primitive",
                 },
               },
@@ -1017,6 +1054,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
                 "generatedName": "userV3ResponseInline",
                 "groupName": [],
                 "nameOverride": null,
+                "title": null,
                 "type": "optional",
                 "value": {
                   "availability": null,
@@ -1028,6 +1066,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
                     "default": null,
                     "type": "boolean",
                   },
+                  "title": null,
                   "type": "primitive",
                 },
               },
@@ -1037,6 +1076,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
             "file": "streaming/openapi.yml",
             "type": "openapi",
           },
+          "title": null,
           "type": "object",
         },
         "source": {
@@ -1089,6 +1129,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
             "generatedName": "baseStreamUserId",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "availability": null,
@@ -1104,6 +1145,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -1113,6 +1155,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
         "file": "streaming/openapi.yml",
         "type": "openapi",
       },
+      "title": null,
       "type": "object",
     },
     "BaseUser": {
@@ -1138,6 +1181,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
             "generatedName": "baseUserId",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "availability": null,
@@ -1153,6 +1197,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -1162,6 +1207,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
         "file": "streaming/openapi.yml",
         "type": "openapi",
       },
+      "title": null,
       "type": "object",
     },
     "StreamUser": {
@@ -1187,6 +1233,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
             "generatedName": "streamUserId",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "availability": null,
@@ -1202,6 +1249,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -1219,6 +1267,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
             "generatedName": "streamUserName",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "availability": null,
@@ -1234,6 +1283,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -1251,6 +1301,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
             "generatedName": "streamUserStreamed",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "availability": null,
@@ -1258,6 +1309,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
               "generatedName": "StreamUserStreamed",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "literal",
               "value": {
                 "type": "boolean",
@@ -1271,6 +1323,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
         "file": "streaming/openapi.yml",
         "type": "openapi",
       },
+      "title": null,
       "type": "object",
     },
     "User": {
@@ -1296,6 +1349,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
             "generatedName": "userId",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "availability": null,
@@ -1311,6 +1365,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -1328,6 +1383,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
             "generatedName": "userName",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "availability": null,
@@ -1343,6 +1399,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -1360,6 +1417,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
             "generatedName": "userStreamed",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "availability": null,
@@ -1367,6 +1425,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
               "generatedName": "UserStreamed",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "literal",
               "value": {
                 "type": "boolean",
@@ -1380,6 +1439,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
         "file": "streaming/openapi.yml",
         "type": "openapi",
       },
+      "title": null,
       "type": "object",
     },
   },

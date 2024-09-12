@@ -32,6 +32,7 @@ interface ReferencedAllOfInfo {
 export function convertObject({
     nameOverride,
     generatedName,
+    title,
     breadcrumbs,
     properties,
     description,
@@ -50,6 +51,7 @@ export function convertObject({
 }: {
     nameOverride: string | undefined;
     generatedName: string;
+    title: string | undefined;
     breadcrumbs: string[];
     properties: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject>;
     description: string | undefined;
@@ -102,6 +104,7 @@ export function convertObject({
                                         schema: SchemaWithExample.optional({
                                             nameOverride: undefined,
                                             generatedName: "",
+                                            title: undefined,
                                             value: property.schema,
                                             description: undefined,
                                             availability: property.availability,
@@ -181,6 +184,7 @@ export function convertObject({
                 : SchemaWithExample.optional({
                       nameOverride,
                       generatedName,
+                      title,
                       description: undefined,
                       availability,
                       value: convertSchema(propertySchema, false, context, propertyBreadcrumbs, source, namespace),
@@ -230,6 +234,7 @@ export function convertObject({
     return wrapObject({
         nameOverride,
         generatedName,
+        title,
         wrapAsNullable,
         properties: convertedProperties.filter((objectProperty) => {
             return !propertiesToExclude.has(objectProperty.key);
@@ -248,6 +253,7 @@ export function convertObject({
 export function wrapObject({
     nameOverride,
     generatedName,
+    title,
     wrapAsNullable,
     properties,
     description,
@@ -261,6 +267,7 @@ export function wrapObject({
 }: {
     nameOverride: string | undefined;
     generatedName: string;
+    title: string | undefined;
     wrapAsNullable: boolean;
     properties: ObjectPropertyWithExample[];
     description: string | undefined;
@@ -276,11 +283,13 @@ export function wrapObject({
         return SchemaWithExample.nullable({
             nameOverride,
             generatedName,
+            title,
             value: SchemaWithExample.object({
                 description,
                 properties,
                 nameOverride,
                 generatedName,
+                title,
                 allOf,
                 allOfPropertyConflicts,
                 groupName,
@@ -299,6 +308,7 @@ export function wrapObject({
         properties,
         nameOverride,
         generatedName,
+        title,
         allOf,
         allOfPropertyConflicts,
         groupName,

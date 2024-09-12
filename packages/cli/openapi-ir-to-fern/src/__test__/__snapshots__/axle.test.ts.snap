@@ -91,12 +91,18 @@ exports[`open api parser > axle > docs 1`] = `
           "properties": {
             "carrier": "string",
             "createdAt": "string",
-            "email": "optional<string>",
+            "email": {
+              "display-name": "Account",
+              "type": "optional<string>",
+            },
             "firstName": "string",
             "id": "string",
             "lastName": "string",
             "modifiedAt": "string",
-            "phone": "optional<string>",
+            "phone": {
+              "display-name": "Account",
+              "type": "optional<string>",
+            },
             "policies": "list<string>",
             "refreshedAt": "string",
           },
@@ -118,7 +124,10 @@ exports[`open api parser > axle > docs 1`] = `
           "docs": "A Policy represents a specific policy associated with an Account and includes high-level policy information (e.g. policy number) and any children objects (e.g., coverages) associated with the policy.",
           "properties": {
             "account": "string",
-            "address": "root.Address",
+            "address": {
+              "display-name": "Address",
+              "type": "root.Address",
+            },
             "carrier": "string",
             "coverages": {
               "docs": "",
@@ -397,7 +406,10 @@ exports[`open api parser > axle > docs 1`] = `
           "docs": "",
           "properties": {
             "data": "StartIgnitionResponseData",
-            "success": "root.Success",
+            "success": {
+              "display-name": "Success",
+              "type": "root.Success",
+            },
           },
           "source": {
             "openapi": "axle/openapi.yml",
@@ -649,7 +661,10 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "docs": "",
           "properties": {
             "data": "ExchangeTokenResponseData",
-            "success": "root.Success",
+            "success": {
+              "display-name": "Success",
+              "type": "root.Success",
+            },
           },
           "source": {
             "openapi": "axle/openapi.yml",
@@ -683,12 +698,30 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
       "Address": {
         "docs": undefined,
         "properties": {
-          "addressLine1": "optional<string>",
-          "addressLine2": "optional<string>",
-          "city": "optional<string>",
-          "country": "optional<string>",
-          "postalCode": "optional<string>",
-          "state": "optional<string>",
+          "addressLine1": {
+            "display-name": "Address",
+            "type": "optional<string>",
+          },
+          "addressLine2": {
+            "display-name": "Address",
+            "type": "optional<string>",
+          },
+          "city": {
+            "display-name": "Address",
+            "type": "optional<string>",
+          },
+          "country": {
+            "display-name": "Address",
+            "type": "optional<string>",
+          },
+          "postalCode": {
+            "display-name": "Address",
+            "type": "optional<string>",
+          },
+          "state": {
+            "display-name": "Address",
+            "type": "optional<string>",
+          },
         },
         "source": {
           "openapi": "axle/openapi.yml",
@@ -697,10 +730,16 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
       "Carrier": {
         "docs": undefined,
         "properties": {
-          "address": "Address",
+          "address": {
+            "display-name": "Address",
+            "type": "Address",
+          },
           "domain": "string",
           "id": "string",
-          "logoUrl": "optional<string>",
+          "logoUrl": {
+            "display-name": "Carrier",
+            "type": "optional<string>",
+          },
           "modifiedAt": "string",
           "name": "string",
           "phone": "string",
@@ -713,11 +752,23 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "docs": undefined,
         "properties": {
           "code": "CoverageCode",
-          "deductible": "optional<integer>",
+          "deductible": {
+            "display-name": "Coverage",
+            "type": "optional<integer>",
+          },
           "label": "string",
-          "limitPerAccident": "optional<integer>",
-          "limitPerPerson": "optional<integer>",
-          "property": "optional<string>",
+          "limitPerAccident": {
+            "display-name": "Coverage",
+            "type": "optional<integer>",
+          },
+          "limitPerPerson": {
+            "display-name": "Coverage",
+            "type": "optional<integer>",
+          },
+          "property": {
+            "display-name": "Coverage",
+            "type": "optional<string>",
+          },
         },
         "source": {
           "openapi": "axle/openapi.yml",
@@ -742,10 +793,14 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "docs": undefined,
         "properties": {
           "message": {
+            "display-name": "Error",
             "docs": "Provides a reason for why the operation failed, if available.",
             "type": "optional<string>",
           },
-          "success": "optional<Success>",
+          "success": {
+            "display-name": "Error",
+            "type": "optional<Success>",
+          },
         },
         "source": {
           "openapi": "axle/openapi.yml",
@@ -754,15 +809,36 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
       "Insured": {
         "docs": undefined,
         "properties": {
-          "dateOfBirth": "optional<string>",
-          "dateOfBirthYear": "optional<string>",
+          "dateOfBirth": {
+            "display-name": "Insured",
+            "type": "optional<string>",
+          },
+          "dateOfBirthYear": {
+            "display-name": "Insured",
+            "type": "optional<string>",
+          },
           "firstName": "string",
           "lastName": "string",
-          "licenseNo": "optional<string>",
-          "licenseState": "optional<string>",
-          "licenseStatus": "optional<string>",
-          "property": "optional<string>",
-          "type": "optional<string>",
+          "licenseNo": {
+            "display-name": "Insured",
+            "type": "optional<string>",
+          },
+          "licenseState": {
+            "display-name": "Insured",
+            "type": "optional<string>",
+          },
+          "licenseStatus": {
+            "display-name": "Insured",
+            "type": "optional<string>",
+          },
+          "property": {
+            "display-name": "Insured",
+            "type": "optional<string>",
+          },
+          "type": {
+            "display-name": "Insured",
+            "type": "optional<string>",
+          },
         },
         "source": {
           "openapi": "axle/openapi.yml",
@@ -771,7 +847,10 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
       "Property": {
         "docs": undefined,
         "properties": {
-          "data": "Vehicle",
+          "data": {
+            "display-name": "Vehicle",
+            "type": "Vehicle",
+          },
           "id": "string",
           "type": "literal<"vehicle">",
         },
@@ -786,9 +865,15 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
       "ThirdParty": {
         "docs": undefined,
         "properties": {
-          "address": "optional<Address>",
+          "address": {
+            "display-name": "Third Party",
+            "type": "optional<Address>",
+          },
           "name": "string",
-          "property": "optional<string>",
+          "property": {
+            "display-name": "Third Party",
+            "type": "optional<string>",
+          },
           "type": {
             "default": "interest",
             "type": "ThirdPartyType",
@@ -813,10 +898,12 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "docs": "User to attach to Ignition session. If user is set, unique \`id\` must be provided.",
         "properties": {
           "email": {
+            "display-name": "User",
             "docs": "User's email address.",
             "type": "optional<string>",
           },
           "firstName": {
+            "display-name": "User",
             "docs": "User's first name.",
             "type": "optional<string>",
           },
@@ -825,10 +912,12 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
             "type": "string",
           },
           "lastName": {
+            "display-name": "User",
             "docs": "User's last name.",
             "type": "optional<string>",
           },
           "phone": {
+            "display-name": "User",
             "docs": "User's phone number in E.164 format.",
             "type": "optional<string>",
           },
@@ -840,7 +929,10 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
       "Vehicle": {
         "docs": undefined,
         "properties": {
-          "bodyStyle": "optional<string>",
+          "bodyStyle": {
+            "display-name": "Vehicle",
+            "type": "optional<string>",
+          },
           "make": "string",
           "model": "string",
           "vin": "string",
@@ -951,12 +1043,18 @@ exports[`open api parser > axle > simple 1`] = `
           "properties": {
             "carrier": "string",
             "createdAt": "string",
-            "email": "optional<string>",
+            "email": {
+              "display-name": "Account",
+              "type": "optional<string>",
+            },
             "firstName": "string",
             "id": "string",
             "lastName": "string",
             "modifiedAt": "string",
-            "phone": "optional<string>",
+            "phone": {
+              "display-name": "Account",
+              "type": "optional<string>",
+            },
             "policies": "list<string>",
             "refreshedAt": "string",
           },
@@ -978,7 +1076,10 @@ exports[`open api parser > axle > simple 1`] = `
           "docs": "A Policy represents a specific policy associated with an Account and includes high-level policy information (e.g. policy number) and any children objects (e.g., coverages) associated with the policy.",
           "properties": {
             "account": "string",
-            "address": "root.Address",
+            "address": {
+              "display-name": "Address",
+              "type": "root.Address",
+            },
             "carrier": "string",
             "coverages": {
               "docs": "",
@@ -1207,7 +1308,10 @@ exports[`open api parser > axle > simple 1`] = `
           "docs": "",
           "properties": {
             "data": "StartIgnitionResponseData",
-            "success": "root.Success",
+            "success": {
+              "display-name": "Success",
+              "type": "root.Success",
+            },
           },
           "source": {
             "openapi": "axle/openapi.yml",
@@ -1430,7 +1534,10 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "docs": "",
           "properties": {
             "data": "ExchangeTokenResponseData",
-            "success": "root.Success",
+            "success": {
+              "display-name": "Success",
+              "type": "root.Success",
+            },
           },
           "source": {
             "openapi": "axle/openapi.yml",
@@ -1464,12 +1571,30 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
       "Address": {
         "docs": undefined,
         "properties": {
-          "addressLine1": "optional<string>",
-          "addressLine2": "optional<string>",
-          "city": "optional<string>",
-          "country": "optional<string>",
-          "postalCode": "optional<string>",
-          "state": "optional<string>",
+          "addressLine1": {
+            "display-name": "Address",
+            "type": "optional<string>",
+          },
+          "addressLine2": {
+            "display-name": "Address",
+            "type": "optional<string>",
+          },
+          "city": {
+            "display-name": "Address",
+            "type": "optional<string>",
+          },
+          "country": {
+            "display-name": "Address",
+            "type": "optional<string>",
+          },
+          "postalCode": {
+            "display-name": "Address",
+            "type": "optional<string>",
+          },
+          "state": {
+            "display-name": "Address",
+            "type": "optional<string>",
+          },
         },
         "source": {
           "openapi": "axle/openapi.yml",
@@ -1478,10 +1603,16 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
       "Carrier": {
         "docs": undefined,
         "properties": {
-          "address": "Address",
+          "address": {
+            "display-name": "Address",
+            "type": "Address",
+          },
           "domain": "string",
           "id": "string",
-          "logoUrl": "optional<string>",
+          "logoUrl": {
+            "display-name": "Carrier",
+            "type": "optional<string>",
+          },
           "modifiedAt": "string",
           "name": "string",
           "phone": "string",
@@ -1494,11 +1625,23 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "docs": undefined,
         "properties": {
           "code": "CoverageCode",
-          "deductible": "optional<integer>",
+          "deductible": {
+            "display-name": "Coverage",
+            "type": "optional<integer>",
+          },
           "label": "string",
-          "limitPerAccident": "optional<integer>",
-          "limitPerPerson": "optional<integer>",
-          "property": "optional<string>",
+          "limitPerAccident": {
+            "display-name": "Coverage",
+            "type": "optional<integer>",
+          },
+          "limitPerPerson": {
+            "display-name": "Coverage",
+            "type": "optional<integer>",
+          },
+          "property": {
+            "display-name": "Coverage",
+            "type": "optional<string>",
+          },
         },
         "source": {
           "openapi": "axle/openapi.yml",
@@ -1523,10 +1666,14 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "docs": undefined,
         "properties": {
           "message": {
+            "display-name": "Error",
             "docs": "Provides a reason for why the operation failed, if available.",
             "type": "optional<string>",
           },
-          "success": "optional<Success>",
+          "success": {
+            "display-name": "Error",
+            "type": "optional<Success>",
+          },
         },
         "source": {
           "openapi": "axle/openapi.yml",
@@ -1535,15 +1682,36 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
       "Insured": {
         "docs": undefined,
         "properties": {
-          "dateOfBirth": "optional<string>",
-          "dateOfBirthYear": "optional<string>",
+          "dateOfBirth": {
+            "display-name": "Insured",
+            "type": "optional<string>",
+          },
+          "dateOfBirthYear": {
+            "display-name": "Insured",
+            "type": "optional<string>",
+          },
           "firstName": "string",
           "lastName": "string",
-          "licenseNo": "optional<string>",
-          "licenseState": "optional<string>",
-          "licenseStatus": "optional<string>",
-          "property": "optional<string>",
-          "type": "optional<string>",
+          "licenseNo": {
+            "display-name": "Insured",
+            "type": "optional<string>",
+          },
+          "licenseState": {
+            "display-name": "Insured",
+            "type": "optional<string>",
+          },
+          "licenseStatus": {
+            "display-name": "Insured",
+            "type": "optional<string>",
+          },
+          "property": {
+            "display-name": "Insured",
+            "type": "optional<string>",
+          },
+          "type": {
+            "display-name": "Insured",
+            "type": "optional<string>",
+          },
         },
         "source": {
           "openapi": "axle/openapi.yml",
@@ -1552,7 +1720,10 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
       "Property": {
         "docs": undefined,
         "properties": {
-          "data": "Vehicle",
+          "data": {
+            "display-name": "Vehicle",
+            "type": "Vehicle",
+          },
           "id": "string",
           "type": "literal<"vehicle">",
         },
@@ -1567,9 +1738,15 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
       "ThirdParty": {
         "docs": undefined,
         "properties": {
-          "address": "optional<Address>",
+          "address": {
+            "display-name": "Third Party",
+            "type": "optional<Address>",
+          },
           "name": "string",
-          "property": "optional<string>",
+          "property": {
+            "display-name": "Third Party",
+            "type": "optional<string>",
+          },
           "type": {
             "default": "interest",
             "type": "ThirdPartyType",
@@ -1594,10 +1771,12 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "docs": "User to attach to Ignition session. If user is set, unique \`id\` must be provided.",
         "properties": {
           "email": {
+            "display-name": "User",
             "docs": "User's email address.",
             "type": "optional<string>",
           },
           "firstName": {
+            "display-name": "User",
             "docs": "User's first name.",
             "type": "optional<string>",
           },
@@ -1606,10 +1785,12 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
             "type": "string",
           },
           "lastName": {
+            "display-name": "User",
             "docs": "User's last name.",
             "type": "optional<string>",
           },
           "phone": {
+            "display-name": "User",
             "docs": "User's phone number in E.164 format.",
             "type": "optional<string>",
           },
@@ -1621,7 +1802,10 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
       "Vehicle": {
         "docs": undefined,
         "properties": {
-          "bodyStyle": "optional<string>",
+          "bodyStyle": {
+            "display-name": "Vehicle",
+            "type": "optional<string>",
+          },
           "make": "string",
           "model": "string",
           "vin": "string",

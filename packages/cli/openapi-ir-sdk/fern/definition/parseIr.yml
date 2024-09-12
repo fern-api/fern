@@ -169,6 +169,7 @@ types:
       - commons.WithName
       - commons.WithDescription
       - commons.WithAvailability
+      - commons.WithTitle
     properties:
       value: SchemaWithExample
       example: optional<list<unknown>>
@@ -180,6 +181,7 @@ types:
       - commons.WithDescription
       - commons.WithAvailability
       - commons.WithEncoding
+      - commons.WithTitle
     properties:
       key: PrimitiveSchemaWithExample
       value: SchemaWithExample
@@ -191,6 +193,7 @@ types:
       - commons.WithName
       - commons.WithDescription
       - commons.WithAvailability
+      - commons.WithTitle
     properties:
       value: SchemaWithExample
 
@@ -200,6 +203,7 @@ types:
       - commons.WithName
       - commons.WithDescription
       - commons.WithAvailability
+      - commons.WithTitle
     properties:
       value: SchemaWithExample
 
@@ -210,6 +214,7 @@ types:
       - commons.WithSdkGroupName
       - commons.WithAvailability
       - commons.WithSource
+      - commons.WithTitle
     properties:
       default: optional<finalIr.EnumValue>
       values: list<finalIr.EnumValue>
@@ -221,6 +226,7 @@ types:
       - commons.WithName
       - commons.WithDescription
       - commons.WithAvailability
+      - commons.WithTitle
     properties:
       example: unknown
 
@@ -231,6 +237,7 @@ types:
       - commons.WithSdkGroupName
       - commons.WithAvailability
       - commons.WithSource
+      - commons.WithTitle
     properties:
       allOf: list<finalIr.ReferencedSchema>
       properties: list<ObjectPropertyWithExample>
@@ -270,6 +277,7 @@ types:
       - commons.WithAvailability
       - commons.WithEncoding
       - commons.WithSource
+      - commons.WithTitle
     properties:
       discriminantProperty: string
       commonProperties: list<CommonPropertyWithExample>
@@ -288,6 +296,7 @@ types:
       - commons.WithAvailability
       - commons.WithEncoding
       - commons.WithSource
+      - commons.WithTitle
     properties:
       schemas: list<SchemaWithExample>
 
@@ -297,6 +306,7 @@ types:
       - commons.WithName
       - commons.WithSdkGroupName
       - commons.WithAvailability
+      - commons.WithTitle
     properties:
       schema: PrimitiveSchemaValueWithExample
 

@@ -408,10 +408,12 @@ API endpoints",
           "properties": {
             "key": "string",
             "lastModified": {
+              "display-name": "BlobListingItem",
               "docs": "Creation date of the object",
               "type": "optional<datetime>",
             },
             "size": {
+              "display-name": "BlobListingItem",
               "docs": "Size in bytes of the object",
               "type": "optional<integer>",
             },
@@ -512,10 +514,19 @@ API endpoints",
           "docs": undefined,
           "properties": {
             "content": "string",
-            "contentId": "optional<string>",
-            "disposition": "optional<string>",
+            "contentId": {
+              "display-name": "AttachmentObject",
+              "type": "optional<string>",
+            },
+            "disposition": {
+              "display-name": "AttachmentObject",
+              "type": "optional<string>",
+            },
             "filename": "string",
-            "type": "optional<string>",
+            "type": {
+              "display-name": "AttachmentObject",
+              "type": "optional<string>",
+            },
           },
           "source": {
             "openapi": "valtown/openapi.yml",
@@ -531,6 +542,7 @@ API endpoints",
           "union": [
             "string",
             {
+              "display-name": "EmailNameAndAddress",
               "docs": "An email address and name",
               "type": "EmailNameAndAddress",
             },
@@ -544,15 +556,24 @@ API endpoints",
             "openapi": "valtown/openapi.yml",
           },
           "union": [
-            "EmailData",
-            "list<EmailData>",
+            {
+              "display-name": "EmailData",
+              "type": "EmailData",
+            },
+            {
+              "display-name": "EmailDataList",
+              "type": "list<EmailData>",
+            },
           ],
         },
         "EmailNameAndAddress": {
           "docs": "An email address and name",
           "properties": {
             "email": "string",
-            "name": "optional<string>",
+            "name": {
+              "display-name": "EmailNameAndAddress",
+              "type": "optional<string>",
+            },
           },
           "source": {
             "openapi": "valtown/openapi.yml",
@@ -576,10 +597,14 @@ API endpoints",
           },
           "union": [
             {
+              "display-name": "EmailNameAndAddress",
               "docs": "An email address and name",
               "type": "EmailNameAndAddress",
             },
-            "list<EmailNameAndAddress>",
+            {
+              "display-name": "EmailList",
+              "type": "list<EmailNameAndAddress>",
+            },
           ],
         },
       },
@@ -1394,6 +1419,7 @@ give access to details and data from the requesting user.",
           "docs": "A parameterized SQL query. See https://docs.turso.tech/sdk/ts/reference#batch-transactions for reference",
           "properties": {
             "args": {
+              "display-name": "StatementArg",
               "docs": "List of arguments to be used in the given statement",
               "type": "StatementArg",
             },
@@ -1429,6 +1455,7 @@ give access to details and data from the requesting user.",
               "type": "string",
             },
             {
+              "display-name": "ParameterizedQuery",
               "docs": "A parameterized SQL query. See https://docs.turso.tech/sdk/ts/reference#batch-transactions for reference",
               "type": "ParameterizedQuery",
             },
@@ -1447,6 +1474,7 @@ give access to details and data from the requesting user.",
               "type": "string",
             },
             {
+              "display-name": "ParameterizedQuery",
               "docs": "A parameterized SQL query. See https://docs.turso.tech/sdk/ts/reference#batch-transactions for reference",
               "type": "ParameterizedQuery",
             },
@@ -2975,6 +3003,7 @@ SELECT author AS author, COUNT(*) AS count FROM books GROUP BY author
             "type": "list<string>",
           },
           "lastInsertRowid": {
+            "display-name": "ResultSet",
             "docs": "ROWID of the last inserted row.
 
 This value is not specified if the SQL statement was not an INSERT or if the table was not a ROWID table.",
@@ -3504,10 +3533,12 @@ API endpoints",
           "properties": {
             "key": "string",
             "lastModified": {
+              "display-name": "BlobListingItem",
               "docs": "Creation date of the object",
               "type": "optional<datetime>",
             },
             "size": {
+              "display-name": "BlobListingItem",
               "docs": "Size in bytes of the object",
               "type": "optional<integer>",
             },
@@ -3608,10 +3639,19 @@ API endpoints",
           "docs": undefined,
           "properties": {
             "content": "string",
-            "contentId": "optional<string>",
-            "disposition": "optional<string>",
+            "contentId": {
+              "display-name": "AttachmentObject",
+              "type": "optional<string>",
+            },
+            "disposition": {
+              "display-name": "AttachmentObject",
+              "type": "optional<string>",
+            },
             "filename": "string",
-            "type": "optional<string>",
+            "type": {
+              "display-name": "AttachmentObject",
+              "type": "optional<string>",
+            },
           },
           "source": {
             "openapi": "valtown/openapi.yml",
@@ -3627,6 +3667,7 @@ API endpoints",
           "union": [
             "string",
             {
+              "display-name": "EmailNameAndAddress",
               "docs": "An email address and name",
               "type": "EmailNameAndAddress",
             },
@@ -3640,15 +3681,24 @@ API endpoints",
             "openapi": "valtown/openapi.yml",
           },
           "union": [
-            "EmailData",
-            "list<EmailData>",
+            {
+              "display-name": "EmailData",
+              "type": "EmailData",
+            },
+            {
+              "display-name": "EmailDataList",
+              "type": "list<EmailData>",
+            },
           ],
         },
         "EmailNameAndAddress": {
           "docs": "An email address and name",
           "properties": {
             "email": "string",
-            "name": "optional<string>",
+            "name": {
+              "display-name": "EmailNameAndAddress",
+              "type": "optional<string>",
+            },
           },
           "source": {
             "openapi": "valtown/openapi.yml",
@@ -3672,10 +3722,14 @@ API endpoints",
           },
           "union": [
             {
+              "display-name": "EmailNameAndAddress",
               "docs": "An email address and name",
               "type": "EmailNameAndAddress",
             },
-            "list<EmailNameAndAddress>",
+            {
+              "display-name": "EmailList",
+              "type": "list<EmailNameAndAddress>",
+            },
           ],
         },
       },
@@ -4490,6 +4544,7 @@ give access to details and data from the requesting user.",
           "docs": "A parameterized SQL query. See https://docs.turso.tech/sdk/ts/reference#batch-transactions for reference",
           "properties": {
             "args": {
+              "display-name": "StatementArg",
               "docs": "List of arguments to be used in the given statement",
               "type": "StatementArg",
             },
@@ -4525,6 +4580,7 @@ give access to details and data from the requesting user.",
               "type": "string",
             },
             {
+              "display-name": "ParameterizedQuery",
               "docs": "A parameterized SQL query. See https://docs.turso.tech/sdk/ts/reference#batch-transactions for reference",
               "type": "ParameterizedQuery",
             },
@@ -4543,6 +4599,7 @@ give access to details and data from the requesting user.",
               "type": "string",
             },
             {
+              "display-name": "ParameterizedQuery",
               "docs": "A parameterized SQL query. See https://docs.turso.tech/sdk/ts/reference#batch-transactions for reference",
               "type": "ParameterizedQuery",
             },
@@ -6045,6 +6102,7 @@ SELECT author AS author, COUNT(*) AS count FROM books GROUP BY author
             "type": "list<string>",
           },
           "lastInsertRowid": {
+            "display-name": "ResultSet",
             "docs": "ROWID of the last inserted row.
 
 This value is not specified if the SQL statement was not an INSERT or if the table was not a ROWID table.",

@@ -567,6 +567,7 @@ function convertMultipartRequestToSchema(request: RequestWithExample.Multipart):
         description: request.description,
         nameOverride: undefined,
         generatedName: "",
+        title: undefined,
         groupName: undefined,
         additionalProperties: false,
         availability: undefined,

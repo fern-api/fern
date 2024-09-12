@@ -9,6 +9,7 @@ import { wrapPrimitive } from "./convertSchemas";
 export function convertNumber({
     nameOverride,
     generatedName,
+    title,
     format,
     _default,
     minimum,
@@ -24,6 +25,7 @@ export function convertNumber({
 }: {
     nameOverride: string | undefined;
     generatedName: string;
+    title: string | undefined;
     format: string | undefined;
     _default: number | undefined;
     minimum: number | undefined;
@@ -41,6 +43,7 @@ export function convertNumber({
         return wrapPrimitive({
             nameOverride,
             generatedName,
+            title,
             primitive: PrimitiveSchemaValueWithExample.double({
                 default: _default,
                 minimum,
@@ -59,6 +62,7 @@ export function convertNumber({
         return wrapPrimitive({
             nameOverride,
             generatedName,
+            title,
             primitive: PrimitiveSchemaValueWithExample.float({
                 example
             }),
@@ -71,6 +75,7 @@ export function convertNumber({
         return wrapPrimitive({
             nameOverride,
             generatedName,
+            title,
             primitive: PrimitiveSchemaValueWithExample.int({
                 default: _default,
                 minimum,
@@ -89,6 +94,7 @@ export function convertNumber({
         return wrapPrimitive({
             nameOverride,
             generatedName,
+            title,
             primitive: PrimitiveSchemaValueWithExample.int64({
                 default: _default,
                 example
@@ -102,6 +108,7 @@ export function convertNumber({
         return wrapPrimitive({
             nameOverride,
             generatedName,
+            title,
             primitive: PrimitiveSchemaValueWithExample.uint({
                 default: _default,
                 example
@@ -115,6 +122,7 @@ export function convertNumber({
         return wrapPrimitive({
             nameOverride,
             generatedName,
+            title,
             primitive: PrimitiveSchemaValueWithExample.uint64({
                 default: _default,
                 example
@@ -128,6 +136,7 @@ export function convertNumber({
         return wrapPrimitive({
             nameOverride,
             generatedName,
+            title,
             primitive: PrimitiveSchemaValueWithExample.float({
                 example
             }),
@@ -140,6 +149,7 @@ export function convertNumber({
     return wrapPrimitive({
         nameOverride,
         generatedName,
+        title,
         primitive: PrimitiveSchemaValueWithExample.float({
             example
         }),
