@@ -233,6 +233,7 @@ exports[`open api parser > availability > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": null,
       "pagination": null,
       "path": "/collection/{id}/{active_id}/{deprecated_ref_id}/{x-fern-availability_path_param}",
@@ -515,10 +516,7 @@ exports[`open api parser > availability > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "availability/openapi.yml",
@@ -565,6 +563,7 @@ exports[`open api parser > availability > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": null,
       "pagination": null,
       "path": "/success-ref",
@@ -618,10 +617,7 @@ exports[`open api parser > availability > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "availability/openapi.yml",
@@ -668,6 +664,7 @@ exports[`open api parser > availability > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": null,
       "pagination": null,
       "path": "/success-inline-property-deprecation",
@@ -785,10 +782,7 @@ exports[`open api parser > availability > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "availability/openapi.yml",
@@ -835,6 +829,7 @@ exports[`open api parser > availability > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": null,
       "pagination": null,
       "path": "/success-inline-object-deprecation",
@@ -922,10 +917,7 @@ exports[`open api parser > availability > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "availability/openapi.yml",
@@ -972,6 +964,7 @@ exports[`open api parser > availability > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": null,
       "pagination": null,
       "path": "/success-inline-beta-body",
@@ -1059,10 +1052,7 @@ exports[`open api parser > availability > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "availability/openapi.yml",

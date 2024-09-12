@@ -142,6 +142,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "account_details_retrieve",
       "pagination": null,
       "path": "/account-details",
@@ -172,10 +173,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -310,6 +308,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "account_token_retrieve",
       "pagination": null,
       "path": "/account-token/{public_token}",
@@ -369,10 +368,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -616,6 +612,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "available_actions_retrieve",
       "pagination": null,
       "path": "/available-actions",
@@ -646,10 +643,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -916,6 +910,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "bank_info_list",
       "pagination": null,
       "path": "/bank-info",
@@ -1537,10 +1532,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -1795,6 +1787,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "bank_info_retrieve",
       "pagination": null,
       "path": "/bank-info/{id}",
@@ -1983,10 +1976,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -2263,6 +2253,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "benefits_list",
       "pagination": null,
       "path": "/benefits",
@@ -2659,10 +2650,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -2927,6 +2915,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "benefits_retrieve",
       "pagination": null,
       "path": "/benefits/{id}",
@@ -3051,10 +3040,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -3322,6 +3308,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "companies_list",
       "pagination": null,
       "path": "/companies",
@@ -3650,10 +3637,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -3909,6 +3893,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "companies_retrieve",
       "pagination": null,
       "path": "/companies/{id}",
@@ -4001,10 +3986,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -4079,6 +4061,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "delete_account_create",
       "pagination": null,
       "path": "/delete-account",
@@ -4087,10 +4070,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "request": null,
       "requestNameOverride": null,
       "response": null,
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -4550,6 +4530,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "employee_payroll_runs_list",
       "pagination": null,
       "path": "/employee-payroll-runs",
@@ -5148,10 +5129,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -5980,6 +5958,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "employee_payroll_runs_retrieve",
       "pagination": null,
       "path": "/employee-payroll-runs/{id}",
@@ -6146,10 +6125,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -6585,6 +6561,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "employees_list",
       "pagination": null,
       "path": "/employees",
@@ -11353,10 +11330,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -11917,6 +11891,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "employees_create",
       "pagination": null,
       "path": "/employees",
@@ -12035,10 +12010,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -12462,6 +12434,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "employees_retrieve",
       "pagination": null,
       "path": "/employees/{id}",
@@ -16396,10 +16369,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -16494,6 +16464,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "employees_ignore_create",
       "pagination": null,
       "path": "/employees/ignore/{model_id}",
@@ -16554,10 +16525,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       },
       "requestNameOverride": null,
       "response": null,
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -16711,6 +16679,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "employees_meta_post_retrieve",
       "pagination": null,
       "path": "/employees/meta/post",
@@ -16741,10 +16710,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -17027,6 +16993,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "employments_list",
       "pagination": null,
       "path": "/employments",
@@ -17986,10 +17953,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -18260,6 +18224,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "employments_retrieve",
       "pagination": null,
       "path": "/employments/{id}",
@@ -18886,10 +18851,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -18953,6 +18915,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "generate_key_create",
       "pagination": null,
       "path": "/generate-key",
@@ -19006,10 +18969,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -19255,6 +19215,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "groups_list",
       "pagination": null,
       "path": "/groups",
@@ -19683,10 +19644,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -19920,6 +19878,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "groups_retrieve",
       "pagination": null,
       "path": "/groups/{id}",
@@ -20076,10 +20035,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -20221,6 +20177,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "issues_list",
       "pagination": null,
       "path": "/issues",
@@ -20729,10 +20686,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -20862,6 +20816,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "issues_retrieve",
       "pagination": null,
       "path": "/issues/{id}",
@@ -20921,10 +20876,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -21018,6 +20970,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "link_token_create",
       "pagination": null,
       "path": "/link-token",
@@ -21071,10 +21024,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -21317,6 +21267,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "linked_accounts_list",
       "pagination": null,
       "path": "/linked-accounts",
@@ -21911,10 +21862,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -22199,6 +22147,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "locations_list",
       "pagination": null,
       "path": "/locations",
@@ -22591,10 +22540,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -22867,6 +22813,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "locations_retrieve",
       "pagination": null,
       "path": "/locations/{id}",
@@ -23023,10 +22970,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -23221,6 +23165,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "passthrough_create",
       "pagination": null,
       "path": "/passthrough",
@@ -23274,10 +23219,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -23512,6 +23454,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "pay_groups_list",
       "pagination": null,
       "path": "/pay-groups",
@@ -23840,10 +23783,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -24066,6 +24006,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "pay_groups_retrieve",
       "pagination": null,
       "path": "/pay-groups/{id}",
@@ -24158,10 +24099,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -24418,6 +24356,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "payroll_runs_list",
       "pagination": null,
       "path": "/payroll-runs",
@@ -25124,10 +25063,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -25372,6 +25308,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "payroll_runs_retrieve",
       "pagination": null,
       "path": "/payroll-runs/{id}",
@@ -25612,10 +25549,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -25679,6 +25613,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "regenerate_key_create",
       "pagination": null,
       "path": "/regenerate-key",
@@ -25732,10 +25667,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -25874,6 +25806,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "selective_sync_configurations_list",
       "pagination": null,
       "path": "/selective-sync/configurations",
@@ -25913,10 +25846,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -26073,6 +26003,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "selective_sync_configurations_update",
       "pagination": null,
       "path": "/selective-sync/configurations",
@@ -26135,10 +26066,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -26323,6 +26251,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "selective_sync_meta_list",
       "pagination": null,
       "path": "/selective-sync/meta",
@@ -26463,10 +26392,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -26612,6 +26538,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "sync_status_list",
       "pagination": null,
       "path": "/sync-status",
@@ -26716,10 +26643,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -26846,6 +26770,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "sync_status_resync_create",
       "pagination": null,
       "path": "/sync-status/resync",
@@ -26885,10 +26810,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -27130,6 +27052,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "teams_list",
       "pagination": null,
       "path": "/teams",
@@ -27526,10 +27449,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -27759,6 +27679,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "teams_retrieve",
       "pagination": null,
       "path": "/teams/{id}",
@@ -27883,10 +27804,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -28168,6 +28086,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "time_off_list",
       "pagination": null,
       "path": "/time-off",
@@ -29120,10 +29039,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -29530,6 +29446,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "time_off_create",
       "pagination": null,
       "path": "/time-off",
@@ -29648,10 +29565,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -29904,6 +29818,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "time_off_balances_list",
       "pagination": null,
       "path": "/time-off-balances",
@@ -30484,10 +30399,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -30728,6 +30640,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "time_off_balances_retrieve",
       "pagination": null,
       "path": "/time-off-balances/{id}",
@@ -30916,10 +30829,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -31189,6 +31099,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "time_off_retrieve",
       "pagination": null,
       "path": "/time-off/{id}",
@@ -31607,10 +31518,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -31764,6 +31672,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "time_off_meta_post_retrieve",
       "pagination": null,
       "path": "/time-off/meta/post",
@@ -31794,10 +31703,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -31902,6 +31808,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "webhook_receivers_list",
       "pagination": null,
       "path": "/webhook-receivers",
@@ -31941,10 +31848,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",
@@ -32062,6 +31966,7 @@ exports[`open api parser > merge > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "webhook_receivers_create",
       "pagination": null,
       "path": "/webhook-receivers",
@@ -32115,10 +32020,7 @@ exports[`open api parser > merge > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "merge/hris.yml",

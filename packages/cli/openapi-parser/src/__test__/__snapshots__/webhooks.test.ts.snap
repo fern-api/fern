@@ -230,6 +230,7 @@ exports[`open api parser > webhooks > parse open api 1`] = `
       "generatedPayloadName": "CreatePetPayload",
       "headers": [],
       "method": "POST",
+      "namespace": null,
       "operationId": "CreatePet",
       "payload": {
         "availability": null,
@@ -245,10 +246,7 @@ exports[`open api parser > webhooks > parse open api 1`] = `
         "title": null,
         "type": "reference",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "source": {
         "file": "webhooks/openapi.yml",
         "type": "openapi",

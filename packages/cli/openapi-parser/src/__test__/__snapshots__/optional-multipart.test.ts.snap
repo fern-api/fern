@@ -57,6 +57,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "speech_operation",
       "pagination": null,
       "path": "/v1/speech/{voice_id}",
@@ -224,10 +225,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
         },
         "type": "file",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "optional-multipart/openapi.json",
@@ -313,6 +311,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "speech_stream_operation",
       "pagination": null,
       "path": "/v1/speech/{voice_id}/stream",
@@ -561,10 +560,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
       },
       "requestNameOverride": null,
       "response": null,
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "optional-multipart/openapi.json",

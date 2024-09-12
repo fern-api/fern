@@ -1038,6 +1038,7 @@ Log.d("TAG", file.toString())
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "baseUpload",
       "pagination": null,
       "path": "/base/",
@@ -1268,10 +1269,7 @@ the value is the unique ID of the file on our systems.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "uploadcare/openapi.json",
@@ -2388,6 +2386,7 @@ Log.d("TAG", file.toString())
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "multipartFileUploadStart",
       "pagination": null,
       "path": "/multipart/start/",
@@ -2748,10 +2747,7 @@ to us as a value of the \`part_size\` parameter (in bytes).
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "uploadcare/openapi.json",
@@ -2889,6 +2885,7 @@ Log.d("TAG", file.toString())
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "multipartFileUploadPart",
       "pagination": null,
       "path": "/<presigned-url-x>",
@@ -2904,10 +2901,7 @@ Log.d("TAG", file.toString())
       },
       "requestNameOverride": null,
       "response": null,
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "uploadcare/openapi.json",
@@ -4033,6 +4027,7 @@ Log.d("TAG", file.toString())
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "multipartFileUploadComplete",
       "pagination": null,
       "path": "/multipart/complete/",
@@ -4118,10 +4113,7 @@ Log.d("TAG", file.toString())
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "uploadcare/openapi.json",
@@ -5926,6 +5918,7 @@ Log.d("TAG", file.toString())
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "fromURLUpload",
       "pagination": null,
       "path": "/from_url/",
@@ -6340,10 +6333,7 @@ to the value of the \`check_URL_duplicates\` parameter.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "uploadcare/openapi.json",
@@ -7572,6 +7562,7 @@ Log.d("TAG", status.toString())
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "fromURLUploadStatus",
       "pagination": null,
       "path": "/from_url/status/",
@@ -7706,10 +7697,7 @@ Log.d("TAG", status.toString())
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "uploadcare/openapi.json",
@@ -8616,6 +8604,7 @@ Log.d("TAG", file.toString())
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "fileUploadInfo",
       "pagination": null,
       "path": "/info/",
@@ -8698,10 +8687,7 @@ Log.d("TAG", file.toString())
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "uploadcare/openapi.json",
@@ -9991,6 +9977,7 @@ Log.d("TAG", group.toString())
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "createFilesGroup",
       "pagination": null,
       "path": "/group/",
@@ -10148,10 +10135,7 @@ processing operations.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "uploadcare/openapi.json",
@@ -11108,6 +11092,7 @@ Log.d("TAG", group.toString())
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "filesGroupInfo",
       "pagination": null,
       "path": "/group/info/",
@@ -11191,10 +11176,7 @@ Log.d("TAG", group.toString())
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "uploadcare/openapi.json",

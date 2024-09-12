@@ -19,6 +19,7 @@ exports[`open api parser > default-content > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "GenerateContent",
       "pagination": null,
       "path": "/generateContent",
@@ -78,10 +79,7 @@ exports[`open api parser > default-content > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "default-content/openapi.yml",

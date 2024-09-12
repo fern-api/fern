@@ -34,6 +34,7 @@ exports[`x-fern-audiences > x-fern-audiences > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": null,
       "pagination": null,
       "path": "/v1/users",
@@ -139,10 +140,7 @@ exports[`x-fern-audiences > x-fern-audiences > parse open api 1`] = `
       },
       "requestNameOverride": null,
       "response": null,
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "x-fern-audiences/openapi.yml",

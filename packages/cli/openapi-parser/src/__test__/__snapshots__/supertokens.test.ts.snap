@@ -308,6 +308,7 @@ exports[`open api parser > supertokens > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "createTotpDevice",
       "pagination": null,
       "path": "/recipe/totp/device",
@@ -540,10 +541,7 @@ exports[`open api parser > supertokens > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -848,6 +846,7 @@ exports[`open api parser > supertokens > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "updateTotpDeviceName",
       "pagination": null,
       "path": "/recipe/totp/device",
@@ -1052,10 +1051,7 @@ exports[`open api parser > supertokens > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -1346,6 +1342,7 @@ exports[`open api parser > supertokens > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getTotpDevices",
       "pagination": null,
       "path": "/recipe/totp/device/list",
@@ -1624,10 +1621,7 @@ exports[`open api parser > supertokens > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -1925,6 +1919,7 @@ exports[`open api parser > supertokens > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "removeTotpDevice",
       "pagination": null,
       "path": "/recipe/totp/device/remove",
@@ -2101,10 +2096,7 @@ exports[`open api parser > supertokens > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -2416,6 +2408,7 @@ exports[`open api parser > supertokens > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "verifyTotpCode",
       "pagination": null,
       "path": "/recipe/totp/verify",
@@ -2652,10 +2645,7 @@ exports[`open api parser > supertokens > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -2967,6 +2957,7 @@ exports[`open api parser > supertokens > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "verifyTotpDevice",
       "pagination": null,
       "path": "/recipe/totp/device/verify",
@@ -3255,10 +3246,7 @@ exports[`open api parser > supertokens > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -3549,6 +3537,7 @@ exports[`open api parser > supertokens > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "userIdMappingGetMapping",
       "pagination": null,
       "path": "/recipe/userid/map",
@@ -3804,10 +3793,7 @@ exports[`open api parser > supertokens > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -4119,6 +4105,7 @@ exports[`open api parser > supertokens > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "userIdMappingCreateMapping",
       "pagination": null,
       "path": "/recipe/userid/map",
@@ -4406,10 +4393,7 @@ exports[`open api parser > supertokens > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -4704,6 +4688,7 @@ exports[`open api parser > supertokens > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "userIdMappingRemoveMapping",
       "pagination": null,
       "path": "/recipe/userid/map/remove",
@@ -4950,10 +4935,7 @@ exports[`open api parser > supertokens > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -5244,6 +5226,7 @@ exports[`open api parser > supertokens > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "userIdMappingUpateExternalUserIdInfo",
       "pagination": null,
       "path": "/recipe/userid/external-user-id-info",
@@ -5470,10 +5453,7 @@ exports[`open api parser > supertokens > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -5808,6 +5788,7 @@ exports[`open api parser > supertokens > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "passwordlessTryUseCode",
       "pagination": null,
       "path": "/recipe/signinup/code/consume",
@@ -6322,10 +6303,7 @@ exports[`open api parser > supertokens > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -6663,6 +6641,7 @@ Passing the optional deviceId signifies a resend code flow.
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "passwordlessStartSignIn",
       "pagination": null,
       "path": "/recipe/signinup/code",
@@ -7282,10 +7261,7 @@ Passing the optional deviceId signifies a resend code flow.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -7573,6 +7549,7 @@ Passing the optional deviceId signifies a resend code flow.
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "passwordlessRevokeCode",
       "pagination": null,
       "path": "/recipe/signinup/code/remove",
@@ -7687,10 +7664,7 @@ Passing the optional deviceId signifies a resend code flow.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -8067,6 +8041,7 @@ Passing the optional deviceId signifies a resend code flow.
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "passwordlessListCodes",
       "pagination": null,
       "path": "/recipe/signinup/codes",
@@ -8577,10 +8552,7 @@ Passing the optional deviceId signifies a resend code flow.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -8868,6 +8840,7 @@ Passing the optional deviceId signifies a resend code flow.
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "passwordlessRevokeAllCodesOfUser",
       "pagination": null,
       "path": "/recipe/signinup/codes/remove",
@@ -9041,10 +9014,7 @@ Passing the optional deviceId signifies a resend code flow.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -9386,6 +9356,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "passwordlessGetUser",
       "pagination": null,
       "path": "/recipe/user⠀⠀",
@@ -9694,10 +9665,7 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -9983,6 +9951,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "passwordlessPutUser",
       "pagination": null,
       "path": "/recipe/user⠀⠀",
@@ -10213,10 +10182,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -10499,6 +10465,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "emailPasswordSignin",
       "pagination": null,
       "path": "/recipe/signin",
@@ -10688,10 +10655,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -10974,6 +10938,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "emailPasswordSignup",
       "pagination": null,
       "path": "/recipe/signup",
@@ -11166,10 +11131,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -11493,6 +11455,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "emailPasswordGetUser",
       "pagination": null,
       "path": "/recipe/user",
@@ -11752,10 +11715,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -12032,6 +11992,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "emailPasswordPutUser",
       "pagination": null,
       "path": "/recipe/user",
@@ -12258,10 +12219,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -12544,6 +12502,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "emailPasswordGetPasswordResetToken",
       "pagination": null,
       "path": "/recipe/user/password/reset/token",
@@ -12702,10 +12661,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -13031,6 +12987,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "emailPasswordGetUsers",
       "pagination": null,
       "path": "/recipe/users",
@@ -13302,10 +13259,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -13588,6 +13542,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "emailPasswordGetPasswordReset",
       "pagination": null,
       "path": "/recipe/user/password/reset",
@@ -13813,10 +13768,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -14100,6 +14052,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "emailPasswordGetUserCount",
       "pagination": null,
       "path": "/recipe/users/count",
@@ -14200,10 +14153,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -14516,6 +14466,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "userImport",
       "pagination": null,
       "path": "/recipe/user/passwordhash/import",
@@ -14806,10 +14757,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -15141,6 +15089,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "thirdPartySigninup",
       "pagination": null,
       "path": "/recipe/signinup",
@@ -15387,10 +15336,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -15734,6 +15680,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "thirdPartyGetUser",
       "pagination": null,
       "path": "/recipe/user⠀",
@@ -16029,10 +15976,7 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -16339,6 +16283,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "thirdPartyGetUsersByEmail",
       "pagination": null,
       "path": "/recipe/users/by-email",
@@ -16472,10 +16417,7 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -16814,6 +16756,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "thirdPartyGetUsers",
       "pagination": null,
       "path": "/recipe/users⠀",
@@ -17085,10 +17028,7 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -17373,6 +17313,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "thirdPartyGetUserCount",
       "pagination": null,
       "path": "/recipe/users/count⠀",
@@ -17473,10 +17414,7 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -17759,6 +17697,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "emailVerificationVerifyToken",
       "pagination": null,
       "path": "/recipe/user/email/verify/token",
@@ -17885,10 +17824,7 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -18168,6 +18104,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "emailVerificationVerifyTokenRemove",
       "pagination": null,
       "path": "/recipe/user/email/verify/token/remove",
@@ -18255,10 +18192,7 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -18563,6 +18497,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "emailVerificationVerifyGet",
       "pagination": null,
       "path": "/recipe/user/email/verify",
@@ -18732,10 +18667,7 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -19018,6 +18950,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "emailVerificationVerify",
       "pagination": null,
       "path": "/recipe/user/email/verify",
@@ -19240,10 +19173,7 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -19523,6 +19453,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "emailVerificationVerifyRemove",
       "pagination": null,
       "path": "/recipe/user/email/verify/remove",
@@ -19610,10 +19541,7 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -19981,6 +19909,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "userMetadataRead",
       "pagination": null,
       "path": "/recipe/user/metadata",
@@ -20105,10 +20034,7 @@ Note that there is an invisible character at the end of the path, this was to av
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -20476,6 +20402,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "userMetadataUpdate",
       "pagination": null,
       "path": "/recipe/user/metadata",
@@ -20661,10 +20588,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -20944,6 +20868,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "userMetadataDelete",
       "pagination": null,
       "path": "/recipe/user/metadata/remove",
@@ -21067,10 +20992,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -21368,6 +21290,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "addUserRole",
       "pagination": null,
       "path": "/recipe/user/role",
@@ -21538,10 +21461,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -21839,6 +21759,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "removeUserRole",
       "pagination": null,
       "path": "/recipe/user/role/remove",
@@ -22009,10 +21930,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -22312,6 +22230,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getUserRoles",
       "pagination": null,
       "path": "/recipe/user/roles",
@@ -22445,10 +22364,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -22739,6 +22655,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getRoleUsers",
       "pagination": null,
       "path": "/recipe/role/users",
@@ -22876,10 +22793,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -23174,6 +23088,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "putRole",
       "pagination": null,
       "path": "/recipe/role",
@@ -23361,10 +23276,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -23655,6 +23567,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getRolePermissions",
       "pagination": null,
       "path": "/recipe/role/permissions",
@@ -23795,10 +23708,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -24089,6 +23999,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "removeRolePermissions",
       "pagination": null,
       "path": "/recipe/role/permissions/remove",
@@ -24249,10 +24160,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -24552,6 +24460,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getPermissionRoles",
       "pagination": null,
       "path": "/recipe/permission/roles",
@@ -24688,10 +24597,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -24986,6 +24892,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "removeRole",
       "pagination": null,
       "path": "/recipe/role/remove",
@@ -25130,10 +25037,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -25422,6 +25326,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getRoles",
       "pagination": null,
       "path": "/recipe/roles",
@@ -25530,10 +25435,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -25831,6 +25733,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getSessionInfo",
       "pagination": null,
       "path": "/recipe/session",
@@ -26120,10 +26023,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -26502,6 +26402,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "createNewSession",
       "pagination": null,
       "path": "/recipe/session",
@@ -26872,10 +26773,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -27167,6 +27065,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "deleteSession",
       "pagination": null,
       "path": "/recipe/session/remove",
@@ -27389,10 +27288,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -27682,6 +27578,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "verifySession",
       "pagination": null,
       "path": "/recipe/session/verify",
@@ -28042,10 +27939,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -28350,6 +28244,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "refreshSession",
       "pagination": null,
       "path": "/recipe/session/refresh",
@@ -28760,10 +28655,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -29063,6 +28955,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getUserSessionHandles",
       "pagination": null,
       "path": "/recipe/session/user",
@@ -29196,10 +29089,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -29489,6 +29379,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "regenerateSession",
       "pagination": null,
       "path": "/recipe/session/regenerate",
@@ -29709,10 +29600,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -30010,6 +29898,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getSessionData",
       "pagination": null,
       "path": "/recipe/session/data",
@@ -30144,10 +30033,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -30437,6 +30323,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "putSessionData",
       "pagination": null,
       "path": "/recipe/session/data",
@@ -30591,10 +30478,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -30853,6 +30737,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "createSignedJWT",
       "pagination": null,
       "path": "/recipe/jwt",
@@ -31140,10 +31025,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -31306,6 +31188,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "retrieveJwks",
       "pagination": null,
       "path": "/.well-known/jwks.jsonx",
@@ -31380,10 +31263,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -31681,6 +31561,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getJWTData",
       "pagination": null,
       "path": "/recipe/jwt/data",
@@ -31815,10 +31696,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -32108,6 +31986,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "putJWTData",
       "pagination": null,
       "path": "/recipe/jwt/data",
@@ -32262,10 +32141,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -32640,6 +32516,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "createDashboardUser",
       "pagination": null,
       "path": "/recipe/dashboard/user",
@@ -33014,10 +32891,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -33300,6 +33174,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "updateDashboardUser",
       "pagination": null,
       "path": "/recipe/dashboard/user",
@@ -33864,10 +33739,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -34172,6 +34044,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "deleteDashboardUser",
       "pagination": null,
       "path": "/recipe/dashboard/user",
@@ -34340,10 +34213,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -34658,6 +34528,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getAllDashboardUsers",
       "pagination": null,
       "path": "/recipe/dashboard/users",
@@ -34899,10 +34770,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -35185,6 +35053,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "verifyDashboardUserSession",
       "pagination": null,
       "path": "/recipe/dashboard/session/verify",
@@ -35369,10 +35238,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -35660,6 +35526,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "RevokeDashboardUsersSession",
       "pagination": null,
       "path": "/recipe/dashboard/session",
@@ -35762,10 +35629,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -36048,6 +35912,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "signInDashboardUser",
       "pagination": null,
       "path": "/recipe/dashboard/signin",
@@ -36301,10 +36166,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -36623,6 +36485,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getAllSessionsForDashboardUser",
       "pagination": null,
       "path": "/recipe/dashboard/user/sessions",
@@ -36873,10 +36736,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -37074,6 +36934,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getApiVersion",
       "pagination": null,
       "path": "/apiversion",
@@ -37151,10 +37012,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -37387,6 +37245,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getConfig",
       "pagination": null,
       "path": "/config",
@@ -37530,10 +37389,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -37600,6 +37456,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getHelloOnRootPath",
       "pagination": null,
       "path": "/",
@@ -37630,10 +37487,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -37700,6 +37554,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getHello",
       "pagination": null,
       "path": "/hello",
@@ -37730,10 +37585,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -37800,6 +37652,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "postHello",
       "pagination": null,
       "path": "/hello",
@@ -37830,10 +37683,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -37900,6 +37750,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "putHello",
       "pagination": null,
       "path": "/hello",
@@ -37930,10 +37781,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -38000,6 +37848,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "deleteHello",
       "pagination": null,
       "path": "/hello",
@@ -38030,10 +37879,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -38270,6 +38116,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getTelemetry",
       "pagination": null,
       "path": "/telemetry",
@@ -38435,10 +38282,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -38686,6 +38530,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getUsersCount",
       "pagination": null,
       "path": "/users/count",
@@ -38823,10 +38668,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -39074,6 +38916,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getActiveUsersCount",
       "pagination": null,
       "path": "/users/count/active",
@@ -39203,10 +39046,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -39544,6 +39384,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getUsers",
       "pagination": null,
       "path": "/users",
@@ -40132,10 +39973,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -40344,6 +40182,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "deleteUser",
       "pagination": null,
       "path": "/user/remove",
@@ -40467,10 +40306,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -40712,6 +40548,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getSearchTags",
       "pagination": null,
       "path": "/user/search/tags",
@@ -40820,10 +40657,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -41093,6 +40927,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getFeatureFlag",
       "pagination": null,
       "path": "/ee/featureflag",
@@ -41249,10 +41084,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -41461,6 +41293,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "getLicense",
       "pagination": null,
       "path": "/ee/license",
@@ -41567,10 +41400,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -41782,6 +41612,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "PUT",
+      "namespace": null,
       "operationId": "setLicense",
       "pagination": null,
       "path": "/ee/license",
@@ -41931,10 +41762,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",
@@ -42140,6 +41968,7 @@ e.g.:
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "deleteLicense",
       "pagination": null,
       "path": "/ee/license",
@@ -42205,10 +42034,7 @@ e.g.:
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "supertokens/openapi.yml",

@@ -229,6 +229,7 @@ exports[`open api parser > devrev > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "artifacts-locate",
       "pagination": null,
       "path": "/artifacts.locate",
@@ -287,10 +288,7 @@ exports[`open api parser > devrev > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -524,6 +522,7 @@ exports[`open api parser > devrev > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "artifacts-prepare",
       "pagination": null,
       "path": "/artifacts.prepare",
@@ -577,10 +576,7 @@ exports[`open api parser > devrev > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -811,6 +807,7 @@ authenticated user.
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "auth-tokens-create",
       "pagination": null,
       "path": "/auth-tokens.create",
@@ -864,10 +861,7 @@ authenticated user.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -1076,6 +1070,7 @@ given Dev organization.
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "auth-tokens-delete",
       "pagination": null,
       "path": "/auth-tokens.delete",
@@ -1107,10 +1102,7 @@ given Dev organization.
       },
       "requestNameOverride": null,
       "response": null,
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -1551,6 +1543,7 @@ given Dev organization.
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "auth-tokens-get",
       "pagination": null,
       "path": "/auth-tokens.get",
@@ -1610,10 +1603,7 @@ given Dev organization.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -1960,6 +1950,7 @@ token type issued for a given subject.
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "auth-tokens-list",
       "pagination": null,
       "path": "/auth-tokens.list",
@@ -2103,10 +2094,7 @@ subject.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -2315,6 +2303,7 @@ authenticated user.
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "auth-tokens-self-delete",
       "pagination": null,
       "path": "/auth-tokens.self.delete",
@@ -2346,10 +2335,7 @@ authenticated user.
       },
       "requestNameOverride": null,
       "response": null,
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -2797,6 +2783,7 @@ organization.
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "auth-tokens-update",
       "pagination": null,
       "path": "/auth-tokens.update",
@@ -2850,10 +2837,7 @@ organization.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -3114,6 +3098,7 @@ enterprise connections can be created by an organization.
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "dev-org-auth-connections-create",
       "pagination": null,
       "path": "/dev-orgs.auth-connections.create",
@@ -3167,10 +3152,7 @@ enterprise connections can be created by an organization.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -3389,6 +3371,7 @@ connections can not be deleted using this method.
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "dev-org-auth-connections-delete",
       "pagination": null,
       "path": "/dev-orgs.auth-connections.delete",
@@ -3420,10 +3403,7 @@ connections can not be deleted using this method.
       },
       "requestNameOverride": null,
       "response": null,
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -3700,6 +3680,7 @@ connections can not be deleted using this method.
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "dev-org-auth-connections-get",
       "pagination": null,
       "path": "/dev-orgs.auth-connections.get",
@@ -3758,10 +3739,7 @@ connections can not be deleted using this method.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -4012,6 +3990,7 @@ created by the user.
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "dev-org-auth-connections-list",
       "pagination": null,
       "path": "/dev-orgs.auth-connections.list",
@@ -4042,10 +4021,7 @@ created by the user.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -4266,6 +4242,7 @@ disabled.
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "dev-org-auth-connections-toggle",
       "pagination": null,
       "path": "/dev-orgs.auth-connections.toggle",
@@ -4297,10 +4274,7 @@ disabled.
       },
       "requestNameOverride": null,
       "response": null,
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -4587,6 +4561,7 @@ disabled.
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "dev-org-auth-connections-update",
       "pagination": null,
       "path": "/dev-orgs.auth-connections.update",
@@ -4640,10 +4615,7 @@ disabled.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -4999,6 +4971,7 @@ disabled.
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "dev-users-list",
       "pagination": null,
       "path": "/dev-users.list",
@@ -5274,10 +5247,7 @@ used.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -5708,6 +5678,7 @@ used.
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "dev-users-self",
       "pagination": null,
       "path": "/dev-users.self",
@@ -5738,10 +5709,7 @@ used.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -6232,6 +6200,7 @@ used.
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "parts-create",
       "pagination": null,
       "path": "/parts.create",
@@ -6285,10 +6254,7 @@ used.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -6523,6 +6489,7 @@ used.
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "parts-delete",
       "pagination": null,
       "path": "/parts.delete",
@@ -6576,10 +6543,7 @@ used.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -7061,6 +7025,7 @@ used.
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "parts-get",
       "pagination": null,
       "path": "/parts.get",
@@ -7119,10 +7084,7 @@ used.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -7500,6 +7462,7 @@ used.
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "parts-list",
       "pagination": null,
       "path": "/parts.list",
@@ -7819,10 +7782,7 @@ used.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -8314,6 +8274,7 @@ used.
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "parts-update",
       "pagination": null,
       "path": "/parts.update",
@@ -8367,10 +8328,7 @@ used.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -8760,6 +8718,7 @@ organization.
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "rev-orgs-create",
       "pagination": null,
       "path": "/rev-orgs.create",
@@ -8813,10 +8772,7 @@ organization.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -9051,6 +9007,7 @@ organization.
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "rev-orgs-delete",
       "pagination": null,
       "path": "/rev-orgs.delete",
@@ -9104,10 +9061,7 @@ organization.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -9519,6 +9473,7 @@ organization.
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "rev-orgs-get",
       "pagination": null,
       "path": "/rev-orgs.get",
@@ -9577,10 +9532,7 @@ organization.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -9915,6 +9867,7 @@ to access.
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "rev-orgs-list",
       "pagination": null,
       "path": "/rev-orgs.list",
@@ -10324,10 +10277,7 @@ them.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -10739,6 +10689,7 @@ them.
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "rev-orgs-update",
       "pagination": null,
       "path": "/rev-orgs.update",
@@ -10792,10 +10743,7 @@ them.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -11183,6 +11131,7 @@ and a logical concept denoted by the tag's name.
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "tags-create",
       "pagination": null,
       "path": "/tags.create",
@@ -11236,10 +11185,7 @@ and a logical concept denoted by the tag's name.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -11474,6 +11420,7 @@ and a logical concept denoted by the tag's name.
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "tags-delete",
       "pagination": null,
       "path": "/tags.delete",
@@ -11527,10 +11474,7 @@ and a logical concept denoted by the tag's name.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -11940,6 +11884,7 @@ and a logical concept denoted by the tag's name.
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "tags-get",
       "pagination": null,
       "path": "/tags.get",
@@ -11998,10 +11943,7 @@ and a logical concept denoted by the tag's name.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -12307,6 +12249,7 @@ and a logical concept denoted by the tag's name.
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "tags-list",
       "pagination": null,
       "path": "/tags.list",
@@ -12448,10 +12391,7 @@ used.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -12861,6 +12801,7 @@ used.
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "tags-update",
       "pagination": null,
       "path": "/tags.update",
@@ -12914,10 +12855,7 @@ used.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -13346,6 +13284,7 @@ used.
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "timeline-entries-create",
       "pagination": null,
       "path": "/timeline-entries.create",
@@ -13399,10 +13338,7 @@ used.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -13845,6 +13781,7 @@ used.
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "timeline-entries-get",
       "pagination": null,
       "path": "/timeline-entries.get",
@@ -13903,10 +13840,7 @@ used.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -14280,6 +14214,7 @@ used.
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "timeline-entries-list",
       "pagination": null,
       "path": "/timeline-entries.list",
@@ -14450,10 +14385,7 @@ used.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -14882,6 +14814,7 @@ used.
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "timeline-entries-update",
       "pagination": null,
       "path": "/timeline-entries.update",
@@ -14935,10 +14868,7 @@ used.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -15325,6 +15255,7 @@ used.
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "webhooks-create",
       "pagination": null,
       "path": "/webhooks.create",
@@ -15378,10 +15309,7 @@ used.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -15616,6 +15544,7 @@ used.
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "webhooks-delete",
       "pagination": null,
       "path": "/webhooks.delete",
@@ -15669,10 +15598,7 @@ used.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -16083,6 +16009,7 @@ used.
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "webhooks-get",
       "pagination": null,
       "path": "/webhooks.get",
@@ -16141,10 +16068,7 @@ used.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -16437,6 +16361,7 @@ used.
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "webhooks-list",
       "pagination": null,
       "path": "/webhooks.list",
@@ -16467,10 +16392,7 @@ used.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -16881,6 +16803,7 @@ used.
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "webhooks-update",
       "pagination": null,
       "path": "/webhooks.update",
@@ -16934,10 +16857,7 @@ used.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -17590,6 +17510,7 @@ used.
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "works-create",
       "pagination": null,
       "path": "/works.create",
@@ -17643,10 +17564,7 @@ used.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -17881,6 +17799,7 @@ used.
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "works-delete",
       "pagination": null,
       "path": "/works.delete",
@@ -17934,10 +17853,7 @@ used.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -18413,6 +18329,7 @@ used.
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "works-export",
       "pagination": null,
       "path": "/works.export",
@@ -18882,10 +18799,7 @@ organizations.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -19507,6 +19421,7 @@ organizations.
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "works-get",
       "pagination": null,
       "path": "/works.get",
@@ -19565,10 +19480,7 @@ organizations.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -20058,6 +19970,7 @@ organizations.
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "works-list",
       "pagination": null,
       "path": "/works.list",
@@ -20599,10 +20512,7 @@ organizations.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",
@@ -21241,6 +21151,7 @@ organizations.
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "works-update",
       "pagination": null,
       "path": "/works.update",
@@ -21294,10 +21205,7 @@ organizations.
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "devrev/openapi.yml",

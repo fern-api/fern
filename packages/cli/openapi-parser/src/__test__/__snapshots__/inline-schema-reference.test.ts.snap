@@ -42,6 +42,7 @@ exports[`inline-schema-reference > inline-schema-reference > parse open api 1`] 
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": null,
       "pagination": null,
       "path": "/example",
@@ -209,10 +210,7 @@ exports[`inline-schema-reference > inline-schema-reference > parse open api 1`] 
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "inline-schema-reference/openapi.yml",

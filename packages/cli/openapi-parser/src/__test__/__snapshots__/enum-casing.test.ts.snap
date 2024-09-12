@@ -64,6 +64,7 @@ exports[`examples > enum-casing > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": null,
       "pagination": null,
       "path": "/example",
@@ -94,10 +95,7 @@ exports[`examples > enum-casing > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "enum-casing/openapi.yml",

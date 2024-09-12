@@ -31,6 +31,7 @@ exports[`path parsing > path > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": null,
       "pagination": null,
       "path": "/example-without-trailing-slash",
@@ -39,10 +40,7 @@ exports[`path parsing > path > parse open api 1`] = `
       "request": null,
       "requestNameOverride": null,
       "response": null,
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "path/openapi.yml",
@@ -75,6 +73,7 @@ exports[`path parsing > path > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": null,
       "pagination": null,
       "path": "/example-with-trailing-slash/",
@@ -83,10 +82,7 @@ exports[`path parsing > path > parse open api 1`] = `
       "request": null,
       "requestNameOverride": null,
       "response": null,
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "path/openapi.yml",

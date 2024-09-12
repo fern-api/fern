@@ -213,6 +213,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "GetApps",
       "pagination": null,
       "path": "/apps/v1/list",
@@ -252,10 +253,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -437,6 +435,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "CreateApp",
       "pagination": null,
       "path": "/apps/v1/create",
@@ -667,10 +666,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -891,6 +887,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "UpdateApp",
       "pagination": null,
       "path": "/apps/v1/update/{appId}",
@@ -1147,10 +1144,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -1302,6 +1296,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "GetAppInfo",
       "pagination": null,
       "path": "/apps/v1/info/{appId}",
@@ -1358,10 +1353,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -1463,6 +1455,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "DeleteApp",
       "pagination": null,
       "path": "/apps/v1/delete/{appId}",
@@ -1497,10 +1490,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "request": null,
       "requestNameOverride": null,
       "response": null,
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -1586,6 +1576,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "LoginAnonymous",
       "pagination": null,
       "path": "/auth/v1/{appId}/login/anonymous",
@@ -1671,10 +1662,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -1771,6 +1759,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "LoginNickname",
       "pagination": null,
       "path": "/auth/v1/{appId}/login/nickname",
@@ -1908,10 +1897,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -2035,6 +2021,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "LoginGoogle",
       "pagination": null,
       "path": "/auth/v1/{appId}/login/google",
@@ -2172,10 +2159,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -2340,6 +2324,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "GetBuilds",
       "pagination": null,
       "path": "/builds/v1/{appId}/list",
@@ -2405,10 +2390,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -2579,6 +2561,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "GetBuildInfo",
       "pagination": null,
       "path": "/builds/v1/{appId}/info/{buildId}",
@@ -2660,10 +2643,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -2877,6 +2857,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "CreateBuild",
       "pagination": null,
       "path": "/builds/v1/{appId}/create",
@@ -2933,10 +2914,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -3014,6 +2992,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "RunBuild",
       "pagination": null,
       "path": "/builds/v1/{appId}/run/{buildId}",
@@ -3099,10 +3078,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
         },
         "type": "file",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -3242,6 +3218,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "DeleteBuild",
       "pagination": null,
       "path": "/builds/v1/{appId}/delete/{buildId}",
@@ -3301,10 +3278,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "request": null,
       "requestNameOverride": null,
       "response": null,
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -3483,6 +3457,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "GetDeployments",
       "pagination": null,
       "path": "/deployments/v1/{appId}/list",
@@ -3548,10 +3523,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -3736,6 +3708,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "GetDeploymentInfo",
       "pagination": null,
       "path": "/deployments/v1/{appId}/info/{deploymentId}",
@@ -3817,10 +3790,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -4109,6 +4079,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "CreateDeployment",
       "pagination": null,
       "path": "/deployments/v1/{appId}/create/{buildId}",
@@ -4213,10 +4184,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -4278,6 +4246,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "GetPingServiceEndpoints",
       "pagination": null,
       "path": "/discovery/v1/ping",
@@ -4308,10 +4277,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -4540,6 +4506,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "CreatePrivateLobbyDeprecated",
       "pagination": null,
       "path": "/lobby/v1/{appId}/create/private",
@@ -4662,10 +4629,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -4894,6 +4858,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "CreatePublicLobbyDeprecated",
       "pagination": null,
       "path": "/lobby/v1/{appId}/create/public",
@@ -5016,10 +4981,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -5255,6 +5217,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "ListActivePublicLobbiesDeprecated",
       "pagination": null,
       "path": "/lobby/v1/{appId}/list",
@@ -5386,10 +5349,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -5730,6 +5690,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "CreatePrivateLobby",
       "pagination": null,
       "path": "/lobby/v2/{appId}/create/private",
@@ -5908,10 +5869,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -6252,6 +6210,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "CreatePublicLobby",
       "pagination": null,
       "path": "/lobby/v2/{appId}/create/public",
@@ -6430,10 +6389,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -6774,6 +6730,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "CreateLocalLobby",
       "pagination": null,
       "path": "/lobby/v2/{appId}/create/local",
@@ -6952,10 +6909,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -7300,6 +7254,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "CreateLobby",
       "pagination": null,
       "path": "/lobby/v2/{appId}/create",
@@ -7541,10 +7496,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -7685,6 +7637,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "ListActivePublicLobbies",
       "pagination": null,
       "path": "/lobby/v2/{appId}/list/public",
@@ -7784,10 +7737,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -7962,6 +7912,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "GetLobbyInfo",
       "pagination": null,
       "path": "/lobby/v2/{appId}/info/{roomId}",
@@ -8043,10 +7994,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -8273,6 +8221,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "SetLobbyState",
       "pagination": null,
       "path": "/lobby/v2/{appId}/setState/{roomId}",
@@ -8420,10 +8369,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -8474,6 +8420,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "GetLogsForApp",
       "pagination": null,
       "path": "/logs/v1/{appId}/all",
@@ -8618,10 +8565,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
         },
         "type": "file",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -8672,6 +8616,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "GetLogsForProcess",
       "pagination": null,
       "path": "/logs/v1/{appId}/process/{processId}",
@@ -8808,10 +8753,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
         },
         "type": "file",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -8862,6 +8804,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "GetLogsForDeployment",
       "pagination": null,
       "path": "/logs/v1/{appId}/deployment/{deploymentId}",
@@ -8998,10 +8941,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
         },
         "type": "text",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -9214,6 +9154,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "GetMetrics",
       "pagination": null,
       "path": "/metrics/v1/{appId}/process/{processId}",
@@ -9449,10 +9390,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -9680,6 +9618,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "GetRunningProcesses",
       "pagination": null,
       "path": "/processes/v1/{appId}/list/running",
@@ -9779,10 +9718,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -9975,6 +9911,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "GetStoppedProcesses",
       "pagination": null,
       "path": "/processes/v1/{appId}/list/stopped",
@@ -10074,10 +10011,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -10276,6 +10210,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "GetProcessInfo",
       "pagination": null,
       "path": "/processes/v1/{appId}/info/{processId}",
@@ -10357,10 +10292,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -10476,6 +10408,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "CreateRoom",
       "pagination": null,
       "path": "/rooms/v1/{appId}/create",
@@ -10581,10 +10514,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -10763,6 +10693,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "GetRoomInfo",
       "pagination": null,
       "path": "/rooms/v1/{appId}/info/{roomId}",
@@ -10844,10 +10775,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -10993,6 +10921,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "GetActiveRoomsForProcess",
       "pagination": null,
       "path": "/rooms/v1/{appId}/list/{processId}/active",
@@ -11083,10 +11012,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -11232,6 +11158,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "GetInactiveRoomsForProcess",
       "pagination": null,
       "path": "/rooms/v1/{appId}/list/{processId}/inactive",
@@ -11322,10 +11249,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -11438,6 +11362,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "DestroyRoom",
       "pagination": null,
       "path": "/rooms/v1/{appId}/destroy/{roomId}",
@@ -11497,10 +11422,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "request": null,
       "requestNameOverride": null,
       "response": null,
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -11613,6 +11535,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "SuspendRoom",
       "pagination": null,
       "path": "/rooms/v1/{appId}/suspend/{roomId}",
@@ -11672,10 +11595,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "request": null,
       "requestNameOverride": null,
       "response": null,
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",
@@ -11854,6 +11774,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "GetConnectionInfo",
       "pagination": null,
       "path": "/rooms/v1/{appId}/connectioninfo/{roomId}",
@@ -11935,10 +11856,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "hathora/openapi.json",

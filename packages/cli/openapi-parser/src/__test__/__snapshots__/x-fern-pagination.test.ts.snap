@@ -85,6 +85,7 @@ exports[`x-fern-pagination > x-fern-pagination > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "list",
       "pagination": {
         "hasNextPage": null,
@@ -159,10 +160,7 @@ exports[`x-fern-pagination > x-fern-pagination > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "x-fern-pagination/openapi.yml",
@@ -249,6 +247,7 @@ exports[`x-fern-pagination > x-fern-pagination > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "list",
       "pagination": {
         "hasNextPage": "$response.meta.hasMore",
@@ -360,10 +359,7 @@ exports[`x-fern-pagination > x-fern-pagination > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "x-fern-pagination/openapi.yml",

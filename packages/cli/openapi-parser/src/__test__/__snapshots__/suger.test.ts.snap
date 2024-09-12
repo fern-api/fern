@@ -147,6 +147,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "ListBuyersByOrganization",
       "pagination": null,
       "path": "/org/{orgId}/buyer",
@@ -215,10 +216,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -499,6 +497,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "GetBuyer",
       "pagination": null,
       "path": "/org/{orgId}/buyer/{buyerId}",
@@ -586,10 +585,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -873,6 +869,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PATCH",
+      "namespace": null,
       "operationId": "UpdateBuyerNameDescription",
       "pagination": null,
       "path": "/org/{orgId}/buyer/{buyerId}",
@@ -983,10 +980,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -1331,6 +1325,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "ListEntitlementsByBuyer",
       "pagination": null,
       "path": "/org/{orgId}/buyer/{buyerId}/entitlement",
@@ -1427,10 +1422,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -2068,6 +2060,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "CreateOrUpdateDraftOffer",
       "pagination": null,
       "path": "/org/{orgId}/draftOffer",
@@ -2150,10 +2143,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -2487,6 +2477,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "ListEntitlements",
       "pagination": null,
       "path": "/org/{orgId}/entitlement",
@@ -2555,10 +2546,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -2898,6 +2886,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "GetEntitlement",
       "pagination": null,
       "path": "/org/{orgId}/entitlement/{entitlementId}",
@@ -2985,10 +2974,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -3165,6 +3151,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "AddEntitlementCredit",
       "pagination": null,
       "path": "/org/{orgId}/entitlement/{entitlementId}/addCredit",
@@ -3275,10 +3262,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -3621,6 +3605,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PATCH",
+      "namespace": null,
       "operationId": "UpdateEntitlementName",
       "pagination": null,
       "path": "/org/{orgId}/entitlement/{entitlementId}/entitlementName",
@@ -3731,10 +3716,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -4070,6 +4052,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "ListEntitlementTerms",
       "pagination": null,
       "path": "/org/{orgId}/entitlement/{entitlementId}/entitlementTerm",
@@ -4166,10 +4149,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -4511,6 +4491,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "GetEntitlementTerm",
       "pagination": null,
       "path": "/org/{orgId}/entitlement/{entitlementId}/entitlementTerm/{entitlementTermId}",
@@ -4626,10 +4607,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -4813,6 +4791,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "ListUsageRecordGroupsByEntitlement",
       "pagination": null,
       "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordGroup",
@@ -5047,10 +5026,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -5327,6 +5303,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "ReportUsageRecordGroup",
       "pagination": null,
       "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordGroup",
@@ -5437,10 +5414,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -5592,6 +5566,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "ListUsageRecordReportsByEntitlement",
       "pagination": null,
       "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordReport",
@@ -5862,10 +5837,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -5987,6 +5959,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "ListIntegrationsByOrganization",
       "pagination": null,
       "path": "/org/{orgId}/integration",
@@ -6055,10 +6028,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -6600,6 +6570,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "CreateIntegration",
       "pagination": null,
       "path": "/org/{orgId}/integration",
@@ -6682,10 +6653,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -7205,6 +7173,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "GetIntegration",
       "pagination": null,
       "path": "/org/{orgId}/integration/{partner}/{service}",
@@ -7383,10 +7352,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -7471,6 +7437,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "DeleteIntegration",
       "pagination": null,
       "path": "/org/{orgId}/integration/{partner}/{service}",
@@ -7652,10 +7619,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -8213,6 +8177,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PATCH",
+      "namespace": null,
       "operationId": "UpdateIntegration",
       "pagination": null,
       "path": "/org/{orgId}/integration/{partner}/{service}",
@@ -8414,10 +8379,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -8502,6 +8464,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "VerifyIntegration",
       "pagination": null,
       "path": "/org/{orgId}/integration/{partner}/{service}/verify",
@@ -8679,10 +8642,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -9015,6 +8975,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "ListOffersByOrganization",
       "pagination": null,
       "path": "/org/{orgId}/offer",
@@ -9083,10 +9044,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -9724,6 +9682,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "CreateOffer",
       "pagination": null,
       "path": "/org/{orgId}/offer",
@@ -9806,10 +9765,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -10440,6 +10396,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "GetOffer",
       "pagination": null,
       "path": "/org/{orgId}/offer/{offerId}",
@@ -10527,10 +10484,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -10610,6 +10564,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "DeleteOffer",
       "pagination": null,
       "path": "/org/{orgId}/offer/{offerId}",
@@ -10700,10 +10655,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -10798,6 +10750,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "CancelOffer",
       "pagination": null,
       "path": "/org/{orgId}/offer/{offerId}/cancel",
@@ -10888,10 +10841,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -11236,6 +11186,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "ListEntitlementsByOffer",
       "pagination": null,
       "path": "/org/{orgId}/offer/{offerId}/entitlement",
@@ -11332,10 +11283,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -11456,6 +11404,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "ListOperations",
       "pagination": null,
       "path": "/org/{orgId}/operation",
@@ -11669,10 +11618,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -12014,6 +11960,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "ListEntitlementsByPartner",
       "pagination": null,
       "path": "/org/{orgId}/partner/{partner}/entitlement",
@@ -12148,10 +12095,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -12532,6 +12476,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "ListOffersByPartner",
       "pagination": null,
       "path": "/org/{orgId}/partner/{partner}/offer",
@@ -12666,10 +12611,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -12912,6 +12854,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "ListProductsByPartner",
       "pagination": null,
       "path": "/org/{orgId}/partner/{partner}/product",
@@ -13046,10 +12989,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -13320,6 +13260,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "ListRevenueRecords",
       "pagination": null,
       "path": "/org/{orgId}/partner/{partner}/revenueRecord",
@@ -13700,10 +13641,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -13833,6 +13771,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "ListRevenueRecordDetails",
       "pagination": null,
       "path": "/org/{orgId}/partner/{partner}/revenueRecordDetail",
@@ -14213,10 +14152,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -14451,6 +14387,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "ListProductsByOrganization",
       "pagination": null,
       "path": "/org/{orgId}/product",
@@ -14519,10 +14456,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -14945,6 +14879,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "GetProduct",
       "pagination": null,
       "path": "/org/{orgId}/product/{productId}",
@@ -15032,10 +14967,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -15115,6 +15047,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "DELETE",
+      "namespace": null,
       "operationId": "DeleteProduct",
       "pagination": null,
       "path": "/org/{orgId}/product/{productId}",
@@ -15205,10 +15138,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -15656,6 +15586,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "PATCH",
+      "namespace": null,
       "operationId": "UpdateProduct",
       "pagination": null,
       "path": "/org/{orgId}/product/{productId}",
@@ -15766,10 +15697,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -15892,6 +15820,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "ListProductMeteringDimensions",
       "pagination": null,
       "path": "/org/{orgId}/product/{productId}/dimension",
@@ -15988,10 +15917,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -16336,6 +16262,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "ListEntitlementsByProduct",
       "pagination": null,
       "path": "/org/{orgId}/product/{productId}/entitlement",
@@ -16432,10 +16359,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -16779,6 +16703,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "ListOffersByProduct",
       "pagination": null,
       "path": "/org/{orgId}/product/{productId}/offer",
@@ -16875,10 +16800,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -17062,6 +16984,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "ListUsageRecordGroupsByProduct",
       "pagination": null,
       "path": "/org/{orgId}/product/{productId}/usageRecordGroup",
@@ -17296,10 +17219,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -17451,6 +17371,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "ListUsageRecordReportsByProduct",
       "pagination": null,
       "path": "/org/{orgId}/product/{productId}/usageRecordReport",
@@ -17685,10 +17606,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -18023,6 +17941,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "GetRevenueReport",
       "pagination": null,
       "path": "/org/{orgId}/revenueReport",
@@ -18105,10 +18024,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -18281,6 +18197,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "ListUsageRecordGroupsByOrganization",
       "pagination": null,
       "path": "/org/{orgId}/usageRecordGroup",
@@ -18487,10 +18404,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -18665,6 +18579,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "GetUsageRecordGroup",
       "pagination": null,
       "path": "/org/{orgId}/usageRecordGroup/{usageRecordGroupId}",
@@ -18752,10 +18667,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -18896,6 +18808,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "ListUsageRecordReportsByOrganization",
       "pagination": null,
       "path": "/org/{orgId}/usageRecordReport",
@@ -19102,10 +19015,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -19463,6 +19373,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "GetUsageRecordReport",
       "pagination": null,
       "path": "/org/{orgId}/usageRecordReport/{usageRecordReportId}",
@@ -19550,10 +19461,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -19751,6 +19659,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "GetUsageReport",
       "pagination": null,
       "path": "/org/{orgId}/usageReport",
@@ -19833,10 +19742,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",
@@ -19937,6 +19843,7 @@ exports[`open api parser > suger > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "GetApiClientAccessToken",
       "pagination": null,
       "path": "/public/apiClient/accessToken",
@@ -19990,10 +19897,7 @@ exports[`open api parser > suger > parse open api 1`] = `
         },
         "type": "json",
       },
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "suger/swagger.json",

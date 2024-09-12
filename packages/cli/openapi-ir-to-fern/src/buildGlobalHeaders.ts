@@ -1,5 +1,5 @@
 import { ROOT_API_FILENAME } from "@fern-api/configuration";
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { GlobalHeader } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { buildHeader } from "./buildHeader";
@@ -7,6 +7,9 @@ import { buildTypeReference } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 import { wrapTypeReferenceAsOptional } from "./utils/wrapTypeReferenceAsOptional";
+import { getNamespaceFromGroup } from "./utils/getNamespaceFromGroup";
+import { camelCase } from "lodash-es";
+import { getGroupNameForSchema } from "./utils/getGroupNameForSchema";
 
 class HeaderWithCount {
     public readonly schema: RawSchemas.HttpHeaderSchema;
@@ -37,6 +40,9 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
         if (header.name == null && header.env == null && typeof header.schema === "string") {
             schema = header.schema;
         } else if (header != null) {
+            const groupName = header.schema ? getGroupNameForSchema(header.schema) : undefined;
+            const namespace = groupName != null ? getNamespaceFromGroup(groupName) : undefined;
+            const defaultFile = RelativeFilePath.of("api.yml");
             schema = {
                 name: header.name,
                 env: header.env,
@@ -46,9 +52,10 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
                               buildTypeReference({
                                   schema: header.schema,
                                   context,
-                                  fileContainingReference: RelativeFilePath.of("api.yml"),
-                                  // TODO: how are we namespacing global headers
-                                  namespace: undefined
+                                  fileContainingReference: namespace
+                                      ? join(RelativeFilePath.of(camelCase(namespace)), defaultFile)
+                                      : defaultFile,
+                                  namespace
                               })
                           ) ?? "optional<string>"
                         : "optional<string>"

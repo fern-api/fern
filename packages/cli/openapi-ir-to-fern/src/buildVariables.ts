@@ -3,16 +3,19 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Schema } from "@fern-api/openapi-ir-sdk";
 import { buildTypeReference } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { getGroupNameForSchema } from "./utils/getGroupNameForSchema";
+import { getNamespaceFromGroup } from "./utils/getNamespaceFromGroup";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
 export function buildVariables(context: OpenApiIrConverterContext): void {
     for (const [variable, variableSchema] of Object.entries(context.ir.variables)) {
+        const namespace =
+            variableSchema.groupName != null ? getNamespaceFromGroup(variableSchema.groupName) : undefined;
         const typeReference = buildTypeReference({
             schema: Schema.primitive(variableSchema),
             context,
             fileContainingReference: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
-            // TODO: how are we namespacing variables
-            namespace: undefined
+            namespace
         });
         context.builder.addVariable({
             name: variable,

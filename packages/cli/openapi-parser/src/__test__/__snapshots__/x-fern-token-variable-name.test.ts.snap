@@ -48,6 +48,7 @@ exports[`x-fern-token-variable-name > x-fern-token-variable-name > parse open ap
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": null,
       "pagination": null,
       "path": "/completions/chat",

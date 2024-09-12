@@ -34,6 +34,7 @@ exports[`file-upload > file-upload > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "upload-file",
       "pagination": null,
       "path": "/upload",
@@ -97,10 +98,7 @@ exports[`file-upload > file-upload > parse open api 1`] = `
       },
       "requestNameOverride": null,
       "response": null,
-      "sdkName": {
-        "groupName": [],
-        "methodName": undefined,
-      },
+      "sdkName": null,
       "server": [],
       "source": {
         "file": "file-upload/openapi.yml",
