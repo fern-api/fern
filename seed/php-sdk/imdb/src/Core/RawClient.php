@@ -30,7 +30,7 @@ class RawClient
     ): ResponseInterface
     {
         $httpRequest = $this->buildRequest($request);
-        return $this->clientOptions->httpClient->send($httpRequest);
+        return $this->clientOptions->httpClient->sendRequest($httpRequest);
     }
 
     private function buildRequest(
