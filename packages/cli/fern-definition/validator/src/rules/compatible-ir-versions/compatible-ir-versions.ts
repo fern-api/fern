@@ -80,8 +80,14 @@ export const CompatibleIrVersionsRule: Rule = {
                     const minCliVersion = await fdr.generators.cli.getMinCliForIr(invocationIrVersion);
                     if (minCliVersion.ok) {
                         return getMaybeBadVersionMessage(invocation.name, minCliVersion.body.version, cliVersion) ?? [];
+                    } else {
+                        throw new Error(
+                            `Failed to get min CLI version for IR version ${invocationIrVersion} ${JSON.stringify(
+                                minCliVersion
+                            )}`
+                        );
                     }
-                    return [];
+                    // return [];
                 }
             }
         };

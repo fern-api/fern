@@ -28,7 +28,15 @@ async function visitGeneratorGroup({
     visitor: Partial<GeneratorsYmlFileAstVisitor>;
     nodePath: NodePath;
 }): Promise<void> {
-    for (const generator of group.generators) {
-        await visitor.generatorInvocation?.(generator, [...nodePath, generator.name]);
-    }
+    await Promise.all(
+        group.generators.map(
+            async (generator, idx) =>
+                await visitor.generatorInvocation?.(generator, [
+                    ...nodePath,
+                    "generators",
+                    idx.toString(),
+                    generator.name
+                ])
+        )
+    );
 }
