@@ -124,6 +124,7 @@ export declare namespace SdkGenerator {
         organization: string;
         apiName: string;
         packageJson: Record<string, unknown> | undefined;
+        useBigInt: boolean;
     }
 }
 
@@ -1264,7 +1265,8 @@ export class SdkGenerator {
             targetRuntime: this.config.targetRuntime,
             inlineFileProperties: this.config.inlineFileProperties,
             generateOAuthClients: this.generateOAuthClients,
-            omitUndefined: this.config.omitUndefined
+            omitUndefined: this.config.omitUndefined,
+            useBigInt: this.config.useBigInt
         });
     }
 }

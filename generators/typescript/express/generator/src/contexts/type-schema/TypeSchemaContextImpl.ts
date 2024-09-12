@@ -26,6 +26,7 @@ export declare namespace TypeSchemaContextImpl {
         treatUnknownAsAny: boolean;
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
+        useBigInt: boolean;
     }
 }
 
@@ -54,7 +55,8 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
         typeSchemaGenerator,
         treatUnknownAsAny,
         includeSerdeLayer,
-        retainOriginalCasing
+        retainOriginalCasing,
+        useBigInt
     }: TypeSchemaContextImpl.Init) {
         this.sourceFile = sourceFile;
         this.coreUtilities = coreUtilities;
@@ -63,14 +65,16 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
             getReferenceToNamedType: (typeName) => this.getReferenceToRawNamedType(typeName).getEntityName(),
             typeResolver,
             treatUnknownAsAny,
-            includeSerdeLayer
+            includeSerdeLayer,
+            useBigInt
         });
         this.typeReferenceToSchemaConverter = new TypeReferenceToSchemaConverter({
             getSchemaOfNamedType: (typeName) => this.getSchemaOfNamedType(typeName, { isGeneratingSchema: true }),
             zurg: this.coreUtilities.zurg,
             typeResolver,
             treatUnknownAsAny,
-            includeSerdeLayer
+            includeSerdeLayer,
+            useBigInt
         });
         this.typeDeclarationReferencer = typeDeclarationReferencer;
         this.typeSchemaDeclarationReferencer = typeSchemaDeclarationReferencer;

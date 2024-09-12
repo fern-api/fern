@@ -120,6 +120,9 @@ fixtures:
     - outputFolder: jsr
       customConfig:
         publishToJsr: true
+    - outputFolder: bigint
+      customConfig:
+        useBigInt: true        
   error-property:
     - customConfig:
         private: true
