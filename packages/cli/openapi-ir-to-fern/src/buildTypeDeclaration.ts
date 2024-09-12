@@ -477,24 +477,6 @@ export function buildOneOfTypeDeclaration({
                 context,
                 fileContainingReference: declarationFile
             });
-            const maybeSingleUnionTypeSchema = union[discriminantValue];
-            if (maybeSingleUnionTypeSchema && typeof maybeSingleUnionTypeSchema !== "string") {
-                const maybeDisplayName = subSchema._visit({
-                    object: (value) => value.title,
-                    reference: (value) => value.title,
-                    primitive: (value) => value.title,
-                    array: (value) => value.title,
-                    map: (value) => value.title,
-                    optional: (value) => value.title,
-                    enum: (value) => value.title,
-                    literal: (value) => value.title,
-                    oneOf: (value) => value.title,
-                    nullable: (value) => value.title,
-                    unknown: () => undefined,
-                    _other: () => undefined
-                });
-                maybeSingleUnionTypeSchema["display-name"] = maybeDisplayName;
-            }
         }
         return {
             name: schema.nameOverride ?? schema.generatedName,

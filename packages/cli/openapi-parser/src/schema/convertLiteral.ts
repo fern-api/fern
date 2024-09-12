@@ -14,6 +14,7 @@ function createLiteralSchemaValue(value: unknown): LiteralSchemaValue {
 export function convertLiteral({
     nameOverride,
     generatedName,
+    title,
     wrapAsNullable,
     value,
     description,
@@ -22,6 +23,7 @@ export function convertLiteral({
 }: {
     nameOverride: string | undefined;
     generatedName: string;
+    title: string | undefined;
     value: unknown;
     wrapAsNullable: boolean;
     description: string | undefined;
@@ -32,9 +34,11 @@ export function convertLiteral({
         return SchemaWithExample.nullable({
             nameOverride,
             generatedName,
+            title,
             value: SchemaWithExample.literal({
                 nameOverride,
                 generatedName,
+                title,
                 value: createLiteralSchemaValue(value),
                 description,
                 availability,
@@ -48,6 +52,7 @@ export function convertLiteral({
     return SchemaWithExample.literal({
         nameOverride,
         generatedName,
+        title,
         value: createLiteralSchemaValue(value),
         description,
         availability,

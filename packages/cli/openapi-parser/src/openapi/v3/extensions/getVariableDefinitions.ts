@@ -23,6 +23,7 @@ export function getVariableDefinitions(document: OpenAPIV3.Document): Record<str
                     {
                         nameOverride: undefined,
                         generatedName: getGeneratedTypeName([variableName]),
+                        title: schema.title,
                         schema: PrimitiveSchemaValue.string({
                             default: getDefaultAsString(schema),
                             pattern: schema.pattern,
