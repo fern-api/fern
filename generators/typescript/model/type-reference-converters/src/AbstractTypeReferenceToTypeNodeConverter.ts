@@ -55,6 +55,24 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
         return this.generateNonOptionalTypeReferenceNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword));
     }
 
+    protected override long(): TypeReferenceNode {
+        if (this.includeSerdeLayer && this.useBigInt) {
+            return this.generateNonOptionalTypeReferenceNode(
+                ts.factory.createKeywordTypeNode(ts.SyntaxKind.BigIntKeyword)
+            );
+        }
+        return this.generateNonOptionalTypeReferenceNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword));
+    }
+
+    protected override bigInteger(): TypeReferenceNode {
+        if (this.includeSerdeLayer && this.useBigInt) {
+            return this.generateNonOptionalTypeReferenceNode(
+                ts.factory.createKeywordTypeNode(ts.SyntaxKind.BigIntKeyword)
+            );
+        }
+        return this.generateNonOptionalTypeReferenceNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword));
+    }
+
     protected override optional(itemType: TypeReference): TypeReferenceNode {
         const referencedToValueType = this.convert(itemType).typeNode;
         return {

@@ -124,6 +124,7 @@ export declare namespace SdkGenerator {
         organization: string;
         apiName: string;
         packageJson: Record<string, unknown> | undefined;
+        useBigInt: boolean;
     }
 }
 

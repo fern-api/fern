@@ -31,6 +31,20 @@ export class TypeReferenceToSchemaConverter extends AbstractTypeReferenceConvert
         return this.zurg.string();
     }
 
+    protected long(): Zurg.Schema {
+        if (this.useBigInt) {
+            return this.zurg.bigint();
+        }
+        return this.zurg.string();
+    }
+
+    protected bigInteger(): Zurg.Schema {
+        if (this.useBigInt) {
+            return this.zurg.bigint();
+        }
+        return this.zurg.string();
+    }
+
     protected override number(): Zurg.Schema {
         return this.zurg.number();
     }

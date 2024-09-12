@@ -33,4 +33,5 @@ export interface SdkCustomConfig {
     omitUndefined: boolean | undefined;
     generateWireTests: boolean | undefined;
     noScripts: boolean | undefined;
+    useBigInt: boolean | undefined;
 }
