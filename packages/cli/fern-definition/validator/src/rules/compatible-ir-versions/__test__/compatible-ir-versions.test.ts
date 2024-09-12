@@ -5,6 +5,7 @@ import { CompatibleIrVersionsRule } from "../compatible-ir-versions";
 
 describe("compatible-ir-versions", () => {
     it("simple", async () => {
+        process.env.CLI_VERSION = "0.1.3-rc0";
         const violations = await getViolationsForRule({
             rule: CompatibleIrVersionsRule,
             absolutePathToWorkspace: join(

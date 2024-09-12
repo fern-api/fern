@@ -50,8 +50,15 @@ export const CompatibleIrVersionsRule: Rule = {
                             return [];
                         }
                     } else {
+                        const generatorEntity = await fdr.generators.getGeneratorByImage({
+                            dockerImage: invocation.name
+                        });
+                        if (!generatorEntity.ok) {
+                            return [];
+                        }
                         const generatorRelease = await fdr.generators.versions.getGeneratorRelease(
-                            invocation.name,
+                            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                            generatorEntity.body!.id,
                             invocation.version
                         );
 
@@ -74,7 +81,6 @@ export const CompatibleIrVersionsRule: Rule = {
                     if (minCliVersion.ok) {
                         return getMaybeBadVersionMessage(invocation.name, minCliVersion.body.version, cliVersion) ?? [];
                     }
-
                     return [];
                 }
             }
