@@ -105,7 +105,6 @@ export class CliContext {
         this.exitProgram();
     }
 
-    // TODO: suggest version upgrades here
     private async nudgeUpgradeIfAvaialable() {
         try {
             const upgradeInfo = await Promise.race<[Promise<FernUpgradeInfo>, Promise<never>]>([

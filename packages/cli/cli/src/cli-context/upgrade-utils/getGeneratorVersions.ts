@@ -223,15 +223,15 @@ export async function getProjectGeneratorUpgrades({
     const generatorUpgrades: FernGeneratorUpgradeInfo[] = [];
     if (project != null) {
         const latestVersions = await getLatestGeneratorVersions({
-            cliContext: cliContext,
-            project: project,
+            cliContext,
+            project,
             generatorFilter,
             groupFilter,
             channel,
             includeMajor
         });
 
-        if (latestVersions.type == "multiApi") {
+        if (latestVersions.type === "multiApi") {
             for (const [apiName, groups] of Object.entries(latestVersions.versions)) {
                 generatorUpgrades.push(...processGeneratorGroups(groups, apiName, cliContext.logger));
             }
