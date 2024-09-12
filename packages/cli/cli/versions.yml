@@ -1,4 +1,10 @@
 - changelogEntry:
+  - summary: Running `fern check` will now check to confirm that the generator versions you are running are compatible with your Fern CLI version.
+    type: feat
+  irVersion: 53
+  version: 0.42.0
+
+- changelogEntry:
   - summary: |
       Adds availability and display-names to discriminated union values. Now, in your docs, you can mark your union values
       with custom names and show their availability. You can do so by adding the following to your API definition:

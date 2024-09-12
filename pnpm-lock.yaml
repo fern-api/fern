@@ -3298,6 +3298,8 @@ importers:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
+  packages/cli/cli/dist/dev: {}
+
   packages/cli/cli/dist/prod: {}
 
   packages/cli/configuration:
@@ -3820,6 +3822,9 @@ importers:
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../../configuration
+      '@fern-api/core':
+        specifier: workspace:*
+        version: link:../../../core
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../commons/core-utils
@@ -3838,6 +3843,9 @@ importers:
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../logger
+      '@fern-api/semver-utils':
+        specifier: workspace:*
+        version: link:../../semver-utils
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../task-context
@@ -5418,6 +5426,9 @@ importers:
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584
+      '@fern-fern/generators-sdk':
+        specifier: 0.107.0-00fe26566
+        version: 0.107.0-00fe26566
     devDependencies:
       '@types/jest':
         specifier: ^29.5.12

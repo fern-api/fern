@@ -1,4 +1,5 @@
 import { Rule } from "./Rule";
+import { CompatibleIrVersionsRule } from "./rules/compatible-ir-versions";
 import { ImportFileExistsRule } from "./rules/import-file-exists";
 import { MatchingEnvironmentUrlsRule } from "./rules/matching-environment-urls";
 import { NoCircularImportsRule } from "./rules/no-circular-imports";
@@ -85,7 +86,8 @@ export function getAllRules(): Rule[] {
         ValidStreamConditionRule,
         ValidVersionRule,
         NoUnusedGenericRule,
-        ValidGenericRule
+        ValidGenericRule,
+        CompatibleIrVersionsRule
     ];
 }
 
