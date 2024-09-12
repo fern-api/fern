@@ -40,7 +40,7 @@ class RawClient
        $headers = $this->encodeHeaders($request);
        $body = $this->encodeRequestBody($request);
        return new Request(
-           $request->method->value,
+           $request->method->name,
            $url,
            $headers,
            $body,
