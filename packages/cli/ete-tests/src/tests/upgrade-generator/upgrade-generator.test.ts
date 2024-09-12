@@ -27,17 +27,6 @@ describe("fern generator upgrade", () => {
         );
 
         expect(pythonVersion.stdout).not.toEqual("3.0.0");
-
-        // Let's make sure that we don't touch the version if it's not found
-        // TODO: remove this test when we register Java generators
-        const javaVersion = await runFernCli(
-            ["generator", "get", "--group", "local", "--generator", "fernapi/fern-java-sdk", "--version"],
-            {
-                cwd: directory
-            }
-        );
-
-        expect(javaVersion.stdout).toEqual("0.0.1");
     }, 60_000);
 
     it("fern generator upgrade with filters", async () => {
