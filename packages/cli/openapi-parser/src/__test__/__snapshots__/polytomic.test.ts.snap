@@ -29,6 +29,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
               "file": "polytomic/openapi.json",
               "type": "openapi",
             },
+            "title": null,
             "type": "reference",
           },
           "source": {
@@ -52,6 +53,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
               "file": "polytomic/openapi.json",
               "type": "openapi",
             },
+            "title": null,
             "type": "reference",
           },
           "source": {
@@ -75,6 +77,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
               "file": "polytomic/openapi.json",
               "type": "openapi",
             },
+            "title": null,
             "type": "reference",
           },
           "source": {
@@ -98,6 +101,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
               "file": "polytomic/openapi.json",
               "type": "openapi",
             },
+            "title": null,
             "type": "reference",
           },
           "source": {
@@ -121,6 +125,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
               "file": "polytomic/openapi.json",
               "type": "openapi",
             },
+            "title": null,
             "type": "reference",
           },
           "source": {
@@ -371,6 +376,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
             "generatedName": "ConnectionsCreateRequestXPolytomicVersion",
             "groupName": null,
             "nameOverride": null,
+            "title": null,
             "type": "literal",
             "value": {
               "type": "string",
@@ -406,6 +412,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
             "file": "polytomic/openapi.json",
             "type": "openapi",
           },
+          "title": null,
           "type": "reference",
         },
         "source": {
@@ -429,6 +436,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
             "file": "polytomic/openapi.json",
             "type": "openapi",
           },
+          "title": null,
           "type": "reference",
         },
         "source": {
@@ -500,6 +508,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
             "generatedName": "apiErrorMessage",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "availability": null,
@@ -515,6 +524,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -532,6 +542,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
             "generatedName": "apiErrorMetadata",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "generatedName": "ApiErrorMetadata",
@@ -553,6 +564,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
             "generatedName": "apiErrorStatus",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "availability": null,
@@ -569,6 +581,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
                 "multipleOf": null,
                 "type": "int",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -578,6 +591,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
         "file": "polytomic/openapi.json",
         "type": "openapi",
       },
+      "title": null,
       "type": "object",
     },
     "BulkItemizedSchedule": {
@@ -608,6 +622,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
               "file": "polytomic/openapi.json",
               "type": "openapi",
             },
+            "title": null,
             "type": "reference",
           },
         },
@@ -629,6 +644,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
               "file": "polytomic/openapi.json",
               "type": "openapi",
             },
+            "title": null,
             "type": "reference",
           },
         },
@@ -637,6 +653,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
         "file": "polytomic/openapi.json",
         "type": "openapi",
       },
+      "title": null,
       "type": "object",
     },
     "BulkMultiScheduleConfiguration": {
@@ -662,6 +679,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
             "generatedName": "BulkMultiScheduleConfigurationSchedules",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "nullable",
             "value": {
               "availability": null,
@@ -669,6 +687,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
               "generatedName": "BulkMultiScheduleConfigurationSchedules",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "array",
               "value": {
                 "availability": null,
@@ -681,6 +700,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
                   "file": "polytomic/openapi.json",
                   "type": "openapi",
                 },
+                "title": null,
                 "type": "reference",
               },
             },
@@ -707,6 +727,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
               "pattern": null,
               "type": "string",
             },
+            "title": null,
             "type": "primitive",
           },
         },
@@ -715,6 +736,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
         "file": "polytomic/openapi.json",
         "type": "openapi",
       },
+      "title": null,
       "type": "object",
     },
     "BulkSchedule": {
@@ -740,6 +762,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
             "generatedName": "bulkScheduleDayOfMonth",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "availability": null,
@@ -755,6 +778,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -772,6 +796,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
             "generatedName": "bulkScheduleDayOfWeek",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "availability": null,
@@ -787,6 +812,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -809,6 +835,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
               "file": "polytomic/openapi.json",
               "type": "openapi",
             },
+            "title": null,
             "type": "reference",
           },
         },
@@ -825,6 +852,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
             "generatedName": "bulkScheduleHour",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "availability": null,
@@ -840,6 +868,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -857,6 +886,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
             "generatedName": "bulkScheduleMinute",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "availability": null,
@@ -872,6 +902,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -889,6 +920,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
             "generatedName": "bulkScheduleMonth",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "availability": null,
@@ -904,6 +936,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -921,6 +954,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
             "generatedName": "bulkScheduleMulti",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "availability": null,
@@ -933,6 +967,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
                 "file": "polytomic/openapi.json",
                 "type": "openapi",
               },
+              "title": null,
               "type": "reference",
             },
           },
@@ -942,6 +977,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
         "file": "polytomic/openapi.json",
         "type": "openapi",
       },
+      "title": null,
       "type": "object",
     },
     "BulkSelectiveMode": {
@@ -955,6 +991,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
         "file": "polytomic/openapi.json",
         "type": "openapi",
       },
+      "title": null,
       "type": "enum",
       "values": [
         {
@@ -1021,6 +1058,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
             "generatedName": "restErrResponseCode",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "availability": null,
@@ -1037,6 +1075,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
                 "multipleOf": null,
                 "type": "int",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -1054,6 +1093,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
             "generatedName": "restErrResponseContext",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "availability": null,
@@ -1075,8 +1115,10 @@ exports[`polytomic > polytomic > parse open api 1`] = `
                   "pattern": null,
                   "type": "string",
                 },
+                "title": null,
               },
               "nameOverride": null,
+              "title": null,
               "type": "map",
               "value": {
                 "generatedName": "RestErrResponseContextValue",
@@ -1099,6 +1141,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
             "generatedName": "restErrResponseError",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "availability": null,
@@ -1114,6 +1157,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -1131,6 +1175,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
             "generatedName": "restErrResponseStatus",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "availability": null,
@@ -1146,6 +1191,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -1155,6 +1201,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
         "file": "polytomic/openapi.json",
         "type": "openapi",
       },
+      "title": null,
       "type": "object",
     },
     "ScheduleFrequency": {
@@ -1168,6 +1215,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
         "file": "polytomic/openapi.json",
         "type": "openapi",
       },
+      "title": null,
       "type": "enum",
       "values": [
         {
@@ -1325,6 +1373,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
             "generatedName": "v2ConnectionTypeSchemaId",
             "groupName": [],
             "nameOverride": "ConnectionTypeSchema",
+            "title": "ConnectionTypeSchema",
             "type": "optional",
             "value": {
               "availability": null,
@@ -1340,6 +1389,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -1357,6 +1407,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
             "generatedName": "v2ConnectionTypeSchemaName",
             "groupName": [],
             "nameOverride": "ConnectionTypeSchema",
+            "title": "ConnectionTypeSchema",
             "type": "optional",
             "value": {
               "availability": null,
@@ -1372,6 +1423,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -1389,6 +1441,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
             "generatedName": "v2ConnectionTypeSchemaOperations",
             "groupName": [],
             "nameOverride": "ConnectionTypeSchema",
+            "title": "ConnectionTypeSchema",
             "type": "optional",
             "value": {
               "availability": null,
@@ -1396,6 +1449,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
               "generatedName": "V2ConnectionTypeSchemaOperations",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "nullable",
               "value": {
                 "availability": null,
@@ -1403,6 +1457,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
                 "generatedName": "V2ConnectionTypeSchemaOperations",
                 "groupName": [],
                 "nameOverride": null,
+                "title": null,
                 "type": "array",
                 "value": {
                   "availability": null,
@@ -1418,6 +1473,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
                     "pattern": null,
                     "type": "string",
                   },
+                  "title": null,
                   "type": "primitive",
                 },
               },
@@ -1429,6 +1485,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
         "file": "polytomic/openapi.json",
         "type": "openapi",
       },
+      "title": "ConnectionTypeSchema",
       "type": "object",
     },
     "V2CreateConnectionRequestSchema": {
@@ -1454,6 +1511,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
             "generatedName": "V2CreateConnectionRequestSchemaConfiguration",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "nullable",
             "value": {
               "availability": null,
@@ -1475,8 +1533,10 @@ exports[`polytomic > polytomic > parse open api 1`] = `
                   "pattern": null,
                   "type": "string",
                 },
+                "title": null,
               },
               "nameOverride": null,
+              "title": null,
               "type": "map",
               "value": {
                 "generatedName": "V2CreateConnectionRequestSchemaConfigurationValue",
@@ -1507,6 +1567,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
               "pattern": null,
               "type": "string",
             },
+            "title": null,
             "type": "primitive",
           },
         },
@@ -1523,6 +1584,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
             "generatedName": "v2CreateConnectionRequestSchemaOrganizationId",
             "groupName": [],
             "nameOverride": "CreateConnectionRequestSchema",
+            "title": "CreateConnectionRequestSchema",
             "type": "optional",
             "value": {
               "availability": null,
@@ -1530,6 +1592,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
               "generatedName": "V2CreateConnectionRequestSchemaOrganizationId",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "nullable",
               "value": {
                 "availability": null,
@@ -1545,6 +1608,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
                   "pattern": null,
                   "type": "string",
                 },
+                "title": null,
                 "type": "primitive",
               },
             },
@@ -1563,6 +1627,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
             "generatedName": "v2CreateConnectionRequestSchemaPolicies",
             "groupName": [],
             "nameOverride": "CreateConnectionRequestSchema",
+            "title": "CreateConnectionRequestSchema",
             "type": "optional",
             "value": {
               "availability": null,
@@ -1570,6 +1635,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
               "generatedName": "V2CreateConnectionRequestSchemaPolicies",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "nullable",
               "value": {
                 "availability": null,
@@ -1577,6 +1643,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
                 "generatedName": "V2CreateConnectionRequestSchemaPolicies",
                 "groupName": [],
                 "nameOverride": null,
+                "title": null,
                 "type": "array",
                 "value": {
                   "availability": null,
@@ -1592,6 +1659,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
                     "pattern": null,
                     "type": "string",
                   },
+                  "title": null,
                   "type": "primitive",
                 },
               },
@@ -1611,6 +1679,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
             "generatedName": "v2CreateConnectionRequestSchemaRedirectUrl",
             "groupName": [],
             "nameOverride": "CreateConnectionRequestSchema",
+            "title": "CreateConnectionRequestSchema",
             "type": "optional",
             "value": {
               "availability": null,
@@ -1626,6 +1695,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -1651,6 +1721,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
               "pattern": null,
               "type": "string",
             },
+            "title": null,
             "type": "primitive",
           },
         },
@@ -1667,6 +1738,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
             "generatedName": "v2CreateConnectionRequestSchemaValidate",
             "groupName": [],
             "nameOverride": "CreateConnectionRequestSchema",
+            "title": "CreateConnectionRequestSchema",
             "type": "optional",
             "value": {
               "availability": null,
@@ -1678,6 +1750,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
                 "default": true,
                 "type": "boolean",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -1687,6 +1760,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
         "file": "polytomic/openapi.json",
         "type": "openapi",
       },
+      "title": "CreateConnectionRequestSchema",
       "type": "object",
     },
     "V2CreateConnectionResponseEnvelope": {
@@ -1712,6 +1786,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
             "generatedName": "v2CreateConnectionResponseEnvelopeData",
             "groupName": [],
             "nameOverride": "CreateConnectionResponseEnvelope",
+            "title": "CreateConnectionResponseEnvelope",
             "type": "optional",
             "value": {
               "availability": null,
@@ -1724,6 +1799,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
                 "file": "polytomic/openapi.json",
                 "type": "openapi",
               },
+              "title": null,
               "type": "reference",
             },
           },
@@ -1733,6 +1809,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
         "file": "polytomic/openapi.json",
         "type": "openapi",
       },
+      "title": "CreateConnectionResponseEnvelope",
       "type": "object",
     },
     "V2CreateConnectionResponseSchema": {
@@ -1758,6 +1835,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
             "generatedName": "v2CreateConnectionResponseSchemaAuthCode",
             "groupName": [],
             "nameOverride": "CreateConnectionResponseSchema",
+            "title": "CreateConnectionResponseSchema",
             "type": "optional",
             "value": {
               "availability": null,
@@ -1773,6 +1851,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -1790,6 +1869,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
             "generatedName": "v2CreateConnectionResponseSchemaAuthUrl",
             "groupName": [],
             "nameOverride": "CreateConnectionResponseSchema",
+            "title": "CreateConnectionResponseSchema",
             "type": "optional",
             "value": {
               "availability": null,
@@ -1805,6 +1885,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -1822,6 +1903,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
             "generatedName": "v2CreateConnectionResponseSchemaConfiguration",
             "groupName": [],
             "nameOverride": "CreateConnectionResponseSchema",
+            "title": "CreateConnectionResponseSchema",
             "type": "optional",
             "value": {
               "availability": null,
@@ -1829,6 +1911,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
               "generatedName": "V2CreateConnectionResponseSchemaConfiguration",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "nullable",
               "value": {
                 "availability": null,
@@ -1850,8 +1933,10 @@ exports[`polytomic > polytomic > parse open api 1`] = `
                     "pattern": null,
                     "type": "string",
                   },
+                  "title": null,
                 },
                 "nameOverride": null,
+                "title": null,
                 "type": "map",
                 "value": {
                   "generatedName": "V2CreateConnectionResponseSchemaConfigurationValue",
@@ -1875,6 +1960,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
             "generatedName": "v2CreateConnectionResponseSchemaId",
             "groupName": [],
             "nameOverride": "CreateConnectionResponseSchema",
+            "title": "CreateConnectionResponseSchema",
             "type": "optional",
             "value": {
               "availability": null,
@@ -1890,6 +1976,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -1907,6 +1994,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
             "generatedName": "v2CreateConnectionResponseSchemaName",
             "groupName": [],
             "nameOverride": "CreateConnectionResponseSchema",
+            "title": "CreateConnectionResponseSchema",
             "type": "optional",
             "value": {
               "availability": null,
@@ -1922,6 +2010,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -1939,6 +2028,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
             "generatedName": "v2CreateConnectionResponseSchemaOrganizationId",
             "groupName": [],
             "nameOverride": "CreateConnectionResponseSchema",
+            "title": "CreateConnectionResponseSchema",
             "type": "optional",
             "value": {
               "availability": null,
@@ -1954,6 +2044,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -1971,6 +2062,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
             "generatedName": "v2CreateConnectionResponseSchemaPolicies",
             "groupName": [],
             "nameOverride": "CreateConnectionResponseSchema",
+            "title": "CreateConnectionResponseSchema",
             "type": "optional",
             "value": {
               "availability": null,
@@ -1978,6 +2070,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
               "generatedName": "V2CreateConnectionResponseSchemaPolicies",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "array",
               "value": {
                 "availability": null,
@@ -1993,6 +2086,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
                   "pattern": null,
                   "type": "string",
                 },
+                "title": null,
                 "type": "primitive",
               },
             },
@@ -2011,6 +2105,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
             "generatedName": "v2CreateConnectionResponseSchemaStatus",
             "groupName": [],
             "nameOverride": "CreateConnectionResponseSchema",
+            "title": "CreateConnectionResponseSchema",
             "type": "optional",
             "value": {
               "availability": null,
@@ -2026,6 +2121,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -2043,6 +2139,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
             "generatedName": "v2CreateConnectionResponseSchemaStatusError",
             "groupName": [],
             "nameOverride": "CreateConnectionResponseSchema",
+            "title": "CreateConnectionResponseSchema",
             "type": "optional",
             "value": {
               "availability": null,
@@ -2058,6 +2155,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -2075,6 +2173,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
             "generatedName": "v2CreateConnectionResponseSchemaType",
             "groupName": [],
             "nameOverride": "CreateConnectionResponseSchema",
+            "title": "CreateConnectionResponseSchema",
             "type": "optional",
             "value": {
               "availability": null,
@@ -2087,6 +2186,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
                 "file": "polytomic/openapi.json",
                 "type": "openapi",
               },
+              "title": null,
               "type": "reference",
             },
           },
@@ -2096,6 +2196,7 @@ exports[`polytomic > polytomic > parse open api 1`] = `
         "file": "polytomic/openapi.json",
         "type": "openapi",
       },
+      "title": "CreateConnectionResponseSchema",
       "type": "object",
     },
   },

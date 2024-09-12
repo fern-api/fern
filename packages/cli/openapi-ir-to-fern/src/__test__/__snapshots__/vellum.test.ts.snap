@@ -672,14 +672,17 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
                     },
                   },
                   "parameters": {
+                    "display-name": undefined,
                     "docs": "The initial model parameters to use for  this prompt",
                     "type": "root.RegisterPromptModelParametersRequest",
                   },
                   "prompt": {
+                    "display-name": undefined,
                     "docs": "Information about how to execute the prompt template.",
                     "type": "root.RegisterPromptPromptInfoRequest",
                   },
                   "provider": {
+                    "display-name": undefined,
                     "docs": "The initial LLM provider to use for this prompt
 
 * \`ANTHROPIC\` - Anthropic
@@ -866,6 +869,7 @@ or overwritten with default values.",
               "body": {
                 "properties": {
                   "inputs": {
+                    "display-name": undefined,
                     "docs": "The inputs for the scenario",
                     "type": "list<root.ScenarioInputRequest>",
                   },
@@ -987,6 +991,7 @@ or overwritten with default values.",
               "body": {
                 "properties": {
                   "evaluation_params": {
+                    "display-name": undefined,
                     "docs": "Parameters to use when evaluating the test case, specific to the test suite's evaluation metric.",
                     "type": "root.EvaluationParamsRequest",
                   },
@@ -1266,6 +1271,7 @@ Generate a completion using a previously defined deployment.
                   "type": "optional<GenerateOptionsRequest>",
                 },
                 "requests": {
+                  "display-name": undefined,
                   "docs": "The generation requests to make. Supplying multiple will perform a bulk request to the LLM provided when possible.",
                   "type": "list<GenerateRequest>",
                 },
@@ -1325,6 +1331,7 @@ Generate a stream of completions using a previously defined deployment.
                   "type": "optional<GenerateOptionsRequest>",
                 },
                 "requests": {
+                  "display-name": undefined,
                   "docs": "The generation requests to make. Supplying multiple will perform a bulk request to the LLM provided when possible.",
                   "type": "list<GenerateRequest>",
                 },
@@ -1457,6 +1464,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "body": {
               "properties": {
                 "actuals": {
+                  "display-name": undefined,
                   "docs": "Feedback regarding the quality of previously generated completions",
                   "type": "list<SubmitCompletionActualRequest>",
                 },
@@ -1627,6 +1635,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "last_deployed_on": "datetime",
           "model_type": {
+            "display-name": undefined,
             "docs": "The type of model this deployment serves
 
 * \`GENERATE\` - Generate
@@ -1957,6 +1966,7 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "results": {
+            "display-name": undefined,
             "docs": "The results of each generation request.",
             "type": "list<GenerateResult>",
           },
@@ -1985,6 +1995,7 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "completions": {
+            "display-name": undefined,
             "docs": "The generated completions. This will generally be a list of length one.",
             "type": "list<EnrichedNormalizedCompletion>",
           },
@@ -2094,6 +2105,7 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "prompt": {
+            "display-name": undefined,
             "docs": "Information about the compiled prompt.",
             "type": "ModelVersionCompiledPrompt",
           },
@@ -2129,10 +2141,12 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "input_variables": {
+            "display-name": undefined,
             "docs": "Names of the input variables specified in the prompt template.",
             "type": "list<PromptTemplateInputVariable>",
           },
           "parameters": {
+            "display-name": undefined,
             "docs": "The generation parameters that are passed to the LLM provider at runtime.",
             "type": "ModelVersionExecConfigParameters",
           },
@@ -2167,14 +2181,17 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "build_config": {
+            "display-name": undefined,
             "docs": "Configuration used to build this model version.",
             "type": "ModelVersionBuildConfig",
           },
           "created": {
+            "display-name": undefined,
             "docs": "Timestamp of when this model version was created.",
             "type": "datetime",
           },
           "exec_config": {
+            "display-name": undefined,
             "docs": "Configuration used to execute this model version.",
             "type": "ModelVersionExecConfig",
           },
@@ -2209,6 +2226,7 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "model_type": {
+            "display-name": undefined,
             "docs": "The type of task this model is used for.
 
 * \`GENERATE\` - Generate
@@ -2216,6 +2234,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "ModelTypeEnum",
           },
           "provider": {
+            "display-name": undefined,
             "docs": "Which LLM provider this model version is associated with.
 
 * \`ANTHROPIC\` - Anthropic
@@ -2328,6 +2347,7 @@ Used to submit feedback regarding the quality of previously generated completion
         },
       },
       "ProcessingFailureReasonEnum": {
+        "display-name": undefined,
         "docs": "* \`EXCEEDED_CHARACTER_LIMIT\` - Exceeded Character Limit",
         "type": "literal<"EXCEEDED_CHARACTER_LIMIT">",
       },
@@ -2571,6 +2591,7 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "input_variables": {
+            "display-name": undefined,
             "docs": "Names of the input variables specified in the prompt template.",
             "type": "list<PromptTemplateInputVariableRequest>",
           },
@@ -2588,22 +2609,27 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "deployment": {
+            "display-name": undefined,
             "docs": "Information about the generated deployment",
             "type": "RegisteredPromptDeployment",
           },
           "model_version": {
+            "display-name": undefined,
             "docs": "Information about the generated model version",
             "type": "RegisteredPromptModelVersion",
           },
           "prompt": {
+            "display-name": undefined,
             "docs": "Information about the generated prompt",
             "type": "RegisterPromptPrompt",
           },
           "sandbox": {
+            "display-name": undefined,
             "docs": "Information about the generated sandbox",
             "type": "RegisteredPromptSandbox",
           },
           "sandbox_snapshot": {
+            "display-name": undefined,
             "docs": "Information about the generated sandbox snapshot",
             "type": "RegisteredPromptSandboxSnapshot",
           },
@@ -2722,6 +2748,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "string",
           },
           "inputs": {
+            "display-name": undefined,
             "docs": "The inputs for the scenario",
             "type": "list<ScenarioInput>",
           },
@@ -2851,6 +2878,7 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "results": {
+            "display-name": undefined,
             "docs": "The results of the search. Each result represents a chunk that matches the search query.",
             "type": "list<SearchResult>",
           },
@@ -2863,6 +2891,7 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "document": {
+            "display-name": undefined,
             "docs": "The document that contains the chunk that matched the search query.",
             "type": "Document",
           },
@@ -2947,6 +2976,7 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "last_uploaded_at": {
+            "display-name": undefined,
             "docs": "A timestamp representing when this document was most recently uploaded.",
             "type": "datetime",
           },
@@ -2977,6 +3007,7 @@ Used to submit feedback regarding the quality of previously generated completion
         },
       },
       "SlimDocumentStatusEnum": {
+        "display-name": undefined,
         "docs": "* \`ACTIVE\` - Active",
         "type": "literal<"ACTIVE">",
       },
@@ -3081,6 +3112,7 @@ Used to submit feedback regarding the quality of previously generated completion
         },
       },
       "TerminalNodeResultOutput": {
+        "availability": undefined,
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
@@ -3111,6 +3143,7 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "evaluation_params": {
+            "display-name": undefined,
             "docs": "Parameters to use when evaluating the test case, specific to the test suite's evaluation metric.",
             "type": "EvaluationParams",
           },
@@ -3202,6 +3235,7 @@ Used to submit feedback regarding the quality of previously generated completion
         },
       },
       "WorkflowNodeResultData": {
+        "availability": undefined,
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
@@ -3268,6 +3302,7 @@ Used to submit feedback regarding the quality of previously generated completion
         },
       },
       "WorkflowRequestInputRequest": {
+        "availability": undefined,
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
@@ -3333,6 +3368,7 @@ Used to submit feedback regarding the quality of previously generated completion
         },
       },
       "WorkflowResultEventOutputData": {
+        "availability": undefined,
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
@@ -3398,6 +3434,7 @@ Used to submit feedback regarding the quality of previously generated completion
         },
       },
       "WorkflowStreamEvent": {
+        "availability": undefined,
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
@@ -4112,14 +4149,17 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
                     },
                   },
                   "parameters": {
+                    "display-name": undefined,
                     "docs": "The initial model parameters to use for  this prompt",
                     "type": "root.RegisterPromptModelParametersRequest",
                   },
                   "prompt": {
+                    "display-name": undefined,
                     "docs": "Information about how to execute the prompt template.",
                     "type": "root.RegisterPromptPromptInfoRequest",
                   },
                   "provider": {
+                    "display-name": undefined,
                     "docs": "The initial LLM provider to use for this prompt
 
 * \`ANTHROPIC\` - Anthropic
@@ -4306,6 +4346,7 @@ or overwritten with default values.",
               "body": {
                 "properties": {
                   "inputs": {
+                    "display-name": undefined,
                     "docs": "The inputs for the scenario",
                     "type": "list<root.ScenarioInputRequest>",
                   },
@@ -4427,6 +4468,7 @@ or overwritten with default values.",
               "body": {
                 "properties": {
                   "evaluation_params": {
+                    "display-name": undefined,
                     "docs": "Parameters to use when evaluating the test case, specific to the test suite's evaluation metric.",
                     "type": "root.EvaluationParamsRequest",
                   },
@@ -4638,6 +4680,7 @@ Generate a completion using a previously defined deployment.
                   "type": "optional<GenerateOptionsRequest>",
                 },
                 "requests": {
+                  "display-name": undefined,
                   "docs": "The generation requests to make. Supplying multiple will perform a bulk request to the LLM provided when possible.",
                   "type": "list<GenerateRequest>",
                 },
@@ -4697,6 +4740,7 @@ Generate a stream of completions using a previously defined deployment.
                   "type": "optional<GenerateOptionsRequest>",
                 },
                 "requests": {
+                  "display-name": undefined,
                   "docs": "The generation requests to make. Supplying multiple will perform a bulk request to the LLM provided when possible.",
                   "type": "list<GenerateRequest>",
                 },
@@ -4829,6 +4873,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "body": {
               "properties": {
                 "actuals": {
+                  "display-name": undefined,
                   "docs": "Feedback regarding the quality of previously generated completions",
                   "type": "list<SubmitCompletionActualRequest>",
                 },
@@ -4999,6 +5044,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "last_deployed_on": "datetime",
           "model_type": {
+            "display-name": undefined,
             "docs": "The type of model this deployment serves
 
 * \`GENERATE\` - Generate
@@ -5329,6 +5375,7 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "results": {
+            "display-name": undefined,
             "docs": "The results of each generation request.",
             "type": "list<GenerateResult>",
           },
@@ -5357,6 +5404,7 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "completions": {
+            "display-name": undefined,
             "docs": "The generated completions. This will generally be a list of length one.",
             "type": "list<EnrichedNormalizedCompletion>",
           },
@@ -5466,6 +5514,7 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "prompt": {
+            "display-name": undefined,
             "docs": "Information about the compiled prompt.",
             "type": "ModelVersionCompiledPrompt",
           },
@@ -5501,10 +5550,12 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "input_variables": {
+            "display-name": undefined,
             "docs": "Names of the input variables specified in the prompt template.",
             "type": "list<PromptTemplateInputVariable>",
           },
           "parameters": {
+            "display-name": undefined,
             "docs": "The generation parameters that are passed to the LLM provider at runtime.",
             "type": "ModelVersionExecConfigParameters",
           },
@@ -5539,14 +5590,17 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "build_config": {
+            "display-name": undefined,
             "docs": "Configuration used to build this model version.",
             "type": "ModelVersionBuildConfig",
           },
           "created": {
+            "display-name": undefined,
             "docs": "Timestamp of when this model version was created.",
             "type": "datetime",
           },
           "exec_config": {
+            "display-name": undefined,
             "docs": "Configuration used to execute this model version.",
             "type": "ModelVersionExecConfig",
           },
@@ -5581,6 +5635,7 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "model_type": {
+            "display-name": undefined,
             "docs": "The type of task this model is used for.
 
 * \`GENERATE\` - Generate
@@ -5588,6 +5643,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "ModelTypeEnum",
           },
           "provider": {
+            "display-name": undefined,
             "docs": "Which LLM provider this model version is associated with.
 
 * \`ANTHROPIC\` - Anthropic
@@ -5700,6 +5756,7 @@ Used to submit feedback regarding the quality of previously generated completion
         },
       },
       "ProcessingFailureReasonEnum": {
+        "display-name": undefined,
         "docs": "* \`EXCEEDED_CHARACTER_LIMIT\` - Exceeded Character Limit",
         "type": "literal<"EXCEEDED_CHARACTER_LIMIT">",
       },
@@ -5943,6 +6000,7 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "input_variables": {
+            "display-name": undefined,
             "docs": "Names of the input variables specified in the prompt template.",
             "type": "list<PromptTemplateInputVariableRequest>",
           },
@@ -5960,22 +6018,27 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "deployment": {
+            "display-name": undefined,
             "docs": "Information about the generated deployment",
             "type": "RegisteredPromptDeployment",
           },
           "model_version": {
+            "display-name": undefined,
             "docs": "Information about the generated model version",
             "type": "RegisteredPromptModelVersion",
           },
           "prompt": {
+            "display-name": undefined,
             "docs": "Information about the generated prompt",
             "type": "RegisterPromptPrompt",
           },
           "sandbox": {
+            "display-name": undefined,
             "docs": "Information about the generated sandbox",
             "type": "RegisteredPromptSandbox",
           },
           "sandbox_snapshot": {
+            "display-name": undefined,
             "docs": "Information about the generated sandbox snapshot",
             "type": "RegisteredPromptSandboxSnapshot",
           },
@@ -6094,6 +6157,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "string",
           },
           "inputs": {
+            "display-name": undefined,
             "docs": "The inputs for the scenario",
             "type": "list<ScenarioInput>",
           },
@@ -6223,6 +6287,7 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "results": {
+            "display-name": undefined,
             "docs": "The results of the search. Each result represents a chunk that matches the search query.",
             "type": "list<SearchResult>",
           },
@@ -6235,6 +6300,7 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "document": {
+            "display-name": undefined,
             "docs": "The document that contains the chunk that matched the search query.",
             "type": "Document",
           },
@@ -6319,6 +6385,7 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "last_uploaded_at": {
+            "display-name": undefined,
             "docs": "A timestamp representing when this document was most recently uploaded.",
             "type": "datetime",
           },
@@ -6349,6 +6416,7 @@ Used to submit feedback regarding the quality of previously generated completion
         },
       },
       "SlimDocumentStatusEnum": {
+        "display-name": undefined,
         "docs": "* \`ACTIVE\` - Active",
         "type": "literal<"ACTIVE">",
       },
@@ -6453,6 +6521,7 @@ Used to submit feedback regarding the quality of previously generated completion
         },
       },
       "TerminalNodeResultOutput": {
+        "availability": undefined,
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
@@ -6483,6 +6552,7 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "evaluation_params": {
+            "display-name": undefined,
             "docs": "Parameters to use when evaluating the test case, specific to the test suite's evaluation metric.",
             "type": "EvaluationParams",
           },
@@ -6574,6 +6644,7 @@ Used to submit feedback regarding the quality of previously generated completion
         },
       },
       "WorkflowNodeResultData": {
+        "availability": undefined,
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
@@ -6640,6 +6711,7 @@ Used to submit feedback regarding the quality of previously generated completion
         },
       },
       "WorkflowRequestInputRequest": {
+        "availability": undefined,
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
@@ -6705,6 +6777,7 @@ Used to submit feedback regarding the quality of previously generated completion
         },
       },
       "WorkflowResultEventOutputData": {
+        "availability": undefined,
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
@@ -6770,6 +6843,7 @@ Used to submit feedback regarding the quality of previously generated completion
         },
       },
       "WorkflowStreamEvent": {
+        "availability": undefined,
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,

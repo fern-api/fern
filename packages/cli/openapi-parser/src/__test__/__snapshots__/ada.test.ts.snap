@@ -81,6 +81,7 @@ exports[`open api parser > ada > parse open api 1`] = `
               "file": "ada/openapi.json",
               "type": "openapi",
             },
+            "title": null,
             "type": "reference",
           },
           "source": {
@@ -156,6 +157,7 @@ exports[`open api parser > ada > parse open api 1`] = `
               "file": "ada/openapi.json",
               "type": "openapi",
             },
+            "title": null,
             "type": "reference",
           },
           "source": {
@@ -231,6 +233,7 @@ exports[`open api parser > ada > parse open api 1`] = `
               "file": "ada/openapi.json",
               "type": "openapi",
             },
+            "title": null,
             "type": "reference",
           },
           "source": {
@@ -306,6 +309,7 @@ exports[`open api parser > ada > parse open api 1`] = `
               "file": "ada/openapi.json",
               "type": "openapi",
             },
+            "title": null,
             "type": "reference",
           },
           "source": {
@@ -384,6 +388,7 @@ exports[`open api parser > ada > parse open api 1`] = `
               "pattern": null,
               "type": "string",
             },
+            "title": null,
             "type": "primitive",
           },
           "source": {
@@ -410,6 +415,7 @@ exports[`open api parser > ada > parse open api 1`] = `
             "file": "ada/openapi.json",
             "type": "openapi",
           },
+          "title": null,
           "type": "reference",
         },
         "source": {
@@ -503,6 +509,7 @@ exports[`open api parser > ada > parse open api 1`] = `
               "file": "ada/openapi.json",
               "type": "openapi",
             },
+            "title": null,
             "type": "reference",
           },
           "source": {
@@ -578,6 +585,7 @@ exports[`open api parser > ada > parse open api 1`] = `
               "file": "ada/openapi.json",
               "type": "openapi",
             },
+            "title": null,
             "type": "reference",
           },
           "source": {
@@ -653,6 +661,7 @@ exports[`open api parser > ada > parse open api 1`] = `
               "file": "ada/openapi.json",
               "type": "openapi",
             },
+            "title": null,
             "type": "reference",
           },
           "source": {
@@ -728,6 +737,7 @@ exports[`open api parser > ada > parse open api 1`] = `
               "file": "ada/openapi.json",
               "type": "openapi",
             },
+            "title": null,
             "type": "reference",
           },
           "source": {
@@ -803,6 +813,7 @@ exports[`open api parser > ada > parse open api 1`] = `
               "file": "ada/openapi.json",
               "type": "openapi",
             },
+            "title": null,
             "type": "reference",
           },
           "source": {
@@ -878,6 +889,7 @@ exports[`open api parser > ada > parse open api 1`] = `
               "file": "ada/openapi.json",
               "type": "openapi",
             },
+            "title": null,
             "type": "reference",
           },
           "source": {
@@ -915,6 +927,7 @@ exports[`open api parser > ada > parse open api 1`] = `
               "pattern": null,
               "type": "string",
             },
+            "title": null,
             "type": "primitive",
           },
           "source": {
@@ -940,6 +953,7 @@ exports[`open api parser > ada > parse open api 1`] = `
             "file": "ada/openapi.json",
             "type": "openapi",
           },
+          "title": null,
           "type": "reference",
         },
         "source": {
@@ -963,6 +977,7 @@ exports[`open api parser > ada > parse open api 1`] = `
             "file": "ada/openapi.json",
             "type": "openapi",
           },
+          "title": null,
           "type": "reference",
         },
         "source": {
@@ -1056,6 +1071,7 @@ exports[`open api parser > ada > parse open api 1`] = `
               "file": "ada/openapi.json",
               "type": "openapi",
             },
+            "title": null,
             "type": "reference",
           },
           "source": {
@@ -1131,6 +1147,7 @@ exports[`open api parser > ada > parse open api 1`] = `
               "file": "ada/openapi.json",
               "type": "openapi",
             },
+            "title": null,
             "type": "reference",
           },
           "source": {
@@ -1206,6 +1223,7 @@ exports[`open api parser > ada > parse open api 1`] = `
               "file": "ada/openapi.json",
               "type": "openapi",
             },
+            "title": null,
             "type": "reference",
           },
           "source": {
@@ -1281,6 +1299,7 @@ exports[`open api parser > ada > parse open api 1`] = `
               "file": "ada/openapi.json",
               "type": "openapi",
             },
+            "title": null,
             "type": "reference",
           },
           "source": {
@@ -1340,6 +1359,7 @@ exports[`open api parser > ada > parse open api 1`] = `
             "generatedName": "GetEndUsersRequestCursor",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "nullable",
             "value": {
               "availability": null,
@@ -1355,6 +1375,7 @@ exports[`open api parser > ada > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -1374,6 +1395,7 @@ exports[`open api parser > ada > parse open api 1`] = `
             "generatedName": "GetEndUsersRequestLimit",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "nullable",
             "value": {
               "availability": null,
@@ -1390,6 +1412,7 @@ exports[`open api parser > ada > parse open api 1`] = `
                 "multipleOf": null,
                 "type": "int",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -1415,6 +1438,7 @@ exports[`open api parser > ada > parse open api 1`] = `
             "file": "ada/openapi.json",
             "type": "openapi",
           },
+          "title": null,
           "type": "reference",
         },
         "source": {
@@ -1473,6 +1497,7 @@ exports[`open api parser > ada > parse open api 1`] = `
             "generatedName": "endUserCreatedWebhookPayloadType",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "availability": null,
@@ -1488,6 +1513,7 @@ exports[`open api parser > ada > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -1505,6 +1531,7 @@ exports[`open api parser > ada > parse open api 1`] = `
             "generatedName": "endUserCreatedWebhookPayloadTimestamp",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "availability": null,
@@ -1520,6 +1547,7 @@ exports[`open api parser > ada > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -1537,6 +1565,7 @@ exports[`open api parser > ada > parse open api 1`] = `
             "generatedName": "endUserCreatedWebhookPayloadData",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "generatedName": "EndUserCreatedWebhookPayloadData",
@@ -1550,6 +1579,7 @@ exports[`open api parser > ada > parse open api 1`] = `
         "file": "ada/openapi.json",
         "type": "openapi",
       },
+      "title": null,
       "type": "object",
     },
     "EndUserRequest": {
@@ -1580,6 +1610,7 @@ exports[`open api parser > ada > parse open api 1`] = `
             "generatedName": "endUserUpdatedWebhookPayloadType",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "availability": null,
@@ -1595,6 +1626,7 @@ exports[`open api parser > ada > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -1612,6 +1644,7 @@ exports[`open api parser > ada > parse open api 1`] = `
             "generatedName": "endUserUpdatedWebhookPayloadTimestamp",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "availability": null,
@@ -1627,6 +1660,7 @@ exports[`open api parser > ada > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -1644,6 +1678,7 @@ exports[`open api parser > ada > parse open api 1`] = `
             "generatedName": "endUserUpdatedWebhookPayloadData",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "generatedName": "EndUserUpdatedWebhookPayloadData",
@@ -1657,6 +1692,7 @@ exports[`open api parser > ada > parse open api 1`] = `
         "file": "ada/openapi.json",
         "type": "openapi",
       },
+      "title": null,
       "type": "object",
     },
     "EndUsers": {

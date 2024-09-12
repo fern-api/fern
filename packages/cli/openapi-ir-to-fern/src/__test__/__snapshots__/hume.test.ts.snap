@@ -364,10 +364,12 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "docs": undefined,
         "properties": {
           "descriptions": {
+            "display-name": "Descriptions Scores",
             "docs": "Modality-specific descriptive features and their scores.",
             "type": "list<DescriptionsScore>",
           },
           "emotions": {
+            "display-name": "Emotions Scores",
             "docs": "A high-dimensional embedding in emotion space.",
             "type": "list<EmotionScore>",
           },
@@ -516,6 +518,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "type": "optional<list<DescriptionsScore>>",
           },
           "emotions": {
+            "display-name": "Emotions Scores",
             "docs": "A high-dimensional embedding in emotion space.",
             "type": "list<EmotionScore>",
           },
@@ -524,6 +527,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "type": "optional<list<FacsScore>>",
           },
           "frame": {
+            "display-name": undefined,
             "docs": "Frame number",
             "type": "uint64",
           },
@@ -544,6 +548,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "docs": undefined,
         "properties": {
           "emotions": {
+            "display-name": "Emotions Scores",
             "docs": "A high-dimensional embedding in emotion space.",
             "type": "list<EmotionScore>",
           },
@@ -790,6 +795,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "type": "optional<double>",
           },
           "emotions": {
+            "display-name": "Emotions Scores",
             "docs": "A high-dimensional embedding in emotion space.",
             "type": "list<EmotionScore>",
           },
@@ -867,6 +873,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "type": "optional<double>",
           },
           "emotions": {
+            "display-name": "Emotions Scores",
             "docs": "A high-dimensional embedding in emotion space.",
             "type": "list<EmotionScore>",
           },
@@ -909,10 +916,12 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         "docs": "Position of a segment of text within a larger document, measured in characters. Uses zero-based indexing. The beginning index is inclusive and the end index is exclusive.",
         "properties": {
           "begin": {
+            "display-name": undefined,
             "docs": "The index of the first character in the text segment, inclusive.",
             "type": "uint64",
           },
           "end": {
+            "display-name": undefined,
             "docs": "The index of the last character in the text segment, exclusive.",
             "type": "uint64",
           },
@@ -1017,6 +1026,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "type": "optional<double>",
           },
           "emotions": {
+            "display-name": "Emotions Scores",
             "docs": "A high-dimensional embedding in emotion space.",
             "type": "list<EmotionScore>",
           },
@@ -1109,6 +1119,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
       },
       "Source": {
+        "availability": undefined,
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
@@ -1156,6 +1167,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
       },
       "State": {
+        "availability": undefined,
         "base-properties": {},
         "discriminant": "status",
         "docs": undefined,
@@ -1716,10 +1728,12 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "docs": undefined,
         "properties": {
           "descriptions": {
+            "display-name": "Descriptions Scores",
             "docs": "Modality-specific descriptive features and their scores.",
             "type": "list<DescriptionsScore>",
           },
           "emotions": {
+            "display-name": "Emotions Scores",
             "docs": "A high-dimensional embedding in emotion space.",
             "type": "list<EmotionScore>",
           },
@@ -1868,6 +1882,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "type": "optional<list<DescriptionsScore>>",
           },
           "emotions": {
+            "display-name": "Emotions Scores",
             "docs": "A high-dimensional embedding in emotion space.",
             "type": "list<EmotionScore>",
           },
@@ -1876,6 +1891,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "type": "optional<list<FacsScore>>",
           },
           "frame": {
+            "display-name": undefined,
             "docs": "Frame number",
             "type": "uint64",
           },
@@ -1896,6 +1912,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "docs": undefined,
         "properties": {
           "emotions": {
+            "display-name": "Emotions Scores",
             "docs": "A high-dimensional embedding in emotion space.",
             "type": "list<EmotionScore>",
           },
@@ -2142,6 +2159,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "type": "optional<double>",
           },
           "emotions": {
+            "display-name": "Emotions Scores",
             "docs": "A high-dimensional embedding in emotion space.",
             "type": "list<EmotionScore>",
           },
@@ -2219,6 +2237,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "type": "optional<double>",
           },
           "emotions": {
+            "display-name": "Emotions Scores",
             "docs": "A high-dimensional embedding in emotion space.",
             "type": "list<EmotionScore>",
           },
@@ -2261,10 +2280,12 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         "docs": "Position of a segment of text within a larger document, measured in characters. Uses zero-based indexing. The beginning index is inclusive and the end index is exclusive.",
         "properties": {
           "begin": {
+            "display-name": undefined,
             "docs": "The index of the first character in the text segment, inclusive.",
             "type": "uint64",
           },
           "end": {
+            "display-name": undefined,
             "docs": "The index of the last character in the text segment, exclusive.",
             "type": "uint64",
           },
@@ -2369,6 +2390,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "type": "optional<double>",
           },
           "emotions": {
+            "display-name": "Emotions Scores",
             "docs": "A high-dimensional embedding in emotion space.",
             "type": "list<EmotionScore>",
           },
@@ -2461,6 +2483,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
       },
       "Source": {
+        "availability": undefined,
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
@@ -2508,6 +2531,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
       },
       "State": {
+        "availability": undefined,
         "base-properties": {},
         "discriminant": "status",
         "docs": undefined,

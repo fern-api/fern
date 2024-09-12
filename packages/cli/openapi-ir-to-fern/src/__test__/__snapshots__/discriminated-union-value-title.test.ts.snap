@@ -16,8 +16,7 @@ exports[`openapi parser > discriminated-union-value-title > docs 1`] = `
               "request": {},
               "response": {
                 "body": {
-                  "likesCream": true,
-                  "meow": "meow",
+                  "value": 1.1,
                 },
               },
             },
@@ -27,14 +26,22 @@ exports[`openapi parser > discriminated-union-value-title > docs 1`] = `
           "path": "/get",
           "request": {
             "body": {
-              "display-name": "Dawg",
-              "docs": undefined,
-              "type": "Dawg",
+              "properties": {
+                "id": {
+                  "display-name": "A simple request title",
+                  "docs": "An optional string value.
+",
+                  "type": "optional<string>",
+                },
+              },
             },
+            "headers": undefined,
+            "name": "Request",
+            "query-parameters": undefined,
           },
           "response": {
             "docs": "A simple API response.",
-            "type": "Kitty",
+            "type": "Response",
           },
         },
       },
@@ -43,77 +50,42 @@ exports[`openapi parser > discriminated-union-value-title > docs 1`] = `
       },
     },
     "types": {
-      "Dawg": {
-        "docs": undefined,
+      "Response": {
+        "docs": "A generic response type used throughout the API.
+",
         "properties": {
-          "bark": "optional<string>",
-          "breed": "optional<DogBreed>",
+          "value": {
+            "display-name": "A simple response title",
+            "docs": "An optional numerical value.
+",
+            "type": "optional<double>",
+          },
         },
         "source": {
           "openapi": "discriminated-union-value-title/openapi.yml",
         },
       },
-      "DogBreed": {
-        "enum": [
-          "Dachshund",
-          "Dalmatian",
-          "Labrador",
-        ],
-        "source": {
-          "openapi": "discriminated-union-value-title/openapi.yml",
-        },
-      },
-      "Kitty": {
-        "docs": undefined,
-        "properties": {
-          "likesCream": "optional<boolean>",
-          "meow": "optional<string>",
-        },
-        "source": {
-          "openapi": "discriminated-union-value-title/openapi.yml",
-        },
-      },
-      "Pet": {
+      "SampleUnion": {
         "availability": undefined,
         "base-properties": {},
-        "discriminant": "petType",
+        "discriminant": "type",
         "docs": undefined,
         "encoding": undefined,
         "source": {
           "openapi": "discriminated-union-value-title/openapi.yml",
         },
         "union": {
-          "cat": {
-            "display-name": "Kitty",
+          "request": {
+            "display-name": "A simple request title",
             "docs": undefined,
-            "type": "Kitty",
+            "type": "Request",
           },
-          "dog": {
-            "display-name": "Dawg",
+          "response": {
+            "display-name": "A simple response title",
             "docs": undefined,
-            "type": "Dawg",
+            "type": "Response",
           },
         },
-      },
-      "PetUnion": {
-        "discriminated": false,
-        "docs": undefined,
-        "encoding": undefined,
-        "source": {
-          "openapi": "discriminated-union-value-title/openapi.yml",
-        },
-        "union": [
-          {
-            "display-name": "Dawg",
-            "docs": undefined,
-            "type": "Dawg",
-          },
-          {
-            "display-name": "Kitty",
-            "docs": undefined,
-            "type": "Kitty",
-          },
-        ],
       },
     },
   },
@@ -143,8 +115,7 @@ exports[`openapi parser > discriminated-union-value-title > simple 1`] = `
               "request": {},
               "response": {
                 "body": {
-                  "likesCream": true,
-                  "meow": "meow",
+                  "value": 1.1,
                 },
               },
             },
@@ -154,14 +125,22 @@ exports[`openapi parser > discriminated-union-value-title > simple 1`] = `
           "path": "/get",
           "request": {
             "body": {
-              "display-name": "Dawg",
-              "docs": undefined,
-              "type": "Dawg",
+              "properties": {
+                "id": {
+                  "display-name": "A simple request title",
+                  "docs": "An optional string value.
+",
+                  "type": "optional<string>",
+                },
+              },
             },
+            "headers": undefined,
+            "name": "Request",
+            "query-parameters": undefined,
           },
           "response": {
             "docs": "A simple API response.",
-            "type": "Kitty",
+            "type": "Response",
           },
         },
       },
@@ -170,77 +149,42 @@ exports[`openapi parser > discriminated-union-value-title > simple 1`] = `
       },
     },
     "types": {
-      "Dawg": {
-        "docs": undefined,
+      "Response": {
+        "docs": "A generic response type used throughout the API.
+",
         "properties": {
-          "bark": "optional<string>",
-          "breed": "optional<DogBreed>",
+          "value": {
+            "display-name": "A simple response title",
+            "docs": "An optional numerical value.
+",
+            "type": "optional<double>",
+          },
         },
         "source": {
           "openapi": "discriminated-union-value-title/openapi.yml",
         },
       },
-      "DogBreed": {
-        "enum": [
-          "Dachshund",
-          "Dalmatian",
-          "Labrador",
-        ],
-        "source": {
-          "openapi": "discriminated-union-value-title/openapi.yml",
-        },
-      },
-      "Kitty": {
-        "docs": undefined,
-        "properties": {
-          "likesCream": "optional<boolean>",
-          "meow": "optional<string>",
-        },
-        "source": {
-          "openapi": "discriminated-union-value-title/openapi.yml",
-        },
-      },
-      "Pet": {
+      "SampleUnion": {
         "availability": undefined,
         "base-properties": {},
-        "discriminant": "petType",
+        "discriminant": "type",
         "docs": undefined,
         "encoding": undefined,
         "source": {
           "openapi": "discriminated-union-value-title/openapi.yml",
         },
         "union": {
-          "cat": {
-            "display-name": "Kitty",
+          "request": {
+            "display-name": "A simple request title",
             "docs": undefined,
-            "type": "Kitty",
+            "type": "Request",
           },
-          "dog": {
-            "display-name": "Dawg",
+          "response": {
+            "display-name": "A simple response title",
             "docs": undefined,
-            "type": "Dawg",
+            "type": "Response",
           },
         },
-      },
-      "PetUnion": {
-        "discriminated": false,
-        "docs": undefined,
-        "encoding": undefined,
-        "source": {
-          "openapi": "discriminated-union-value-title/openapi.yml",
-        },
-        "union": [
-          {
-            "display-name": "Dawg",
-            "docs": undefined,
-            "type": "Dawg",
-          },
-          {
-            "display-name": "Kitty",
-            "docs": undefined,
-            "type": "Kitty",
-          },
-        ],
       },
     },
   },

@@ -12197,6 +12197,7 @@ exports[`seam > seam > docs 1`] = `
           "docs": undefined,
           "properties": {
             "accessible_devices": {
+              "display-name": undefined,
               "docs": "
       ---
       deprecated: use devices.
@@ -14426,6 +14427,7 @@ exports[`seam > seam > docs 1`] = `
             "type": "optional<string>",
           },
           "created_at": {
+            "display-name": undefined,
             "docs": "Date and time at which the access code was created.",
             "type": "datetime",
           },
@@ -15014,6 +15016,7 @@ exports[`seam > seam > docs 1`] = `
         },
       },
       "AcsSystemErrorsItem": {
+        "availability": undefined,
         "base-properties": {},
         "discriminant": "error_code",
         "docs": undefined,
@@ -15198,98 +15201,122 @@ exports[`seam > seam > docs 1`] = `
         },
         "union": [
           {
+            "display-name": undefined,
             "docs": "Locking door.",
             "type": "ActionAttemptZero",
           },
           {
+            "display-name": undefined,
             "docs": "Locking door succeeded.",
             "type": "ActionAttemptOne",
           },
           {
+            "display-name": undefined,
             "docs": "Locking door failed.",
             "type": "ActionAttemptTwo",
           },
           {
+            "display-name": undefined,
             "docs": "Unlocking door.",
             "type": "ActionAttemptThree",
           },
           {
+            "display-name": undefined,
             "docs": "Unlocking door succeeded.",
             "type": "ActionAttemptFour",
           },
           {
+            "display-name": undefined,
             "docs": "Unlocking door failed.",
             "type": "ActionAttemptFive",
           },
           {
+            "display-name": undefined,
             "docs": "Resetting sandbox workspace.",
             "type": "ActionAttemptSix",
           },
           {
+            "display-name": undefined,
             "docs": "Resetting sandbox workspace succeeded.",
             "type": "ActionAttemptSeven",
           },
           {
+            "display-name": undefined,
             "docs": "Resetting sandbox workspace failed.",
             "type": "ActionAttemptEight",
           },
           {
+            "display-name": undefined,
             "docs": "Setting HVAC to cool.",
             "type": "ActionAttemptNine",
           },
           {
+            "display-name": undefined,
             "docs": "Setting HVAC to cool succeeded.",
             "type": "ActionAttemptTen",
           },
           {
+            "display-name": undefined,
             "docs": "Setting HVAC to cool failed.",
             "type": "ActionAttemptEleven",
           },
           {
+            "display-name": undefined,
             "docs": "Setting HVAC to heat mode.",
             "type": "ActionAttemptTwelve",
           },
           {
+            "display-name": undefined,
             "docs": "Setting HVAC to heat mode succeeded.",
             "type": "ActionAttemptThirteen",
           },
           {
+            "display-name": undefined,
             "docs": "Setting HVAC to heat mode failed.",
             "type": "ActionAttemptFourteen",
           },
           {
+            "display-name": undefined,
             "docs": "Setting HVAC to heat-cool mode.",
             "type": "ActionAttemptFifteen",
           },
           {
+            "display-name": undefined,
             "docs": "Setting HVAC to heat-cool mode succeeded.",
             "type": "ActionAttemptSixteen",
           },
           {
+            "display-name": undefined,
             "docs": "Setting heat-cool mode failed.",
             "type": "ActionAttemptSeventeen",
           },
           {
+            "display-name": undefined,
             "docs": "Setting fan mode.",
             "type": "ActionAttemptEighteen",
           },
           {
+            "display-name": undefined,
             "docs": "Setting fan mode succeeded.",
             "type": "ActionAttemptNineteen",
           },
           {
+            "display-name": undefined,
             "docs": "Setting fan mode failed.",
             "type": "ActionAttemptTwenty",
           },
           {
+            "display-name": undefined,
             "docs": "Turning HVAC off.",
             "type": "ActionAttemptTwentyOne",
           },
           {
+            "display-name": undefined,
             "docs": "Turning HVAC off succeeded.",
             "type": "ActionAttemptTwentyTwo",
           },
           {
+            "display-name": undefined,
             "docs": "Turning HVAC off failed.",
             "type": "ActionAttemptTwentyThree",
           },
@@ -16825,6 +16852,7 @@ exports[`seam > seam > docs 1`] = `
         "docs": undefined,
         "properties": {
           "accepted_devices": {
+            "display-name": undefined,
             "docs": "
       ---
       deprecated: Unused. Will be removed.
@@ -17003,6 +17031,7 @@ exports[`seam > seam > docs 1`] = `
           "can_simulate_disconnection": "optional<boolean>",
           "can_simulate_removal": "optional<boolean>",
           "capabilities_supported": {
+            "display-name": undefined,
             "docs": "Collection of capabilities that the device supports when connected to Seam. Values are "access_code," which indicates that the device can manage and utilize digital PIN codes for secure access; "lock," which indicates that the device controls a door locking mechanism, enabling the remote opening and closing of doors and other entry points; "noise_detection," which indicates that the device supports monitoring and responding to ambient noise levels; "thermostat," which indicates that the device can regulate and adjust indoor temperatures; and "battery," which indicates that the device can manage battery life and health.",
             "type": "list<DeviceCapabilitiesSupportedItem>",
           },
@@ -17017,6 +17046,7 @@ exports[`seam > seam > docs 1`] = `
             },
           },
           "created_at": {
+            "display-name": undefined,
             "docs": "Date and time at which the device object was created.",
             "type": "datetime",
           },
@@ -17040,6 +17070,7 @@ exports[`seam > seam > docs 1`] = `
             "type": "string",
           },
           "errors": {
+            "display-name": undefined,
             "docs": "Array of errors associated with the device. Each error object within the array contains two fields: "error_code" and "message." "error_code" is a string that uniquely identifies the type of error, enabling quick recognition and categorization of the issue. "message" provides a more detailed description of the error, offering insights into the issue and potentially how to rectify it.",
             "type": "list<DeviceErrorsItem>",
           },
@@ -17056,10 +17087,12 @@ exports[`seam > seam > docs 1`] = `
             "type": "optional<string>",
           },
           "properties": {
+            "display-name": undefined,
             "docs": "Properties of the device.",
             "type": "DeviceProperties",
           },
           "warnings": {
+            "display-name": undefined,
             "docs": "Array of warnings associated with the device. Each warning object within the array contains two fields: "warning_code" and "message." "warning_code" is a string that uniquely identifies the type of warning, enabling quick recognition and categorization of the issue. "message" provides a more detailed description of the warning, offering insights into the issue and potentially how to rectify it.",
             "type": "list<DeviceWarningsItem>",
           },
@@ -18213,10 +18246,12 @@ exports[`seam > seam > docs 1`] = `
           "can_simulate_disconnection": "optional<boolean>",
           "can_simulate_removal": "optional<boolean>",
           "capabilities_supported": {
+            "display-name": undefined,
             "docs": "Collection of capabilities that the device supports when connected to Seam. Values are "access_code," which indicates that the device can manage and utilize digital PIN codes for secure access; "lock," which indicates that the device controls a door locking mechanism, enabling the remote opening and closing of doors and other entry points; "noise_detection," which indicates that the device supports monitoring and responding to ambient noise levels; "thermostat," which indicates that the device can regulate and adjust indoor temperatures; and "battery," which indicates that the device can manage battery life and health.",
             "type": "list<PhoneCapabilitiesSupportedItem>",
           },
           "created_at": {
+            "display-name": undefined,
             "docs": "Date and time at which the device object was created.",
             "type": "datetime",
           },
@@ -18237,6 +18272,7 @@ exports[`seam > seam > docs 1`] = `
             "type": "string",
           },
           "errors": {
+            "display-name": undefined,
             "docs": "Array of errors associated with the device. Each error object within the array contains two fields: "error_code" and "message." "error_code" is a string that uniquely identifies the type of error, enabling quick recognition and categorization of the issue. "message" provides a more detailed description of the error, offering insights into the issue and potentially how to rectify it.",
             "type": "list<PhoneErrorsItem>",
           },
@@ -18254,6 +18290,7 @@ exports[`seam > seam > docs 1`] = `
           },
           "properties": "PhoneProperties",
           "warnings": {
+            "display-name": undefined,
             "docs": "Array of warnings associated with the device. Each warning object within the array contains two fields: "warning_code" and "message." "warning_code" is a string that uniquely identifies the type of warning, enabling quick recognition and categorization of the issue. "message" provides a more detailed description of the warning, offering insights into the issue and potentially how to rectify it.",
             "type": "list<PhoneWarningsItem>",
           },
@@ -18410,6 +18447,7 @@ exports[`seam > seam > docs 1`] = `
             "type": "optional<string>",
           },
           "created_at": {
+            "display-name": undefined,
             "docs": "Date and time at which the access code was created.",
             "type": "datetime",
           },
@@ -18469,6 +18507,7 @@ exports[`seam > seam > docs 1`] = `
           "can_simulate_disconnection": "optional<boolean>",
           "can_simulate_removal": "optional<boolean>",
           "capabilities_supported": {
+            "display-name": undefined,
             "docs": "Collection of capabilities that the device supports when connected to Seam. Values are "access_code," which indicates that the device can manage and utilize digital PIN codes for secure access; "lock," which indicates that the device controls a door locking mechanism, enabling the remote opening and closing of doors and other entry points; "noise_detection," which indicates that the device supports monitoring and responding to ambient noise levels; "thermostat," which indicates that the device can regulate and adjust indoor temperatures; and "battery," which indicates that the device can manage battery life and health.",
             "type": "list<UnmanagedDeviceCapabilitiesSupportedItem>",
           },
@@ -18483,6 +18522,7 @@ exports[`seam > seam > docs 1`] = `
             },
           },
           "created_at": {
+            "display-name": undefined,
             "docs": "Date and time at which the device object was created.",
             "type": "datetime",
           },
@@ -18501,12 +18541,14 @@ exports[`seam > seam > docs 1`] = `
             "type": "UnmanagedDeviceDeviceType",
           },
           "errors": {
+            "display-name": undefined,
             "docs": "Array of errors associated with the device. Each error object within the array contains two fields: "error_code" and "message." "error_code" is a string that uniquely identifies the type of error, enabling quick recognition and categorization of the issue. "message" provides a more detailed description of the error, offering insights into the issue and potentially how to rectify it.",
             "type": "list<UnmanagedDeviceErrorsItem>",
           },
           "is_managed": "boolean",
           "properties": "UnmanagedDeviceProperties",
           "warnings": {
+            "display-name": undefined,
             "docs": "Array of warnings associated with the device. Each warning object within the array contains two fields: "warning_code" and "message." "warning_code" is a string that uniquely identifies the type of warning, enabling quick recognition and categorization of the issue. "message" provides a more detailed description of the warning, offering insights into the issue and potentially how to rectify it.",
             "type": "list<UnmanagedDeviceWarningsItem>",
           },
@@ -31110,6 +31152,7 @@ exports[`seam > seam > simple 1`] = `
           "docs": undefined,
           "properties": {
             "accessible_devices": {
+              "display-name": undefined,
               "docs": "
       ---
       deprecated: use devices.
@@ -32079,6 +32122,7 @@ exports[`seam > seam > simple 1`] = `
             "type": "optional<string>",
           },
           "created_at": {
+            "display-name": undefined,
             "docs": "Date and time at which the access code was created.",
             "type": "datetime",
           },
@@ -32667,6 +32711,7 @@ exports[`seam > seam > simple 1`] = `
         },
       },
       "AcsSystemErrorsItem": {
+        "availability": undefined,
         "base-properties": {},
         "discriminant": "error_code",
         "docs": undefined,
@@ -32851,98 +32896,122 @@ exports[`seam > seam > simple 1`] = `
         },
         "union": [
           {
+            "display-name": undefined,
             "docs": "Locking door.",
             "type": "ActionAttemptZero",
           },
           {
+            "display-name": undefined,
             "docs": "Locking door succeeded.",
             "type": "ActionAttemptOne",
           },
           {
+            "display-name": undefined,
             "docs": "Locking door failed.",
             "type": "ActionAttemptTwo",
           },
           {
+            "display-name": undefined,
             "docs": "Unlocking door.",
             "type": "ActionAttemptThree",
           },
           {
+            "display-name": undefined,
             "docs": "Unlocking door succeeded.",
             "type": "ActionAttemptFour",
           },
           {
+            "display-name": undefined,
             "docs": "Unlocking door failed.",
             "type": "ActionAttemptFive",
           },
           {
+            "display-name": undefined,
             "docs": "Resetting sandbox workspace.",
             "type": "ActionAttemptSix",
           },
           {
+            "display-name": undefined,
             "docs": "Resetting sandbox workspace succeeded.",
             "type": "ActionAttemptSeven",
           },
           {
+            "display-name": undefined,
             "docs": "Resetting sandbox workspace failed.",
             "type": "ActionAttemptEight",
           },
           {
+            "display-name": undefined,
             "docs": "Setting HVAC to cool.",
             "type": "ActionAttemptNine",
           },
           {
+            "display-name": undefined,
             "docs": "Setting HVAC to cool succeeded.",
             "type": "ActionAttemptTen",
           },
           {
+            "display-name": undefined,
             "docs": "Setting HVAC to cool failed.",
             "type": "ActionAttemptEleven",
           },
           {
+            "display-name": undefined,
             "docs": "Setting HVAC to heat mode.",
             "type": "ActionAttemptTwelve",
           },
           {
+            "display-name": undefined,
             "docs": "Setting HVAC to heat mode succeeded.",
             "type": "ActionAttemptThirteen",
           },
           {
+            "display-name": undefined,
             "docs": "Setting HVAC to heat mode failed.",
             "type": "ActionAttemptFourteen",
           },
           {
+            "display-name": undefined,
             "docs": "Setting HVAC to heat-cool mode.",
             "type": "ActionAttemptFifteen",
           },
           {
+            "display-name": undefined,
             "docs": "Setting HVAC to heat-cool mode succeeded.",
             "type": "ActionAttemptSixteen",
           },
           {
+            "display-name": undefined,
             "docs": "Setting heat-cool mode failed.",
             "type": "ActionAttemptSeventeen",
           },
           {
+            "display-name": undefined,
             "docs": "Setting fan mode.",
             "type": "ActionAttemptEighteen",
           },
           {
+            "display-name": undefined,
             "docs": "Setting fan mode succeeded.",
             "type": "ActionAttemptNineteen",
           },
           {
+            "display-name": undefined,
             "docs": "Setting fan mode failed.",
             "type": "ActionAttemptTwenty",
           },
           {
+            "display-name": undefined,
             "docs": "Turning HVAC off.",
             "type": "ActionAttemptTwentyOne",
           },
           {
+            "display-name": undefined,
             "docs": "Turning HVAC off succeeded.",
             "type": "ActionAttemptTwentyTwo",
           },
           {
+            "display-name": undefined,
             "docs": "Turning HVAC off failed.",
             "type": "ActionAttemptTwentyThree",
           },
@@ -34478,6 +34547,7 @@ exports[`seam > seam > simple 1`] = `
         "docs": undefined,
         "properties": {
           "accepted_devices": {
+            "display-name": undefined,
             "docs": "
       ---
       deprecated: Unused. Will be removed.
@@ -34656,6 +34726,7 @@ exports[`seam > seam > simple 1`] = `
           "can_simulate_disconnection": "optional<boolean>",
           "can_simulate_removal": "optional<boolean>",
           "capabilities_supported": {
+            "display-name": undefined,
             "docs": "Collection of capabilities that the device supports when connected to Seam. Values are "access_code," which indicates that the device can manage and utilize digital PIN codes for secure access; "lock," which indicates that the device controls a door locking mechanism, enabling the remote opening and closing of doors and other entry points; "noise_detection," which indicates that the device supports monitoring and responding to ambient noise levels; "thermostat," which indicates that the device can regulate and adjust indoor temperatures; and "battery," which indicates that the device can manage battery life and health.",
             "type": "list<DeviceCapabilitiesSupportedItem>",
           },
@@ -34670,6 +34741,7 @@ exports[`seam > seam > simple 1`] = `
             },
           },
           "created_at": {
+            "display-name": undefined,
             "docs": "Date and time at which the device object was created.",
             "type": "datetime",
           },
@@ -34693,6 +34765,7 @@ exports[`seam > seam > simple 1`] = `
             "type": "string",
           },
           "errors": {
+            "display-name": undefined,
             "docs": "Array of errors associated with the device. Each error object within the array contains two fields: "error_code" and "message." "error_code" is a string that uniquely identifies the type of error, enabling quick recognition and categorization of the issue. "message" provides a more detailed description of the error, offering insights into the issue and potentially how to rectify it.",
             "type": "list<DeviceErrorsItem>",
           },
@@ -34709,10 +34782,12 @@ exports[`seam > seam > simple 1`] = `
             "type": "optional<string>",
           },
           "properties": {
+            "display-name": undefined,
             "docs": "Properties of the device.",
             "type": "DeviceProperties",
           },
           "warnings": {
+            "display-name": undefined,
             "docs": "Array of warnings associated with the device. Each warning object within the array contains two fields: "warning_code" and "message." "warning_code" is a string that uniquely identifies the type of warning, enabling quick recognition and categorization of the issue. "message" provides a more detailed description of the warning, offering insights into the issue and potentially how to rectify it.",
             "type": "list<DeviceWarningsItem>",
           },
@@ -35866,10 +35941,12 @@ exports[`seam > seam > simple 1`] = `
           "can_simulate_disconnection": "optional<boolean>",
           "can_simulate_removal": "optional<boolean>",
           "capabilities_supported": {
+            "display-name": undefined,
             "docs": "Collection of capabilities that the device supports when connected to Seam. Values are "access_code," which indicates that the device can manage and utilize digital PIN codes for secure access; "lock," which indicates that the device controls a door locking mechanism, enabling the remote opening and closing of doors and other entry points; "noise_detection," which indicates that the device supports monitoring and responding to ambient noise levels; "thermostat," which indicates that the device can regulate and adjust indoor temperatures; and "battery," which indicates that the device can manage battery life and health.",
             "type": "list<PhoneCapabilitiesSupportedItem>",
           },
           "created_at": {
+            "display-name": undefined,
             "docs": "Date and time at which the device object was created.",
             "type": "datetime",
           },
@@ -35890,6 +35967,7 @@ exports[`seam > seam > simple 1`] = `
             "type": "string",
           },
           "errors": {
+            "display-name": undefined,
             "docs": "Array of errors associated with the device. Each error object within the array contains two fields: "error_code" and "message." "error_code" is a string that uniquely identifies the type of error, enabling quick recognition and categorization of the issue. "message" provides a more detailed description of the error, offering insights into the issue and potentially how to rectify it.",
             "type": "list<PhoneErrorsItem>",
           },
@@ -35907,6 +35985,7 @@ exports[`seam > seam > simple 1`] = `
           },
           "properties": "PhoneProperties",
           "warnings": {
+            "display-name": undefined,
             "docs": "Array of warnings associated with the device. Each warning object within the array contains two fields: "warning_code" and "message." "warning_code" is a string that uniquely identifies the type of warning, enabling quick recognition and categorization of the issue. "message" provides a more detailed description of the warning, offering insights into the issue and potentially how to rectify it.",
             "type": "list<PhoneWarningsItem>",
           },
@@ -36063,6 +36142,7 @@ exports[`seam > seam > simple 1`] = `
             "type": "optional<string>",
           },
           "created_at": {
+            "display-name": undefined,
             "docs": "Date and time at which the access code was created.",
             "type": "datetime",
           },
@@ -36122,6 +36202,7 @@ exports[`seam > seam > simple 1`] = `
           "can_simulate_disconnection": "optional<boolean>",
           "can_simulate_removal": "optional<boolean>",
           "capabilities_supported": {
+            "display-name": undefined,
             "docs": "Collection of capabilities that the device supports when connected to Seam. Values are "access_code," which indicates that the device can manage and utilize digital PIN codes for secure access; "lock," which indicates that the device controls a door locking mechanism, enabling the remote opening and closing of doors and other entry points; "noise_detection," which indicates that the device supports monitoring and responding to ambient noise levels; "thermostat," which indicates that the device can regulate and adjust indoor temperatures; and "battery," which indicates that the device can manage battery life and health.",
             "type": "list<UnmanagedDeviceCapabilitiesSupportedItem>",
           },
@@ -36136,6 +36217,7 @@ exports[`seam > seam > simple 1`] = `
             },
           },
           "created_at": {
+            "display-name": undefined,
             "docs": "Date and time at which the device object was created.",
             "type": "datetime",
           },
@@ -36154,12 +36236,14 @@ exports[`seam > seam > simple 1`] = `
             "type": "UnmanagedDeviceDeviceType",
           },
           "errors": {
+            "display-name": undefined,
             "docs": "Array of errors associated with the device. Each error object within the array contains two fields: "error_code" and "message." "error_code" is a string that uniquely identifies the type of error, enabling quick recognition and categorization of the issue. "message" provides a more detailed description of the error, offering insights into the issue and potentially how to rectify it.",
             "type": "list<UnmanagedDeviceErrorsItem>",
           },
           "is_managed": "boolean",
           "properties": "UnmanagedDeviceProperties",
           "warnings": {
+            "display-name": undefined,
             "docs": "Array of warnings associated with the device. Each warning object within the array contains two fields: "warning_code" and "message." "warning_code" is a string that uniquely identifies the type of warning, enabling quick recognition and categorization of the issue. "message" provides a more detailed description of the warning, offering insights into the issue and potentially how to rectify it.",
             "type": "list<UnmanagedDeviceWarningsItem>",
           },

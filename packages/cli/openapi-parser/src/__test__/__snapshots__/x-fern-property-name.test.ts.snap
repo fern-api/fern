@@ -36,6 +36,7 @@ exports[`x-fern-property-name > x-fern-property-name > parse open api 1`] = `
             "generatedName": "baseUserId",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "availability": null,
@@ -51,6 +52,7 @@ exports[`x-fern-property-name > x-fern-property-name > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -60,6 +62,7 @@ exports[`x-fern-property-name > x-fern-property-name > parse open api 1`] = `
         "file": "x-fern-property-name/openapi.yml",
         "type": "openapi",
       },
+      "title": null,
       "type": "object",
     },
   },

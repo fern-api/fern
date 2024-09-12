@@ -6134,6 +6134,7 @@ exports[`open api parser > deel > docs 1`] = `
                     "type": "optional<string>",
                   },
                   "events": {
+                    "display-name": undefined,
                     "docs": "The list of events to enable for this subscription.",
                     "type": "list<string>",
                   },
@@ -6279,6 +6280,7 @@ exports[`open api parser > deel > docs 1`] = `
                     "type": "optional<string>",
                   },
                   "events": {
+                    "display-name": undefined,
                     "docs": "The list of events to enable for this subscription.",
                     "type": "list<string>",
                   },
@@ -9191,6 +9193,7 @@ exports[`open api parser > deel > docs 1`] = `
         },
       },
       "AlternateEmailList": {
+        "display-name": undefined,
         "docs": "List of alternate email addresses.",
         "type": "list<AlternateEmailItem>",
       },
@@ -10154,6 +10157,7 @@ exports[`open api parser > deel > docs 1`] = `
         },
       },
       "ContractStatusEnumList": {
+        "display-name": undefined,
         "docs": "List of contract statuses",
         "type": "list<ContractStatusEnum>",
       },
@@ -10396,6 +10400,7 @@ exports[`open api parser > deel > docs 1`] = `
             "type": "optional<string>",
           },
           "job_title": {
+            "display-name": undefined,
             "docs": "Worker's job title. You can enter a custom job title or use a pre-defiled job title using the Id retrieved in job-titles endpoint.",
             "type": "ContractToCreateSharedJobTitle",
           },
@@ -10437,10 +10442,12 @@ exports[`open api parser > deel > docs 1`] = `
         "docs": undefined,
         "properties": {
           "legal_entity": {
+            "display-name": undefined,
             "docs": "Choose the Deel legal entity for this contract. Use legal entity endpoint to retrieve a list of legal entities in your organization.",
             "type": "ContractToCreateSharedClientLegalEntity",
           },
           "team": {
+            "display-name": undefined,
             "docs": "Choose the Deel team for this contract. Use teams endpoint to retrieve a list of teams in your organization.",
             "type": "ContractToCreateSharedClientTeam",
           },
@@ -10563,6 +10570,7 @@ exports[`open api parser > deel > docs 1`] = `
         },
       },
       "ContractTypeEnumList": {
+        "display-name": undefined,
         "docs": "List of contract types",
         "type": "list<ContractTypeEnum>",
       },
@@ -11038,6 +11046,7 @@ exports[`open api parser > deel > docs 1`] = `
             "type": "optional<boolean>",
           },
           "requests": {
+            "display-name": undefined,
             "docs": "List of time offs.",
             "type": "list<EorTimeoffsItem>",
           },
@@ -11059,6 +11068,7 @@ exports[`open api parser > deel > docs 1`] = `
         "docs": undefined,
         "properties": {
           "employees": {
+            "display-name": undefined,
             "docs": "List of employee time offs.",
             "type": "list<EorTimeoffsEmployeeItem>",
           },
@@ -11770,6 +11780,7 @@ exports[`open api parser > deel > docs 1`] = `
         "docs": "Time-off Entitlements for EOR contracts.",
         "properties": {
           "entitlements": {
+            "display-name": undefined,
             "docs": "List of entitlements.",
             "type": "list<EorEntitlementListItem>",
           },
@@ -11800,6 +11811,7 @@ exports[`open api parser > deel > docs 1`] = `
         },
       },
       "EorTimeoffs": {
+        "display-name": undefined,
         "docs": "List of time offs.",
         "type": "list<EorTimeoffsItem>",
       },
@@ -11840,6 +11852,7 @@ exports[`open api parser > deel > docs 1`] = `
             "type": "optional<string>",
           },
           "requested_at": {
+            "display-name": undefined,
             "docs": "Timestamp when time off was requested.",
             "type": "optional<DateTimeString>",
           },
@@ -11861,6 +11874,7 @@ exports[`open api parser > deel > docs 1`] = `
             "type": "optional<boolean>",
           },
           "status": {
+            "display-name": undefined,
             "docs": "Status of the time off request.",
             "type": "TimeoffsStatusEnum",
           },
@@ -11869,6 +11883,7 @@ exports[`open api parser > deel > docs 1`] = `
             "type": "optional<string>",
           },
           "type": {
+            "display-name": undefined,
             "docs": "The type of time off.",
             "type": "TimeoffsTypeEnum",
           },
@@ -11894,15 +11909,18 @@ exports[`open api parser > deel > docs 1`] = `
           "id": "double",
           "name": "string",
           "others": {
+            "display-name": undefined,
             "docs": "List of all other employee time offs.",
             "type": "list<EorClientTimeoffRequests>",
           },
           "sick_leaves": {
+            "display-name": undefined,
             "docs": "List of employee sick leave time offs.",
             "type": "list<EorClientTimeoffRequests>",
           },
           "time_zones": "string",
           "vacations": {
+            "display-name": undefined,
             "docs": "List of employee vacation time offs.",
             "type": "list<EorClientTimeoffRequests>",
           },
@@ -12111,6 +12129,7 @@ exports[`open api parser > deel > docs 1`] = `
             "type": "string",
           },
           "last_cycle": {
+            "display-name": undefined,
             "docs": "The last payment cycle.",
             "type": "FinalPaymentCalculatedLastCycle",
           },
@@ -12442,6 +12461,7 @@ exports[`open api parser > deel > docs 1`] = `
         },
       },
       "HrisDirectEmployeeContract": {
+        "availability": undefined,
         "base-properties": {},
         "discriminant": "employment_type",
         "docs": undefined,
@@ -13148,6 +13168,7 @@ exports[`open api parser > deel > docs 1`] = `
         },
       },
       "InvoiceStatusEnumList": {
+        "display-name": undefined,
         "docs": "filter invoices by current status, show a invoice if its status is in this list",
         "type": "list<InvoiceStatusEnum>",
       },
@@ -13265,6 +13286,7 @@ exports[`open api parser > deel > docs 1`] = `
             "type": "double",
           },
           "reported_by": {
+            "display-name": undefined,
             "docs": "Milestone creator.",
             "type": "MilestoneReportedBy",
           },
@@ -13620,6 +13642,7 @@ exports[`open api parser > deel > docs 1`] = `
         },
       },
       "OffCyclePaymentTypeEnum": {
+        "display-name": undefined,
         "docs": "Type for Off-cycle payments",
         "type": "literal<"offcycle">",
       },
@@ -13704,6 +13727,7 @@ exports[`open api parser > deel > docs 1`] = `
         "docs": undefined,
         "properties": {
           "created_at": {
+            "display-name": undefined,
             "docs": "Timestamp when the record was created.",
             "type": "optional<DateTimeString>",
           },
@@ -13713,6 +13737,7 @@ exports[`open api parser > deel > docs 1`] = `
           },
           "label": "string",
           "paid_at": {
+            "display-name": undefined,
             "docs": "Timestamp when payment was paid.",
             "type": "optional<DateTimeString>",
           },
@@ -13846,6 +13871,7 @@ exports[`open api parser > deel > docs 1`] = `
         },
       },
       "PaymentMethodEnumList": {
+        "display-name": undefined,
         "docs": "filter invoices by payment method",
         "type": "list<PaymentMethodEnum>",
       },
@@ -13884,6 +13910,7 @@ exports[`open api parser > deel > docs 1`] = `
         "docs": undefined,
         "properties": {
           "contract_id": {
+            "display-name": "The worker for the payment",
             "docs": "The worker's Deel contract Id.",
             "type": "optional<string>",
           },
@@ -14698,6 +14725,7 @@ exports[`open api parser > deel > docs 1`] = `
         },
       },
       "TimeoffsAttachments": {
+        "display-name": undefined,
         "docs": "A list of attachments. 2022-09-08 FE only allows for "SICK LEAVE"",
         "type": "list<TimeoffsAttachmentsItem>",
       },
@@ -15022,6 +15050,7 @@ exports[`open api parser > deel > docs 1`] = `
         },
       },
       "TimesheetTypeEnum": {
+        "display-name": undefined,
         "docs": "Type for timesheet",
         "type": "literal<"work">",
       },
@@ -15073,6 +15102,7 @@ exports[`open api parser > deel > docs 1`] = `
             "type": "optional<string>",
           },
           "events": {
+            "display-name": undefined,
             "docs": "The list of events to enable for this subscription.",
             "type": "list<string>",
           },
@@ -21470,6 +21500,7 @@ exports[`open api parser > deel > simple 1`] = `
                     "type": "optional<string>",
                   },
                   "events": {
+                    "display-name": undefined,
                     "docs": "The list of events to enable for this subscription.",
                     "type": "list<string>",
                   },
@@ -21615,6 +21646,7 @@ exports[`open api parser > deel > simple 1`] = `
                     "type": "optional<string>",
                   },
                   "events": {
+                    "display-name": undefined,
                     "docs": "The list of events to enable for this subscription.",
                     "type": "list<string>",
                   },
@@ -21852,6 +21884,7 @@ exports[`open api parser > deel > simple 1`] = `
         },
       },
       "AlternateEmailList": {
+        "display-name": undefined,
         "docs": "List of alternate email addresses.",
         "type": "list<AlternateEmailItem>",
       },
@@ -22815,6 +22848,7 @@ exports[`open api parser > deel > simple 1`] = `
         },
       },
       "ContractStatusEnumList": {
+        "display-name": undefined,
         "docs": "List of contract statuses",
         "type": "list<ContractStatusEnum>",
       },
@@ -23057,6 +23091,7 @@ exports[`open api parser > deel > simple 1`] = `
             "type": "optional<string>",
           },
           "job_title": {
+            "display-name": undefined,
             "docs": "Worker's job title. You can enter a custom job title or use a pre-defiled job title using the Id retrieved in job-titles endpoint.",
             "type": "ContractToCreateSharedJobTitle",
           },
@@ -23098,10 +23133,12 @@ exports[`open api parser > deel > simple 1`] = `
         "docs": undefined,
         "properties": {
           "legal_entity": {
+            "display-name": undefined,
             "docs": "Choose the Deel legal entity for this contract. Use legal entity endpoint to retrieve a list of legal entities in your organization.",
             "type": "ContractToCreateSharedClientLegalEntity",
           },
           "team": {
+            "display-name": undefined,
             "docs": "Choose the Deel team for this contract. Use teams endpoint to retrieve a list of teams in your organization.",
             "type": "ContractToCreateSharedClientTeam",
           },
@@ -23224,6 +23261,7 @@ exports[`open api parser > deel > simple 1`] = `
         },
       },
       "ContractTypeEnumList": {
+        "display-name": undefined,
         "docs": "List of contract types",
         "type": "list<ContractTypeEnum>",
       },
@@ -23699,6 +23737,7 @@ exports[`open api parser > deel > simple 1`] = `
             "type": "optional<boolean>",
           },
           "requests": {
+            "display-name": undefined,
             "docs": "List of time offs.",
             "type": "list<EorTimeoffsItem>",
           },
@@ -23720,6 +23759,7 @@ exports[`open api parser > deel > simple 1`] = `
         "docs": undefined,
         "properties": {
           "employees": {
+            "display-name": undefined,
             "docs": "List of employee time offs.",
             "type": "list<EorTimeoffsEmployeeItem>",
           },
@@ -24431,6 +24471,7 @@ exports[`open api parser > deel > simple 1`] = `
         "docs": "Time-off Entitlements for EOR contracts.",
         "properties": {
           "entitlements": {
+            "display-name": undefined,
             "docs": "List of entitlements.",
             "type": "list<EorEntitlementListItem>",
           },
@@ -24461,6 +24502,7 @@ exports[`open api parser > deel > simple 1`] = `
         },
       },
       "EorTimeoffs": {
+        "display-name": undefined,
         "docs": "List of time offs.",
         "type": "list<EorTimeoffsItem>",
       },
@@ -24501,6 +24543,7 @@ exports[`open api parser > deel > simple 1`] = `
             "type": "optional<string>",
           },
           "requested_at": {
+            "display-name": undefined,
             "docs": "Timestamp when time off was requested.",
             "type": "optional<DateTimeString>",
           },
@@ -24522,6 +24565,7 @@ exports[`open api parser > deel > simple 1`] = `
             "type": "optional<boolean>",
           },
           "status": {
+            "display-name": undefined,
             "docs": "Status of the time off request.",
             "type": "TimeoffsStatusEnum",
           },
@@ -24530,6 +24574,7 @@ exports[`open api parser > deel > simple 1`] = `
             "type": "optional<string>",
           },
           "type": {
+            "display-name": undefined,
             "docs": "The type of time off.",
             "type": "TimeoffsTypeEnum",
           },
@@ -24555,15 +24600,18 @@ exports[`open api parser > deel > simple 1`] = `
           "id": "double",
           "name": "string",
           "others": {
+            "display-name": undefined,
             "docs": "List of all other employee time offs.",
             "type": "list<EorClientTimeoffRequests>",
           },
           "sick_leaves": {
+            "display-name": undefined,
             "docs": "List of employee sick leave time offs.",
             "type": "list<EorClientTimeoffRequests>",
           },
           "time_zones": "string",
           "vacations": {
+            "display-name": undefined,
             "docs": "List of employee vacation time offs.",
             "type": "list<EorClientTimeoffRequests>",
           },
@@ -24772,6 +24820,7 @@ exports[`open api parser > deel > simple 1`] = `
             "type": "string",
           },
           "last_cycle": {
+            "display-name": undefined,
             "docs": "The last payment cycle.",
             "type": "FinalPaymentCalculatedLastCycle",
           },
@@ -25103,6 +25152,7 @@ exports[`open api parser > deel > simple 1`] = `
         },
       },
       "HrisDirectEmployeeContract": {
+        "availability": undefined,
         "base-properties": {},
         "discriminant": "employment_type",
         "docs": undefined,
@@ -25809,6 +25859,7 @@ exports[`open api parser > deel > simple 1`] = `
         },
       },
       "InvoiceStatusEnumList": {
+        "display-name": undefined,
         "docs": "filter invoices by current status, show a invoice if its status is in this list",
         "type": "list<InvoiceStatusEnum>",
       },
@@ -25926,6 +25977,7 @@ exports[`open api parser > deel > simple 1`] = `
             "type": "double",
           },
           "reported_by": {
+            "display-name": undefined,
             "docs": "Milestone creator.",
             "type": "MilestoneReportedBy",
           },
@@ -26281,6 +26333,7 @@ exports[`open api parser > deel > simple 1`] = `
         },
       },
       "OffCyclePaymentTypeEnum": {
+        "display-name": undefined,
         "docs": "Type for Off-cycle payments",
         "type": "literal<"offcycle">",
       },
@@ -26365,6 +26418,7 @@ exports[`open api parser > deel > simple 1`] = `
         "docs": undefined,
         "properties": {
           "created_at": {
+            "display-name": undefined,
             "docs": "Timestamp when the record was created.",
             "type": "optional<DateTimeString>",
           },
@@ -26374,6 +26428,7 @@ exports[`open api parser > deel > simple 1`] = `
           },
           "label": "string",
           "paid_at": {
+            "display-name": undefined,
             "docs": "Timestamp when payment was paid.",
             "type": "optional<DateTimeString>",
           },
@@ -26507,6 +26562,7 @@ exports[`open api parser > deel > simple 1`] = `
         },
       },
       "PaymentMethodEnumList": {
+        "display-name": undefined,
         "docs": "filter invoices by payment method",
         "type": "list<PaymentMethodEnum>",
       },
@@ -26545,6 +26601,7 @@ exports[`open api parser > deel > simple 1`] = `
         "docs": undefined,
         "properties": {
           "contract_id": {
+            "display-name": "The worker for the payment",
             "docs": "The worker's Deel contract Id.",
             "type": "optional<string>",
           },
@@ -27359,6 +27416,7 @@ exports[`open api parser > deel > simple 1`] = `
         },
       },
       "TimeoffsAttachments": {
+        "display-name": undefined,
         "docs": "A list of attachments. 2022-09-08 FE only allows for "SICK LEAVE"",
         "type": "list<TimeoffsAttachmentsItem>",
       },
@@ -27683,6 +27741,7 @@ exports[`open api parser > deel > simple 1`] = `
         },
       },
       "TimesheetTypeEnum": {
+        "display-name": undefined,
         "docs": "Type for timesheet",
         "type": "literal<"work">",
       },
@@ -27734,6 +27793,7 @@ exports[`open api parser > deel > simple 1`] = `
             "type": "optional<string>",
           },
           "events": {
+            "display-name": undefined,
             "docs": "The list of events to enable for this subscription.",
             "type": "list<string>",
           },
