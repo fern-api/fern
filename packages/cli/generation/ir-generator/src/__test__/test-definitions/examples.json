@@ -1865,6 +1865,8 @@
                             },
                             "typeId": "type_commons/types:Metadata"
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     },
                     {
@@ -2022,6 +2024,8 @@
                                 "inline": null
                             }
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     }
                 ]
@@ -2847,6 +2851,8 @@
                                 }
                             }
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     },
                     {
@@ -2904,6 +2910,8 @@
                                 }
                             }
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     }
                 ]
@@ -15727,6 +15735,8 @@
                                 }
                             }
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     },
                     {
@@ -15788,6 +15798,8 @@
                                 }
                             }
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     }
                 ]
@@ -16082,6 +16094,8 @@
                             },
                             "typeId": "type_types:ExceptionInfo"
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     },
                     {
@@ -16110,6 +16124,8 @@
                         "shape": {
                             "_type": "noProperties"
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     }
                 ]
@@ -19447,6 +19463,8 @@
                                 }
                             }
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     },
                     {
@@ -19504,6 +19522,8 @@
                                 }
                             }
                         },
+                        "displayName": null,
+                        "availability": null,
                         "docs": null
                     }
                 ]

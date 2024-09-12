@@ -58,7 +58,14 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 })
             );
 
-            const generatorContext = new GeneratorContextImpl(logger);
+            const version = config.output?.mode._visit({
+                downloadFiles: () => undefined,
+                github: (github) => github.version,
+                publish: (publish) => publish.version,
+                _other: () => undefined
+            });
+
+            const generatorContext = new GeneratorContextImpl(logger, version);
             const typescriptProject = await this.generateTypescriptProject({
                 config,
                 customConfig,
@@ -165,7 +172,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
 class GeneratorContextImpl implements GeneratorContext {
     private isSuccess = true;
 
-    constructor(public readonly logger: Logger) {}
+    constructor(public readonly logger: Logger, public readonly version: string | undefined) {}
 
     public fail(): void {
         this.isSuccess = false;

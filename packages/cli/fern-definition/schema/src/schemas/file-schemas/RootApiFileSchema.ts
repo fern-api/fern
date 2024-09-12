@@ -8,6 +8,7 @@ import { HttpPathParameterSchema } from "../HttpPathParameterSchema";
 import { PaginationSchema } from "../PaginationSchema";
 import { VariableDeclarationSchema } from "../VariableDeclarationSchema";
 import { VersionDeclarationSchema } from "../VersionDeclarationSchema";
+import { WithDisplayNameSchema } from "../WithDisplayNameSchema";
 
 export const WithEnvironmentsSchema = z.strictObject({
     "default-url": z.optional(z.string()),
@@ -27,7 +28,6 @@ export type WithAuthSchema = z.infer<typeof WithAuthSchema>;
 export const RootApiFileSchema = z
     .strictObject({
         name: z.string(), // TODO: should this be migrated to id?
-        "display-name": z.optional(z.string()),
         imports: z.optional(z.record(z.string())),
         headers: z.optional(z.record(z.string(), HttpHeaderSchema)),
         "error-discrimination": z.optional(ErrorDiscriminationSchema),
@@ -42,6 +42,7 @@ export const RootApiFileSchema = z
         version: z.optional(VersionDeclarationSchema)
     })
     .extend(WithEnvironmentsSchema.shape)
-    .extend(WithAuthSchema.shape);
+    .extend(WithAuthSchema.shape)
+    .extend(WithDisplayNameSchema.shape);
 
 export type RootApiFileSchema = z.infer<typeof RootApiFileSchema>;

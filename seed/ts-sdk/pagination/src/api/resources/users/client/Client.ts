@@ -35,7 +35,7 @@ export class Users {
      *     await client.users.listWithCursorPagination({
      *         page: 1,
      *         perPage: 1,
-     *         order: SeedPagination.Order.Asc,
+     *         order: "asc",
      *         startingAfter: "string"
      *     })
      */
@@ -202,7 +202,7 @@ export class Users {
      *     await client.users.listWithOffsetPagination({
      *         page: 1,
      *         perPage: 1,
-     *         order: SeedPagination.Order.Asc,
+     *         order: "asc",
      *         startingAfter: "string"
      *     })
      */
@@ -373,7 +373,7 @@ export class Users {
      *     await client.users.listWithOffsetStepPagination({
      *         page: 1,
      *         limit: 1,
-     *         order: SeedPagination.Order.Asc
+     *         order: "asc"
      *     })
      */
     public async listWithOffsetStepPagination(
@@ -461,7 +461,7 @@ export class Users {
      *     await client.users.listWithOffsetPaginationHasNextPage({
      *         page: 1,
      *         limit: 1,
-     *         order: SeedPagination.Order.Asc
+     *         order: "asc"
      *     })
      */
     public async listWithOffsetPaginationHasNextPage(

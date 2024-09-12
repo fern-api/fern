@@ -914,10 +914,10 @@
                                         "imports": [],
                                         "isOptional": true,
                                         "values": {
-                                            "SUNNY": "SeedExhaustive.WeatherReport.Sunny",
-                                            "CLOUDY": "SeedExhaustive.WeatherReport.Cloudy",
-                                            "RAINING": "SeedExhaustive.WeatherReport.Raining",
-                                            "SNOWING": "SeedExhaustive.WeatherReport.Snowing"
+                                            "SUNNY": "\"SUNNY\"",
+                                            "CLOUDY": "\"CLOUDY\"",
+                                            "RAINING": "\"RAINING\"",
+                                            "SNOWING": "\"SNOWING\""
                                         },
                                         "templateString": "$FERN_INPUT",
                                         "templateInput": {

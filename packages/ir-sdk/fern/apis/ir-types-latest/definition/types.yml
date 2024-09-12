@@ -120,6 +120,8 @@ types:
     properties:
       discriminantValue: commons.NameAndWireValue
       shape: SingleUnionTypeProperties
+      displayName: optional<string>
+      availability: optional<commons.Availability>
   SingleUnionTypeProperties:
     discriminant:
       value: _type

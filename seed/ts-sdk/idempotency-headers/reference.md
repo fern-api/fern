@@ -17,7 +17,7 @@
 ```typescript
 await client.payment.create({
     amount: 1,
-    currency: SeedIdempotencyHeaders.Currency.Usd,
+    currency: "USD",
 });
 ```
 

@@ -1,10 +1,18 @@
 - changelogEntry:
   - summary: |
-      The Spring generator is now on major version 2. To take this upgrade without any breaks, please add the below
+      We no longer enforce non-null constraints for Object type properties in builders.
+    type: feat
+  createdAt: '2024-09-11'
+  irVersion: 46
+  version: 2.1.0
+
+- changelogEntry:
+  - summary: |
+      The SDK generator is now on major version 2. To take this upgrade without any breaks, please add the below
       configuration to your `generators.yml` file:
       ```yaml
       generators:
-        - name: fernapi/fern-java-spring
+        - name: fernapi/fern-java-sdk
           config:
             disable-required-property-builder-checks: true
       ```
@@ -20,7 +28,7 @@
             return this;
         }
         ```
-    type: improvement
+    type: feat
   createdAt: '2024-09-05'
   irVersion: 46
   version: 2.0.0
@@ -34,7 +42,7 @@
           config:
             enable-public-constructors: true # default false
         ```
-    type: improvement
+    type: feat
   createdAt: '2024-09-04'
   irVersion: 46
   version: 1.0.7
@@ -106,7 +114,7 @@
         }
       }
       ```
-    type: improvement
+    type: feat
   createdAt: '2024-06-26'
   irVersion: 46
   version: 1.0.1
@@ -304,7 +312,7 @@
               package-description: ""
               reference-url: ""
       ```
-    type: improvement
+    type: feat
   createdAt: '2024-03-21'
   irVersion: 31
   version: 0.8.7
