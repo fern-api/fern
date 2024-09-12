@@ -6,6 +6,7 @@ import { CompatibleIrVersionsRule } from "../compatible-ir-versions";
 describe("compatible-ir-versions", () => {
     it("simple", async () => {
         process.env.CLI_VERSION = "0.1.3-rc0";
+        process.env.DEFAULT_FDR_ORIGIN = "https://registry-dev2.buildwithfern.com";
         const violations = await getViolationsForRule({
             rule: CompatibleIrVersionsRule,
             absolutePathToWorkspace: join(
