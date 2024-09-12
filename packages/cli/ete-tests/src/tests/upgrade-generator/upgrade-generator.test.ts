@@ -206,4 +206,34 @@ describe("fern generator upgrade", () => {
             ).stdout
         ).toMatchSnapshot();
     }, 60_000);
+
+    it("fern generator upgrade message", async () => {
+        const tmpDir = await tmp.dir();
+        const directory = AbsoluteFilePath.of(tmpDir.path);
+
+        await cp(FIXTURES_DIR, directory, { recursive: true });
+
+        const outputFileNewMajor = join(directory, RelativeFilePath.of("version-new.txt"));
+
+        expect(
+            (
+                await runFernCli(
+                    [
+                        "generator",
+                        "get",
+                        "--group",
+                        "python-sdk",
+                        "--generator",
+                        "fernapi/fern-python-sdk",
+                        "--version",
+                        "-o",
+                        outputFileNewMajor
+                    ],
+                    {
+                        cwd: directory
+                    }
+                )
+            ).stdout
+        ).toMatchSnapshot();
+    }, 60_000);
 });

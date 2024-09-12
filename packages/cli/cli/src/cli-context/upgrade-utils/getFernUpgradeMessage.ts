@@ -41,7 +41,7 @@ export function getFernUpgradeMessage({
     if (generatorsNeedingUpgrades.length > 2) {
         message +=
             `\nRun ${chalk.cyan("fern generator upgrade --list")}` +
-            "to see the full list of generator upgrades available.";
+            " to see the full list of generator upgrades available.";
     }
 
     return upgradeAvailable
@@ -86,6 +86,8 @@ export function getGeneratorUpgradeMessage({
 
         generatorUpgradeNeeded = true;
     }
+
+    message += "\n";
 
     if (generatorUpgradeNeeded) {
         return includeBoxen
