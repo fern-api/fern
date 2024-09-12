@@ -7,6 +7,7 @@ export interface Reference {
 }
 
 export interface GetReferenceOpts {
+    isForTypeDeclarationComment?: boolean;
     isForComment?: boolean;
     isForSnippet?: boolean;
 }

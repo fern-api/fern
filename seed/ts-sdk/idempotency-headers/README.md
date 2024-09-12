@@ -16,12 +16,12 @@ npm i -s @fern/idempotency-headers
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedIdempotencyHeadersClient, SeedIdempotencyHeaders } from "@fern/idempotency-headers";
+import { SeedIdempotencyHeadersClient } from "@fern/idempotency-headers";
 
 const client = new SeedIdempotencyHeadersClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.payment.create({
     amount: 1,
-    currency: SeedIdempotencyHeaders.Currency.Usd,
+    currency: "USD",
 });
 ```
 

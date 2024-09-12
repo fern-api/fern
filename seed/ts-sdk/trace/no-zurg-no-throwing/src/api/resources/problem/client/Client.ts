@@ -46,7 +46,7 @@ export class Problem {
      *                 }]
      *         },
      *         files: {
-     *             [SeedTrace.Language.Java]: {
+     *             ["JAVA"]: {
      *                 solutionFile: {
      *                     filename: "string",
      *                     contents: "string"
@@ -142,7 +142,7 @@ export class Problem {
      *                 }]
      *         },
      *         files: {
-     *             [SeedTrace.Language.Java]: {
+     *             ["JAVA"]: {
      *                 solutionFile: {
      *                     filename: "string",
      *                     contents: "string"

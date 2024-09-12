@@ -32,8 +32,8 @@ export class InlinedRequest {
      *
      * @example
      *     await client.inlinedRequest.send({
-     *         operand: SeedEnum.Operand.GreaterThan,
-     *         operandOrColor: SeedEnum.Color.Red
+     *         operand: ">",
+     *         operandOrColor: "red"
      *     })
      */
     public async send(
