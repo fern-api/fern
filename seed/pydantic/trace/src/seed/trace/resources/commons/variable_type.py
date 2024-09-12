@@ -89,6 +89,10 @@ class VariableType_MapType(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from .list_type import ListType  # noqa: E402
+from .map_type import MapType  # noqa: E402
+
+
 class VariableType_BinaryTreeType(UniversalBaseModel):
     type: typing.Literal["binaryTreeType"] = "binaryTreeType"
 
@@ -134,5 +138,9 @@ VariableType = typing.Union[
     VariableType_SinglyLinkedListType,
     VariableType_DoublyLinkedListType,
 ]
+update_forward_refs(ListType, VariableType_ListType=VariableType_ListType)
+update_forward_refs(MapType, VariableType_ListType=VariableType_ListType)
 update_forward_refs(VariableType_ListType)
+update_forward_refs(ListType, VariableType_MapType=VariableType_MapType)
+update_forward_refs(MapType, VariableType_MapType=VariableType_MapType)
 update_forward_refs(VariableType_MapType)

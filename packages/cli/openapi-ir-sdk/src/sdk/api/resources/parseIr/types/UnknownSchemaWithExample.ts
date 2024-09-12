@@ -8,6 +8,7 @@ export interface UnknownSchemaWithExample
     extends FernOpenapiIr.WithSdkGroupName,
         FernOpenapiIr.WithName,
         FernOpenapiIr.WithDescription,
-        FernOpenapiIr.WithAvailability {
+        FernOpenapiIr.WithAvailability,
+        FernOpenapiIr.WithTitle {
     example: unknown;
 }

@@ -274,8 +274,8 @@
                                         "imports": [],
                                         "isOptional": true,
                                         "values": {
-                                            "FOO": "SeedFileUpload.ObjectType.Foo",
-                                            "BAR": "SeedFileUpload.ObjectType.Bar"
+                                            "FOO": "\"FOO\"",
+                                            "BAR": "\"BAR\""
                                         },
                                         "templateString": "optionalObjectType: $FERN_INPUT",
                                         "templateInput": {

@@ -69,6 +69,7 @@ exports[`x-fern-token-variable-name > x-fern-token-variable-name > parse open ap
             "file": "x-fern-token-variable-name/openapi.yml",
             "type": "openapi",
           },
+          "title": null,
           "type": "reference",
         },
         "source": {
@@ -95,6 +96,7 @@ exports[`x-fern-token-variable-name > x-fern-token-variable-name > parse open ap
             "pattern": null,
             "type": "string",
           },
+          "title": null,
           "type": "primitive",
         },
         "source": {
@@ -148,6 +150,7 @@ exports[`x-fern-token-variable-name > x-fern-token-variable-name > parse open ap
               "generatedName": "completionText",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -163,6 +166,7 @@ exports[`x-fern-token-variable-name > x-fern-token-variable-name > parse open ap
                   "pattern": null,
                   "type": "string",
                 },
+                "title": null,
                 "type": "primitive",
               },
             },
@@ -172,6 +176,7 @@ exports[`x-fern-token-variable-name > x-fern-token-variable-name > parse open ap
           "file": "x-fern-token-variable-name/openapi.yml",
           "type": "openapi",
         },
+        "title": null,
         "type": "object",
       },
       "CompletionChunk": {
@@ -197,6 +202,7 @@ exports[`x-fern-token-variable-name > x-fern-token-variable-name > parse open ap
               "generatedName": "completionChunkText",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -212,6 +218,7 @@ exports[`x-fern-token-variable-name > x-fern-token-variable-name > parse open ap
                   "pattern": null,
                   "type": "string",
                 },
+                "title": null,
                 "type": "primitive",
               },
             },
@@ -221,6 +228,7 @@ exports[`x-fern-token-variable-name > x-fern-token-variable-name > parse open ap
           "file": "x-fern-token-variable-name/openapi.yml",
           "type": "openapi",
         },
+        "title": null,
         "type": "object",
       },
       "CreateCompletionRequest": {
@@ -246,6 +254,7 @@ exports[`x-fern-token-variable-name > x-fern-token-variable-name > parse open ap
               "generatedName": "createCompletionRequestStream",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -257,6 +266,7 @@ exports[`x-fern-token-variable-name > x-fern-token-variable-name > parse open ap
                   "default": null,
                   "type": "boolean",
                 },
+                "title": null,
                 "type": "primitive",
               },
             },
@@ -282,6 +292,7 @@ exports[`x-fern-token-variable-name > x-fern-token-variable-name > parse open ap
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -290,6 +301,7 @@ exports[`x-fern-token-variable-name > x-fern-token-variable-name > parse open ap
           "file": "x-fern-token-variable-name/openapi.yml",
           "type": "openapi",
         },
+        "title": null,
         "type": "object",
       },
     },

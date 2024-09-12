@@ -6,6 +6,7 @@ import { SchemaParserContext } from "./SchemaParserContext";
 export function convertArray({
     nameOverride,
     generatedName,
+    title,
     breadcrumbs,
     item,
     description,
@@ -19,6 +20,7 @@ export function convertArray({
 }: {
     nameOverride: string | undefined;
     generatedName: string;
+    title: string | undefined;
     breadcrumbs: string[];
     item: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined;
     description: string | undefined;
@@ -35,6 +37,7 @@ export function convertArray({
             ? SchemaWithExample.unknown({
                   nameOverride,
                   generatedName,
+                  title,
                   description: undefined,
                   availability: undefined,
                   example: undefined,
@@ -44,6 +47,7 @@ export function convertArray({
     return wrapArray({
         nameOverride,
         generatedName,
+        title,
         groupName,
         itemSchema,
         wrapAsNullable,
@@ -56,6 +60,7 @@ export function convertArray({
 export function wrapArray({
     nameOverride,
     generatedName,
+    title,
     itemSchema,
     wrapAsNullable,
     description,
@@ -65,6 +70,7 @@ export function wrapArray({
 }: {
     nameOverride: string | undefined;
     generatedName: string;
+    title: string | undefined;
     itemSchema: SchemaWithExample;
     wrapAsNullable: boolean;
     description: string | undefined;
@@ -76,9 +82,11 @@ export function wrapArray({
         return SchemaWithExample.nullable({
             nameOverride,
             generatedName,
+            title,
             value: SchemaWithExample.array({
                 nameOverride,
                 generatedName,
+                title,
                 value: itemSchema,
                 description,
                 // TODO: maybe undefined?
@@ -94,6 +102,7 @@ export function wrapArray({
     return SchemaWithExample.array({
         nameOverride,
         generatedName,
+        title,
         value: itemSchema,
         description,
         availability,

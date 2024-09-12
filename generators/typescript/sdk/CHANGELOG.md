@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.39.8] - 2024-08-27
+
+- Fix: The generated enum examples now reference the value of the enum directly instead 
+  of using the enum itself. 
+
+  ### Before
+
+  ```ts
+  {
+    "genre": Imdb.Genre.Humor,
+  }
+  ```
+
+  ### After
+
+  ```ts
+  {
+    "genre": "humor"
+  }
+  ```
+
+
+## [0.39.7] - 2024-08-27
+
+- Chore: The SDK now produces a `version.ts` file where we export a constant called `SDK_VERSION`. 
+  This constant can be used by different utilities to dynamically import in the version (for example, if someone wants to customize the user agent). 
+
 ## [0.39.6] - 2024-08-27
 
 - Fix: Browser clients can now import streams, via `readable-streams` polyfill. Additionally adds a

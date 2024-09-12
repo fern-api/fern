@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 from ...core.pydantic_utilities import UniversalBaseModel
+from ...commons.types.key_value_pair import KeyValuePair
+from ...commons.types.map_value import MapValue
 import typing
 import typing_extensions
 from ...commons.types.problem_id import ProblemId
@@ -11,6 +13,7 @@ from .test_submission_status import TestSubmissionStatus
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 from .workspace_submission_status import WorkspaceSubmissionStatus
+from ...core.pydantic_utilities import update_forward_refs
 
 
 class SubmissionTypeState_Test(UniversalBaseModel):
@@ -45,3 +48,5 @@ class SubmissionTypeState_Workspace(UniversalBaseModel):
 
 
 SubmissionTypeState = typing.Union[SubmissionTypeState_Test, SubmissionTypeState_Workspace]
+update_forward_refs(KeyValuePair, SubmissionTypeState_Test=SubmissionTypeState_Test)
+update_forward_refs(MapValue, SubmissionTypeState_Test=SubmissionTypeState_Test)

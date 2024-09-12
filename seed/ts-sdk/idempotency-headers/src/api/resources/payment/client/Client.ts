@@ -39,7 +39,7 @@ export class Payment {
      * @example
      *     await client.payment.create({
      *         amount: 1,
-     *         currency: SeedIdempotencyHeaders.Currency.Usd
+     *         currency: "USD"
      *     })
      */
     public async create(

@@ -37,6 +37,7 @@ exports[`open api parser > gen-yml-use-title > parse open api 1`] = `
               "generatedName": "schemaWithALongNameIsRightHereAndNotSomewhereElseId",
               "groupName": [],
               "nameOverride": "EnticingTitle",
+              "title": "EnticingTitle",
               "type": "optional",
               "value": {
                 "availability": null,
@@ -52,6 +53,7 @@ exports[`open api parser > gen-yml-use-title > parse open api 1`] = `
                   "pattern": null,
                   "type": "string",
                 },
+                "title": null,
                 "type": "primitive",
               },
             },
@@ -61,6 +63,7 @@ exports[`open api parser > gen-yml-use-title > parse open api 1`] = `
           "file": "gen-yml-use-title/openapi.yml",
           "type": "openapi",
         },
+        "title": "EnticingTitle",
         "type": "object",
       },
     },

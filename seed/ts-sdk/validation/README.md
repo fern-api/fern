@@ -16,14 +16,14 @@ npm i -s @fern/validation
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedValidationClient, SeedValidation } from "@fern/validation";
+import { SeedValidationClient } from "@fern/validation";
 
 const client = new SeedValidationClient({ environment: "YOUR_BASE_URL" });
 await client.create({
     decimal: 1.1,
     even: 1,
     name: "string",
-    shape: SeedValidation.Shape.Square,
+    shape: "SQUARE",
 });
 ```
 

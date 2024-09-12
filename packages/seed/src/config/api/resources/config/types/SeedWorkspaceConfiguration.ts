@@ -5,6 +5,7 @@
 import * as FernSeedConfig from "../../..";
 
 export interface SeedWorkspaceConfiguration {
+    image: string;
     irVersion: string;
     test: FernSeedConfig.TestConfiguration;
     publish: FernSeedConfig.PublishConfiguration;

@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Callable, List, Optional, Set
+from typing import Callable, Dict, List, Optional, Set
 
 import fern.ir.resources as ir_types
 from fern.generator_exec import GeneratorConfig
+from ordered_set import OrderedSet
 
 from fern_python.codegen import AST, Filepath
 from fern_python.declaration_referencer import AbstractDeclarationReferencer
@@ -69,6 +70,16 @@ class PydanticGeneratorContext(ABC):
         ...
 
     @abstractmethod
+    def get_non_union_circular_references(self) -> Set[ir_types.TypeId]:
+        ...
+
+    @abstractmethod
+    def get_non_union_self_referencing_dependencies_from_types(
+        self,
+    ) -> Dict[ir_types.TypeId, OrderedSet[ir_types.TypeId]]:
+        ...
+
+    @abstractmethod
     def do_types_reference_each_other(self, a: ir_types.TypeId, b: ir_types.TypeId) -> bool:
         ...
 
@@ -84,6 +95,10 @@ class PydanticGeneratorContext(ABC):
 
     @abstractmethod
     def get_referenced_types(self, type_id: ir_types.TypeId) -> Set[ir_types.TypeId]:
+        ...
+
+    @abstractmethod
+    def get_referenced_types_ordered(self, type_id: ir_types.TypeId) -> OrderedSet[ir_types.TypeId]:
         ...
 
     @abstractmethod

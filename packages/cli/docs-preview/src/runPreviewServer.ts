@@ -1,6 +1,6 @@
 import { wrapWithHttps } from "@fern-api/docs-resolver";
 import { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
-import { dirname, doesPathExist } from "@fern-api/fs-utils";
+import { dirname, doesPathExist, AbsoluteFilePath } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
@@ -33,27 +33,37 @@ export async function runPreviewServer({
     reloadProject,
     validateProject,
     context,
-    port
+    port,
+    bundlePath
 }: {
     initialProject: Project;
     reloadProject: () => Promise<Project>;
     validateProject: (project: Project) => Promise<void>;
     context: TaskContext;
     port: number;
+    bundlePath?: string;
 }): Promise<void> {
-    try {
-        const url = process.env.DOCS_PREVIEW_BUCKET;
-        if (url == null) {
-            throw new Error("Failed to connect to the docs preview server. Please contact support@buildwithfern.com");
-        }
-        await downloadBundle({ bucketUrl: url, logger: context.logger, preferCached: true });
-    } catch (err) {
-        const pathToBundle = getPathToBundleFolder();
-        if (await doesPathExist(pathToBundle)) {
-            context.logger.warn("Failed to download latest docs application. Falling back to existing bundle.");
-        } else {
-            context.logger.warn("Failed to download docs application. Please reach out to support@buildwithfern.com.");
-            return;
+    if (bundlePath != null) {
+        context.logger.info(`Using bundle from path: ${bundlePath}`);
+    } else {
+        try {
+            const url = process.env.DOCS_PREVIEW_BUCKET;
+            if (url == null) {
+                throw new Error(
+                    "Failed to connect to the docs preview server. Please contact support@buildwithfern.com"
+                );
+            }
+            await downloadBundle({ bucketUrl: url, logger: context.logger, preferCached: true });
+        } catch (err) {
+            const pathToBundle = getPathToBundleFolder();
+            if (await doesPathExist(pathToBundle)) {
+                context.logger.warn("Failed to download latest docs application. Falling back to existing bundle.");
+            } else {
+                context.logger.warn(
+                    "Failed to download docs application. Please reach out to support@buildwithfern.com."
+                );
+                return;
+            }
         }
     }
 
@@ -115,6 +125,7 @@ export async function runPreviewServer({
     docsDefinition = await reloadDocsDefinition();
 
     const additionalFilepaths = project.apiWorkspaces.flatMap((workspace) => workspace.getAbsoluteFilepaths());
+    const bundleRoot = bundlePath ? AbsoluteFilePath.of(path.resolve(bundlePath)) : getPathToBundleFolder();
 
     const watcher = new Watcher([absoluteFilePathToFern, ...additionalFilepaths], {
         recursive: true,
@@ -173,11 +184,11 @@ export async function runPreviewServer({
         return next();
     });
 
-    app.use("/_next", express.static(path.join(getPathToBundleFolder(), "/_next")));
+    app.use("/_next", express.static(path.join(bundleRoot, "/_next")));
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     app.use("*", async (_req, res) => {
-        return res.sendFile(path.join(getPathToBundleFolder(), "/[[...slug]].html"));
+        return res.sendFile(path.join(bundleRoot, "/[[...slug]].html"));
     });
 
     app.listen(port);

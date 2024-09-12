@@ -42,7 +42,7 @@ export class Submission {
      * @param {Submission.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.submission.createExecutionSession(SeedTrace.Language.Java)
+     *     await client.submission.createExecutionSession("JAVA")
      */
     public async createExecutionSession(
         language: SeedTrace.Language,

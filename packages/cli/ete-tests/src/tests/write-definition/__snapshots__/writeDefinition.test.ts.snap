@@ -644,11 +644,19 @@ types:
       exp_year:
         type: long
         docs: Four-digit number representing the card's expiration year.
-      address_line1: optional<string>
-      address_line2: optional<string>
-      address_city: optional<string>
+      address_line1:
+        type: optional<string>
+        display-name: Card
+      address_line2:
+        type: optional<string>
+        display-name: Card
+      address_city:
+        type: optional<string>
+        display-name: Card
       address_country: string
-      address_post_code: optional<string>
+      address_post_code:
+        type: optional<string>
+        display-name: Card
     source:
       openapi: openapi/trains/openapi.yml
   BookingPaymentSourceBankAccountAccountType:
@@ -676,6 +684,7 @@ types:
         docs: >-
           The sort code for the bank account, in string form. Must be a
           six-digit number.
+        display-name: Bank Account
       account_type:
         type: BookingPaymentSourceBankAccountAccountType
         docs: >-
@@ -698,9 +707,11 @@ types:
       leaking.
     union:
       card:
+        display-name: Card
         type: Card
         docs: A card (debit or credit) to take payment from.
       bank_account:
+        display-name: Bank Account
         type: BookingPaymentSourceBankAccount
         docs: >-
           A bank account to take payment from. Must be able to make payments in

@@ -2,11 +2,14 @@
 
 from __future__ import annotations
 from .......core.pydantic_utilities import UniversalBaseModel
+from ......commons.list_type import ListType
+from ......commons.map_type import MapType
 import typing
 from .parameter import Parameter
 from .......core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 from ......commons.variable_type import VariableType
+from .......core.pydantic_utilities import update_forward_refs
 
 
 class FunctionSignature_Void(UniversalBaseModel):
@@ -50,3 +53,9 @@ class FunctionSignature_VoidThatTakesActualResult(UniversalBaseModel):
 FunctionSignature = typing.Union[
     FunctionSignature_Void, FunctionSignature_NonVoid, FunctionSignature_VoidThatTakesActualResult
 ]
+update_forward_refs(ListType, FunctionSignature_Void=FunctionSignature_Void)
+update_forward_refs(MapType, FunctionSignature_Void=FunctionSignature_Void)
+update_forward_refs(ListType, FunctionSignature_NonVoid=FunctionSignature_NonVoid)
+update_forward_refs(MapType, FunctionSignature_NonVoid=FunctionSignature_NonVoid)
+update_forward_refs(ListType, FunctionSignature_VoidThatTakesActualResult=FunctionSignature_VoidThatTakesActualResult)
+update_forward_refs(MapType, FunctionSignature_VoidThatTakesActualResult=FunctionSignature_VoidThatTakesActualResult)

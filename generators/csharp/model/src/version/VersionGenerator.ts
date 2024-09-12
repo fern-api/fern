@@ -26,7 +26,7 @@ export class VersionGenerator extends FileGenerator<CSharpFile, ModelCustomConfi
                 type: csharp.Type.string(),
                 access: "public",
                 const_: true,
-                initializer: csharp.codeblock(`"${this.context.getVersion() ?? DEFAULT_VERSION}"`)
+                initializer: csharp.codeblock(`"${this.context.version ?? DEFAULT_VERSION}"`)
             })
         );
 

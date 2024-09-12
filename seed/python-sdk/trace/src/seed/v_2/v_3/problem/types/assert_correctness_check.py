@@ -8,8 +8,11 @@ from .parameter_id import ParameterId
 from .....core.serialization import FieldMetadata
 from .....core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from .....commons.types.list_type import ListType
+from .....commons.types.map_type import MapType
 from .parameter import Parameter
 from .function_implementation_for_multiple_languages import FunctionImplementationForMultipleLanguages
+from .....core.pydantic_utilities import update_forward_refs
 
 
 class AssertCorrectnessCheck_DeepEquality(UniversalBaseModel):
@@ -46,3 +49,5 @@ class AssertCorrectnessCheck_Custom(UniversalBaseModel):
 
 
 AssertCorrectnessCheck = typing.Union[AssertCorrectnessCheck_DeepEquality, AssertCorrectnessCheck_Custom]
+update_forward_refs(ListType, AssertCorrectnessCheck_Custom=AssertCorrectnessCheck_Custom)
+update_forward_refs(MapType, AssertCorrectnessCheck_Custom=AssertCorrectnessCheck_Custom)

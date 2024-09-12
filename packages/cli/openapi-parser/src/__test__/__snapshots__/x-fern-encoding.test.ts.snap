@@ -40,8 +40,10 @@ exports[`x-fern-encoding > x-fern-encoding > parse open api 1`] = `
             "pattern": null,
             "type": "string",
           },
+          "title": null,
         },
         "nameOverride": null,
+        "title": null,
         "type": "map",
         "value": {
           "availability": null,
@@ -54,6 +56,7 @@ exports[`x-fern-encoding > x-fern-encoding > parse open api 1`] = `
             "file": "x-fern-encoding/openapi.yml",
             "type": "openapi",
           },
+          "title": null,
           "type": "reference",
         },
       },
@@ -63,6 +66,7 @@ exports[`x-fern-encoding > x-fern-encoding > parse open api 1`] = `
         "generatedName": "MetadataValue",
         "groupName": [],
         "nameOverride": null,
+        "title": null,
         "type": "nullable",
         "value": {
           "type": "oneOf",
@@ -92,6 +96,7 @@ exports[`x-fern-encoding > x-fern-encoding > parse open api 1`] = `
                   "multipleOf": null,
                   "type": "double",
                 },
+                "title": null,
                 "type": "primitive",
               },
               {
@@ -108,6 +113,7 @@ exports[`x-fern-encoding > x-fern-encoding > parse open api 1`] = `
                   "pattern": null,
                   "type": "string",
                 },
+                "title": null,
                 "type": "primitive",
               },
               {
@@ -120,6 +126,7 @@ exports[`x-fern-encoding > x-fern-encoding > parse open api 1`] = `
                   "default": null,
                   "type": "boolean",
                 },
+                "title": null,
                 "type": "primitive",
               },
               {
@@ -128,6 +135,7 @@ exports[`x-fern-encoding > x-fern-encoding > parse open api 1`] = `
                 "generatedName": "MetadataValue",
                 "groupName": [],
                 "nameOverride": null,
+                "title": null,
                 "type": "array",
                 "value": {
                   "availability": null,
@@ -140,6 +148,7 @@ exports[`x-fern-encoding > x-fern-encoding > parse open api 1`] = `
                     "file": "x-fern-encoding/openapi.yml",
                     "type": "openapi",
                   },
+                  "title": null,
                   "type": "reference",
                 },
               },
@@ -148,6 +157,7 @@ exports[`x-fern-encoding > x-fern-encoding > parse open api 1`] = `
               "file": "x-fern-encoding/openapi.yml",
               "type": "openapi",
             },
+            "title": null,
             "type": "undisciminated",
           },
         },

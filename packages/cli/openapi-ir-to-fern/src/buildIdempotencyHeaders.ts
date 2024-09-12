@@ -20,6 +20,7 @@ export function buildIdempotencyHeaders(context: OpenApiIrConverterContext): voi
                         description: undefined,
                         availability: undefined,
                         generatedName: "",
+                        title: undefined,
                         groupName: undefined,
                         nameOverride: undefined,
                         schema: PrimitiveSchemaValue.string({

@@ -2,6 +2,10 @@ imports:
   finalIr: finalIr.yml
 
 types:
+  WithTitle:
+    properties:
+      title: optional<string>
+
   WithSource:
     properties:
       source: optional<Source>

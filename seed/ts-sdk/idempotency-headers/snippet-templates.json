@@ -93,8 +93,8 @@
                                         "imports": [],
                                         "isOptional": true,
                                         "values": {
-                                            "USD": "SeedIdempotencyHeaders.Currency.Usd",
-                                            "YEN": "SeedIdempotencyHeaders.Currency.Yen"
+                                            "USD": "\"USD\"",
+                                            "YEN": "\"YEN\""
                                         },
                                         "templateString": "currency: $FERN_INPUT",
                                         "templateInput": {

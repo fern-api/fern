@@ -98,6 +98,7 @@ function getQueryParameterTypeReference({
                     schema: Schema.optional({
                         nameOverride: schema.nameOverride,
                         generatedName: schema.generatedName,
+                        title: schema.title,
                         value: resolvedSchema.value,
                         description: schema.description ?? resolvedSchema.description,
                         availability: schema.availability,
@@ -149,6 +150,7 @@ function getQueryParameterTypeReference({
                             schema: Schema.optional({
                                 nameOverride: schema.nameOverride,
                                 generatedName: schema.generatedName,
+                                title: schema.title,
                                 value: secondSchema,
                                 description: schema.description,
                                 availability: schema.availability,
@@ -171,6 +173,7 @@ function getQueryParameterTypeReference({
                             schema: Schema.optional({
                                 nameOverride: schema.nameOverride,
                                 generatedName: schema.generatedName,
+                                title: schema.title,
                                 value: firstSchema,
                                 description: schema.description,
                                 availability: schema.availability,
@@ -210,6 +213,7 @@ function getQueryParameterTypeReference({
                         schema: Schema.optional({
                             nameOverride: schema.nameOverride,
                             generatedName: schema.generatedName,
+                            title: schema.title,
                             value: resolvedSchema.value,
                             description: schema.description ?? resolvedSchema.description,
                             availability: schema.availability,
@@ -230,6 +234,7 @@ function getQueryParameterTypeReference({
                     schema: Schema.optional({
                         nameOverride: schema.nameOverride,
                         generatedName: schema.generatedName,
+                        title: schema.title,
                         value: schema.value.value,
                         description: schema.description,
                         availability: schema.availability,
@@ -280,6 +285,7 @@ function getQueryParameterTypeReference({
                             schema: Schema.optional({
                                 nameOverride: schema.nameOverride,
                                 generatedName: schema.generatedName,
+                                title: schema.title,
                                 value: secondSchema,
                                 description: schema.description,
                                 availability: schema.availability,
@@ -302,6 +308,7 @@ function getQueryParameterTypeReference({
                             schema: Schema.optional({
                                 nameOverride: schema.nameOverride,
                                 generatedName: schema.generatedName,
+                                title: schema.title,
                                 value: firstSchema,
                                 description: schema.description,
                                 availability: schema.availability,
@@ -322,6 +329,7 @@ function getQueryParameterTypeReference({
                     schema: Schema.optional({
                         nameOverride: schema.nameOverride,
                         generatedName: schema.generatedName,
+                        title: schema.title,
                         value: oneOfSchema,
                         description: undefined,
                         availability: schema.availability,
@@ -352,6 +360,7 @@ function getQueryParameterTypeReference({
                 schema: Schema.optional({
                     nameOverride: schema.nameOverride,
                     generatedName: schema.generatedName,
+                    title: schema.title,
                     value: schema.value,
                     description: schema.description,
                     availability: schema.availability,

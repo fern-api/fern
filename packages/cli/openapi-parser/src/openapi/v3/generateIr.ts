@@ -413,6 +413,7 @@ function maybeAddBackDiscriminantsFromSchemas(
                         schema: SchemaWithExample.literal({
                             nameOverride: undefined,
                             generatedName: getGeneratedTypeName([schema.generatedName, discriminantValue]),
+                            title: undefined,
                             value: LiteralSchemaValue.string(discriminantValue),
                             groupName: undefined,
                             description: undefined,

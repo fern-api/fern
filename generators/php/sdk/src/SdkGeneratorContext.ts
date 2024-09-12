@@ -1,11 +1,9 @@
 import { AbstractPhpGeneratorContext } from "@fern-api/php-codegen";
-import { RelativeFilePath } from "@fern-api/fs-utils";
 import { GeneratorNotificationService } from "@fern-api/generator-commons";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
-
-export const MOCK_SERVER_TEST_FOLDER = RelativeFilePath.of("Unit/MockServer");
+import { AsIsFiles } from "@fern-api/php-codegen";
 
 export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomConfigSchema> {
     public constructor(
@@ -15,5 +13,17 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(ir, config, customConfig, generatorNotificationService);
+    }
+
+    public getRawAsIsFiles(): string[] {
+        return [AsIsFiles.GitIgnore, AsIsFiles.PhpStanNeon, AsIsFiles.PhpUnitXml];
+    }
+
+    public getCoreAsIsFiles(): string[] {
+        return [AsIsFiles.RawClient];
+    }
+
+    public getCoreTestAsIsFiles(): string[] {
+        return [AsIsFiles.RawClientTest];
     }
 }

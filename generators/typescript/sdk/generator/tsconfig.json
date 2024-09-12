@@ -22,6 +22,7 @@
     { "path": "../sdk-endpoint-type-schemas-generator" },
     { "path": "../sdk-error-generator" },
     { "path": "../sdk-error-schema-generator" },
-    { "path": "../sdk-inlined-request-body-schema-generator" }
+    { "path": "../sdk-inlined-request-body-schema-generator" },
+    { "path": "../../codegen" },
   ]
 }

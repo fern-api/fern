@@ -107,6 +107,7 @@ export function parseAsyncAPI({
                                   description: undefined,
                                   availability: undefined,
                                   generatedName: "",
+                                  title: undefined,
                                   groupName: undefined,
                                   nameOverride: undefined
                               }),
@@ -322,6 +323,7 @@ function convertMessageToSchema({
             subtypes,
             nameOverride: event.operationId,
             generatedName,
+            title: event.message.title,
             groupName: undefined,
             wrapAsNullable: false,
             breadcrumbs,

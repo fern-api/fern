@@ -8,7 +8,7 @@ import * as SeedIdempotencyHeaders from "../../../../index";
  * @example
  *     {
  *         amount: 1,
- *         currency: SeedIdempotencyHeaders.Currency.Usd
+ *         currency: "USD"
  *     }
  */
 export interface CreatePaymentRequest {

@@ -13,6 +13,7 @@ import { WithName } from "../../commons/types/WithName";
 import { WithSdkGroupName } from "../../commons/types/WithSdkGroupName";
 import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithSource } from "../../commons/types/WithSource";
+import { WithTitle } from "../../commons/types/WithTitle";
 
 export const ObjectSchemaWithExample: core.serialization.ObjectSchema<
     serializers.ObjectSchemaWithExample.Raw,
@@ -29,7 +30,8 @@ export const ObjectSchemaWithExample: core.serialization.ObjectSchema<
     .extend(WithName)
     .extend(WithSdkGroupName)
     .extend(WithAvailability)
-    .extend(WithSource);
+    .extend(WithSource)
+    .extend(WithTitle);
 
 export declare namespace ObjectSchemaWithExample {
     interface Raw
@@ -37,7 +39,8 @@ export declare namespace ObjectSchemaWithExample {
             WithName.Raw,
             WithSdkGroupName.Raw,
             WithAvailability.Raw,
-            WithSource.Raw {
+            WithSource.Raw,
+            WithTitle.Raw {
         allOf: ReferencedSchema.Raw[];
         properties: serializers.ObjectPropertyWithExample.Raw[];
         allOfPropertyConflicts: AllOfPropertyConflict.Raw[];

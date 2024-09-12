@@ -28,6 +28,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
             "generatedName": "SpeechOperationRequestAnApiKey",
             "groupName": [],
             "nameOverride": null,
+            "title": "an-api-key",
             "type": "nullable",
             "value": {
               "availability": null,
@@ -43,6 +44,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": "an-api-key",
               "type": "primitive",
             },
           },
@@ -79,6 +81,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
               "pattern": null,
               "type": "string",
             },
+            "title": "Voice Id",
             "type": "primitive",
           },
           "source": {
@@ -100,6 +103,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
             "generatedName": "SpeechOperationRequestSomeQueryParam",
             "groupName": [],
             "nameOverride": null,
+            "title": "An optional query param",
             "type": "nullable",
             "value": {
               "availability": null,
@@ -116,6 +120,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
                 "multipleOf": null,
                 "type": "int",
               },
+              "title": "An optional query param",
               "type": "primitive",
             },
           },
@@ -149,6 +154,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
                 "generatedName": "speechOperationRequestModelId",
                 "groupName": [],
                 "nameOverride": "SpeechBody",
+                "title": "SpeechBody",
                 "type": "optional",
                 "value": {
                   "availability": null,
@@ -164,6 +170,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
                     "pattern": null,
                     "type": "string",
                   },
+                  "title": "Model Id",
                   "type": "primitive",
                 },
               },
@@ -180,6 +187,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
                 "generatedName": "speechOperationRequestVoiceSettings",
                 "groupName": [],
                 "nameOverride": "SpeechBody",
+                "title": "SpeechBody",
                 "type": "optional",
                 "value": {
                   "availability": null,
@@ -195,6 +203,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
                     "pattern": null,
                     "type": "string",
                   },
+                  "title": "Voice Settings",
                   "type": "primitive",
                 },
               },
@@ -273,6 +282,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
             "generatedName": "SpeechStreamOperationRequestAnApiKey",
             "groupName": [],
             "nameOverride": null,
+            "title": "an-api-key",
             "type": "nullable",
             "value": {
               "availability": null,
@@ -288,6 +298,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": "an-api-key",
               "type": "primitive",
             },
           },
@@ -324,6 +335,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
               "pattern": null,
               "type": "string",
             },
+            "title": "Voice Id",
             "type": "primitive",
           },
           "source": {
@@ -345,6 +357,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
             "generatedName": "SpeechStreamOperationRequestSomeQueryParam",
             "groupName": [],
             "nameOverride": null,
+            "title": "An optional query param",
             "type": "nullable",
             "value": {
               "availability": null,
@@ -361,6 +374,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
                 "multipleOf": null,
                 "type": "int",
               },
+              "title": "An optional query param",
               "type": "primitive",
             },
           },
@@ -394,6 +408,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
                 "generatedName": "speechStreamOperationRequestModelId",
                 "groupName": [],
                 "nameOverride": "SpeechBodyStream",
+                "title": "SpeechBodyStream",
                 "type": "optional",
                 "value": {
                   "availability": null,
@@ -409,6 +424,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
                     "pattern": null,
                     "type": "string",
                   },
+                  "title": "Model Id",
                   "type": "primitive",
                 },
               },
@@ -425,6 +441,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
                 "generatedName": "speechStreamOperationRequestVoiceSettings",
                 "groupName": [],
                 "nameOverride": "SpeechBodyStream",
+                "title": "SpeechBodyStream",
                 "type": "optional",
                 "value": {
                   "availability": null,
@@ -440,6 +457,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
                     "pattern": null,
                     "type": "string",
                   },
+                  "title": "Voice Settings",
                   "type": "primitive",
                 },
               },
@@ -456,6 +474,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
                 "generatedName": "speechStreamOperationRequestMyEnum",
                 "groupName": [],
                 "nameOverride": "SpeechBodyStream",
+                "title": "SpeechBodyStream",
                 "type": "optional",
                 "value": {
                   "availability": null,
@@ -468,6 +487,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
                     "file": "optional-multipart/openapi.json",
                     "type": "openapi",
                   },
+                  "title": "my_enum",
                   "type": "enum",
                   "values": [
                     {
@@ -512,6 +532,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
                 "generatedName": "speechStreamOperationRequestMyRef",
                 "groupName": [],
                 "nameOverride": "SpeechBodyStream",
+                "title": "SpeechBodyStream",
                 "type": "optional",
                 "value": {
                   "availability": null,
@@ -524,6 +545,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
                     "file": "optional-multipart/openapi.json",
                     "type": "openapi",
                   },
+                  "title": null,
                   "type": "reference",
                 },
               },
@@ -588,6 +610,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": "Audio",
               "type": "primitive",
             },
           },
@@ -604,6 +627,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
               "generatedName": "speechBodyModelId",
               "groupName": [],
               "nameOverride": "SpeechBody",
+              "title": "SpeechBody",
               "type": "optional",
               "value": {
                 "availability": null,
@@ -619,6 +643,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
                   "pattern": null,
                   "type": "string",
                 },
+                "title": "Model Id",
                 "type": "primitive",
               },
             },
@@ -636,6 +661,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
               "generatedName": "speechBodyVoiceSettings",
               "groupName": [],
               "nameOverride": "SpeechBody",
+              "title": "SpeechBody",
               "type": "optional",
               "value": {
                 "availability": null,
@@ -651,6 +677,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
                   "pattern": null,
                   "type": "string",
                 },
+                "title": "Voice Settings",
                 "type": "primitive",
               },
             },
@@ -660,6 +687,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
           "file": "optional-multipart/openapi.json",
           "type": "openapi",
         },
+        "title": "SpeechBody",
         "type": "object",
       },
       "SpeechBodyStream": {
@@ -693,6 +721,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": "Audio",
               "type": "primitive",
             },
           },
@@ -709,6 +738,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
               "generatedName": "speechBodyStreamModelId",
               "groupName": [],
               "nameOverride": "SpeechBodyStream",
+              "title": "SpeechBodyStream",
               "type": "optional",
               "value": {
                 "availability": null,
@@ -724,6 +754,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
                   "pattern": null,
                   "type": "string",
                 },
+                "title": "Model Id",
                 "type": "primitive",
               },
             },
@@ -741,6 +772,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
               "generatedName": "speechBodyStreamVoiceSettings",
               "groupName": [],
               "nameOverride": "SpeechBodyStream",
+              "title": "SpeechBodyStream",
               "type": "optional",
               "value": {
                 "availability": null,
@@ -756,6 +788,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
                   "pattern": null,
                   "type": "string",
                 },
+                "title": "Voice Settings",
                 "type": "primitive",
               },
             },
@@ -773,6 +806,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
               "generatedName": "speechBodyStreamMyEnum",
               "groupName": [],
               "nameOverride": "SpeechBodyStream",
+              "title": "SpeechBodyStream",
               "type": "optional",
               "value": {
                 "availability": null,
@@ -785,6 +819,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
                   "file": "optional-multipart/openapi.json",
                   "type": "openapi",
                 },
+                "title": "my_enum",
                 "type": "enum",
                 "values": [
                   {
@@ -830,6 +865,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
               "generatedName": "speechBodyStreamMyRef",
               "groupName": [],
               "nameOverride": "SpeechBodyStream",
+              "title": "SpeechBodyStream",
               "type": "optional",
               "value": {
                 "availability": null,
@@ -842,6 +878,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
                   "file": "optional-multipart/openapi.json",
                   "type": "openapi",
                 },
+                "title": null,
                 "type": "reference",
               },
             },
@@ -851,6 +888,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
           "file": "optional-multipart/openapi.json",
           "type": "openapi",
         },
+        "title": "SpeechBodyStream",
         "type": "object",
       },
       "request-model": {
@@ -884,6 +922,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": "Voice Id",
               "type": "primitive",
             },
           },
@@ -892,6 +931,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
           "file": "optional-multipart/openapi.json",
           "type": "openapi",
         },
+        "title": "request-model",
         "type": "object",
       },
     },

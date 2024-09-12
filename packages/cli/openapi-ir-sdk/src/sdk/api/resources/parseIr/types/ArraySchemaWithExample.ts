@@ -8,7 +8,8 @@ export interface ArraySchemaWithExample
     extends FernOpenapiIr.WithSdkGroupName,
         FernOpenapiIr.WithName,
         FernOpenapiIr.WithDescription,
-        FernOpenapiIr.WithAvailability {
+        FernOpenapiIr.WithAvailability,
+        FernOpenapiIr.WithTitle {
     value: FernOpenapiIr.SchemaWithExample;
     example: unknown[] | undefined;
 }

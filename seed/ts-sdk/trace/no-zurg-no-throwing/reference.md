@@ -119,7 +119,7 @@ await client.admin.sendTestSubmissionUpdate("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc3
     updateTime: "2024-01-15T09:30:00Z",
     updateInfo: {
         type: "running",
-        value: SeedTrace.RunningSubmissionState.QueueingSubmission,
+        value: "QUEUEING_SUBMISSION",
     },
 });
 ```
@@ -239,7 +239,7 @@ await client.admin.sendWorkspaceSubmissionUpdate("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a
     updateTime: "2024-01-15T09:30:00Z",
     updateInfo: {
         type: "running",
-        value: SeedTrace.RunningSubmissionState.QueueingSubmission,
+        value: "QUEUEING_SUBMISSION",
     },
 });
 ```
@@ -1253,7 +1253,7 @@ await client.problem.createProblem({
         ],
     },
     files: {
-        [SeedTrace.Language.Java]: {
+        ["JAVA"]: {
             solutionFile: {
                 filename: "string",
                 contents: "string",
@@ -1369,7 +1369,7 @@ await client.problem.updateProblem("string", {
         ],
     },
     files: {
-        [SeedTrace.Language.Java]: {
+        ["JAVA"]: {
             solutionFile: {
                 filename: "string",
                 contents: "string",
@@ -1623,7 +1623,7 @@ Returns sessionId and execution server URL for session. Spins up server.
 <dd>
 
 ```typescript
-await client.submission.createExecutionSession(SeedTrace.Language.Java);
+await client.submission.createExecutionSession("JAVA");
 ```
 
 </dd>
@@ -1839,7 +1839,7 @@ await client.submission.getExecutionSessionsState();
 <dd>
 
 ```typescript
-await client.sysprop.setNumWarmInstances(SeedTrace.Language.Java, 1);
+await client.sysprop.setNumWarmInstances("JAVA", 1);
 ```
 
 </dd>
