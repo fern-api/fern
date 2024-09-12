@@ -29,7 +29,7 @@ export declare namespace ObjectWithOptionalField {
     interface Raw {
         string?: string | null;
         integer?: number | null;
-        long?: bigint | null;
+        long?: string | null;
         double?: number | null;
         bool?: boolean | null;
         datetime?: string | null;
@@ -39,6 +39,6 @@ export declare namespace ObjectWithOptionalField {
         list?: string[] | null;
         set?: string[] | null;
         map?: Record<number, string> | null;
-        bigint?: bigint | null;
+        bigint?: string | null;
     }
 }
