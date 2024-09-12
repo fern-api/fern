@@ -6,6 +6,7 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Utils;
 use InvalidArgumentException;
 use Psr\Http\Client\ClientExceptionInterface;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 use Seed\ClientOptions;
 
@@ -13,39 +14,23 @@ use Seed\ClientOptions;
 class RawClient
 {
     /**
-     * The client options used to make requests.
-     *
-     * @var ClientOptions
-     */
-    private ClientOptions $clientOptions;
-
-    /**
-     * The client options used to make requests.
-     *
-     * * @param ClientOptions|null $clientOptions
+     * @param ClientOptions $clientOptions The client options used to make requests.
      */
     public function __construct(
-        ?ClientOptions $clientOptions,
+        private readonly ClientOptions $clientOptions = new ClientOptions(),
     )
     {
-        $this->clientOptions = $clientOptions ?? new ClientOptions();
     }
 
     /**
-     * The client options used to make requests.
-     *
      * @throws ClientExceptionInterface
      */
     public function sendRequest(
         BaseApiRequest $request,
-    ): BaseApiResponse
+    ): ResponseInterface
     {
         $httpRequest = $this->buildRequest($request);
-        $httpResponse = $this->clientOptions->httpClient->send($httpRequest);
-        return new BaseApiResponse(
-            $httpResponse->getStatusCode(),
-            $httpResponse,
-        );
+        return $this->clientOptions->httpClient->send($httpRequest);
     }
 
     private function buildRequest(
@@ -61,9 +46,8 @@ class RawClient
            $body,
        );
     }
+
     /**
-     * The client options used to make requests.
-     *
      * @return array<string, string>
      */
     private function encodeHeaders(
