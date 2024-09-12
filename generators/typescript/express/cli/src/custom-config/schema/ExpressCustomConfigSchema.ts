@@ -10,6 +10,7 @@ export const ExpressCustomConfigSchema = z.strictObject({
     skipResponseValidation: z.optional(z.boolean()),
     outputEsm: z.optional(z.boolean()),
     requestValidationStatusCode: z.optional(z.number()),
+    useBigInt: z.optional(z.boolean()),
 
     // beta (not in docs)
     outputSourceFiles: z.optional(z.boolean()),
