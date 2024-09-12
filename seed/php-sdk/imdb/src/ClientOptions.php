@@ -3,6 +3,7 @@
 namespace Seed;
 
 use GuzzleHttp\Client;
+use Psr\Http\Client\ClientInterface;
 
 class ClientOptions
 {
@@ -16,9 +17,9 @@ class ClientOptions
     /**
      * The HTTP client used to make requests.
      *
-     * @var Client
+     * @var ClientInterface
      */
-    public Client $httpClient;
+    public ClientInterface $httpClient;
 
     /**
      * The HTTP headers sent with the request.
