@@ -184,6 +184,12 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
 }
 
 class PhpProjectFilepaths {
+    constructor(private readonly name: string) {}
+
+    public getProjectDirectory(): RelativeFilePath {
+        return RelativeFilePath.of(this.name);
+    }
+
     public getSourceDirectory(): RelativeFilePath {
         return RelativeFilePath.of(SRC_DIRECTORY_NAME);
     }
@@ -193,11 +199,11 @@ class PhpProjectFilepaths {
     }
 
     public getCoreDirectory(): RelativeFilePath {
-        return RelativeFilePath.of(CORE_DIRECTORY_NAME);
+        return join(this.getSourceDirectory(), RelativeFilePath.of(CORE_DIRECTORY_NAME));
     }
 
     public getCoreTestsDirectory(): RelativeFilePath {
-        return join(this.getTestsDirectory(), this.getCoreDirectory());
+        return join(this.getTestsDirectory(), this.getProjectDirectory(), RelativeFilePath.of(CORE_DIRECTORY_NAME));
     }
 }
 

@@ -37,7 +37,7 @@ export abstract class AbstractPhpGeneratorContext<
     }
 
     public getCoreTestsNamespace(): string {
-        return `${this.namespace}\\Core\\Tests`;
+        return `${this.namespace}\\Tests\\Core`;
     }
 
     public abstract getRawAsIsFiles(): string[];
