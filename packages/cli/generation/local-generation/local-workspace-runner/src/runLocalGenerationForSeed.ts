@@ -125,6 +125,9 @@ export async function writeResolvedSnippetsJson({
     const endpointSnippetTemplates: Record<string, Fern.SnippetRegistryEntry> = {};
     if (absolutePathToLocalSnippetTemplateJSON != null) {
         const contents = (await readFile(absolutePathToLocalSnippetTemplateJSON)).toString();
+        if (contents.length <= 0) {
+            return;
+        }
         const parsed = JSON.parse(contents);
         if (Array.isArray(parsed)) {
             for (const template of parsed) {
