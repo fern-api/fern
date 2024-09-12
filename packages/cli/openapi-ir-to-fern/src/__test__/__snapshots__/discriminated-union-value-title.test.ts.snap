@@ -77,12 +77,10 @@ exports[`openapi parser > discriminated-union-value-title > docs 1`] = `
         "union": {
           "request": {
             "display-name": "A simple request title",
-            "docs": undefined,
             "type": "Request",
           },
           "response": {
             "display-name": "A simple response title",
-            "docs": undefined,
             "type": "Response",
           },
         },
@@ -176,12 +174,10 @@ exports[`openapi parser > discriminated-union-value-title > simple 1`] = `
         "union": {
           "request": {
             "display-name": "A simple request title",
-            "docs": undefined,
             "type": "Request",
           },
           "response": {
             "display-name": "A simple response title",
-            "docs": undefined,
             "type": "Response",
           },
         },

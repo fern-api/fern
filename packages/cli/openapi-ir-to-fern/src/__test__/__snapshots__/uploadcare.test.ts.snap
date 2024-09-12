@@ -208,7 +208,6 @@ Log.d("TAG", group.toString())
                 "properties": {
                   "expire": "optional<root.ExpireType>",
                   "files[]": {
-                    "display-name": undefined,
                     "docs": "Set of files you want to add to the group.
 Each element can be a file UUID with or without the applied image
 processing operations.
@@ -4732,7 +4731,6 @@ Log.d("TAG", group.toString())
                 "properties": {
                   "expire": "optional<root.ExpireType>",
                   "files[]": {
-                    "display-name": undefined,
                     "docs": "Set of files you want to add to the group.
 Each element can be a file UUID with or without the applied image
 processing operations.

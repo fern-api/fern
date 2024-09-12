@@ -4692,12 +4692,10 @@ exports[`open api parser > hookdeck > docs 1`] = `
               "body": {
                 "properties": {
                   "configs": {
-                    "display-name": undefined,
                     "docs": "Decrypted Key/Value object of the associated configuration for that provider",
                     "type": "CreateIntegrationRequestConfigs",
                   },
                   "features": {
-                    "display-name": undefined,
                     "docs": "List of features to enable (see features list above)",
                     "type": "list<root.IntegrationFeature>",
                   },
@@ -6505,7 +6503,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
               "body": {
                 "properties": {
                   "webhook_ids": {
-                    "display-name": undefined,
                     "docs": "Subset of webhook_ids to re-run the event logic on. Useful to retry only specific ignored_events",
                     "type": "list<string>",
                   },
@@ -9020,7 +9017,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
             "type": "optional<integer>",
           },
           "created_at": {
-            "display-name": undefined,
             "docs": "Date the bulk retry was created",
             "type": "datetime",
           },
@@ -9062,7 +9058,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
             "type": "string",
           },
           "updated_at": {
-            "display-name": undefined,
             "docs": "Last time the bulk retry was updated",
             "type": "datetime",
           },
@@ -9122,7 +9117,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
             "type": "optional<string>",
           },
           "created_at": {
-            "display-name": undefined,
             "docs": "Date the bookmark was created",
             "type": "datetime",
           },
@@ -9148,7 +9142,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
             "type": "string",
           },
           "updated_at": {
-            "display-name": undefined,
             "docs": "Date the bookmark was last updated",
             "type": "datetime",
           },
@@ -9180,7 +9173,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
             "type": "optional<datetime>",
           },
           "created_at": {
-            "display-name": undefined,
             "docs": "Date the connection was created",
             "type": "datetime",
           },
@@ -9212,7 +9204,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
             "type": "string",
           },
           "updated_at": {
-            "display-name": undefined,
             "docs": "Date the connection was last updated",
             "type": "datetime",
           },
@@ -9331,7 +9322,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
             "type": "optional<datetime>",
           },
           "first_seen_at": {
-            "display-name": undefined,
             "docs": "ISO timestamp for when the issue was first opened",
             "type": "datetime",
           },
@@ -9340,7 +9330,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
             "type": "string",
           },
           "last_seen_at": {
-            "display-name": undefined,
             "docs": "ISO timestamp for when the issue last occured",
             "type": "datetime",
           },
@@ -9350,7 +9339,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
           },
           "merged_with": "optional<string>",
           "opened_at": {
-            "display-name": undefined,
             "docs": "ISO timestamp for when the issue was last opened",
             "type": "datetime",
           },
@@ -9415,7 +9403,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
             "type": "optional<datetime>",
           },
           "first_seen_at": {
-            "display-name": undefined,
             "docs": "ISO timestamp for when the issue was first opened",
             "type": "datetime",
           },
@@ -9424,7 +9411,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
             "type": "string",
           },
           "last_seen_at": {
-            "display-name": undefined,
             "docs": "ISO timestamp for when the issue last occured",
             "type": "datetime",
           },
@@ -9434,7 +9420,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
           },
           "merged_with": "optional<string>",
           "opened_at": {
-            "display-name": undefined,
             "docs": "ISO timestamp for when the issue was last opened",
             "type": "datetime",
           },
@@ -9465,7 +9450,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
             "type": "optional<string>",
           },
           "created_at": {
-            "display-name": undefined,
             "docs": "Date the destination was created",
             "type": "datetime",
           },
@@ -9488,7 +9472,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
             "type": "string",
           },
           "updated_at": {
-            "display-name": undefined,
             "docs": "Date the destination was last updated",
             "type": "datetime",
           },
@@ -9543,7 +9526,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
             "type": "optional<string>",
           },
           "created_at": {
-            "display-name": undefined,
             "docs": "Date the event was created",
             "type": "datetime",
           },
@@ -9592,7 +9574,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
             "type": "string",
           },
           "updated_at": {
-            "display-name": undefined,
             "docs": "Date the event was last updated",
             "type": "datetime",
           },
@@ -9626,7 +9607,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
             "type": "optional<string>",
           },
           "created_at": {
-            "display-name": undefined,
             "docs": "Date the attempt was created",
             "type": "datetime",
           },
@@ -9676,7 +9656,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
           },
           "trigger": "optional<AttemptTrigger>",
           "updated_at": {
-            "display-name": undefined,
             "docs": "Date the attempt was last updated",
             "type": "datetime",
           },
@@ -9909,17 +9888,14 @@ exports[`open api parser > hookdeck > docs 1`] = `
         "docs": undefined,
         "properties": {
           "configs": {
-            "display-name": undefined,
             "docs": "Decrypted Key/Value object of the associated configuration for that provider",
             "type": "IntegrationConfigs",
           },
           "created_at": {
-            "display-name": undefined,
             "docs": "Date the integration was created",
             "type": "datetime",
           },
           "features": {
-            "display-name": undefined,
             "docs": "List of features to enable (see features list below)",
             "type": "list<IntegrationFeature>",
           },
@@ -9933,7 +9909,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
           },
           "provider": "IntegrationProvider",
           "sources": {
-            "display-name": undefined,
             "docs": "List of source IDs the integration is attached to",
             "type": "list<string>",
           },
@@ -9942,7 +9917,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
             "type": "string",
           },
           "updated_at": {
-            "display-name": undefined,
             "docs": "Date the integration was last updated",
             "type": "datetime",
           },
@@ -10065,7 +10039,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
           "channels": "optional<IssueTriggerChannels>",
           "configs": "IssueTriggerReference",
           "created_at": {
-            "display-name": undefined,
             "docs": "ISO timestamp for when the issue trigger was created",
             "type": "datetime",
           },
@@ -10091,7 +10064,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
           },
           "type": "IssueType",
           "updated_at": {
-            "display-name": undefined,
             "docs": "ISO timestamp for when the issue trigger was last updated",
             "type": "datetime",
           },
@@ -10105,7 +10077,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
         "properties": {
           "delay": "IssueTriggerBackpressureDelay",
           "destinations": {
-            "display-name": undefined,
             "docs": "A pattern to match on the destination name or array of destination IDs. Use \`*\` as wildcard.",
             "type": "IssueTriggerBackpressureConfigsDestinations",
           },
@@ -10152,7 +10123,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
         "docs": "Configurations for a 'delivery' issue trigger",
         "properties": {
           "connections": {
-            "display-name": undefined,
             "docs": "A pattern to match on the connection name or array of connection IDs. Use \`*\` as wildcard.",
             "type": "IssueTriggerDeliveryConfigsConnections",
           },
@@ -10239,7 +10209,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
         "properties": {
           "log_level": "TransformationExecutionLogLevel",
           "transformations": {
-            "display-name": undefined,
             "docs": "A pattern to match on the transformation name or array of transformation IDs. Use \`*\` as wildcard.",
             "type": "IssueTriggerTransformationConfigsTransformations",
           },
@@ -10322,7 +10291,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
             "type": "optional<integer>",
           },
           "created_at": {
-            "display-name": undefined,
             "docs": "	Date the event was created",
             "type": "datetime",
           },
@@ -10367,7 +10335,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
             "type": "string",
           },
           "updated_at": {
-            "display-name": undefined,
             "docs": "Date the event was last updated",
             "type": "datetime",
           },
@@ -10554,7 +10521,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
             "type": "optional<datetime>",
           },
           "created_at": {
-            "display-name": undefined,
             "docs": "Date the ruleset was created",
             "type": "datetime",
           },
@@ -10571,7 +10537,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
             "type": "string",
           },
           "rules": {
-            "display-name": undefined,
             "docs": "Array of rules to apply",
             "type": "list<Rule>",
           },
@@ -10580,7 +10545,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
             "type": "string",
           },
           "updated_at": {
-            "display-name": undefined,
             "docs": "Date the ruleset was last updated",
             "type": "datetime",
           },
@@ -10733,7 +10697,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
             "type": "optional<datetime>",
           },
           "created_at": {
-            "display-name": undefined,
             "docs": "Date the source was created",
             "type": "datetime",
           },
@@ -10758,7 +10721,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
             "type": "string",
           },
           "updated_at": {
-            "display-name": undefined,
             "docs": "Date the source was last updated",
             "type": "datetime",
           },
@@ -10775,7 +10737,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
         "docs": "Integration object",
         "properties": {
           "features": {
-            "display-name": undefined,
             "docs": "List of enabled features",
             "type": "list<IntegrationFeature>",
           },
@@ -10851,7 +10812,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
             "type": "optional<string>",
           },
           "type": {
-            "display-name": undefined,
             "docs": "A transformation rule must be of type \`transformation\`",
             "type": "literal<"transform">",
           },
@@ -10888,7 +10848,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
             "type": "string",
           },
           "type": {
-            "display-name": undefined,
             "docs": "A transformation rule must be of type \`transformation\`",
             "type": "literal<"transform">",
           },
@@ -10917,7 +10876,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
             "type": "string",
           },
           "created_at": {
-            "display-name": undefined,
             "docs": "Date the transformation was created",
             "type": "datetime",
           },
@@ -10940,7 +10898,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
             "type": "string",
           },
           "updated_at": {
-            "display-name": undefined,
             "docs": "Date the transformation was last updated",
             "type": "datetime",
           },
@@ -11113,7 +11070,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
             "type": "optional<datetime>",
           },
           "first_seen_at": {
-            "display-name": undefined,
             "docs": "ISO timestamp for when the issue was first opened",
             "type": "datetime",
           },
@@ -11122,7 +11078,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
             "type": "string",
           },
           "last_seen_at": {
-            "display-name": undefined,
             "docs": "ISO timestamp for when the issue last occured",
             "type": "datetime",
           },
@@ -11132,7 +11087,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
           },
           "merged_with": "optional<string>",
           "opened_at": {
-            "display-name": undefined,
             "docs": "ISO timestamp for when the issue was last opened",
             "type": "datetime",
           },
@@ -11199,7 +11153,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
             "type": "optional<datetime>",
           },
           "first_seen_at": {
-            "display-name": undefined,
             "docs": "ISO timestamp for when the issue was first opened",
             "type": "datetime",
           },
@@ -11208,7 +11161,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
             "type": "string",
           },
           "last_seen_at": {
-            "display-name": undefined,
             "docs": "ISO timestamp for when the issue last occured",
             "type": "datetime",
           },
@@ -11218,7 +11170,6 @@ exports[`open api parser > hookdeck > docs 1`] = `
           },
           "merged_with": "optional<string>",
           "opened_at": {
-            "display-name": undefined,
             "docs": "ISO timestamp for when the issue was last opened",
             "type": "datetime",
           },
@@ -15965,12 +15916,10 @@ exports[`open api parser > hookdeck > simple 1`] = `
               "body": {
                 "properties": {
                   "configs": {
-                    "display-name": undefined,
                     "docs": "Decrypted Key/Value object of the associated configuration for that provider",
                     "type": "CreateIntegrationRequestConfigs",
                   },
                   "features": {
-                    "display-name": undefined,
                     "docs": "List of features to enable (see features list above)",
                     "type": "list<root.IntegrationFeature>",
                   },
@@ -17778,7 +17727,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
               "body": {
                 "properties": {
                   "webhook_ids": {
-                    "display-name": undefined,
                     "docs": "Subset of webhook_ids to re-run the event logic on. Useful to retry only specific ignored_events",
                     "type": "list<string>",
                   },
@@ -19538,7 +19486,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
             "type": "optional<integer>",
           },
           "created_at": {
-            "display-name": undefined,
             "docs": "Date the bulk retry was created",
             "type": "datetime",
           },
@@ -19580,7 +19527,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
             "type": "string",
           },
           "updated_at": {
-            "display-name": undefined,
             "docs": "Last time the bulk retry was updated",
             "type": "datetime",
           },
@@ -19640,7 +19586,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
             "type": "optional<string>",
           },
           "created_at": {
-            "display-name": undefined,
             "docs": "Date the bookmark was created",
             "type": "datetime",
           },
@@ -19666,7 +19611,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
             "type": "string",
           },
           "updated_at": {
-            "display-name": undefined,
             "docs": "Date the bookmark was last updated",
             "type": "datetime",
           },
@@ -19698,7 +19642,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
             "type": "optional<datetime>",
           },
           "created_at": {
-            "display-name": undefined,
             "docs": "Date the connection was created",
             "type": "datetime",
           },
@@ -19730,7 +19673,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
             "type": "string",
           },
           "updated_at": {
-            "display-name": undefined,
             "docs": "Date the connection was last updated",
             "type": "datetime",
           },
@@ -19849,7 +19791,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
             "type": "optional<datetime>",
           },
           "first_seen_at": {
-            "display-name": undefined,
             "docs": "ISO timestamp for when the issue was first opened",
             "type": "datetime",
           },
@@ -19858,7 +19799,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
             "type": "string",
           },
           "last_seen_at": {
-            "display-name": undefined,
             "docs": "ISO timestamp for when the issue last occured",
             "type": "datetime",
           },
@@ -19868,7 +19808,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
           },
           "merged_with": "optional<string>",
           "opened_at": {
-            "display-name": undefined,
             "docs": "ISO timestamp for when the issue was last opened",
             "type": "datetime",
           },
@@ -19933,7 +19872,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
             "type": "optional<datetime>",
           },
           "first_seen_at": {
-            "display-name": undefined,
             "docs": "ISO timestamp for when the issue was first opened",
             "type": "datetime",
           },
@@ -19942,7 +19880,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
             "type": "string",
           },
           "last_seen_at": {
-            "display-name": undefined,
             "docs": "ISO timestamp for when the issue last occured",
             "type": "datetime",
           },
@@ -19952,7 +19889,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
           },
           "merged_with": "optional<string>",
           "opened_at": {
-            "display-name": undefined,
             "docs": "ISO timestamp for when the issue was last opened",
             "type": "datetime",
           },
@@ -19983,7 +19919,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
             "type": "optional<string>",
           },
           "created_at": {
-            "display-name": undefined,
             "docs": "Date the destination was created",
             "type": "datetime",
           },
@@ -20006,7 +19941,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
             "type": "string",
           },
           "updated_at": {
-            "display-name": undefined,
             "docs": "Date the destination was last updated",
             "type": "datetime",
           },
@@ -20061,7 +19995,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
             "type": "optional<string>",
           },
           "created_at": {
-            "display-name": undefined,
             "docs": "Date the event was created",
             "type": "datetime",
           },
@@ -20110,7 +20043,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
             "type": "string",
           },
           "updated_at": {
-            "display-name": undefined,
             "docs": "Date the event was last updated",
             "type": "datetime",
           },
@@ -20144,7 +20076,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
             "type": "optional<string>",
           },
           "created_at": {
-            "display-name": undefined,
             "docs": "Date the attempt was created",
             "type": "datetime",
           },
@@ -20194,7 +20125,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
           },
           "trigger": "optional<AttemptTrigger>",
           "updated_at": {
-            "display-name": undefined,
             "docs": "Date the attempt was last updated",
             "type": "datetime",
           },
@@ -20427,17 +20357,14 @@ exports[`open api parser > hookdeck > simple 1`] = `
         "docs": undefined,
         "properties": {
           "configs": {
-            "display-name": undefined,
             "docs": "Decrypted Key/Value object of the associated configuration for that provider",
             "type": "IntegrationConfigs",
           },
           "created_at": {
-            "display-name": undefined,
             "docs": "Date the integration was created",
             "type": "datetime",
           },
           "features": {
-            "display-name": undefined,
             "docs": "List of features to enable (see features list below)",
             "type": "list<IntegrationFeature>",
           },
@@ -20451,7 +20378,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
           },
           "provider": "IntegrationProvider",
           "sources": {
-            "display-name": undefined,
             "docs": "List of source IDs the integration is attached to",
             "type": "list<string>",
           },
@@ -20460,7 +20386,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
             "type": "string",
           },
           "updated_at": {
-            "display-name": undefined,
             "docs": "Date the integration was last updated",
             "type": "datetime",
           },
@@ -20583,7 +20508,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
           "channels": "optional<IssueTriggerChannels>",
           "configs": "IssueTriggerReference",
           "created_at": {
-            "display-name": undefined,
             "docs": "ISO timestamp for when the issue trigger was created",
             "type": "datetime",
           },
@@ -20609,7 +20533,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
           },
           "type": "IssueType",
           "updated_at": {
-            "display-name": undefined,
             "docs": "ISO timestamp for when the issue trigger was last updated",
             "type": "datetime",
           },
@@ -20623,7 +20546,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
         "properties": {
           "delay": "IssueTriggerBackpressureDelay",
           "destinations": {
-            "display-name": undefined,
             "docs": "A pattern to match on the destination name or array of destination IDs. Use \`*\` as wildcard.",
             "type": "IssueTriggerBackpressureConfigsDestinations",
           },
@@ -20670,7 +20592,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
         "docs": "Configurations for a 'delivery' issue trigger",
         "properties": {
           "connections": {
-            "display-name": undefined,
             "docs": "A pattern to match on the connection name or array of connection IDs. Use \`*\` as wildcard.",
             "type": "IssueTriggerDeliveryConfigsConnections",
           },
@@ -20757,7 +20678,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
         "properties": {
           "log_level": "TransformationExecutionLogLevel",
           "transformations": {
-            "display-name": undefined,
             "docs": "A pattern to match on the transformation name or array of transformation IDs. Use \`*\` as wildcard.",
             "type": "IssueTriggerTransformationConfigsTransformations",
           },
@@ -20840,7 +20760,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
             "type": "optional<integer>",
           },
           "created_at": {
-            "display-name": undefined,
             "docs": "	Date the event was created",
             "type": "datetime",
           },
@@ -20885,7 +20804,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
             "type": "string",
           },
           "updated_at": {
-            "display-name": undefined,
             "docs": "Date the event was last updated",
             "type": "datetime",
           },
@@ -21072,7 +20990,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
             "type": "optional<datetime>",
           },
           "created_at": {
-            "display-name": undefined,
             "docs": "Date the ruleset was created",
             "type": "datetime",
           },
@@ -21089,7 +21006,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
             "type": "string",
           },
           "rules": {
-            "display-name": undefined,
             "docs": "Array of rules to apply",
             "type": "list<Rule>",
           },
@@ -21098,7 +21014,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
             "type": "string",
           },
           "updated_at": {
-            "display-name": undefined,
             "docs": "Date the ruleset was last updated",
             "type": "datetime",
           },
@@ -21251,7 +21166,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
             "type": "optional<datetime>",
           },
           "created_at": {
-            "display-name": undefined,
             "docs": "Date the source was created",
             "type": "datetime",
           },
@@ -21276,7 +21190,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
             "type": "string",
           },
           "updated_at": {
-            "display-name": undefined,
             "docs": "Date the source was last updated",
             "type": "datetime",
           },
@@ -21293,7 +21206,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
         "docs": "Integration object",
         "properties": {
           "features": {
-            "display-name": undefined,
             "docs": "List of enabled features",
             "type": "list<IntegrationFeature>",
           },
@@ -21369,7 +21281,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
             "type": "optional<string>",
           },
           "type": {
-            "display-name": undefined,
             "docs": "A transformation rule must be of type \`transformation\`",
             "type": "literal<"transform">",
           },
@@ -21406,7 +21317,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
             "type": "string",
           },
           "type": {
-            "display-name": undefined,
             "docs": "A transformation rule must be of type \`transformation\`",
             "type": "literal<"transform">",
           },
@@ -21435,7 +21345,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
             "type": "string",
           },
           "created_at": {
-            "display-name": undefined,
             "docs": "Date the transformation was created",
             "type": "datetime",
           },
@@ -21458,7 +21367,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
             "type": "string",
           },
           "updated_at": {
-            "display-name": undefined,
             "docs": "Date the transformation was last updated",
             "type": "datetime",
           },
@@ -21631,7 +21539,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
             "type": "optional<datetime>",
           },
           "first_seen_at": {
-            "display-name": undefined,
             "docs": "ISO timestamp for when the issue was first opened",
             "type": "datetime",
           },
@@ -21640,7 +21547,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
             "type": "string",
           },
           "last_seen_at": {
-            "display-name": undefined,
             "docs": "ISO timestamp for when the issue last occured",
             "type": "datetime",
           },
@@ -21650,7 +21556,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
           },
           "merged_with": "optional<string>",
           "opened_at": {
-            "display-name": undefined,
             "docs": "ISO timestamp for when the issue was last opened",
             "type": "datetime",
           },
@@ -21717,7 +21622,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
             "type": "optional<datetime>",
           },
           "first_seen_at": {
-            "display-name": undefined,
             "docs": "ISO timestamp for when the issue was first opened",
             "type": "datetime",
           },
@@ -21726,7 +21630,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
             "type": "string",
           },
           "last_seen_at": {
-            "display-name": undefined,
             "docs": "ISO timestamp for when the issue last occured",
             "type": "datetime",
           },
@@ -21736,7 +21639,6 @@ exports[`open api parser > hookdeck > simple 1`] = `
           },
           "merged_with": "optional<string>",
           "opened_at": {
-            "display-name": undefined,
             "docs": "ISO timestamp for when the issue was last opened",
             "type": "datetime",
           },

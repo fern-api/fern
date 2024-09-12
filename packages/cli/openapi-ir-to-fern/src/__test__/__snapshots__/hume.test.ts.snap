@@ -527,7 +527,6 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "type": "optional<list<FacsScore>>",
           },
           "frame": {
-            "display-name": undefined,
             "docs": "Frame number",
             "type": "uint64",
           },
@@ -916,12 +915,10 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         "docs": "Position of a segment of text within a larger document, measured in characters. Uses zero-based indexing. The beginning index is inclusive and the end index is exclusive.",
         "properties": {
           "begin": {
-            "display-name": undefined,
             "docs": "The index of the first character in the text segment, inclusive.",
             "type": "uint64",
           },
           "end": {
-            "display-name": undefined,
             "docs": "The index of the last character in the text segment, exclusive.",
             "type": "uint64",
           },
@@ -1891,7 +1888,6 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "type": "optional<list<FacsScore>>",
           },
           "frame": {
-            "display-name": undefined,
             "docs": "Frame number",
             "type": "uint64",
           },
@@ -2280,12 +2276,10 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         "docs": "Position of a segment of text within a larger document, measured in characters. Uses zero-based indexing. The beginning index is inclusive and the end index is exclusive.",
         "properties": {
           "begin": {
-            "display-name": undefined,
             "docs": "The index of the first character in the text segment, inclusive.",
             "type": "uint64",
           },
           "end": {
-            "display-name": undefined,
             "docs": "The index of the last character in the text segment, exclusive.",
             "type": "uint64",
           },

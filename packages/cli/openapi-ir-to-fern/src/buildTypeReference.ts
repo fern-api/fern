@@ -133,14 +133,15 @@ export function buildPrimitiveTypeReference(
         boolean: () => "boolean",
         _other: () => "unknown"
     });
-    if (primitiveSchema.description != null) {
-        return {
-            "display-name": primitiveSchema.title,
-            type: typeReference,
-            docs: primitiveSchema.description
-        };
+    if (primitiveSchema.description == null && primitiveSchema.title == null) {
+        return typeReference;
     }
-    return typeReference;
+
+    return {
+        ...(primitiveSchema.title != null ? { "display-name": primitiveSchema.title } : {}),
+        type: typeReference,
+        ...(primitiveSchema.description != null ? { docs: primitiveSchema.description } : {})
+    };
 }
 
 function buildBooleanTypeReference({
@@ -408,9 +409,9 @@ export function buildReferenceTypeReference({
         return type;
     }
     return {
-        "display-name": displayName,
+        ...(displayName != null ? { "display-name": displayName } : {}),
         type: resolvedSchema.type === "nullable" ? `optional<${typeWithPrefix}>` : typeWithPrefix,
-        docs: schema.description
+        ...(schema.description != null ? { docs: schema.description } : {})
     };
 }
 
@@ -431,8 +432,8 @@ export function buildArrayTypeReference({
         return type;
     }
     return {
-        "display-name": schema.title,
-        docs: schema.description,
+        ...(schema.title != null ? { "display-name": schema.title } : {}),
+        ...(schema.description != null ? { docs: schema.description } : {}),
         type
     };
 }
@@ -548,9 +549,9 @@ export function buildLiteralTypeReference(
         return value;
     }
     return {
-        "display-name": schema.title,
+        ...(schema.title != null ? { "display-name": schema.title } : {}),
         type: value,
-        docs: schema.description
+        ...(schema.description != null ? { docs: schema.description } : {})
     };
 }
 
@@ -616,9 +617,9 @@ export function buildObjectTypeReference({
         return prefixedType;
     }
     return {
-        "display-name": schema.title,
+        ...(schema.title != null ? { "display-name": schema.title } : {}),
         type: prefixedType,
-        docs: schema.description
+        ...(schema.description != null ? { docs: schema.description } : {})
     };
 }
 
@@ -648,9 +649,9 @@ export function buildOneOfTypeReference({
         return prefixedType;
     }
     return {
-        "display-name": schema.title,
+        ...(schema.title != null ? { "display-name": schema.title } : {}),
         type: prefixedType,
-        docs: schema.description
+        ...(schema.description != null ? { docs: schema.description } : {})
     };
 }
 

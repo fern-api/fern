@@ -674,7 +674,6 @@ exports[`open api parser > superagent > docs 1`] = `
                 "properties": {
                   "input_variables": {
                     "display-name": "Input Variables",
-                    "docs": undefined,
                     "type": "list<unknown>",
                   },
                   "name": "string",
@@ -1178,7 +1177,6 @@ exports[`open api parser > superagent > docs 1`] = `
         "properties": {
           "loc": {
             "display-name": "Location",
-            "docs": undefined,
             "type": "list<ValidationErrorLocItem>",
           },
           "msg": "string",
@@ -1899,7 +1897,6 @@ exports[`open api parser > superagent > simple 1`] = `
                 "properties": {
                   "input_variables": {
                     "display-name": "Input Variables",
-                    "docs": undefined,
                     "type": "list<unknown>",
                   },
                   "name": "string",
@@ -2303,7 +2300,6 @@ exports[`open api parser > superagent > simple 1`] = `
         "properties": {
           "loc": {
             "display-name": "Location",
-            "docs": undefined,
             "type": "list<ValidationErrorLocItem>",
           },
           "msg": "string",

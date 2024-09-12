@@ -3476,7 +3476,6 @@ exports[`open api parser > flexport > docs 1`] = `
                     "type": "optional<string>",
                   },
                   "mailing_address": {
-                    "display-name": undefined,
                     "docs": "Always Required. The object representing the mailing address of the company entity.",
                     "type": "root.AddressForRequestBody",
                   },
@@ -12297,7 +12296,6 @@ Other details about this invoice",
             },
           },
           "line_items": {
-            "display-name": undefined,
             "docs": "A list of the line items in this purchase order",
             "type": "list<CreateLineItem>",
           },
@@ -12338,7 +12336,6 @@ Other details about this invoice",
             "type": "optional<CreatePurchaseOrderPort>",
           },
           "parties": {
-            "display-name": undefined,
             "docs": "A list of the parties in this purchase order. Buyer and seller are required parties. Owner is the owner of this order and will default to the buyer if not specified.",
             "type": "list<CreateParty>",
           },
@@ -13507,12 +13504,10 @@ Other details about this invoice",
         },
         "union": [
           {
-            "display-name": undefined,
             "docs": "Object format.",
             "type": "MetadataCreateExampleKey",
           },
           {
-            "display-name": undefined,
             "docs": "Array format.",
             "type": "list<MetadataCreateItem>",
           },
@@ -15437,7 +15432,6 @@ Other details about this invoice",
         "docs": undefined,
         "properties": {
           "codes": {
-            "display-name": undefined,
             "docs": "Always required. An array of HS codes for this product in the provided region",
             "type": "list<string>",
           },
@@ -18994,7 +18988,6 @@ exports[`open api parser > flexport > simple 1`] = `
                     "type": "optional<string>",
                   },
                   "mailing_address": {
-                    "display-name": undefined,
                     "docs": "Always Required. The object representing the mailing address of the company entity.",
                     "type": "root.AddressForRequestBody",
                   },
@@ -27361,7 +27354,6 @@ Other details about this invoice",
             },
           },
           "line_items": {
-            "display-name": undefined,
             "docs": "A list of the line items in this purchase order",
             "type": "list<CreateLineItem>",
           },
@@ -27402,7 +27394,6 @@ Other details about this invoice",
             "type": "optional<CreatePurchaseOrderPort>",
           },
           "parties": {
-            "display-name": undefined,
             "docs": "A list of the parties in this purchase order. Buyer and seller are required parties. Owner is the owner of this order and will default to the buyer if not specified.",
             "type": "list<CreateParty>",
           },
@@ -28415,12 +28406,10 @@ Other details about this invoice",
         },
         "union": [
           {
-            "display-name": undefined,
             "docs": "Object format.",
             "type": "MetadataCreateExampleKey",
           },
           {
-            "display-name": undefined,
             "docs": "Array format.",
             "type": "list<MetadataCreateItem>",
           },
@@ -29929,7 +29918,6 @@ Other details about this invoice",
         "docs": undefined,
         "properties": {
           "codes": {
-            "display-name": undefined,
             "docs": "Always required. An array of HS codes for this product in the provided region",
             "type": "list<string>",
           },

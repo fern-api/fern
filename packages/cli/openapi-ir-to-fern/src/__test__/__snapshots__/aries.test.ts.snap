@@ -1070,7 +1070,6 @@ exports[`open api parser > aries > docs 1`] = `
               "body": {
                 "properties": {
                   "metadata": {
-                    "display-name": undefined,
                     "docs": "Dictionary of metadata to set for connection.",
                     "type": "ConnectionMetadataSetRequestMetadata",
                   },
@@ -2722,7 +2721,6 @@ exports[`open api parser > aries > docs 1`] = `
               "body": {
                 "properties": {
                   "expires_time": {
-                    "display-name": undefined,
                     "docs": "Expiry Date",
                     "type": "datetime",
                   },
@@ -3448,7 +3446,6 @@ exports[`open api parser > aries > docs 1`] = `
                   },
                   "credential_proposal": {
                     "display-name": "CredentialPreview",
-                    "docs": undefined,
                     "type": "root.CredentialPreview",
                   },
                   "issuer_did": {
@@ -3713,7 +3710,6 @@ exports[`open api parser > aries > docs 1`] = `
                   },
                   "credential_preview": {
                     "display-name": "CredentialPreview",
-                    "docs": undefined,
                     "type": "root.CredentialPreview",
                   },
                   "trace": {
@@ -4979,7 +4975,6 @@ exports[`open api parser > aries > docs 1`] = `
                   },
                   "credential_proposal": {
                     "display-name": "CredentialPreview",
-                    "docs": undefined,
                     "type": "root.CredentialPreview",
                   },
                   "issuer_did": {
@@ -5255,7 +5250,6 @@ exports[`open api parser > aries > docs 1`] = `
                   },
                   "credential_preview": {
                     "display-name": "CredentialPreview",
-                    "docs": undefined,
                     "type": "root.CredentialPreview",
                   },
                   "trace": {
@@ -8033,7 +8027,6 @@ exports[`open api parser > aries > docs 1`] = `
             "request": {
               "body": {
                 "display-name": "V20CredExFree",
-                "docs": undefined,
                 "type": "root.V20CredExFree",
               },
             },
@@ -8548,7 +8541,6 @@ exports[`open api parser > aries > docs 1`] = `
             "request": {
               "body": {
                 "display-name": "V20CredExFree",
-                "docs": undefined,
                 "type": "root.V20CredExFree",
               },
             },
@@ -9198,7 +9190,6 @@ exports[`open api parser > aries > docs 1`] = `
                 "properties": {
                   "doc": {
                     "display-name": "Doc",
-                    "docs": undefined,
                     "type": "root.Doc",
                   },
                   "verkey": {
@@ -11222,7 +11213,6 @@ exports[`open api parser > aries > docs 1`] = `
             "request": {
               "body": {
                 "display-name": "InvitationMessage",
-                "docs": undefined,
                 "type": "root.InvitationMessage",
               },
               "name": "ReceiveOobInvitationRequest",
@@ -11486,7 +11476,6 @@ exports[`open api parser > aries > docs 1`] = `
                   },
                   "proof_request": {
                     "display-name": "IndyProofRequest",
-                    "docs": undefined,
                     "type": "root.IndyProofRequest",
                   },
                   "trace": {
@@ -12318,7 +12307,6 @@ exports[`open api parser > aries > docs 1`] = `
                   },
                   "proof_request": {
                     "display-name": "IndyProofRequest",
-                    "docs": undefined,
                     "type": "root.IndyProofRequest",
                   },
                   "trace": {
@@ -12556,7 +12544,6 @@ exports[`open api parser > aries > docs 1`] = `
                   },
                   "presentation_proposal": {
                     "display-name": "IndyPresPreview",
-                    "docs": undefined,
                     "type": "root.IndyPresPreview",
                   },
                   "trace": {
@@ -12760,7 +12747,6 @@ exports[`open api parser > aries > docs 1`] = `
             "request": {
               "body": {
                 "display-name": "IndyPresSpec",
-                "docs": undefined,
                 "type": "root.IndyPresSpec",
               },
             },
@@ -13360,7 +13346,6 @@ exports[`open api parser > aries > docs 1`] = `
                   },
                   "presentation_request": {
                     "display-name": "V20PresRequestByFormat",
-                    "docs": undefined,
                     "type": "root.V20PresRequestByFormat",
                   },
                   "trace": {
@@ -14130,7 +14115,6 @@ exports[`open api parser > aries > docs 1`] = `
                   },
                   "presentation_request": {
                     "display-name": "V20PresRequestByFormat",
-                    "docs": undefined,
                     "type": "root.V20PresRequestByFormat",
                   },
                   "trace": {
@@ -14348,7 +14332,6 @@ exports[`open api parser > aries > docs 1`] = `
                   },
                   "presentation_proposal": {
                     "display-name": "V20PresProposalByFormat",
-                    "docs": undefined,
                     "type": "root.V20PresProposalByFormat",
                   },
                   "trace": {
@@ -15763,7 +15746,6 @@ exports[`open api parser > aries > docs 1`] = `
             "request": {
               "body": {
                 "display-name": "PublishRevocations",
-                "docs": undefined,
                 "type": "root.PublishRevocations",
               },
             },
@@ -16325,7 +16307,6 @@ exports[`open api parser > aries > docs 1`] = `
               "body": {
                 "properties": {
                   "attributes": {
-                    "display-name": undefined,
                     "docs": "List of schema attributes",
                     "type": "list<string>",
                   },
@@ -17259,7 +17240,6 @@ exports[`open api parser > aries > docs 1`] = `
           },
           "data": {
             "display-name": "AttachDecoratorData",
-            "docs": undefined,
             "type": "AttachDecoratorData",
           },
           "description": {
@@ -17342,7 +17322,6 @@ exports[`open api parser > aries > docs 1`] = `
         "properties": {
           "header": {
             "display-name": "AttachDecoratorDataJWSHeader",
-            "docs": undefined,
             "type": "AttachDecoratorDataJWSHeader",
           },
           "protected": {
@@ -17862,7 +17841,6 @@ exports[`open api parser > aries > docs 1`] = `
           },
           "record": {
             "display-name": "ConnRecord",
-            "docs": undefined,
             "type": "ConnRecord",
           },
           "their_did": {
@@ -18444,7 +18422,6 @@ exports[`open api parser > aries > docs 1`] = `
           },
           "offers~attach": {
             "display-name": "offers~attach",
-            "docs": undefined,
             "type": "list<AttachDecorator>",
           },
         },
@@ -18811,7 +18788,6 @@ exports[`open api parser > aries > docs 1`] = `
           },
           "presentation_definition": {
             "display-name": "PresentationDefinition",
-            "docs": undefined,
             "type": "PresentationDefinition",
           },
         },
@@ -18924,7 +18900,6 @@ exports[`open api parser > aries > docs 1`] = `
         "docs": undefined,
         "properties": {
           "credential": {
-            "display-name": undefined,
             "docs": "Credential to sign",
             "type": "DocCredential",
           },
@@ -21680,7 +21655,6 @@ exports[`open api parser > aries > docs 1`] = `
           },
           "presentation_proposal": {
             "display-name": "IndyPresPreview",
-            "docs": undefined,
             "type": "IndyPresPreview",
           },
         },
@@ -21708,7 +21682,6 @@ exports[`open api parser > aries > docs 1`] = `
           },
           "request_presentations~attach": {
             "display-name": "request_presentations~attach",
-            "docs": undefined,
             "type": "list<AttachDecorator>",
           },
         },
@@ -21846,12 +21819,10 @@ exports[`open api parser > aries > docs 1`] = `
         "docs": undefined,
         "properties": {
           "did_document": {
-            "display-name": undefined,
             "docs": "DID Document",
             "type": "ResolutionResultDidDocument",
           },
           "metadata": {
-            "display-name": undefined,
             "docs": "Resolution metadata",
             "type": "ResolutionResultMetadata",
           },
@@ -22173,7 +22144,6 @@ exports[`open api parser > aries > docs 1`] = `
         "docs": undefined,
         "properties": {
           "recipientKeys": {
-            "display-name": undefined,
             "docs": "List of recipient keys",
             "type": "list<string>",
           },
@@ -24079,7 +24049,6 @@ exports[`open api parser > aries > docs 1`] = `
           },
           "presentations~attach": {
             "display-name": "presentations~attach",
-            "docs": undefined,
             "type": "list<AttachDecorator>",
           },
         },
@@ -24355,7 +24324,6 @@ exports[`open api parser > aries > docs 1`] = `
           },
           "formats": {
             "display-name": "formats",
-            "docs": undefined,
             "type": "list<V20PresFormat>",
           },
           "proposals~attach": {
@@ -24414,7 +24382,6 @@ exports[`open api parser > aries > docs 1`] = `
           },
           "formats": {
             "display-name": "formats",
-            "docs": undefined,
             "type": "list<V20PresFormat>",
           },
           "request_presentations~attach": {
@@ -25826,7 +25793,6 @@ exports[`open api parser > aries > simple 1`] = `
               "body": {
                 "properties": {
                   "metadata": {
-                    "display-name": undefined,
                     "docs": "Dictionary of metadata to set for connection.",
                     "type": "ConnectionMetadataSetRequestMetadata",
                   },
@@ -27478,7 +27444,6 @@ exports[`open api parser > aries > simple 1`] = `
               "body": {
                 "properties": {
                   "expires_time": {
-                    "display-name": undefined,
                     "docs": "Expiry Date",
                     "type": "datetime",
                   },
@@ -28204,7 +28169,6 @@ exports[`open api parser > aries > simple 1`] = `
                   },
                   "credential_proposal": {
                     "display-name": "CredentialPreview",
-                    "docs": undefined,
                     "type": "root.CredentialPreview",
                   },
                   "issuer_did": {
@@ -28469,7 +28433,6 @@ exports[`open api parser > aries > simple 1`] = `
                   },
                   "credential_preview": {
                     "display-name": "CredentialPreview",
-                    "docs": undefined,
                     "type": "root.CredentialPreview",
                   },
                   "trace": {
@@ -29735,7 +29698,6 @@ exports[`open api parser > aries > simple 1`] = `
                   },
                   "credential_proposal": {
                     "display-name": "CredentialPreview",
-                    "docs": undefined,
                     "type": "root.CredentialPreview",
                   },
                   "issuer_did": {
@@ -30011,7 +29973,6 @@ exports[`open api parser > aries > simple 1`] = `
                   },
                   "credential_preview": {
                     "display-name": "CredentialPreview",
-                    "docs": undefined,
                     "type": "root.CredentialPreview",
                   },
                   "trace": {
@@ -32789,7 +32750,6 @@ exports[`open api parser > aries > simple 1`] = `
             "request": {
               "body": {
                 "display-name": "V20CredExFree",
-                "docs": undefined,
                 "type": "root.V20CredExFree",
               },
             },
@@ -33304,7 +33264,6 @@ exports[`open api parser > aries > simple 1`] = `
             "request": {
               "body": {
                 "display-name": "V20CredExFree",
-                "docs": undefined,
                 "type": "root.V20CredExFree",
               },
             },
@@ -33954,7 +33913,6 @@ exports[`open api parser > aries > simple 1`] = `
                 "properties": {
                   "doc": {
                     "display-name": "Doc",
-                    "docs": undefined,
                     "type": "root.Doc",
                   },
                   "verkey": {
@@ -35978,7 +35936,6 @@ exports[`open api parser > aries > simple 1`] = `
             "request": {
               "body": {
                 "display-name": "InvitationMessage",
-                "docs": undefined,
                 "type": "root.InvitationMessage",
               },
               "name": "ReceiveOobInvitationRequest",
@@ -36242,7 +36199,6 @@ exports[`open api parser > aries > simple 1`] = `
                   },
                   "proof_request": {
                     "display-name": "IndyProofRequest",
-                    "docs": undefined,
                     "type": "root.IndyProofRequest",
                   },
                   "trace": {
@@ -37074,7 +37030,6 @@ exports[`open api parser > aries > simple 1`] = `
                   },
                   "proof_request": {
                     "display-name": "IndyProofRequest",
-                    "docs": undefined,
                     "type": "root.IndyProofRequest",
                   },
                   "trace": {
@@ -37312,7 +37267,6 @@ exports[`open api parser > aries > simple 1`] = `
                   },
                   "presentation_proposal": {
                     "display-name": "IndyPresPreview",
-                    "docs": undefined,
                     "type": "root.IndyPresPreview",
                   },
                   "trace": {
@@ -37516,7 +37470,6 @@ exports[`open api parser > aries > simple 1`] = `
             "request": {
               "body": {
                 "display-name": "IndyPresSpec",
-                "docs": undefined,
                 "type": "root.IndyPresSpec",
               },
             },
@@ -38116,7 +38069,6 @@ exports[`open api parser > aries > simple 1`] = `
                   },
                   "presentation_request": {
                     "display-name": "V20PresRequestByFormat",
-                    "docs": undefined,
                     "type": "root.V20PresRequestByFormat",
                   },
                   "trace": {
@@ -38886,7 +38838,6 @@ exports[`open api parser > aries > simple 1`] = `
                   },
                   "presentation_request": {
                     "display-name": "V20PresRequestByFormat",
-                    "docs": undefined,
                     "type": "root.V20PresRequestByFormat",
                   },
                   "trace": {
@@ -39104,7 +39055,6 @@ exports[`open api parser > aries > simple 1`] = `
                   },
                   "presentation_proposal": {
                     "display-name": "V20PresProposalByFormat",
-                    "docs": undefined,
                     "type": "root.V20PresProposalByFormat",
                   },
                   "trace": {
@@ -40519,7 +40469,6 @@ exports[`open api parser > aries > simple 1`] = `
             "request": {
               "body": {
                 "display-name": "PublishRevocations",
-                "docs": undefined,
                 "type": "root.PublishRevocations",
               },
             },
@@ -41081,7 +41030,6 @@ exports[`open api parser > aries > simple 1`] = `
               "body": {
                 "properties": {
                   "attributes": {
-                    "display-name": undefined,
                     "docs": "List of schema attributes",
                     "type": "list<string>",
                   },
@@ -42015,7 +41963,6 @@ exports[`open api parser > aries > simple 1`] = `
           },
           "data": {
             "display-name": "AttachDecoratorData",
-            "docs": undefined,
             "type": "AttachDecoratorData",
           },
           "description": {
@@ -42098,7 +42045,6 @@ exports[`open api parser > aries > simple 1`] = `
         "properties": {
           "header": {
             "display-name": "AttachDecoratorDataJWSHeader",
-            "docs": undefined,
             "type": "AttachDecoratorDataJWSHeader",
           },
           "protected": {
@@ -42618,7 +42564,6 @@ exports[`open api parser > aries > simple 1`] = `
           },
           "record": {
             "display-name": "ConnRecord",
-            "docs": undefined,
             "type": "ConnRecord",
           },
           "their_did": {
@@ -43200,7 +43145,6 @@ exports[`open api parser > aries > simple 1`] = `
           },
           "offers~attach": {
             "display-name": "offers~attach",
-            "docs": undefined,
             "type": "list<AttachDecorator>",
           },
         },
@@ -43567,7 +43511,6 @@ exports[`open api parser > aries > simple 1`] = `
           },
           "presentation_definition": {
             "display-name": "PresentationDefinition",
-            "docs": undefined,
             "type": "PresentationDefinition",
           },
         },
@@ -43680,7 +43623,6 @@ exports[`open api parser > aries > simple 1`] = `
         "docs": undefined,
         "properties": {
           "credential": {
-            "display-name": undefined,
             "docs": "Credential to sign",
             "type": "DocCredential",
           },
@@ -46436,7 +46378,6 @@ exports[`open api parser > aries > simple 1`] = `
           },
           "presentation_proposal": {
             "display-name": "IndyPresPreview",
-            "docs": undefined,
             "type": "IndyPresPreview",
           },
         },
@@ -46464,7 +46405,6 @@ exports[`open api parser > aries > simple 1`] = `
           },
           "request_presentations~attach": {
             "display-name": "request_presentations~attach",
-            "docs": undefined,
             "type": "list<AttachDecorator>",
           },
         },
@@ -46602,12 +46542,10 @@ exports[`open api parser > aries > simple 1`] = `
         "docs": undefined,
         "properties": {
           "did_document": {
-            "display-name": undefined,
             "docs": "DID Document",
             "type": "ResolutionResultDidDocument",
           },
           "metadata": {
-            "display-name": undefined,
             "docs": "Resolution metadata",
             "type": "ResolutionResultMetadata",
           },
@@ -46929,7 +46867,6 @@ exports[`open api parser > aries > simple 1`] = `
         "docs": undefined,
         "properties": {
           "recipientKeys": {
-            "display-name": undefined,
             "docs": "List of recipient keys",
             "type": "list<string>",
           },
@@ -48835,7 +48772,6 @@ exports[`open api parser > aries > simple 1`] = `
           },
           "presentations~attach": {
             "display-name": "presentations~attach",
-            "docs": undefined,
             "type": "list<AttachDecorator>",
           },
         },
@@ -49111,7 +49047,6 @@ exports[`open api parser > aries > simple 1`] = `
           },
           "formats": {
             "display-name": "formats",
-            "docs": undefined,
             "type": "list<V20PresFormat>",
           },
           "proposals~attach": {
@@ -49170,7 +49105,6 @@ exports[`open api parser > aries > simple 1`] = `
           },
           "formats": {
             "display-name": "formats",
-            "docs": undefined,
             "type": "list<V20PresFormat>",
           },
           "request_presentations~attach": {

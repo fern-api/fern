@@ -63,7 +63,6 @@ exports[`open api parser > permit > docs 1`] = `
                 "properties": {
                   "operations": {
                     "display-name": "Operations",
-                    "docs": undefined,
                     "type": "list<root.TenantCreate>",
                   },
                 },
@@ -131,7 +130,6 @@ exports[`open api parser > permit > docs 1`] = `
                 "properties": {
                   "operations": {
                     "display-name": "Operations",
-                    "docs": undefined,
                     "type": "list<root.UserCreate>",
                   },
                 },
@@ -186,7 +184,6 @@ exports[`open api parser > permit > docs 1`] = `
                 "properties": {
                   "idents": {
                     "display-name": "Idents",
-                    "docs": undefined,
                     "type": "list<string>",
                   },
                 },
@@ -241,7 +238,6 @@ exports[`open api parser > permit > docs 1`] = `
                 "properties": {
                   "idents": {
                     "display-name": "Idents",
-                    "docs": undefined,
                     "type": "list<string>",
                   },
                 },
@@ -309,7 +305,6 @@ exports[`open api parser > permit > docs 1`] = `
                 "properties": {
                   "operations": {
                     "display-name": "Operations",
-                    "docs": undefined,
                     "type": "list<root.UserCreate>",
                   },
                 },
@@ -1528,7 +1523,6 @@ Fields that will be provided will be completely overwritten.",
           "union": [
             {
               "display-name": "PaginatedResult[ConditionSetRead]",
-              "docs": undefined,
               "type": "root.PaginatedResultConditionSetRead",
             },
             "list<root.ConditionSetRead>",
@@ -1707,7 +1701,6 @@ allowed.",
             "request": {
               "body": {
                 "display-name": "EnvironmentCreate",
-                "docs": undefined,
                 "type": "root.EnvironmentCreate",
               },
             },
@@ -3570,7 +3563,6 @@ define a boolean \`private\` attributes that we can now use in our policies.
             "request": {
               "body": {
                 "display-name": "ResourceAttributeCreate",
-                "docs": undefined,
                 "type": "root.ResourceAttributeCreate",
               },
             },
@@ -3823,7 +3815,6 @@ Fields that will be provided will be completely overwritten.",
             "request": {
               "body": {
                 "display-name": "ResourceAttributeUpdate",
-                "docs": undefined,
                 "type": "root.ResourceAttributeUpdate",
               },
             },
@@ -4282,7 +4273,6 @@ If some of the permissions specified are already assigned, will skip them.",
             "request": {
               "body": {
                 "display-name": "AddRolePermissions",
-                "docs": undefined,
                 "type": "root.AddRolePermissions",
               },
             },
@@ -4799,7 +4789,6 @@ If some of the permissions specified are already unassigned, will skip them.",
             "request": {
               "body": {
                 "display-name": "RemoveRolePermissions",
-                "docs": undefined,
                 "type": "root.RemoveRolePermissions",
               },
             },
@@ -5646,7 +5635,6 @@ Fields that will be provided will be completely overwritten.",
           "union": [
             {
               "display-name": "PaginatedResult[ResourceRead]",
-              "docs": undefined,
               "type": "root.PaginatedResultResourceRead",
             },
             "list<root.ResourceRead>",
@@ -5722,7 +5710,6 @@ The tenant defines the scope of the assignment. In other words, the role is effe
             "request": {
               "body": {
                 "display-name": "RoleAssignmentCreate",
-                "docs": undefined,
                 "type": "root.RoleAssignmentCreate",
               },
             },
@@ -5774,7 +5761,6 @@ The tenant defines the scope of the assignment. In other words, the role is effe
             "request": {
               "body": {
                 "display-name": "Role Assignments In",
-                "docs": undefined,
                 "type": "list<root.RoleAssignmentCreate>",
               },
             },
@@ -5826,7 +5812,6 @@ The tenant defines the scope of the assignment. In other words, the role is effe
             "request": {
               "body": {
                 "display-name": "Role Assignment In",
-                "docs": undefined,
                 "type": "list<root.RoleAssignmentRemove>",
               },
             },
@@ -5954,7 +5939,6 @@ If the role is not actually assigned, will return 404.",
             "request": {
               "body": {
                 "display-name": "RoleAssignmentRemove",
-                "docs": undefined,
                 "type": "root.RoleAssignmentRemove",
               },
             },
@@ -6048,7 +6032,6 @@ If some of the permissions specified are already assigned, will skip them.",
             "request": {
               "body": {
                 "display-name": "AddRolePermissions",
-                "docs": undefined,
                 "type": "root.AddRolePermissions",
               },
             },
@@ -6536,7 +6519,6 @@ If some of the permissions specified are already unassigned, will skip them.",
             "request": {
               "body": {
                 "display-name": "RemoveRolePermissions",
-                "docs": undefined,
                 "type": "root.RemoveRolePermissions",
               },
             },
@@ -6662,7 +6644,6 @@ Fields that will be provided will be completely overwritten.",
           "union": [
             {
               "display-name": "PaginatedResult[RoleRead]",
-              "docs": undefined,
               "type": "root.PaginatedResultRoleRead",
             },
             "list<root.RoleRead>",
@@ -6754,7 +6735,6 @@ and will return the existing tenant object in the response body.",
             "request": {
               "body": {
                 "display-name": "TenantCreate",
-                "docs": undefined,
                 "type": "root.TenantCreate",
               },
             },
@@ -7185,7 +7165,6 @@ Fields that will be provided will be completely overwritten.",
           "union": [
             {
               "display-name": "PaginatedResult[TenantRead]",
-              "docs": undefined,
               "type": "root.PaginatedResultTenantRead",
             },
             "list<root.TenantRead>",
@@ -7266,7 +7245,6 @@ define a string \`owner\` attribute that we can now use in our policies.
             "request": {
               "body": {
                 "display-name": "ResourceAttributeCreate",
-                "docs": undefined,
                 "type": "root.ResourceAttributeCreate",
               },
               "name": "CreateUserAttributeRequest",
@@ -7511,7 +7489,6 @@ Fields that will be provided will be completely overwritten.",
             "request": {
               "body": {
                 "display-name": "ResourceAttributeUpdate",
-                "docs": undefined,
                 "type": "root.ResourceAttributeUpdate",
               },
               "name": "UpdateUserAttributeRequest",
@@ -7719,7 +7696,6 @@ and will return the existing user object in the response body.",
             "request": {
               "body": {
                 "display-name": "UserCreate",
-                "docs": undefined,
                 "type": "root.UserCreate",
               },
             },
@@ -8048,7 +8024,6 @@ and will return the existing user object in the response body.",
             "request": {
               "body": {
                 "display-name": "UserCreate",
-                "docs": undefined,
                 "type": "root.UserCreate",
               },
             },
@@ -9351,7 +9326,6 @@ Fields that will be provided will be completely overwritten.",
           },
           "pdp_configs": {
             "display-name": "Pdp Configs",
-            "docs": undefined,
             "type": "list<PDPConfigRead>",
           },
           "project_id": {
@@ -9371,7 +9345,6 @@ Fields that will be provided will be completely overwritten.",
           },
           "stats": {
             "display-name": "Statistics",
-            "docs": undefined,
             "type": "Statistics",
           },
           "updated_at": {
@@ -9612,7 +9585,6 @@ Fields that will be provided will be completely overwritten.",
           },
           "grants": {
             "display-name": "Grants",
-            "docs": undefined,
             "type": "list<Permission>",
           },
           "id": {
@@ -9627,7 +9599,6 @@ Fields that will be provided will be completely overwritten.",
           },
           "identities": {
             "display-name": "Identities",
-            "docs": undefined,
             "type": "list<IdentityRead>",
           },
           "invite": {
@@ -10055,7 +10026,6 @@ Fields that will be provided will be completely overwritten.",
         "properties": {
           "access_level": {
             "display-name": "MemberAccessLevel",
-            "docs": undefined,
             "type": "MemberAccessLevel",
           },
           "environment_id": {
@@ -10078,7 +10048,6 @@ Fields that will be provided will be completely overwritten.",
           },
           "object_type": {
             "display-name": "MemberAccessObj",
-            "docs": undefined,
             "type": "MemberAccessObj",
           },
           "organization_id": {
@@ -10735,7 +10704,6 @@ The actions represents the ways you can interact with a protected resource.",
         "properties": {
           "roles": {
             "display-name": "Roles",
-            "docs": undefined,
             "type": "Roles",
           },
         },
@@ -10997,7 +10965,6 @@ The actions represents the ways you can interact with a protected resource.",
         "properties": {
           "roles": {
             "display-name": "Roles",
-            "docs": undefined,
             "type": "Roles",
           },
         },
@@ -11102,7 +11069,6 @@ The actions represents the ways you can interact with a protected resource.",
           "list<RoleRead>",
           {
             "display-name": "PaginatedResult[RoleRead]",
-            "docs": undefined,
             "type": "PaginatedResultRoleRead",
           },
         ],
@@ -11118,7 +11084,6 @@ The actions represents the ways you can interact with a protected resource.",
           "has_decision_logs": "boolean",
           "members": {
             "display-name": "Members",
-            "docs": undefined,
             "type": "list<OrgMemberReadWithGrants>",
           },
           "policies": {
@@ -11508,7 +11473,6 @@ The actions represents the ways you can interact with a protected resource.",
         "properties": {
           "loc": {
             "display-name": "Location",
-            "docs": undefined,
             "type": "list<ValidationErrorLocItem>",
           },
           "msg": "string",
@@ -11615,7 +11579,6 @@ exports[`open api parser > permit > simple 1`] = `
                 "properties": {
                   "operations": {
                     "display-name": "Operations",
-                    "docs": undefined,
                     "type": "list<root.TenantCreate>",
                   },
                 },
@@ -11683,7 +11646,6 @@ exports[`open api parser > permit > simple 1`] = `
                 "properties": {
                   "operations": {
                     "display-name": "Operations",
-                    "docs": undefined,
                     "type": "list<root.UserCreate>",
                   },
                 },
@@ -11738,7 +11700,6 @@ exports[`open api parser > permit > simple 1`] = `
                 "properties": {
                   "idents": {
                     "display-name": "Idents",
-                    "docs": undefined,
                     "type": "list<string>",
                   },
                 },
@@ -11793,7 +11754,6 @@ exports[`open api parser > permit > simple 1`] = `
                 "properties": {
                   "idents": {
                     "display-name": "Idents",
-                    "docs": undefined,
                     "type": "list<string>",
                   },
                 },
@@ -11861,7 +11821,6 @@ exports[`open api parser > permit > simple 1`] = `
                 "properties": {
                   "operations": {
                     "display-name": "Operations",
-                    "docs": undefined,
                     "type": "list<root.UserCreate>",
                   },
                 },
@@ -13080,7 +13039,6 @@ Fields that will be provided will be completely overwritten.",
           "union": [
             {
               "display-name": "PaginatedResult[ConditionSetRead]",
-              "docs": undefined,
               "type": "root.PaginatedResultConditionSetRead",
             },
             "list<root.ConditionSetRead>",
@@ -13259,7 +13217,6 @@ allowed.",
             "request": {
               "body": {
                 "display-name": "EnvironmentCreate",
-                "docs": undefined,
                 "type": "root.EnvironmentCreate",
               },
             },
@@ -15122,7 +15079,6 @@ define a boolean \`private\` attributes that we can now use in our policies.
             "request": {
               "body": {
                 "display-name": "ResourceAttributeCreate",
-                "docs": undefined,
                 "type": "root.ResourceAttributeCreate",
               },
             },
@@ -15375,7 +15331,6 @@ Fields that will be provided will be completely overwritten.",
             "request": {
               "body": {
                 "display-name": "ResourceAttributeUpdate",
-                "docs": undefined,
                 "type": "root.ResourceAttributeUpdate",
               },
             },
@@ -15834,7 +15789,6 @@ If some of the permissions specified are already assigned, will skip them.",
             "request": {
               "body": {
                 "display-name": "AddRolePermissions",
-                "docs": undefined,
                 "type": "root.AddRolePermissions",
               },
             },
@@ -16351,7 +16305,6 @@ If some of the permissions specified are already unassigned, will skip them.",
             "request": {
               "body": {
                 "display-name": "RemoveRolePermissions",
-                "docs": undefined,
                 "type": "root.RemoveRolePermissions",
               },
             },
@@ -17198,7 +17151,6 @@ Fields that will be provided will be completely overwritten.",
           "union": [
             {
               "display-name": "PaginatedResult[ResourceRead]",
-              "docs": undefined,
               "type": "root.PaginatedResultResourceRead",
             },
             "list<root.ResourceRead>",
@@ -17274,7 +17226,6 @@ The tenant defines the scope of the assignment. In other words, the role is effe
             "request": {
               "body": {
                 "display-name": "RoleAssignmentCreate",
-                "docs": undefined,
                 "type": "root.RoleAssignmentCreate",
               },
             },
@@ -17326,7 +17277,6 @@ The tenant defines the scope of the assignment. In other words, the role is effe
             "request": {
               "body": {
                 "display-name": "Role Assignments In",
-                "docs": undefined,
                 "type": "list<root.RoleAssignmentCreate>",
               },
             },
@@ -17378,7 +17328,6 @@ The tenant defines the scope of the assignment. In other words, the role is effe
             "request": {
               "body": {
                 "display-name": "Role Assignment In",
-                "docs": undefined,
                 "type": "list<root.RoleAssignmentRemove>",
               },
             },
@@ -17506,7 +17455,6 @@ If the role is not actually assigned, will return 404.",
             "request": {
               "body": {
                 "display-name": "RoleAssignmentRemove",
-                "docs": undefined,
                 "type": "root.RoleAssignmentRemove",
               },
             },
@@ -17600,7 +17548,6 @@ If some of the permissions specified are already assigned, will skip them.",
             "request": {
               "body": {
                 "display-name": "AddRolePermissions",
-                "docs": undefined,
                 "type": "root.AddRolePermissions",
               },
             },
@@ -18088,7 +18035,6 @@ If some of the permissions specified are already unassigned, will skip them.",
             "request": {
               "body": {
                 "display-name": "RemoveRolePermissions",
-                "docs": undefined,
                 "type": "root.RemoveRolePermissions",
               },
             },
@@ -18214,7 +18160,6 @@ Fields that will be provided will be completely overwritten.",
           "union": [
             {
               "display-name": "PaginatedResult[RoleRead]",
-              "docs": undefined,
               "type": "root.PaginatedResultRoleRead",
             },
             "list<root.RoleRead>",
@@ -18306,7 +18251,6 @@ and will return the existing tenant object in the response body.",
             "request": {
               "body": {
                 "display-name": "TenantCreate",
-                "docs": undefined,
                 "type": "root.TenantCreate",
               },
             },
@@ -18737,7 +18681,6 @@ Fields that will be provided will be completely overwritten.",
           "union": [
             {
               "display-name": "PaginatedResult[TenantRead]",
-              "docs": undefined,
               "type": "root.PaginatedResultTenantRead",
             },
             "list<root.TenantRead>",
@@ -18818,7 +18761,6 @@ define a string \`owner\` attribute that we can now use in our policies.
             "request": {
               "body": {
                 "display-name": "ResourceAttributeCreate",
-                "docs": undefined,
                 "type": "root.ResourceAttributeCreate",
               },
               "name": "CreateUserAttributeRequest",
@@ -19063,7 +19005,6 @@ Fields that will be provided will be completely overwritten.",
             "request": {
               "body": {
                 "display-name": "ResourceAttributeUpdate",
-                "docs": undefined,
                 "type": "root.ResourceAttributeUpdate",
               },
               "name": "UpdateUserAttributeRequest",
@@ -19271,7 +19212,6 @@ and will return the existing user object in the response body.",
             "request": {
               "body": {
                 "display-name": "UserCreate",
-                "docs": undefined,
                 "type": "root.UserCreate",
               },
             },
@@ -19600,7 +19540,6 @@ and will return the existing user object in the response body.",
             "request": {
               "body": {
                 "display-name": "UserCreate",
-                "docs": undefined,
                 "type": "root.UserCreate",
               },
             },
@@ -20398,7 +20337,6 @@ Fields that will be provided will be completely overwritten.",
           },
           "pdp_configs": {
             "display-name": "Pdp Configs",
-            "docs": undefined,
             "type": "list<PDPConfigRead>",
           },
           "project_id": {
@@ -20418,7 +20356,6 @@ Fields that will be provided will be completely overwritten.",
           },
           "stats": {
             "display-name": "Statistics",
-            "docs": undefined,
             "type": "Statistics",
           },
           "updated_at": {
@@ -20659,7 +20596,6 @@ Fields that will be provided will be completely overwritten.",
           },
           "grants": {
             "display-name": "Grants",
-            "docs": undefined,
             "type": "list<Permission>",
           },
           "id": {
@@ -20674,7 +20610,6 @@ Fields that will be provided will be completely overwritten.",
           },
           "identities": {
             "display-name": "Identities",
-            "docs": undefined,
             "type": "list<IdentityRead>",
           },
           "invite": {
@@ -21102,7 +21037,6 @@ Fields that will be provided will be completely overwritten.",
         "properties": {
           "access_level": {
             "display-name": "MemberAccessLevel",
-            "docs": undefined,
             "type": "MemberAccessLevel",
           },
           "environment_id": {
@@ -21125,7 +21059,6 @@ Fields that will be provided will be completely overwritten.",
           },
           "object_type": {
             "display-name": "MemberAccessObj",
-            "docs": undefined,
             "type": "MemberAccessObj",
           },
           "organization_id": {
@@ -21782,7 +21715,6 @@ The actions represents the ways you can interact with a protected resource.",
         "properties": {
           "roles": {
             "display-name": "Roles",
-            "docs": undefined,
             "type": "Roles",
           },
         },
@@ -22044,7 +21976,6 @@ The actions represents the ways you can interact with a protected resource.",
         "properties": {
           "roles": {
             "display-name": "Roles",
-            "docs": undefined,
             "type": "Roles",
           },
         },
@@ -22149,7 +22080,6 @@ The actions represents the ways you can interact with a protected resource.",
           "list<RoleRead>",
           {
             "display-name": "PaginatedResult[RoleRead]",
-            "docs": undefined,
             "type": "PaginatedResultRoleRead",
           },
         ],
@@ -22165,7 +22095,6 @@ The actions represents the ways you can interact with a protected resource.",
           "has_decision_logs": "boolean",
           "members": {
             "display-name": "Members",
-            "docs": undefined,
             "type": "list<OrgMemberReadWithGrants>",
           },
           "policies": {
@@ -22555,7 +22484,6 @@ The actions represents the ways you can interact with a protected resource.",
         "properties": {
           "loc": {
             "display-name": "Location",
-            "docs": undefined,
             "type": "list<ValidationErrorLocItem>",
           },
           "msg": "string",

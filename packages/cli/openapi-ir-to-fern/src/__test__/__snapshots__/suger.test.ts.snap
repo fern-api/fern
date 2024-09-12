@@ -4045,7 +4045,6 @@ exports[`open api parser > suger > docs 1`] = `
                   },
                   "reportType": "root.SharedRevenueReportType",
                   "service": {
-                    "display-name": undefined,
                     "docs": "Required.",
                     "type": "literal<"MARKETPLACE">",
                   },
@@ -12541,7 +12540,6 @@ exports[`open api parser > suger > simple 1`] = `
                   },
                   "reportType": "root.SharedRevenueReportType",
                   "service": {
-                    "display-name": undefined,
                     "docs": "Required.",
                     "type": "literal<"MARKETPLACE">",
                   },

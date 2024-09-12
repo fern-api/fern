@@ -1586,7 +1586,6 @@ Each consumer User entity needs three mandatory fields:
           "request": {
             "body": {
               "display-name": "User",
-              "docs": undefined,
               "type": "User",
             },
           },
@@ -1806,7 +1805,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 },
                 "transactionState": {
                   "display-name": "TransactionState",
-                  "docs": undefined,
                   "type": "TransactionState",
                 },
                 "updatedTransactionAttributes": "optional<TransactionUpdatable>",
@@ -2146,7 +2144,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": "Model for standardized address",
         "properties": {
           "addressLines": {
-            "display-name": undefined,
             "docs": "Address lines of the user's residence address",
             "type": "list<unknown>",
           },
@@ -2258,7 +2255,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "properties": {
           "amountCurrency": {
             "display-name": "CurrencyCode",
-            "docs": undefined,
             "type": "CurrencyCode",
           },
           "amountValue": {
@@ -2401,47 +2397,38 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "union": {
           "ACH": {
             "display-name": "ACHDetails",
-            "docs": undefined,
             "type": "ACHDetails",
           },
           "CARD": {
             "display-name": "CardDetails",
-            "docs": undefined,
             "type": "CardDetails",
           },
           "CHECK": {
             "display-name": "CheckDetails",
-            "docs": undefined,
             "type": "CheckDetails",
           },
           "GENERIC_BANK_ACCOUNT": {
             "display-name": "GenericBankAccountDetails",
-            "docs": undefined,
             "type": "GenericBankAccountDetails",
           },
           "IBAN": {
             "display-name": "IBANDetails",
-            "docs": undefined,
             "type": "IBANDetails",
           },
           "MPESA": {
             "display-name": "MpesaDetails",
-            "docs": undefined,
             "type": "MpesaDetails",
           },
           "SWIFT": {
             "display-name": "SWIFTDetails",
-            "docs": undefined,
             "type": "SWIFTDetails",
           },
           "UPI": {
             "display-name": "UPIDetails",
-            "docs": undefined,
             "type": "UPIDetails",
           },
           "WALLET": {
             "display-name": "WalletDetails",
-            "docs": undefined,
             "type": "WalletDetails",
           },
         },
@@ -2927,7 +2914,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "registrationCountry": {
             "display-name": "CountryCode",
-            "docs": undefined,
             "type": "CountryCode",
           },
           "registrationIdentifier": {
@@ -3724,7 +3710,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "ruleAction": {
             "display-name": "RuleAction",
-            "docs": undefined,
             "type": "RuleAction",
           },
           "ruleDescription": {
@@ -3773,7 +3758,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "properties": {
           "failureException": {
             "display-name": "RuleFailureException",
-            "docs": undefined,
             "type": "RuleFailureException",
           },
           "ruleDescription": {
@@ -3897,7 +3881,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "ruleAction": {
             "display-name": "RuleAction",
-            "docs": undefined,
             "type": "RuleAction",
           },
           "ruleDescription": {
@@ -4045,7 +4028,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "documentIssuedCountry": {
             "display-name": "CountryCode",
-            "docs": undefined,
             "type": "CountryCode",
           },
           "documentIssuedDate": {
@@ -4096,7 +4078,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "companyGeneralDetails": {
             "display-name": "CompanyGeneralDetails",
-            "docs": undefined,
             "type": "CompanyGeneralDetails",
           },
           "companyRegistrationDetails": {
@@ -4139,11 +4120,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "properties": {
           "header": {
             "display-name": "ListHeader",
-            "docs": undefined,
             "type": "ListHeader",
           },
           "items": {
-            "display-name": undefined,
             "docs": "List items",
             "type": "list<ListItem>",
           },
@@ -4347,7 +4326,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "generalDetails": {
             "display-name": "UserDetails",
-            "docs": undefined,
             "type": "UserDetails",
           },
           "legalDocuments": {
@@ -4552,12 +4530,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": undefined,
         "properties": {
           "executedRules": {
-            "display-name": undefined,
             "docs": "Unique transaction identifier",
             "type": "list<ExecutedRulesResult>",
           },
           "hitRules": {
-            "display-name": undefined,
             "docs": "Unique transaction identifier",
             "type": "list<HitRulesDetails>",
           },
@@ -4721,7 +4697,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "transactionCurrency": {
             "display-name": "CurrencyCode",
-            "docs": undefined,
             "type": "CurrencyCode",
           },
         },
@@ -5027,47 +5002,38 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "union": {
           "ACH": {
             "display-name": "ACHDetails",
-            "docs": undefined,
             "type": "ACHDetails",
           },
           "CARD": {
             "display-name": "CardDetails",
-            "docs": undefined,
             "type": "CardDetails",
           },
           "CHECK": {
             "display-name": "CheckDetails",
-            "docs": undefined,
             "type": "CheckDetails",
           },
           "GENERIC_BANK_ACCOUNT": {
             "display-name": "GenericBankAccountDetails",
-            "docs": undefined,
             "type": "GenericBankAccountDetails",
           },
           "IBAN": {
             "display-name": "IBANDetails",
-            "docs": undefined,
             "type": "IBANDetails",
           },
           "MPESA": {
             "display-name": "MpesaDetails",
-            "docs": undefined,
             "type": "MpesaDetails",
           },
           "SWIFT": {
             "display-name": "SWIFTDetails",
-            "docs": undefined,
             "type": "SWIFTDetails",
           },
           "UPI": {
             "display-name": "UPIDetails",
-            "docs": undefined,
             "type": "UPIDetails",
           },
           "WALLET": {
             "display-name": "WalletDetails",
-            "docs": undefined,
             "type": "WalletDetails",
           },
         },
@@ -5084,47 +5050,38 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "union": {
           "ACH": {
             "display-name": "ACHDetails",
-            "docs": undefined,
             "type": "ACHDetails",
           },
           "CARD": {
             "display-name": "CardDetails",
-            "docs": undefined,
             "type": "CardDetails",
           },
           "CHECK": {
             "display-name": "CheckDetails",
-            "docs": undefined,
             "type": "CheckDetails",
           },
           "GENERIC_BANK_ACCOUNT": {
             "display-name": "GenericBankAccountDetails",
-            "docs": undefined,
             "type": "GenericBankAccountDetails",
           },
           "IBAN": {
             "display-name": "IBANDetails",
-            "docs": undefined,
             "type": "IBANDetails",
           },
           "MPESA": {
             "display-name": "MpesaDetails",
-            "docs": undefined,
             "type": "MpesaDetails",
           },
           "SWIFT": {
             "display-name": "SWIFTDetails",
-            "docs": undefined,
             "type": "SWIFTDetails",
           },
           "UPI": {
             "display-name": "UPIDetails",
-            "docs": undefined,
             "type": "UPIDetails",
           },
           "WALLET": {
             "display-name": "WalletDetails",
-            "docs": undefined,
             "type": "WalletDetails",
           },
         },
@@ -5265,7 +5222,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "name": {
             "display-name": "ConsumerName",
-            "docs": undefined,
             "type": "ConsumerName",
           },
         },
@@ -5397,7 +5353,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "state": {
             "display-name": "UserState",
-            "docs": undefined,
             "type": "UserState",
           },
           "userId": {
@@ -5484,13 +5439,11 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "data": {
             "display-name": "UserStateDetails",
-            "docs": undefined,
             "type": "UserStateDetails",
           },
           "id": "string",
           "type": {
             "display-name": "WebhookEventType",
-            "docs": undefined,
             "type": "WebhookEventType",
           },
         },
@@ -7013,7 +6966,6 @@ Each consumer User entity needs three mandatory fields:
           "request": {
             "body": {
               "display-name": "User",
-              "docs": undefined,
               "type": "User",
             },
           },
@@ -7233,7 +7185,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 },
                 "transactionState": {
                   "display-name": "TransactionState",
-                  "docs": undefined,
                   "type": "TransactionState",
                 },
                 "updatedTransactionAttributes": "optional<TransactionUpdatable>",
@@ -7573,7 +7524,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": "Model for standardized address",
         "properties": {
           "addressLines": {
-            "display-name": undefined,
             "docs": "Address lines of the user's residence address",
             "type": "list<unknown>",
           },
@@ -7685,7 +7635,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "properties": {
           "amountCurrency": {
             "display-name": "CurrencyCode",
-            "docs": undefined,
             "type": "CurrencyCode",
           },
           "amountValue": {
@@ -7828,47 +7777,38 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "union": {
           "ACH": {
             "display-name": "ACHDetails",
-            "docs": undefined,
             "type": "ACHDetails",
           },
           "CARD": {
             "display-name": "CardDetails",
-            "docs": undefined,
             "type": "CardDetails",
           },
           "CHECK": {
             "display-name": "CheckDetails",
-            "docs": undefined,
             "type": "CheckDetails",
           },
           "GENERIC_BANK_ACCOUNT": {
             "display-name": "GenericBankAccountDetails",
-            "docs": undefined,
             "type": "GenericBankAccountDetails",
           },
           "IBAN": {
             "display-name": "IBANDetails",
-            "docs": undefined,
             "type": "IBANDetails",
           },
           "MPESA": {
             "display-name": "MpesaDetails",
-            "docs": undefined,
             "type": "MpesaDetails",
           },
           "SWIFT": {
             "display-name": "SWIFTDetails",
-            "docs": undefined,
             "type": "SWIFTDetails",
           },
           "UPI": {
             "display-name": "UPIDetails",
-            "docs": undefined,
             "type": "UPIDetails",
           },
           "WALLET": {
             "display-name": "WalletDetails",
-            "docs": undefined,
             "type": "WalletDetails",
           },
         },
@@ -8354,7 +8294,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "registrationCountry": {
             "display-name": "CountryCode",
-            "docs": undefined,
             "type": "CountryCode",
           },
           "registrationIdentifier": {
@@ -9151,7 +9090,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "ruleAction": {
             "display-name": "RuleAction",
-            "docs": undefined,
             "type": "RuleAction",
           },
           "ruleDescription": {
@@ -9200,7 +9138,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "properties": {
           "failureException": {
             "display-name": "RuleFailureException",
-            "docs": undefined,
             "type": "RuleFailureException",
           },
           "ruleDescription": {
@@ -9324,7 +9261,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "ruleAction": {
             "display-name": "RuleAction",
-            "docs": undefined,
             "type": "RuleAction",
           },
           "ruleDescription": {
@@ -9472,7 +9408,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "documentIssuedCountry": {
             "display-name": "CountryCode",
-            "docs": undefined,
             "type": "CountryCode",
           },
           "documentIssuedDate": {
@@ -9523,7 +9458,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "companyGeneralDetails": {
             "display-name": "CompanyGeneralDetails",
-            "docs": undefined,
             "type": "CompanyGeneralDetails",
           },
           "companyRegistrationDetails": {
@@ -9566,11 +9500,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "properties": {
           "header": {
             "display-name": "ListHeader",
-            "docs": undefined,
             "type": "ListHeader",
           },
           "items": {
-            "display-name": undefined,
             "docs": "List items",
             "type": "list<ListItem>",
           },
@@ -9774,7 +9706,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "generalDetails": {
             "display-name": "UserDetails",
-            "docs": undefined,
             "type": "UserDetails",
           },
           "legalDocuments": {
@@ -9979,12 +9910,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": undefined,
         "properties": {
           "executedRules": {
-            "display-name": undefined,
             "docs": "Unique transaction identifier",
             "type": "list<ExecutedRulesResult>",
           },
           "hitRules": {
-            "display-name": undefined,
             "docs": "Unique transaction identifier",
             "type": "list<HitRulesDetails>",
           },
@@ -10148,7 +10077,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "transactionCurrency": {
             "display-name": "CurrencyCode",
-            "docs": undefined,
             "type": "CurrencyCode",
           },
         },
@@ -10454,47 +10382,38 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "union": {
           "ACH": {
             "display-name": "ACHDetails",
-            "docs": undefined,
             "type": "ACHDetails",
           },
           "CARD": {
             "display-name": "CardDetails",
-            "docs": undefined,
             "type": "CardDetails",
           },
           "CHECK": {
             "display-name": "CheckDetails",
-            "docs": undefined,
             "type": "CheckDetails",
           },
           "GENERIC_BANK_ACCOUNT": {
             "display-name": "GenericBankAccountDetails",
-            "docs": undefined,
             "type": "GenericBankAccountDetails",
           },
           "IBAN": {
             "display-name": "IBANDetails",
-            "docs": undefined,
             "type": "IBANDetails",
           },
           "MPESA": {
             "display-name": "MpesaDetails",
-            "docs": undefined,
             "type": "MpesaDetails",
           },
           "SWIFT": {
             "display-name": "SWIFTDetails",
-            "docs": undefined,
             "type": "SWIFTDetails",
           },
           "UPI": {
             "display-name": "UPIDetails",
-            "docs": undefined,
             "type": "UPIDetails",
           },
           "WALLET": {
             "display-name": "WalletDetails",
-            "docs": undefined,
             "type": "WalletDetails",
           },
         },
@@ -10511,47 +10430,38 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "union": {
           "ACH": {
             "display-name": "ACHDetails",
-            "docs": undefined,
             "type": "ACHDetails",
           },
           "CARD": {
             "display-name": "CardDetails",
-            "docs": undefined,
             "type": "CardDetails",
           },
           "CHECK": {
             "display-name": "CheckDetails",
-            "docs": undefined,
             "type": "CheckDetails",
           },
           "GENERIC_BANK_ACCOUNT": {
             "display-name": "GenericBankAccountDetails",
-            "docs": undefined,
             "type": "GenericBankAccountDetails",
           },
           "IBAN": {
             "display-name": "IBANDetails",
-            "docs": undefined,
             "type": "IBANDetails",
           },
           "MPESA": {
             "display-name": "MpesaDetails",
-            "docs": undefined,
             "type": "MpesaDetails",
           },
           "SWIFT": {
             "display-name": "SWIFTDetails",
-            "docs": undefined,
             "type": "SWIFTDetails",
           },
           "UPI": {
             "display-name": "UPIDetails",
-            "docs": undefined,
             "type": "UPIDetails",
           },
           "WALLET": {
             "display-name": "WalletDetails",
-            "docs": undefined,
             "type": "WalletDetails",
           },
         },
@@ -10692,7 +10602,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "name": {
             "display-name": "ConsumerName",
-            "docs": undefined,
             "type": "ConsumerName",
           },
         },
@@ -10824,7 +10733,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "state": {
             "display-name": "UserState",
-            "docs": undefined,
             "type": "UserState",
           },
           "userId": {
@@ -10911,13 +10819,11 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "data": {
             "display-name": "UserStateDetails",
-            "docs": undefined,
             "type": "UserStateDetails",
           },
           "id": "string",
           "type": {
             "display-name": "WebhookEventType",
-            "docs": undefined,
             "type": "WebhookEventType",
           },
         },

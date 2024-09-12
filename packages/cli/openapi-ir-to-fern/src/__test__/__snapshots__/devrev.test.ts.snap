@@ -166,7 +166,6 @@ enterprise connections can be created by an organization.
             "request": {
               "body": {
                 "display-name": "dev-org-auth-connections-create-request",
-                "docs": undefined,
                 "type": "root.DevOrgAuthConnectionsCreateRequest",
               },
             },
@@ -389,7 +388,6 @@ disabled.
             "request": {
               "body": {
                 "display-name": "dev-org-auth-connections-update-request",
-                "docs": undefined,
                 "type": "root.DevOrgAuthConnectionsUpdateRequest",
               },
             },
@@ -1136,7 +1134,6 @@ used.
             "request": {
               "body": {
                 "display-name": "parts-create-request",
-                "docs": undefined,
                 "type": "root.PartsCreateRequest",
               },
             },
@@ -1476,7 +1473,6 @@ used.
             "request": {
               "body": {
                 "display-name": "parts-update-request",
-                "docs": undefined,
                 "type": "root.PartsUpdateRequest",
               },
             },
@@ -2431,7 +2427,6 @@ tags.
             "request": {
               "body": {
                 "display-name": "timeline-entries-create-request",
-                "docs": undefined,
                 "type": "root.TimelineEntriesCreateRequest",
               },
             },
@@ -2678,7 +2673,6 @@ used.
             "request": {
               "body": {
                 "display-name": "timeline-entries-update-request",
-                "docs": undefined,
                 "type": "root.TimelineEntriesUpdateRequest",
               },
             },
@@ -3220,7 +3214,6 @@ won't receive any object events until successfully verified.
             "request": {
               "body": {
                 "display-name": "works-create-request",
-                "docs": undefined,
                 "type": "root.WorksCreateRequest",
               },
             },
@@ -3810,7 +3803,6 @@ organizations.
             "request": {
               "body": {
                 "display-name": "works-update-request",
-                "docs": undefined,
                 "type": "root.WorksUpdateRequest",
               },
             },
@@ -5352,7 +5344,6 @@ organizations.
     "types": {
       "ArtifactSummary": {
         "display-name": "atom-base-summary",
-        "docs": undefined,
         "type": "AtomBaseSummary",
       },
       "ArtifactsLocateResponse": {
@@ -5376,7 +5367,6 @@ organizations.
         "docs": "The response to preparing a URL to upload a file.",
         "properties": {
           "form_data": {
-            "display-name": undefined,
             "docs": "The POST policy form data.",
             "type": "list<ArtifactsPrepareResponseFormData>",
           },
@@ -5495,27 +5485,22 @@ authentication connection that is set up for a Dev organization.
         "union": {
           "google_apps": {
             "display-name": "auth-connection-options-google-apps",
-            "docs": undefined,
             "type": "AuthConnectionOptionsGoogleApps",
           },
           "oidc": {
             "display-name": "auth-connection-options-oidc",
-            "docs": undefined,
             "type": "AuthConnectionOptionsOidc",
           },
           "samlp": {
             "display-name": "auth-connection-options-saml",
-            "docs": undefined,
             "type": "AuthConnectionOptionsSaml",
           },
           "social": {
             "display-name": "auth-connection-options-social",
-            "docs": undefined,
             "type": "AuthConnectionOptionsSocial",
           },
           "waad": {
             "display-name": "auth-connection-options-azure-ad",
-            "docs": undefined,
             "type": "AuthConnectionOptionsAzureAd",
           },
         },
@@ -5793,7 +5778,6 @@ token. Only applicable for application access tokens.
         },
       },
       "AuthTokenTokenType": {
-        "display-name": undefined,
         "docs": "The type of the issued token. Bearer is the only supported token type.
 ",
         "type": "literal<"bearer">",
@@ -5846,7 +5830,6 @@ of values in which the order of values does not matter.
         "properties": {
           "token": {
             "display-name": "auth-token",
-            "docs": undefined,
             "type": "AuthToken",
           },
         },
@@ -5858,7 +5841,6 @@ of values in which the order of values does not matter.
         "docs": "The response to list the token metadata.",
         "properties": {
           "tokens": {
-            "display-name": undefined,
             "docs": "The list of token metadata.",
             "type": "list<AuthToken>",
           },
@@ -5922,7 +5904,6 @@ issue a Rev session token.
         "properties": {
           "token": {
             "display-name": "auth-token",
-            "docs": undefined,
             "type": "AuthToken",
           },
         },
@@ -5955,12 +5936,10 @@ issue a Rev session token.
       },
       "Capability": {
         "display-name": "part-base",
-        "docs": undefined,
         "type": "PartBase",
       },
       "CapabilitySummary": {
         "display-name": "part-base-summary",
-        "docs": undefined,
         "type": "PartBaseSummary",
       },
       "DevOrgAuthConnectionsCreateRequest": {
@@ -5985,22 +5964,18 @@ it would appear on the login button as 'Log in to abclogin'.
         "union": {
           "google_apps": {
             "display-name": "auth-connection-options-google-apps",
-            "docs": undefined,
             "type": "AuthConnectionOptionsGoogleApps",
           },
           "oidc": {
             "display-name": "auth-connection-options-oidc",
-            "docs": undefined,
             "type": "AuthConnectionOptionsOidc",
           },
           "samlp": {
             "display-name": "auth-connection-options-saml",
-            "docs": undefined,
             "type": "AuthConnectionOptionsSaml",
           },
           "waad": {
             "display-name": "auth-connection-options-azure-ad",
-            "docs": undefined,
             "type": "AuthConnectionOptionsAzureAd",
           },
         },
@@ -6026,7 +6001,6 @@ connection.
         "properties": {
           "auth_connection": {
             "display-name": "auth-connection",
-            "docs": undefined,
             "type": "AuthConnection",
           },
         },
@@ -6041,7 +6015,6 @@ authentication connection.
         "properties": {
           "auth_connection": {
             "display-name": "auth-connection",
-            "docs": undefined,
             "type": "AuthConnection",
           },
         },
@@ -6055,7 +6028,6 @@ authentication connections configured for a Dev organization.
 ",
         "properties": {
           "auth_connections": {
-            "display-name": undefined,
             "docs": "List of all the authentication connections currently configured for
 a Dev organization.
 ",
@@ -6094,27 +6066,22 @@ organization.
         "union": {
           "google_apps": {
             "display-name": "auth-connection-options-google-apps",
-            "docs": undefined,
             "type": "AuthConnectionOptionsGoogleApps",
           },
           "none": {
             "display-name": "empty",
-            "docs": undefined,
             "type": "empty",
           },
           "oidc": {
             "display-name": "auth-connection-options-oidc",
-            "docs": undefined,
             "type": "AuthConnectionOptionsOidc",
           },
           "samlp": {
             "display-name": "auth-connection-options-saml",
-            "docs": undefined,
             "type": "AuthConnectionOptionsSaml",
           },
           "waad": {
             "display-name": "auth-connection-options-azure-ad",
-            "docs": undefined,
             "type": "AuthConnectionOptionsAzureAd",
           },
         },
@@ -6142,7 +6109,6 @@ connection.
         "properties": {
           "auth_connection": {
             "display-name": "auth-connection",
-            "docs": undefined,
             "type": "AuthConnection",
           },
         },
@@ -6167,14 +6133,12 @@ connection.
       },
       "DevUserSummary": {
         "display-name": "user-base-summary",
-        "docs": undefined,
         "type": "UserBaseSummary",
       },
       "DevUsersListResponse": {
         "docs": "The response to listing the Dev users.",
         "properties": {
           "dev_users": {
-            "display-name": undefined,
             "docs": "The list of Dev users.",
             "type": "list<DevUser>",
           },
@@ -6203,7 +6167,6 @@ sort order. If not set, then no prior elements exist.
         "properties": {
           "dev_user": {
             "display-name": "dev-user",
-            "docs": undefined,
             "type": "DevUser",
           },
         },
@@ -6213,7 +6176,6 @@ sort order. If not set, then no prior elements exist.
       },
       "EnhancementSummary": {
         "display-name": "part-base-summary",
-        "docs": undefined,
         "type": "PartBaseSummary",
       },
       "ErrorBadRequest": {
@@ -6234,7 +6196,6 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "allowed_values": {
-            "display-name": undefined,
             "docs": "The allowed values for the field.",
             "type": "list<string>",
           },
@@ -6404,7 +6365,6 @@ sort order. If not set, then no prior elements exist.
         "properties": {
           "part": {
             "display-name": "part",
-            "docs": undefined,
             "type": "part",
           },
         },
@@ -6429,7 +6389,6 @@ sort order. If not set, then no prior elements exist.
         "properties": {
           "part": {
             "display-name": "part",
-            "docs": undefined,
             "type": "part",
           },
         },
@@ -6442,7 +6401,6 @@ sort order. If not set, then no prior elements exist.
         "properties": {
           "rev_org": {
             "display-name": "rev-org",
-            "docs": undefined,
             "type": "RevOrg",
           },
         },
@@ -6467,7 +6425,6 @@ sort order. If not set, then no prior elements exist.
         "properties": {
           "rev_org": {
             "display-name": "rev-org",
-            "docs": undefined,
             "type": "RevOrg",
           },
         },
@@ -6480,7 +6437,6 @@ sort order. If not set, then no prior elements exist.
         "properties": {
           "tag": {
             "display-name": "tag",
-            "docs": undefined,
             "type": "tag",
           },
         },
@@ -6505,7 +6461,6 @@ sort order. If not set, then no prior elements exist.
         "properties": {
           "tag": {
             "display-name": "tag",
-            "docs": undefined,
             "type": "tag",
           },
         },
@@ -6518,7 +6473,6 @@ sort order. If not set, then no prior elements exist.
         "properties": {
           "entry": {
             "display-name": "timeline-entry",
-            "docs": undefined,
             "type": "TimelineEntry",
           },
         },
@@ -6543,7 +6497,6 @@ sort order. If not set, then no prior elements exist.
         "properties": {
           "entry": {
             "display-name": "timeline-entry",
-            "docs": undefined,
             "type": "TimelineEntry",
           },
         },
@@ -6556,7 +6509,6 @@ sort order. If not set, then no prior elements exist.
         "properties": {
           "webhook": {
             "display-name": "webhook",
-            "docs": undefined,
             "type": "webhook",
           },
         },
@@ -6581,7 +6533,6 @@ sort order. If not set, then no prior elements exist.
         "properties": {
           "webhook": {
             "display-name": "webhook",
-            "docs": undefined,
             "type": "webhook",
           },
         },
@@ -6594,7 +6545,6 @@ sort order. If not set, then no prior elements exist.
         "properties": {
           "work": {
             "display-name": "work",
-            "docs": undefined,
             "type": "work",
           },
         },
@@ -6619,7 +6569,6 @@ sort order. If not set, then no prior elements exist.
         "properties": {
           "work": {
             "display-name": "work",
-            "docs": undefined,
             "type": "work",
           },
         },
@@ -6634,17 +6583,14 @@ sort order. If not set, then no prior elements exist.
       },
       "Feature": {
         "display-name": "part-base",
-        "docs": undefined,
         "type": "PartBase",
       },
       "FeatureSummary": {
         "display-name": "part-base-summary",
-        "docs": undefined,
         "type": "PartBaseSummary",
       },
       "GroupSummary": {
         "display-name": "atom-base-summary",
-        "docs": undefined,
         "type": "AtomBaseSummary",
       },
       "IssuePriority": {
@@ -6749,7 +6695,6 @@ always be returned in the specified sort-by order.
             "type": "string",
           },
           "owned_by": {
-            "display-name": undefined,
             "docs": "The users that own the part.",
             "type": "list<UserSummary>",
           },
@@ -6816,7 +6761,6 @@ always be returned in the specified sort-by order.
             "type": "string",
           },
           "owned_by": {
-            "display-name": undefined,
             "docs": "The users that own the part.",
             "type": "list<string>",
           },
@@ -6830,22 +6774,18 @@ always be returned in the specified sort-by order.
         "union": {
           "capability": {
             "display-name": "parts-create-request-capability",
-            "docs": undefined,
             "type": "PartsCreateRequestCapability",
           },
           "enhancement": {
             "display-name": "parts-create-request-enhancement",
-            "docs": undefined,
             "type": "PartsCreateRequestEnhancement",
           },
           "feature": {
             "display-name": "parts-create-request-feature",
-            "docs": undefined,
             "type": "PartsCreateRequestFeature",
           },
           "product": {
             "display-name": "parts-create-request-product",
-            "docs": undefined,
             "type": "PartsCreateRequestProduct",
           },
         },
@@ -6854,7 +6794,6 @@ always be returned in the specified sort-by order.
         "docs": undefined,
         "properties": {
           "parent_part": {
-            "display-name": undefined,
             "docs": "ID of the parent product for the capability.",
             "type": "list<string>",
           },
@@ -6867,7 +6806,6 @@ always be returned in the specified sort-by order.
         "docs": undefined,
         "properties": {
           "parent_part": {
-            "display-name": undefined,
             "docs": "ID of the parent part on which the enhancement is to be created.
 ",
             "type": "list<string>",
@@ -6887,7 +6825,6 @@ always be returned in the specified sort-by order.
         "docs": undefined,
         "properties": {
           "parent_part": {
-            "display-name": undefined,
             "docs": "ID of the parent capability/feature for the feature.",
             "type": "list<string>",
           },
@@ -6905,7 +6842,6 @@ always be returned in the specified sort-by order.
         "properties": {
           "part": {
             "display-name": "part",
-            "docs": undefined,
             "type": "part",
           },
         },
@@ -6922,7 +6858,6 @@ always be returned in the specified sort-by order.
         "properties": {
           "part": {
             "display-name": "part",
-            "docs": undefined,
             "type": "part",
           },
         },
@@ -6941,7 +6876,6 @@ sort order. If not set, then no later elements exist.
             "type": "optional<string>",
           },
           "parts": {
-            "display-name": undefined,
             "docs": "The list of parts.",
             "type": "list<part>",
           },
@@ -6983,27 +6917,22 @@ sort order. If not set, then no prior elements exist.
         "union": {
           "capability": {
             "display-name": "parts-update-request-capability",
-            "docs": undefined,
             "type": "PartsUpdateRequestCapability",
           },
           "enhancement": {
             "display-name": "parts-update-request-enhancement",
-            "docs": undefined,
             "type": "PartsUpdateRequestEnhancement",
           },
           "feature": {
             "display-name": "parts-update-request-feature",
-            "docs": undefined,
             "type": "PartsUpdateRequestFeature",
           },
           "none": {
             "display-name": "empty",
-            "docs": undefined,
             "type": "empty",
           },
           "product": {
             "display-name": "parts-update-request-product",
-            "docs": undefined,
             "type": "PartsUpdateRequestProduct",
           },
         },
@@ -7053,7 +6982,6 @@ empty.
         "properties": {
           "part": {
             "display-name": "part",
-            "docs": undefined,
             "type": "part",
           },
         },
@@ -7063,12 +6991,10 @@ empty.
       },
       "Product": {
         "display-name": "part-base",
-        "docs": undefined,
         "type": "PartBase",
       },
       "ProductSummary": {
         "display-name": "part-base-summary",
-        "docs": undefined,
         "type": "PartBaseSummary",
       },
       "RevOrg": {
@@ -7100,7 +7026,6 @@ organization.
       },
       "RevOrgSummary": {
         "display-name": "org-base-summary",
-        "docs": undefined,
         "type": "OrgBaseSummary",
       },
       "RevOrgsCreateResponse": {
@@ -7109,7 +7034,6 @@ organization.
         "properties": {
           "rev_org": {
             "display-name": "rev-org",
-            "docs": undefined,
             "type": "RevOrg",
           },
         },
@@ -7127,7 +7051,6 @@ organization.
         "properties": {
           "rev_org": {
             "display-name": "rev-org",
-            "docs": undefined,
             "type": "RevOrg",
           },
         },
@@ -7154,7 +7077,6 @@ sort order. If not set, then no prior elements exist.
             "type": "optional<string>",
           },
           "rev_orgs": {
-            "display-name": undefined,
             "docs": "List with all of the Rev organizations' information.",
             "type": "list<RevOrg>",
           },
@@ -7168,7 +7090,6 @@ sort order. If not set, then no prior elements exist.
         "properties": {
           "rev_org": {
             "display-name": "rev-org",
-            "docs": undefined,
             "type": "RevOrg",
           },
         },
@@ -7245,7 +7166,6 @@ the value must be one that's specified in the tag's allowed values.
       },
       "SysUserSummary": {
         "display-name": "user-base-summary",
-        "docs": undefined,
         "type": "UserBaseSummary",
       },
       "TagSummary": {
@@ -7271,7 +7191,6 @@ unique.
         "properties": {
           "tag": {
             "display-name": "tag-summary",
-            "docs": undefined,
             "type": "TagSummary",
           },
           "value": {
@@ -7289,7 +7208,6 @@ unique.
         "properties": {
           "tag": {
             "display-name": "tag",
-            "docs": undefined,
             "type": "tag",
           },
         },
@@ -7307,7 +7225,6 @@ unique.
         "properties": {
           "tag": {
             "display-name": "tag",
-            "docs": undefined,
             "type": "tag",
           },
         },
@@ -7333,7 +7250,6 @@ sort order. If not set, then no prior elements exist.
             "type": "optional<string>",
           },
           "tags": {
-            "display-name": undefined,
             "docs": "The list of tags.",
             "type": "list<tag>",
           },
@@ -7360,7 +7276,6 @@ sort order. If not set, then no prior elements exist.
         "properties": {
           "tag": {
             "display-name": "tag",
-            "docs": undefined,
             "type": "tag",
           },
         },
@@ -7434,7 +7349,6 @@ will appear in the response.
         "union": {
           "timeline_comment": {
             "display-name": "timeline-entries-create-request-timeline-comment",
-            "docs": undefined,
             "type": "TimelineEntriesCreateRequestTimelineComment",
           },
         },
@@ -7472,7 +7386,6 @@ will appear in the response.
         "properties": {
           "timeline_entry": {
             "display-name": "timeline-entry",
-            "docs": undefined,
             "type": "TimelineEntry",
           },
         },
@@ -7485,7 +7398,6 @@ will appear in the response.
         "properties": {
           "timeline_entry": {
             "display-name": "timeline-entry",
-            "docs": undefined,
             "type": "TimelineEntry",
           },
         },
@@ -7511,7 +7423,6 @@ sort order. If not set, then no prior elements exist.
             "type": "optional<string>",
           },
           "timeline_entries": {
-            "display-name": undefined,
             "docs": "The timeline entries for the object.",
             "type": "list<TimelineEntry>",
           },
@@ -7537,7 +7448,6 @@ sort order. If not set, then no prior elements exist.
         "union": {
           "timeline_comment": {
             "display-name": "timeline-entries-update-request-timeline-comment",
-            "docs": undefined,
             "type": "TimelineEntriesUpdateRequestTimelineComment",
           },
         },
@@ -7602,7 +7512,6 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
         "properties": {
           "timeline_entry": {
             "display-name": "timeline-entry",
-            "docs": undefined,
             "type": "TimelineEntry",
           },
         },
@@ -7622,19 +7531,16 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
         "union": {
           "timeline_comment": {
             "display-name": "timeline-comment",
-            "docs": undefined,
             "type": "TimelineComment",
           },
         },
       },
       "TimelineEntryBase": {
         "display-name": "atom-base",
-        "docs": undefined,
         "type": "AtomBase",
       },
       "TimelineEntryType": "literal<"timeline_comment">",
       "TimelineEntryVisibility": {
-        "display-name": undefined,
         "docs": "The visibility of the entry. If 'private', then the entry is only
 visible to the creator, otherwise if not set, then the entry has
 default visibility.
@@ -7723,7 +7629,6 @@ default visibility.
           "dev_user": "DevUserSummary",
           "rev_user": {
             "display-name": "rev-user-summary",
-            "docs": undefined,
             "type": "RevUserSummary",
           },
           "sys_user": "SysUserSummary",
@@ -7926,7 +7831,6 @@ be set for other request types.
         "properties": {
           "webhook": {
             "display-name": "webhook",
-            "docs": undefined,
             "type": "webhook",
           },
         },
@@ -7944,7 +7848,6 @@ be set for other request types.
         "properties": {
           "webhook": {
             "display-name": "webhook",
-            "docs": undefined,
             "type": "webhook",
           },
         },
@@ -7956,7 +7859,6 @@ be set for other request types.
         "docs": "The response to listing the webhooks.",
         "properties": {
           "webhooks": {
-            "display-name": undefined,
             "docs": "The list of webhooks.",
             "type": "list<webhook>",
           },
@@ -8012,7 +7914,6 @@ event types. Note this is mutually exclusive with 'add' and
         "properties": {
           "webhook": {
             "display-name": "webhook",
-            "docs": undefined,
             "type": "webhook",
           },
         },
@@ -8036,7 +7937,6 @@ event types. Note this is mutually exclusive with 'add' and
             "type": "optional<string>",
           },
           "owned_by": {
-            "display-name": undefined,
             "docs": "The users that own the work.",
             "type": "list<UserSummary>",
           },
@@ -8091,7 +7991,6 @@ issues.
             "type": "optional<string>",
           },
           "owned_by": {
-            "display-name": undefined,
             "docs": "The users that own the work.",
             "type": "list<string>",
           },
@@ -8122,12 +8021,10 @@ issues.
         "union": {
           "issue": {
             "display-name": "works-create-request-issue",
-            "docs": undefined,
             "type": "WorksCreateRequestIssue",
           },
           "ticket": {
             "display-name": "works-create-request-ticket",
-            "docs": undefined,
             "type": "WorksCreateRequestTicket",
           },
         },
@@ -8176,7 +8073,6 @@ issues.
         "properties": {
           "work": {
             "display-name": "work",
-            "docs": undefined,
             "type": "work",
           },
         },
@@ -8192,7 +8088,6 @@ issues.
         "docs": undefined,
         "properties": {
           "works": {
-            "display-name": undefined,
             "docs": "The resulting collection of work items.",
             "type": "list<work>",
           },
@@ -8206,7 +8101,6 @@ issues.
         "properties": {
           "work": {
             "display-name": "work",
-            "docs": undefined,
             "type": "work",
           },
         },
@@ -8232,7 +8126,6 @@ sort order. If not set, then no prior elements exist.
             "type": "optional<string>",
           },
           "works": {
-            "display-name": undefined,
             "docs": "The list of works.",
             "type": "list<work>",
           },
@@ -8282,17 +8175,14 @@ sort order. If not set, then no prior elements exist.
         "union": {
           "issue": {
             "display-name": "works-update-request-issue",
-            "docs": undefined,
             "type": "WorksUpdateRequestIssue",
           },
           "none": {
             "display-name": "empty",
-            "docs": undefined,
             "type": "empty",
           },
           "ticket": {
             "display-name": "works-update-request-ticket",
-            "docs": undefined,
             "type": "WorksUpdateRequestTicket",
           },
         },
@@ -8397,7 +8287,6 @@ empty.
         "properties": {
           "work": {
             "display-name": "work",
-            "docs": undefined,
             "type": "work",
           },
         },
@@ -8449,7 +8338,6 @@ empty.
           "capability": "Capability",
           "enhancement": {
             "display-name": "enhancement",
-            "docs": undefined,
             "type": "enhancement",
           },
           "feature": "Feature",
@@ -8555,12 +8443,10 @@ unique.
         "union": {
           "issue": {
             "display-name": "issue",
-            "docs": undefined,
             "type": "issue",
           },
           "ticket": {
             "display-name": "ticket",
-            "docs": undefined,
             "type": "ticket",
           },
         },
@@ -8755,7 +8641,6 @@ enterprise connections can be created by an organization.
             "request": {
               "body": {
                 "display-name": "dev-org-auth-connections-create-request",
-                "docs": undefined,
                 "type": "root.DevOrgAuthConnectionsCreateRequest",
               },
             },
@@ -8978,7 +8863,6 @@ disabled.
             "request": {
               "body": {
                 "display-name": "dev-org-auth-connections-update-request",
-                "docs": undefined,
                 "type": "root.DevOrgAuthConnectionsUpdateRequest",
               },
             },
@@ -9725,7 +9609,6 @@ used.
             "request": {
               "body": {
                 "display-name": "parts-create-request",
-                "docs": undefined,
                 "type": "root.PartsCreateRequest",
               },
             },
@@ -10065,7 +9948,6 @@ used.
             "request": {
               "body": {
                 "display-name": "parts-update-request",
-                "docs": undefined,
                 "type": "root.PartsUpdateRequest",
               },
             },
@@ -11020,7 +10902,6 @@ tags.
             "request": {
               "body": {
                 "display-name": "timeline-entries-create-request",
-                "docs": undefined,
                 "type": "root.TimelineEntriesCreateRequest",
               },
             },
@@ -11267,7 +11148,6 @@ used.
             "request": {
               "body": {
                 "display-name": "timeline-entries-update-request",
-                "docs": undefined,
                 "type": "root.TimelineEntriesUpdateRequest",
               },
             },
@@ -11809,7 +11689,6 @@ won't receive any object events until successfully verified.
             "request": {
               "body": {
                 "display-name": "works-create-request",
-                "docs": undefined,
                 "type": "root.WorksCreateRequest",
               },
             },
@@ -12399,7 +12278,6 @@ organizations.
             "request": {
               "body": {
                 "display-name": "works-update-request",
-                "docs": undefined,
                 "type": "root.WorksUpdateRequest",
               },
             },
@@ -12456,7 +12334,6 @@ organizations.
     "types": {
       "ArtifactSummary": {
         "display-name": "atom-base-summary",
-        "docs": undefined,
         "type": "AtomBaseSummary",
       },
       "ArtifactsLocateResponse": {
@@ -12480,7 +12357,6 @@ organizations.
         "docs": "The response to preparing a URL to upload a file.",
         "properties": {
           "form_data": {
-            "display-name": undefined,
             "docs": "The POST policy form data.",
             "type": "list<ArtifactsPrepareResponseFormData>",
           },
@@ -12599,27 +12475,22 @@ authentication connection that is set up for a Dev organization.
         "union": {
           "google_apps": {
             "display-name": "auth-connection-options-google-apps",
-            "docs": undefined,
             "type": "AuthConnectionOptionsGoogleApps",
           },
           "oidc": {
             "display-name": "auth-connection-options-oidc",
-            "docs": undefined,
             "type": "AuthConnectionOptionsOidc",
           },
           "samlp": {
             "display-name": "auth-connection-options-saml",
-            "docs": undefined,
             "type": "AuthConnectionOptionsSaml",
           },
           "social": {
             "display-name": "auth-connection-options-social",
-            "docs": undefined,
             "type": "AuthConnectionOptionsSocial",
           },
           "waad": {
             "display-name": "auth-connection-options-azure-ad",
-            "docs": undefined,
             "type": "AuthConnectionOptionsAzureAd",
           },
         },
@@ -12897,7 +12768,6 @@ token. Only applicable for application access tokens.
         },
       },
       "AuthTokenTokenType": {
-        "display-name": undefined,
         "docs": "The type of the issued token. Bearer is the only supported token type.
 ",
         "type": "literal<"bearer">",
@@ -12950,7 +12820,6 @@ of values in which the order of values does not matter.
         "properties": {
           "token": {
             "display-name": "auth-token",
-            "docs": undefined,
             "type": "AuthToken",
           },
         },
@@ -12962,7 +12831,6 @@ of values in which the order of values does not matter.
         "docs": "The response to list the token metadata.",
         "properties": {
           "tokens": {
-            "display-name": undefined,
             "docs": "The list of token metadata.",
             "type": "list<AuthToken>",
           },
@@ -13026,7 +12894,6 @@ issue a Rev session token.
         "properties": {
           "token": {
             "display-name": "auth-token",
-            "docs": undefined,
             "type": "AuthToken",
           },
         },
@@ -13059,12 +12926,10 @@ issue a Rev session token.
       },
       "Capability": {
         "display-name": "part-base",
-        "docs": undefined,
         "type": "PartBase",
       },
       "CapabilitySummary": {
         "display-name": "part-base-summary",
-        "docs": undefined,
         "type": "PartBaseSummary",
       },
       "DevOrgAuthConnectionsCreateRequest": {
@@ -13089,22 +12954,18 @@ it would appear on the login button as 'Log in to abclogin'.
         "union": {
           "google_apps": {
             "display-name": "auth-connection-options-google-apps",
-            "docs": undefined,
             "type": "AuthConnectionOptionsGoogleApps",
           },
           "oidc": {
             "display-name": "auth-connection-options-oidc",
-            "docs": undefined,
             "type": "AuthConnectionOptionsOidc",
           },
           "samlp": {
             "display-name": "auth-connection-options-saml",
-            "docs": undefined,
             "type": "AuthConnectionOptionsSaml",
           },
           "waad": {
             "display-name": "auth-connection-options-azure-ad",
-            "docs": undefined,
             "type": "AuthConnectionOptionsAzureAd",
           },
         },
@@ -13130,7 +12991,6 @@ connection.
         "properties": {
           "auth_connection": {
             "display-name": "auth-connection",
-            "docs": undefined,
             "type": "AuthConnection",
           },
         },
@@ -13145,7 +13005,6 @@ authentication connection.
         "properties": {
           "auth_connection": {
             "display-name": "auth-connection",
-            "docs": undefined,
             "type": "AuthConnection",
           },
         },
@@ -13159,7 +13018,6 @@ authentication connections configured for a Dev organization.
 ",
         "properties": {
           "auth_connections": {
-            "display-name": undefined,
             "docs": "List of all the authentication connections currently configured for
 a Dev organization.
 ",
@@ -13198,27 +13056,22 @@ organization.
         "union": {
           "google_apps": {
             "display-name": "auth-connection-options-google-apps",
-            "docs": undefined,
             "type": "AuthConnectionOptionsGoogleApps",
           },
           "none": {
             "display-name": "empty",
-            "docs": undefined,
             "type": "empty",
           },
           "oidc": {
             "display-name": "auth-connection-options-oidc",
-            "docs": undefined,
             "type": "AuthConnectionOptionsOidc",
           },
           "samlp": {
             "display-name": "auth-connection-options-saml",
-            "docs": undefined,
             "type": "AuthConnectionOptionsSaml",
           },
           "waad": {
             "display-name": "auth-connection-options-azure-ad",
-            "docs": undefined,
             "type": "AuthConnectionOptionsAzureAd",
           },
         },
@@ -13246,7 +13099,6 @@ connection.
         "properties": {
           "auth_connection": {
             "display-name": "auth-connection",
-            "docs": undefined,
             "type": "AuthConnection",
           },
         },
@@ -13271,14 +13123,12 @@ connection.
       },
       "DevUserSummary": {
         "display-name": "user-base-summary",
-        "docs": undefined,
         "type": "UserBaseSummary",
       },
       "DevUsersListResponse": {
         "docs": "The response to listing the Dev users.",
         "properties": {
           "dev_users": {
-            "display-name": undefined,
             "docs": "The list of Dev users.",
             "type": "list<DevUser>",
           },
@@ -13307,7 +13157,6 @@ sort order. If not set, then no prior elements exist.
         "properties": {
           "dev_user": {
             "display-name": "dev-user",
-            "docs": undefined,
             "type": "DevUser",
           },
         },
@@ -13317,7 +13166,6 @@ sort order. If not set, then no prior elements exist.
       },
       "EnhancementSummary": {
         "display-name": "part-base-summary",
-        "docs": undefined,
         "type": "PartBaseSummary",
       },
       "ErrorBadRequest": {
@@ -13338,7 +13186,6 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "allowed_values": {
-            "display-name": undefined,
             "docs": "The allowed values for the field.",
             "type": "list<string>",
           },
@@ -13508,7 +13355,6 @@ sort order. If not set, then no prior elements exist.
         "properties": {
           "part": {
             "display-name": "part",
-            "docs": undefined,
             "type": "part",
           },
         },
@@ -13533,7 +13379,6 @@ sort order. If not set, then no prior elements exist.
         "properties": {
           "part": {
             "display-name": "part",
-            "docs": undefined,
             "type": "part",
           },
         },
@@ -13546,7 +13391,6 @@ sort order. If not set, then no prior elements exist.
         "properties": {
           "rev_org": {
             "display-name": "rev-org",
-            "docs": undefined,
             "type": "RevOrg",
           },
         },
@@ -13571,7 +13415,6 @@ sort order. If not set, then no prior elements exist.
         "properties": {
           "rev_org": {
             "display-name": "rev-org",
-            "docs": undefined,
             "type": "RevOrg",
           },
         },
@@ -13584,7 +13427,6 @@ sort order. If not set, then no prior elements exist.
         "properties": {
           "tag": {
             "display-name": "tag",
-            "docs": undefined,
             "type": "tag",
           },
         },
@@ -13609,7 +13451,6 @@ sort order. If not set, then no prior elements exist.
         "properties": {
           "tag": {
             "display-name": "tag",
-            "docs": undefined,
             "type": "tag",
           },
         },
@@ -13622,7 +13463,6 @@ sort order. If not set, then no prior elements exist.
         "properties": {
           "entry": {
             "display-name": "timeline-entry",
-            "docs": undefined,
             "type": "TimelineEntry",
           },
         },
@@ -13647,7 +13487,6 @@ sort order. If not set, then no prior elements exist.
         "properties": {
           "entry": {
             "display-name": "timeline-entry",
-            "docs": undefined,
             "type": "TimelineEntry",
           },
         },
@@ -13660,7 +13499,6 @@ sort order. If not set, then no prior elements exist.
         "properties": {
           "webhook": {
             "display-name": "webhook",
-            "docs": undefined,
             "type": "webhook",
           },
         },
@@ -13685,7 +13523,6 @@ sort order. If not set, then no prior elements exist.
         "properties": {
           "webhook": {
             "display-name": "webhook",
-            "docs": undefined,
             "type": "webhook",
           },
         },
@@ -13698,7 +13535,6 @@ sort order. If not set, then no prior elements exist.
         "properties": {
           "work": {
             "display-name": "work",
-            "docs": undefined,
             "type": "work",
           },
         },
@@ -13723,7 +13559,6 @@ sort order. If not set, then no prior elements exist.
         "properties": {
           "work": {
             "display-name": "work",
-            "docs": undefined,
             "type": "work",
           },
         },
@@ -13738,17 +13573,14 @@ sort order. If not set, then no prior elements exist.
       },
       "Feature": {
         "display-name": "part-base",
-        "docs": undefined,
         "type": "PartBase",
       },
       "FeatureSummary": {
         "display-name": "part-base-summary",
-        "docs": undefined,
         "type": "PartBaseSummary",
       },
       "GroupSummary": {
         "display-name": "atom-base-summary",
-        "docs": undefined,
         "type": "AtomBaseSummary",
       },
       "IssuePriority": {
@@ -13853,7 +13685,6 @@ always be returned in the specified sort-by order.
             "type": "string",
           },
           "owned_by": {
-            "display-name": undefined,
             "docs": "The users that own the part.",
             "type": "list<UserSummary>",
           },
@@ -13920,7 +13751,6 @@ always be returned in the specified sort-by order.
             "type": "string",
           },
           "owned_by": {
-            "display-name": undefined,
             "docs": "The users that own the part.",
             "type": "list<string>",
           },
@@ -13934,22 +13764,18 @@ always be returned in the specified sort-by order.
         "union": {
           "capability": {
             "display-name": "parts-create-request-capability",
-            "docs": undefined,
             "type": "PartsCreateRequestCapability",
           },
           "enhancement": {
             "display-name": "parts-create-request-enhancement",
-            "docs": undefined,
             "type": "PartsCreateRequestEnhancement",
           },
           "feature": {
             "display-name": "parts-create-request-feature",
-            "docs": undefined,
             "type": "PartsCreateRequestFeature",
           },
           "product": {
             "display-name": "parts-create-request-product",
-            "docs": undefined,
             "type": "PartsCreateRequestProduct",
           },
         },
@@ -13958,7 +13784,6 @@ always be returned in the specified sort-by order.
         "docs": undefined,
         "properties": {
           "parent_part": {
-            "display-name": undefined,
             "docs": "ID of the parent product for the capability.",
             "type": "list<string>",
           },
@@ -13971,7 +13796,6 @@ always be returned in the specified sort-by order.
         "docs": undefined,
         "properties": {
           "parent_part": {
-            "display-name": undefined,
             "docs": "ID of the parent part on which the enhancement is to be created.
 ",
             "type": "list<string>",
@@ -13991,7 +13815,6 @@ always be returned in the specified sort-by order.
         "docs": undefined,
         "properties": {
           "parent_part": {
-            "display-name": undefined,
             "docs": "ID of the parent capability/feature for the feature.",
             "type": "list<string>",
           },
@@ -14009,7 +13832,6 @@ always be returned in the specified sort-by order.
         "properties": {
           "part": {
             "display-name": "part",
-            "docs": undefined,
             "type": "part",
           },
         },
@@ -14026,7 +13848,6 @@ always be returned in the specified sort-by order.
         "properties": {
           "part": {
             "display-name": "part",
-            "docs": undefined,
             "type": "part",
           },
         },
@@ -14045,7 +13866,6 @@ sort order. If not set, then no later elements exist.
             "type": "optional<string>",
           },
           "parts": {
-            "display-name": undefined,
             "docs": "The list of parts.",
             "type": "list<part>",
           },
@@ -14087,27 +13907,22 @@ sort order. If not set, then no prior elements exist.
         "union": {
           "capability": {
             "display-name": "parts-update-request-capability",
-            "docs": undefined,
             "type": "PartsUpdateRequestCapability",
           },
           "enhancement": {
             "display-name": "parts-update-request-enhancement",
-            "docs": undefined,
             "type": "PartsUpdateRequestEnhancement",
           },
           "feature": {
             "display-name": "parts-update-request-feature",
-            "docs": undefined,
             "type": "PartsUpdateRequestFeature",
           },
           "none": {
             "display-name": "empty",
-            "docs": undefined,
             "type": "empty",
           },
           "product": {
             "display-name": "parts-update-request-product",
-            "docs": undefined,
             "type": "PartsUpdateRequestProduct",
           },
         },
@@ -14157,7 +13972,6 @@ empty.
         "properties": {
           "part": {
             "display-name": "part",
-            "docs": undefined,
             "type": "part",
           },
         },
@@ -14167,12 +13981,10 @@ empty.
       },
       "Product": {
         "display-name": "part-base",
-        "docs": undefined,
         "type": "PartBase",
       },
       "ProductSummary": {
         "display-name": "part-base-summary",
-        "docs": undefined,
         "type": "PartBaseSummary",
       },
       "RevOrg": {
@@ -14204,7 +14016,6 @@ organization.
       },
       "RevOrgSummary": {
         "display-name": "org-base-summary",
-        "docs": undefined,
         "type": "OrgBaseSummary",
       },
       "RevOrgsCreateResponse": {
@@ -14213,7 +14024,6 @@ organization.
         "properties": {
           "rev_org": {
             "display-name": "rev-org",
-            "docs": undefined,
             "type": "RevOrg",
           },
         },
@@ -14231,7 +14041,6 @@ organization.
         "properties": {
           "rev_org": {
             "display-name": "rev-org",
-            "docs": undefined,
             "type": "RevOrg",
           },
         },
@@ -14258,7 +14067,6 @@ sort order. If not set, then no prior elements exist.
             "type": "optional<string>",
           },
           "rev_orgs": {
-            "display-name": undefined,
             "docs": "List with all of the Rev organizations' information.",
             "type": "list<RevOrg>",
           },
@@ -14272,7 +14080,6 @@ sort order. If not set, then no prior elements exist.
         "properties": {
           "rev_org": {
             "display-name": "rev-org",
-            "docs": undefined,
             "type": "RevOrg",
           },
         },
@@ -14349,7 +14156,6 @@ the value must be one that's specified in the tag's allowed values.
       },
       "SysUserSummary": {
         "display-name": "user-base-summary",
-        "docs": undefined,
         "type": "UserBaseSummary",
       },
       "TagSummary": {
@@ -14375,7 +14181,6 @@ unique.
         "properties": {
           "tag": {
             "display-name": "tag-summary",
-            "docs": undefined,
             "type": "TagSummary",
           },
           "value": {
@@ -14393,7 +14198,6 @@ unique.
         "properties": {
           "tag": {
             "display-name": "tag",
-            "docs": undefined,
             "type": "tag",
           },
         },
@@ -14411,7 +14215,6 @@ unique.
         "properties": {
           "tag": {
             "display-name": "tag",
-            "docs": undefined,
             "type": "tag",
           },
         },
@@ -14437,7 +14240,6 @@ sort order. If not set, then no prior elements exist.
             "type": "optional<string>",
           },
           "tags": {
-            "display-name": undefined,
             "docs": "The list of tags.",
             "type": "list<tag>",
           },
@@ -14464,7 +14266,6 @@ sort order. If not set, then no prior elements exist.
         "properties": {
           "tag": {
             "display-name": "tag",
-            "docs": undefined,
             "type": "tag",
           },
         },
@@ -14538,7 +14339,6 @@ will appear in the response.
         "union": {
           "timeline_comment": {
             "display-name": "timeline-entries-create-request-timeline-comment",
-            "docs": undefined,
             "type": "TimelineEntriesCreateRequestTimelineComment",
           },
         },
@@ -14576,7 +14376,6 @@ will appear in the response.
         "properties": {
           "timeline_entry": {
             "display-name": "timeline-entry",
-            "docs": undefined,
             "type": "TimelineEntry",
           },
         },
@@ -14589,7 +14388,6 @@ will appear in the response.
         "properties": {
           "timeline_entry": {
             "display-name": "timeline-entry",
-            "docs": undefined,
             "type": "TimelineEntry",
           },
         },
@@ -14615,7 +14413,6 @@ sort order. If not set, then no prior elements exist.
             "type": "optional<string>",
           },
           "timeline_entries": {
-            "display-name": undefined,
             "docs": "The timeline entries for the object.",
             "type": "list<TimelineEntry>",
           },
@@ -14641,7 +14438,6 @@ sort order. If not set, then no prior elements exist.
         "union": {
           "timeline_comment": {
             "display-name": "timeline-entries-update-request-timeline-comment",
-            "docs": undefined,
             "type": "TimelineEntriesUpdateRequestTimelineComment",
           },
         },
@@ -14706,7 +14502,6 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
         "properties": {
           "timeline_entry": {
             "display-name": "timeline-entry",
-            "docs": undefined,
             "type": "TimelineEntry",
           },
         },
@@ -14726,19 +14521,16 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
         "union": {
           "timeline_comment": {
             "display-name": "timeline-comment",
-            "docs": undefined,
             "type": "TimelineComment",
           },
         },
       },
       "TimelineEntryBase": {
         "display-name": "atom-base",
-        "docs": undefined,
         "type": "AtomBase",
       },
       "TimelineEntryType": "literal<"timeline_comment">",
       "TimelineEntryVisibility": {
-        "display-name": undefined,
         "docs": "The visibility of the entry. If 'private', then the entry is only
 visible to the creator, otherwise if not set, then the entry has
 default visibility.
@@ -14827,7 +14619,6 @@ default visibility.
           "dev_user": "DevUserSummary",
           "rev_user": {
             "display-name": "rev-user-summary",
-            "docs": undefined,
             "type": "RevUserSummary",
           },
           "sys_user": "SysUserSummary",
@@ -15030,7 +14821,6 @@ be set for other request types.
         "properties": {
           "webhook": {
             "display-name": "webhook",
-            "docs": undefined,
             "type": "webhook",
           },
         },
@@ -15048,7 +14838,6 @@ be set for other request types.
         "properties": {
           "webhook": {
             "display-name": "webhook",
-            "docs": undefined,
             "type": "webhook",
           },
         },
@@ -15060,7 +14849,6 @@ be set for other request types.
         "docs": "The response to listing the webhooks.",
         "properties": {
           "webhooks": {
-            "display-name": undefined,
             "docs": "The list of webhooks.",
             "type": "list<webhook>",
           },
@@ -15116,7 +14904,6 @@ event types. Note this is mutually exclusive with 'add' and
         "properties": {
           "webhook": {
             "display-name": "webhook",
-            "docs": undefined,
             "type": "webhook",
           },
         },
@@ -15140,7 +14927,6 @@ event types. Note this is mutually exclusive with 'add' and
             "type": "optional<string>",
           },
           "owned_by": {
-            "display-name": undefined,
             "docs": "The users that own the work.",
             "type": "list<UserSummary>",
           },
@@ -15195,7 +14981,6 @@ issues.
             "type": "optional<string>",
           },
           "owned_by": {
-            "display-name": undefined,
             "docs": "The users that own the work.",
             "type": "list<string>",
           },
@@ -15226,12 +15011,10 @@ issues.
         "union": {
           "issue": {
             "display-name": "works-create-request-issue",
-            "docs": undefined,
             "type": "WorksCreateRequestIssue",
           },
           "ticket": {
             "display-name": "works-create-request-ticket",
-            "docs": undefined,
             "type": "WorksCreateRequestTicket",
           },
         },
@@ -15280,7 +15063,6 @@ issues.
         "properties": {
           "work": {
             "display-name": "work",
-            "docs": undefined,
             "type": "work",
           },
         },
@@ -15296,7 +15078,6 @@ issues.
         "docs": undefined,
         "properties": {
           "works": {
-            "display-name": undefined,
             "docs": "The resulting collection of work items.",
             "type": "list<work>",
           },
@@ -15310,7 +15091,6 @@ issues.
         "properties": {
           "work": {
             "display-name": "work",
-            "docs": undefined,
             "type": "work",
           },
         },
@@ -15336,7 +15116,6 @@ sort order. If not set, then no prior elements exist.
             "type": "optional<string>",
           },
           "works": {
-            "display-name": undefined,
             "docs": "The list of works.",
             "type": "list<work>",
           },
@@ -15386,17 +15165,14 @@ sort order. If not set, then no prior elements exist.
         "union": {
           "issue": {
             "display-name": "works-update-request-issue",
-            "docs": undefined,
             "type": "WorksUpdateRequestIssue",
           },
           "none": {
             "display-name": "empty",
-            "docs": undefined,
             "type": "empty",
           },
           "ticket": {
             "display-name": "works-update-request-ticket",
-            "docs": undefined,
             "type": "WorksUpdateRequestTicket",
           },
         },
@@ -15501,7 +15277,6 @@ empty.
         "properties": {
           "work": {
             "display-name": "work",
-            "docs": undefined,
             "type": "work",
           },
         },
@@ -15553,7 +15328,6 @@ empty.
           "capability": "Capability",
           "enhancement": {
             "display-name": "enhancement",
-            "docs": undefined,
             "type": "enhancement",
           },
           "feature": "Feature",
@@ -15659,12 +15433,10 @@ unique.
         "union": {
           "issue": {
             "display-name": "issue",
-            "docs": undefined,
             "type": "issue",
           },
           "ticket": {
             "display-name": "ticket",
-            "docs": undefined,
             "type": "ticket",
           },
         },
