@@ -800,9 +800,9 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "{\n\t\t\t$FERN_INPUT\n\t\t}",
+                                        "templateString": "$FERN_INPUT",
                                         "isOptional": true,
-                                        "inputDelimiter": ",\n\t\t\t",
+                                        "inputDelimiter": ",\n\t\t",
                                         "templateInputs": [
                                             {
                                                 "value": {
@@ -1115,9 +1115,9 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "{\n\t\t\t$FERN_INPUT\n\t\t}",
+                                        "templateString": "$FERN_INPUT",
                                         "isOptional": true,
-                                        "inputDelimiter": ",\n\t\t\t",
+                                        "inputDelimiter": ",\n\t\t",
                                         "templateInputs": [
                                             {
                                                 "value": {
@@ -1255,9 +1255,9 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "{\n\t\t\t$FERN_INPUT\n\t\t}",
+                                        "templateString": "$FERN_INPUT",
                                         "isOptional": true,
-                                        "inputDelimiter": ",\n\t\t\t",
+                                        "inputDelimiter": ",\n\t\t",
                                         "templateInputs": [
                                             {
                                                 "value": {
@@ -1395,9 +1395,9 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "{\n\t\t\t$FERN_INPUT\n\t\t}",
+                                        "templateString": "$FERN_INPUT",
                                         "isOptional": true,
-                                        "inputDelimiter": ",\n\t\t\t",
+                                        "inputDelimiter": ",\n\t\t",
                                         "templateInputs": [
                                             {
                                                 "value": {
@@ -1845,9 +1845,9 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "{\n\t\t\t$FERN_INPUT\n\t\t}",
+                                        "templateString": "$FERN_INPUT",
                                         "isOptional": true,
-                                        "inputDelimiter": ",\n\t\t\t",
+                                        "inputDelimiter": ",\n\t\t",
                                         "templateInputs": [
                                             {
                                                 "value": {
@@ -2195,9 +2195,9 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "{\n\t\t\t$FERN_INPUT\n\t\t}",
+                                        "templateString": "$FERN_INPUT",
                                         "isOptional": true,
-                                        "inputDelimiter": ",\n\t\t\t",
+                                        "inputDelimiter": ",\n\t\t",
                                         "templateInputs": [
                                             {
                                                 "value": {
@@ -2307,9 +2307,9 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "{\n\t\t\t$FERN_INPUT\n\t\t}",
+                                        "templateString": "$FERN_INPUT",
                                         "isOptional": true,
-                                        "inputDelimiter": ",\n\t\t\t",
+                                        "inputDelimiter": ",\n\t\t",
                                         "templateInputs": [
                                             {
                                                 "value": {
@@ -2467,9 +2467,9 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "{\n\t\t\t$FERN_INPUT\n\t\t}",
+                                        "templateString": "$FERN_INPUT",
                                         "isOptional": true,
-                                        "inputDelimiter": ",\n\t\t\t",
+                                        "inputDelimiter": ",\n\t\t",
                                         "templateInputs": [
                                             {
                                                 "value": {
@@ -2873,9 +2873,9 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "{\n\t\t\t$FERN_INPUT\n\t\t}",
+                                        "templateString": "$FERN_INPUT",
                                         "isOptional": true,
-                                        "inputDelimiter": ",\n\t\t\t",
+                                        "inputDelimiter": ",\n\t\t",
                                         "templateInputs": [
                                             {
                                                 "value": {

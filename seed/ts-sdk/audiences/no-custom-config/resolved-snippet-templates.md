@@ -28,6 +28,8 @@ const client = new SeedAudiencesClient({
 });
 await client.foo.find({
   optionalString: "string",
+  publicProperty: "string",
+  privateProperty: 1,
 });
  
 ```                        

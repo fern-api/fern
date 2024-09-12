@@ -1,17 +1,29 @@
 ```python
-
+from seed import Column
 
 client = SeedApi(base_url="https://yourhost.com/path/to/api", )        
-undefined
+client.dataservice.upload(
+	columns=[
+		Column(
+			id="id"
+		)
+	]
+)
  
 ```                        
 
 
 ```python
-
+from seed import Column
 
 client = SeedApi(base_url="https://yourhost.com/path/to/api", )        
-undefined
+client.dataservice.upload(
+	columns=[
+		Column(
+			id="id"
+		)
+	]
+)
  
 ```                        
 
@@ -100,7 +112,9 @@ client.dataservice.list(
 
 
 client = SeedApi(base_url="https://yourhost.com/path/to/api", )        
-undefined
+client.dataservice.query(
+	top_k=1
+)
  
 ```                        
 
@@ -109,7 +123,9 @@ undefined
 
 
 client = SeedApi(base_url="https://yourhost.com/path/to/api", )        
-undefined
+client.dataservice.query(
+	top_k=1
+)
  
 ```                        
 
@@ -118,7 +134,9 @@ undefined
 
 
 client = SeedApi(base_url="https://yourhost.com/path/to/api", )        
-undefined
+client.dataservice.update(
+	id="id"
+)
  
 ```                        
 
@@ -127,7 +145,9 @@ undefined
 
 
 client = SeedApi(base_url="https://yourhost.com/path/to/api", )        
-undefined
+client.dataservice.update(
+	id="id"
+)
  
 ```                        
 

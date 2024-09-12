@@ -2,7 +2,9 @@
 
 
 client = SeedMixedFileDirectory(base_url="https://yourhost.com/path/to/api", )        
-undefined
+client.organization.create(
+	name="string"
+)
  
 ```                        
 

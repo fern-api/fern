@@ -2,7 +2,9 @@
 
 
 client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )        
-undefined
+client.headers.send(
+	query="What is the weather today"
+)
  
 ```                        
 
@@ -11,7 +13,9 @@ undefined
 
 
 client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )        
-undefined
+client.headers.send(
+	query="What is the weather today"
+)
  
 ```                        
 
@@ -21,6 +25,8 @@ undefined
 
 client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )        
 client.inlined.send(
+	query="What is the weather today",
+	temperature=10.1,
 	object_with_literal={
 		"nested_literal": {
 			
@@ -36,6 +42,8 @@ client.inlined.send(
 
 client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )        
 client.inlined.send(
+	query="What is the weather today",
+	temperature=10.1,
 	object_with_literal={
 		"nested_literal": {
 			
@@ -94,7 +102,9 @@ client.query.send(
 
 
 client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )        
-undefined
+client.reference.send(
+	query="What is the weather today"
+)
  
 ```                        
 
@@ -103,7 +113,9 @@ undefined
 
 
 client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )        
-undefined
+client.reference.send(
+	query="What is the weather today"
+)
  
 ```                        
 

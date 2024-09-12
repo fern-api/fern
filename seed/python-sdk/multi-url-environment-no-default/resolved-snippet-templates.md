@@ -3,7 +3,9 @@ from seed import SeedMultiUrlEnvironmentNoDefault
 from seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment
 
 client = SeedMultiUrlEnvironmentNoDefault(environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
-undefined
+client.ec_2.boot_instance(
+	size="string"
+)
  
 ```                        
 
@@ -13,7 +15,9 @@ from seed import SeedMultiUrlEnvironmentNoDefault
 from seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment
 
 client = SeedMultiUrlEnvironmentNoDefault(environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION, token="YOUR_TOKEN", )        
-undefined
+client.s_3.get_presigned_url(
+	s_3_key="string"
+)
  
 ```                        
 

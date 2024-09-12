@@ -177,7 +177,7 @@ export async function writeResolvedSnippetsJson({
                             value: parameter.value.jsonExample
                         };
                     }),
-                    requestBody: example.example?.request
+                    requestBody: example.example?.request?.jsonExample
                 });
                 switch (snippet.type) {
                     case "typescript":

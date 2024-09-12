@@ -25,7 +25,9 @@ client.folder_d.service.get_direct_thread(
 
 client = SeedAudiences(environment=SeedAudiencesEnvironment.ENVIRONMENT_A, )        
 client.foo.find(
-	optional_string="string"
+	optional_string="string",
+	public_property="string",
+	private_property=1
 )
  
 ```                        

@@ -28,6 +28,8 @@ const client = new SeedCrossPackageTypeNamesClient({
 });
 await client.foo.find({
   optionalString: "string",
+  publicProperty: "string",
+  privateProperty: 1,
 });
  
 ```                        

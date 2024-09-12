@@ -2,7 +2,10 @@
 from seed import SeedApi
 
 client = SeedApi(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
-undefined
+client.imdb.create_movie(
+	title="string",
+	rating=1.1
+)
  
 ```                        
 

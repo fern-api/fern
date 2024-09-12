@@ -1,11 +1,14 @@
 ```typescript
 import { SeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({
-  environment: "YOUR_BASE_URL",
-  token: "YOUR_TOKEN",
-});
-undefined;
+const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+await client.endpoints.container.getAndReturnListOfPrimitives(
+	{
+		[
+			"string"
+		]
+	}
+)
  
 ```                        
 
@@ -13,11 +16,16 @@ undefined;
 ```typescript
 import { SeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({
-  environment: "YOUR_BASE_URL",
-  token: "YOUR_TOKEN",
-});
-undefined;
+const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+await client.endpoints.container.getAndReturnListOfObjects(
+	{
+		[
+			{
+				string: "string"
+			}
+		]
+	}
+)
  
 ```                        
 
@@ -25,11 +33,14 @@ undefined;
 ```typescript
 import { SeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({
-  environment: "YOUR_BASE_URL",
-  token: "YOUR_TOKEN",
-});
-undefined;
+const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+await client.endpoints.container.getAndReturnSetOfPrimitives(
+	{
+		new Set([
+			"string"
+		])
+	}
+)
  
 ```                        
 
@@ -37,11 +48,16 @@ undefined;
 ```typescript
 import { SeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({
-  environment: "YOUR_BASE_URL",
-  token: "YOUR_TOKEN",
-});
-undefined;
+const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+await client.endpoints.container.getAndReturnSetOfObjects(
+	{
+		new Set([
+			{
+				string: "string"
+			}
+		])
+	}
+)
  
 ```                        
 
@@ -53,10 +69,7 @@ const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "
 await client.endpoints.container.getAndReturnMapPrimToPrim(
 	{
 		{
-			"jsonExample": {"string":"string"},
-			"shape": {"container":{"map":[{"key":{"jsonExample":"string","shape":{"primitive":{"string":{"original":"string"},"type":"string"},"type":"primitive"}},"value":{"jsonExample":"string","shape":{"primitive":{"string":{"original":"string"},"type":"string"},"type":"primitive"}}}],"keyType":{"primitive":{"v1":"STRING","v2":{"type":"string"}},"type":"primitive"},"valueType":{"primitive":{"v1":"STRING","v2":{"type":"string"}},"type":"primitive"},"type":"map"},"type":"container"},
-			"type": "reference",
-			"_visit": 
+			"string": "string"
 		}
 	}
 )
@@ -71,8 +84,8 @@ const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "
 await client.endpoints.container.getAndReturnMapOfPrimToObject(
 	{
 		{
-			"jsonExample": {
-				string: {"string":"string"}
+			"string": {
+				string: "string"
 			}
 		}
 	}
@@ -88,7 +101,9 @@ const client = new SeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
-undefined;
+await client.endpoints.container.getAndReturnOptional({
+  string: "string",
+});
  
 ```                        
 
@@ -124,7 +139,9 @@ const client = new SeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
-undefined;
+await client.endpoints.httpMethods.testPost({
+  string: "string",
+});
  
 ```                        
 
@@ -136,7 +153,9 @@ const client = new SeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
-await client.endpoints.httpMethods.testPut("string");
+await client.endpoints.httpMethods.testPut("string", {
+  string: "string",
+});
  
 ```                        
 
@@ -148,7 +167,23 @@ const client = new SeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
-await client.endpoints.httpMethods.testPatch("string");
+await client.endpoints.httpMethods.testPatch("string", {
+  string: "string",
+  integer: 1,
+  long: 1000000,
+  double: 1.1,
+  bool: true,
+  datetime: "2024-01-15T09:30:00Z",
+  date: "2023-01-15",
+  uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+  base64: "SGVsbG8gd29ybGQh",
+  list: ["string"],
+  set: new Set(["string"]),
+  map: {
+    1: "string",
+  },
+  bigint: "123456789123456789",
+});
  
 ```                        
 
@@ -172,7 +207,23 @@ const client = new SeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
-undefined;
+await client.endpoints.object.getAndReturnWithOptionalField({
+  string: "string",
+  integer: 1,
+  long: 1000000,
+  double: 1.1,
+  bool: true,
+  datetime: "2024-01-15T09:30:00Z",
+  date: "2023-01-15",
+  uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+  base64: "SGVsbG8gd29ybGQh",
+  list: ["string"],
+  set: new Set(["string"]),
+  map: {
+    1: "string",
+  },
+  bigint: "123456789123456789",
+});
  
 ```                        
 
@@ -184,7 +235,9 @@ const client = new SeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
-undefined;
+await client.endpoints.object.getAndReturnWithRequiredField({
+  string: "string",
+});
  
 ```                        
 
@@ -196,7 +249,13 @@ const client = new SeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
-undefined;
+await client.endpoints.object.getAndReturnWithMapOfMap({
+  map: {
+    string: {
+      string: "string",
+    },
+  },
+});
  
 ```                        
 
@@ -208,7 +267,26 @@ const client = new SeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
-undefined;
+await client.endpoints.object.getAndReturnNestedWithOptionalField({
+  string: "string",
+  nestedObject: {
+    string: "string",
+    integer: 1,
+    long: 1000000,
+    double: 1.1,
+    bool: true,
+    datetime: "2024-01-15T09:30:00Z",
+    date: "2023-01-15",
+    uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    base64: "SGVsbG8gd29ybGQh",
+    list: ["string"],
+    set: new Set(["string"]),
+    map: {
+      1: "string",
+    },
+    bigint: "123456789123456789",
+  },
+});
  
 ```                        
 
@@ -220,7 +298,26 @@ const client = new SeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
-await client.endpoints.object.getAndReturnNestedWithRequiredField("string");
+await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
+  string: "string",
+  nestedObject: {
+    string: "string",
+    integer: 1,
+    long: 1000000,
+    double: 1.1,
+    bool: true,
+    datetime: "2024-01-15T09:30:00Z",
+    date: "2023-01-15",
+    uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    base64: "SGVsbG8gd29ybGQh",
+    list: ["string"],
+    set: new Set(["string"]),
+    map: {
+      1: "string",
+    },
+    bigint: "123456789123456789",
+  },
+});
  
 ```                        
 
@@ -228,11 +325,31 @@ await client.endpoints.object.getAndReturnNestedWithRequiredField("string");
 ```typescript
 import { SeedExhaustiveClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({
-  environment: "YOUR_BASE_URL",
-  token: "YOUR_TOKEN",
-});
-undefined;
+const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList(
+	{
+		[
+			{
+				string: "string",
+				nestedObject: {
+					string: "string",
+					integer: 1,
+					long: 1000000,
+					double: 1.1,
+					bool: true,
+					datetime: "2024-01-15T09:30:00Z",
+					date: "2023-01-15",
+					uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+					base64: "SGVsbG8gd29ybGQh",
+					map: {
+						"1": "string"
+					},
+					bigint: "123456789123456789"
+				}
+			}
+		]
+	}
+)
  
 ```                        
 
@@ -300,7 +417,7 @@ const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "
 await client.endpoints.params.modifyWithPath(
 	"string",
 	{
-		{"jsonExample":"string","shape":{"primitive":{"string":{"original":"string"},"type":"string"},"type":"primitive"},"type":"reference"}
+		"string"
 	}
 )
  
@@ -313,7 +430,7 @@ import { SeedExhaustiveClient } from "@fern/exhaustive";
 const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.endpoints.primitive.getAndReturnString(
 	{
-		{"jsonExample":"string","shape":{"primitive":{"string":{"original":"string"},"type":"string"},"type":"primitive"},"type":"reference"}
+		"string"
 	}
 )
  
@@ -326,7 +443,7 @@ import { SeedExhaustiveClient } from "@fern/exhaustive";
 const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.endpoints.primitive.getAndReturnInt(
 	{
-		{"jsonExample":1,"shape":{"primitive":{"integer":1,"type":"integer"},"type":"primitive"},"type":"reference"}
+		1
 	}
 )
  
@@ -339,7 +456,7 @@ import { SeedExhaustiveClient } from "@fern/exhaustive";
 const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.endpoints.primitive.getAndReturnLong(
 	{
-		{"jsonExample":1000000,"shape":{"primitive":{"long":1000000,"type":"long"},"type":"primitive"},"type":"reference"}
+		1000000
 	}
 )
  
@@ -352,7 +469,7 @@ import { SeedExhaustiveClient } from "@fern/exhaustive";
 const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.endpoints.primitive.getAndReturnDouble(
 	{
-		{"jsonExample":1.1,"shape":{"primitive":{"double":1.1,"type":"double"},"type":"primitive"},"type":"reference"}
+		1.1
 	}
 )
  
@@ -365,7 +482,7 @@ import { SeedExhaustiveClient } from "@fern/exhaustive";
 const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.endpoints.primitive.getAndReturnBool(
 	{
-		{"jsonExample":true,"shape":{"primitive":{"boolean":true,"type":"boolean"},"type":"primitive"},"type":"reference"}
+		true
 	}
 )
  
@@ -378,7 +495,7 @@ import { SeedExhaustiveClient } from "@fern/exhaustive";
 const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.endpoints.primitive.getAndReturnDatetime(
 	{
-		{"jsonExample":"2024-01-15T09:30:00Z","shape":{"primitive":{"datetime":"2024-01-15T09:30:00.000Z","raw":"2024-01-15T09:30:00Z","type":"datetime"},"type":"primitive"},"type":"reference"}
+		"2024-01-15T09:30:00Z"
 	}
 )
  
@@ -391,7 +508,7 @@ import { SeedExhaustiveClient } from "@fern/exhaustive";
 const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.endpoints.primitive.getAndReturnDate(
 	{
-		{"jsonExample":"2023-01-15","shape":{"primitive":{"date":"2023-01-15","type":"date"},"type":"primitive"},"type":"reference"}
+		"2023-01-15"
 	}
 )
  
@@ -404,7 +521,7 @@ import { SeedExhaustiveClient } from "@fern/exhaustive";
 const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.endpoints.primitive.getAndReturnUuid(
 	{
-		{"jsonExample":"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32","shape":{"primitive":{"uuid":"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32","type":"uuid"},"type":"primitive"},"type":"reference"}
+		"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
 	}
 )
  
@@ -417,7 +534,24 @@ import { SeedExhaustiveClient } from "@fern/exhaustive";
 const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.endpoints.primitive.getAndReturnBase64(
 	{
-		{"jsonExample":"SGVsbG8gd29ybGQh","shape":{"primitive":{"string":{"original":"SGVsbG8gd29ybGQh"},"type":"string"},"type":"primitive"},"type":"reference"}
+		"SGVsbG8gd29ybGQh"
+	}
+)
+ 
+```                        
+
+
+```typescript
+import { SeedExhaustiveClient } from "@fern/exhaustive";
+
+const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
+await client.endpoints.union.getAndReturnUnion(
+	{
+		{ 
+			animal : "dog", 
+			name: "string",
+			likesToWoof: true
+		}
 	}
 )
  
@@ -431,7 +565,27 @@ const client = new SeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
-undefined;
+await client.inlinedRequests.postWithObjectBodyandResponse({
+  string: "string",
+  integer: 1,
+  nestedObject: {
+    string: "string",
+    integer: 1,
+    long: 1000000,
+    double: 1.1,
+    bool: true,
+    datetime: "2024-01-15T09:30:00Z",
+    date: "2023-01-15",
+    uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    base64: "SGVsbG8gd29ybGQh",
+    list: ["string"],
+    set: new Set(["string"]),
+    map: {
+      1: "string",
+    },
+    bigint: "123456789123456789",
+  },
+});
  
 ```                        
 
@@ -443,19 +597,27 @@ const client = new SeedExhaustiveClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
-undefined;
- 
-```                        
-
-
-```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
-
-const client = new SeedExhaustiveClient({
-  environment: "YOUR_BASE_URL",
-  token: "YOUR_TOKEN",
+await client.inlinedRequests.postWithObjectBodyandResponse({
+  string: "string",
+  integer: 1,
+  nestedObject: {
+    string: "string",
+    integer: 1,
+    long: 1000000,
+    double: 1.1,
+    bool: true,
+    datetime: "2024-01-15T09:30:00Z",
+    date: "2023-01-15",
+    uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    base64: "SGVsbG8gd29ybGQh",
+    list: ["string"],
+    set: new Set(["string"]),
+    map: {
+      1: "string",
+    },
+    bigint: "123456789123456789",
+  },
 });
-undefined;
  
 ```                        
 
@@ -466,7 +628,7 @@ import { SeedExhaustiveClient } from "@fern/exhaustive";
 const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.noAuth.postWithNoAuth(
 	{
-		{"jsonExample":{"key":"value"},"shape":{"unknown":{"key":"value"},"type":"unknown"},"type":"reference"}
+		{"key":"value"}
 	}
 )
  
@@ -479,7 +641,7 @@ import { SeedExhaustiveClient } from "@fern/exhaustive";
 const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.noAuth.postWithNoAuth(
 	{
-		{"jsonExample":{"key":"value"},"shape":{"unknown":{"key":"value"},"type":"unknown"},"type":"reference"}
+		{"key":"value"}
 	}
 )
  
@@ -517,7 +679,7 @@ const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "
 await client.reqWithHeaders.getWithCustomHeader(
 	{
 		xTestEndpointHeader: "string",
-		{"jsonExample":"string","shape":{"primitive":{"string":{"original":"string"},"type":"string"},"type":"primitive"},"type":"reference"}
+		"string"
 	}
 )
  

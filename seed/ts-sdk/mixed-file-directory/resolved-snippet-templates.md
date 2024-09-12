@@ -4,7 +4,9 @@ import { SeedMixedFileDirectoryClient } from "@fern/mixed-file-directory";
 const client = new SeedMixedFileDirectoryClient({
   environment: "YOUR_BASE_URL",
 });
-undefined;
+await client.organization.create({
+  name: "string",
+});
  
 ```                        
 

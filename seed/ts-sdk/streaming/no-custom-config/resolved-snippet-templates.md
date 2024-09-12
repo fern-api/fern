@@ -2,7 +2,9 @@
 import { SeedStreamingClient } from "@fern/streaming";
 
 const client = new SeedStreamingClient({ environment: "YOUR_BASE_URL" });
-undefined;
+await client.dummy.generateStream({
+  numEvents: 1,
+});
  
 ```                        
 
@@ -11,7 +13,9 @@ undefined;
 import { SeedStreamingClient } from "@fern/streaming";
 
 const client = new SeedStreamingClient({ environment: "YOUR_BASE_URL" });
-undefined;
+await client.dummy.generate({
+  numEvents: 5,
+});
  
 ```                        
 
@@ -20,7 +24,9 @@ undefined;
 import { SeedStreamingClient } from "@fern/streaming";
 
 const client = new SeedStreamingClient({ environment: "YOUR_BASE_URL" });
-undefined;
+await client.dummy.generate({
+  numEvents: 5,
+});
  
 ```                        
 

@@ -2,7 +2,10 @@
 
 
 client = SeedAliasExtends(base_url="https://yourhost.com/path/to/api", )        
-undefined
+client.extended_inline_request_body(
+	child="string",
+	parent="string"
+)
  
 ```                        
 

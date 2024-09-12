@@ -4,7 +4,7 @@ import { SeedExamplesClient } from "@fern/examples";
 const client = new SeedExamplesClient({ environment: SeedExamplesEnvironment.Production, token: "YOUR_TOKEN" });        
 await client.echo(
 	{
-		{"shape":{"primitive":{"string":{"original":"Hello world!\\n\\nwith\\n\\tnewlines"},"type":"string"},"type":"primitive"},"jsonExample":"Hello world!\\n\\nwith\\n\\tnewlines","type":"reference"}
+		"Hello world!\\n\\nwith\\n\\tnewlines"
 	}
 )
  
@@ -17,7 +17,7 @@ import { SeedExamplesClient } from "@fern/examples";
 const client = new SeedExamplesClient({ environment: SeedExamplesEnvironment.Production, token: "YOUR_TOKEN" });        
 await client.echo(
 	{
-		{"shape":{"primitive":{"string":{"original":"Hello world!\\n\\nwith\\n\\tnewlines"},"type":"string"},"type":"primitive"},"jsonExample":"Hello world!\\n\\nwith\\n\\tnewlines","type":"reference"}
+		"Hello world!\\n\\nwith\\n\\tnewlines"
 	}
 )
  
@@ -187,7 +187,20 @@ const client = new SeedExamplesClient({
   environment: SeedExamplesEnvironment.Production,
   token: "YOUR_TOKEN",
 });
-undefined;
+await client.service.createMovie({
+  id: "movie-c06a4ad7",
+  prequel: "movie-cv9b914f",
+  title: "The Boy and the Heron",
+  from: "Hayao Miyazaki",
+  rating: 8,
+  tag: "tag-wf9as23d",
+  metadata: {
+    actors: ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
+    releaseDate: "2023-12-08",
+    ratings: { rottenTomatoes: 97, imdb: 7.6 },
+  },
+  revenue: 1000000,
+});
  
 ```                        
 
@@ -199,7 +212,20 @@ const client = new SeedExamplesClient({
   environment: SeedExamplesEnvironment.Production,
   token: "YOUR_TOKEN",
 });
-undefined;
+await client.service.createMovie({
+  id: "movie-c06a4ad7",
+  prequel: "movie-cv9b914f",
+  title: "The Boy and the Heron",
+  from: "Hayao Miyazaki",
+  rating: 8,
+  tag: "tag-wf9as23d",
+  metadata: {
+    actors: ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
+    releaseDate: "2023-12-08",
+    ratings: { rottenTomatoes: 97, imdb: 7.6 },
+  },
+  revenue: 1000000,
+});
  
 ```                        
 
