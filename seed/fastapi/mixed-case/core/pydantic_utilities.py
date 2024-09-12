@@ -85,7 +85,7 @@ class UniversalBaseModel(pydantic.BaseModel):
             protected_namespaces=(),
         )  # type: ignore # Pydantic v2
 
-        @pydantic.model_serializer(mode="wrap")  # type: ignore # Pydantic v2
+        @pydantic.model_serializer(mode="wrap", when_used="json")  # type: ignore # Pydantic v2
         def serialize_model(
             self, handler: pydantic.SerializerFunctionWrapHandler
         ) -> typing.Any:  # type: ignore # Pydantic v2
@@ -100,6 +100,7 @@ class UniversalBaseModel(pydantic.BaseModel):
 
         class Config:
             smart_union = True
+            json_encoders = {dt.datetime: serialize_datetime}
 
     @classmethod
     def model_construct(

@@ -82,7 +82,7 @@ class UniversalBaseModel(pydantic.BaseModel):
             protected_namespaces=(),
         )  # type: ignore # Pydantic v2
 
-        @pydantic.model_serializer(mode="wrap")  # type: ignore # Pydantic v2
+        @pydantic.model_serializer(mode="wrap", when_used="json")  # type: ignore # Pydantic v2
         def serialize_model(self, handler: pydantic.SerializerFunctionWrapHandler) -> typing.Any:  # type: ignore # Pydantic v2
             serialized = handler(self)
             data = {k: serialize_datetime(v) if isinstance(v, dt.datetime) else v for k, v in serialized.items()}
