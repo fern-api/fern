@@ -132,7 +132,9 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                         .option("list", {
                             demandOption: false,
                             boolean: true,
-                            default: false
+                            default: false,
+                            description:
+                                "When specified, a list of available upgrades will be displayed, but no upgrade will be taken."
                         }),
                 async (argv) => {
                     await cliContext.instrumentPostHogEvent({
@@ -157,13 +159,20 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                             cliContext,
                             project,
                             generatorFilter: argv.generator,
-                            groupFilter: argv.group
+                            groupFilter: argv.group,
+                            includeMajor: argv.includeMajor,
+                            channel: argv.channel
                         });
 
-                        getGeneratorUpgradeMessage({
+                        const message = getGeneratorUpgradeMessage({
                             generatorUpgradeInfo: upgrades,
                             includeBoxen: true
                         });
+                        if (message) {
+                            cliContext.logger.info(message);
+                        } else {
+                            throw new Error(JSON.stringify(upgrades));
+                        }
                     } else {
                         await upgradeGenerator({
                             cliContext,

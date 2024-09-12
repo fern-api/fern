@@ -2,7 +2,9 @@ import { generatorsYml } from "@fern-api/configuration";
 import { Logger } from "@fern-api/logger";
 import { Project } from "@fern-api/project-loader";
 import { isVersionAhead } from "@fern-api/semver-utils";
+import { TaskContext } from "@fern-api/task-context";
 import { LazyFernWorkspace, OSSWorkspace } from "@fern-api/workspace-loader";
+import { ReleaseType } from "@fern-fern/generators-sdk/api/resources/generators";
 import { CliContext } from "../CliContext";
 
 export interface FernGeneratorUpgradeInfo {
@@ -36,23 +38,39 @@ export async function getLatestGeneratorVersions({
     cliContext,
     project: { apiWorkspaces },
     generatorFilter,
-    groupFilter
+    groupFilter,
+    channel,
+    includeMajor
 }: {
     cliContext: CliContext;
     project: Project;
     generatorFilter?: string;
     groupFilter?: string;
+    channel?: ReleaseType;
+    includeMajor?: boolean;
 }): Promise<GeneratorVersions> {
     if (apiWorkspaces.length === 1) {
         const versions: SingleApiWorkspaceGeneratorVersions = { type: "singleApi", versions: {} };
         await processGeneratorsYml({
             cliContext,
             apiWorkspaces,
-            perGeneratorAction: (_, group, generator) => {
+            perGeneratorAction: async (_, group, generator, context) => {
                 let groupVersions = versions.versions[group];
                 if (groupVersions == null) {
                     groupVersions = {};
                 }
+
+                const normalizedGeneratorName = generatorsYml.getGeneratorNameOrThrow(generator.name, context);
+
+                await generatorsYml.getLatestGeneratorVersion({
+                    generatorName: normalizedGeneratorName,
+                    cliVersion: cliContext.environment.packageVersion,
+                    currentGeneratorVersion: generator.version,
+                    channel,
+                    includeMajor,
+                    context
+                });
+
                 groupVersions[generator.name] = {
                     previousVersion: generator.version,
                     // TODO: get versions here
@@ -68,7 +86,7 @@ export async function getLatestGeneratorVersions({
         await processGeneratorsYml({
             cliContext,
             apiWorkspaces,
-            perGeneratorAction: (api, group, generator) => {
+            perGeneratorAction: async (api, group, generator, context) => {
                 if (api == null) {
                     return;
                 }
@@ -103,7 +121,12 @@ async function processGeneratorsYml({
 }: {
     cliContext: CliContext;
     apiWorkspaces: (OSSWorkspace | LazyFernWorkspace)[];
-    perGeneratorAction: (api: string | undefined, group: string, generator: generatorsYml.GeneratorInvocation) => void;
+    perGeneratorAction: (
+        api: string | undefined,
+        group: string,
+        generator: generatorsYml.GeneratorInvocation,
+        context: TaskContext
+    ) => Promise<void>;
     generatorFilter?: string;
     groupFilter?: string;
 }) {
@@ -128,7 +151,7 @@ async function processGeneratorsYml({
                         if (generatorFilter != null && generator.name !== generatorFilter) {
                             continue;
                         }
-                        perGeneratorAction(workspace.workspaceName, group.groupName, generator);
+                        await perGeneratorAction(workspace.workspaceName, group.groupName, generator, context);
                     }
                 }
             });
@@ -172,12 +195,16 @@ export async function getProjectGeneratorUpgrades({
     project,
     cliContext,
     generatorFilter,
-    groupFilter
+    groupFilter,
+    channel,
+    includeMajor
 }: {
     project: Project | undefined;
     cliContext: CliContext;
     generatorFilter?: string;
     groupFilter?: string;
+    channel?: ReleaseType;
+    includeMajor?: boolean;
 }): Promise<FernGeneratorUpgradeInfo[]> {
     const generatorUpgrades: FernGeneratorUpgradeInfo[] = [];
     if (project != null) {
@@ -185,7 +212,9 @@ export async function getProjectGeneratorUpgrades({
             cliContext: cliContext,
             project: project,
             generatorFilter,
-            groupFilter
+            groupFilter,
+            channel,
+            includeMajor
         });
 
         if (latestVersions.type == "multiApi") {
