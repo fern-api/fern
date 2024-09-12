@@ -37,15 +37,28 @@ exports[`open api parser > superagent > docs 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "documentId": "optional<string>",
+                  "documentId": {
+                    "display-name": "Agent",
+                    "type": "optional<string>",
+                  },
                   "has_memory": {
                     "default": false,
+                    "display-name": "Agent",
                     "type": "optional<boolean>",
                   },
-                  "llm": "optional<map<string, unknown>>",
+                  "llm": {
+                    "display-name": "Agent",
+                    "type": "optional<map<string, unknown>>",
+                  },
                   "name": "string",
-                  "promptId": "optional<string>",
-                  "toolId": "optional<string>",
+                  "promptId": {
+                    "display-name": "Agent",
+                    "type": "optional<string>",
+                  },
+                  "toolId": {
+                    "display-name": "Agent",
+                    "type": "optional<string>",
+                  },
                   "type": "string",
                 },
               },
@@ -168,7 +181,10 @@ exports[`open api parser > superagent > docs 1`] = `
               "agentId": "string",
             },
             "request": {
-              "body": "map<string, unknown>",
+              "body": {
+                "display-name": "Body",
+                "type": "map<string, unknown>",
+              },
             },
             "response": {
               "docs": "Successful Response",
@@ -210,9 +226,13 @@ exports[`open api parser > superagent > docs 1`] = `
                 "properties": {
                   "has_streaming": {
                     "default": false,
+                    "display-name": "PredictAgent",
                     "type": "optional<boolean>",
                   },
-                  "input": "map<string, unknown>",
+                  "input": {
+                    "display-name": "Input",
+                    "type": "map<string, unknown>",
+                  },
                 },
               },
               "headers": undefined,
@@ -436,8 +456,14 @@ exports[`open api parser > superagent > docs 1`] = `
               "body": {
                 "properties": {
                   "email": "string",
-                  "metadata": "optional<map<string, unknown>>",
-                  "name": "optional<string>",
+                  "metadata": {
+                    "display-name": "SignUp",
+                    "type": "optional<map<string, unknown>>",
+                  },
+                  "name": {
+                    "display-name": "SignUp",
+                    "type": "optional<string>",
+                  },
                   "password": "string",
                 },
               },
@@ -491,16 +517,26 @@ exports[`open api parser > superagent > docs 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "authorization": "optional<map<string, unknown>>",
+                  "authorization": {
+                    "display-name": "Document",
+                    "type": "optional<map<string, unknown>>",
+                  },
                   "from_page": {
                     "default": [
                       1,
                     ],
+                    "display-name": "Document",
                     "type": "optional<integer>",
                   },
                   "name": "string",
-                  "splitter": "optional<map<string, unknown>>",
-                  "to_page": "optional<integer>",
+                  "splitter": {
+                    "display-name": "Document",
+                    "type": "optional<map<string, unknown>>",
+                  },
+                  "to_page": {
+                    "display-name": "Document",
+                    "type": "optional<integer>",
+                  },
                   "type": "string",
                   "url": "string",
                 },
@@ -636,7 +672,10 @@ exports[`open api parser > superagent > docs 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "input_variables": "list<unknown>",
+                  "input_variables": {
+                    "display-name": "Input Variables",
+                    "type": "list<unknown>",
+                  },
                   "name": "string",
                   "template": "string",
                 },
@@ -760,7 +799,10 @@ exports[`open api parser > superagent > docs 1`] = `
               "promptId": "string",
             },
             "request": {
-              "body": "map<string, unknown>",
+              "body": {
+                "display-name": "Body",
+                "type": "map<string, unknown>",
+              },
             },
             "response": {
               "docs": "Successful Response",
@@ -807,7 +849,10 @@ exports[`open api parser > superagent > docs 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "authorization": "optional<map<string, unknown>>",
+                  "authorization": {
+                    "display-name": "Tool",
+                    "type": "optional<map<string, unknown>>",
+                  },
                   "name": "string",
                   "type": "string",
                 },
@@ -1118,7 +1163,10 @@ exports[`open api parser > superagent > docs 1`] = `
       "HTTPValidationError": {
         "docs": undefined,
         "properties": {
-          "detail": "optional<list<ValidationError>>",
+          "detail": {
+            "display-name": "HTTPValidationError",
+            "type": "optional<list<ValidationError>>",
+          },
         },
         "source": {
           "openapi": "superagent/openapi.yml",
@@ -1127,7 +1175,10 @@ exports[`open api parser > superagent > docs 1`] = `
       "ValidationError": {
         "docs": undefined,
         "properties": {
-          "loc": "list<ValidationErrorLocItem>",
+          "loc": {
+            "display-name": "Location",
+            "type": "list<ValidationErrorLocItem>",
+          },
           "msg": "string",
           "type": "string",
         },
@@ -1209,15 +1260,28 @@ exports[`open api parser > superagent > simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "documentId": "optional<string>",
+                  "documentId": {
+                    "display-name": "Agent",
+                    "type": "optional<string>",
+                  },
                   "has_memory": {
                     "default": false,
+                    "display-name": "Agent",
                     "type": "optional<boolean>",
                   },
-                  "llm": "optional<map<string, unknown>>",
+                  "llm": {
+                    "display-name": "Agent",
+                    "type": "optional<map<string, unknown>>",
+                  },
                   "name": "string",
-                  "promptId": "optional<string>",
-                  "toolId": "optional<string>",
+                  "promptId": {
+                    "display-name": "Agent",
+                    "type": "optional<string>",
+                  },
+                  "toolId": {
+                    "display-name": "Agent",
+                    "type": "optional<string>",
+                  },
                   "type": "string",
                 },
               },
@@ -1340,7 +1404,10 @@ exports[`open api parser > superagent > simple 1`] = `
               "agentId": "string",
             },
             "request": {
-              "body": "map<string, unknown>",
+              "body": {
+                "display-name": "Body",
+                "type": "map<string, unknown>",
+              },
             },
             "response": {
               "docs": "Successful Response",
@@ -1382,9 +1449,13 @@ exports[`open api parser > superagent > simple 1`] = `
                 "properties": {
                   "has_streaming": {
                     "default": false,
+                    "display-name": "PredictAgent",
                     "type": "optional<boolean>",
                   },
-                  "input": "map<string, unknown>",
+                  "input": {
+                    "display-name": "Input",
+                    "type": "map<string, unknown>",
+                  },
                 },
               },
               "headers": undefined,
@@ -1608,8 +1679,14 @@ exports[`open api parser > superagent > simple 1`] = `
               "body": {
                 "properties": {
                   "email": "string",
-                  "metadata": "optional<map<string, unknown>>",
-                  "name": "optional<string>",
+                  "metadata": {
+                    "display-name": "SignUp",
+                    "type": "optional<map<string, unknown>>",
+                  },
+                  "name": {
+                    "display-name": "SignUp",
+                    "type": "optional<string>",
+                  },
                   "password": "string",
                 },
               },
@@ -1663,16 +1740,26 @@ exports[`open api parser > superagent > simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "authorization": "optional<map<string, unknown>>",
+                  "authorization": {
+                    "display-name": "Document",
+                    "type": "optional<map<string, unknown>>",
+                  },
                   "from_page": {
                     "default": [
                       1,
                     ],
+                    "display-name": "Document",
                     "type": "optional<integer>",
                   },
                   "name": "string",
-                  "splitter": "optional<map<string, unknown>>",
-                  "to_page": "optional<integer>",
+                  "splitter": {
+                    "display-name": "Document",
+                    "type": "optional<map<string, unknown>>",
+                  },
+                  "to_page": {
+                    "display-name": "Document",
+                    "type": "optional<integer>",
+                  },
                   "type": "string",
                   "url": "string",
                 },
@@ -1808,7 +1895,10 @@ exports[`open api parser > superagent > simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "input_variables": "list<unknown>",
+                  "input_variables": {
+                    "display-name": "Input Variables",
+                    "type": "list<unknown>",
+                  },
                   "name": "string",
                   "template": "string",
                 },
@@ -1932,7 +2022,10 @@ exports[`open api parser > superagent > simple 1`] = `
               "promptId": "string",
             },
             "request": {
-              "body": "map<string, unknown>",
+              "body": {
+                "display-name": "Body",
+                "type": "map<string, unknown>",
+              },
             },
             "response": {
               "docs": "Successful Response",
@@ -1979,7 +2072,10 @@ exports[`open api parser > superagent > simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "authorization": "optional<map<string, unknown>>",
+                  "authorization": {
+                    "display-name": "Tool",
+                    "type": "optional<map<string, unknown>>",
+                  },
                   "name": "string",
                   "type": "string",
                 },
@@ -2190,7 +2286,10 @@ exports[`open api parser > superagent > simple 1`] = `
       "HTTPValidationError": {
         "docs": undefined,
         "properties": {
-          "detail": "optional<list<ValidationError>>",
+          "detail": {
+            "display-name": "HTTPValidationError",
+            "type": "optional<list<ValidationError>>",
+          },
         },
         "source": {
           "openapi": "superagent/openapi.yml",
@@ -2199,7 +2298,10 @@ exports[`open api parser > superagent > simple 1`] = `
       "ValidationError": {
         "docs": undefined,
         "properties": {
-          "loc": "list<ValidationErrorLocItem>",
+          "loc": {
+            "display-name": "Location",
+            "type": "list<ValidationErrorLocItem>",
+          },
           "msg": "string",
           "type": "string",
         },

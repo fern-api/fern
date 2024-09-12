@@ -2592,6 +2592,7 @@ exports[`open api parser > hathora > docs 1`] = `
         },
       },
       "ConnectionInfo": {
+        "availability": undefined,
         "base-properties": {},
         "discriminant": "status",
         "docs": undefined,
@@ -5150,6 +5151,7 @@ exports[`open api parser > hathora > simple 1`] = `
         },
       },
       "ConnectionInfo": {
+        "availability": undefined,
         "base-properties": {},
         "discriminant": "status",
         "docs": undefined,

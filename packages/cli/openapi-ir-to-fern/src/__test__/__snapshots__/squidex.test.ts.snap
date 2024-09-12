@@ -18582,6 +18582,7 @@ You will be assigned as owner of the new team automatically.",
         },
       },
       "FieldPropertiesDto": {
+        "availability": undefined,
         "base-properties": {
           "editorUrl": {
             "docs": "Optional url to the editor.",
@@ -19485,6 +19486,7 @@ You will be assigned as owner of the new team automatically.",
         },
       },
       "RuleActionDto": {
+        "availability": undefined,
         "base-properties": {},
         "discriminant": "actionType",
         "docs": undefined,
@@ -19758,6 +19760,7 @@ You will be assigned as owner of the new team automatically.",
         },
       },
       "RuleTriggerDto": {
+        "availability": undefined,
         "base-properties": {},
         "discriminant": "triggerType",
         "docs": undefined,
@@ -37476,6 +37479,7 @@ You will be assigned as owner of the new team automatically.",
         },
       },
       "FieldPropertiesDto": {
+        "availability": undefined,
         "base-properties": {
           "editorUrl": {
             "docs": "Optional url to the editor.",
@@ -38379,6 +38383,7 @@ You will be assigned as owner of the new team automatically.",
         },
       },
       "RuleActionDto": {
+        "availability": undefined,
         "base-properties": {},
         "discriminant": "actionType",
         "docs": undefined,
@@ -38652,6 +38657,7 @@ You will be assigned as owner of the new team automatically.",
         },
       },
       "RuleTriggerDto": {
+        "availability": undefined,
         "base-properties": {},
         "discriminant": "triggerType",
         "docs": undefined,

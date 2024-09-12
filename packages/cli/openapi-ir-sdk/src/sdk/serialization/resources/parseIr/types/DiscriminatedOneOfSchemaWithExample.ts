@@ -11,6 +11,7 @@ import { WithSdkGroupName } from "../../commons/types/WithSdkGroupName";
 import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithEncoding } from "../../commons/types/WithEncoding";
 import { WithSource } from "../../commons/types/WithSource";
+import { WithTitle } from "../../commons/types/WithTitle";
 
 export const DiscriminatedOneOfSchemaWithExample: core.serialization.ObjectSchema<
     serializers.DiscriminatedOneOfSchemaWithExample.Raw,
@@ -31,7 +32,8 @@ export const DiscriminatedOneOfSchemaWithExample: core.serialization.ObjectSchem
     .extend(WithSdkGroupName)
     .extend(WithAvailability)
     .extend(WithEncoding)
-    .extend(WithSource);
+    .extend(WithSource)
+    .extend(WithTitle);
 
 export declare namespace DiscriminatedOneOfSchemaWithExample {
     interface Raw
@@ -40,7 +42,8 @@ export declare namespace DiscriminatedOneOfSchemaWithExample {
             WithSdkGroupName.Raw,
             WithAvailability.Raw,
             WithEncoding.Raw,
-            WithSource.Raw {
+            WithSource.Raw,
+            WithTitle.Raw {
         discriminantProperty: string;
         commonProperties: serializers.CommonPropertyWithExample.Raw[];
         schemas: Record<string, serializers.SchemaWithExample.Raw>;

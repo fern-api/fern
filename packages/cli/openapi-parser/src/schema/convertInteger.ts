@@ -9,6 +9,7 @@ import { wrapPrimitive } from "./convertSchemas";
 export function convertInteger({
     nameOverride,
     generatedName,
+    title,
     format,
     _default,
     minimum,
@@ -24,6 +25,7 @@ export function convertInteger({
 }: {
     nameOverride: string | undefined;
     generatedName: string;
+    title: string | undefined;
     format: string | undefined;
     _default: number | undefined;
     minimum: number | undefined;
@@ -41,6 +43,7 @@ export function convertInteger({
         return wrapPrimitive({
             nameOverride,
             generatedName,
+            title,
             primitive: PrimitiveSchemaValueWithExample.int64({
                 default: _default,
                 example
@@ -54,6 +57,7 @@ export function convertInteger({
         return wrapPrimitive({
             nameOverride,
             generatedName,
+            title,
             primitive: PrimitiveSchemaValueWithExample.uint({
                 default: _default,
                 example
@@ -67,6 +71,7 @@ export function convertInteger({
         return wrapPrimitive({
             nameOverride,
             generatedName,
+            title,
             primitive: PrimitiveSchemaValueWithExample.uint64({
                 default: _default,
                 example
@@ -80,6 +85,7 @@ export function convertInteger({
     return wrapPrimitive({
         nameOverride,
         generatedName,
+        title,
         primitive: PrimitiveSchemaValueWithExample.int({
             default: _default,
             minimum,

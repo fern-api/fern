@@ -73,7 +73,11 @@ export { StatusCodeErrorDiscriminationSchema } from "./StatusCodeErrorDiscrimina
 export { StringValidationSchema } from "./StringValidationSchema";
 export { TransportSchema } from "./TransportSchema";
 export { TypeDeclarationSchema } from "./TypeDeclarationSchema";
-export { TypeReferenceSchema, TypeReferenceWithDocsSchema } from "./TypeReferenceSchema";
+export {
+    TypeReferenceSchema,
+    TypeReferenceWithDocsSchema,
+    TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema
+} from "./TypeReferenceSchema";
 export { UndiscriminatedUnionSchema } from "./UndiscriminatedUnionSchema";
 export { ValidationSchema } from "./ValidationSchema";
 export { VariableDeclarationSchema } from "./VariableDeclarationSchema";

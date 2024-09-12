@@ -9996,6 +9996,7 @@ exports[`open api parser > hookdeck > docs 1`] = `
         },
       },
       "Issue": {
+        "availability": undefined,
         "base-properties": {},
         "discriminant": "type",
         "docs": "Issue",
@@ -10240,6 +10241,7 @@ exports[`open api parser > hookdeck > docs 1`] = `
         },
       },
       "IssueWithData": {
+        "availability": undefined,
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
@@ -10495,6 +10497,7 @@ exports[`open api parser > hookdeck > docs 1`] = `
         },
       },
       "Rule": {
+        "availability": undefined,
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
@@ -20462,6 +20465,7 @@ exports[`open api parser > hookdeck > simple 1`] = `
         },
       },
       "Issue": {
+        "availability": undefined,
         "base-properties": {},
         "discriminant": "type",
         "docs": "Issue",
@@ -20706,6 +20710,7 @@ exports[`open api parser > hookdeck > simple 1`] = `
         },
       },
       "IssueWithData": {
+        "availability": undefined,
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
@@ -20961,6 +20966,7 @@ exports[`open api parser > hookdeck > simple 1`] = `
         },
       },
       "Rule": {
+        "availability": undefined,
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,

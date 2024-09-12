@@ -40,6 +40,7 @@ exports[`open api parser > undiscriminated-enums > parse open api 1`] = `
             "file": "undiscriminated-enums/openapi.yml",
             "type": "openapi",
           },
+          "title": null,
           "type": "reference",
         },
         "source": {
@@ -91,6 +92,7 @@ exports[`open api parser > undiscriminated-enums > parse open api 1`] = `
               "file": "undiscriminated-enums/openapi.yml",
               "type": "openapi",
             },
+            "title": null,
             "type": "reference",
           },
           "hello": {
@@ -104,6 +106,7 @@ exports[`open api parser > undiscriminated-enums > parse open api 1`] = `
               "file": "undiscriminated-enums/openapi.yml",
               "type": "openapi",
             },
+            "title": null,
             "type": "reference",
           },
         },
@@ -111,6 +114,7 @@ exports[`open api parser > undiscriminated-enums > parse open api 1`] = `
           "file": "undiscriminated-enums/openapi.yml",
           "type": "openapi",
         },
+        "title": null,
         "type": "discriminated",
       },
     },
@@ -137,6 +141,7 @@ exports[`open api parser > undiscriminated-enums > parse open api 1`] = `
             "generatedName": "farewellMessage",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "availability": null,
@@ -152,6 +157,7 @@ exports[`open api parser > undiscriminated-enums > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -161,6 +167,7 @@ exports[`open api parser > undiscriminated-enums > parse open api 1`] = `
         "file": "undiscriminated-enums/openapi.yml",
         "type": "openapi",
       },
+      "title": null,
       "type": "object",
     },
     "FarewellEnum": {
@@ -174,6 +181,7 @@ exports[`open api parser > undiscriminated-enums > parse open api 1`] = `
         "file": "undiscriminated-enums/openapi.yml",
         "type": "openapi",
       },
+      "title": null,
       "type": "enum",
       "values": [
         {
@@ -227,6 +235,7 @@ exports[`open api parser > undiscriminated-enums > parse open api 1`] = `
             "generatedName": "greetingMessage",
             "groupName": [],
             "nameOverride": null,
+            "title": null,
             "type": "optional",
             "value": {
               "availability": null,
@@ -242,6 +251,7 @@ exports[`open api parser > undiscriminated-enums > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -251,6 +261,7 @@ exports[`open api parser > undiscriminated-enums > parse open api 1`] = `
         "file": "undiscriminated-enums/openapi.yml",
         "type": "openapi",
       },
+      "title": null,
       "type": "object",
     },
     "GreetingEnum": {
@@ -264,6 +275,7 @@ exports[`open api parser > undiscriminated-enums > parse open api 1`] = `
         "file": "undiscriminated-enums/openapi.yml",
         "type": "openapi",
       },
+      "title": null,
       "type": "enum",
       "values": [
         {

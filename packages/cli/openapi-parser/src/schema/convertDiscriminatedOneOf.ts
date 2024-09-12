@@ -15,6 +15,7 @@ import { isReferenceObject } from "./utils/isReferenceObject";
 export function convertDiscriminatedOneOf({
     nameOverride,
     generatedName,
+    title,
     breadcrumbs,
     properties,
     description,
@@ -30,6 +31,7 @@ export function convertDiscriminatedOneOf({
 }: {
     nameOverride: string | undefined;
     generatedName: string;
+    title: string | undefined;
     breadcrumbs: string[];
     properties: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject>;
     description: string | undefined;
@@ -89,6 +91,7 @@ export function convertDiscriminatedOneOf({
     return wrapDiscriminantedOneOf({
         nameOverride,
         generatedName,
+        title,
         wrapAsNullable,
         properties: convertedProperties,
         description,
@@ -103,6 +106,7 @@ export function convertDiscriminatedOneOf({
 export function convertDiscriminatedOneOfWithVariants({
     nameOverride,
     generatedName,
+    title,
     breadcrumbs,
     properties,
     description,
@@ -119,6 +123,7 @@ export function convertDiscriminatedOneOfWithVariants({
 }: {
     nameOverride: string | undefined;
     generatedName: string;
+    title: string | undefined;
     breadcrumbs: string[];
     properties: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject>;
     description: string | undefined;
@@ -184,6 +189,7 @@ export function convertDiscriminatedOneOfWithVariants({
     return wrapDiscriminantedOneOf({
         nameOverride,
         generatedName,
+        title,
         wrapAsNullable,
         properties: convertedProperties,
         description,
@@ -198,6 +204,7 @@ export function convertDiscriminatedOneOfWithVariants({
 export function wrapDiscriminantedOneOf({
     nameOverride,
     generatedName,
+    title,
     wrapAsNullable,
     properties,
     description,
@@ -209,6 +216,7 @@ export function wrapDiscriminantedOneOf({
 }: {
     nameOverride: string | undefined;
     generatedName: string;
+    title: string | undefined;
     wrapAsNullable: boolean;
     properties: CommonPropertyWithExample[];
     description: string | undefined;
@@ -222,6 +230,7 @@ export function wrapDiscriminantedOneOf({
         return SchemaWithExample.nullable({
             nameOverride,
             generatedName,
+            title,
             value: SchemaWithExample.oneOf(
                 OneOfSchemaWithExample.discriminated({
                     description,
@@ -229,6 +238,7 @@ export function wrapDiscriminantedOneOf({
                     discriminantProperty: discriminant,
                     nameOverride,
                     generatedName,
+                    title,
                     schemas: subtypes,
                     commonProperties: properties,
                     groupName,
@@ -248,6 +258,7 @@ export function wrapDiscriminantedOneOf({
             discriminantProperty: discriminant,
             nameOverride,
             generatedName,
+            title,
             schemas: subtypes,
             commonProperties: properties,
             groupName,

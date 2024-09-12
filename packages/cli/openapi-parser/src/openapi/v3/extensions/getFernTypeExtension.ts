@@ -13,12 +13,14 @@ import { FernOpenAPIExtension } from "./fernExtensions";
 export function getFernTypeExtension({
     nameOverride,
     generatedName,
+    title,
     schema,
     description,
     availability
 }: {
     nameOverride: string | undefined;
     generatedName: string;
+    title: string | undefined;
     schema: OpenAPIV3.SchemaObject;
     description: string | undefined;
     availability: Availability | undefined;
@@ -32,6 +34,7 @@ export function getFernTypeExtension({
         fernType,
         nameOverride,
         generatedName,
+        title,
         description,
         availability,
         groupName: typeof groupName === "string" ? [groupName] : groupName
@@ -42,6 +45,7 @@ export function getSchemaFromFernType({
     fernType,
     nameOverride,
     generatedName,
+    title,
     description,
     availability,
     groupName
@@ -49,6 +53,7 @@ export function getSchemaFromFernType({
     fernType: string;
     nameOverride: string | undefined;
     generatedName: string;
+    title: string | undefined;
     description: string | undefined;
     availability: Availability | undefined;
     groupName: string[] | undefined;
@@ -64,6 +69,7 @@ export function getSchemaFromFernType({
                         return SchemaWithExample.primitive({
                             nameOverride,
                             generatedName,
+                            title,
                             description,
                             availability,
                             groupName,
@@ -75,6 +81,7 @@ export function getSchemaFromFernType({
                         return SchemaWithExample.primitive({
                             nameOverride,
                             generatedName,
+                            title,
                             description,
                             availability,
                             groupName,
@@ -87,6 +94,7 @@ export function getSchemaFromFernType({
                         return SchemaWithExample.primitive({
                             nameOverride,
                             generatedName,
+                            title,
                             description,
                             availability,
                             groupName,
@@ -98,6 +106,7 @@ export function getSchemaFromFernType({
                         return SchemaWithExample.primitive({
                             nameOverride,
                             generatedName,
+                            title,
                             description,
                             availability,
                             groupName,
@@ -109,6 +118,7 @@ export function getSchemaFromFernType({
                         return SchemaWithExample.primitive({
                             nameOverride,
                             generatedName,
+                            title,
                             description,
                             availability,
                             groupName,
@@ -120,6 +130,7 @@ export function getSchemaFromFernType({
                         return SchemaWithExample.primitive({
                             nameOverride,
                             generatedName,
+                            title,
                             description,
                             availability,
                             groupName,
@@ -137,6 +148,7 @@ export function getSchemaFromFernType({
                         return SchemaWithExample.primitive({
                             nameOverride,
                             generatedName,
+                            title,
                             description,
                             availability,
                             groupName,
@@ -149,6 +161,7 @@ export function getSchemaFromFernType({
                         return SchemaWithExample.primitive({
                             nameOverride,
                             generatedName,
+                            title,
                             description,
                             availability,
                             groupName,
@@ -166,6 +179,7 @@ export function getSchemaFromFernType({
                         return SchemaWithExample.primitive({
                             nameOverride,
                             generatedName,
+                            title,
                             description,
                             availability,
                             groupName,
@@ -178,6 +192,7 @@ export function getSchemaFromFernType({
                         return SchemaWithExample.primitive({
                             nameOverride,
                             generatedName,
+                            title,
                             description,
                             availability,
                             groupName,
@@ -192,6 +207,7 @@ export function getSchemaFromFernType({
                         return SchemaWithExample.primitive({
                             nameOverride,
                             generatedName,
+                            title,
                             description,
                             availability,
                             groupName,
@@ -212,6 +228,7 @@ export function getSchemaFromFernType({
                 return SchemaWithExample.unknown({
                     nameOverride,
                     generatedName,
+                    title,
                     example: undefined,
                     description,
                     availability,
@@ -223,6 +240,7 @@ export function getSchemaFromFernType({
                     ? SchemaWithExample.map({
                           nameOverride,
                           generatedName,
+                          title,
                           key: keyType,
                           value: valueType,
                           description,
@@ -237,6 +255,7 @@ export function getSchemaFromFernType({
                     ? SchemaWithExample.array({
                           nameOverride,
                           generatedName,
+                          title,
                           value: itemType,
                           description,
                           availability,
@@ -249,6 +268,7 @@ export function getSchemaFromFernType({
                     ? SchemaWithExample.optional({
                           nameOverride,
                           generatedName,
+                          title,
                           value: itemType,
                           description,
                           availability,
@@ -260,6 +280,7 @@ export function getSchemaFromFernType({
                     ? SchemaWithExample.array({
                           nameOverride,
                           generatedName,
+                          title,
                           value: itemType,
                           description,
                           availability,
@@ -271,6 +292,7 @@ export function getSchemaFromFernType({
                 SchemaWithExample.literal({
                     nameOverride,
                     generatedName,
+                    title,
                     value: literal._visit<LiteralSchemaValue>({
                         string: (value) => LiteralSchemaValue.string(value),
                         boolean: (value) => LiteralSchemaValue.boolean(value),
