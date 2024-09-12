@@ -1,4 +1,4 @@
-import { GeneratorGroupSchema } from "@fern-api/configuration/src/generators-yml/schemas/GeneratorGroupSchema";
+import { generatorsYml } from "@fern-api/configuration";
 import { NodePath } from "@fern-api/fern-definition-schema";
 import { GeneratorsYmlFileAstVisitor } from "../GeneratorsYmlAstVisitor";
 
@@ -7,7 +7,7 @@ export async function visitGeneratorGroups({
     visitor,
     nodePath
 }: {
-    groups: Record<string, GeneratorGroupSchema> | undefined;
+    groups: Record<string, generatorsYml.GeneratorGroupSchema> | undefined;
     visitor: Partial<GeneratorsYmlFileAstVisitor>;
     nodePath: NodePath;
 }): Promise<void> {
@@ -24,7 +24,7 @@ async function visitGeneratorGroup({
     visitor,
     nodePath
 }: {
-    group: GeneratorGroupSchema;
+    group: generatorsYml.GeneratorGroupSchema;
     visitor: Partial<GeneratorsYmlFileAstVisitor>;
     nodePath: NodePath;
 }): Promise<void> {
