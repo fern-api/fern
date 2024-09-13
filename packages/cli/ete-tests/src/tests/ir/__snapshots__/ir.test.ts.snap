@@ -1547,6 +1547,7 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                                         }
                                     }
                                 },
+                                "availability": null,
                                 "docs": null
                             },
                             {
@@ -1642,6 +1643,7 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                                         }
                                     }
                                 },
+                                "availability": null,
                                 "docs": null
                             }
                         ]
@@ -35094,6 +35096,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
                                         "v2": null
                                     }
                                 },
+                                "availability": null,
                                 "docs": null
                             }
                         ],
@@ -36792,6 +36795,7 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                                     }
                                 }
                             },
+                            "availability": null,
                             "docs": null
                         },
                         {
@@ -36824,6 +36828,7 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                                     "v2": null
                                 }
                             },
+                            "availability": null,
                             "docs": "Some docs about urgency"
                         }
                     ]
