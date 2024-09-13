@@ -22,7 +22,7 @@ export async function getLatestGeneratorVersion({
     const client = new GeneratorsClient({
         environment: process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com"
     });
-    context?.logger.info(
+    context?.logger.debug(
         `Getting latest version for ${generatorName} with CLI version ${cliVersion}, includeMajor: ${includeMajor}, prior version: ${parsedVersion}`
     );
 

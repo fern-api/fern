@@ -22,6 +22,7 @@ export async function registerGenerator({
     // Register generator itself
     fdrClient.generators.upsertGenerator({
         id: generatorId,
+        displayName: generatorConfig.displayName,
         generatorType: convertGeneratorType(generatorConfig.generatorType),
         generatorLanguage: generatorConfig.language,
         dockerImage: generatorConfig.image
