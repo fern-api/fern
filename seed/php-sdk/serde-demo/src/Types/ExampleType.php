@@ -3,9 +3,6 @@
 namespace Seed\Types;
 
 use DateTime;
-use DateTimeInterface;
-use ReflectionClass;
-use ReflectionProperty;
 use Seed\Core\ArrayType;
 use Seed\Core\DateType;
 use Seed\Core\JsonProperty;
@@ -52,9 +49,12 @@ class ExampleType extends SerializableType
         #[JsonProperty('nested_string_list')]
         public array    $nestedStringList,
 
-        #[ArrayType(['int' => ['int' => ExampleNestedType::class]])]
+        #[ArrayType(['int' => ['int' => ExampleNestedType::class | "null" | "date" | "datetime"]])]
         #[JsonProperty('nested_type_map')]
         public array    $nestedTypeMap,
+
+        #[JsonProperty('weather_report')]
+        public string  $weatherReport,
 
         #[JsonProperty('optional_name')]
         public ?string  $optionalName = null

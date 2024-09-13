@@ -3,7 +3,6 @@
 namespace Seed\Core;
 
 use DateTime;
-use DateTimeInterface;
 use InvalidArgumentException;
 use JsonException;
 use LogicException;
@@ -127,14 +126,19 @@ abstract class SerializableType
             $jsonKey = SerializableType::getJsonKey($property);
             $value = $property->getValue($this);
 
+            // Skip properties with null values
+            if ($value === null) {
+                continue;
+            }
+
             // Handle DateTime properties
             $dateTypeAttr = $property->getAttributes(DateType::class)[0] ?? null;
-            if ($dateTypeAttr && $value instanceof DateTimeInterface) {
+            if ($dateTypeAttr && $value instanceof DateTime) {
                 $dateType = $dateTypeAttr->newInstance()->type;
                 if ($dateType === DateType::TYPE_DATE) {
                     $value = $value->format('Y-m-d');
                 } else {
-                    $value = $value->format(DateTimeInterface::RFC3339);
+                    $value = $value->format(DateTime::RFC3339);
                 }
             }
 
@@ -233,25 +237,35 @@ abstract class SerializableType
         return $result;
     }
 
-    /**
-     * Serializes a list (indexed array) where only the value type is defined.
-     *
-     * @param array $data The list to serialize.
-     * @param array $type The type definition for the list.
-     * @return array The serialized list.
-     */
     private static function serializeList(array $data, array $type): array
     {
-        $valueType = $type[0];
+        $valueTypes = self::parseTypeExpression($type[0]);
 
-        return array_map(function ($item) use ($valueType) {
-            if (is_array($valueType)) {
-                return self::serializeGenericArray($item, $valueType);
-            } elseif (is_object($item) && method_exists($item, 'toArray')) {
-                return $item->toArray();
-            } else {
-                return $item;
+        return array_map(function ($item) use ($valueTypes) {
+            foreach ($valueTypes as $expectedType) {
+                if ($expectedType === 'null' && $item === null) {
+                    return null;
+                }
+
+                if (($expectedType === 'date' || $expectedType === 'datetime') && $item instanceof DateTime) {
+                    $format = $expectedType === 'date' ? 'Y-m-d' : DateTime::RFC3339;
+                    return $item->format($format);
+                }
+
+                if (class_exists($expectedType) && $item instanceof $expectedType) {
+                    if (method_exists($item, 'toArray')) {
+                        return $item->toArray();
+                    } else {
+                        throw new \InvalidArgumentException("Class $expectedType must implement toArray method.");
+                    }
+                }
+
+                if (gettype($item) === $expectedType) {
+                    return $item;
+                }
             }
+
+            throw new \InvalidArgumentException("Unable to serialize item of type '" . gettype($item) . "'.");
         }, $data);
     }
 
@@ -269,29 +283,72 @@ abstract class SerializableType
             : self::deserializeList($data, $type);
     }
 
-    /**
-     * Deserializes a map (associative array) where key and value types are defined.
-     *
-     * @param array $data The associative array to deserialize.
-     * @param array $type The type definition for the map.
-     * @return array The deserialized map.
-     */
+    private static function deserializeValue($item, $typeDef)
+    {
+        if (is_array($typeDef)) {
+            // Type definition is an array (complex type like map or list)
+            return self::deserializeGenericArray($item, $typeDef);
+        } else {
+            // Type definition is a string (possibly with union types)
+            $valueTypes = self::parseTypeExpression($typeDef);
+
+            foreach ($valueTypes as $expectedType) {
+                // Handle 'null' type
+                if ($expectedType === 'null' && $item === null) {
+                    return null;
+                }
+
+                // Handle 'date' and 'datetime' types
+                if ($expectedType === 'date' && is_string($item)) {
+                    $date = DateTime::createFromFormat('Y-m-d', $item);
+                    if ($date !== false) {
+                        return $date;
+                    }
+                } elseif ($expectedType === 'datetime' && is_string($item)) {
+                    try {
+                        return new DateTime($item);
+                    } catch (\Exception $e) {
+                        // Invalid datetime
+                    }
+                }
+
+                // Handle class types
+                if (class_exists($expectedType) && is_array($item)) {
+                    if (method_exists($expectedType, 'fromArray')) {
+                        return $expectedType::fromArray($item);
+                    }
+                }
+
+                // Handle scalar types using is_* functions
+                if (($expectedType === 'int' && is_int($item)) ||
+                    ($expectedType === 'bool' && is_bool($item)) ||
+                    ($expectedType === 'float' && is_float($item)) ||
+                    ($expectedType === 'string' && is_string($item))) {
+                    return $item;
+                }
+            }
+
+            // If no matching type is found, throw an exception
+            throw new \InvalidArgumentException("Unable to deserialize value: type mismatch.");
+        }
+    }
+
     private static function deserializeMap(array $data, array $type): array
     {
         $keyType = array_key_first($type);
-        $valueType = $type[$keyType];
+        $valueTypeDef = $type[$keyType];
         $result = [];
 
         foreach ($data as $key => $item) {
             $key = SerializableType::castKey($key, (string) $keyType);
 
-            if (is_array($valueType)) {
-                $result[$key] = self::deserializeGenericArray($item, $valueType);
-            } elseif (class_exists($valueType) && method_exists($valueType, 'fromArray')) {
-                $result[$key] = $valueType::fromArray($item);
-            } else {
-                $result[$key] = $item;
+            try {
+                $deserializedItem = self::deserializeValue($item, $valueTypeDef);
+            } catch (\InvalidArgumentException $e) {
+                throw new \InvalidArgumentException("Unable to deserialize map item with key '$key': " . $e->getMessage());
             }
+
+            $result[$key] = $deserializedItem;
         }
 
         return $result;
@@ -304,18 +361,88 @@ abstract class SerializableType
      * @param array $type The type definition for the list.
      * @return array The deserialized list.
      */
-    private static function deserializeList(array $data, array $type): array
+    private static function deserializeList(array $data, array $typeDef): array
     {
-        $valueType = $type[0];
+        $valueTypes = self::parseTypeDefinition($typeDef[0]);
 
-        return array_map(function ($item) use ($valueType) {
-            if (is_array($valueType)) {
-                return self::deserializeGenericArray($item, $valueType);
-            } elseif (class_exists($valueType) && method_exists($valueType, 'fromArray')) {
-                return $valueType::fromArray($item);
-            } else {
-                return $item;
+        return array_map(function ($item) use ($valueTypes) {
+            foreach ($valueTypes as $expectedType) {
+                // Handle 'null' type
+                if ($expectedType === 'null' && $item === null) {
+                    return null;
+                }
+
+                // Handle 'date' and 'datetime' types
+                if ($expectedType === 'date' && is_string($item)) {
+                    $date = DateTime::createFromFormat('Y-m-d', $item);
+                    if ($date !== false) {
+                        return $date;
+                    }
+                } elseif ($expectedType === 'datetime' && is_string($item)) {
+                    try {
+                        return new DateTime($item);
+                    } catch (\Exception $e) {
+                        // Not a valid datetime
+                    }
+                }
+
+                // Handle class types
+                if (class_exists($expectedType) && is_array($item)) {
+                    if (method_exists($expectedType, 'fromArray')) {
+                        return $expectedType::fromArray($item);
+                    }
+                }
+
+                // Handle scalar types
+                if (in_array($expectedType, ['string', 'int', 'float', 'bool']) && gettype($item) === $expectedType) {
+                    return $item;
+                }
             }
+
+            // If no matching type is found, throw an exception
+            throw new \InvalidArgumentException("Unable to deserialize item in array: type mismatch.");
         }, $data);
+    }
+
+    /**
+     * @param $type
+     * @return array|string[]
+     */
+    private static function parseTypeDefinition($type)
+    {
+        if (is_array($type)) {
+            $parsed = [];
+            foreach ($type as $key => $value) {
+                // Parse the key
+                if (is_string($key)) {
+                    $parsedKeys = self::parseTypeExpression($key); // This is an array of types
+                } else {
+                    $parsedKeys = [null];
+                }
+                // Parse the value
+                $parsedValue = self::parseTypeDefinition($value);
+
+                foreach ($parsedKeys as $parsedKey) {
+                    if ($parsedKey !== null) {
+                        $parsed[$parsedKey] = $parsedValue;
+                    } else {
+                        $parsed[] = $parsedValue;
+                    }
+                }
+            }
+            return $parsed;
+        } else {
+            return self::parseTypeExpression($type);
+        }
+    }
+
+    /**
+     * @param string $typeExpr
+     * @return array<string>
+     */
+    private static function parseTypeExpression(string $typeExpr): array
+    {
+        // Split the type expression by '|' to handle union types
+        return array_map('trim', explode('|', $typeExpr));
     }
 }
