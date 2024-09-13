@@ -26,5 +26,7 @@ export async function loadProjectAndRegisterWorkspacesWithContext(
         cliContext.registerWorkspaces(project.apiWorkspaces);
     }
 
+    cliContext.registerProject(project);
+
     return project;
 }
