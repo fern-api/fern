@@ -84,19 +84,19 @@ export class Class extends AstNode {
     }
 
     private writeConstructor({ writer, constructor }: { writer: Writer; constructor: Class.Constructor }): void {
-        if (constructor.parameters.length === 0) {
-            return;
-        }
         this.writeConstructorComment({ writer, constructor });
         if (constructor.access != null) {
             writer.write(`${constructor.access} `);
         }
-        writer.writeLine("function __construct(");
+        writer.write("function __construct(");
         writer.indent();
-        for (const parameter of constructor.parameters) {
+        constructor.parameters.forEach((parameter, index) => {
+            if (index === 0) {
+                writer.newLine();
+            }
             parameter.write(writer);
             writer.writeLine(",");
-        }
+        });
         writer.dedent();
         writer.writeLine(")");
         writer.writeLine("{");
@@ -108,6 +108,9 @@ export class Class extends AstNode {
     }
 
     private writeConstructorComment({ writer, constructor }: { writer: Writer; constructor: Class.Constructor }): void {
+        if (constructor.parameters.length === 0) {
+            return;
+        }
         const comment = new Comment();
         for (const parameter of constructor.parameters) {
             comment.addTag(parameter.getCommentTag());
