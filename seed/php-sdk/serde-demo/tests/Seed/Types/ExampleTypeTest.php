@@ -22,12 +22,12 @@ class ExampleTypeTest extends TestCase
             'nested_string_list' => [['one', 'two'], ['three', 'four']],
             'nested_type_map' => [
                 1 => [
-                    10 => ['id' => 10, 'name' => 'NestedType 10'],
-                    20 => ['id' => 20, 'name' => 'NestedType 20']
+                    10 => ['nested_field' => 'NestedType 10'],
+                    20 => ['nested_field' => 'NestedType 20']
                 ],
                 2 => [
-                    30 => ['id' => 30, 'name' => 'NestedType 30'],
-                    40 => ['id' => 40, 'name' => 'NestedType 40']
+                    30 => ['nested_field' => 'NestedType 30'],
+                    40 => ['nested_field' => 'NestedType 40']
                 ]
             ]
         ];
@@ -35,17 +35,16 @@ class ExampleTypeTest extends TestCase
         // Convert the original data into JSON
         $json = json_encode($originalData);
 
-        // Deserialize the JSON into an ExampleType object using fromArray
-        $deserializedObject = ExampleType::fromArray(json_decode($json, true));
+        // Deserialize the JSON into an ExampleType object using fromJson
+        $deserializedObject = ExampleType::fromJson($json);
 
-        // Serialize the object back into JSON using toArray
-        $serializedData = $deserializedObject->toArray();
-        $serializedJson = json_encode($serializedData);
+        // Serialize the object back into JSON using toJson
+        $serializedJson = $deserializedObject->toJson();
 
         // Assert that the serialized JSON matches the original JSON
         $this->assertJsonStringEqualsJsonString($json, $serializedJson, 'The serialized JSON does not match the original JSON.');
 
-        // Additional assertions can be added to check specific properties
+        // Additional assertions to check specific properties
         $this->assertEquals('Test Example', $deserializedObject->name);
         $this->assertNull($deserializedObject->optionalName);
         $this->assertEquals(30, $deserializedObject->age);
@@ -59,10 +58,19 @@ class ExampleTypeTest extends TestCase
         // Test nested structures
         $this->assertEquals([['one', 'two'], ['three', 'four']], $deserializedObject->nestedStringList);
 
-        // Check a nested ExampleNestedType object
-        $this->assertEquals(10, $deserializedObject->nestedTypeMap[1][10]->id);
-        $this->assertEquals('NestedType 10', $deserializedObject->nestedTypeMap[1][10]->name);
-        $this->assertEquals(20, $deserializedObject->nestedTypeMap[1][20]->id);
-        $this->assertEquals('NestedType 20', $deserializedObject->nestedTypeMap[1][20]->name);
+        // Check nested ExampleNestedType objects
+        $nestedTypeMap = $deserializedObject->nestedTypeMap;
+
+        $this->assertInstanceOf(ExampleNestedType::class, $nestedTypeMap[1][10]);
+        $this->assertEquals('NestedType 10', $nestedTypeMap[1][10]->nestedField);
+
+        $this->assertInstanceOf(ExampleNestedType::class, $nestedTypeMap[1][20]);
+        $this->assertEquals('NestedType 20', $nestedTypeMap[1][20]->nestedField);
+
+        $this->assertInstanceOf(ExampleNestedType::class, $nestedTypeMap[2][30]);
+        $this->assertEquals('NestedType 30', $nestedTypeMap[2][30]->nestedField);
+
+        $this->assertInstanceOf(ExampleNestedType::class, $nestedTypeMap[2][40]);
+        $this->assertEquals('NestedType 40', $nestedTypeMap[2][40]->nestedField);
     }
 }

@@ -2,41 +2,15 @@
 
 namespace Seed\Types;
 
-use JetBrains\PhpStorm\ArrayShape;
+use Seed\Core\JsonProperty;
+use Seed\Core\SerializableType;
 
-class ExampleNestedType
+class ExampleNestedType extends SerializableType
 {
-    /** @var int */
-    public int $id;
-
-    /** @var string */
-    public string $name;
-
-    /**
-     * Deserializes an array into an ExampleNestedType object.
-     *
-     * @param array $data The array to deserialize.
-     * @return self
-     */
-    public static function fromArray(array $data): self
+    public function __construct(
+        #[JsonProperty('nested_field')]
+        public string $nestedField
+    )
     {
-        $instance = new self();
-        $instance->id = $data['id'];
-        $instance->name = $data['name'];
-
-        return $instance;
-    }
-
-    /**
-     * Serializes the object to an array for JSON encoding.
-     *
-     * @return array
-     */
-    public function toArray(): array
-    {
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-        ];
     }
 }
