@@ -4,6 +4,9 @@ namespace Seed\Core;
 
 use DateTime;
 use DateTimeInterface;
+use InvalidArgumentException;
+use JsonException;
+use LogicException;
 use ReflectionClass;
 use ReflectionProperty;
 
@@ -18,11 +21,12 @@ abstract class SerializableType
      * Serializes the object to a JSON string.
      *
      * @return string
+     * @throws JsonException
      */
     public function toJson(): string
     {
         $arrayData = $this->toArray();
-        return json_encode($arrayData);
+        return json_encode($arrayData, JSON_THROW_ON_ERROR);
     }
 
     /**
@@ -30,10 +34,17 @@ abstract class SerializableType
      *
      * @param string $json The JSON string to deserialize.
      * @return static
+     *
+     * @throws InvalidArgumentException if the JSON is invalid or does not decode to an array.
      */
     public static function fromJson(string $json): static
     {
         $arrayData = json_decode($json, true);
+
+        if (!is_array($arrayData)) {
+            throw new InvalidArgumentException('Invalid JSON provided or JSON does not decode to an array.');
+        }
+
         return static::fromArray($arrayData);
     }
 
@@ -42,11 +53,16 @@ abstract class SerializableType
      *
      * @param array $data The array to deserialize.
      * @return static
+     *
+     * @throws LogicException if the class does not have a constructor.
      */
     public static function fromArray(array $data): static
     {
         $reflectionClass = new ReflectionClass(static::class);
         $constructor = $reflectionClass->getConstructor();
+        if ($constructor === null) {
+            throw new LogicException('The class ' . static::class . ' must have a constructor.');
+        }
         $parameters = $constructor->getParameters();
         $args = [];
 
@@ -60,7 +76,7 @@ abstract class SerializableType
                 continue;
             }
 
-            $jsonKey = static::getJsonKey($property);
+            $jsonKey = SerializableType::getJsonKey($property);
             if (array_key_exists($jsonKey, $data)) {
                 $value = $data[$jsonKey];
 
@@ -79,7 +95,7 @@ abstract class SerializableType
                 $arrayTypeAttr = $property->getAttributes(ArrayType::class)[0] ?? null;
                 if (is_array($value) && $arrayTypeAttr) {
                     $arrayType = $arrayTypeAttr->newInstance()->type;
-                    $value = static::deserializeGenericArray($value, $arrayType);
+                    $value = SerializableType::deserializeGenericArray($value, $arrayType);
                 }
 
                 $args[$parameter->getPosition()] = $value;
@@ -108,8 +124,7 @@ abstract class SerializableType
         $reflectionClass = new ReflectionClass($this);
 
         foreach ($reflectionClass->getProperties() as $property) {
-            $property->setAccessible(true);
-            $jsonKey = static::getJsonKey($property);
+            $jsonKey = SerializableType::getJsonKey($property);
             $value = $property->getValue($this);
 
             // Handle DateTime properties
@@ -127,7 +142,7 @@ abstract class SerializableType
             $arrayTypeAttr = $property->getAttributes(ArrayType::class)[0] ?? null;
             if ($arrayTypeAttr && is_array($value)) {
                 $arrayType = $arrayTypeAttr->newInstance()->type;
-                $value = static::serializeGenericArray($value, $arrayType);
+                $value = SerializableType::serializeGenericArray($value, $arrayType);
             }
 
             $result[$jsonKey] = $value;
@@ -204,7 +219,7 @@ abstract class SerializableType
         $result = [];
 
         foreach ($data as $key => $item) {
-            $key = self::castKey($key, $keyType);
+            $key = SerializableType::castKey($key, $keyType);
 
             if (is_array($valueType)) {
                 $result[$key] = self::serializeGenericArray($item, $valueType);
@@ -268,7 +283,7 @@ abstract class SerializableType
         $result = [];
 
         foreach ($data as $key => $item) {
-            $key = self::castKey($key, $keyType);
+            $key = SerializableType::castKey($key, (string) $keyType);
 
             if (is_array($valueType)) {
                 $result[$key] = self::deserializeGenericArray($item, $valueType);
@@ -297,8 +312,7 @@ abstract class SerializableType
             if (is_array($valueType)) {
                 return self::deserializeGenericArray($item, $valueType);
             } elseif (class_exists($valueType) && method_exists($valueType, 'fromArray')) {
-                $result = $valueType::fromArray($item);
-                return $result;
+                return $valueType::fromArray($item);
             } else {
                 return $item;
             }

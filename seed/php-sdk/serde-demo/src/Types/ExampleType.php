@@ -13,18 +13,24 @@ use Seed\Core\SerializableType;
 
 class ExampleType extends SerializableType
 {
+    /**
+     * @param string[] $stringList
+     * @param array<string, int> $stringIntMap
+     * @param string[][] $nestedStringList
+     * @param array<int, array<int, ExampleNestedType>> $nestedTypeMap
+     */
     public function __construct(
         #[JsonProperty('name')]
-        public string $name,
+        public string   $name,
 
         #[JsonProperty('age')]
-        public int $age,
+        public int      $age,
 
         #[JsonProperty('price')]
-        public float $price,
+        public float    $price,
 
         #[JsonProperty('is_active')]
-        public bool $isActive,
+        public bool     $isActive,
 
         #[DateType(DateType::TYPE_DATE)]
         #[JsonProperty('start_date')]
@@ -36,22 +42,23 @@ class ExampleType extends SerializableType
 
         #[ArrayType(['string'])]
         #[JsonProperty('string_list')]
-        /** @var string[] $stringList */
-        public array $stringList,
+        public array    $stringList,
 
         #[ArrayType(['string' => 'int'])]
         #[JsonProperty('string_int_map')]
-        public array $stringIntMap,
+        public array    $stringIntMap,
 
         #[ArrayType([['string']])]
         #[JsonProperty('nested_string_list')]
-        public array $nestedStringList,
+        public array    $nestedStringList,
 
         #[ArrayType(['int' => ['int' => ExampleNestedType::class]])]
         #[JsonProperty('nested_type_map')]
-        public array $nestedTypeMap,
+        public array    $nestedTypeMap,
 
         #[JsonProperty('optional_name')]
-        public ?string $optionalName = null
-    ) {}
+        public ?string  $optionalName = null
+    )
+    {
+    }
 }
