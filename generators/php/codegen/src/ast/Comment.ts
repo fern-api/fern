@@ -58,7 +58,7 @@ export class Comment extends AstNode {
 
     private writeTag({ writer, tag }: { writer: Writer; tag: Comment.Tag }): void {
         writer.write(` * @${tag.tagType} `);
-        tag.type.write(writer, undefined, true); // Write the tag type as a comment.
+        tag.type.write(writer, { comment: true });
         if (tag.name != null) {
             writer.write(` ${tag.name}`);
         }
