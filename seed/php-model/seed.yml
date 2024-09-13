@@ -18,5 +18,8 @@ fixtures: {}
 scripts:
   - docker: composer:2.7.9
     commands:
-      - composer install && composer build && composer analyze && composer test
+      - composer install
+      - composer build
+      - composer analyze
+      - composer test
 allowedFailures: []
