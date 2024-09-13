@@ -1,4 +1,24 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.2.0
+  irVersion: 53
+  changelogEntry:
+    - type: feat
+      summary: |
+        Allow specifying arbitrary configuration to your packages `pyproject.toml` by adding a `pyproject_toml` block to your configuration
+        whatever you include in this block will be added as-is to the `pyproject.toml` file. The config, as an example is:
+
+        ```yaml
+        config:
+          pyproject_toml: |
+            [tool.covcheck.group.unit.coverage]
+            branch = 26.0
+            line = 62.0
+
+            [tool.covcheck.group.service.coverage]
+            branch = 30.0
+            line = 67.0
+        ```
+
 - version: 4.1.0
   irVersion: 53
   changelogEntry:
