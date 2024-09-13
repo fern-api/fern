@@ -69,11 +69,13 @@ export async function upgrade({
                   latestVersion: targetVersion,
                   isUpgradeAvailable: true
               }
-            : await cliContext.isUpgradeAvailable({
-                  includePreReleases
-              });
+            : (
+                  await cliContext.isUpgradeAvailable({
+                      includePreReleases
+                  })
+              ).cliUpgradeInfo;
 
-    if (!fernCliUpgradeInfo.isUpgradeAvailable) {
+    if (fernCliUpgradeInfo && !fernCliUpgradeInfo.isUpgradeAvailable) {
         const previousVersion = process.env[PREVIOUS_VERSION_ENV_VAR];
         if (previousVersion == null) {
             cliContext.logger.info("No upgrade available.");
@@ -88,7 +90,7 @@ export async function upgrade({
             });
         });
         await cliContext.exitIfFailed();
-    } else {
+    } else if (fernCliUpgradeInfo != null) {
         const fernDirectory = await getFernDirectory();
         if (fernDirectory == null) {
             return cliContext.failAndThrow(`Directory "${FERN_DIRECTORY}" not found.`);

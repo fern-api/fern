@@ -857,7 +857,7 @@ export class TemplateGenerator {
                     wireOrOriginalName: undefined,
                     nameBreadcrumbs: undefined,
                     indentationLevel: 2,
-                    isObjectInlined
+                    isObjectInlined: true
                 })
             ],
             // File properties are handled separately
