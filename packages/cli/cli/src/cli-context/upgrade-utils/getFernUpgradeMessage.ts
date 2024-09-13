@@ -78,7 +78,7 @@ export function getGeneratorUpgradeMessage({
         // ex: "Python SDK 1.0.0 → 1.1.0 (API: myApi, Group: myGroup)"
         message +=
             `\n${normalizeGeneratorName(generatorUpgrade.generatorName)} (${
-                generatorUpgrade.apiName != null ? "API:" + generatorUpgrade.apiName + ", " : ""
+                generatorUpgrade.apiName != null ? "API: " + generatorUpgrade.apiName + ", " : ""
             }Group: ${generatorUpgrade.generatorGroup}) ` +
             chalk.dim(generatorUpgrade.currentVersion) +
             chalk.reset(" → ") +
