@@ -201,7 +201,7 @@ packages = [
                     if is_optional:
                         deps += ", optional = true"
                     if extras is not None:
-                        deps += f', extras = {json.dumps(list(extras))}'
+                        deps += f", extras = {json.dumps(list(extras))}"
                     deps += "}\n"
                 else:
                     deps += f'{name} = "{version}"\n'
