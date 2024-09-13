@@ -167,7 +167,7 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                             channel: argv.channel
                         });
 
-                        const message = getGeneratorUpgradeMessage({
+                        const message = await getGeneratorUpgradeMessage({
                             generatorUpgradeInfo: upgrades,
                             header: "Generator Upgrades\n",
                             includeBoxen: true

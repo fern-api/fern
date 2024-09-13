@@ -82,48 +82,48 @@ export async function getLatestGeneratorVersions({
             groupFilter
         });
         return versions;
-    } else {
-        const versions: MultiApiWorkspaceGeneratorVersions = { type: "multiApi", versions: {} };
-        await processGeneratorsYml({
-            cliContext,
-            apiWorkspaces,
-            perGeneratorAction: async (api, group, generator, context) => {
-                if (api == null) {
-                    return;
-                }
-
-                if (versions.versions[api] == null) {
-                    versions.versions[api] = {};
-                }
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                if (versions.versions[api]![group] == null) {
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                    versions.versions[api]![group] = {};
-                }
-
-                const normalizedGeneratorName = generatorsYml.getGeneratorNameOrThrow(generator.name, context);
-                const latestVersion = await generatorsYml.getLatestGeneratorVersion({
-                    generatorName: normalizedGeneratorName,
-                    cliVersion: cliContext.environment.packageVersion,
-                    currentGeneratorVersion: generator.version,
-                    channel,
-                    includeMajor,
-                    context
-                });
-
-                if (latestVersion != null) {
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                    versions.versions[api]![group]![generator.name] = {
-                        previousVersion: generator.version,
-                        latestVersion
-                    };
-                }
-            },
-            generatorFilter,
-            groupFilter
-        });
-        return versions;
     }
+
+    const versions: MultiApiWorkspaceGeneratorVersions = { type: "multiApi", versions: {} };
+    await processGeneratorsYml({
+        cliContext,
+        apiWorkspaces,
+        perGeneratorAction: async (api, group, generator, context) => {
+            if (api == null) {
+                return;
+            }
+
+            if (versions.versions[api] == null) {
+                versions.versions[api] = {};
+            }
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            if (versions.versions[api]![group] == null) {
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                versions.versions[api]![group] = {};
+            }
+
+            const normalizedGeneratorName = generatorsYml.getGeneratorNameOrThrow(generator.name, context);
+            const latestVersion = await generatorsYml.getLatestGeneratorVersion({
+                generatorName: normalizedGeneratorName,
+                cliVersion: cliContext.environment.packageVersion,
+                currentGeneratorVersion: generator.version,
+                channel,
+                includeMajor,
+                context
+            });
+
+            if (latestVersion != null) {
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                versions.versions[api]![group]![generator.name] = {
+                    previousVersion: generator.version,
+                    latestVersion
+                };
+            }
+        },
+        generatorFilter,
+        groupFilter
+    });
+    return versions;
 }
 
 async function processGeneratorsYml({

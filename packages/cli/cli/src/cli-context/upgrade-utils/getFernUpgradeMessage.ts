@@ -3,15 +3,27 @@ import chalk from "chalk";
 import { FernUpgradeInfo } from "../CliContext";
 import { CliEnvironment } from "../CliEnvironment";
 import { FernGeneratorUpgradeInfo } from "./getGeneratorVersions";
+import { FernRegistryClient } from "@fern-fern/generators-sdk";
 
-export function getFernUpgradeMessage({
+function hasGeneratorUpgrade(generatorUpgradeInfo: FernGeneratorUpgradeInfo[]): boolean {
+    return generatorUpgradeInfo.filter((gui) => gui.isUpgradeAvailable).length > 0;
+}
+
+function hasUpgrade(upgradeInfo: FernUpgradeInfo): boolean {
+    return upgradeInfo.cliUpgradeInfo?.isUpgradeAvailable || hasGeneratorUpgrade(upgradeInfo.generatorUpgradeInfo);
+}
+
+export async function getFernUpgradeMessage({
     cliEnvironment,
     upgradeInfo
 }: {
     cliEnvironment: CliEnvironment;
     upgradeInfo: FernUpgradeInfo;
-}): string | undefined {
-    let upgradeAvailable = false;
+}): Promise<string | undefined> {
+    if (!hasUpgrade(upgradeInfo)) {
+        return;
+    }
+
     let message = `${chalk.underline("Upgrades available")}\n\n`;
 
     if (upgradeInfo.cliUpgradeInfo?.isUpgradeAvailable) {
@@ -23,12 +35,11 @@ export function getFernUpgradeMessage({
             " \n(Run " +
             chalk.cyan(`${cliEnvironment.cliName} upgrade`) +
             " to update)";
-        upgradeAvailable = true;
     }
 
     // To start we're truncating the list and recommending the user use a different command
     // to see the full list so as to not overwhelm them
-    message += getGeneratorUpgradeMessage({
+    message += await getGeneratorUpgradeMessage({
         generatorUpgradeInfo: upgradeInfo.generatorUpgradeInfo,
         limit: 2,
         includeBoxen: false
@@ -36,7 +47,6 @@ export function getFernUpgradeMessage({
     const generatorsNeedingUpgrades = upgradeInfo.generatorUpgradeInfo.filter((gui) => gui.isUpgradeAvailable);
     if (generatorsNeedingUpgrades.length > 0) {
         message += `\nRun ${chalk.cyan("fern generator upgrade")} to upgrade your generators.`;
-        upgradeAvailable = true;
     }
     if (generatorsNeedingUpgrades.length > 2) {
         message +=
@@ -44,18 +54,16 @@ export function getFernUpgradeMessage({
             " to see the full list of generator upgrades available.";
     }
 
-    return upgradeAvailable
-        ? boxen(message, {
-              padding: 1,
-              float: "center",
-              textAlignment: "center",
-              borderColor: "yellow",
-              borderStyle: "round"
-          })
-        : undefined;
+    return boxen(message, {
+        padding: 1,
+        float: "center",
+        textAlignment: "center",
+        borderColor: "yellow",
+        borderStyle: "round"
+    });
 }
 
-export function getGeneratorUpgradeMessage({
+export async function getGeneratorUpgradeMessage({
     generatorUpgradeInfo,
     header,
     limit,
@@ -65,98 +73,53 @@ export function getGeneratorUpgradeMessage({
     header?: string;
     limit?: number;
     includeBoxen?: boolean;
-}): string | undefined {
+}): Promise<string | undefined> {
+    if (!hasGeneratorUpgrade(generatorUpgradeInfo)) {
+        return;
+    }
+
     let message = header ?? "";
-    let generatorUpgradeNeeded = false;
 
     let generatorsNeedingUpgrades = generatorUpgradeInfo.filter((gui) => gui.isUpgradeAvailable);
     if (limit != null) {
         generatorsNeedingUpgrades = generatorsNeedingUpgrades.slice(0, limit + 1);
     }
-    for (const generatorUpgrade of generatorsNeedingUpgrades) {
+
+    const sortedUpgrades = generatorsNeedingUpgrades.sort(
+        (a, b) => a.generatorName.localeCompare(b.generatorName) || a.currentVersion.localeCompare(b.currentVersion)
+    );
+    for (const generatorUpgrade of sortedUpgrades) {
         // Format => Generator 1.0.0 → 1.1.0 (API: API Name, Group: Group Name)
         // ex: "Python SDK 1.0.0 → 1.1.0 (API: myApi, Group: myGroup)"
         message +=
-            `\n${normalizeGeneratorName(generatorUpgrade.generatorName)} (${
+            `\n${await normalizeGeneratorName(generatorUpgrade.generatorName)} (${
                 generatorUpgrade.apiName != null ? "API: " + generatorUpgrade.apiName + ", " : ""
             }Group: ${generatorUpgrade.generatorGroup}) ` +
             chalk.dim(generatorUpgrade.currentVersion) +
             chalk.reset(" → ") +
             chalk.green(generatorUpgrade.latestVersion);
-
-        generatorUpgradeNeeded = true;
     }
 
     message += "\n";
 
-    if (generatorUpgradeNeeded) {
-        return includeBoxen
-            ? boxen(message, {
-                  padding: 1,
-                  float: "center",
-                  textAlignment: "center",
-                  borderColor: "yellow",
-                  borderStyle: "round"
-              })
-            : message;
-    }
-    return;
+    return includeBoxen
+        ? boxen(message, {
+              padding: 1,
+              float: "center",
+              textAlignment: "center",
+              borderColor: "yellow",
+              borderStyle: "round"
+          })
+        : message;
 }
 
-function normalizeGeneratorName(generatorName: string): string {
-    if (generatorName.startsWith("fernapi/")) {
-        generatorName = generatorName.replace("fernapi/", "");
+async function normalizeGeneratorName(generatorImage: string): Promise<string> {
+    const client = new FernRegistryClient({
+        environment: process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com"
+    });
+    const generatorResponse = await client.generators.getGeneratorByImage({ dockerImage: generatorImage });
+    if (!generatorResponse.ok || generatorResponse.body == null) {
+        throw new Error(`Generator ${generatorImage} not found`);
     }
-    switch (generatorName) {
-        // Python
-        case "fern-python-sdk":
-            return "Python SDK";
-        case "fern-pydantic-model":
-            return "Pydantic Model";
-        case "fern-fastapi-server":
-            return "FastAPI";
-        // TypeScript
-        case "fern-typescript-browser-sdk":
-        case "fern-typescript-node-sdk":
-        case "fern-typescript-sdk":
-            return "TypeScript SDK";
-        case "fern-typescript-express":
-            return "Express";
-        // Java
-        case "fern-java-sdk":
-            return "Java SDK";
-        case "java-model":
-            return "Java Model";
-        case "fern-java-spring":
-            return "Spring";
-        // Go
-        case "fern-go-sdk":
-            return "Go SDK";
-        case "fern-go-model":
-            return "Go Model";
-        case "fern-go-fiber":
-            return "Fiber";
-        // C#
-        case "fern-csharp-sdk":
-            return "C# SDK";
-        case "fern-csharp-model":
-            return "C# Model";
-        // Ruby
-        case "fern-ruby-sdk":
-            return "Ruby SDK";
-        case "fern-ruby-model":
-            return "Ruby Model";
-        // Misc.
-        case "fern-postman":
-            return "Postman";
-        case "fern-openapi":
-            return "OpenAPI";
-
-        default: {
-            if (generatorName.startsWith("fern-")) {
-                return generatorName.replace("fern-", "");
-            }
-            return generatorName;
-        }
-    }
+    return generatorResponse.body.displayName;
 }

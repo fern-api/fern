@@ -112,7 +112,7 @@ export class CliContext {
                 new Promise((_resolve, reject) => setTimeout(() => reject("Request timed out"), 300))
             ]);
 
-            let upgradeMessage = getFernUpgradeMessage({
+            let upgradeMessage = await getFernUpgradeMessage({
                 cliEnvironment: this.environment,
                 upgradeInfo
             });
