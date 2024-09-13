@@ -1,4 +1,5 @@
 export * from "./WithDocs";
+export * from "./WithDocsAndAvailability";
 export * from "./FernFilepath";
 export * from "./Name";
 export * from "./NameAndWireValue";

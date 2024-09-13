@@ -56,8 +56,7 @@ export function convertEnum({
             generatedName,
             value,
             description: fernEnumValue?.description,
-            // not supported as of now, due to lack of support from openapi
-            availability: undefined,
+            availability,
             casing: {
                 snake: fernEnumValue?.casing?.snake ?? undefined,
                 pascal: fernEnumValue?.casing?.pascal ?? undefined,
@@ -116,7 +115,7 @@ export function wrapEnum({
                 values,
                 description,
                 default: _default,
-                availability: undefined,
+                availability,
                 example: undefined,
                 groupName,
                 source

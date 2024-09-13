@@ -6303,6 +6303,7 @@
                                         }
                                     }
                                 },
+                                "availability": null,
                                 "docs": "The object that contains the cursor used for pagination\nin order to fetch the next page of results.\n"
                             }
                         ],
@@ -11699,6 +11700,7 @@
                                         }
                                     }
                                 },
+                                "availability": null,
                                 "docs": "The object that contains the offset used for pagination\nin order to fetch the next page of results.\n"
                             }
                         ],

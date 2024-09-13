@@ -4,7 +4,7 @@
 
 import * as FernIr from "../../../index";
 
-export interface InlinedWebSocketMessageBodyProperty extends FernIr.WithDocs {
+export interface InlinedWebSocketMessageBodyProperty extends FernIr.WithDocsAndAvailability {
     name: FernIr.NameAndWireValue;
     valueType: FernIr.TypeReference;
 }

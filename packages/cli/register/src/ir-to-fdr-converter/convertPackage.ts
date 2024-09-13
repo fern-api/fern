@@ -345,7 +345,8 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FdrCjsSdk.api.v
                             (property): FdrCjsSdk.api.v1.register.ObjectProperty => ({
                                 description: property.docs ?? undefined,
                                 key: property.name.wireValue,
-                                valueType: convertTypeReference(property.valueType)
+                                valueType: convertTypeReference(property.valueType),
+                                availability: convertIrAvailability(property.availability)
                             })
                         )
                     }
@@ -396,7 +397,8 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FdrCjsSdk.api.v
                                     type: "bodyProperty",
                                     key: bodyProperty.name.wireValue,
                                     valueType: convertTypeReference(bodyProperty.valueType),
-                                    description: bodyProperty.docs
+                                    description: bodyProperty.docs,
+                                    availability: convertIrAvailability(bodyProperty.availability)
                                 }),
                                 _other: () => undefined
                             });
@@ -747,7 +749,8 @@ function convertWebhookPayload(irWebhookPayload: Ir.webhooks.WebhookPayload): Fd
                         (property): FdrCjsSdk.api.v1.register.ObjectProperty => ({
                             description: property.docs ?? undefined,
                             key: property.name.wireValue,
-                            valueType: convertTypeReference(property.valueType)
+                            valueType: convertTypeReference(property.valueType),
+                            availability: convertIrAvailability(property.availability)
                         })
                     )
                 }
@@ -776,7 +779,8 @@ function convertMessageBody(
                     (property): FdrCjsSdk.api.v1.register.ObjectProperty => ({
                         description: property.docs ?? undefined,
                         key: property.name.wireValue,
-                        valueType: convertTypeReference(property.valueType)
+                        valueType: convertTypeReference(property.valueType),
+                        availability: convertIrAvailability(property.availability)
                     })
                 )
             };
