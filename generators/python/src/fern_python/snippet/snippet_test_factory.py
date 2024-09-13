@@ -402,7 +402,15 @@ class SnippetTestFactory:
                         writer.write_node(async_expression)
                         writer.write(" # type: ignore[func-returns-value]")
                     writer.write_newline_if_last_line_not()
-                    writer.write(f" is None")
+                    if (
+                        endpoint.response is not None
+                        and endpoint.response.body is not None
+                        and endpoint.response.body.get_as_union().type == "text"
+                    ):
+                        # HttpX returns an empty string for text responses that are empty/no content
+                        writer.write(f" == ''")
+                    else:
+                        writer.write(f" is None")
                     writer.write_line(")")
             writer.write_newline_if_last_line_not()
 
