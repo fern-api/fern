@@ -1,7 +1,7 @@
 from typing import Any, Dict, List, Literal, Optional, Union
 
-from fern_python.codegen import pyproject_toml
 import pydantic
+from fern_python.codegen import pyproject_toml
 from fern_python.codegen.module_manager import ModuleExport
 from fern_python.generators.pydantic_model import PydanticModelCustomConfig
 

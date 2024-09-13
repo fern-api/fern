@@ -182,7 +182,7 @@ class Project:
                 pypi_metadata=self._pypi_metadata,
                 license_=self.license_,
                 extras=self._extras,
-                user_defined_toml=self._user_defined_toml
+                user_defined_toml=self._user_defined_toml,
             )
             py_project_toml.write()
 
