@@ -1,5 +1,6 @@
 from typing import Any, Dict, List, Literal, Optional, Union
 
+from fern_python.codegen import pyproject_toml
 import pydantic
 from fern_python.codegen.module_manager import ModuleExport
 from fern_python.generators.pydantic_model import PydanticModelCustomConfig
@@ -73,6 +74,8 @@ class SDKCustomConfig(pydantic.BaseModel):
     # Whether or not to generate TypedDicts instead of Pydantic
     # Models for request objects.
     use_typeddict_requests: bool = False
+
+    pyproject_toml: Optional[str] = None
 
     class Config:
         extra = pydantic.Extra.forbid
