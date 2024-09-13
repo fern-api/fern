@@ -75,7 +75,7 @@
     "@fern-fern/generators-sdk": "0.109.0-21be2e5be",
     "@fern-fern/fiddle-sdk": "0.0.584",
     "@types/get-port": "^4.2.0",
-    "ansi-escapes": "^5.0.0",
+    "ansi-escapes": "^7.0.0",
     "axios": "^0.28.0",
     "boxen": "^7.1.1",
     "chalk": "^5.3.0",
