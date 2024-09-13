@@ -191,12 +191,18 @@ packages = [
                 compatiblity = dep.compatibility
                 is_optional = dep.optional
                 version = dep.version
+                extras = dep.extras
                 name = dep.name.replace(".", "-")
                 if compatiblity == DependencyCompatibility.GREATER_THAN_OR_EQUAL:
                     version = f">={dep.version}"
 
-                if is_optional:
-                    deps += f'{name} = {{ version="{version}", optional = true}}\n'
+                if is_optional or dep.extras is not None:
+                    deps += f'{name} = {{ version = "{version}"'
+                    if is_optional:
+                        deps += ", optional = true"
+                    if extras is not None:
+                        deps += f', extras = {json.dumps(list(extras))}'
+                    deps += "}\n"
                 else:
                     deps += f'{name} = "{version}"\n'
             return deps

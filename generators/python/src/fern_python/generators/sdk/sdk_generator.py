@@ -36,7 +36,7 @@ from .client_generator.client_generator import ClientGenerator
 from .client_generator.generated_root_client import GeneratedRootClient
 from .client_generator.oauth_token_provider_generator import OAuthTokenProviderGenerator
 from .client_generator.root_client_generator import RootClientGenerator
-from .custom_config import DependencyCusomConfig, SDKCustomConfig
+from .custom_config import BaseDependencyCusomConfig, DependencyCusomConfig, SDKCustomConfig
 from .environment_generators import (
     GeneratedEnvironment,
     MultipleBaseUrlsEnvironmentGenerator,
@@ -106,8 +106,13 @@ class SdkGenerator(AbstractGenerator):
 
         project.add_extra(custom_config.extras)
 
-        for dep, version in custom_config.extra_dev_dependencies.items():
-            project.add_dev_dependency(dependency=AST.Dependency(name=dep, version=version))
+        for dep, value in custom_config.extra_dev_dependencies.items():
+            if type(value) is str:
+                project.add_dev_dependency(dependency=AST.Dependency(name=dep, version=value))
+            elif isinstance(value, BaseDependencyCusomConfig):
+                project.add_dev_dependency(
+                    dependency=AST.Dependency(name=dep, version=value.version, extras=tuple(value.extras) if value.extras is not None else None)
+                )
 
         # Export from root init
         if custom_config.additional_init_exports is not None:
