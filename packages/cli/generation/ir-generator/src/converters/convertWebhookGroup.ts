@@ -1,5 +1,6 @@
 import { isPlainObject } from "@fern-api/core-utils";
 import {
+    Availability,
     ExampleWebhookCall,
     InlinedWebhookPayloadProperty,
     Webhook,
@@ -95,6 +96,10 @@ function convertWebhookPayloadSchema({
                               propertyKey,
                               propertyDefinition,
                               docs: typeof propertyDefinition !== "string" ? propertyDefinition.docs : undefined,
+                              availability:
+                                  typeof propertyDefinition !== "string"
+                                      ? convertAvailability(propertyDefinition.availability)
+                                      : undefined,
                               file
                           })
                       )
@@ -107,15 +112,18 @@ function convertInlinedRequestProperty({
     propertyKey,
     propertyDefinition,
     docs,
+    availability,
     file
 }: {
     propertyKey: string;
     propertyDefinition: RawSchemas.ObjectPropertySchema;
     docs: string | undefined;
+    availability: Availability | undefined;
     file: FernFileContext;
 }): InlinedWebhookPayloadProperty {
     return {
         docs,
+        availability,
         name: file.casingsGenerator.generateNameAndWireValue({
             wireValue: propertyKey,
             name: getPropertyName({ propertyKey, property: propertyDefinition }).name

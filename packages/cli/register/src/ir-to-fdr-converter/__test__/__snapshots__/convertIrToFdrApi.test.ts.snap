@@ -180,6 +180,7 @@ exports[`fdr test definitions > alias-extends 1`] = `
               ],
               "properties": [
                 {
+                  "availability": undefined,
                   "description": undefined,
                   "key": "child",
                   "valueType": {
@@ -341,6 +342,7 @@ exports[`fdr test definitions > any-auth 1`] = `
                 "extends": [],
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "client_id",
                     "valueType": {
@@ -355,6 +357,7 @@ exports[`fdr test definitions > any-auth 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "client_secret",
                     "valueType": {
@@ -369,6 +372,7 @@ exports[`fdr test definitions > any-auth 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "audience",
                     "valueType": {
@@ -380,6 +384,7 @@ exports[`fdr test definitions > any-auth 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "grant_type",
                     "valueType": {
@@ -391,6 +396,7 @@ exports[`fdr test definitions > any-auth 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "scope",
                     "valueType": {
@@ -1060,6 +1066,7 @@ exports[`fdr test definitions > audiences 1`] = `
                 "extends": [],
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "publicProperty",
                     "valueType": {
@@ -1077,6 +1084,7 @@ exports[`fdr test definitions > audiences 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "privateProperty",
                     "valueType": {
@@ -1494,6 +1502,141 @@ exports[`fdr test definitions > auth-environment-variables 1`] = `
     },
   },
   "types": {},
+}
+`;
+
+exports[`fdr test definitions > availability 1`] = `
+{
+  "auth": undefined,
+  "globalHeaders": [],
+  "rootPackage": {
+    "endpoints": [],
+    "pointsTo": undefined,
+    "subpackages": [
+      "subpackage_service",
+    ],
+    "types": [],
+    "webhooks": [],
+    "websockets": [],
+  },
+  "snippetsConfiguration": {},
+  "subpackages": {
+    "subpackage_service": {
+      "description": undefined,
+      "displayName": undefined,
+      "endpoints": [
+        {
+          "auth": false,
+          "availability": undefined,
+          "defaultEnvironment": undefined,
+          "description": undefined,
+          "environments": undefined,
+          "errors": undefined,
+          "errorsV2": [],
+          "examples": [],
+          "headers": [],
+          "id": "test-availability",
+          "method": "POST",
+          "name": "Test Availability",
+          "originalEndpointId": "endpoint_service.test-availability",
+          "path": {
+            "parts": [
+              {
+                "type": "literal",
+                "value": "",
+              },
+              {
+                "type": "literal",
+                "value": "/test-availability",
+              },
+            ],
+            "pathParameters": [],
+          },
+          "queryParameters": [],
+          "request": {
+            "type": {
+              "contentType": "application/json",
+              "shape": {
+                "extends": [],
+                "properties": [
+                  {
+                    "availability": "Beta",
+                    "description": undefined,
+                    "key": "random",
+                    "valueType": {
+                      "type": "primitive",
+                      "value": {
+                        "default": undefined,
+                        "maxLength": undefined,
+                        "minLength": undefined,
+                        "regex": undefined,
+                        "type": "string",
+                      },
+                    },
+                  },
+                ],
+                "type": "object",
+              },
+              "type": "json",
+            },
+          },
+          "response": {
+            "statusCode": undefined,
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+            },
+          },
+        },
+      ],
+      "name": "service",
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_service",
+      "subpackages": [],
+      "types": [
+        "type_service:Object",
+      ],
+      "webhooks": [],
+      "websockets": [],
+    },
+  },
+  "types": {
+    "type_service:Object": {
+      "availability": undefined,
+      "description": undefined,
+      "name": "Object",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "availability": "Beta",
+            "description": undefined,
+            "key": "id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+  },
 }
 `;
 
@@ -2996,6 +3139,7 @@ exports[`fdr test definitions > cross-package-type-names 1`] = `
                 "extends": [],
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "publicProperty",
                     "valueType": {
@@ -3013,6 +3157,7 @@ exports[`fdr test definitions > cross-package-type-names 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "privateProperty",
                     "valueType": {
@@ -3724,6 +3869,7 @@ exports[`fdr test definitions > enum 1`] = `
                 "extends": [],
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "operand",
                     "valueType": {
@@ -3732,6 +3878,7 @@ exports[`fdr test definitions > enum 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "maybeOperand",
                     "valueType": {
@@ -3743,6 +3890,7 @@ exports[`fdr test definitions > enum 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "operandOrColor",
                     "valueType": {
@@ -3751,6 +3899,7 @@ exports[`fdr test definitions > enum 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "maybeOperandOrColor",
                     "valueType": {
@@ -9199,6 +9348,7 @@ exports[`fdr test definitions > exhaustive 1`] = `
                 "extends": [],
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "string",
                     "valueType": {
@@ -9213,6 +9363,7 @@ exports[`fdr test definitions > exhaustive 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "integer",
                     "valueType": {
@@ -9226,6 +9377,7 @@ exports[`fdr test definitions > exhaustive 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "NestedObject",
                     "valueType": {
@@ -10242,6 +10394,7 @@ exports[`fdr test definitions > extends 1`] = `
               ],
               "properties": [
                 {
+                  "availability": undefined,
                   "description": undefined,
                   "key": "unique",
                   "valueType": {
@@ -10449,6 +10602,7 @@ exports[`fdr test definitions > extra-properties 1`] = `
                 "extends": [],
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "_type",
                     "valueType": {
@@ -10460,6 +10614,7 @@ exports[`fdr test definitions > extra-properties 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "_version",
                     "valueType": {
@@ -10471,6 +10626,7 @@ exports[`fdr test definitions > extra-properties 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "name",
                     "valueType": {
@@ -10694,6 +10850,7 @@ exports[`fdr test definitions > file-upload 1`] = `
                 "name": "MyRequest",
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "maybeString",
                     "type": "bodyProperty",
@@ -10712,6 +10869,7 @@ exports[`fdr test definitions > file-upload 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "integer",
                     "type": "bodyProperty",
@@ -10758,6 +10916,7 @@ exports[`fdr test definitions > file-upload 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "maybeInteger",
                     "type": "bodyProperty",
@@ -10775,6 +10934,7 @@ exports[`fdr test definitions > file-upload 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "optionalListOfStrings",
                     "type": "bodyProperty",
@@ -10796,6 +10956,7 @@ exports[`fdr test definitions > file-upload 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "listOfObjects",
                     "type": "bodyProperty",
@@ -10808,6 +10969,7 @@ exports[`fdr test definitions > file-upload 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "optionalMetadata",
                     "type": "bodyProperty",
@@ -10819,6 +10981,7 @@ exports[`fdr test definitions > file-upload 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "optionalObjectType",
                     "type": "bodyProperty",
@@ -10831,6 +10994,7 @@ exports[`fdr test definitions > file-upload 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "optionalId",
                     "type": "bodyProperty",
@@ -11572,6 +11736,7 @@ exports[`fdr test definitions > grpc-proto 1`] = `
                 "extends": [],
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "username",
                     "valueType": {
@@ -11589,6 +11754,7 @@ exports[`fdr test definitions > grpc-proto 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "email",
                     "valueType": {
@@ -11606,6 +11772,7 @@ exports[`fdr test definitions > grpc-proto 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "age",
                     "valueType": {
@@ -11619,6 +11786,7 @@ exports[`fdr test definitions > grpc-proto 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "weight",
                     "valueType": {
@@ -11632,6 +11800,7 @@ exports[`fdr test definitions > grpc-proto 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "metadata",
                     "valueType": {
@@ -11999,6 +12168,7 @@ exports[`fdr test definitions > grpc-proto-exhaustive 1`] = `
                 "extends": [],
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "columns",
                     "valueType": {
@@ -12010,6 +12180,7 @@ exports[`fdr test definitions > grpc-proto-exhaustive 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "namespace",
                     "valueType": {
@@ -12099,6 +12270,7 @@ exports[`fdr test definitions > grpc-proto-exhaustive 1`] = `
                 "extends": [],
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "ids",
                     "valueType": {
@@ -12119,6 +12291,7 @@ exports[`fdr test definitions > grpc-proto-exhaustive 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "deleteAll",
                     "valueType": {
@@ -12132,6 +12305,7 @@ exports[`fdr test definitions > grpc-proto-exhaustive 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "namespace",
                     "valueType": {
@@ -12149,6 +12323,7 @@ exports[`fdr test definitions > grpc-proto-exhaustive 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "filter",
                     "valueType": {
@@ -12250,6 +12425,7 @@ exports[`fdr test definitions > grpc-proto-exhaustive 1`] = `
                 "extends": [],
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "filter",
                     "valueType": {
@@ -12703,6 +12879,7 @@ exports[`fdr test definitions > grpc-proto-exhaustive 1`] = `
                 "extends": [],
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "namespace",
                     "valueType": {
@@ -12720,6 +12897,7 @@ exports[`fdr test definitions > grpc-proto-exhaustive 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "topK",
                     "valueType": {
@@ -12730,6 +12908,7 @@ exports[`fdr test definitions > grpc-proto-exhaustive 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "filter",
                     "valueType": {
@@ -12741,6 +12920,7 @@ exports[`fdr test definitions > grpc-proto-exhaustive 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "includeValues",
                     "valueType": {
@@ -12754,6 +12934,7 @@ exports[`fdr test definitions > grpc-proto-exhaustive 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "includeMetadata",
                     "valueType": {
@@ -12767,6 +12948,7 @@ exports[`fdr test definitions > grpc-proto-exhaustive 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "queries",
                     "valueType": {
@@ -12781,6 +12963,7 @@ exports[`fdr test definitions > grpc-proto-exhaustive 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "column",
                     "valueType": {
@@ -12797,6 +12980,7 @@ exports[`fdr test definitions > grpc-proto-exhaustive 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "id",
                     "valueType": {
@@ -12814,6 +12998,7 @@ exports[`fdr test definitions > grpc-proto-exhaustive 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "indexedData",
                     "valueType": {
@@ -12901,6 +13086,7 @@ exports[`fdr test definitions > grpc-proto-exhaustive 1`] = `
                 "extends": [],
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "id",
                     "valueType": {
@@ -12915,6 +13101,7 @@ exports[`fdr test definitions > grpc-proto-exhaustive 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "values",
                     "valueType": {
@@ -12931,6 +13118,7 @@ exports[`fdr test definitions > grpc-proto-exhaustive 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "setMetadata",
                     "valueType": {
@@ -12942,6 +13130,7 @@ exports[`fdr test definitions > grpc-proto-exhaustive 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "namespace",
                     "valueType": {
@@ -12959,6 +13148,7 @@ exports[`fdr test definitions > grpc-proto-exhaustive 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "indexedData",
                     "valueType": {
@@ -13902,6 +14092,7 @@ exports[`fdr test definitions > idempotency-headers 1`] = `
                 "extends": [],
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "amount",
                     "valueType": {
@@ -13915,6 +14106,7 @@ exports[`fdr test definitions > idempotency-headers 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "currency",
                     "valueType": {
@@ -14451,6 +14643,7 @@ exports[`fdr test definitions > literal 1`] = `
                 "extends": [],
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "query",
                     "valueType": {
@@ -14587,6 +14780,7 @@ exports[`fdr test definitions > literal 1`] = `
                 "extends": [],
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "prompt",
                     "valueType": {
@@ -14598,6 +14792,7 @@ exports[`fdr test definitions > literal 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "context",
                     "valueType": {
@@ -14612,6 +14807,7 @@ exports[`fdr test definitions > literal 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "query",
                     "valueType": {
@@ -14626,6 +14822,7 @@ exports[`fdr test definitions > literal 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "temperature",
                     "valueType": {
@@ -14642,6 +14839,7 @@ exports[`fdr test definitions > literal 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "stream",
                     "valueType": {
@@ -14653,6 +14851,7 @@ exports[`fdr test definitions > literal 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "aliasedContext",
                     "valueType": {
@@ -14661,6 +14860,7 @@ exports[`fdr test definitions > literal 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "maybeContext",
                     "valueType": {
@@ -14672,6 +14872,7 @@ exports[`fdr test definitions > literal 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "objectWithLiteral",
                     "valueType": {
@@ -16353,6 +16554,7 @@ This endpoint is used to create a new user.",
                 "extends": [],
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": "The name of the user to create.
 This name is unique to each user.
 ",
@@ -16369,6 +16571,7 @@ This name is unique to each user.
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": "The age of the user.
 This propery is not required.
 ",
@@ -16581,6 +16784,7 @@ exports[`fdr test definitions > multi-url-environment 1`] = `
                 "extends": [],
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "size",
                     "valueType": {
@@ -16659,6 +16863,7 @@ exports[`fdr test definitions > multi-url-environment 1`] = `
                 "extends": [],
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "s3Key",
                     "valueType": {
@@ -16777,6 +16982,7 @@ exports[`fdr test definitions > multi-url-environment-no-default 1`] = `
                 "extends": [],
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "size",
                     "valueType": {
@@ -16855,6 +17061,7 @@ exports[`fdr test definitions > multi-url-environment-no-default 1`] = `
                 "extends": [],
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "s3Key",
                     "valueType": {
@@ -17046,6 +17253,7 @@ exports[`fdr test definitions > oauth-client-credentials 1`] = `
                 "extends": [],
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "client_id",
                     "valueType": {
@@ -17060,6 +17268,7 @@ exports[`fdr test definitions > oauth-client-credentials 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "client_secret",
                     "valueType": {
@@ -17074,6 +17283,7 @@ exports[`fdr test definitions > oauth-client-credentials 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "audience",
                     "valueType": {
@@ -17085,6 +17295,7 @@ exports[`fdr test definitions > oauth-client-credentials 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "grant_type",
                     "valueType": {
@@ -17096,6 +17307,7 @@ exports[`fdr test definitions > oauth-client-credentials 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "scope",
                     "valueType": {
@@ -17164,6 +17376,7 @@ exports[`fdr test definitions > oauth-client-credentials 1`] = `
                 "extends": [],
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "client_id",
                     "valueType": {
@@ -17178,6 +17391,7 @@ exports[`fdr test definitions > oauth-client-credentials 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "client_secret",
                     "valueType": {
@@ -17192,6 +17406,7 @@ exports[`fdr test definitions > oauth-client-credentials 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "refresh_token",
                     "valueType": {
@@ -17206,6 +17421,7 @@ exports[`fdr test definitions > oauth-client-credentials 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "audience",
                     "valueType": {
@@ -17217,6 +17433,7 @@ exports[`fdr test definitions > oauth-client-credentials 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "grant_type",
                     "valueType": {
@@ -17228,6 +17445,7 @@ exports[`fdr test definitions > oauth-client-credentials 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "scope",
                     "valueType": {
@@ -17394,6 +17612,7 @@ exports[`fdr test definitions > oauth-client-credentials-default 1`] = `
                 "extends": [],
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "client_id",
                     "valueType": {
@@ -17408,6 +17627,7 @@ exports[`fdr test definitions > oauth-client-credentials-default 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "client_secret",
                     "valueType": {
@@ -17422,6 +17642,7 @@ exports[`fdr test definitions > oauth-client-credentials-default 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "grant_type",
                     "valueType": {
@@ -17564,6 +17785,7 @@ exports[`fdr test definitions > oauth-client-credentials-environment-variables 1
                 "extends": [],
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "client_id",
                     "valueType": {
@@ -17578,6 +17800,7 @@ exports[`fdr test definitions > oauth-client-credentials-environment-variables 1
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "client_secret",
                     "valueType": {
@@ -17592,6 +17815,7 @@ exports[`fdr test definitions > oauth-client-credentials-environment-variables 1
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "audience",
                     "valueType": {
@@ -17603,6 +17827,7 @@ exports[`fdr test definitions > oauth-client-credentials-environment-variables 1
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "grant_type",
                     "valueType": {
@@ -17614,6 +17839,7 @@ exports[`fdr test definitions > oauth-client-credentials-environment-variables 1
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "scope",
                     "valueType": {
@@ -17682,6 +17908,7 @@ exports[`fdr test definitions > oauth-client-credentials-environment-variables 1
                 "extends": [],
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "client_id",
                     "valueType": {
@@ -17696,6 +17923,7 @@ exports[`fdr test definitions > oauth-client-credentials-environment-variables 1
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "client_secret",
                     "valueType": {
@@ -17710,6 +17938,7 @@ exports[`fdr test definitions > oauth-client-credentials-environment-variables 1
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "refresh_token",
                     "valueType": {
@@ -17724,6 +17953,7 @@ exports[`fdr test definitions > oauth-client-credentials-environment-variables 1
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "audience",
                     "valueType": {
@@ -17735,6 +17965,7 @@ exports[`fdr test definitions > oauth-client-credentials-environment-variables 1
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "grant_type",
                     "valueType": {
@@ -17746,6 +17977,7 @@ exports[`fdr test definitions > oauth-client-credentials-environment-variables 1
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "scope",
                     "valueType": {
@@ -17912,6 +18144,7 @@ exports[`fdr test definitions > oauth-client-credentials-nested-root 1`] = `
                 "extends": [],
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "client_id",
                     "valueType": {
@@ -17926,6 +18159,7 @@ exports[`fdr test definitions > oauth-client-credentials-nested-root 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "client_secret",
                     "valueType": {
@@ -17940,6 +18174,7 @@ exports[`fdr test definitions > oauth-client-credentials-nested-root 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "audience",
                     "valueType": {
@@ -17951,6 +18186,7 @@ exports[`fdr test definitions > oauth-client-credentials-nested-root 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "grant_type",
                     "valueType": {
@@ -17962,6 +18198,7 @@ exports[`fdr test definitions > oauth-client-credentials-nested-root 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "scope",
                     "valueType": {
@@ -19380,6 +19617,7 @@ the next page of results.",
                 "extends": [],
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": "The object that contains the cursor used for pagination
 in order to fetch the next page of results.
 ",
@@ -19550,6 +19788,7 @@ the next page of results.",
                 "extends": [],
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": "The object that contains the offset used for pagination
 in order to fetch the next page of results.
 ",
@@ -21872,6 +22111,7 @@ exports[`fdr test definitions > server-sent-event-examples 1`] = `
                 "extends": [],
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "query",
                     "valueType": {
@@ -22020,6 +22260,7 @@ exports[`fdr test definitions > server-sent-events 1`] = `
                 "extends": [],
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "query",
                     "valueType": {
@@ -22766,6 +23007,7 @@ exports[`fdr test definitions > streaming 1`] = `
                 "extends": [],
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "stream",
                     "valueType": {
@@ -22777,6 +23019,7 @@ exports[`fdr test definitions > streaming 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "num_events",
                     "valueType": {
@@ -22877,6 +23120,7 @@ exports[`fdr test definitions > streaming 1`] = `
                 "extends": [],
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "stream",
                     "valueType": {
@@ -22888,6 +23132,7 @@ exports[`fdr test definitions > streaming 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "num_events",
                     "valueType": {
@@ -23066,6 +23311,7 @@ exports[`fdr test definitions > streaming-parameter 1`] = `
                 "extends": [],
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "stream",
                     "valueType": {
@@ -23076,6 +23322,7 @@ exports[`fdr test definitions > streaming-parameter 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "num_events",
                     "valueType": {
@@ -23591,6 +23838,7 @@ exports[`fdr test definitions > trace 1`] = `
                 "extends": [],
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "result",
                     "valueType": {
@@ -23599,6 +23847,7 @@ exports[`fdr test definitions > trace 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "traceResponses",
                     "valueType": {
@@ -23758,6 +24007,7 @@ exports[`fdr test definitions > trace 1`] = `
                 "extends": [],
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "workspaceRunDetails",
                     "valueType": {
@@ -23766,6 +24016,7 @@ exports[`fdr test definitions > trace 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "traceResponses",
                     "valueType": {
@@ -24936,6 +25187,7 @@ description",
                 "extends": [],
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "inputParams",
                     "valueType": {
@@ -24947,6 +25199,7 @@ description",
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "outputType",
                     "valueType": {
@@ -24955,6 +25208,7 @@ description",
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": "The name of the \`method\` that the student has to complete.
 The method name cannot include the following characters:
   - Greater Than \`>\`
@@ -35188,6 +35442,7 @@ exports[`fdr test definitions > ts-express-casing 1`] = `
                 "extends": [],
                 "properties": [
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "id",
                     "valueType": {
@@ -35196,6 +35451,7 @@ exports[`fdr test definitions > ts-express-casing 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": undefined,
                     "key": "movie_title",
                     "valueType": {
@@ -35210,6 +35466,7 @@ exports[`fdr test definitions > ts-express-casing 1`] = `
                     },
                   },
                   {
+                    "availability": undefined,
                     "description": "The rating scale is one to five stars",
                     "key": "movie_rating",
                     "valueType": {
@@ -36863,6 +37120,7 @@ exports[`fdr test definitions > validation 1`] = `
               "extends": [],
               "properties": [
                 {
+                  "availability": undefined,
                   "description": undefined,
                   "key": "decimal",
                   "valueType": {
@@ -36876,6 +37134,7 @@ exports[`fdr test definitions > validation 1`] = `
                   },
                 },
                 {
+                  "availability": undefined,
                   "description": undefined,
                   "key": "even",
                   "valueType": {
@@ -36889,6 +37148,7 @@ exports[`fdr test definitions > validation 1`] = `
                   },
                 },
                 {
+                  "availability": undefined,
                   "description": undefined,
                   "key": "name",
                   "valueType": {
@@ -36903,6 +37163,7 @@ exports[`fdr test definitions > validation 1`] = `
                   },
                 },
                 {
+                  "availability": undefined,
                   "description": undefined,
                   "key": "shape",
                   "valueType": {

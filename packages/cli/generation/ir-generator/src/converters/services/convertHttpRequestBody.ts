@@ -3,7 +3,8 @@ import {
     FileUploadRequestProperty,
     HttpRequestBody,
     HttpRequestBodyReference,
-    InlinedRequestBodyProperty
+    InlinedRequestBodyProperty,
+    Availability
 } from "@fern-api/ir-sdk";
 import {
     isInlineRequestBody,
@@ -14,6 +15,7 @@ import {
 import { FernFileContext } from "../../FernFileContext";
 import { parseTypeName } from "../../utils/parseTypeName";
 import { getExtensionsAsList, getPropertyName } from "../type-declarations/convertObjectTypeDeclaration";
+import { convertAvailability } from "../convertDeclaration";
 
 export function convertHttpRequestBody({
     request,
@@ -76,6 +78,7 @@ export function convertHttpRequestBody({
                             propertyKey: property.key,
                             propertyDefinition: property.propertyType,
                             docs: property.docs,
+                            availability: convertAvailability(property.availability),
                             file
                         })
                     );
@@ -102,6 +105,10 @@ export function convertHttpRequestBody({
                               propertyKey,
                               propertyDefinition,
                               docs: typeof propertyDefinition !== "string" ? propertyDefinition.docs : undefined,
+                              availability:
+                                  typeof propertyDefinition !== "string"
+                                      ? convertAvailability(propertyDefinition.availability)
+                                      : undefined,
                               file
                           })
                       )
@@ -140,15 +147,18 @@ function convertInlinedRequestProperty({
     propertyKey,
     propertyDefinition,
     docs,
+    availability,
     file
 }: {
     propertyKey: string;
     propertyDefinition: RawSchemas.ObjectPropertySchema;
     docs: string | undefined;
+    availability: Availability | undefined;
     file: FernFileContext;
 }): InlinedRequestBodyProperty {
     return {
         docs,
+        availability,
         name: file.casingsGenerator.generateNameAndWireValue({
             wireValue: propertyKey,
             name: getPropertyName({ propertyKey, property: propertyDefinition }).name

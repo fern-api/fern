@@ -89,7 +89,6 @@ export function wrapArray({
                 title,
                 value: itemSchema,
                 description,
-                // TODO: maybe undefined?
                 availability,
                 groupName,
                 example

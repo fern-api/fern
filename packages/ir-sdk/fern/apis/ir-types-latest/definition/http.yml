@@ -114,7 +114,7 @@ types:
         docs: Whether to allow extra properties on the request.
         type: boolean
   InlinedRequestBodyProperty:
-    extends: commons.WithDocs
+    extends: commons.WithDocsAndAvailability
     properties:
       name: commons.NameAndWireValue
       valueType: types.TypeReference
