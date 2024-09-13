@@ -50,7 +50,7 @@ export class Type extends AstNode {
         super();
     }
 
-    public write(writer: Writer, parentType: Type | undefined = undefined): void {
+    public write(writer: Writer, parentType: Type | undefined = undefined, comment: boolean = false): void {
         switch (this.internalType.type) {
             case "int":
                 writer.write("int");
@@ -71,17 +71,23 @@ export class Type extends AstNode {
                 writer.write("object");
                 break;
             case "array":
-                // TODO: Support non-doc format.
+                if (!comment) {
+                    writer.write("array");
+                    break;
+                }
                 writer.write("array<");
-                this.internalType.value.write(writer);
+                this.internalType.value.write(writer, this, comment);
                 writer.write(">");
                 break;
             case "map": {
-                // TODO: Support non-doc format.
+                if (!comment) {
+                    writer.write("array");
+                    break;
+                }
                 writer.write("array<");
-                this.internalType.keyType.write(writer);
+                this.internalType.keyType.write(writer, this, comment);
                 writer.write(", ");
-                this.internalType.valueType.write(writer);
+                this.internalType.valueType.write(writer, this, comment);
                 writer.write(">");
                 break;
             }
@@ -90,7 +96,7 @@ export class Type extends AstNode {
                     // Avoids double optional.
                     writer.write("?");
                 }
-                this.internalType.value.write(writer, this);
+                this.internalType.value.write(writer, this, comment);
                 break;
             default:
                 assertNever(this.internalType);

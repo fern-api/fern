@@ -3,6 +3,7 @@ import { Writer } from "./core/Writer";
 import { Type } from "./Type";
 import { Access } from "./Access";
 import { CodeBlock } from "./CodeBlock";
+import { Comment } from "./Comment";
 
 export declare namespace Parameter {
     interface Args {
@@ -37,6 +38,15 @@ export class Parameter extends AstNode {
         this.initializer = initializer;
         this.access = access;
         this.readonly_ = readonly_ ?? false;
+    }
+
+    public getCommentTag(): Comment.Tag {
+        return {
+            tagType: "param",
+            type: this.type,
+            name: this.name,
+            docs: this.docs
+        };
     }
 
     public write(writer: Writer): void {

@@ -3,6 +3,7 @@ import { CodeBlock } from "./CodeBlock";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { Type } from "./Type";
+import { Comment } from "./Comment";
 
 export declare namespace Field {
     interface Args {
@@ -40,6 +41,8 @@ export class Field extends AstNode {
     }
 
     public write(writer: Writer): void {
+        this.writeComment(writer);
+
         writer.write(`${this.access} `);
         if (this.readonly_) {
             writer.write("readonly ");
@@ -53,5 +56,16 @@ export class Field extends AstNode {
             this.initializer.write(writer);
         }
         writer.writeLine(";");
+    }
+
+    private writeComment(writer: Writer): void {
+        const comment = new Comment();
+        comment.addTag({
+            tagType: "var",
+            type: this.type,
+            name: this.name,
+            docs: this.docs
+        });
+        comment.write(writer);
     }
 }

@@ -13,7 +13,14 @@ describe("class", () => {
                     name: "metadata",
                     type: php.Type.optional(php.Type.mixed()),
                     access: "public",
-                    readonly_: true
+                    readonly_: true,
+                    docs: "Miscellaneous metadata"
+                }),
+                php.parameter({
+                    name: "dictionary",
+                    type: php.Type.map(php.Type.string(), php.Type.mixed()),
+                    access: "public",
+                    docs: "A collection of arbitrary key-value pairs"
                 })
             ]
         });
@@ -34,9 +41,20 @@ describe("class", () => {
 
 class UserClient
 {
+    /**
+     * @var string name
+     */
     private string name;
 
-    function __construct(public readonly mixed metadata) {
+    /**
+     * @param mixed metadata Miscellaneous metadata
+     * @param array<string, mixed> dictionary A collection of arbitrary key-value pairs
+     */
+    function __construct(
+        public readonly mixed metadata,
+        public array dictionary,
+    )
+    {
         // TODO: Implement me!
     }
 }
