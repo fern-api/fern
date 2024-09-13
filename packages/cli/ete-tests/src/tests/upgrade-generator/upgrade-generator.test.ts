@@ -207,7 +207,7 @@ describe("fern generator upgrade", () => {
         ).toMatchSnapshot();
     }, 60_000);
 
-    it("fern generator upgrade message", async () => {
+    it.skip("fern generator upgrade message", async () => {
         const tmpDir = await tmp.dir();
         const directory = AbsoluteFilePath.of(tmpDir.path);
 

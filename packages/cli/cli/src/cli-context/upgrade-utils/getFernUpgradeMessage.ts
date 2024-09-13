@@ -10,7 +10,10 @@ function hasGeneratorUpgrade(generatorUpgradeInfo: FernGeneratorUpgradeInfo[]): 
 }
 
 function hasUpgrade(upgradeInfo: FernUpgradeInfo): boolean {
-    return upgradeInfo.cliUpgradeInfo?.isUpgradeAvailable || hasGeneratorUpgrade(upgradeInfo.generatorUpgradeInfo);
+    return (
+        (upgradeInfo.cliUpgradeInfo?.isUpgradeAvailable ?? false) ||
+        hasGeneratorUpgrade(upgradeInfo.generatorUpgradeInfo)
+    );
 }
 
 export async function getFernUpgradeMessage({
