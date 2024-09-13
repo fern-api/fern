@@ -110,15 +110,15 @@ class SdkGenerator(AbstractGenerator):
 
         project.add_extra(custom_config.extras)
 
-        for dep, value in custom_config.extra_dev_dependencies.items():
-            if type(value) is str:
-                project.add_dev_dependency(dependency=AST.Dependency(name=dep, version=value))
-            elif isinstance(value, BaseDependencyCusomConfig):
+        for dep, bas_dep_value in custom_config.extra_dev_dependencies.items():
+            if type(bas_dep_value) is str:
+                project.add_dev_dependency(dependency=AST.Dependency(name=dep, version=bas_dep_value))
+            elif isinstance(bas_dep_value, BaseDependencyCusomConfig):
                 project.add_dev_dependency(
                     dependency=AST.Dependency(
                         name=dep,
-                        version=value.version,
-                        extras=tuple(value.extras) if value.extras is not None else None,
+                        version=bas_dep_value.version,
+                        extras=tuple(bas_dep_value.extras) if bas_dep_value.extras is not None else None,
                     )
                 )
 
