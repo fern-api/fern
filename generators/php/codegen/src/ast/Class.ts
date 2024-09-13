@@ -4,6 +4,7 @@ import { CodeBlock } from "./CodeBlock";
 import { Parameter } from "./Parameter";
 import { Access } from "./Access";
 import { Field } from "./Field";
+import { Comment } from "./Comment";
 
 export declare namespace Class {
     interface Args {
@@ -13,6 +14,8 @@ export declare namespace Class {
         namespace: string;
         /* Defaults to false */
         abstract?: boolean;
+        /* Docs associated with the class */
+        docs?: string;
     }
 
     interface Constructor {
@@ -29,15 +32,17 @@ export class Class extends AstNode {
     public readonly name: string;
     public readonly namespace: string;
     public readonly abstract: boolean;
+    public readonly docs: string | undefined;
 
     private fields: Field[] = [];
     private constructor_: Class.Constructor | undefined;
 
-    constructor({ name, namespace, abstract }: Class.Args) {
+    constructor({ name, namespace, abstract, docs }: Class.Args) {
         super();
         this.name = name;
         this.namespace = namespace;
         this.abstract = abstract ?? false;
+        this.docs = docs;
     }
 
     public addField(field: Field): void {
@@ -54,6 +59,7 @@ export class Class extends AstNode {
         if (this.abstract) {
             writer.write("abstract ");
         }
+        this.writeComment(writer);
         writer.writeLine(`class ${this.name}`);
         writer.writeLine("{");
         writer.indent();
@@ -69,23 +75,43 @@ export class Class extends AstNode {
         return;
     }
 
+    public writeComment(writer: Writer): void {
+        if (this.docs == null) {
+            return undefined;
+        }
+        const comment = new Comment({ docs: this.docs });
+        comment.write(writer);
+    }
+
     private writeConstructor({ writer, constructor }: { writer: Writer; constructor: Class.Constructor }): void {
+        if (constructor.parameters.length === 0) {
+            return;
+        }
+        this.writeConstructorComment({ writer, constructor });
         if (constructor.access != null) {
             writer.write(`${constructor.access} `);
         }
-        writer.write("function __construct(");
-        constructor.parameters.forEach((parameter, index) => {
-            if (index > 0) {
-                writer.write(", ");
-            }
+        writer.writeLine("function __construct(");
+        writer.indent();
+        for (const parameter of constructor.parameters) {
             parameter.write(writer);
-        });
-        writer.write(")");
-        writer.writeLine(" {");
+            writer.writeLine(",");
+        }
+        writer.dedent();
+        writer.writeLine(")");
+        writer.writeLine("{");
         writer.indent();
         constructor.body?.write(writer);
         writer.writeNewLineIfLastLineNot();
         writer.dedent();
         writer.writeLine("}");
+    }
+
+    private writeConstructorComment({ writer, constructor }: { writer: Writer; constructor: Class.Constructor }): void {
+        const comment = new Comment();
+        for (const parameter of constructor.parameters) {
+            comment.addTag(parameter.getCommentTag());
+        }
+        comment.write(writer);
     }
 }
