@@ -36,7 +36,7 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
     }) {
         super(context);
         this.name = name;
-        this.filepaths = new PhpProjectFilepaths();
+        this.filepaths = new PhpProjectFilepaths(this.name);
     }
 
     public addSourceFiles(file: PhpFile): void {
@@ -97,7 +97,7 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
         return new File(
             filename.replace(".Template", ""),
             RelativeFilePath.of(""),
-            replaceTemplate({
+            this.replaceTemplate({
                 contents,
                 namespace
             })
@@ -155,7 +155,7 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
         }
         return await this.createPhpDirectory({
             absolutePathToDirectory: join(this.absolutePathToOutputDirectory, this.filepaths.getCoreTestsDirectory()),
-            files: this.coreFiles
+            files: this.coreTestFiles
         });
     }
 
@@ -167,7 +167,7 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
         files: File[];
     }): Promise<AbsoluteFilePath> {
         await this.mkdir(absolutePathToDirectory);
-        await Promise.all(files.map(async (file) => await file.write(this.absolutePathToOutputDirectory)));
+        await Promise.all(files.map(async (file) => await file.write(absolutePathToDirectory)));
         if (files.length > 0) {
             await loggingExeca(this.context.logger, "php-cs-fixer", ["fix", "."], {
                 doNotPipeOutput: true,
@@ -181,9 +181,22 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
         this.context.logger.debug(`mkdir ${absolutePathToDirectory}`);
         await mkdir(absolutePathToDirectory, { recursive: true });
     }
+
+    private replaceTemplate({ contents, namespace }: { contents: string; namespace: string }): string {
+        return template(contents)({
+            namespace,
+            coreNamespace: this.context.getCoreNamespace()
+        });
+    }
 }
 
 class PhpProjectFilepaths {
+    constructor(private readonly name: string) {}
+
+    public getProjectDirectory(): RelativeFilePath {
+        return RelativeFilePath.of(this.name);
+    }
+
     public getSourceDirectory(): RelativeFilePath {
         return RelativeFilePath.of(SRC_DIRECTORY_NAME);
     }
@@ -193,11 +206,11 @@ class PhpProjectFilepaths {
     }
 
     public getCoreDirectory(): RelativeFilePath {
-        return RelativeFilePath.of(CORE_DIRECTORY_NAME);
+        return join(this.getSourceDirectory(), RelativeFilePath.of(CORE_DIRECTORY_NAME));
     }
 
     public getCoreTestsDirectory(): RelativeFilePath {
-        return join(this.getTestsDirectory(), this.getCoreDirectory());
+        return join(this.getTestsDirectory(), this.getProjectDirectory(), RelativeFilePath.of(CORE_DIRECTORY_NAME));
     }
 }
 
@@ -264,12 +277,6 @@ class ComposerJson {
 }
 `;
     }
-}
-
-function replaceTemplate({ contents, namespace }: { contents: string; namespace: string }): string {
-    return template(contents)({
-        namespace
-    });
 }
 
 function getAsIsFilepath(filename: string): string {

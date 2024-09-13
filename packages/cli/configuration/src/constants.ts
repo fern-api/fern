@@ -15,6 +15,7 @@ export const DEFAULT_API_WORSPACE_FOLDER_NAME = "api";
 export const FERNIGNORE_FILENAME = ".fernignore";
 export const SNIPPET_JSON_FILENAME = "snippet.json";
 export const SNIPPET_TEMPLATES_JSON_FILENAME = "snippet-templates.json";
+export const RESOLVED_SNIPPET_TEMPLATES_MD = "resolved-snippet-templates.md";
 export const DEFAULT_GROUP_GENERATORS_CONFIG_KEY = "default-group";
 
 export const DOCS_DIRECTORY = "docs";

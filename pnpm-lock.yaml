@@ -3104,8 +3104,8 @@ importers:
         specifier: 0.0.584
         version: 0.0.584
       '@fern-fern/generators-sdk':
-        specifier: 0.107.0-00fe26566
-        version: 0.107.0-00fe26566
+        specifier: 0.109.0-21be2e5be
+        version: 0.109.0-21be2e5be
       '@types/get-port':
         specifier: ^4.2.0
         version: 4.2.0
@@ -3298,7 +3298,7 @@ importers:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
-  packages/cli/cli/dist/prod: {}
+  packages/cli/cli/dist/dev: {}
 
   packages/cli/configuration:
     dependencies:
@@ -3321,8 +3321,8 @@ importers:
         specifier: 0.0.584
         version: 0.0.584
       '@fern-fern/generators-sdk':
-        specifier: 0.107.0-00fe26566
-        version: 0.107.0-00fe26566
+        specifier: 0.109.0-21be2e5be
+        version: 0.109.0-21be2e5be
       find-up:
         specifier: ^6.3.0
         version: 6.3.0
@@ -4244,6 +4244,9 @@ importers:
       '@fern-api/logging-execa':
         specifier: workspace:*
         version: link:../../../../commons/logging-execa
+      '@fern-api/sdk':
+        specifier: 0.12.3
+        version: 0.12.3
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../../task-context
@@ -5577,8 +5580,8 @@ importers:
         specifier: ^0.0.898
         version: 0.0.898
       '@fern-fern/generators-sdk':
-        specifier: 0.107.0-00fe26566
-        version: 0.107.0-00fe26566
+        specifier: 0.109.0-21be2e5be
+        version: 0.109.0-21be2e5be
       '@types/pretty-ms':
         specifier: ^5.0.1
         version: 5.0.1
@@ -6675,6 +6678,12 @@ packages:
   '@fern-api/fdr-sdk@0.108.0-dcb0f740c':
     resolution: {integrity: sha512-gqTfYDtwsgAcdmJYXS4+PA4kxjvgu5rClG2Tcv531UUM5Mia2fql82irSyFwOY1b8wGHJmDIHcsSiEyXVBc08Q==}
 
+  '@fern-api/sdk@0.12.3':
+    resolution: {integrity: sha512-sexxpQEHBmsAXW3UHo5x7NW8Z9TrHWYLGo/J7eFqHYSH8Sq9LA3vRlR0ni9h4FNlKnPDu9Y55L0BhsQVXYqPKA==}
+
+  '@fern-api/template-resolver@0.7.5':
+    resolution: {integrity: sha512-hmvSxuhyWMjn1DxJJS/R+CIaZcF5c+UBEyFqFOw+laoBtdDvNgEyCu7XP5cILVMABPHmt7kkIO5KbrsCS5S2kw==}
+
   '@fern-api/venus-api-sdk@0.0.38':
     resolution: {integrity: sha512-1JjuctZwyPu4jN51bBqjIy+uCBPGa/ROcDfqN0UnGeVEW7NyztkGh/qOFwnN6K07VMMql1AIF4Zov+MVqTPwmw==}
 
@@ -6699,8 +6708,8 @@ packages:
   '@fern-fern/generator-exec-sdk@0.0.898':
     resolution: {integrity: sha512-VQYn32CkAd437deesaGk4LKikbVptxrWINAwUwiAUWOy77LelX1zWNKihjU2XDgIPv3VXK07aJwoPR5BDYD46Q==}
 
-  '@fern-fern/generators-sdk@0.107.0-00fe26566':
-    resolution: {integrity: sha512-fwk1xrv3wTO/6kJztIwO8Zz/thkRxIMLjYCtHelfbtbYNH9ZZr+yWDiCZGFBOOu7m8tuEZjaoOYOR3wiqmeivQ==}
+  '@fern-fern/generators-sdk@0.109.0-21be2e5be':
+    resolution: {integrity: sha512-McFSFWNqfZBC7E0gUQfhj45tTl8Eu+6bahqD6FHf0fQm+TXI/oQf8mhPJw/TVqzAGxP/2kOzSYNqkDg1DwkIFQ==}
 
   '@fern-fern/ir-sdk@0.0.2828':
     resolution: {integrity: sha512-qFZZHyw0cuHtoR9v7KsrPpz0PFH0V6/ORSMHdTKU/82KcaNCMjk0BbzicK8jjrMD0mYS4JxNUzEjcUOvgeuqaA==}
@@ -11148,6 +11157,11 @@ packages:
     engines: {node: '>=10.13.0'}
     hasBin: true
 
+  prettier@3.3.3:
+    resolution: {integrity: sha512-i2tDNA0O5IrMO757lfrdQZCc2jPNDVntV0m/+4whiDfWaTKfMNgR7Qz0NAeGz/nRqF4m5/6CLzbP4/liHt12Ew==}
+    engines: {node: '>=14'}
+    hasBin: true
+
   pretty-format@29.7.0:
     resolution: {integrity: sha512-Pdlw/oPxN+aXdmM9R00JVC9WVFoCLTKJvDVLgmJ+qAffBMxsV85l/Lu7sNx4zSzPyoL2euImuEwHhOXdEgNFZQ==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
@@ -13741,6 +13755,22 @@ snapshots:
       - encoding
       - typescript
 
+  '@fern-api/sdk@0.12.3':
+    dependencies:
+      '@fern-api/template-resolver': 0.7.5
+      form-data: 4.0.0
+      formdata-node: 6.0.3
+      js-base64: 3.7.2
+      node-fetch: 2.7.0
+      qs: 6.11.2
+      url-join: 4.0.1
+    transitivePeerDependencies:
+      - encoding
+
+  '@fern-api/template-resolver@0.7.5':
+    dependencies:
+      prettier: 3.3.3
+
   '@fern-api/venus-api-sdk@0.0.38':
     dependencies:
       '@types/url-join': 4.0.1
@@ -13803,7 +13833,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@fern-fern/generators-sdk@0.107.0-00fe26566':
+  '@fern-fern/generators-sdk@0.109.0-21be2e5be':
     dependencies:
       form-data: 4.0.0
       formdata-node: 6.0.3
@@ -19133,6 +19163,8 @@ snapshots:
   prelude-ls@1.2.1: {}
 
   prettier@2.7.1: {}
+
+  prettier@3.3.3: {}
 
   pretty-format@29.7.0:
     dependencies:

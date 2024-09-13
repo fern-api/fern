@@ -1,4 +1,5 @@
 irVersion: v46
+displayName: Java Spring
 changelogLocation: ../../generators/java/spring/versions.yml
 image: fernapi/fern-java-spring
 publish:
