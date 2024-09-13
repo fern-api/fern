@@ -1,4 +1,26 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.1.0
+  irVersion: 53
+  changelogEntry:
+    - type: feat
+      summary: |
+        Allow specifying pip extras within your `pyproject.toml`. The following config:
+
+        ```yaml
+        config:
+          extra_dev_dependencies:
+            covcheck: 
+              version: "^0.4.3"
+              extras: ["toml"]
+        ```
+
+        would add the following to your `pyproject.toml`:
+
+        ```toml
+        [tool.poetry.dev-dependencies]
+        covcheck = { version = "^0.4.3", extras = ["toml"] }
+        ```
+
 - version: 4.0.0
   irVersion: 53
   changelogEntry:
