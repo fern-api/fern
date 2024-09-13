@@ -5,12 +5,17 @@ import { php } from "@fern-api/php-codegen";
 
 export function generateModels({ context }: { context: ModelGeneratorContext }): PhpFile[] {
     const files: PhpFile[] = [];
+    const clazz = php.class_({
+        name: "Placeholder",
+        namespace: `${context.getNamespace()}\\Placeholder`
+    });
+    clazz.addConstructor({
+        body: php.codeblock("// TODO: Implement me!"),
+        parameters: []
+    });
     files.push(
         new PhpFile({
-            clazz: php.class_({
-                name: "Placeholder",
-                namespace: `${context.getNamespace()}\\Placeholder`
-            }),
+            clazz,
             rootNamespace: context.getNamespace(),
             directory: RelativeFilePath.of("Placeholder"),
             customConfig: context.customConfig

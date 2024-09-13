@@ -73,7 +73,7 @@ export class Class extends AstNode {
         if (constructor.access != null) {
             writer.write(`${constructor.access} `);
         }
-        writer.write("__construct(");
+        writer.write("function __construct(");
         constructor.parameters.forEach((parameter, index) => {
             if (index > 0) {
                 writer.write(", ");

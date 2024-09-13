@@ -36,7 +36,7 @@ class UserClient
 {
     private string name;
 
-    __construct(public readonly mixed metadata) {
+    function __construct(public readonly mixed metadata) {
         // TODO: Implement me!
     }
 }
