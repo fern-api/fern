@@ -25,10 +25,6 @@ interface HeaderInfo {
 }
 
 export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
-    constructor(context: SdkGeneratorContext) {
-        super(context);
-    }
-
     protected getFilepath(): RelativeFilePath {
         return join(RelativeFilePath.of(this.context.getRootClientClassName() + ".php"));
     }
