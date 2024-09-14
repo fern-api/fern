@@ -33,7 +33,7 @@ describe("class", () => {
         );
         expect(
             clazz.toString({
-                namespace: "",
+                namespace: "Acme",
                 rootNamespace: "",
                 customConfig: {}
             })
