@@ -1,6 +1,9 @@
 export { Class } from "./Class";
+export { ClassInstantiation } from "./ClassInstantiation";
+export { ClassReference } from "./ClassReference";
 export { CodeBlock } from "./CodeBlock";
 export { Writer } from "./core/Writer";
 export { Field } from "./Field";
+export { Map } from "./Map";
 export { Parameter } from "./Parameter";
 export { Type } from "./Type";

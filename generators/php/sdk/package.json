@@ -32,6 +32,8 @@
     "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-php-sdk:latest ../../.."
   },
   "devDependencies": {
+    "@fern-api/core-utils": "workspace:*",
+    "@fern-api/fs-utils": "workspace:*",
     "@fern-api/generator-commons": "workspace:*",
     "@fern-api/php-codegen": "workspace:*",
     "@fern-api/php-model": "workspace:*",
