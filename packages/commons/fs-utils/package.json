@@ -31,9 +31,11 @@
     "glob": "^8.0.3",
     "glob-promise": "^5.0.0",
     "json-stream-stringify": "^3.0.1",
-    "tmp-promise": "^3.0.3"
+    "tmp-promise": "^3.0.3",
+    "stream-json": "^1.8.0"
   },
   "devDependencies": {
+    "@types/stream-json": "^1.7.7",
     "@types/jest": "^29.5.12",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.6",
