@@ -1,6 +1,7 @@
 - changelogEntry:
   - summary: |
-      Fixes a crash when generating local SDKs from huge spec definitions. See issue #4639 for more detail.
+      `fern generate --local` no longer crashes on large API Definitions because we 
+      stream the JSON to file instead of calling `JSON.stringify`. See [PR 4640](https://github.com/fern-api/fern/pull/4640). 
     type: fix
   irVersion: 53
   version: 0.41.13
