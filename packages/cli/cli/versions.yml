@@ -1,5 +1,14 @@
 - changelogEntry:
   - summary: |
+      The Fern CLI now safely handles a npx file exists error by retrying the command on failure. 
+      This error typically happens when two or more instances of the Fern CLI are running `npx`
+      at the same time. 
+    type: fix
+  irVersion: 53
+  version: 0.41.14-rc0
+
+- changelogEntry:
+  - summary: |
       `fern generate --local` no longer crashes on large API Definitions because we 
       stream the JSON to file instead of calling `JSON.stringify`. See [PR 4640](https://github.com/fern-api/fern/pull/4640). 
     type: fix
