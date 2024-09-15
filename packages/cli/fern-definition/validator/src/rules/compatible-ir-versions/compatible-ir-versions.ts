@@ -71,9 +71,6 @@ export const CompatibleIrVersionsRule: Rule = {
                     if (invocation["ir-version"] != null) {
                         // You've overridden the IR version in the generator invocation, let's clean it up
                         invocationIrVersion = getOverriddenIrVersion(invocation["ir-version"]);
-                        if (invocationIrVersion <= cliIrVersion) {
-                            return [];
-                        }
                     } else {
                         const maybeIrVersion = await getIrVersionForGeneratorInvocation(invocation);
 
@@ -84,6 +81,10 @@ export const CompatibleIrVersionsRule: Rule = {
                         }
 
                         invocationIrVersion = maybeIrVersion;
+                    }
+
+                    if (invocationIrVersion <= cliIrVersion) {
+                        return [];
                     }
 
                     // If we've made it this far, we know the IR versions aren't a match, let's grab the min version
