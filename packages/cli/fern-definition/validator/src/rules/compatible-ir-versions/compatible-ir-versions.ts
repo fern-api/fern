@@ -1,3 +1,4 @@
+import { generatorsYml } from "@fern-api/configuration";
 import { createFdrGeneratorsSdkService } from "@fern-api/core";
 import { isVersionAhead } from "@fern-api/semver-utils";
 
@@ -23,7 +24,9 @@ function getOverriddenIrVersion(irVersion: string): number {
     return Number(irVersion.replace("v", ""));
 }
 
-async function getIrVersionForGeneratorInvocation(invocation: any): Promise<number | undefined> {
+async function getIrVersionForGeneratorInvocation(
+    invocation: generatorsYml.GeneratorInvocationSchema
+): Promise<number | undefined> {
     const fdr = createFdrGeneratorsSdkService({ token: undefined });
     const generatorEntity = await fdr.generators.getGeneratorByImage({
         dockerImage: invocation.name
