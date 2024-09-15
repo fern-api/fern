@@ -1,5 +1,6 @@
-import { createLogger, LogLevel, LOG_LEVELS } from "@fern-api/logger";
+import { createLogger, LogLevel, LOG_LEVELS, Logger } from "@fern-api/logger";
 import { getPosthogManager } from "@fern-api/posthog-manager";
+import { Project } from "@fern-api/project-loader";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { FernCliError, Finishable, PosthogEvent, Startable, TaskContext, TaskResult } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
@@ -10,7 +11,8 @@ import { Log } from "./Log";
 import { logErrorMessage } from "./logErrorMessage";
 import { TaskContextImpl } from "./TaskContextImpl";
 import { TtyAwareLogger } from "./TtyAwareLogger";
-import { getFernCliUpgradeMessage } from "./upgrade-utils/getFernCliUpgradeMessage";
+import { getFernUpgradeMessage } from "./upgrade-utils/getFernUpgradeMessage";
+import { FernGeneratorUpgradeInfo, getProjectGeneratorUpgrades } from "./upgrade-utils/getGeneratorVersions";
 import { getLatestVersionOfCli } from "./upgrade-utils/getLatestVersionOfCli";
 
 const WORKSPACE_NAME_COLORS = ["#2E86AB", "#A23B72", "#F18F01", "#C73E1D", "#CCE2A3"];
@@ -18,6 +20,11 @@ const WORKSPACE_NAME_COLORS = ["#2E86AB", "#A23B72", "#F18F01", "#C73E1D", "#CCE
 export interface FernCliUpgradeInfo {
     isUpgradeAvailable: boolean;
     latestVersion: string;
+}
+
+export interface FernUpgradeInfo {
+    cliUpgradeInfo: FernCliUpgradeInfo | undefined;
+    generatorUpgradeInfo: FernGeneratorUpgradeInfo[];
 }
 
 export class CliContext {
@@ -100,18 +107,16 @@ export class CliContext {
 
     private async nudgeUpgradeIfAvaialable() {
         try {
-            const { isUpgradeAvailable, latestVersion } = await Promise.race<
-                [Promise<FernCliUpgradeInfo>, Promise<never>]
-            >([
+            const upgradeInfo = await Promise.race<[Promise<FernUpgradeInfo>, Promise<never>]>([
                 this.isUpgradeAvailable(),
                 new Promise((_resolve, reject) => setTimeout(() => reject("Request timed out"), 300))
             ]);
 
-            if (isUpgradeAvailable) {
-                let upgradeMessage = getFernCliUpgradeMessage({
-                    toVersion: latestVersion,
-                    cliEnvironment: this.environment
-                });
+            let upgradeMessage = await getFernUpgradeMessage({
+                cliEnvironment: this.environment,
+                upgradeInfo
+            });
+            if (upgradeMessage != null) {
                 if (!upgradeMessage.endsWith("\n")) {
                     upgradeMessage += "\n";
                 }
@@ -141,6 +146,11 @@ export class CliContext {
         if (longestWorkspaceName != null) {
             this.longestWorkspaceName = longestWorkspaceName;
         }
+    }
+
+    private project: Project | undefined;
+    public registerProject(project: Project): void {
+        this.project = project;
     }
 
     public runTask<T>(run: (context: TaskContext) => T | Promise<T>): Promise<T> {
@@ -250,13 +260,14 @@ export class CliContext {
         this._suppressUpgradeMessage = true;
     }
 
-    private _isUpgradeAvailable: FernCliUpgradeInfo | undefined;
+    private _isUpgradeAvailable: FernUpgradeInfo | undefined;
     public async isUpgradeAvailable({
         includePreReleases = false
     }: {
         includePreReleases?: boolean;
-    } = {}): Promise<FernCliUpgradeInfo> {
+    } = {}): Promise<FernUpgradeInfo> {
         if (this._isUpgradeAvailable == null) {
+            // Check if the CLI is upgradable
             this.logger.debug(`Checking if ${this.environment.packageName} upgrade is available...`);
 
             const latestPackageVersion = await getLatestVersionOfCli({
@@ -270,9 +281,20 @@ export class CliContext {
                     (isUpgradeAvailable ? "Upgrade available." : "No upgrade available.")
             );
 
-            this._isUpgradeAvailable = {
+            const cliUpgrade: FernCliUpgradeInfo = {
                 isUpgradeAvailable,
                 latestVersion: latestPackageVersion
+            };
+
+            // Check if the generators are upgradable
+            const generatorUpgrades: FernGeneratorUpgradeInfo[] = await getProjectGeneratorUpgrades({
+                project: this.project,
+                cliContext: this
+            });
+
+            this._isUpgradeAvailable = {
+                cliUpgradeInfo: cliUpgrade,
+                generatorUpgradeInfo: generatorUpgrades
             };
         }
         return this._isUpgradeAvailable;

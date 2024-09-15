@@ -1,5 +1,10 @@
 import { MediaType } from "@fern-api/core-utils";
-import { HttpInlineRequestBodySchema, HttpRequestSchema, ObjectPropertySchema } from "../schemas";
+import {
+    AvailabilityUnionSchema,
+    HttpInlineRequestBodySchema,
+    HttpRequestSchema,
+    ObjectPropertySchema
+} from "../schemas";
 import { isInlineRequestBody } from "./isInlineRequestBody";
 import { parseRawFileType } from "./parseRawFileType";
 
@@ -25,6 +30,7 @@ export declare namespace RawFileUploadRequest {
 
     export interface BaseProperty {
         docs: string | undefined;
+        availability?: AvailabilityUnionSchema | undefined;
         key: string;
     }
 }

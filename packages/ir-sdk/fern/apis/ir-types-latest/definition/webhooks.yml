@@ -35,7 +35,7 @@ types:
       properties: list<InlinedWebhookPayloadProperty>
 
   InlinedWebhookPayloadProperty:
-    extends: commons.WithDocs
+    extends: commons.WithDocsAndAvailability
     properties:
       name: commons.NameAndWireValue
       valueType: types.TypeReference

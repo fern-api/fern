@@ -10027,6 +10027,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             },
             "properties": [
               {
+                "availability": undefined,
                 "docs": undefined,
                 "name": {
                   "name": {
@@ -10056,6 +10057,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 },
               },
               {
+                "availability": undefined,
                 "docs": undefined,
                 "name": {
                   "name": {
@@ -10085,6 +10087,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 },
               },
               {
+                "availability": undefined,
                 "docs": undefined,
                 "name": {
                   "name": {

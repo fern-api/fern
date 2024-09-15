@@ -1,4 +1,5 @@
 irVersion: v39
+displayName: Ruby SDK
 image: fernapi/fern-ruby-sdk
 changelogLocation: ../../generators/ruby/sdk/versions.yml
 publish:

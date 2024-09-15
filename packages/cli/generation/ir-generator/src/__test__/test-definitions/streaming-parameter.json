@@ -517,6 +517,7 @@
                                         "v2": null
                                     }
                                 },
+                                "availability": null,
                                 "docs": null
                             },
                             {
@@ -553,6 +554,7 @@
                                         }
                                     }
                                 },
+                                "availability": null,
                                 "docs": null
                             }
                         ],

@@ -6,7 +6,7 @@ import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { NameAndWireValue } from "../../commons/types/NameAndWireValue";
-import { WithDocs } from "../../commons/types/WithDocs";
+import { WithDocsAndAvailability } from "../../commons/types/WithDocsAndAvailability";
 
 export const InlinedWebhookPayloadProperty: core.serialization.ObjectSchema<
     serializers.InlinedWebhookPayloadProperty.Raw,
@@ -16,10 +16,10 @@ export const InlinedWebhookPayloadProperty: core.serialization.ObjectSchema<
         name: NameAndWireValue,
         valueType: core.serialization.lazy(() => serializers.TypeReference),
     })
-    .extend(WithDocs);
+    .extend(WithDocsAndAvailability);
 
 export declare namespace InlinedWebhookPayloadProperty {
-    interface Raw extends WithDocs.Raw {
+    interface Raw extends WithDocsAndAvailability.Raw {
         name: NameAndWireValue.Raw;
         valueType: serializers.TypeReference.Raw;
     }

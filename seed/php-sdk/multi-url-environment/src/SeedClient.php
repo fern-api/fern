@@ -1,0 +1,43 @@
+<?php
+
+namespace Seed;
+
+use Seed\Core\RawClient;
+use GuzzleHttp\Client;
+
+class SeedClient
+{
+    /**
+     * @var RawClient $client
+     */
+    private RawClient $client;
+
+    /**
+     * @var array<mixed> $ec2
+     */
+    public array $ec2;
+
+    /**
+     * @var array<mixed> $s3
+     */
+    public array $s3;
+
+    /**
+     * @param ?array<string, mixed> $clientOptions
+     */
+    public function __construct(
+        ?array $clientOptions = null,
+    ) {
+        $defaultHeaders = [
+            "X-Fern-Language" => "PHP",
+            "X-Fern-SDK-Name" => "Seed",
+            "X-Fern-SDK-Version" => "0.0.1",
+        ];
+        $this->client = new RawClient(
+            client: isset($clientOptions['client']) ? $clientOptions['client'] : new Client(),
+            headers: $defaultHeaders,
+        );
+        $this->ec2 = [];
+        $this->s3 = [];
+    }
+}

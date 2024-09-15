@@ -23,6 +23,9 @@ describe("test env compatibility", () => {
                 (err, stats) => {
                     try {
                         expect(err).toBe(null);
+                        if (stats?.hasErrors()) {
+                            console.log(stats?.toString());
+                        }
                         expect(stats?.hasErrors()).toBe(false);
                         resolve();
                     } catch (error) {

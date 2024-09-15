@@ -1,4 +1,62 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.2.1
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        When the generator runs bash commands such as `poetry install` and there is a failure, 
+        now the `stderr` and `stdout` is logged to help improve user debugging. 
+
+- version: 4.2.0
+  irVersion: 53
+  changelogEntry:
+    - type: feat
+      summary: |
+        Allow specifying arbitrary configuration to your packages `pyproject.toml` by adding a `pyproject_toml` block to your configuration
+        whatever you include in this block will be added as-is to the `pyproject.toml` file. The config, as an example is:
+
+        ```yaml
+        config:
+          pyproject_toml: |
+            [tool.covcheck.group.unit.coverage]
+            branch = 26.0
+            line = 62.0
+
+            [tool.covcheck.group.service.coverage]
+            branch = 30.0
+            line = 67.0
+        ```
+
+- version: 4.1.0
+  irVersion: 53
+  changelogEntry:
+    - type: feat
+      summary: |
+        Allow specifying pip extras within your `pyproject.toml`. The following config:
+
+        ```yaml
+        config:
+          extra_dev_dependencies:
+            covcheck: 
+              version: "^0.4.3"
+              extras: ["toml"]
+        ```
+
+        would add the following to your `pyproject.toml`:
+
+        ```toml
+        [tool.poetry.dev-dependencies]
+        covcheck = { version = "^0.4.3", extras = ["toml"] }
+        ```
+
+- version: 4.0.0
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Generated tests that expect an empty result when they are of type `text` (not JSON) now appropriately expect an empty string instead of `None` for async functions as well.
+        Version 3.3.4 fixed this for sync functions only, which was a bug.
+
 - version: 4.0.0-rc9
   irVersion: 53
   changelogEntry:

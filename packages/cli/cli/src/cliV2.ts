@@ -7,6 +7,9 @@ import { getGeneratorList } from "./commands/generator-list/getGeneratorList";
 import { getGeneratorMetadata } from "./commands/generator-metadata/getGeneratorMetadata";
 import { getOrganziation } from "./commands/organization/getOrganization";
 import { upgradeGenerator } from "./commands/upgrade/upgradeGenerator";
+import { getProjectGeneratorUpgrades } from "./cli-context/upgrade-utils/getGeneratorVersions";
+import { getGeneratorUpgradeMessage } from "./cli-context/upgrade-utils/getFernUpgradeMessage";
+import { writeFile } from "fs/promises";
 
 export function addGetOrganizationCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext): void {
     cli.command(
@@ -126,6 +129,13 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                         .option("channel", {
                             demandOption: false,
                             choices: Object.values(FernRegistry.generators.ReleaseType)
+                        })
+                        .option("list", {
+                            demandOption: false,
+                            boolean: true,
+                            default: false,
+                            description:
+                                "When specified, a list of available upgrades will be displayed, but no upgrade will be taken."
                         }),
                 async (argv) => {
                     await cliContext.instrumentPostHogEvent({
@@ -139,17 +149,45 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                             rc: argv.rc
                         }
                     });
-                    await upgradeGenerator({
-                        cliContext,
-                        generator: argv.generator,
-                        group: argv.group,
-                        project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                            commandLineApiWorkspace: argv.api,
-                            defaultToAllApiWorkspaces: true
-                        }),
-                        includeMajor: argv.includeMajor,
-                        channel: argv.channel
+
+                    const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                        commandLineApiWorkspace: argv.api,
+                        defaultToAllApiWorkspaces: true
                     });
+
+                    if (argv.list) {
+                        // We're delivering a verbose upgrade message, so we should suppress the traditional upgrade message
+                        cliContext.suppressUpgradeMessage();
+                        const upgrades = await getProjectGeneratorUpgrades({
+                            cliContext,
+                            project,
+                            generatorFilter: argv.generator,
+                            groupFilter: argv.group,
+                            includeMajor: argv.includeMajor,
+                            channel: argv.channel
+                        });
+
+                        const message = await getGeneratorUpgradeMessage({
+                            generatorUpgradeInfo: upgrades,
+                            header: "Generator Upgrades\n",
+                            includeBoxen: true
+                        });
+                        if (message != null) {
+                            cliContext.logger.info(message);
+                        }
+                    } else {
+                        await upgradeGenerator({
+                            cliContext,
+                            generator: argv.generator,
+                            group: argv.group,
+                            project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                                commandLineApiWorkspace: argv.api,
+                                defaultToAllApiWorkspaces: true
+                            }),
+                            includeMajor: argv.includeMajor,
+                            channel: argv.channel
+                        });
+                    }
                 }
             )
             .command(
@@ -158,6 +196,11 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                 false,
                 (yargs) =>
                     yargs
+                        .option("output", {
+                            string: true,
+                            alias: "o",
+                            description: "The location to output the list as a text file, defaults to standard out."
+                        })
                         .option("generator", {
                             string: true,
                             demandOption: true,
@@ -205,7 +248,19 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                         );
                     }
                     if (argv.version) {
-                        process.stdout.write(generator.version);
+                        if (argv.output == null) {
+                            process.stdout.write(generator.version);
+                            return;
+                        }
+
+                        try {
+                            await writeFile(argv.output, generator.version);
+                        } catch (error) {
+                            cliContext.failAndThrow(
+                                `Could not write file to the specified location: ${argv.output}`,
+                                error
+                            );
+                        }
                     }
                 }
             );

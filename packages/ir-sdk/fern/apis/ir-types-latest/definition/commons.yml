@@ -4,6 +4,10 @@ types:
   WithDocs:
     properties:
       docs: optional<string>
+  WithDocsAndAvailability:
+    extends: WithDocs
+    properties:
+      availability: optional<Availability>
   FernFilepath:
     properties:
       allParts: list<Name>

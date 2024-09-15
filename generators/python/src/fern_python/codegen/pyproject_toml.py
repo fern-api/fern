@@ -42,6 +42,7 @@ class PyProjectToml:
         github_output_mode: Optional[GithubOutputMode],
         license_: Optional[LicenseConfig],
         extras: typing.Dict[str, List[str]] = {},
+        user_defined_toml: Optional[str] = None,
     ):
         self._poetry_block = PyProjectToml.PoetryBlock(
             name=name,
@@ -55,6 +56,7 @@ class PyProjectToml:
         self._path = path
         self._python_version = python_version
         self._extras = extras
+        self._user_defined_toml = user_defined_toml
 
     def write(self) -> None:
         blocks: List[PyProjectToml.Block] = [
@@ -78,6 +80,10 @@ class PyProjectToml:
             for key, vals in self._extras.items():
                 stringified_vals = ", ".join([f'"{val}"' for val in vals])
                 content += f"{key}=[{stringified_vals}]\n"
+
+        if self._user_defined_toml is not None:
+            content += "\n"
+            content += self._user_defined_toml
 
         with open(os.path.join(self._path, "pyproject.toml"), "w") as f:
             f.write(content)
@@ -191,12 +197,18 @@ packages = [
                 compatiblity = dep.compatibility
                 is_optional = dep.optional
                 version = dep.version
+                extras = dep.extras
                 name = dep.name.replace(".", "-")
                 if compatiblity == DependencyCompatibility.GREATER_THAN_OR_EQUAL:
                     version = f">={dep.version}"
 
-                if is_optional:
-                    deps += f'{name} = {{ version="{version}", optional = true}}\n'
+                if is_optional or dep.extras is not None:
+                    deps += f'{name} = {{ version = "{version}"'
+                    if is_optional:
+                        deps += ", optional = true"
+                    if extras is not None:
+                        deps += f", extras = {json.dumps(list(extras))}"
+                    deps += "}\n"
                 else:
                     deps += f'{name} = "{version}"\n'
             return deps

@@ -1,6 +1,5 @@
 export { And } from "./And";
 export { Annotation } from "./Annotation";
-export { type Argument, type Arguments, type NamedArgument, type UnnamedArgument } from "./Argument";
 export { Class } from "./Class";
 export { ClassInstantiation } from "./ClassInstantiation";
 export { ClassReference } from "./ClassReference";

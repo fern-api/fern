@@ -48,7 +48,7 @@ types:
       properties: list<InlinedWebSocketMessageBodyProperty>
 
   InlinedWebSocketMessageBodyProperty:
-    extends: commons.WithDocs
+    extends: commons.WithDocsAndAvailability
     properties:
       name: commons.NameAndWireValue
       valueType: types.TypeReference
