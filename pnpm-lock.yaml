@@ -556,7 +556,7 @@ importers:
         version: 3.22.4
 
   generators/php/sdk:
-    dependencies:
+    devDependencies:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
@@ -566,16 +566,6 @@ importers:
       '@fern-api/generator-commons':
         specifier: workspace:*
         version: link:../../commons
-      '@fern-fern/ir-sdk':
-        specifier: ^53.7.0
-        version: 53.9.0
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
-      zod:
-        specifier: ^3.22.3
-        version: 3.22.4
-    devDependencies:
       '@fern-api/php-codegen':
         specifier: workspace:*
         version: link:../codegen
@@ -585,6 +575,9 @@ importers:
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.898
         version: 0.0.898
+      '@fern-fern/ir-sdk':
+        specifier: ^53.7.0
+        version: 53.9.0
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
@@ -609,6 +602,9 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -624,6 +620,9 @@ importers:
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+      zod:
+        specifier: ^3.22.3
+        version: 3.22.4
 
   generators/postman:
     dependencies:
