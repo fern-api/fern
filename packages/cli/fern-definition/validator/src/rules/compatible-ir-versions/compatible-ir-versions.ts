@@ -32,12 +32,11 @@ async function getIrVersionForGeneratorInvocation(
         dockerImage: invocation.name
     });
     // Again, this is to allow for offline usage, and other transient errors
-    if (!generatorEntity.ok) {
+    if (!generatorEntity.ok || generatorEntity.body == null) {
         return undefined;
     }
     const generatorRelease = await fdr.generators.versions.getGeneratorRelease(
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        generatorEntity.body!.id,
+        generatorEntity.body.id,
         invocation.version
     );
 
