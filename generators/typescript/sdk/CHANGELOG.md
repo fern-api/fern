@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.40.3] - 2024-09-12
+
+- Fix: If the serde layer is enabled, then all the serializers are exported under the 
+  namespace `serializers`. 
+
+  ```ts
+  import { serializers } from "@plantstore/sdk"; 
+
+  export function main(): void { 
+    // serialize to json
+
+    const json = serializers.Plant.toJson({
+      name: "fern",
+    });
+
+    const parsed = serializers.Plant.parseOrThrow(`{ "name": "fern" }`);
+  }
+  ```
+
 ## [0.40.2] - 2024-09-12
 
 - Fix: The generated SDK now handles reading IR JSONs that are larger than 500MB. In order to 

@@ -1,9 +1,4 @@
-FROM node:lts-slim as base
-
-FROM base AS builder
-
-RUN mkdir /yarn-cache-template
-RUN yarn config set cache-folder /yarn-cache-template
+FROM node:lts-slim
 
 RUN  yarn add \
   # jest
@@ -45,9 +40,6 @@ RUN  yarn add \
   # fetch mock jest
   fetch-mock-jest@1.5.1
 
-FROM base AS runner
-
-COPY --from=builder /yarn-cache-template /yarn-cache-template
 # Installs tsc
 RUN npm install -g typescript
 
