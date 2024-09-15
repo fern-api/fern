@@ -1,4 +1,10 @@
 - changelogEntry:
+  - summary: Remove bang operator and fix eslint warning in `compatible-ir-versions.ts`. 
+    type: internal
+  irVersion: 53
+  version: 0.41.14-rc2
+
+- changelogEntry:
   - summary: |
       Running `fern check` will now check to confirm that the generator versions you are running are compatible with your Fern CLI version.
 
