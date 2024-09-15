@@ -415,6 +415,9 @@ export class SdkGenerator {
             this.generateTypeSchemas();
             this.generateEndpointTypeSchemas();
             this.generateInlinedRequestBodySchemas();
+            this.exportsManager.addExportsForDirectories([
+                { nameOnDisk: "serialization", exportDeclaration: { namespaceExport: "serializers" } }
+            ]);
             this.context.logger.debug("Generated serde layer.");
         }
 
