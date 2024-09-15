@@ -1,4 +1,12 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.2.1
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        When the generator runs bash commands such as `poetry install` and there is a failure, 
+        now the `stderr` and `stdout` is logged to help improve user debugging. 
+
 - version: 4.2.0
   irVersion: 53
   changelogEntry:
