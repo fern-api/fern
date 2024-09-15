@@ -190,7 +190,8 @@ export async function loadAPIWorkspace({
                 workspaceName,
                 absoluteFilepath: absolutePathToWorkspace,
                 generatorsConfiguration,
-                changelog
+                changelog,
+                cliVersion
             })
         };
     }
