@@ -102,7 +102,10 @@ class Publisher:
         except subprocess.CalledProcessError as e:
             self._generator_exec_wrapper.send_update(
                 logging.GeneratorUpdate.factory.log(
-                    logging.LogUpdate(level=logging.LogLevel.ERROR, message=f"Failed to run command: {safe_command}.\n{e.stdout}\n{e.stderr}")
+                    logging.LogUpdate(
+                        level=logging.LogLevel.ERROR,
+                        message=f"Failed to run command: {safe_command}.\n{e.stdout}\n{e.stderr}",
+                    )
                 )
             )
             print(f"Failed to run command: {' '.join(command)}")
