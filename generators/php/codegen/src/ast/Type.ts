@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
+import { GLOBAL_NAMESPACE, Writer } from "./core/Writer";
 import { ClassReference } from "./ClassReference";
 
 type InternalType =
@@ -91,9 +91,11 @@ export class Type extends AstNode {
                 writer.write("float");
                 break;
             case "date":
+                writer.addReference(DateTimeClassReference);
                 writer.write("DateTime");
                 break;
             case "dateTime":
+                writer.addReference(DateTimeClassReference);
                 writer.write("DateTime");
                 break;
             case "mixed":
@@ -238,3 +240,8 @@ export class Type extends AstNode {
         });
     }
 }
+
+export const DateTimeClassReference = new ClassReference({
+    namespace: GLOBAL_NAMESPACE,
+    name: "DateTime"
+});
