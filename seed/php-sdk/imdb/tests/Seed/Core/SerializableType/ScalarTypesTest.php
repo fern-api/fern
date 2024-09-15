@@ -48,16 +48,12 @@ class ScalarTypesTestTest extends TestCase
             'int_float_array' => [1, 2.5, 3, 4.75]
         ];
 
-        // Convert data to JSON
         $json = json_encode($data, JSON_THROW_ON_ERROR);
 
-        // Deserialize JSON to object
         $object = ScalarTypesTest::fromJson($json);
 
-        // Serialize object back to JSON
         $serializedJson = $object->toJson();
 
-        // Compare serialized JSON with original JSON
         $this->assertJsonStringEqualsJsonString($json, $serializedJson, 'Serialized JSON does not match original JSON for ScalarTypesTest.');
 
         // Check scalar properties

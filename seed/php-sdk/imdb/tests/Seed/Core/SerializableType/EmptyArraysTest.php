@@ -31,23 +31,18 @@ class EmptyArraysTestTest extends TestCase
 {
     public function testEmptyArrays()
     {
-        // Create test data with empty arrays
         $data = [
             'empty_string_array' => [],
             'empty_map_array' => [],
             'empty_dates_array' => []
         ];
 
-        // Convert data to JSON
         $json = json_encode($data, JSON_THROW_ON_ERROR);
 
-        // Deserialize JSON to object
         $object = EmptyArraysTest::fromJson($json);
 
-        // Serialize object back to JSON
         $serializedJson = $object->toJson();
 
-        // Compare serialized JSON with original JSON
         $this->assertJsonStringEqualsJsonString($json, $serializedJson, 'Serialized JSON does not match original JSON for EmptyArraysTest.');
 
         // Check that arrays are empty

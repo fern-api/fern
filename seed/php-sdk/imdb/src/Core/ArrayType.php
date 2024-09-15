@@ -21,15 +21,4 @@ class Union {
     public function __construct(string ...$strings) {
         $this->types = $strings;
     }
-
-    /**
-     * Check if a given type is part of the union.
-     *
-     * @param mixed $type
-     * @return bool
-     */
-    public function contains($type): bool
-    {
-        return in_array($type, $this->types, true);
-    }
 }

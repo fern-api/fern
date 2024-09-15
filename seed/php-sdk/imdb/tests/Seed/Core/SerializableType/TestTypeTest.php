@@ -92,16 +92,12 @@ class TestTypeTest extends TestCase
             'dates_array' => ['2023-01-01', null, '2023-03-01'] // Testing nullable dates in array
         ];
 
-        // Convert data to JSON
         $json = json_encode($data, JSON_THROW_ON_ERROR);
 
-        // Deserialize JSON to object
         $object = TestType::fromJson($json);
 
-        // Serialize object back to JSON
         $serializedJson = $object->toJson();
 
-        // Compare serialized JSON with original JSON
         $this->assertJsonStringEqualsJsonString($json, $serializedJson, 'The serialized JSON does not match the original JSON.');
 
         // Check that nullable property is null and not included in JSON

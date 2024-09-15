@@ -23,9 +23,6 @@ class TestNestedType extends SerializableType
 
 class NestedUnionArrayType extends SerializableType
 {
-    /**
-     * @param array<int, array<int, TestNestedType|null|date|datetime>> $nestedArray
-     */
     public function __construct(
         #[ArrayType(['integer' => ['integer' => new Union(TestNestedType::class, 'null', 'date')]])]
         #[JsonProperty('nested_array')]

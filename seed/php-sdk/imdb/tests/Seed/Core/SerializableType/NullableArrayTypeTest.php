@@ -11,7 +11,6 @@ use Seed\Core\Union;
 class NullableArrayType extends SerializableType
 {
     public function __construct(
-        // Array of strings or null using Union
         #[ArrayType([new Union('string', 'null')])]
         #[JsonProperty('nullable_string_array')]
         public array $nullableStringArray

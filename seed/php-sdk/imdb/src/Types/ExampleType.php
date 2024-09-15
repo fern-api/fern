@@ -7,14 +7,23 @@ use Seed\Core\ArrayType;
 use Seed\Core\DateType;
 use Seed\Core\JsonProperty;
 use Seed\Core\SerializableType;
+use Seed\Core\Union;
 
 class ExampleType extends SerializableType
 {
     /**
+     * @param string $name
+     * @param int $age
+     * @param float $price
+     * @param bool $isActive
+     * @param DateTime $startDate
+     * @param DateTime $createdAt
      * @param string[] $stringList
      * @param array<string, int> $stringIntMap
      * @param string[][] $nestedStringList
      * @param array<int, array<int, ExampleNestedType>> $nestedTypeMap
+     * @param WeatherReport $weatherReport
+     * @param string|null $optionalName
      */
     public function __construct(
         #[JsonProperty('name')]
@@ -41,7 +50,7 @@ class ExampleType extends SerializableType
         #[JsonProperty('string_list')]
         public array    $stringList,
 
-        #[ArrayType(['string' => 'int'])]
+        #[ArrayType(['string' => 'integer'])]
         #[JsonProperty('string_int_map')]
         public array    $stringIntMap,
 
@@ -49,7 +58,7 @@ class ExampleType extends SerializableType
         #[JsonProperty('nested_string_list')]
         public array    $nestedStringList,
 
-        #[ArrayType(['int' => ['int' => ExampleNestedType::class | "null" | "date" | "datetime"]])]
+        #[ArrayType(['integer' => ['integer' => new Union("null", "date", ExampleNestedType::class)]])]
         #[JsonProperty('nested_type_map')]
         public array    $nestedTypeMap,
 

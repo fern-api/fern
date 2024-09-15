@@ -11,7 +11,6 @@ class ExampleTypeTest extends TestCase
         // Define the original data for ExampleType with nested ExampleNestedType
         $originalData = [
             'name' => 'Test Example',
-            'optional_name' => null,
             'age' => 30,
             'price' => 99.99,
             'is_active' => true,
@@ -29,7 +28,8 @@ class ExampleTypeTest extends TestCase
                     30 => ['nested_field' => 'NestedType 30'],
                     40 => ['nested_field' => 'NestedType 40']
                 ]
-            ]
+            ],
+            'weather_report' => 'clear'
         ];
 
         // Convert the original data into JSON
