@@ -34,7 +34,8 @@ export async function runRulesOnWorkspace({
     if (workspace.generatorsConfiguration?.rawConfiguration) {
         const violationsForGeneratorsYml = await validateGeneratorsYmlFile({
             contents: workspace.generatorsConfiguration.rawConfiguration,
-            allRuleVisitors
+            allRuleVisitors,
+            cliVersion: workspace.cliVersion
         });
         violations.push(...violationsForGeneratorsYml);
     }
@@ -68,10 +69,12 @@ export async function runRulesOnWorkspace({
 
 async function validateGeneratorsYmlFile({
     contents,
-    allRuleVisitors
+    allRuleVisitors,
+    cliVersion
 }: {
     contents: generatorsYml.GeneratorsConfigurationSchema;
     allRuleVisitors: RuleVisitors[];
+    cliVersion: string;
 }): Promise<ValidationViolation[]> {
     const violations: ValidationViolation[] = [];
 
@@ -83,7 +86,7 @@ async function validateGeneratorsYmlFile({
             violations.push(...newViolations);
         }
     });
-    await visitGeneratorsYamlAst(contents, astVisitor);
+    await visitGeneratorsYamlAst(contents, cliVersion, astVisitor);
 
     return violations;
 }

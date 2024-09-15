@@ -7,7 +7,10 @@ export type GeneratorsYmlFileAstVisitor<R = void | Promise<void>> = {
 
 export interface GeneratorsYmlFileAstNodeTypes {
     file: generatorsYml.GeneratorsConfigurationSchema;
-    generatorInvocation: generatorsYml.GeneratorInvocationSchema;
+    generatorInvocation: {
+        invocation: generatorsYml.GeneratorInvocationSchema;
+        cliVersion: string;
+    };
 }
 
 export type GeneratorsYmlFileAstNodeVisitor<K extends keyof GeneratorsYmlFileAstNodeTypes, R = void | Promise<void>> = (

@@ -5,6 +5,7 @@ import { visitGeneratorGroups } from "./visitors/visitGeneratorGroups";
 
 export async function visitGeneratorsYamlAst(
     contents: generatorsYml.GeneratorsConfigurationSchema,
+    cliVersion: string,
     visitor: Partial<GeneratorsYmlFileAstVisitor>
 ): Promise<void> {
     await visitor.file?.(contents, []);
@@ -22,7 +23,7 @@ export async function visitGeneratorsYamlAst(
         "async-api": noop,
         "api-settings": noop,
         groups: async (groups) => {
-            await visitGeneratorGroups({ groups, visitor, nodePath: ["groups"] });
+            await visitGeneratorGroups({ groups, visitor, nodePath: ["groups"], cliVersion });
         }
     });
 }

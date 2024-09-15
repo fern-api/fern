@@ -12,29 +12,55 @@ function getMaybeBadVersionMessage(
         return [
             {
                 severity: "error",
-                message: `The generator ${generatorName} requires CLI version ${minCliVersion} or later (current version: ${cliVersion}).`
+                message: `The generator ${generatorName} requires CLI version ${minCliVersion} or later (current version: ${cliVersion}). Please run \`fern upgrade\` to use this generator.`
             }
         ];
     }
     return;
 }
 
+function getOverriddenIrVersion(irVersion: string): number {
+    return Number(irVersion.replace("v", ""));
+}
+
+async function getIrVersionForGeneratorInvocation(invocation: any): Promise<number | undefined> {
+    const fdr = createFdrGeneratorsSdkService({ token: undefined });
+    const generatorEntity = await fdr.generators.getGeneratorByImage({
+        dockerImage: invocation.name
+    });
+    // Again, this is to allow for offline usage, and other transient errors
+    if (!generatorEntity.ok) {
+        return undefined;
+    }
+    const generatorRelease = await fdr.generators.versions.getGeneratorRelease(
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        generatorEntity.body!.id,
+        invocation.version
+    );
+
+    if (generatorRelease.ok) {
+        // We've pulled the generator release, let's get it's IR version
+        return generatorRelease.body.irVersion;
+    }
+
+    return undefined;
+}
+
+// NOTE: we do not throw in the event of a failure here, to account for using the generator offline
 export const CompatibleIrVersionsRule: Rule = {
     name: "compatible-ir-version",
     create: async () => {
         return {
             generatorsYml: {
-                generatorInvocation: async (invocation) => {
+                generatorInvocation: async ({ invocation, cliVersion }) => {
                     const fdr = createFdrGeneratorsSdkService({ token: undefined });
-                    // TODO: is there a better way to do this? I feel like I can't bring a dep on the cli package
-                    // I also feel like we shouldn't throw or error if we can't get the CLI version, so just returning here.
-                    const cliVersion = process.env.CLI_VERSION;
                     if (cliVersion == null) {
                         return [];
                     }
 
                     // Pull the CLI release to get the IR version
                     const cliRelease = await fdr.generators.cli.getCliRelease(cliVersion);
+                    // Again, this is to allow for offline usage, and other transient errors
                     if (!cliRelease.ok) {
                         return [];
                     }
@@ -44,35 +70,20 @@ export const CompatibleIrVersionsRule: Rule = {
                     let invocationIrVersion: number;
                     if (invocation["ir-version"] != null) {
                         // You've overridden the IR version in the generator invocation, let's clean it up
-                        invocationIrVersion = Number(invocation["ir-version"].replace("v", ""));
-                        if (cliIrVersion >= invocationIrVersion) {
-                            // You've overridden the IR version and you're on a CLI that works with it!
+                        invocationIrVersion = getOverriddenIrVersion(invocation["ir-version"]);
+                        if (invocationIrVersion <= cliIrVersion) {
                             return [];
                         }
                     } else {
-                        const generatorEntity = await fdr.generators.getGeneratorByImage({
-                            dockerImage: invocation.name
-                        });
-                        if (!generatorEntity.ok) {
-                            return [];
-                        }
-                        const generatorRelease = await fdr.generators.versions.getGeneratorRelease(
-                            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                            generatorEntity.body!.id,
-                            invocation.version
-                        );
+                        const maybeIrVersion = await getIrVersionForGeneratorInvocation(invocation);
 
-                        if (generatorRelease.ok) {
-                            // We've pulled the generator release, let's get it's IR version
-                            invocationIrVersion = generatorRelease.body.irVersion;
-                            if (cliIrVersion >= generatorRelease.body.irVersion) {
-                                // You're on a CLI that works with the generator you have specified!
-                                return [];
-                            }
-                        } else {
-                            // We don't have a generator release for this generator, so we can't validate it.
+                        // The above returns undefined if we can't get the IR version, so we'll just return an empty array
+                        // Again, this is to allow for offline usage, and other transient errors
+                        if (maybeIrVersion == null) {
                             return [];
                         }
+
+                        invocationIrVersion = maybeIrVersion;
                     }
 
                     // If we've made it this far, we know the IR versions aren't a match, let's grab the min version
@@ -81,13 +92,9 @@ export const CompatibleIrVersionsRule: Rule = {
                     if (minCliVersion.ok) {
                         return getMaybeBadVersionMessage(invocation.name, minCliVersion.body.version, cliVersion) ?? [];
                     } else {
-                        throw new Error(
-                            `Failed to get min CLI version for IR version ${invocationIrVersion} ${JSON.stringify(
-                                minCliVersion
-                            )}`
-                        );
+                        // Again, this is to allow for offline usage, and other transient errors
+                        return [];
                     }
-                    // return [];
                 }
             }
         };
