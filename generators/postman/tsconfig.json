@@ -4,6 +4,7 @@
   "include": ["./src/**/*"],
   "references": [
     { "path": "../commons" }, 
-    { "path": "../../packages/core" }
+    { "path": "../../packages/core" },
+    { "path": "../../packages/commons/fs-utils" }
   ]
 }

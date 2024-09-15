@@ -5,7 +5,7 @@ import { readFile } from "fs/promises";
 export async function parseGeneratorConfig(pathToConfig: string): Promise<FernGeneratorExec.GeneratorConfig> {
     const configStr = await readFile(pathToConfig);
     // eslint-disable-next-line no-console
-    console.log(`Read ${pathToConfig}`);
+    console.log(`Parsed ${pathToConfig}`);
     const rawConfig = JSON.parse(configStr.toString());
     const parsedConfig = await GeneratorExecParsing.GeneratorConfig.parse(rawConfig, {
         unrecognizedObjectKeys: "passthrough"
@@ -13,7 +13,7 @@ export async function parseGeneratorConfig(pathToConfig: string): Promise<FernGe
 
     if (!parsedConfig.ok) {
         // eslint-disable-next-line no-console
-        console.log(`Failed to read ${pathToConfig}`);
+        console.log(`Failed to parse ${pathToConfig}`);
         throw new Error("Failed to parse the generator configuration");
     }
 
