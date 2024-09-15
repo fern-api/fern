@@ -412,11 +412,10 @@ export class SdkGenerator {
         }
 
         if (this.config.includeSerdeLayer) {
-            let generated = true;
-            generated = generated && this.generateTypeSchemas().generated;
-            generated = generated && this.generateEndpointTypeSchemas().generated;
-            generated = generated && this.generateInlinedRequestBodySchemas().generated;
-            if (generated) {
+            const { generated: typeSchemasGenerated } = this.generateTypeSchemas();
+            const { generated: endpointTypeSchemasGenerated } = this.generateEndpointTypeSchemas();
+            const { generated: inlinedRequestSchemasGenerated } = this.generateInlinedRequestBodySchemas();
+            if (typeSchemasGenerated || endpointTypeSchemasGenerated || inlinedRequestSchemasGenerated) {
                 this.exportsManager.addExportsForDirectories([
                     { nameOnDisk: "serialization", exportDeclaration: { namespaceExport: "serializers" } }
                 ]);
