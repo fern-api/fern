@@ -18,11 +18,11 @@ class SeedClient
     public array $service;
 
     /**
-     * @param array<mixed> $xAnotherHeader
+     * @param string $xAnotherHeader
      * @param ?array<string, mixed> $clientOptions
      */
     public function __construct(
-        array $xAnotherHeader,
+        string $xAnotherHeader,
         ?array $clientOptions = null,
     ) {
         $defaultHeaders = [

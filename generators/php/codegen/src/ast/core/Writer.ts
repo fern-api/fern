@@ -4,6 +4,8 @@ import { ClassReference } from "../ClassReference";
 
 type Namespace = string;
 
+export const GLOBAL_NAMESPACE = "";
+
 export declare namespace Writer {
     interface Args {
         /* The namespace that is being written to */
@@ -37,7 +39,8 @@ export class Writer extends AbstractWriter {
         if (reference.namespace == null) {
             return;
         }
-        const namespace = `${reference.namespace}\\${reference.name}`;
+        const namespace =
+            reference.namespace === GLOBAL_NAMESPACE ? reference.name : `${reference.namespace}\\${reference.name}`;
         const references = (this.references[namespace] ??= []);
         references.push(reference);
     }

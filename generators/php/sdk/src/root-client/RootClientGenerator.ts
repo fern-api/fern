@@ -70,11 +70,10 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         const { requiredParameters, optionalParameters, literalParameters } = this.getConstructorParameters();
         const parameters: php.Parameter[] = [];
         for (const param of requiredParameters) {
-            // TODO: Replace 'array' with the PHP type mapper.
             parameters.push(
                 php.parameter({
                     name: param.name,
-                    type: php.Type.array(php.Type.mixed()),
+                    type: this.context.phpTypeMapper.convert({ reference: param.typeReference }),
                     docs: param.docs
                 })
             );
