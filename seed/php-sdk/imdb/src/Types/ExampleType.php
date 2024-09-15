@@ -12,12 +12,6 @@ use Seed\Core\Union;
 class ExampleType extends SerializableType
 {
     /**
-     * @param string $name
-     * @param int $age
-     * @param float $price
-     * @param bool $isActive
-     * @param DateTime $startDate
-     * @param DateTime $createdAt
      * @param string[] $stringList
      * @param array<string, int> $stringIntMap
      * @param string[][] $nestedStringList
