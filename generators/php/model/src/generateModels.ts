@@ -7,7 +7,7 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
     const files: PhpFile[] = [];
     const clazz = php.class_({
         name: "Placeholder",
-        namespace: `${context.getNamespace()}\\Placeholder`
+        namespace: `${context.getRootNamespace()}\\Placeholder`
     });
     clazz.addConstructor({
         body: php.codeblock("// TODO: Implement me!"),
@@ -16,7 +16,7 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
     files.push(
         new PhpFile({
             clazz,
-            rootNamespace: context.getNamespace(),
+            rootNamespace: context.getRootNamespace(),
             directory: RelativeFilePath.of("Placeholder"),
             customConfig: context.customConfig
         })

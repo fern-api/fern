@@ -5,6 +5,7 @@ import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { generateModels } from "@fern-api/php-model";
+import { RootClientGenerator } from "./root-client/RootClientGenerator";
 
 export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -46,6 +47,10 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
         for (const file of models) {
             context.project.addSourceFiles(file);
         }
+
+        const rootClient = new RootClientGenerator(context);
+        context.project.addSourceFiles(rootClient.generate());
+
         await context.project.persist();
     }
 }

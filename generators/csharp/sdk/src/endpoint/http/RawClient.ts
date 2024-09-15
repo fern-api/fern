@@ -1,3 +1,4 @@
+import { Arguments } from "@fern-api/generator-commons";
 import { csharp } from "@fern-api/csharp-codegen";
 import { HttpEndpoint, HttpMethod } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
@@ -47,7 +48,7 @@ export class RawClient {
         queryBagReference,
         requestType
     }: RawClient.MakeRequestArgs): csharp.MethodInvocation {
-        const arguments_: csharp.Arguments = [
+        const arguments_: Arguments = [
             {
                 name: "BaseUrl",
                 assignment: baseUrl

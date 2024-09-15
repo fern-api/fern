@@ -1,8 +1,9 @@
 import { assertNever } from "@fern-api/core-utils";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
+import { ClassReference } from "./ClassReference";
 
-type InternalType = Int | String_ | Bool | Float | Mixed | Object_ | Array_ | Map | Optional;
+type InternalType = Int | String_ | Bool | Float | Mixed | Object_ | Array_ | Map | Optional | Reference;
 
 interface Int {
     type: "int";
@@ -42,6 +43,11 @@ interface Map {
 interface Optional {
     type: "optional";
     value: Type;
+}
+
+interface Reference {
+    type: "reference";
+    value: ClassReference;
 }
 
 /* A PHP parameter to a method */
@@ -97,6 +103,9 @@ export class Type extends AstNode {
                     writer.write("?");
                 }
                 this.internalType.value.write(writer, { parentType: this, comment });
+                break;
+            case "reference":
+                writer.writeNode(this.internalType.value);
                 break;
             default:
                 assertNever(this.internalType);
@@ -180,6 +189,13 @@ export class Type extends AstNode {
     public static optional(value: Type): Type {
         return new this({
             type: "optional",
+            value
+        });
+    }
+
+    public static reference(value: ClassReference): Type {
+        return new this({
+            type: "reference",
             value
         });
     }
