@@ -65,7 +65,7 @@ export declare namespace parseIR {
 export async function parseIR<IR>({ absolutePathToIR, parse }: parseIR.Args<IR>): Promise<IR> {
     const irJson = await streamObjectFromFile(absolutePathToIR);
     // eslint-disable-next-line no-console
-    console.log(`Read ${absolutePathToIR}`);
+    console.log(`Parsed ${absolutePathToIR}`);
     const parsedIR = await parse(irJson, {
         unrecognizedObjectKeys: "passthrough",
         allowUnrecognizedEnumValues: true,
@@ -74,7 +74,7 @@ export async function parseIR<IR>({ absolutePathToIR, parse }: parseIR.Args<IR>)
 
     if (!parsedIR.ok) {
         // eslint-disable-next-line no-console
-        console.log(`Failed to read ${absolutePathToIR}`);
+        console.log(`Failed to parse ${absolutePathToIR}`);
         throw new Error(`Failed to parse IR: ${parsedIR.errors}`);
     }
 
