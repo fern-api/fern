@@ -412,10 +412,11 @@ export class SdkGenerator {
         }
 
         if (this.config.includeSerdeLayer) {
-            const { generated: typeSchemasGenerated } = this.generateTypeSchemas();
-            const { generated: endpointTypeSchemasGenerated } = this.generateEndpointTypeSchemas();
-            const { generated: inlinedRequestSchemasGenerated } = this.generateInlinedRequestBodySchemas();
-            if (typeSchemasGenerated || endpointTypeSchemasGenerated || inlinedRequestSchemasGenerated) {
+            this.generateTypeSchemas();
+            this.generateEndpointTypeSchemas();
+            this.generateInlinedRequestBodySchemas();
+            const serializationDirectory = this.rootDirectory.getDirectory(RelativeFilePath.of("src/serialization"));
+            if (serializationDirectory != null && serializationDirectory?.getSourceFiles().length > 0) {
                 this.exportsManager.addExportsForDirectories([
                     { nameOnDisk: "serialization", exportDeclaration: { namespaceExport: "serializers" } }
                 ]);
@@ -564,12 +565,12 @@ export class SdkGenerator {
     private generateTypeSchemas(): { generated: boolean } {
         let generated = false;
         for (const typeDeclaration of Object.values(this.intermediateRepresentation.types)) {
-            if (!generated) {
-                generated = true;
-            }
             this.withSourceFile({
                 filepath: this.typeSchemaDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
                 run: ({ sourceFile, importsManager }) => {
+                    if (!generated) {
+                        generated = true;
+                    }
                     const context = this.generateSdkContext({ sourceFile, importsManager });
                     context.typeSchema.getGeneratedTypeSchema(typeDeclaration.name).writeToFile(context);
                 }
