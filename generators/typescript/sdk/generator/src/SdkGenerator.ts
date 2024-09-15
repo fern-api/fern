@@ -412,13 +412,16 @@ export class SdkGenerator {
         }
 
         if (this.config.includeSerdeLayer) {
-            this.generateTypeSchemas();
-            this.generateEndpointTypeSchemas();
-            this.generateInlinedRequestBodySchemas();
-            this.exportsManager.addExportsForDirectories([
-                { nameOnDisk: "serialization", exportDeclaration: { namespaceExport: "serializers" } }
-            ]);
-            this.context.logger.debug("Generated serde layer.");
+            let generated = true;
+            generated = generated && this.generateTypeSchemas().generated;
+            generated = generated && this.generateEndpointTypeSchemas().generated;
+            generated = generated && this.generateInlinedRequestBodySchemas().generated;
+            if (generated) {
+                this.exportsManager.addExportsForDirectories([
+                    { nameOnDisk: "serialization", exportDeclaration: { namespaceExport: "serializers" } }
+                ]);
+                this.context.logger.debug("Generated serde layer.");
+            }
         }
 
         if (this.generateOAuthClients) {
@@ -559,8 +562,12 @@ export class SdkGenerator {
         }
     }
 
-    private generateTypeSchemas() {
+    private generateTypeSchemas(): { generated: boolean } {
+        let generated = false;
         for (const typeDeclaration of Object.values(this.intermediateRepresentation.types)) {
+            if (!generated) {
+                generated = true;
+            }
             this.withSourceFile({
                 filepath: this.typeSchemaDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
                 run: ({ sourceFile, importsManager }) => {
@@ -569,6 +576,7 @@ export class SdkGenerator {
                 }
             });
         }
+        return { generated };
     }
 
     private generateErrorDeclarations() {
@@ -614,7 +622,8 @@ export class SdkGenerator {
         });
     }
 
-    private generateEndpointTypeSchemas() {
+    private generateEndpointTypeSchemas(): { generated: boolean } {
+        let generated = false;
         this.forEachService((service, packageId) => {
             for (const endpoint of service.endpoints) {
                 this.withSourceFile({
@@ -627,10 +636,14 @@ export class SdkGenerator {
                         context.sdkEndpointTypeSchemas
                             .getGeneratedEndpointTypeSchemas(packageId, endpoint.name)
                             .writeToFile(context);
+                        if (!generated) {
+                            generated = true;
+                        }
                     }
                 });
             }
         });
+        return { generated };
     }
 
     private generateRequestWrappers() {
@@ -655,7 +668,8 @@ export class SdkGenerator {
         });
     }
 
-    private generateInlinedRequestBodySchemas() {
+    private generateInlinedRequestBodySchemas(): { generated: boolean } {
+        let generated = false;
         this.forEachService((service, packageId) => {
             for (const endpoint of service.endpoints) {
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
@@ -669,11 +683,15 @@ export class SdkGenerator {
                             context.sdkInlinedRequestBodySchema
                                 .getGeneratedInlinedRequestBodySchema(packageId, endpoint.name)
                                 .writeToFile(context);
+                            if (!generated) {
+                                generated = true;
+                            }
                         }
                     });
                 }
             }
         });
+        return { generated };
     }
 
     private generateServiceDeclarations() {
