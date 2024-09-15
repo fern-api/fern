@@ -3,7 +3,19 @@ import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { ClassReference } from "./ClassReference";
 
-type InternalType = Int | String_ | Bool | Float | Mixed | Object_ | Array_ | Map | Optional | Reference;
+type InternalType =
+    | Int
+    | String_
+    | Bool
+    | Float
+    | Date
+    | DateTime
+    | Mixed
+    | Object_
+    | Array_
+    | Map
+    | Optional
+    | Reference;
 
 interface Int {
     type: "int";
@@ -19,6 +31,14 @@ interface Bool {
 
 interface Float {
     type: "float";
+}
+
+interface Date {
+    type: "date";
+}
+
+interface DateTime {
+    type: "dateTime";
 }
 
 interface Mixed {
@@ -69,6 +89,12 @@ export class Type extends AstNode {
                 break;
             case "float":
                 writer.write("float");
+                break;
+            case "date":
+                writer.write("DateTime");
+                break;
+            case "dateTime":
+                writer.write("DateTime");
                 break;
             case "mixed":
                 writer.write("mixed");
@@ -156,6 +182,18 @@ export class Type extends AstNode {
     public static float(): Type {
         return new this({
             type: "float"
+        });
+    }
+
+    public static date(): Type {
+        return new this({
+            type: "date"
+        });
+    }
+
+    public static dateTime(): Type {
+        return new this({
+            type: "dateTime"
         });
     }
 

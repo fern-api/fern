@@ -2,6 +2,7 @@ import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationServi
 import {
     IntermediateRepresentation,
     Literal,
+    Name,
     TypeReference,
     TypeId,
     TypeDeclaration,
@@ -11,11 +12,13 @@ import {
 import { BasePhpCustomConfigSchema } from "../custom-config/BasePhpCustomConfigSchema";
 import { PhpProject } from "../project";
 import { camelCase, upperFirst } from "lodash-es";
+import { PhpTypeMapper } from "./PhpTypeMapper";
 
 export abstract class AbstractPhpGeneratorContext<
     CustomConfig extends BasePhpCustomConfigSchema
 > extends AbstractGeneratorContext {
     private rootNamespace: string;
+    public readonly phpTypeMapper: PhpTypeMapper;
     public readonly project: PhpProject;
 
     public constructor(
@@ -26,6 +29,7 @@ export abstract class AbstractPhpGeneratorContext<
     ) {
         super(config, generatorNotificationService);
         this.rootNamespace = this.customConfig.namespace ?? upperFirst(camelCase(`${this.config.organization}`));
+        this.phpTypeMapper = new PhpTypeMapper(this);
         this.project = new PhpProject({
             context: this,
             name: this.rootNamespace
@@ -38,6 +42,18 @@ export abstract class AbstractPhpGeneratorContext<
             throw new Error(`Subpackage with id ${subpackageId} not found`);
         }
         return subpackage;
+    }
+
+    public getNamespaceForTypeId(typeId: TypeId): string {
+        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
+        return [
+            this.getRootNamespace(),
+            ...typeDeclaration.name.fernFilepath.packagePath.map((path) => path.pascalCase.safeName)
+        ].join("\\");
+    }
+
+    public getClassName(name: Name): string {
+        return name.pascalCase.safeName;
     }
 
     public getRootNamespace(): string {
