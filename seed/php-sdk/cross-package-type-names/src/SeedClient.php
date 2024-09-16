@@ -2,66 +2,76 @@
 
 namespace Seed;
 
+use GuzzleHttp\ClientInterface;
 use Seed\Core\RawClient;
+use Seed\Commons\CommonsClient;
+use Seed\FolderA\FolderAClient;
+use Seed\FolderB\FolderBClient;
+use Seed\FolderC\FolderCClient;
+use Seed\FolderD\FolderDClient;
+use Seed\Foo\FooClient;
 use GuzzleHttp\Client;
 
 class SeedClient
 {
+    /**
+     * @var ?array{baseUrl?: string, client?: ClientInterface} $options
+     */
+    private ?array $options;
+
     /**
      * @var RawClient $client
      */
     private RawClient $client;
 
     /**
-     * @var array<mixed> $commons
+     * @var CommonsClient $commons
      */
-    public array $commons;
+    public CommonsClient $commons;
 
     /**
-     * @var array<mixed> $folderA
+     * @var FolderAClient $folderA
      */
-    public array $folderA;
+    public FolderAClient $folderA;
 
     /**
-     * @var array<mixed> $folderB
+     * @var FolderBClient $folderB
      */
-    public array $folderB;
+    public FolderBClient $folderB;
 
     /**
-     * @var array<mixed> $folderC
+     * @var FolderCClient $folderC
      */
-    public array $folderC;
+    public FolderCClient $folderC;
 
     /**
-     * @var array<mixed> $folderD
+     * @var FolderDClient $folderD
      */
-    public array $folderD;
+    public FolderDClient $folderD;
 
     /**
-     * @var array<mixed> $foo
+     * @var FooClient $foo
      */
-    public array $foo;
+    public FooClient $foo;
 
     /**
-     * @param ?array<string, mixed> $clientOptions
+     * @param ?array{baseUrl?: string, client?: ClientInterface} $options
      */
     public function __construct(
-        ?array $clientOptions = null,
+        ?array $options = null,
     ) {
         $defaultHeaders = [
             "X-Fern-Language" => "PHP",
             "X-Fern-SDK-Name" => "Seed",
             "X-Fern-SDK-Version" => "0.0.1",
         ];
-        $this->client = new RawClient(
-            client: isset($clientOptions['client']) ? $clientOptions['client'] : new Client(),
-            headers: $defaultHeaders,
-        );
-        $this->commons = [];
-        $this->folderA = [];
-        $this->folderB = [];
-        $this->folderC = [];
-        $this->folderD = [];
-        $this->foo = [];
+        $this->options = $options ?? [];
+        $this->client = new RawClient(client: $this->options['client'] ?? new Client(), headers: $defaultHeaders);
+        $this->commons = new CommonsClient($this->client);
+        $this->folderA = new FolderAClient($this->client);
+        $this->folderB = new FolderBClient($this->client);
+        $this->folderC = new FolderCClient($this->client);
+        $this->folderD = new FolderDClient($this->client);
+        $this->foo = new FooClient($this->client);
     }
 }
