@@ -6,7 +6,7 @@ import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { FileProperty } from "./FileProperty";
-import { InlinedRequestBodyProperty } from "./InlinedRequestBodyProperty";
+import { FileUploadBodyProperty } from "./FileUploadBodyProperty";
 
 export const FileUploadRequestProperty: core.serialization.Schema<
     serializers.FileUploadRequestProperty.Raw,
@@ -16,7 +16,7 @@ export const FileUploadRequestProperty: core.serialization.Schema<
         file: core.serialization.object({
             value: FileProperty,
         }),
-        bodyProperty: InlinedRequestBodyProperty,
+        bodyProperty: FileUploadBodyProperty,
     })
     .transform<FernIr.FileUploadRequestProperty>({
         transform: (value) => {
@@ -40,7 +40,7 @@ export declare namespace FileUploadRequestProperty {
         value: FileProperty.Raw;
     }
 
-    interface BodyProperty extends InlinedRequestBodyProperty.Raw {
+    interface BodyProperty extends FileUploadBodyProperty.Raw {
         type: "bodyProperty";
     }
 }

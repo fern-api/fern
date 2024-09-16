@@ -7,4 +7,5 @@ import * as FernIr from "../../../index";
 export interface FilePropertyArray {
     key: FernIr.NameAndWireValue;
     isOptional: boolean;
+    contentType: string | undefined;
 }

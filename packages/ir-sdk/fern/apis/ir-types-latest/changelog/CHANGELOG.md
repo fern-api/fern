@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v53.12.0] - 2024-08-13
+
+- Feature: Add `contentType` to file upload body properties.
+
 ## [v53.11.0] - 2024-08-13
 
 - Fix: Add availability to inline websocket, webhook, and http body parameter properties.

@@ -1,0 +1,16 @@
+groups:
+  python-sdk:
+    audiences:
+      - external
+    generators:
+      - name: fernapi/fern-python-sdk
+        version: 2.0.0
+        output:
+          location: pypi
+          package-name: fern-api
+          token: ${PYPI_TOKEN}
+        github:
+          repository: fern-api/python-sdk
+          license: MIT
+        config:
+          client_class_name: Fern

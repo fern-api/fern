@@ -42,6 +42,7 @@ import { ValidStreamConditionRule } from "./rules/valid-stream-condition";
 import { ValidTypeNameRule } from "./rules/valid-type-name";
 import { ValidTypeReferenceWithDefaultAndValidationRule } from "./rules/valid-type-reference-with-default-and-validation";
 import { ValidVersionRule } from "./rules/valid-version";
+import { ContentTypeOnlyForMultipartRule } from "./rules/content-type-only-for-multipart";
 
 export function getAllRules(): Rule[] {
     return [
@@ -87,7 +88,8 @@ export function getAllRules(): Rule[] {
         ValidVersionRule,
         NoUnusedGenericRule,
         ValidGenericRule,
-        CompatibleIrVersionsRule
+        CompatibleIrVersionsRule,
+        ContentTypeOnlyForMultipartRule
     ];
 }
 

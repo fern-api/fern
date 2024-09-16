@@ -308,3 +308,75 @@ core.File` — See core.File for more documentation
 </dl>
 </details>
 
+<details><summary><code>client.service.<a href="src/seed/service/client.py">with_content_type</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedFileUpload
+
+client = SeedFileUpload(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.service.with_content_type()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**file:** `from __future__ import annotations
+
+core.File` — See core.File for more documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**foo:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bar:** `MyObject` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+

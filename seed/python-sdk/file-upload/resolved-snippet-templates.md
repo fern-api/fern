@@ -31,3 +31,12 @@ client.service.just_file_with_query_params(
 ```                        
 
 
+```python
+
+
+client = SeedFileUpload(base_url="https://yourhost.com/path/to/api", )        
+undefined
+ 
+```                        
+
+

@@ -157,3 +157,53 @@ await client.service.justFileWithQueryParams({
 </dd>
 </dl>
 </details>
+
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">withContentType</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.service.withContentType({
+    file: fs.createReadStream("/path/to/your/file"),
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedFileUpload.WithContentTypeRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Service.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
