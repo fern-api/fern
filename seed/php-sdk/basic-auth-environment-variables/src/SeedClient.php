@@ -2,42 +2,48 @@
 
 namespace Seed;
 
+use GuzzleHttp\ClientInterface;
 use Seed\Core\RawClient;
+use Seed\BasicAuth\BasicAuthClient;
+use Seed\Errors\ErrorsClient;
 use GuzzleHttp\Client;
 
 class SeedClient
 {
+    /**
+     * @var ?array{baseUrl?: string, client?: ClientInterface} $options
+     */
+    private ?array $options;
+
     /**
      * @var RawClient $client
      */
     private RawClient $client;
 
     /**
-     * @var array<mixed> $basicAuth
+     * @var BasicAuthClient $basicAuth
      */
-    public array $basicAuth;
+    public BasicAuthClient $basicAuth;
 
     /**
-     * @var array<mixed> $errors
+     * @var ErrorsClient $errors
      */
-    public array $errors;
+    public ErrorsClient $errors;
 
     /**
-     * @param ?array<string, mixed> $clientOptions
+     * @param ?array{baseUrl?: string, client?: ClientInterface} $options
      */
     public function __construct(
-        ?array $clientOptions = null,
+        ?array $options = null,
     ) {
         $defaultHeaders = [
             "X-Fern-Language" => "PHP",
             "X-Fern-SDK-Name" => "Seed",
             "X-Fern-SDK-Version" => "0.0.1",
         ];
-        $this->client = new RawClient(
-            client: isset($clientOptions['client']) ? $clientOptions['client'] : new Client(),
-            headers: $defaultHeaders,
-        );
-        $this->basicAuth = [];
-        $this->errors = [];
+        $this->options = $options ?? [];
+        $this->client = new RawClient(client: $this->options['client'] ?? new Client(), headers: $defaultHeaders);
+        $this->basicAuth = new BasicAuthClient($this->client);
+        $this->errors = new ErrorsClient($this->client);
     }
 }
