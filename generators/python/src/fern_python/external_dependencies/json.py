@@ -26,3 +26,13 @@ class Json:
             ),
             args=[obj],
         )
+
+    @staticmethod
+    def dumps(obj: AST.Expression) -> AST.FunctionInvocation:
+        return AST.FunctionInvocation(
+            function_definition=AST.Reference(
+                import_=AST.ReferenceImport(module=AST.Module.built_in(("json",))),
+                qualified_name_excluding_import=("dumps",),
+            ),
+            args=[obj],
+        )

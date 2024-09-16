@@ -9,6 +9,8 @@ from .types.id import Id
 from ..core.request_options import RequestOptions
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
+import json
+from ..core.jsonable_encoder import jsonable_encoder
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -261,10 +263,10 @@ class ServiceClient:
             method="POST",
             data={
                 "foo": foo,
-                "bar": bar,
             },
             files={
                 "file": file,
+                "bar": (None, json.dumps(jsonable_encoder(bar)), "application/json"),
             },
             request_options=request_options,
             omit=OMIT,
@@ -556,10 +558,10 @@ class AsyncServiceClient:
             method="POST",
             data={
                 "foo": foo,
-                "bar": bar,
             },
             files={
                 "file": file,
+                "bar": (None, json.dumps(jsonable_encoder(bar)), "application/json"),
             },
             request_options=request_options,
             omit=OMIT,
