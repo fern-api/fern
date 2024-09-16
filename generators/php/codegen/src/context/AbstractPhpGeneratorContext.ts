@@ -14,6 +14,7 @@ import { BasePhpCustomConfigSchema } from "../custom-config/BasePhpCustomConfigS
 import { PhpProject } from "../project";
 import { camelCase, upperFirst } from "lodash-es";
 import { PhpTypeMapper } from "./PhpTypeMapper";
+import { AsIsFiles } from "../AsIs";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 
 export interface FileLocation {
@@ -117,6 +118,32 @@ export abstract class AbstractPhpGeneratorContext<
     public abstract getCoreAsIsFiles(): string[];
 
     public abstract getCoreTestAsIsFiles(): string[];
+
+    public getCoreSerializationAsIsFiles(): string[] {
+        return [
+            AsIsFiles.ArrayType,
+            AsIsFiles.Constant,
+            AsIsFiles.DateType,
+            AsIsFiles.JsonProperty,
+            AsIsFiles.SerializableType,
+            AsIsFiles.Union
+        ];
+    }
+
+    public getCoreSerializationTestAsIsFiles(): string[] {
+        return [
+            AsIsFiles.DateArrayTypeTest,
+            AsIsFiles.EmptyArraysTest,
+            AsIsFiles.InvalidTypesTest,
+            AsIsFiles.MixedDateArrayTypeTest,
+            AsIsFiles.NestedUnionArrayTypeTest,
+            AsIsFiles.NullableArrayTypeTest,
+            AsIsFiles.NullPropertyTypeTest,
+            AsIsFiles.ScalarTypesTest,
+            AsIsFiles.TestTypeTest,
+            AsIsFiles.UnionArrayTypeTest
+        ];
+    }
 
     public abstract getLocationForTypeId(typeId: TypeId): FileLocation;
 

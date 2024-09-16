@@ -13,10 +13,10 @@ export class ModelGeneratorContext extends AbstractPhpGeneratorContext<ModelCust
     }
 
     public getCoreAsIsFiles(): string[] {
-        return [];
+        return [...this.getCoreSerializationAsIsFiles()];
     }
 
     public getCoreTestAsIsFiles(): string[] {
-        return [];
+        return [...this.getCoreSerializationTestAsIsFiles()];
     }
 }
