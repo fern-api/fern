@@ -57,7 +57,9 @@ service:
         name: WithContentTypeRequest
         body:
           properties:
-            file: file
+            file: 
+              type: file
+              content-type: application/octet-stream
             foo: string
             bar: 
               type: MyObject

@@ -1,4 +1,17 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.2.3
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        The content type of file properties is now respected for multipart 
+        requests. For example, if you have a file property called `image` that has the 
+        content type `image/jpeg`, then it will be sent as: 
+
+        ```python
+        "image": core.with_content_type(file=image, content_type="image/jpeg"),
+        ````
+
 - version: 4.2.2
   irVersion: 53
   changelogEntry:

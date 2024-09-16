@@ -89,7 +89,7 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="file"),
             ),
-            exports={"File", "convert_file_dict_to_httpx_tuples"},
+            exports={"File", "convert_file_dict_to_httpx_tuples", "with_content_type"},
         )
         self._copy_file_to_project(
             project=project,
@@ -347,6 +347,19 @@ class CoreUtilities:
             AST.FunctionInvocation(
                 function_definition=AST.Reference(
                     qualified_name_excluding_import=("convert_file_dict_to_httpx_tuples",),
+                    import_=AST.ReferenceImport(
+                        module=AST.Module.local(*self._module_path_unnamed), named_import="core"
+                    ),
+                ),
+                args=[obj],
+            )
+        )
+
+    def with_content_type(self, obj: AST.Expression) -> AST.Expression:
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=AST.Reference(
+                    qualified_name_excluding_import=("with_content_type",),
                     import_=AST.ReferenceImport(
                         module=AST.Module.local(*self._module_path_unnamed), named_import="core"
                     ),
