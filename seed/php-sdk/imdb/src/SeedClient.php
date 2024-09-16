@@ -10,7 +10,7 @@ class SeedClient
     /**
      * @var RawClient $client
      */
-    private RawClient $client;
+    public RawClient $client;
 
     /**
      * @var array<mixed> $imdb

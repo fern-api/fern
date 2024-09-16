@@ -2,8 +2,10 @@
 
 namespace Seed;
 
-use Seed\Core\RawClient;
 use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
+use Seed\Core\RawClient;
+use Seed\User\Client as UserClient;
 
 class SeedClient
 {
@@ -13,12 +15,23 @@ class SeedClient
     private RawClient $client;
 
     /**
-     * @var array<mixed> $user
+     * @var ?array{
+     *     baseUrl?: string,
+     *     client?: ClientInterface
+     * } $clientOptions
      */
-    public array $user;
+    private ?array $clientOptions;
 
     /**
-     * @param ?array<string, mixed> $clientOptions
+     * @var UserClient $user
+     */
+    public UserClient $user;
+
+    /**
+     * @param ?array{
+     *     baseUrl?: string,
+     *     client?: ClientInterface
+     * } $clientOptions
      */
     public function __construct(
         ?array $clientOptions = null,
@@ -28,10 +41,11 @@ class SeedClient
             "X-Fern-SDK-Name" => "Seed",
             "X-Fern-SDK-Version" => "0.0.1",
         ];
+        $this->clientOptions = $clientOptions ?? [];
         $this->client = new RawClient(
-            client: isset($clientOptions['client']) ? $clientOptions['client'] : new Client(),
+            client: $this->clientOptions['client'] ?? new Client(),
             headers: $defaultHeaders,
         );
-        $this->user = [];
+        $this->user = new UserClient($this->client);
     }
 }
