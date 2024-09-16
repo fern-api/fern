@@ -7,13 +7,20 @@ import {
     TypeId,
     TypeDeclaration,
     Subpackage,
-    SubpackageId
+    SubpackageId,
+    FernFilepath
 } from "@fern-fern/ir-sdk/api";
 import { BasePhpCustomConfigSchema } from "../custom-config/BasePhpCustomConfigSchema";
 import { PhpProject } from "../project";
 import { camelCase, upperFirst } from "lodash-es";
 import { PhpTypeMapper } from "./PhpTypeMapper";
 import { AsIsFiles } from "../AsIs";
+import { RelativeFilePath } from "@fern-api/fs-utils";
+
+export interface FileLocation {
+    namespace: string;
+    directory: RelativeFilePath;
+}
 
 export abstract class AbstractPhpGeneratorContext<
     CustomConfig extends BasePhpCustomConfigSchema
@@ -43,14 +50,6 @@ export abstract class AbstractPhpGeneratorContext<
             throw new Error(`Subpackage with id ${subpackageId} not found`);
         }
         return subpackage;
-    }
-
-    public getNamespaceForTypeId(typeId: TypeId): string {
-        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
-        return [
-            this.getRootNamespace(),
-            ...typeDeclaration.name.fernFilepath.packagePath.map((path) => path.pascalCase.safeName)
-        ].join("\\");
     }
 
     public getClassName(name: Name): string {
@@ -144,5 +143,16 @@ export abstract class AbstractPhpGeneratorContext<
             AsIsFiles.TestTypeTest,
             AsIsFiles.UnionArrayTypeTest
         ];
+    }
+
+    public abstract getLocationForTypeId(typeId: TypeId): FileLocation;
+
+    protected getFileLocation(filepath: FernFilepath, suffix?: string): FileLocation {
+        let parts = [this.getRootNamespace(), ...filepath.packagePath.map((path) => path.pascalCase.safeName)];
+        parts = suffix != null ? [...parts, suffix] : parts;
+        return {
+            namespace: parts.join("\\"),
+            directory: RelativeFilePath.of(parts.join("/"))
+        };
     }
 }
