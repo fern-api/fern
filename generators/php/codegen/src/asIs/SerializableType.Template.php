@@ -15,7 +15,7 @@ abstract class SerializableType
     /**
      * Serializes the object to a JSON string.
      *
-     * @return string
+     * @throws JsonException
      */
     public function toJson(): string
     {
@@ -26,7 +26,7 @@ abstract class SerializableType
     /**
      * Serializes the object to an array for JSON encoding.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function toArray(): array
     {
@@ -64,9 +64,9 @@ abstract class SerializableType
     /**
      * Serializes the given array based on the type annotation.
      *
-     * @param array $data The array to be serialized.
-     * @param array $type The type definition from the annotation.
-     * @return array The serialized array.
+     * @param mixed[]|array<string, mixed> $data The array to be serialized.
+     * @param mixed[]|array<string, mixed> $type The type definition from the annotation.
+     * @return mixed[]|array<string, mixed> The serialized array.
      */
     private static function serializeGenericArray(array $data, array $type): array
     {
@@ -79,10 +79,11 @@ abstract class SerializableType
      * Serializes a value based on the type definition.
      *
      * @param mixed $data The value to serialize.
-     * @param array|Union|string $type The type definition.
+     * @param mixed $type The type definition.
      * @return mixed The serialized value.
+     * @throws Exception
      */
-    private static function serializeValue(mixed $data, array|Union|string $type): mixed
+    private static function serializeValue(mixed $data, mixed $type): mixed
     {
         if ($type instanceof Union) {
             foreach ($type->types as $unionType) {
@@ -97,7 +98,9 @@ abstract class SerializableType
         if (is_array($type)) {
             return self::serializeGenericArray((array)$data, $type);
         }
-
+        if (gettype($type) != "string") {
+            throw new Exception("Unexpected non-string type.");
+        }
         return self::serializeSingleValue($data, $type);
     }
 
@@ -137,12 +140,16 @@ abstract class SerializableType
      * Serializes a map (associative array) where key and value types are defined.
      *
      * @param array<string, mixed> $data The associative array to serialize.
-     * @param array<string, array|Union|string> $type The type definition for the map.
-     * @return array The serialized map.
+     * @param array<string, mixed> $type The type definition for the map.
+     * @return array<string, mixed> The serialized map.
+     * @throws Exception
      */
     private static function serializeMap(array $data, array $type): array
     {
         $keyType = array_key_first($type);
+        if ($keyType == null) {
+            throw new Exception("Unexpected no key ArrayType array");
+        }
         $valueType = $type[$keyType];
         $result = [];
 
@@ -157,9 +164,9 @@ abstract class SerializableType
     /**
      * Serializes a list (indexed array) where only the value type is defined.
      *
-     * @param array $data The list to serialize.
-     * @param array|Union|string[] $type The type definition for the list.
-     * @return array The serialized list.
+     * @param mixed[] $data The list to serialize.
+     * @param array<string, mixed>|mixed[] $type The type definition for the list.
+     * @return mixed[] The serialized list.
      */
     private static function serializeList(array $data, array $type): array
     {
@@ -185,9 +192,13 @@ abstract class SerializableType
      * @param mixed $key The key to be cast.
      * @param string $keyType The type to cast the key to ('string', 'integer', 'float').
      * @return mixed The casted key.
+     * @throws Exception
      */
     private static function castKey(mixed $key, string $keyType): mixed
     {
+        if (!is_scalar($key)) {
+            throw new Exception("Key must be a scalar type.");
+        }
         return match ($keyType) {
             'integer' => (int)$key,
             'float' => (float)$key,
@@ -199,7 +210,7 @@ abstract class SerializableType
     /**
      * Determines if the given type represents a map.
      *
-     * @param array $type The type definition from the annotation.
+     * @param mixed[]|array<string, mixed> $type The type definition from the annotation.
      * @return bool True if the type is a map, false if it's a list.
      */
     private static function isMapType(array $type): bool
@@ -227,13 +238,17 @@ abstract class SerializableType
     /**
      * Deserializes an array into an object of the calling class.
      *
-     * @param array $data The array to deserialize.
+     * @param array<string, mixed> $data The array to deserialize.
      * @return static
+     * @throws Exception
      */
     public static function fromArray(array $data): static
     {
         $reflectionClass = new \ReflectionClass(static::class);
         $constructor = $reflectionClass->getConstructor();
+        if ($constructor == null) {
+            throw new Exception("No constructor found.");
+        }
         $parameters = $constructor->getParameters();
         $args = [];
 
@@ -254,6 +269,9 @@ abstract class SerializableType
                 $dateTypeAttr = $property->getAttributes(DateType::class)[0] ?? null;
                 if ($dateTypeAttr) {
                     $dateType = $dateTypeAttr->newInstance()->type;
+                    if (gettype($value) != "string") {
+                        throw new Exception("Unexpected non-string type for date.");
+                    }
                     $value = ($dateType === DateType::TYPE_DATE)
                         ? DateTime::createFromFormat(Constant::DeserializationDateFormat, $value)
                         : new DateTime($value);
@@ -271,16 +289,16 @@ abstract class SerializableType
                 $args[$parameter->getPosition()] = $parameter->isDefaultValueAvailable() ? $parameter->getDefaultValue() : null;
             }
         }
-
+        // @phpstan-ignore-next-line
         return new static(...$args);
     }
 
     /**
      * Deserializes the given array based on the type annotation.
      *
-     * @param array $data The array to be deserialized.
-     * @param array $type The type definition from the annotation.
-     * @return array The deserialized array.
+     * @param mixed[]|array<string, mixed> $data The array to be deserialized.
+     * @param mixed[]|array<string, mixed> $type The type definition from the annotation.
+     * @return mixed[]|array<string, mixed> The deserialized array.
      */
     private static function deserializeGenericArray(array $data, array $type): array
     {
@@ -293,10 +311,11 @@ abstract class SerializableType
      * Deserializes a value based on the type definition.
      *
      * @param mixed $data The data to deserialize.
-     * @param array|Union|string $type The type definition.
+     * @param mixed $type The type definition.
      * @return mixed The deserialized value.
+     * @throws Exception
      */
-    private static function deserializeValue(mixed $data, array|Union|string $type): mixed
+    private static function deserializeValue(mixed $data, mixed $type): mixed
     {
         if ($type instanceof Union) {
             foreach ($type->types as $unionType) {
@@ -312,6 +331,9 @@ abstract class SerializableType
             return self::deserializeGenericArray((array)$data, $type);
         }
 
+        if (gettype($type) != "string") {
+            throw new Exception("Unexpected non-string type.");
+        }
         return self::deserializeSingleValue($data, $type);
     }
 
@@ -351,7 +373,7 @@ abstract class SerializableType
      * Deserializes a map (associative array) where key and value types are defined.
      *
      * @param array<string, mixed> $data The associative array to deserialize.
-     * @param array<string, array|Union|string> $type The type definition for the map.
+     * @param array<string, mixed> $type The type definition for the map.
      * @return array<string, mixed> The deserialized map.
      */
     private static function deserializeMap(array $data, array $type): array
@@ -371,9 +393,9 @@ abstract class SerializableType
     /**
      * Deserializes a list (indexed array) where only the value type is defined.
      *
-     * @param array $data The list to deserialize.
-     * @param array|Union|string[] $type The type definition for the list.
-     * @return array The deserialized list.
+     * @param mixed[] $data The list to deserialize.
+     * @param mixed[] $type The type definition for the list.
+     * @return mixed[] The deserialized list.
      */
     private static function deserializeList(array $data, array $type): array
     {
