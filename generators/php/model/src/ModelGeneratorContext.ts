@@ -9,11 +9,7 @@ export class ModelGeneratorContext extends AbstractPhpGeneratorContext<ModelCust
 
     public getLocationForTypeId(typeId: string): FileLocation {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
-        const parts = this.getPartsForFileLocation(typeDeclaration.name.fernFilepath);
-        return {
-            namespace: parts.join("\\"),
-            directory: RelativeFilePath.of(parts.join("/"))
-        };
+        return this.getFileLocation(typeDeclaration.name.fernFilepath);
     }
 
     public getCoreAsIsFiles(): string[] {

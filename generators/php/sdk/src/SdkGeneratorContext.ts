@@ -10,6 +10,7 @@ import { RawClient } from "./core/RawClient";
 import { GuzzleClient } from "./external/GuzzleClient";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { ErrorId, ErrorDeclaration } from "@fern-fern/ir-sdk/api";
+import { TYPES_DIRECTORY, ERRORS_DIRECTORY } from "./constants";
 
 export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomConfigSchema> {
     public guzzleClient: GuzzleClient;
@@ -87,28 +88,16 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
 
     public getLocationForHttpService(serviceId: string): FileLocation {
         const httpService = this.getHttpServiceOrThrow(serviceId);
-        const parts = this.getPartsForFileLocation(httpService.name.fernFilepath, "types");
-        return {
-            namespace: parts.join("\\"),
-            directory: RelativeFilePath.of(parts.join("/"))
-        };
+        return this.getFileLocation(httpService.name.fernFilepath, TYPES_DIRECTORY);
     }
 
     public getLocationForRequestWrapper(serviceId: string): FileLocation {
         const httpService = this.getHttpServiceOrThrow(serviceId);
-        const parts = this.getPartsForFileLocation(httpService.name.fernFilepath);
-        return {
-            namespace: parts.join("\\"),
-            directory: RelativeFilePath.of(parts.join("/"))
-        };
+        return this.getFileLocation(httpService.name.fernFilepath);
     }
 
     public getLocationForError(errorId: ErrorId): FileLocation {
         const errorDeclaration = this.getErrorDeclarationOrThrow(errorId);
-        const parts = this.getPartsForFileLocation(errorDeclaration.name.fernFilepath, "errors");
-        return {
-            namespace: parts.join("\\"),
-            directory: RelativeFilePath.of(parts.join("/"))
-        };
+        return this.getFileLocation(errorDeclaration.name.fernFilepath, ERRORS_DIRECTORY);
     }
 }
