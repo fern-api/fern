@@ -75,20 +75,12 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
 
     public getLocationForTypeId(typeId: string): FileLocation {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
-        const parts = [
-            this.getRootNamespace(),
-            ...typeDeclaration.name.fernFilepath.packagePath.map((path) => path.pascalCase.safeName),
-            "types"
-        ];
-        return {
-            namespace: parts.join("\\"),
-            directory: RelativeFilePath.of(parts.join("/"))
-        };
+        return this.getFileLocation(typeDeclaration.name.fernFilepath, TYPES_DIRECTORY);
     }
 
     public getLocationForHttpService(serviceId: string): FileLocation {
         const httpService = this.getHttpServiceOrThrow(serviceId);
-        return this.getFileLocation(httpService.name.fernFilepath, TYPES_DIRECTORY);
+        return this.getFileLocation(httpService.name.fernFilepath);
     }
 
     public getLocationForRequestWrapper(serviceId: string): FileLocation {
