@@ -57,7 +57,7 @@ class ExampleType extends SerializableType
         public array    $nestedTypeMap,
 
         #[JsonProperty('weather_report')]
-        public string  $weatherReport,
+        public string   $weatherReport,
 
         #[JsonProperty('optional_name')]
         public ?string  $optionalName = null

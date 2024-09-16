@@ -36,7 +36,7 @@ class ScalarTypesTest extends SerializableType
 
 class ScalarTypesTestTest extends TestCase
 {
-    public function testAllScalarTypesIncludingFloat()
+    public function testAllScalarTypesIncludingFloat(): void
     {
         // Create test data
         $data = [

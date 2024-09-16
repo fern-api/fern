@@ -1,6 +1,6 @@
 <?php
 
-namespace Seed\Types;
+namespace Seed\Tests\Types;
 
 use PHPUnit\Framework\TestCase;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Seed\Core\SerializableType;
+namespace Seed\Tests\Core\SerializableType;
 
 use PHPUnit\Framework\TestCase;
 use Seed\Core\SerializableType;
@@ -24,7 +24,7 @@ class DateArrayType extends SerializableType
 
 class DateArrayTypeTest extends TestCase
 {
-    public function testDateTimeTypesInArrays()
+    public function testDateTimeTypesInArrays(string $something): void
     {
         $data = [
             'dates' => ['2023-01-01', '2023-02-01', '2023-03-01']

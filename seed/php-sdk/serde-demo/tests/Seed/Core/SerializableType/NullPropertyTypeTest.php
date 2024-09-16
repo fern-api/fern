@@ -21,7 +21,7 @@ class NullPropertyType extends SerializableType
 
 class NullPropertyTypeTest extends TestCase
 {
-    public function testNullPropertiesAreOmitted()
+    public function testNullPropertiesAreOmitted(): void
     {
         $object = new NullPropertyType('Test String', null);
 

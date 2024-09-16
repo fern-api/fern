@@ -8,7 +8,7 @@ use Seed\Core\JsonProperty;
 use Seed\Core\ArrayType;
 use Seed\Core\Union;
 
-class EmptyArraysTest extends SerializableType
+class EmptyArraysType extends SerializableType
 {
     public function __construct(
         #[ArrayType(['string'])]
@@ -27,9 +27,9 @@ class EmptyArraysTest extends SerializableType
     }
 }
 
-class EmptyArraysTestTest extends TestCase
+class EmptyArraysTest extends TestCase
 {
-    public function testEmptyArrays()
+    public function testEmptyArrays(): void
     {
         $data = [
             'empty_string_array' => [],
@@ -39,11 +39,11 @@ class EmptyArraysTestTest extends TestCase
 
         $json = json_encode($data, JSON_THROW_ON_ERROR);
 
-        $object = EmptyArraysTest::fromJson($json);
+        $object = EmptyArraysType::fromJson($json);
 
         $serializedJson = $object->toJson();
 
-        $this->assertJsonStringEqualsJsonString($json, $serializedJson, 'Serialized JSON does not match original JSON for EmptyArraysTest.');
+        $this->assertJsonStringEqualsJsonString($json, $serializedJson, 'Serialized JSON does not match original JSON for EmptyArraysType.');
 
         // Check that arrays are empty
         $this->assertEmpty($object->emptyStringArray, 'empty_string_array should be empty.');

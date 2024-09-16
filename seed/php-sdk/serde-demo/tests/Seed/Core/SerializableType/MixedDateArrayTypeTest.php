@@ -22,7 +22,7 @@ class MixedDateArrayType extends SerializableType
 
 class MixedDateArrayTypeTest extends TestCase
 {
-    public function testDateTimeTypesInUnionArrays()
+    public function testDateTimeTypesInUnionArrays(): void
     {
         $data = [
             'mixed_dates' => [

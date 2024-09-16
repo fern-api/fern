@@ -21,7 +21,7 @@ class NullableArrayType extends SerializableType
 
 class NullableArrayTypeTest extends TestCase
 {
-    public function testNullableTypesInArrays()
+    public function testNullableTypesInArrays(): void
     {
         $data = [
             'nullable_string_array' => ['one', null, 'three']

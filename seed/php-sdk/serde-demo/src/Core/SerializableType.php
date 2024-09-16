@@ -45,8 +45,8 @@ abstract class SerializableType
             if ($dateTypeAttr && $value instanceof DateTime) {
                 $dateType = $dateTypeAttr->newInstance()->type;
                 $value = ($dateType === DateType::TYPE_DATE)
-                    ? $value->format('Y-m-d')
-                    : $value->format(DateTime::RFC3339);
+                    ? $value->format(Constant::DateFormat)
+                    : $value->format(Constant::DateTimeFormat);
             }
 
             // Handle arrays with type annotations
@@ -108,7 +108,7 @@ abstract class SerializableType
      * @param string $type The expected type.
      * @return mixed The serialized value.
      */
-    private static function serializeSingleValue($data, $type)
+    private static function serializeSingleValue(mixed $data, mixed $type): mixed
     {
         if (is_array($type)) {
             return self::serializeGenericArray($data, $type);
@@ -118,7 +118,7 @@ abstract class SerializableType
         }
 
         if (($type === 'date' || $type === 'datetime') && $data instanceof DateTime) {
-            return $type === 'date' ? $data->format('Y-m-d') : $data->format(DateTime::RFC3339);
+            return $type === 'date' ? $data->format(Constant::DateFormat) : $data->format(Constant::DateTimeFormat);
         }
 
         if (class_exists($type) && $data instanceof $type) {
@@ -258,7 +258,7 @@ abstract class SerializableType
                 if ($dateTypeAttr) {
                     $dateType = $dateTypeAttr->newInstance()->type;
                     $value = ($dateType === DateType::TYPE_DATE)
-                        ? DateTime::createFromFormat('!Y-m-d', $value)
+                        ? DateTime::createFromFormat(Constant::DeserializationDateFormat, $value)
                         : new DateTime($value);
                 }
 
@@ -325,14 +325,14 @@ abstract class SerializableType
      * @param string $type The expected type.
      * @return mixed The deserialized value.
      */
-    private static function deserializeSingleValue(mixed $data, string $type)
+    private static function deserializeSingleValue(mixed $data, string $type): mixed
     {
         if ($type === 'null' && $data === null) {
             return null;
         }
 
         if ($type === 'date' && is_string($data)) {
-            return DateTime::createFromFormat('!Y-m-d', $data);
+            return DateTime::createFromFormat(Constant::DeserializationDateFormat, $data);
         }
 
         if ($type === 'datetime' && is_string($data)) {
@@ -364,7 +364,7 @@ abstract class SerializableType
         $result = [];
 
         foreach ($data as $key => $item) {
-            $key = self::castKey($key, $keyType);
+            $key = self::castKey($key, (string)$keyType);
             $result[$key] = self::deserializeValue($item, $valueType);
         }
 

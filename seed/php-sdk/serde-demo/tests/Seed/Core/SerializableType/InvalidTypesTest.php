@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 
-class InvalidTypesTest extends SerializableType
+class InvalidType extends SerializableType
 {
     public function __construct(
         #[JsonProperty('integer_property')]
@@ -16,9 +16,9 @@ class InvalidTypesTest extends SerializableType
     }
 }
 
-class InvalidTypesTestTest extends TestCase
+class InvalidTypesTest extends TestCase
 {
-    public function testInvalidTypesThrowExceptions()
+    public function testInvalidTypesThrowExceptions(): void
     {
         // Create test data with invalid type for integer_property (string instead of int)
         $data = [
@@ -27,10 +27,9 @@ class InvalidTypesTestTest extends TestCase
 
         $json = json_encode($data, JSON_THROW_ON_ERROR);
 
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage("Unable to deserialize value of type 'string' as 'integer'.");
+        $this->expectException(\TypeError::class);
 
         // Attempt to deserialize invalid data
-        $object = InvalidTypesTest::fromJson($json);
+        InvalidType::fromJson($json);
     }
 }

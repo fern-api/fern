@@ -3,6 +3,7 @@
 namespace Seed\Core\SerializableType;
 
 use PHPUnit\Framework\TestCase;
+use Seed\Core\Constant;
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 use Seed\Core\ArrayType;
@@ -62,7 +63,7 @@ class NestedUnionArrayTypeTest extends TestCase
 
         // ensure dates are set with the default time
         $this->assertInstanceOf(DateTime::class, $object->nestedArray[1][4], 'nested_array[1][4] should be a DateTime instance.');
-        $this->assertEquals('2023-01-02 00:00:00', $object->nestedArray[1][4]->format('Y-m-d H:i:s'), 'nested_array[1][4] should have the correct datetime.');
+        $this->assertEquals('2023-01-02T00:00:00+00:00', $object->nestedArray[1][4]->format(Constant::DateTimeFormat), 'nested_array[1][4] should have the correct datetime.');
 
         // Level 2
         $this->assertInstanceOf(TestNestedType::class, $object->nestedArray[2][5], 'nested_array[2][5] should be an instance of TestNestedType.');

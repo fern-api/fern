@@ -22,7 +22,7 @@ class UnionArrayType extends SerializableType
 
 class UnionArrayTypeTest extends TestCase
 {
-    public function testUnionTypesInArrays()
+    public function testUnionTypesInArrays(): void
     {
         $data = [
             'mixed_array' => [
