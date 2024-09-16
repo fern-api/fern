@@ -3,6 +3,7 @@ import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { BasePhpCustomConfigSchema } from "../custom-config/BasePhpCustomConfigSchema";
 import { PhpProject } from "../project";
 import { camelCase, upperFirst } from "lodash-es";
+import { AsIsFiles } from "../AsIs";
 
 export abstract class AbstractPhpGeneratorContext<
     CustomConfig extends BasePhpCustomConfigSchema
@@ -45,4 +46,30 @@ export abstract class AbstractPhpGeneratorContext<
     public abstract getCoreAsIsFiles(): string[];
 
     public abstract getCoreTestAsIsFiles(): string[];
+
+    public getCoreSerializationAsIsFiles(): string[] {
+        return [
+            AsIsFiles.ArrayType,
+            AsIsFiles.Constant,
+            AsIsFiles.DateType,
+            AsIsFiles.JsonProperty,
+            AsIsFiles.SerializableType,
+            AsIsFiles.Union
+        ];
+    }
+
+    public getCoreSerializationTestAsIsFiles(): string[] {
+        return [
+            AsIsFiles.DateArrayTypeTest,
+            AsIsFiles.EmptyArraysTest,
+            AsIsFiles.InvalidTypesTest,
+            AsIsFiles.MixedDateArrayTypeTest,
+            AsIsFiles.NestedUnionArrayTypeTest,
+            AsIsFiles.NullableArrayTypeTest,
+            AsIsFiles.NullPropertyTypeTest,
+            AsIsFiles.ScalarTypesTest,
+            AsIsFiles.TestTypeTest,
+            AsIsFiles.UnionArrayTypeTest
+        ];
+    }
 }

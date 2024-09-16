@@ -1,6 +1,6 @@
 <?php
 
-namespace Seed\Core;
+namespace Seed\Types;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
@@ -8,6 +8,10 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
+use Seed\Core\BaseApiRequest;
+use Seed\Core\HttpMethod;
+use Seed\Core\JsonApiRequest;
+use Seed\Core\RawClient;
 
 class RawClientTest extends TestCase
 {

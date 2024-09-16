@@ -1,6 +1,6 @@
 <?php
 
-namespace Seed\Core;
+namespace <%= namespace%>;
 
 use DateTime;
 use Exception;

@@ -1,13 +1,13 @@
 <?php
 
-namespace Seed\Tests\Core\SerializableType;
+namespace <%= namespace%>;
 
 use PHPUnit\Framework\TestCase;
-use Seed\Core\Constant;
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
-use Seed\Core\Union;
+use <%= coreNamespace%>\Constant;
+use <%= coreNamespace%>\SerializableType;
+use <%= coreNamespace%>\JsonProperty;
+use <%= coreNamespace%>\ArrayType;
+use <%= coreNamespace%>\Union;
 use DateTime;
 
 // Supporting Classes

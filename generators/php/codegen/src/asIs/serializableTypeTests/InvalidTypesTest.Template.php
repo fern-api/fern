@@ -1,10 +1,10 @@
 <?php
 
-namespace Seed\Tests\Core\SerializableType;
+namespace <%= namespace%>;
 
 use PHPUnit\Framework\TestCase;
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use <%= coreNamespace%>\SerializableType;
+use <%= coreNamespace%>\JsonProperty;
 
 class InvalidType extends SerializableType
 {

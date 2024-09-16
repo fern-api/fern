@@ -1,14 +1,14 @@
 <?php
 
-namespace Seed\Tests\Core\SerializableType;
+namespace <%= namespace%>;
 
 use PHPUnit\Framework\TestCase;
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\DateType;
-use Seed\Core\ArrayType;
+use <%= coreNamespace%>\SerializableType;
+use <%= coreNamespace%>\JsonProperty;
+use <%= coreNamespace%>\DateType;
+use <%= coreNamespace%>\ArrayType;
 use DateTime;
-use Seed\Core\Union;
+use <%= coreNamespace%>\Union;
 
 class TestNestedType1 extends SerializableType
 {

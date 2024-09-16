@@ -8,5 +8,21 @@ export enum AsIsFiles {
     PhpStanNeon = "phpstan.neon",
     PhpUnitXml = "phpunit.xml",
     RawClient = "RawClient.Template.php",
-    RawClientTest = "RawClientTest.Template.php"
+    RawClientTest = "RawClientTest.Template.php",
+    DateArrayTypeTest = "serializableTypeTests/DateArrayTypeTest.Template.php",
+    EmptyArraysTest = "serializableTypeTests/EmptyArraysTest.Template.php",
+    InvalidTypesTest = "serializableTypeTests/InvalidTypesTest.Template.php",
+    MixedDateArrayTypeTest = "serializableTypeTests/MixedDateArrayTypeTest.Template.php",
+    NestedUnionArrayTypeTest = "serializableTypeTests/NestedUnionArrayTypeTest.Template.php",
+    NullableArrayTypeTest = "serializableTypeTests/NullableArrayTypeTest.Template.php",
+    NullPropertyTypeTest = "serializableTypeTests/NullPropertyTypeTest.Template.php",
+    ScalarTypesTest = "serializableTypeTests/ScalarTypesTest.Template.php",
+    TestTypeTest = "serializableTypeTests/TestTypeTest.Template.php",
+    UnionArrayTypeTest = "serializableTypeTests/UnionArrayTypeTest.Template.php",
+    ArrayType = "ArrayType.Template.php",
+    Constant = "Constant.Template.php",
+    DateType = "DateType.Template.php",
+    JsonProperty = "JsonProperty.Template.php",
+    SerializableType = "SerializableType.Template.php",
+    Union = "Union.Template.php"
 }
