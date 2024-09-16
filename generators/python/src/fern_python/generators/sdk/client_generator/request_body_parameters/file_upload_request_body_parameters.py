@@ -114,7 +114,7 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
             with writer.indent():
                 for property in self._request.properties:
                     property_as_union = property.get_as_union()
-                    if property_as_union.type == "bodyProperty" and property_as_union.content_type is not None: 
+                    if property_as_union.type == "bodyProperty" and property_as_union.content_type is not None:
                         continue
                     elif property_as_union.type == "bodyProperty":
                         writer.write_line(
@@ -130,18 +130,20 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
             with writer.indent():
                 for property in self._request.properties:
                     property_as_union = property.get_as_union()
-                    if property_as_union.type == "bodyProperty" and property_as_union.content_type is not None: 
-                        writer.write(
-                            f'"{property_as_union.name.wire_value}": (None, '
-                        )
+                    if property_as_union.type == "bodyProperty" and property_as_union.content_type is not None:
+                        writer.write(f'"{property_as_union.name.wire_value}": (None, ')
                         writer.write_node(
                             AST.Expression(
-                                Json.dumps(AST.Expression(self._context.core_utilities.jsonable_encoder(
-                                    AST.Expression(property_as_union.name.wire_value)
-                                )))
+                                Json.dumps(
+                                    AST.Expression(
+                                        self._context.core_utilities.jsonable_encoder(
+                                            AST.Expression(property_as_union.name.wire_value)
+                                        )
+                                    )
+                                )
                             )
                         )
-                        writer.write_line(f", \"{property_as_union.content_type}\"),")
+                        writer.write_line(f', "{property_as_union.content_type}"),')
                     elif property_as_union.type == "file":
                         writer.write_line(
                             f'"{property_as_union.value.get_as_union().key.wire_value}": {self._get_file_property_name(property_as_union.value)},'

@@ -26,7 +26,7 @@ class Json:
             ),
             args=[obj],
         )
-    
+
     @staticmethod
     def dumps(obj: AST.Expression) -> AST.FunctionInvocation:
         return AST.FunctionInvocation(
@@ -35,4 +35,4 @@ class Json:
                 qualified_name_excluding_import=("dumps",),
             ),
             args=[obj],
-        )    
+        )
