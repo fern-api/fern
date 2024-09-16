@@ -46,6 +46,7 @@ class Project:
         pypi_metadata: Optional[PypiMetadata],
         github_output_mode: Optional[GithubOutputMode],
         license_: Optional[LicenseConfig],
+        user_defined_toml: Optional[str] = None,
     ) -> None:
         if flat_layout:
             self._project_relative_filepath = relative_path_to_project
@@ -67,6 +68,7 @@ class Project:
         self._pypi_metadata = pypi_metadata
         self.license_ = license_
         self._extras: typing.Dict[str, List[str]] = {}
+        self._user_defined_toml = user_defined_toml
 
     def add_init_exports(self, path: AST.ModulePath, exports: List[ModuleExport]) -> None:
         self._module_manager.register_additional_exports(path, exports)
@@ -180,6 +182,7 @@ class Project:
                 pypi_metadata=self._pypi_metadata,
                 license_=self.license_,
                 extras=self._extras,
+                user_defined_toml=self._user_defined_toml,
             )
             py_project_toml.write()
 

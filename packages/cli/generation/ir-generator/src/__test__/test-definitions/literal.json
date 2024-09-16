@@ -1390,6 +1390,7 @@
                                         }
                                     }
                                 },
+                                "availability": null,
                                 "docs": null
                             }
                         ],
@@ -2412,6 +2413,7 @@
                                         }
                                     }
                                 },
+                                "availability": null,
                                 "docs": null
                             },
                             {
@@ -2453,6 +2455,7 @@
                                         }
                                     }
                                 },
+                                "availability": null,
                                 "docs": null
                             },
                             {
@@ -2489,6 +2492,7 @@
                                         }
                                     }
                                 },
+                                "availability": null,
                                 "docs": null
                             },
                             {
@@ -2531,6 +2535,7 @@
                                         }
                                     }
                                 },
+                                "availability": null,
                                 "docs": null
                             },
                             {
@@ -2566,6 +2571,7 @@
                                         }
                                     }
                                 },
+                                "availability": null,
                                 "docs": null
                             },
                             {
@@ -2659,6 +2665,7 @@
                                     "default": null,
                                     "inline": null
                                 },
+                                "availability": null,
                                 "docs": null
                             },
                             {
@@ -2758,6 +2765,7 @@
                                         }
                                     }
                                 },
+                                "availability": null,
                                 "docs": null
                             },
                             {
@@ -2851,6 +2859,7 @@
                                     "default": null,
                                     "inline": null
                                 },
+                                "availability": null,
                                 "docs": null
                             }
                         ],

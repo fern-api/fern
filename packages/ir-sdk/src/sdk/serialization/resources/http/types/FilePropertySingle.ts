@@ -13,11 +13,13 @@ export const FilePropertySingle: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({
     key: NameAndWireValue,
     isOptional: core.serialization.boolean(),
+    contentType: core.serialization.string().optional(),
 });
 
 export declare namespace FilePropertySingle {
     interface Raw {
         key: NameAndWireValue.Raw;
         isOptional: boolean;
+        contentType?: string | null;
     }
 }

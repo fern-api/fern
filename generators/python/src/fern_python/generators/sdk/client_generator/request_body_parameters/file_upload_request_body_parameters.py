@@ -3,6 +3,7 @@ from typing import Dict, List, Optional
 import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST
+from fern_python.external_dependencies.json import Json
 
 from ...context.sdk_generator_context import SdkGeneratorContext
 from .abstract_request_body_parameters import AbstractRequestBodyParameters
@@ -113,7 +114,9 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
             with writer.indent():
                 for property in self._request.properties:
                     property_as_union = property.get_as_union()
-                    if property_as_union.type == "bodyProperty":
+                    if property_as_union.type == "bodyProperty" and property_as_union.content_type is not None:
+                        continue
+                    elif property_as_union.type == "bodyProperty":
                         writer.write_line(
                             f'"{property_as_union.name.wire_value}": {self._get_body_property_name(property_as_union)},'
                         )
@@ -127,10 +130,36 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
             with writer.indent():
                 for property in self._request.properties:
                     property_as_union = property.get_as_union()
-                    if property_as_union.type == "file":
-                        writer.write_line(
-                            f'"{property_as_union.value.get_as_union().key.wire_value}": {self._get_file_property_name(property_as_union.value)},'
+                    if property_as_union.type == "bodyProperty" and property_as_union.content_type is not None:
+                        writer.write(f'"{property_as_union.name.wire_value}": (None, ')
+                        writer.write_node(
+                            AST.Expression(
+                                Json.dumps(
+                                    AST.Expression(
+                                        self._context.core_utilities.jsonable_encoder(
+                                            AST.Expression(property_as_union.name.wire_value)
+                                        )
+                                    )
+                                )
+                            )
                         )
+                        writer.write_line(f', "{property_as_union.content_type}"),')
+                    elif property_as_union.type == "file":
+                        file_property_as_union = property_as_union.value.get_as_union()
+                        if file_property_as_union.content_type is not None:
+                            writer.write(f'"{file_property_as_union.key.wire_value}": ')
+                            writer.write_node(
+                                self._context.core_utilities.with_content_type(
+                                    AST.Expression(
+                                        f'file={file_property_as_union.key.wire_value}, content_type="{file_property_as_union.content_type}"'
+                                    )
+                                )
+                            )
+                            writer.write_line(",")
+                        else:
+                            writer.write_line(
+                                f'"{file_property_as_union.key.wire_value}": {self._get_file_property_name(property_as_union.value)},'
+                            )
             writer.write_line("}")
 
         return AST.Expression(AST.CodeWriter(write))

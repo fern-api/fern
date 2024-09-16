@@ -395,6 +395,7 @@
                                         }
                                     }
                                 },
+                                "availability": null,
                                 "docs": null
                             },
                             {
@@ -430,6 +431,7 @@
                                         }
                                     }
                                 },
+                                "availability": null,
                                 "docs": null
                             },
                             {
@@ -466,6 +468,7 @@
                                         }
                                     }
                                 },
+                                "availability": null,
                                 "docs": null
                             }
                         ],

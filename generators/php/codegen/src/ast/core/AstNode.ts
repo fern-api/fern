@@ -1,13 +1,26 @@
+import { AbstractAstNode } from "@fern-api/generator-commons";
+import { BasePhpCustomConfigSchema } from "../../custom-config/BasePhpCustomConfigSchema";
 import { Writer } from "./Writer";
 
-export interface FormattedAstNodeSnippet {
-    imports: string | undefined;
-    body: string;
-}
-
-export abstract class AstNode {
+export abstract class AstNode extends AbstractAstNode {
     /**
-     * Every AST node knows how to write itself to a string.
+     * Writes the node to a string.
      */
-    public abstract write(writer: Writer): void;
+    public toString({
+        namespace,
+        rootNamespace,
+        customConfig
+    }: {
+        namespace: string;
+        rootNamespace: string;
+        customConfig: BasePhpCustomConfigSchema;
+    }): string {
+        const writer = new Writer({
+            namespace,
+            rootNamespace,
+            customConfig
+        });
+        this.write(writer);
+        return writer.toString();
+    }
 }

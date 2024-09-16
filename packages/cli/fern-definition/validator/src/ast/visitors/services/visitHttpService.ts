@@ -198,6 +198,7 @@ async function visitEndpoint({
                                                     validation: property.validation
                                                 });
                                             },
+                                            "content-type": noop,
                                             audiences: noop,
                                             encoding: noop,
                                             default: noop,

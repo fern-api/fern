@@ -803,6 +803,7 @@
                                         }
                                     }
                                 },
+                                "availability": null,
                                 "docs": "The name of the user to create.\nThis name is unique to each user.\n"
                             },
                             {
@@ -845,6 +846,7 @@
                                         }
                                     }
                                 },
+                                "availability": null,
                                 "docs": "The age of the user.\nThis propery is not required.\n"
                             }
                         ],

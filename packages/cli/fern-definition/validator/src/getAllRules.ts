@@ -1,4 +1,5 @@
 import { Rule } from "./Rule";
+import { CompatibleIrVersionsRule } from "./rules/compatible-ir-versions";
 import { ImportFileExistsRule } from "./rules/import-file-exists";
 import { MatchingEnvironmentUrlsRule } from "./rules/matching-environment-urls";
 import { NoCircularImportsRule } from "./rules/no-circular-imports";
@@ -41,6 +42,7 @@ import { ValidStreamConditionRule } from "./rules/valid-stream-condition";
 import { ValidTypeNameRule } from "./rules/valid-type-name";
 import { ValidTypeReferenceWithDefaultAndValidationRule } from "./rules/valid-type-reference-with-default-and-validation";
 import { ValidVersionRule } from "./rules/valid-version";
+import { ContentTypeOnlyForMultipartRule } from "./rules/content-type-only-for-multipart";
 
 export function getAllRules(): Rule[] {
     return [
@@ -85,7 +87,9 @@ export function getAllRules(): Rule[] {
         ValidStreamConditionRule,
         ValidVersionRule,
         NoUnusedGenericRule,
-        ValidGenericRule
+        ValidGenericRule,
+        CompatibleIrVersionsRule,
+        ContentTypeOnlyForMultipartRule
     ];
 }
 

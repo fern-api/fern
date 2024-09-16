@@ -1,13 +1,18 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { FernGeneratorExec, GeneratorNotificationService, parseGeneratorConfig } from "@fern-api/generator-commons";
+import {
+    FernGeneratorExec,
+    GeneratorNotificationService,
+    parseGeneratorConfig,
+    parseIR
+} from "@fern-api/generator-commons";
 import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { constructNpmPackage } from "./constructNpmPackage";
-import { loadIntermediateRepresentation } from "./loadIntermediateRepresentation";
 import { publishPackage } from "./publishPackage";
 import { writeGitHubWorkflows } from "./writeGitHubWorkflows";
+import * as serializers from "@fern-fern/ir-sdk/serialization";
 
 const OUTPUT_ZIP_FILENAME = "output.zip";
 
@@ -71,7 +76,10 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 customConfig,
                 npmPackage,
                 generatorContext,
-                intermediateRepresentation: await loadIntermediateRepresentation(config.irFilepath)
+                intermediateRepresentation: await parseIR({
+                    absolutePathToIR: AbsoluteFilePath.of(config.irFilepath),
+                    parse: serializers.IntermediateRepresentation.parse
+                })
             });
             if (!generatorContext.didSucceed()) {
                 throw new Error("Failed to generate TypeScript project.");

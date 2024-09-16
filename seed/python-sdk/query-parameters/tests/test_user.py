@@ -17,11 +17,15 @@ async def test_get_username(client: SeedQueryParameters, async_client: AsyncSeed
         limit=1,
         id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
         date=datetime.date.fromisoformat("2023-01-15"),
-        deadline=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"),
+        deadline=datetime.datetime.fromisoformat(
+            "datetime=datetime.datetime(2024, 1, 15, 9, 30, tzinfo=TzInfo(UTC)) raw='2024-01-15T09:30:00Z'"
+        ),
         bytes="SGVsbG8gd29ybGQh",
         user=User(name="string", tags=["string"]),
         user_list=[User(name="string", tags=["string"])],
-        optional_deadline=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"),
+        optional_deadline=datetime.datetime.fromisoformat(
+            "datetime=datetime.datetime(2024, 1, 15, 9, 30, tzinfo=TzInfo(UTC)) raw='2024-01-15T09:30:00Z'"
+        ),
         key_value={"string": "string"},
         optional_string="string",
         nested_user=NestedUser(name="string", user=User(name="string", tags=["string"])),
@@ -35,11 +39,15 @@ async def test_get_username(client: SeedQueryParameters, async_client: AsyncSeed
         limit=1,
         id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
         date=datetime.date.fromisoformat("2023-01-15"),
-        deadline=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"),
+        deadline=datetime.datetime.fromisoformat(
+            "datetime=datetime.datetime(2024, 1, 15, 9, 30, tzinfo=TzInfo(UTC)) raw='2024-01-15T09:30:00Z'"
+        ),
         bytes="SGVsbG8gd29ybGQh",
         user=User(name="string", tags=["string"]),
         user_list=[User(name="string", tags=["string"])],
-        optional_deadline=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"),
+        optional_deadline=datetime.datetime.fromisoformat(
+            "datetime=datetime.datetime(2024, 1, 15, 9, 30, tzinfo=TzInfo(UTC)) raw='2024-01-15T09:30:00Z'"
+        ),
         key_value={"string": "string"},
         optional_string="string",
         nested_user=NestedUser(name="string", user=User(name="string", tags=["string"])),

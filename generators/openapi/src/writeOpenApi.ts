@@ -11,8 +11,10 @@ import {
     GeneratorExecParsing,
     GeneratorUpdate,
     ExitStatusUpdate,
-    parseGeneratorConfig
+    parseGeneratorConfig,
+    parseIR
 } from "@fern-api/generator-commons";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 
 const OPENAPI_JSON_FILENAME = "openapi.json";
 const OPENAPI_YML_FILENAME = "openapi.yml";
@@ -73,8 +75,8 @@ export async function writeOpenApi(mode: Mode, pathToConfig: string): Promise<vo
 }
 
 async function loadIntermediateRepresentation(pathToFile: string): Promise<IntermediateRepresentation> {
-    const irString = (await readFile(pathToFile)).toString();
-    const irJson = JSON.parse(irString);
-
-    return IrSerialization.IntermediateRepresentation.parseOrThrow(irJson);
+    return await parseIR<IntermediateRepresentation>({
+        absolutePathToIR: AbsoluteFilePath.of(pathToFile),
+        parse: IrSerialization.IntermediateRepresentation.parse
+    });
 }

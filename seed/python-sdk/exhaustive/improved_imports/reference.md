@@ -686,7 +686,7 @@ client.endpoints.http_methods.test_patch(
     double=1.1,
     bool_=True,
     datetime=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
+        "datetime=datetime.datetime(2024, 1, 15, 9, 30, tzinfo=TzInfo(UTC)) raw='2024-01-15T09:30:00Z'",
     ),
     date=datetime.date.fromisoformat(
         "2023-01-15",
@@ -926,7 +926,7 @@ client.endpoints.object.get_and_return_with_optional_field(
     double=1.1,
     bool_=True,
     datetime=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
+        "datetime=datetime.datetime(2024, 1, 15, 9, 30, tzinfo=TzInfo(UTC)) raw='2024-01-15T09:30:00Z'",
     ),
     date=datetime.date.fromisoformat(
         "2023-01-15",
@@ -1217,7 +1217,7 @@ client.endpoints.object.get_and_return_nested_with_optional_field(
         double=1.1,
         bool_=True,
         datetime=datetime.datetime.fromisoformat(
-            "2024-01-15 09:30:00+00:00",
+            "datetime=datetime.datetime(2024, 1, 15, 9, 30, tzinfo=TzInfo(UTC)) raw='2024-01-15T09:30:00Z'",
         ),
         date=datetime.date.fromisoformat(
             "2023-01-15",
@@ -1308,7 +1308,7 @@ client.endpoints.object.get_and_return_nested_with_required_field(
         double=1.1,
         bool_=True,
         datetime=datetime.datetime.fromisoformat(
-            "2024-01-15 09:30:00+00:00",
+            "datetime=datetime.datetime(2024, 1, 15, 9, 30, tzinfo=TzInfo(UTC)) raw='2024-01-15T09:30:00Z'",
         ),
         date=datetime.date.fromisoformat(
             "2023-01-15",
@@ -1411,7 +1411,7 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(
                 double=1.1,
                 bool_=True,
                 datetime=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
+                    "datetime=datetime.datetime(2024, 1, 15, 9, 30, tzinfo=TzInfo(UTC)) raw='2024-01-15T09:30:00Z'",
                 ),
                 date=datetime.date.fromisoformat(
                     "2023-01-15",
@@ -2164,7 +2164,7 @@ client = SeedExhaustive(
 )
 client.endpoints.primitive.get_and_return_datetime(
     request=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
+        "datetime=datetime.datetime(2024, 1, 15, 9, 30, tzinfo=TzInfo(UTC)) raw='2024-01-15T09:30:00Z'",
     ),
 )
 
@@ -2491,7 +2491,7 @@ client.inlined_requests.post_with_object_bodyand_response(
         double=1.1,
         bool_=True,
         datetime=datetime.datetime.fromisoformat(
-            "2024-01-15 09:30:00+00:00",
+            "datetime=datetime.datetime(2024, 1, 15, 9, 30, tzinfo=TzInfo(UTC)) raw='2024-01-15T09:30:00Z'",
         ),
         date=datetime.date.fromisoformat(
             "2023-01-15",

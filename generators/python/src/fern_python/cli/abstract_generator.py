@@ -47,6 +47,10 @@ class AbstractGenerator(ABC):
         python_version = "^3.8"
         if generator_config.custom_config is not None and "pyproject_python_version" in generator_config.custom_config:
             python_version = generator_config.custom_config.get("pyproject_python_version")
+
+        user_defined_toml = None
+        if generator_config.custom_config is not None and "pyproject_toml" in generator_config.custom_config:
+            user_defined_toml = generator_config.custom_config.get("pyproject_toml")
         with Project(
             filepath=generator_config.output.path,
             relative_path_to_project=os.path.join(
@@ -65,6 +69,7 @@ class AbstractGenerator(ABC):
             pypi_metadata=self._get_pypi_metadata(generator_config=generator_config),
             github_output_mode=maybe_github_output_mode,
             license_=generator_config.license,
+            user_defined_toml=user_defined_toml,
         ) as project:
             self.run(
                 generator_exec_wrapper=generator_exec_wrapper,
