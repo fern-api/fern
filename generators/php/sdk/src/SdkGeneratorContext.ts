@@ -1,5 +1,5 @@
-import { HttpService, ServiceId } from "@fern-fern/ir-sdk/api";
-import { AbstractPhpGeneratorContext } from "@fern-api/php-codegen";
+import { DeclaredErrorName, HttpService, ServiceId } from "@fern-fern/ir-sdk/api";
+import { AbstractPhpGeneratorContext, FileLocation } from "@fern-api/php-codegen";
 import { GeneratorNotificationService } from "@fern-api/generator-commons";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
@@ -8,6 +8,8 @@ import { AsIsFiles, php } from "@fern-api/php-codegen";
 import { camelCase, upperFirst } from "lodash-es";
 import { RawClient } from "./core/RawClient";
 import { GuzzleClient } from "./external/GuzzleClient";
+import { RelativeFilePath } from "@fern-api/fs-utils";
+import { ErrorId, ErrorDeclaration } from "@fern-fern/ir-sdk/api";
 
 export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomConfigSchema> {
     public guzzleClient: GuzzleClient;
@@ -29,6 +31,14 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             throw new Error(`Service with id ${serviceId} not found`);
         }
         return service;
+    }
+
+    public getErrorDeclarationOrThrow(errorId: ErrorId): ErrorDeclaration {
+        const error = this.ir.errors[errorId];
+        if (error == null) {
+            throw new Error(`Error with id ${errorId} not found`);
+        }
+        return error;
     }
 
     public getRootClientClassName(): string {
@@ -60,5 +70,45 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
 
     public getCoreTestAsIsFiles(): string[] {
         return [AsIsFiles.RawClientTest];
+    }
+
+    public getLocationForTypeId(typeId: string): FileLocation {
+        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
+        const parts = [
+            this.getRootNamespace(),
+            ...typeDeclaration.name.fernFilepath.packagePath.map((path) => path.pascalCase.safeName),
+            "types"
+        ];
+        return {
+            namespace: parts.join("\\"),
+            directory: RelativeFilePath.of(parts.join("/"))
+        };
+    }
+
+    public getLocationForHttpService(serviceId: string): FileLocation {
+        const httpService = this.getHttpServiceOrThrow(serviceId);
+        const parts = this.getPartsForFileLocation(httpService.name.fernFilepath, "types");
+        return {
+            namespace: parts.join("\\"),
+            directory: RelativeFilePath.of(parts.join("/"))
+        };
+    }
+
+    public getLocationForRequestWrapper(serviceId: string): FileLocation {
+        const httpService = this.getHttpServiceOrThrow(serviceId);
+        const parts = this.getPartsForFileLocation(httpService.name.fernFilepath);
+        return {
+            namespace: parts.join("\\"),
+            directory: RelativeFilePath.of(parts.join("/"))
+        };
+    }
+
+    public getLocationForError(errorId: ErrorId): FileLocation {
+        const errorDeclaration = this.getErrorDeclarationOrThrow(errorId);
+        const parts = this.getPartsForFileLocation(errorDeclaration.name.fernFilepath, "errors");
+        return {
+            namespace: parts.join("\\"),
+            directory: RelativeFilePath.of(parts.join("/"))
+        };
     }
 }
