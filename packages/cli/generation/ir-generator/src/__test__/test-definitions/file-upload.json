@@ -2182,7 +2182,7 @@
                                         "wireValue": "file"
                                     },
                                     "isOptional": false,
-                                    "contentType": null
+                                    "contentType": "application/octet-stream"
                                 }
                             },
                             {

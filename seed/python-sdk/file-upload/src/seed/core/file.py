@@ -47,13 +47,13 @@ def with_content_type(*, file: File, content_type: str) -> File:
     """ """
     if isinstance(file, tuple):
         if len(file) == 2:
-            filename, content = cast(Tuple[Optional[str], FileContent], file)
+            filename, content = cast(Tuple[Optional[str], FileContent], file)  # type: ignore
             return (filename, content, content_type)
         elif len(file) == 3:
-            filename, content, _ = cast(Tuple[Optional[str], FileContent, Optional[str]], file)
+            filename, content, _ = cast(Tuple[Optional[str], FileContent, Optional[str]], file)  # type: ignore
             return (filename, content, content_type)
         elif len(file) == 4:
-            filename, content, _, headers = cast(
+            filename, content, _, headers = cast(  # type: ignore
                 Tuple[Optional[str], FileContent, Optional[str], Mapping[str, str]], file
             )
             return (filename, content, content_type, headers)
