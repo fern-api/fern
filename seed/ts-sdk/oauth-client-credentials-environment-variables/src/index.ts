@@ -4,4 +4,3 @@ export {
     SeedOauthClientCredentialsEnvironmentVariablesError,
     SeedOauthClientCredentialsEnvironmentVariablesTimeoutError,
 } from "./errors";
-export * as serializers from "./serialization";
