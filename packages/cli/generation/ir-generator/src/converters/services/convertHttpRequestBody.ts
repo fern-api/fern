@@ -58,7 +58,8 @@ export function convertHttpRequestBody({
                                     wireValue: property.key,
                                     name: property.key
                                 }),
-                                isOptional: property.isOptional
+                                isOptional: property.isOptional,
+                                contentType: property.contentType
                             })
                         );
                     } else {
@@ -68,20 +69,22 @@ export function convertHttpRequestBody({
                                     wireValue: property.key,
                                     name: property.key
                                 }),
-                                isOptional: property.isOptional
+                                isOptional: property.isOptional,
+                                contentType: property.contentType
                             })
                         );
                     }
                 } else {
-                    return FileUploadRequestProperty.bodyProperty(
-                        convertInlinedRequestProperty({
+                    return FileUploadRequestProperty.bodyProperty({
+                        ...convertInlinedRequestProperty({
                             propertyKey: property.key,
                             propertyDefinition: property.propertyType,
                             docs: property.docs,
                             availability: convertAvailability(property.availability),
                             file
-                        })
-                    );
+                        }),
+                        contentType: property.contentType
+                    });
                 }
             })
         });

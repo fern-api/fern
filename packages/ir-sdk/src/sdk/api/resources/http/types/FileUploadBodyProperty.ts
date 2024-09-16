@@ -4,8 +4,6 @@
 
 import * as FernIr from "../../../index";
 
-export interface FilePropertySingle {
-    key: FernIr.NameAndWireValue;
-    isOptional: boolean;
+export interface FileUploadBodyProperty extends FernIr.InlinedRequestBodyProperty {
     contentType: string | undefined;
 }

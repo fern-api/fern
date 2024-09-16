@@ -516,6 +516,7 @@
                         "properties": [
                             {
                                 "type": "bodyProperty",
+                                "contentType": null,
                                 "name": {
                                     "name": {
                                         "originalName": "maybeString",
@@ -560,6 +561,7 @@
                             },
                             {
                                 "type": "bodyProperty",
+                                "contentType": null,
                                 "name": {
                                     "name": {
                                         "originalName": "integer",
@@ -622,7 +624,8 @@
                                         },
                                         "wireValue": "file"
                                     },
-                                    "isOptional": false
+                                    "isOptional": false,
+                                    "contentType": null
                                 }
                             },
                             {
@@ -651,7 +654,8 @@
                                         },
                                         "wireValue": "fileList"
                                     },
-                                    "isOptional": false
+                                    "isOptional": false,
+                                    "contentType": null
                                 }
                             },
                             {
@@ -680,7 +684,8 @@
                                         },
                                         "wireValue": "maybeFile"
                                     },
-                                    "isOptional": true
+                                    "isOptional": true,
+                                    "contentType": null
                                 }
                             },
                             {
@@ -709,11 +714,13 @@
                                         },
                                         "wireValue": "maybeFileList"
                                     },
-                                    "isOptional": true
+                                    "isOptional": true,
+                                    "contentType": null
                                 }
                             },
                             {
                                 "type": "bodyProperty",
+                                "contentType": null,
                                 "name": {
                                     "name": {
                                         "originalName": "maybeInteger",
@@ -758,6 +765,7 @@
                             },
                             {
                                 "type": "bodyProperty",
+                                "contentType": null,
                                 "name": {
                                     "name": {
                                         "originalName": "optionalListOfStrings",
@@ -808,6 +816,7 @@
                             },
                             {
                                 "type": "bodyProperty",
+                                "contentType": null,
                                 "name": {
                                     "name": {
                                         "originalName": "listOfObjects",
@@ -909,6 +918,7 @@
                             },
                             {
                                 "type": "bodyProperty",
+                                "contentType": null,
                                 "name": {
                                     "name": {
                                         "originalName": "optionalMetadata",
@@ -945,6 +955,7 @@
                             },
                             {
                                 "type": "bodyProperty",
+                                "contentType": null,
                                 "name": {
                                     "name": {
                                         "originalName": "optionalObjectType",
@@ -1046,6 +1057,7 @@
                             },
                             {
                                 "type": "bodyProperty",
+                                "contentType": null,
                                 "name": {
                                     "name": {
                                         "originalName": "optionalId",
@@ -1330,7 +1342,8 @@
                                         },
                                         "wireValue": "file"
                                     },
-                                    "isOptional": false
+                                    "isOptional": false,
+                                    "contentType": null
                                 }
                             }
                         ]
@@ -1727,7 +1740,8 @@
                                         },
                                         "wireValue": "file"
                                     },
-                                    "isOptional": false
+                                    "isOptional": false,
+                                    "contentType": null
                                 }
                             }
                         ]
@@ -2073,6 +2087,330 @@
                                     }
                                 },
                                 "id": "11521834f2cf87d8de4b4564420889b252731803",
+                                "docs": null
+                            }
+                        }
+                    ],
+                    "pagination": null,
+                    "availability": null,
+                    "docs": null
+                },
+                {
+                    "id": "endpoint_service.withContentType",
+                    "name": {
+                        "originalName": "withContentType",
+                        "camelCase": {
+                            "unsafeName": "withContentType",
+                            "safeName": "withContentType"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "with_content_type",
+                            "safeName": "with_content_type"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "WITH_CONTENT_TYPE",
+                            "safeName": "WITH_CONTENT_TYPE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "WithContentType",
+                            "safeName": "WithContentType"
+                        }
+                    },
+                    "displayName": null,
+                    "auth": false,
+                    "idempotent": false,
+                    "baseUrl": null,
+                    "method": "POST",
+                    "path": {
+                        "head": "/with-content-type",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "/with-content-type",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": {
+                        "type": "fileUpload",
+                        "name": {
+                            "originalName": "WithContentTypeRequest",
+                            "camelCase": {
+                                "unsafeName": "withContentTypeRequest",
+                                "safeName": "withContentTypeRequest"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "with_content_type_request",
+                                "safeName": "with_content_type_request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "WITH_CONTENT_TYPE_REQUEST",
+                                "safeName": "WITH_CONTENT_TYPE_REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "WithContentTypeRequest",
+                                "safeName": "WithContentTypeRequest"
+                            }
+                        },
+                        "properties": [
+                            {
+                                "type": "file",
+                                "value": {
+                                    "type": "file",
+                                    "key": {
+                                        "name": {
+                                            "originalName": "file",
+                                            "camelCase": {
+                                                "unsafeName": "file",
+                                                "safeName": "file"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "file",
+                                                "safeName": "file"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "FILE",
+                                                "safeName": "FILE"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "File",
+                                                "safeName": "File"
+                                            }
+                                        },
+                                        "wireValue": "file"
+                                    },
+                                    "isOptional": false,
+                                    "contentType": null
+                                }
+                            },
+                            {
+                                "type": "bodyProperty",
+                                "contentType": null,
+                                "name": {
+                                    "name": {
+                                        "originalName": "foo",
+                                        "camelCase": {
+                                            "unsafeName": "foo",
+                                            "safeName": "foo"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "foo",
+                                            "safeName": "foo"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "FOO",
+                                            "safeName": "FOO"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Foo",
+                                            "safeName": "Foo"
+                                        }
+                                    },
+                                    "wireValue": "foo"
+                                },
+                                "valueType": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                },
+                                "availability": null,
+                                "docs": null
+                            },
+                            {
+                                "type": "bodyProperty",
+                                "contentType": "application/json",
+                                "name": {
+                                    "name": {
+                                        "originalName": "bar",
+                                        "camelCase": {
+                                            "unsafeName": "bar",
+                                            "safeName": "bar"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "bar",
+                                            "safeName": "bar"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "BAR",
+                                            "safeName": "BAR"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Bar",
+                                            "safeName": "Bar"
+                                        }
+                                    },
+                                    "wireValue": "bar"
+                                },
+                                "valueType": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "MyObject",
+                                        "camelCase": {
+                                            "unsafeName": "myObject",
+                                            "safeName": "myObject"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "my_object",
+                                            "safeName": "my_object"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "MY_OBJECT",
+                                            "safeName": "MY_OBJECT"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "MyObject",
+                                            "safeName": "MyObject"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [
+                                            {
+                                                "originalName": "service",
+                                                "camelCase": {
+                                                    "unsafeName": "service",
+                                                    "safeName": "service"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "service",
+                                                    "safeName": "service"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "SERVICE",
+                                                    "safeName": "SERVICE"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Service",
+                                                    "safeName": "Service"
+                                                }
+                                            }
+                                        ],
+                                        "packagePath": [],
+                                        "file": {
+                                            "originalName": "service",
+                                            "camelCase": {
+                                                "unsafeName": "service",
+                                                "safeName": "service"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "service",
+                                                "safeName": "service"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "SERVICE",
+                                                "safeName": "SERVICE"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Service",
+                                                "safeName": "Service"
+                                            }
+                                        }
+                                    },
+                                    "typeId": "type_service:MyObject",
+                                    "default": null,
+                                    "inline": null
+                                },
+                                "availability": null,
+                                "docs": null
+                            }
+                        ]
+                    },
+                    "sdkRequest": {
+                        "shape": {
+                            "type": "wrapper",
+                            "wrapperName": {
+                                "originalName": "WithContentTypeRequest",
+                                "camelCase": {
+                                    "unsafeName": "withContentTypeRequest",
+                                    "safeName": "withContentTypeRequest"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "with_content_type_request",
+                                    "safeName": "with_content_type_request"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "WITH_CONTENT_TYPE_REQUEST",
+                                    "safeName": "WITH_CONTENT_TYPE_REQUEST"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "WithContentTypeRequest",
+                                    "safeName": "WithContentTypeRequest"
+                                }
+                            },
+                            "bodyKey": {
+                                "originalName": "body",
+                                "camelCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "BODY",
+                                    "safeName": "BODY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Body",
+                                    "safeName": "Body"
+                                }
+                            }
+                        },
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        },
+                        "streamParameter": null
+                    },
+                    "response": {
+                        "body": null,
+                        "status-code": null
+                    },
+                    "errors": [],
+                    "userSpecifiedExamples": [],
+                    "autogeneratedExamples": [
+                        {
+                            "example": {
+                                "url": "/with-content-type",
+                                "rootPathParameters": [],
+                                "servicePathParameters": [],
+                                "endpointPathParameters": [],
+                                "serviceHeaders": [],
+                                "endpointHeaders": [],
+                                "queryParameters": [],
+                                "request": null,
+                                "name": null,
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": null
+                                    }
+                                },
+                                "id": "b0765b3588f9e7638200b3085cbdde56e6b79d1c",
                                 "docs": null
                             }
                         }

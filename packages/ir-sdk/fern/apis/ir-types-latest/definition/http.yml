@@ -129,7 +129,11 @@ types:
   FileUploadRequestProperty:
     union:
       file: FileProperty
-      bodyProperty: InlinedRequestBodyProperty
+      bodyProperty: FileUploadBodyProperty
+  FileUploadBodyProperty: 
+    extends: InlinedRequestBodyProperty
+    properties: 
+      contentType: optional<string>
   FileProperty:
     union:
       file: FilePropertySingle
@@ -138,10 +142,12 @@ types:
     properties:
       key: commons.NameAndWireValue
       isOptional: boolean
+      contentType: optional<string>
   FilePropertyArray:
     properties:
       key: commons.NameAndWireValue
       isOptional: boolean
+      contentType: optional<string>
   HttpRequestBodyReference:
     extends: commons.WithDocs
     properties:
