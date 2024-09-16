@@ -273,7 +273,7 @@ abstract class SerializableType
                         throw new Exception("Unexpected non-string type for date.");
                     }
                     $value = ($dateType === DateType::TYPE_DATE)
-                        ? DateTime::createFromFormat(Constant::DeserializationDateFormat, $value)
+                        ? DateTime::createFromFormat(Constant::DateDeserializationFormat, $value)
                         : new DateTime($value);
                 }
 
@@ -351,7 +351,7 @@ abstract class SerializableType
         }
 
         if ($type === 'date' && is_string($data)) {
-            return DateTime::createFromFormat(Constant::DeserializationDateFormat, $data);
+            return DateTime::createFromFormat(Constant::DateDeserializationFormat, $data);
         }
 
         if ($type === 'datetime' && is_string($data)) {
