@@ -265,7 +265,7 @@ class ServiceClient:
                 "foo": foo,
             },
             files={
-                "file": file,
+                "file": core.with_content_type(file=file, content_type="application/octet-stream"),
                 "bar": (None, json.dumps(jsonable_encoder(bar)), "application/json"),
             },
             request_options=request_options,
@@ -560,7 +560,7 @@ class AsyncServiceClient:
                 "foo": foo,
             },
             files={
-                "file": file,
+                "file": core.with_content_type(file=file, content_type="application/octet-stream"),
                 "bar": (None, json.dumps(jsonable_encoder(bar)), "application/json"),
             },
             request_options=request_options,
