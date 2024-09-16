@@ -47,7 +47,7 @@ export class PhpTypeMapper {
     public convertToClassReference(declaredTypeName: { typeId: TypeId; name: Name }): ClassReference {
         return new php.ClassReference({
             name: this.context.getClassName(declaredTypeName.name),
-            namespace: this.context.getNamespaceForTypeId(declaredTypeName.typeId)
+            namespace: this.context.getLocationForTypeId(declaredTypeName.typeId).namespace
         });
     }
 
