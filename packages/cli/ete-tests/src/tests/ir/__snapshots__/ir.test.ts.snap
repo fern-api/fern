@@ -1514,6 +1514,7 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                         "properties": [
                             {
                                 "type": "bodyProperty",
+                                "contentType": null,
                                 "name": {
                                     "name": {
                                         "originalName": "foo",
@@ -1576,7 +1577,8 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                                         },
                                         "wireValue": "file"
                                     },
-                                    "isOptional": false
+                                    "isOptional": false,
+                                    "contentType": null
                                 }
                             },
                             {
@@ -1605,11 +1607,13 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                                         },
                                         "wireValue": "optionalFile"
                                     },
-                                    "isOptional": true
+                                    "isOptional": true,
+                                    "contentType": null
                                 }
                             },
                             {
                                 "type": "bodyProperty",
+                                "contentType": null,
                                 "name": {
                                     "name": {
                                         "originalName": "bar",

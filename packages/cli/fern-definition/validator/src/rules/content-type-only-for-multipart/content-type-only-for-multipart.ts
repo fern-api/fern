@@ -26,7 +26,7 @@ export const ContentTypeOnlyForMultipartRule: Rule = {
                         for (const [propertyName, propertyDeclaration] of Object.entries(
                             endpoint.request.body.properties ?? {}
                         )) {
-                            if (typeof propertyDeclaration == "string") {
+                            if (typeof propertyDeclaration === "string") {
                                 continue;
                             }
                             if (propertyDeclaration["content-type"] != null) {
