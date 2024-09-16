@@ -10,6 +10,9 @@ use DateTime;
 
 class DateArrayType extends SerializableType
 {
+    /**
+     * @param string[] $dates
+     */
     public function __construct(
         // Array of dates
         #[ArrayType(['date'])]

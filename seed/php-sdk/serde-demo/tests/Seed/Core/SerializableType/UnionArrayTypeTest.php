@@ -10,6 +10,9 @@ use Seed\Core\Union;
 
 class UnionArrayType extends SerializableType
 {
+    /**
+     * @param array<integer, string|integer|null> $mixedArray
+     */
     public function __construct(
         // Map with int keys and values that can be string, int, or null using Union
         #[ArrayType(['integer' => new Union('string', 'integer', 'null')])]

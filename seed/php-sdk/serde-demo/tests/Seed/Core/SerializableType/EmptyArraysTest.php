@@ -10,6 +10,11 @@ use Seed\Core\Union;
 
 class EmptyArraysType extends SerializableType
 {
+    /**
+     * @param string[] $emptyStringArray
+     * @param array<string, string|null> $emptyMapArray
+     * @param array<string|null> $emptyDatesArray
+     */
     public function __construct(
         #[ArrayType(['string'])]
         #[JsonProperty('empty_string_array')]

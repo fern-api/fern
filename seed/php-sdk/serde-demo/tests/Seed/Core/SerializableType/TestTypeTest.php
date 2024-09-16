@@ -22,6 +22,17 @@ class TestNestedType1 extends SerializableType
 
 class TestType extends SerializableType
 {
+    /**
+     * @param string $simpleProperty
+     * @param DateTime $dateProperty
+     * @param DateTime $datetimeProperty
+     * @param string[] $stringArray
+     * @param array<string, integer> $mapProperty
+     * @param array<integer, TestNestedType1|null> $objectArray
+     * @param array<integer, array<integer, string|null>> $nestedArray
+     * @param array<string|null> $datesArray
+     * @param string|null $nullableProperty
+     */
     public function __construct(
         #[JsonProperty('simple_property')]
         public string   $simpleProperty,
@@ -102,6 +113,7 @@ class TestTypeTest extends TestCase
 
         // Check that nullable property is null and not included in JSON
         $this->assertNull($object->nullableProperty, 'Nullable property should be null.');
+        // @phpstan-ignore-next-line
         $this->assertFalse(array_key_exists('nullable_property', json_decode($serializedJson, true)), 'Nullable property should be omitted from JSON.');
 
         // Check date properties

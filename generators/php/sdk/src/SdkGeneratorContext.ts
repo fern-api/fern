@@ -76,6 +76,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     public getCoreTestAsIsFiles(): string[] {
+        // return [AsIsFiles.RawClientTest];
         return [AsIsFiles.RawClientTest, ...this.getCoreSerializationTestAsIsFiles()];
     }
 

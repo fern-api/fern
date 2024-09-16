@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 
 class ExampleTypeTest extends TestCase
 {
-    public function testSerializationAndDeserialization()
+    public function testSerializationAndDeserialization(): void
     {
         // Define the original data for ExampleType with nested ExampleNestedType
         $originalData = [
