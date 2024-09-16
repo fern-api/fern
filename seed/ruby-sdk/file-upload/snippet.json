@@ -35,6 +35,17 @@
         },
         {
             "id": {
+                "path": "/with-content-type",
+                "method": "POST",
+                "identifierOverride": "endpoint_service.withContentType"
+            },
+            "snippet": {
+                "client": "require \"fern_file_upload\"\n\nfile_upload = SeedFileUploadClient::Client.new(base_url: \"https://api.example.com\")\nfile_upload.service.with_content_type(file: my_file.txt)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
                 "path": "/",
                 "method": "POST",
                 "identifierOverride": "endpoint_service.post"
@@ -63,6 +74,17 @@
             },
             "snippet": {
                 "client": "require \"fern_file_upload\"\n\nfile_upload = SeedFileUploadClient::Client.new(base_url: \"https://api.example.com\")\nfile_upload.service.just_file_with_query_params(\n  maybe_string: \"string\",\n  integer: 1,\n  maybe_integer: 1,\n  list_of_strings: \"string\",\n  optional_list_of_strings: \"string\",\n  file: my_file.txt\n)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/with-content-type",
+                "method": "POST",
+                "identifierOverride": "endpoint_service.withContentType"
+            },
+            "snippet": {
+                "client": "require \"fern_file_upload\"\n\nfile_upload = SeedFileUploadClient::Client.new(base_url: \"https://api.example.com\")\nfile_upload.service.with_content_type(file: my_file.txt)",
                 "type": "ruby"
             }
         }

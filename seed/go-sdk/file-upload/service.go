@@ -91,3 +91,8 @@ func NewObjectTypeFromString(s string) (ObjectType, error) {
 func (o ObjectType) Ptr() *ObjectType {
 	return &o
 }
+
+type WithContentTypeRequest struct {
+	Foo string    `json:"foo" url:"-"`
+	Bar *MyObject `json:"bar,omitempty" url:"-"`
+}
