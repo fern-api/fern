@@ -210,7 +210,6 @@ scripts:
   - docker: fernapi/ts-seed
     commands:
       - mkdir cache
-      - cp -r .yarn/cache ./cache
       - yarn install --cache-folder ./cache
       - yarn build
       - if grep -q '"test"' package.json && grep -q 'exhaustive' package.json; then yarn test --passWithNoTests --testPathPattern='exhaustive.*\.test\.ts$'; fi
