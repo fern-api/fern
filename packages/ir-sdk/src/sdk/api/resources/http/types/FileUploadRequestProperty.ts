@@ -14,7 +14,7 @@ export declare namespace FileUploadRequestProperty {
         value: FernIr.FileProperty;
     }
 
-    interface BodyProperty extends FernIr.InlinedRequestBodyProperty, _Utils {
+    interface BodyProperty extends FernIr.FileUploadBodyProperty, _Utils {
         type: "bodyProperty";
     }
 
@@ -24,7 +24,7 @@ export declare namespace FileUploadRequestProperty {
 
     interface _Visitor<_Result> {
         file: (value: FernIr.FileProperty) => _Result;
-        bodyProperty: (value: FernIr.InlinedRequestBodyProperty) => _Result;
+        bodyProperty: (value: FernIr.FileUploadBodyProperty) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -43,7 +43,7 @@ export const FileUploadRequestProperty = {
         };
     },
 
-    bodyProperty: (value: FernIr.InlinedRequestBodyProperty): FernIr.FileUploadRequestProperty.BodyProperty => {
+    bodyProperty: (value: FernIr.FileUploadBodyProperty): FernIr.FileUploadRequestProperty.BodyProperty => {
         return {
             ...value,
             type: "bodyProperty",

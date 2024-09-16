@@ -1,5 +1,10 @@
 import { MediaType } from "@fern-api/core-utils";
-import { HttpInlineRequestBodySchema, HttpRequestSchema, ObjectPropertySchema } from "../schemas";
+import {
+    AvailabilityUnionSchema,
+    HttpInlineRequestBodySchema,
+    HttpRequestSchema,
+    ObjectPropertySchema
+} from "../schemas";
 import { isInlineRequestBody } from "./isInlineRequestBody";
 import { parseRawFileType } from "./parseRawFileType";
 
@@ -25,7 +30,9 @@ export declare namespace RawFileUploadRequest {
 
     export interface BaseProperty {
         docs: string | undefined;
+        availability?: AvailabilityUnionSchema | undefined;
         key: string;
+        contentType?: string;
     }
 }
 
@@ -76,6 +83,7 @@ function createRawFileUploadRequest(
     const properties = Object.entries(requestBody.properties ?? []).reduce<RawFileUploadRequest.Property[]>(
         (acc, [key, propertyType]) => {
             const docs = typeof propertyType !== "string" ? propertyType.docs : undefined;
+            const contentType = typeof propertyType !== "string" ? propertyType["content-type"] : undefined;
             const maybeParsedFileType = parseRawFileType(
                 typeof propertyType === "string" ? propertyType : propertyType.type
             );
@@ -85,10 +93,11 @@ function createRawFileUploadRequest(
                     key,
                     docs,
                     isOptional: maybeParsedFileType.isOptional,
-                    isArray: maybeParsedFileType.isArray
+                    isArray: maybeParsedFileType.isArray,
+                    contentType
                 });
             } else {
-                acc.push({ isFile: false, key, propertyType, docs });
+                acc.push({ isFile: false, key, propertyType, docs, contentType });
             }
             return acc;
         },

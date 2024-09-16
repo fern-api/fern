@@ -66,11 +66,37 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     public getCoreAsIsFiles(): string[] {
-        return [AsIsFiles.BaseApiRequest, AsIsFiles.HttpMethod, AsIsFiles.JsonApiRequest, AsIsFiles.RawClient];
+        return [
+            AsIsFiles.BaseApiRequest,
+            AsIsFiles.HttpMethod,
+            AsIsFiles.JsonApiRequest,
+            AsIsFiles.RawClient,
+            ...this.getCoreSerializationAsIsFiles()
+        ];
     }
 
     public getCoreTestAsIsFiles(): string[] {
-        return [AsIsFiles.RawClientTest];
+        return [AsIsFiles.RawClientTest, ...this.getCoreSerializationTestAsIsFiles()];
+    }
+
+    public getLocationForTypeId(typeId: string): FileLocation {
+        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
+        return this.getFileLocation(typeDeclaration.name.fernFilepath, TYPES_DIRECTORY);
+    }
+
+    public getLocationForHttpService(serviceId: string): FileLocation {
+        const httpService = this.getHttpServiceOrThrow(serviceId);
+        return this.getFileLocation(httpService.name.fernFilepath);
+    }
+
+    public getLocationForRequestWrapper(serviceId: string): FileLocation {
+        const httpService = this.getHttpServiceOrThrow(serviceId);
+        return this.getFileLocation(httpService.name.fernFilepath);
+    }
+
+    public getLocationForError(errorId: ErrorId): FileLocation {
+        const errorDeclaration = this.getErrorDeclarationOrThrow(errorId);
+        return this.getFileLocation(errorDeclaration.name.fernFilepath, ERRORS_DIRECTORY);
     }
 
     public getLocationForTypeId(typeId: string): FileLocation {

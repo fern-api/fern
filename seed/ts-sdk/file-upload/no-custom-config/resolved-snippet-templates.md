@@ -31,3 +31,12 @@ await client.service.justFileWithQueryParams({
 ```                        
 
 
+```typescript
+import { SeedFileUploadClient } from "@fern/file-upload";
+
+const client = new SeedFileUploadClient({ environment: "YOUR_BASE_URL" });
+undefined;
+ 
+```                        
+
+

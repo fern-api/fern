@@ -9,6 +9,8 @@ from .types.id import Id
 from ..core.request_options import RequestOptions
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
+import json
+from ..core.jsonable_encoder import jsonable_encoder
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -215,6 +217,56 @@ class ServiceClient:
             data={},
             files={
                 "file": file,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def with_content_type(
+        self, *, file: core.File, foo: str, bar: MyObject, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        foo : str
+
+        bar : MyObject
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from seed import SeedFileUpload
+
+        client = SeedFileUpload(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.with_content_type()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "with-content-type",
+            method="POST",
+            data={
+                "foo": foo,
+            },
+            files={
+                "file": core.with_content_type(file=file, content_type="application/octet-stream"),
+                "bar": (None, json.dumps(jsonable_encoder(bar)), "application/json"),
             },
             request_options=request_options,
             omit=OMIT,
@@ -452,6 +504,64 @@ class AsyncServiceClient:
             data={},
             files={
                 "file": file,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def with_content_type(
+        self, *, file: core.File, foo: str, bar: MyObject, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        foo : str
+
+        bar : MyObject
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedFileUpload
+
+        client = AsyncSeedFileUpload(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.service.with_content_type()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "with-content-type",
+            method="POST",
+            data={
+                "foo": foo,
+            },
+            files={
+                "file": core.with_content_type(file=file, content_type="application/octet-stream"),
+                "bar": (None, json.dumps(jsonable_encoder(bar)), "application/json"),
             },
             request_options=request_options,
             omit=OMIT,

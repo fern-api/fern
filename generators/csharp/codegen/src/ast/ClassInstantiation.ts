@@ -1,4 +1,4 @@
-import { Arguments, isNamedArgument, NamedArgument, UnnamedArgument } from "./Argument";
+import { Arguments, hasNamedArgument, isNamedArgument } from "@fern-api/generator-commons";
 import { ClassReference } from "./ClassReference";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
@@ -15,7 +15,7 @@ export declare namespace ClassInstantiation {
 
 export class ClassInstantiation extends AstNode {
     public readonly classReference: ClassReference;
-    public readonly arguments_: NamedArgument[] | UnnamedArgument[];
+    public readonly arguments_: Arguments;
     private readonly forceUseConstructor: boolean;
 
     constructor({ classReference, arguments_, forceUseConstructor }: ClassInstantiation.Args) {
@@ -33,9 +33,7 @@ export class ClassInstantiation extends AstNode {
             writer.writeNode(this.classReference);
         }
 
-        const hasNamedArguments =
-            this.arguments_.length > 0 && this.arguments_[0] != null && isNamedArgument(this.arguments_[0]);
-
+        const hasNamedArguments = hasNamedArgument(this.arguments_);
         if (hasNamedArguments && !this.forceUseConstructor) {
             writer.write("{ ");
         } else {

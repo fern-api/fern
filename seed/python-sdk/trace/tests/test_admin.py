@@ -47,7 +47,9 @@ async def test_send_test_submission_update(client: SeedTrace, async_client: Asyn
     assert (
         client.admin.send_test_submission_update(
             submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-            update_time=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"),
+            update_time=datetime.datetime.fromisoformat(
+                "datetime=datetime.datetime(2024, 1, 15, 9, 30, tzinfo=TzInfo(UTC)) raw='2024-01-15T09:30:00Z'"
+            ),
             update_info=TestSubmissionUpdateInfo_Running(value="QUEUEING_SUBMISSION"),
         )  # type: ignore[func-returns-value]
         is None
@@ -56,7 +58,9 @@ async def test_send_test_submission_update(client: SeedTrace, async_client: Asyn
     assert (
         await async_client.admin.send_test_submission_update(
             submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-            update_time=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"),
+            update_time=datetime.datetime.fromisoformat(
+                "datetime=datetime.datetime(2024, 1, 15, 9, 30, tzinfo=TzInfo(UTC)) raw='2024-01-15T09:30:00Z'"
+            ),
             update_info=TestSubmissionUpdateInfo_Running(value="QUEUEING_SUBMISSION"),
         )  # type: ignore[func-returns-value]
         is None
@@ -85,7 +89,9 @@ async def test_send_workspace_submission_update(client: SeedTrace, async_client:
     assert (
         client.admin.send_workspace_submission_update(
             submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-            update_time=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"),
+            update_time=datetime.datetime.fromisoformat(
+                "datetime=datetime.datetime(2024, 1, 15, 9, 30, tzinfo=TzInfo(UTC)) raw='2024-01-15T09:30:00Z'"
+            ),
             update_info=WorkspaceSubmissionUpdateInfo_Running(value="QUEUEING_SUBMISSION"),
         )  # type: ignore[func-returns-value]
         is None
@@ -94,7 +100,9 @@ async def test_send_workspace_submission_update(client: SeedTrace, async_client:
     assert (
         await async_client.admin.send_workspace_submission_update(
             submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-            update_time=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"),
+            update_time=datetime.datetime.fromisoformat(
+                "datetime=datetime.datetime(2024, 1, 15, 9, 30, tzinfo=TzInfo(UTC)) raw='2024-01-15T09:30:00Z'"
+            ),
             update_info=WorkspaceSubmissionUpdateInfo_Running(value="QUEUEING_SUBMISSION"),
         )  # type: ignore[func-returns-value]
         is None

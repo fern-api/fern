@@ -1,6 +1,6 @@
 import { Audiences, generatorsYml } from "@fern-api/configuration";
 import { runDocker } from "@fern-api/docker-utils";
-import { AbsoluteFilePath, waitUntilPathExists } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, streamObjectToFile, waitUntilPathExists } from "@fern-api/fs-utils";
 import { ApiDefinitionSource, IntermediateRepresentation, SourceConfig } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
@@ -157,7 +157,7 @@ async function writeIrToFile({
         tmpdir: workspaceTempDir.path
     });
     const absolutePathToIr = AbsoluteFilePath.of(irFile.path);
-    await writeFile(absolutePathToIr, JSON.stringify(ir, undefined, 4));
+    await streamObjectToFile(absolutePathToIr, ir, { pretty: true });
     context.logger.debug(`Wrote IR to ${absolutePathToIr}`);
     return absolutePathToIr;
 }

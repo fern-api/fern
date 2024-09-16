@@ -11,18 +11,20 @@ export declare namespace getViolationsForRule {
     export interface Args {
         rule: Rule;
         absolutePathToWorkspace: AbsoluteFilePath;
+        cliVersion?: string;
     }
 }
 
 export async function getViolationsForRule({
     rule,
-    absolutePathToWorkspace
+    absolutePathToWorkspace,
+    cliVersion
 }: getViolationsForRule.Args): Promise<ValidationViolation[]> {
     const context = createMockTaskContext();
     const parseResult = await loadAPIWorkspace({
         absolutePathToWorkspace,
         context,
-        cliVersion: "0.0.0",
+        cliVersion: cliVersion ?? "0.0.0",
         workspaceName: undefined
     });
     if (!parseResult.didSucceed) {
