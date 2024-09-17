@@ -157,7 +157,7 @@ async function writeIrToFile({
         tmpdir: workspaceTempDir.path
     });
     const absolutePathToIr = AbsoluteFilePath.of(irFile.path);
-    await streamObjectToFile(absolutePathToIr, ir, { pretty: true });
+    await streamObjectToFile(absolutePathToIr, ir, { pretty: false });
     context.logger.debug(`Wrote IR to ${absolutePathToIr}`);
     return absolutePathToIr;
 }
