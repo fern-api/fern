@@ -62,16 +62,12 @@ async def test_get_and_return_datetime(client: SeedExhaustive, async_client: Asy
     expected_response: typing.Any = "2024-01-15T09:30:00Z"
     expected_types: typing.Any = "datetime"
     response = client.endpoints.primitive.get_and_return_datetime(
-        request=datetime.datetime.fromisoformat(
-            "datetime=datetime.datetime(2024, 1, 15, 9, 30, tzinfo=TzInfo(UTC)) raw='2024-01-15T09:30:00Z'"
-        )
+        request=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00")
     )
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.endpoints.primitive.get_and_return_datetime(
-        request=datetime.datetime.fromisoformat(
-            "datetime=datetime.datetime(2024, 1, 15, 9, 30, tzinfo=TzInfo(UTC)) raw='2024-01-15T09:30:00Z'"
-        )
+        request=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00")
     )
     validate_response(async_response, expected_response, expected_types)
 

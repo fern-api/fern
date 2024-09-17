@@ -1,4 +1,12 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.2.4
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Datetime examples are generated correctly once again.
+        The `pydantic_utilites` file is python 3.8 compatible.
+
 - version: 4.2.3
   irVersion: 53
   changelogEntry:
