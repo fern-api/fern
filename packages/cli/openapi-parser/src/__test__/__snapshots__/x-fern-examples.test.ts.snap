@@ -220,15 +220,9 @@ exports[`x-fern-examples > x-fern-examples > parse open api 1`] = `
     },
   ],
   "globalHeaders": [],
-  "groups": {},
-  "hasEndpointsMarkedInternal": false,
-  "idempotencyHeaders": [],
-  "nonRequestReferencedSchemas": [
-    "Schema1",
-    "Schema2",
-  ],
-  "schemas": {
-    "__no_namespace__": {
+  "groupedSchemas": {
+    "namespacedSchemas": {},
+    "rootSchemas": {
       "Schema1": {
         "additionalProperties": false,
         "allOf": [],
@@ -405,6 +399,13 @@ exports[`x-fern-examples > x-fern-examples > parse open api 1`] = `
       },
     },
   },
+  "groups": {},
+  "hasEndpointsMarkedInternal": false,
+  "idempotencyHeaders": [],
+  "nonRequestReferencedSchemas": [
+    "Schema1",
+    "Schema2",
+  ],
   "securitySchemes": {},
   "servers": [],
   "tags": {

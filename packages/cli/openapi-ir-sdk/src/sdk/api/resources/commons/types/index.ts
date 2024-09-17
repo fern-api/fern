@@ -21,7 +21,6 @@ export * from "./QuerySecurityScheme";
 export * from "./OauthSecurityScheme";
 export * from "./StatusCode";
 export * from "./Server";
-export * from "./NoNamespaceSentinel";
 export * from "./NamespaceId";
 export * from "./Namespace";
 export * from "./SdkGroup";

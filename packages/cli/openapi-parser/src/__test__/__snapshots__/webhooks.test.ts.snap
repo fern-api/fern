@@ -8,12 +8,9 @@ exports[`open api parser > webhooks > parse open api 1`] = `
   "description": null,
   "endpoints": [],
   "globalHeaders": [],
-  "groups": {},
-  "hasEndpointsMarkedInternal": false,
-  "idempotencyHeaders": [],
-  "nonRequestReferencedSchemas": [],
-  "schemas": {
-    "__no_namespace__": {
+  "groupedSchemas": {
+    "namespacedSchemas": {},
+    "rootSchemas": {
       "Pet": {
         "additionalProperties": false,
         "allOf": [],
@@ -114,6 +111,10 @@ exports[`open api parser > webhooks > parse open api 1`] = `
       },
     },
   },
+  "groups": {},
+  "hasEndpointsMarkedInternal": false,
+  "idempotencyHeaders": [],
+  "nonRequestReferencedSchemas": [],
   "securitySchemes": {},
   "servers": [],
   "tags": {

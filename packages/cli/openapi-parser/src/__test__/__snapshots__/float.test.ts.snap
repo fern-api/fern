@@ -117,14 +117,9 @@ exports[`float > float > parse open api 1`] = `
     },
   ],
   "globalHeaders": [],
-  "groups": {},
-  "hasEndpointsMarkedInternal": false,
-  "idempotencyHeaders": [],
-  "nonRequestReferencedSchemas": [
-    "Response",
-  ],
-  "schemas": {
-    "__no_namespace__": {
+  "groupedSchemas": {
+    "namespacedSchemas": {},
+    "rootSchemas": {
       "Request": {
         "additionalProperties": false,
         "allOf": [],
@@ -252,6 +247,12 @@ exports[`float > float > parse open api 1`] = `
       },
     },
   },
+  "groups": {},
+  "hasEndpointsMarkedInternal": false,
+  "idempotencyHeaders": [],
+  "nonRequestReferencedSchemas": [
+    "Response",
+  ],
   "securitySchemes": {},
   "servers": [],
   "tags": {

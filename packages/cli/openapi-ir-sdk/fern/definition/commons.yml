@@ -123,14 +123,8 @@ types:
       url: string
       audiences: optional<list<string>>
 
-  NoNamespaceSentinel:
-    type: literal<"__no_namespace__">
-
   NamespaceId:
-    discriminated: false
-    union:
-      - NoNamespaceSentinel
-      - string
+    type: string
 
   Namespace:
     properties:

@@ -2043,25 +2043,9 @@ exports[`open api parser > x-fern-streaming > parse open api 1`] = `
     },
   ],
   "globalHeaders": [],
-  "groups": {},
-  "hasEndpointsMarkedInternal": false,
-  "idempotencyHeaders": [],
-  "nonRequestReferencedSchemas": [
-    "Function",
-    "ChatMessage",
-    "ChatCompletionRequestExt",
-    "ChatCompletionResponseFormat",
-    "ChatCompletionChunk",
-    "ChatCompletionResponse",
-    "FinishReason",
-    "ChatCompletionChunkChoice",
-    "ChatCompletionDelta",
-    "ChatCompletionRequestExtVLLM",
-    "ChatCompletionChoice",
-    "UsageStats",
-  ],
-  "schemas": {
-    "__no_namespace__": {
+  "groupedSchemas": {
+    "namespacedSchemas": {},
+    "rootSchemas": {
       "ChatCompletionChoice": {
         "additionalProperties": false,
         "allOf": [],
@@ -3434,6 +3418,23 @@ exports[`open api parser > x-fern-streaming > parse open api 1`] = `
       },
     },
   },
+  "groups": {},
+  "hasEndpointsMarkedInternal": false,
+  "idempotencyHeaders": [],
+  "nonRequestReferencedSchemas": [
+    "Function",
+    "ChatMessage",
+    "ChatCompletionRequestExt",
+    "ChatCompletionResponseFormat",
+    "ChatCompletionChunk",
+    "ChatCompletionResponse",
+    "FinishReason",
+    "ChatCompletionChunkChoice",
+    "ChatCompletionDelta",
+    "ChatCompletionRequestExtVLLM",
+    "ChatCompletionChoice",
+    "UsageStats",
+  ],
   "securitySchemes": {},
   "servers": [
     {

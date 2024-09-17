@@ -129,12 +129,9 @@ exports[`x-fern-version > x-fern-version > parse open api 1`] = `
     },
   ],
   "globalHeaders": [],
-  "groups": {},
-  "hasEndpointsMarkedInternal": false,
-  "idempotencyHeaders": [],
-  "nonRequestReferencedSchemas": [],
-  "schemas": {
-    "__no_namespace__": {
+  "groupedSchemas": {
+    "namespacedSchemas": {},
+    "rootSchemas": {
       "Completion": {
         "additionalProperties": false,
         "allOf": [],
@@ -314,6 +311,10 @@ exports[`x-fern-version > x-fern-version > parse open api 1`] = `
       },
     },
   },
+  "groups": {},
+  "hasEndpointsMarkedInternal": false,
+  "idempotencyHeaders": [],
+  "nonRequestReferencedSchemas": [],
   "securitySchemes": {
     "access_token": {
       "tokenEnvVar": null,

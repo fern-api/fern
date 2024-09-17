@@ -1102,17 +1102,9 @@ exports[`open api parser > streaming > parse open api 1`] = `
     },
   ],
   "globalHeaders": [],
-  "groups": {},
-  "hasEndpointsMarkedInternal": false,
-  "idempotencyHeaders": [],
-  "nonRequestReferencedSchemas": [
-    "BaseStreamUser",
-    "BaseUser",
-    "StreamUser",
-    "User",
-  ],
-  "schemas": {
-    "__no_namespace__": {
+  "groupedSchemas": {
+    "namespacedSchemas": {},
+    "rootSchemas": {
       "BaseStreamUser": {
         "additionalProperties": false,
         "allOf": [],
@@ -1451,6 +1443,15 @@ exports[`open api parser > streaming > parse open api 1`] = `
       },
     },
   },
+  "groups": {},
+  "hasEndpointsMarkedInternal": false,
+  "idempotencyHeaders": [],
+  "nonRequestReferencedSchemas": [
+    "BaseStreamUser",
+    "BaseUser",
+    "StreamUser",
+    "User",
+  ],
   "securitySchemes": {},
   "servers": [],
   "tags": {

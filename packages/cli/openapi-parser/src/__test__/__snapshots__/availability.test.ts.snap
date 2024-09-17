@@ -1063,16 +1063,9 @@ exports[`open api parser > availability > parse open api 1`] = `
     },
   ],
   "globalHeaders": [],
-  "groups": {},
-  "hasEndpointsMarkedInternal": false,
-  "idempotencyHeaders": [],
-  "nonRequestReferencedSchemas": [
-    "DeprecatedParam",
-    "WholeDeprecatedSettings",
-    "NotDeprecatedSettings",
-  ],
-  "schemas": {
-    "__no_namespace__": {
+  "groupedSchemas": {
+    "namespacedSchemas": {},
+    "rootSchemas": {
       "DeprecatedParam": {
         "availability": "Deprecated",
         "description": null,
@@ -1266,6 +1259,14 @@ exports[`open api parser > availability > parse open api 1`] = `
       },
     },
   },
+  "groups": {},
+  "hasEndpointsMarkedInternal": false,
+  "idempotencyHeaders": [],
+  "nonRequestReferencedSchemas": [
+    "DeprecatedParam",
+    "WholeDeprecatedSettings",
+    "NotDeprecatedSettings",
+  ],
   "securitySchemes": {},
   "servers": [],
   "tags": {

@@ -470,23 +470,9 @@ exports[`polytomic > polytomic > parse open api 1`] = `
       "schema": null,
     },
   ],
-  "groups": {},
-  "hasEndpointsMarkedInternal": false,
-  "idempotencyHeaders": [],
-  "nonRequestReferencedSchemas": [
-    "ApiError",
-    "RestErrResponse",
-    "V2CreateConnectionResponseEnvelope",
-    "BulkSelectiveMode",
-    "BulkSchedule",
-    "BulkItemizedSchedule",
-    "ScheduleFrequency",
-    "BulkMultiScheduleConfiguration",
-    "V2CreateConnectionResponseSchema",
-    "V2ConnectionTypeSchema",
-  ],
-  "schemas": {
-    "__no_namespace__": {
+  "groupedSchemas": {
+    "namespacedSchemas": {},
+    "rootSchemas": {
       "ApiError": {
         "additionalProperties": false,
         "allOf": [],
@@ -2203,6 +2189,21 @@ exports[`polytomic > polytomic > parse open api 1`] = `
       },
     },
   },
+  "groups": {},
+  "hasEndpointsMarkedInternal": false,
+  "idempotencyHeaders": [],
+  "nonRequestReferencedSchemas": [
+    "ApiError",
+    "RestErrResponse",
+    "V2CreateConnectionResponseEnvelope",
+    "BulkSelectiveMode",
+    "BulkSchedule",
+    "BulkItemizedSchedule",
+    "ScheduleFrequency",
+    "BulkMultiScheduleConfiguration",
+    "V2CreateConnectionResponseSchema",
+    "V2ConnectionTypeSchema",
+  ],
   "securitySchemes": {
     "APIKey": {
       "tokenEnvVar": null,

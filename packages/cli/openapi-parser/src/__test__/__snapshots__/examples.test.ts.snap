@@ -192,14 +192,9 @@ exports[`examples > examples > parse open api 1`] = `
     },
   ],
   "globalHeaders": [],
-  "groups": {},
-  "hasEndpointsMarkedInternal": false,
-  "idempotencyHeaders": [],
-  "nonRequestReferencedSchemas": [
-    "PropertySearchResponse",
-  ],
-  "schemas": {
-    "__no_namespace__": {
+  "groupedSchemas": {
+    "namespacedSchemas": {},
+    "rootSchemas": {
       "PropertySearchResponse": {
         "additionalProperties": false,
         "allOf": [],
@@ -641,6 +636,12 @@ It is a very simple property object that can then be used to query the /properti
       },
     },
   },
+  "groups": {},
+  "hasEndpointsMarkedInternal": false,
+  "idempotencyHeaders": [],
+  "nonRequestReferencedSchemas": [
+    "PropertySearchResponse",
+  ],
   "securitySchemes": {},
   "servers": [],
   "tags": {

@@ -8,15 +8,9 @@ exports[`x-fern-encoding > x-fern-encoding > parse open api 1`] = `
   "description": null,
   "endpoints": [],
   "globalHeaders": [],
-  "groups": {},
-  "hasEndpointsMarkedInternal": false,
-  "idempotencyHeaders": [],
-  "nonRequestReferencedSchemas": [
-    "MetadataValue",
-    "Value",
-  ],
-  "schemas": {
-    "__no_namespace__": {
+  "groupedSchemas": {
+    "namespacedSchemas": {},
+    "rootSchemas": {
       "Metadata": {
         "availability": null,
         "description": null,
@@ -164,6 +158,13 @@ exports[`x-fern-encoding > x-fern-encoding > parse open api 1`] = `
       },
     },
   },
+  "groups": {},
+  "hasEndpointsMarkedInternal": false,
+  "idempotencyHeaders": [],
+  "nonRequestReferencedSchemas": [
+    "MetadataValue",
+    "Value",
+  ],
   "securitySchemes": {},
   "servers": [],
   "tags": {

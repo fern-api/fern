@@ -151,12 +151,9 @@ exports[`x-fern-audiences > x-fern-audiences > parse open api 1`] = `
     },
   ],
   "globalHeaders": [],
-  "groups": {},
-  "hasEndpointsMarkedInternal": false,
-  "idempotencyHeaders": [],
-  "nonRequestReferencedSchemas": [],
-  "schemas": {
-    "__no_namespace__": {
+  "groupedSchemas": {
+    "namespacedSchemas": {},
+    "rootSchemas": {
       "BaseUser": {
         "additionalProperties": false,
         "allOf": [],
@@ -213,6 +210,10 @@ exports[`x-fern-audiences > x-fern-audiences > parse open api 1`] = `
       },
     },
   },
+  "groups": {},
+  "hasEndpointsMarkedInternal": false,
+  "idempotencyHeaders": [],
+  "nonRequestReferencedSchemas": [],
   "securitySchemes": {},
   "servers": [
     {

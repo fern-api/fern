@@ -107,15 +107,9 @@ exports[`non alphanumeric characters > non-alphanumeric-characters > parse open 
     },
   ],
   "globalHeaders": [],
-  "groups": {},
-  "hasEndpointsMarkedInternal": false,
-  "idempotencyHeaders": [],
-  "nonRequestReferencedSchemas": [
-    "Settings",
-    "DocumentIDSeparators",
-  ],
-  "schemas": {
-    "__no_namespace__": {
+  "groupedSchemas": {
+    "namespacedSchemas": {},
+    "rootSchemas": {
       "DocumentIDSeparators": {
         "availability": null,
         "default": null,
@@ -248,6 +242,13 @@ exports[`non alphanumeric characters > non-alphanumeric-characters > parse open 
       },
     },
   },
+  "groups": {},
+  "hasEndpointsMarkedInternal": false,
+  "idempotencyHeaders": [],
+  "nonRequestReferencedSchemas": [
+    "Settings",
+    "DocumentIDSeparators",
+  ],
   "securitySchemes": {},
   "servers": [],
   "tags": {

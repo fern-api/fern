@@ -4058,12 +4058,9 @@ exports[`open api parser > dopt > parse open api 1`] = `
     },
   ],
   "globalHeaders": [],
-  "groups": {},
-  "hasEndpointsMarkedInternal": false,
-  "idempotencyHeaders": [],
-  "nonRequestReferencedSchemas": [],
-  "schemas": {
-    "__no_namespace__": {
+  "groupedSchemas": {
+    "namespacedSchemas": {},
+    "rootSchemas": {
       "BadRequestErrorResponseBody": {
         "additionalProperties": false,
         "allOf": [],
@@ -5174,6 +5171,10 @@ exports[`open api parser > dopt > parse open api 1`] = `
       },
     },
   },
+  "groups": {},
+  "hasEndpointsMarkedInternal": false,
+  "idempotencyHeaders": [],
+  "nonRequestReferencedSchemas": [],
   "securitySchemes": {
     "ApiKeyAuth": {
       "headerEnvVar": null,

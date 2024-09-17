@@ -571,14 +571,9 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
     },
   ],
   "globalHeaders": [],
-  "groups": {},
-  "hasEndpointsMarkedInternal": false,
-  "idempotencyHeaders": [],
-  "nonRequestReferencedSchemas": [
-    "request-model",
-  ],
-  "schemas": {
-    "__no_namespace__": {
+  "groupedSchemas": {
+    "namespacedSchemas": {},
+    "rootSchemas": {
       "SpeechBody": {
         "additionalProperties": false,
         "allOf": [],
@@ -936,6 +931,12 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
       },
     },
   },
+  "groups": {},
+  "hasEndpointsMarkedInternal": false,
+  "idempotencyHeaders": [],
+  "nonRequestReferencedSchemas": [
+    "request-model",
+  ],
   "securitySchemes": {},
   "servers": [],
   "tags": {

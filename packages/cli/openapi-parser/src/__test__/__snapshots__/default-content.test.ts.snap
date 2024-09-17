@@ -92,15 +92,16 @@ exports[`open api parser > default-content > parse open api 1`] = `
     },
   ],
   "globalHeaders": [],
+  "groupedSchemas": {
+    "namespacedSchemas": {},
+    "rootSchemas": {},
+  },
   "groups": {},
   "hasEndpointsMarkedInternal": false,
   "idempotencyHeaders": [],
   "nonRequestReferencedSchemas": [
     "GenerateContentResponse",
   ],
-  "schemas": {
-    "__no_namespace__": {},
-  },
   "securitySchemes": {},
   "servers": [
     {

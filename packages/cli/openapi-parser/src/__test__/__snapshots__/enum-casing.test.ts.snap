@@ -106,14 +106,9 @@ exports[`examples > enum-casing > parse open api 1`] = `
     },
   ],
   "globalHeaders": [],
-  "groups": {},
-  "hasEndpointsMarkedInternal": false,
-  "idempotencyHeaders": [],
-  "nonRequestReferencedSchemas": [
-    "ExampleResponse",
-  ],
-  "schemas": {
-    "__no_namespace__": {
+  "groupedSchemas": {
+    "namespacedSchemas": {},
+    "rootSchemas": {
       "ExampleResponse": {
         "additionalProperties": false,
         "allOf": [],
@@ -329,6 +324,12 @@ exports[`examples > enum-casing > parse open api 1`] = `
       },
     },
   },
+  "groups": {},
+  "hasEndpointsMarkedInternal": false,
+  "idempotencyHeaders": [],
+  "nonRequestReferencedSchemas": [
+    "ExampleResponse",
+  ],
   "securitySchemes": {},
   "servers": [],
   "tags": {

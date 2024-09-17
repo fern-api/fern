@@ -370,16 +370,9 @@ exports[`x-fern-pagination > x-fern-pagination > parse open api 1`] = `
     },
   ],
   "globalHeaders": [],
-  "groups": {},
-  "hasEndpointsMarkedInternal": false,
-  "idempotencyHeaders": [],
-  "nonRequestReferencedSchemas": [
-    "UsersResponse",
-    "Meta",
-    "User",
-  ],
-  "schemas": {
-    "__no_namespace__": {
+  "groupedSchemas": {
+    "namespacedSchemas": {},
+    "rootSchemas": {
       "Meta": {
         "additionalProperties": false,
         "allOf": [],
@@ -674,6 +667,14 @@ exports[`x-fern-pagination > x-fern-pagination > parse open api 1`] = `
       },
     },
   },
+  "groups": {},
+  "hasEndpointsMarkedInternal": false,
+  "idempotencyHeaders": [],
+  "nonRequestReferencedSchemas": [
+    "UsersResponse",
+    "Meta",
+    "User",
+  ],
   "securitySchemes": {},
   "servers": [],
   "tags": {

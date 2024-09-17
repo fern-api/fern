@@ -121,12 +121,9 @@ exports[`x-fern-token-variable-name > x-fern-token-variable-name > parse open ap
     },
   ],
   "globalHeaders": [],
-  "groups": {},
-  "hasEndpointsMarkedInternal": false,
-  "idempotencyHeaders": [],
-  "nonRequestReferencedSchemas": [],
-  "schemas": {
-    "__no_namespace__": {
+  "groupedSchemas": {
+    "namespacedSchemas": {},
+    "rootSchemas": {
       "Completion": {
         "additionalProperties": false,
         "allOf": [],
@@ -306,6 +303,10 @@ exports[`x-fern-token-variable-name > x-fern-token-variable-name > parse open ap
       },
     },
   },
+  "groups": {},
+  "hasEndpointsMarkedInternal": false,
+  "idempotencyHeaders": [],
+  "nonRequestReferencedSchemas": [],
   "securitySchemes": {
     "access_token": {
       "tokenEnvVar": null,

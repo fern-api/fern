@@ -5,11 +5,10 @@
 import * as serializers from "../../../index";
 import * as FernOpenapiIr from "../../../../api/index";
 import * as core from "../../../../core";
-import { NoNamespaceSentinel } from "./NoNamespaceSentinel";
 
 export const NamespaceId: core.serialization.Schema<serializers.NamespaceId.Raw, FernOpenapiIr.NamespaceId> =
-    core.serialization.undiscriminatedUnion([NoNamespaceSentinel, core.serialization.string()]);
+    core.serialization.string();
 
 export declare namespace NamespaceId {
-    type Raw = NoNamespaceSentinel.Raw | string;
+    type Raw = string;
 }

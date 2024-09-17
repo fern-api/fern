@@ -1,12 +1,10 @@
 import {
     HeaderWithExample,
-    NamespaceId,
-    NoNamespaceSentinel,
     PathParameterWithExample,
     PrimitiveSchemaValueWithExample,
     QueryParameterWithExample,
-    Schema,
     SchemaId,
+    Schemas,
     SchemaWithExample,
     Source,
     WebsocketChannel,
@@ -21,6 +19,7 @@ import { convertSchema } from "../schema/convertSchemas";
 import { convertUndiscriminatedOneOf, UndiscriminatedOneOfPrefix } from "../schema/convertUndiscriminatedOneOf";
 import { convertSchemaWithExampleToSchema } from "../schema/utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../schema/utils/isReferenceObject";
+import { getSchemas } from "../utils/getSchemas";
 import { AsyncAPIV2ParserContext } from "./AsyncAPIParserContext";
 import { ExampleWebsocketSessionFactory } from "./ExampleWebsocketSessionFactory";
 import { FernAsyncAPIExtension } from "./fernExtensions";
@@ -29,7 +28,7 @@ import { ParseAsyncAPIOptions } from "./options";
 import { AsyncAPIV2 } from "./v2";
 
 export interface AsyncAPIIntermediateRepresentation {
-    schemas: Record<NamespaceId, Record<SchemaId, Schema>>;
+    groupedSchemas: Schemas;
     channel: WebsocketChannel | undefined;
     basePath: string | undefined;
 }
@@ -262,15 +261,8 @@ export function parseAsyncAPI({
         }
     }
 
-    // TODO: It'd be better if I could reference the sentinel directly, but cannot as it's just a type
-    const NoNamespaceSentinelValue: NoNamespaceSentinel = "__no_namespace__";
-    const namespacedSchemas: Record<NamespaceId, Record<string, Schema>> = {
-        [namespace ?? NoNamespaceSentinelValue]: Object.fromEntries(
-            Object.entries(schemas).map(([id, schema]) => [id, convertSchemaWithExampleToSchema(schema)])
-        )
-    };
     return {
-        schemas: namespacedSchemas,
+        groupedSchemas: getSchemas(namespace, schemas),
         channel: parsedChannel,
         basePath: getExtension<string | undefined>(document, FernAsyncAPIExtension.BASE_PATH)
     };

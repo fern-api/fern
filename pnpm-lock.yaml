@@ -3300,6 +3300,8 @@ importers:
 
   packages/cli/cli/dist/dev: {}
 
+  packages/cli/cli/dist/prod: {}
+
   packages/cli/configuration:
     dependencies:
       '@fern-api/core-utils':

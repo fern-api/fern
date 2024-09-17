@@ -8,12 +8,9 @@ exports[`x-fern-type > x-fern-type > parse open api 1`] = `
   "description": null,
   "endpoints": [],
   "globalHeaders": [],
-  "groups": {},
-  "hasEndpointsMarkedInternal": false,
-  "idempotencyHeaders": [],
-  "nonRequestReferencedSchemas": [],
-  "schemas": {
-    "__no_namespace__": {
+  "groupedSchemas": {
+    "namespacedSchemas": {},
+    "rootSchemas": {
       "BaseUser": {
         "availability": null,
         "description": null,
@@ -59,6 +56,10 @@ exports[`x-fern-type > x-fern-type > parse open api 1`] = `
       },
     },
   },
+  "groups": {},
+  "hasEndpointsMarkedInternal": false,
+  "idempotencyHeaders": [],
+  "nonRequestReferencedSchemas": [],
   "securitySchemes": {},
   "servers": [],
   "tags": {

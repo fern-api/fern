@@ -48,13 +48,14 @@ exports[`open api parser > application-pdf-content-type > parse open api 1`] = `
     },
   ],
   "globalHeaders": [],
+  "groupedSchemas": {
+    "namespacedSchemas": {},
+    "rootSchemas": {},
+  },
   "groups": {},
   "hasEndpointsMarkedInternal": false,
   "idempotencyHeaders": [],
   "nonRequestReferencedSchemas": [],
-  "schemas": {
-    "__no_namespace__": {},
-  },
   "securitySchemes": {},
   "servers": [],
   "tags": {

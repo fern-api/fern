@@ -8,12 +8,9 @@ exports[`open api parser > defaults > parse open api 1`] = `
   "description": null,
   "endpoints": [],
   "globalHeaders": [],
-  "groups": {},
-  "hasEndpointsMarkedInternal": false,
-  "idempotencyHeaders": [],
-  "nonRequestReferencedSchemas": [],
-  "schemas": {
-    "__no_namespace__": {
+  "groupedSchemas": {
+    "namespacedSchemas": {},
+    "rootSchemas": {
       "jointOwnerInvitationFields": {
         "additionalProperties": false,
         "allOf": [],
@@ -126,6 +123,10 @@ exports[`open api parser > defaults > parse open api 1`] = `
       },
     },
   },
+  "groups": {},
+  "hasEndpointsMarkedInternal": false,
+  "idempotencyHeaders": [],
+  "nonRequestReferencedSchemas": [],
   "securitySchemes": {},
   "servers": [
     {

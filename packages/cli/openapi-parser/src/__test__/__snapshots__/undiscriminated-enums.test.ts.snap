@@ -61,16 +61,9 @@ exports[`open api parser > undiscriminated-enums > parse open api 1`] = `
     },
   ],
   "globalHeaders": [],
-  "groups": {},
-  "hasEndpointsMarkedInternal": false,
-  "idempotencyHeaders": [],
-  "nonRequestReferencedSchemas": [
-    "ExampleResponse",
-    "GreetingEnum",
-    "FarewellEnum",
-  ],
-  "schemas": {
-    "__no_namespace__": {
+  "groupedSchemas": {
+    "namespacedSchemas": {},
+    "rootSchemas": {
       "Conversation": {
         "type": "oneOf",
         "value": {
@@ -310,6 +303,14 @@ exports[`open api parser > undiscriminated-enums > parse open api 1`] = `
       },
     },
   },
+  "groups": {},
+  "hasEndpointsMarkedInternal": false,
+  "idempotencyHeaders": [],
+  "nonRequestReferencedSchemas": [
+    "ExampleResponse",
+    "GreetingEnum",
+    "FarewellEnum",
+  ],
   "securitySchemes": {},
   "servers": [],
   "tags": {

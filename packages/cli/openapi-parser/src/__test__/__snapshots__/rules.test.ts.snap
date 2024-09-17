@@ -169,14 +169,9 @@ exports[`rules > rules > parse open api 1`] = `
     },
   ],
   "globalHeaders": [],
-  "groups": {},
-  "hasEndpointsMarkedInternal": false,
-  "idempotencyHeaders": [],
-  "nonRequestReferencedSchemas": [
-    "Schema",
-  ],
-  "schemas": {
-    "__no_namespace__": {
+  "groupedSchemas": {
+    "namespacedSchemas": {},
+    "rootSchemas": {
       "Schema": {
         "additionalProperties": false,
         "allOf": [],
@@ -301,6 +296,12 @@ exports[`rules > rules > parse open api 1`] = `
       },
     },
   },
+  "groups": {},
+  "hasEndpointsMarkedInternal": false,
+  "idempotencyHeaders": [],
+  "nonRequestReferencedSchemas": [
+    "Schema",
+  ],
   "securitySchemes": {},
   "servers": [],
   "tags": {
