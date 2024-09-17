@@ -95,6 +95,8 @@ components:
           type: string
         tag:
           type: string
+        messages:
+          $ref: './V2ChatMessages.yaml'
     Pets:
       type: array
       maxItems: 100

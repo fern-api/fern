@@ -1,5 +1,5 @@
 imports:
-  root: neopets/__package__.yml
+  root: __package__.yml
 service:
   auth: false
   base-path: ''
@@ -24,6 +24,8 @@ service:
               - id: 1000000
                 name: name
                 tag: tag
+                messages:
+                  - key: value
     createPets:
       path: /pets
       method: POST
@@ -51,5 +53,7 @@ service:
               id: 1000000
               name: name
               tag: tag
+              messages:
+                - key: value
   source:
     openapi: openapi/petstore/openapi.yml

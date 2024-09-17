@@ -4,7 +4,7 @@
 
 import * as FernOpenapiIr from "../../../index";
 
-export interface Webhook extends FernOpenapiIr.WithDescription, FernOpenapiIr.WithSource {
+export interface Webhook extends FernOpenapiIr.WithDescription, FernOpenapiIr.WithSource, FernOpenapiIr.WithNamespace {
     sdkName: FernOpenapiIr.EndpointSdkName | undefined;
     method: FernOpenapiIr.WebhookHttpMethod;
     summary: string | undefined;

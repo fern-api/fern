@@ -52,9 +52,12 @@ export class OpenApiIrConverterContext {
         this.authOverrides = authOverrides;
     }
 
-    public getSchema(id: SchemaId): Schema | undefined {
-        const schema = this.ir.schemas[id];
-        return schema;
+    public getSchema(id: SchemaId, namespace: string | undefined): Schema | undefined {
+        if (namespace == null) {
+            return this.ir.groupedSchemas.rootSchemas[id];
+        }
+
+        return this.ir.groupedSchemas.namespacedSchemas[namespace]?.[id];
     }
 
     /**
