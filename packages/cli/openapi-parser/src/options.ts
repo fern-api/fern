@@ -9,7 +9,7 @@ export interface ParseOpenAPIOptions {
     useTitlesAsName: boolean;
     /* The audiences that the OpenAPI must be filtered down into */
     audiences: string[] | undefined;
-    /* Whether or not to make additional proeprties optional */
+    /* Whether or not to make additional property values optional */
     optionalAdditionalProperties: boolean;
 }
 

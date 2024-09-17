@@ -40,7 +40,7 @@ export declare namespace OSSWorkspace {
          */
         detectGlobalHeaders?: boolean;
         /*
-         * Whether or not to let additional properties (maps) in OpenAPI come through as
+         * Whether or not to let additional property values in OpenAPI come through as
          * optional.
          */
         optionalAdditionalProperties?: boolean;
