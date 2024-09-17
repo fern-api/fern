@@ -1,5 +1,5 @@
 import path from "path";
-import { convertToOsPath } from "./convertToOsPath";
+import { convertToOsPath } from "./osPathConverter";
 
 export type AbsoluteFilePath = string & {
     __AbsoluteFilePath: void;
