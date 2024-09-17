@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        Make sure to check for optionality when parsing stdout and stderr in CLI. This 
+        removes the error: `Cannot read properties of undefined (reading 'includes')`. 
+      type: fix
+  irVersion: 53
+  version: 0.42.1
+
+- changelogEntry:
+    - summary: |
         If you merge multiple OpenAPI specs with namespaces, `fern check` will no longer 
         complain about duplicate schema names across namespaces. 
         In the example below, both OpenAPI specs can have duplicative schema names and 
