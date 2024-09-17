@@ -22,25 +22,11 @@ export const PrimitiveSchemaWithExample: core.serialization.ObjectSchema<
     .extend(WithDescription)
     .extend(WithName)
     .extend(WithSdkGroupName)
-<<<<<<< HEAD
-    .extend(WithSchemaId)
     .extend(WithAvailability)
     .extend(WithTitle);
 
 export declare namespace PrimitiveSchemaWithExample {
-    interface Raw
-        extends WithDescription.Raw,
-            WithName.Raw,
-            WithSdkGroupName.Raw,
-            WithSchemaId.Raw,
-            WithAvailability.Raw,
-            WithTitle.Raw {
-=======
-    .extend(WithAvailability);
-
-export declare namespace PrimitiveSchemaWithExample {
-    interface Raw extends WithDescription.Raw, WithName.Raw, WithSdkGroupName.Raw, WithAvailability.Raw {
->>>>>>> cafb0600e0 (not fully working)
+    interface Raw extends WithDescription.Raw, WithName.Raw, WithSdkGroupName.Raw, WithAvailability.Raw, WithTitle.Raw {
         schema: PrimitiveSchemaValueWithExample.Raw;
     }
 }

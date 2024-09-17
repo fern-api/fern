@@ -34,21 +34,10 @@ exports[`x-fern-type > x-fern-type > parse open api 1`] = `
             "pattern": null,
             "type": "string",
           },
+          "title": null,
         },
-<<<<<<< HEAD
-        "title": null,
-      },
-      "nameOverride": null,
-      "title": null,
-      "type": "map",
-      "value": {
-        "availability": null,
-        "description": null,
-        "generatedName": "BaseUser",
-        "groupName": null,
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
         "nameOverride": null,
+        "title": null,
         "type": "map",
         "value": {
           "availability": null,
@@ -64,13 +53,9 @@ exports[`x-fern-type > x-fern-type > parse open api 1`] = `
             "pattern": null,
             "type": "string",
           },
+          "title": null,
           "type": "primitive",
         },
-<<<<<<< HEAD
-        "title": null,
-        "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
       },
     },
   },

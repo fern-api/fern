@@ -25,17 +25,7 @@ export const NullableSchema: core.serialization.ObjectSchema<
     .extend(WithTitle);
 
 export declare namespace NullableSchema {
-<<<<<<< HEAD
-    interface Raw
-        extends WithDescription.Raw,
-            WithName.Raw,
-            WithSchemaId.Raw,
-            WithSdkGroupName.Raw,
-            WithAvailability.Raw,
-            WithTitle.Raw {
-=======
-    interface Raw extends WithDescription.Raw, WithName.Raw, WithSdkGroupName.Raw, WithAvailability.Raw {
->>>>>>> cafb0600e0 (not fully working)
+    interface Raw extends WithDescription.Raw, WithName.Raw, WithSdkGroupName.Raw, WithAvailability.Raw, WithTitle.Raw {
         value: serializers.Schema.Raw;
     }
 }

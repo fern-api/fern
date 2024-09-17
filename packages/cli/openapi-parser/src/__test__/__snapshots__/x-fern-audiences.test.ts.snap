@@ -176,18 +176,13 @@ exports[`x-fern-audiences > x-fern-audiences > parse open api 1`] = `
             "generatedName": "baseUserId",
             "key": "id",
             "nameOverride": null,
-<<<<<<< HEAD
-            "title": null,
-            "type": "optional",
-            "value": {
-=======
             "schema": {
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
               "generatedName": "baseUserId",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -203,13 +198,9 @@ exports[`x-fern-audiences > x-fern-audiences > parse open api 1`] = `
                   "pattern": null,
                   "type": "string",
                 },
+                "title": null,
                 "type": "primitive",
               },
-<<<<<<< HEAD
-              "title": null,
-              "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
         ],
@@ -217,13 +208,9 @@ exports[`x-fern-audiences > x-fern-audiences > parse open api 1`] = `
           "file": "x-fern-audiences/openapi.yml",
           "type": "openapi",
         },
+        "title": null,
         "type": "object",
       },
-<<<<<<< HEAD
-      "title": null,
-      "type": "object",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
     },
   },
   "securitySchemes": {},

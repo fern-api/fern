@@ -268,14 +268,9 @@ export function convertSchemaObject(
             return SchemaWithExample.nullable({
                 nameOverride,
                 generatedName,
-<<<<<<< HEAD
                 title,
-                value: convertSchemaObject({
-                    schema: {
-=======
                 value: convertSchemaObject(
                     {
->>>>>>> cafb0600e0 (not fully working)
                         ...schema,
                         type: secondElement as OpenAPIV3.NonArraySchemaObjectType
                     },
@@ -297,14 +292,9 @@ export function convertSchemaObject(
             return SchemaWithExample.nullable({
                 nameOverride,
                 generatedName,
-<<<<<<< HEAD
                 title,
-                value: convertSchemaObject({
-                    schema: {
-=======
                 value: convertSchemaObject(
                     {
->>>>>>> cafb0600e0 (not fully working)
                         ...schema,
                         type: firstElement as OpenAPIV3.NonArraySchemaObjectType
                     },
@@ -1035,6 +1025,7 @@ function isValidAllOfObject(allOf: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaO
 
 export function wrapLiteral({
     literal,
+    title,
     wrapAsNullable,
     groupName,
     description,
@@ -1043,6 +1034,7 @@ export function wrapLiteral({
     generatedName
 }: {
     literal: LiteralSchemaValue;
+    title: string | undefined;
     wrapAsNullable: boolean;
     description: string | undefined;
     availability: Availability | undefined;

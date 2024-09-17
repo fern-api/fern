@@ -1130,18 +1130,13 @@ exports[`open api parser > streaming > parse open api 1`] = `
             "generatedName": "baseStreamUserId",
             "key": "id",
             "nameOverride": null,
-<<<<<<< HEAD
-            "title": null,
-            "type": "optional",
-            "value": {
-=======
             "schema": {
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
               "generatedName": "baseStreamUserId",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -1157,13 +1152,9 @@ exports[`open api parser > streaming > parse open api 1`] = `
                   "pattern": null,
                   "type": "string",
                 },
+                "title": null,
                 "type": "primitive",
               },
-<<<<<<< HEAD
-              "title": null,
-              "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
         ],
@@ -1171,31 +1162,9 @@ exports[`open api parser > streaming > parse open api 1`] = `
           "file": "streaming/openapi.yml",
           "type": "openapi",
         },
+        "title": null,
         "type": "object",
       },
-<<<<<<< HEAD
-      "title": null,
-      "type": "object",
-    },
-    "BaseUser": {
-      "additionalProperties": false,
-      "allOf": [],
-      "allOfPropertyConflicts": [],
-      "availability": null,
-      "description": null,
-      "generatedName": "BaseUser",
-      "groupName": [],
-      "nameOverride": null,
-      "properties": [
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "baseUserId",
-          "key": "id",
-          "nameOverride": null,
-          "schema": {
-=======
       "BaseUser": {
         "additionalProperties": false,
         "allOf": [],
@@ -1208,24 +1177,18 @@ exports[`open api parser > streaming > parse open api 1`] = `
         "properties": [
           {
             "audiences": [],
->>>>>>> 30dc3ebe9d (working, need to polish)
             "availability": null,
             "conflict": {},
             "generatedName": "baseUserId",
             "key": "id",
             "nameOverride": null,
-<<<<<<< HEAD
-            "title": null,
-            "type": "optional",
-            "value": {
-=======
             "schema": {
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
               "generatedName": "baseUserId",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -1241,13 +1204,9 @@ exports[`open api parser > streaming > parse open api 1`] = `
                   "pattern": null,
                   "type": "string",
                 },
+                "title": null,
                 "type": "primitive",
               },
-<<<<<<< HEAD
-              "title": null,
-              "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
         ],
@@ -1255,31 +1214,9 @@ exports[`open api parser > streaming > parse open api 1`] = `
           "file": "streaming/openapi.yml",
           "type": "openapi",
         },
+        "title": null,
         "type": "object",
       },
-<<<<<<< HEAD
-      "title": null,
-      "type": "object",
-    },
-    "StreamUser": {
-      "additionalProperties": false,
-      "allOf": [],
-      "allOfPropertyConflicts": [],
-      "availability": null,
-      "description": null,
-      "generatedName": "StreamUser",
-      "groupName": [],
-      "nameOverride": null,
-      "properties": [
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "streamUserId",
-          "key": "id",
-          "nameOverride": null,
-          "schema": {
-=======
       "StreamUser": {
         "additionalProperties": false,
         "allOf": [],
@@ -1292,24 +1229,18 @@ exports[`open api parser > streaming > parse open api 1`] = `
         "properties": [
           {
             "audiences": [],
->>>>>>> 30dc3ebe9d (working, need to polish)
             "availability": null,
             "conflict": {},
             "generatedName": "streamUserId",
             "key": "id",
             "nameOverride": null,
-<<<<<<< HEAD
-            "title": null,
-            "type": "optional",
-            "value": {
-=======
             "schema": {
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
               "generatedName": "streamUserId",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -1325,13 +1256,9 @@ exports[`open api parser > streaming > parse open api 1`] = `
                   "pattern": null,
                   "type": "string",
                 },
+                "title": null,
                 "type": "primitive",
               },
-<<<<<<< HEAD
-              "title": null,
-              "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
           {
@@ -1341,18 +1268,13 @@ exports[`open api parser > streaming > parse open api 1`] = `
             "generatedName": "streamUserName",
             "key": "name",
             "nameOverride": null,
-<<<<<<< HEAD
-            "title": null,
-            "type": "optional",
-            "value": {
-=======
             "schema": {
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
               "generatedName": "streamUserName",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -1368,13 +1290,9 @@ exports[`open api parser > streaming > parse open api 1`] = `
                   "pattern": null,
                   "type": "string",
                 },
+                "title": null,
                 "type": "primitive",
               },
-<<<<<<< HEAD
-              "title": null,
-              "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
           {
@@ -1384,30 +1302,21 @@ exports[`open api parser > streaming > parse open api 1`] = `
             "generatedName": "streamUserStreamed",
             "key": "streamed",
             "nameOverride": null,
-<<<<<<< HEAD
-            "title": null,
-            "type": "optional",
-            "value": {
-=======
             "schema": {
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
               "generatedName": "streamUserStreamed",
               "groupName": [],
               "nameOverride": null,
-<<<<<<< HEAD
               "title": null,
-              "type": "literal",
-=======
               "type": "optional",
->>>>>>> 30dc3ebe9d (working, need to polish)
               "value": {
                 "availability": null,
                 "description": null,
                 "generatedName": "StreamUserStreamed",
                 "groupName": [],
                 "nameOverride": null,
+                "title": null,
                 "type": "literal",
                 "value": {
                   "type": "boolean",
@@ -1421,31 +1330,9 @@ exports[`open api parser > streaming > parse open api 1`] = `
           "file": "streaming/openapi.yml",
           "type": "openapi",
         },
+        "title": null,
         "type": "object",
       },
-<<<<<<< HEAD
-      "title": null,
-      "type": "object",
-    },
-    "User": {
-      "additionalProperties": false,
-      "allOf": [],
-      "allOfPropertyConflicts": [],
-      "availability": null,
-      "description": null,
-      "generatedName": "User",
-      "groupName": [],
-      "nameOverride": null,
-      "properties": [
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "userId",
-          "key": "id",
-          "nameOverride": null,
-          "schema": {
-=======
       "User": {
         "additionalProperties": false,
         "allOf": [],
@@ -1458,98 +1345,19 @@ exports[`open api parser > streaming > parse open api 1`] = `
         "properties": [
           {
             "audiences": [],
->>>>>>> 30dc3ebe9d (working, need to polish)
             "availability": null,
             "conflict": {},
             "generatedName": "userId",
             "key": "id",
             "nameOverride": null,
-<<<<<<< HEAD
-            "title": null,
-            "type": "optional",
-            "value": {
-=======
             "schema": {
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
               "generatedName": "userId",
               "groupName": [],
               "nameOverride": null,
-<<<<<<< HEAD
-              "schema": {
-                "default": null,
-                "format": "uuid",
-                "maxLength": null,
-                "minLength": null,
-                "pattern": null,
-                "type": "string",
-              },
               "title": null,
-              "type": "primitive",
-            },
-          },
-        },
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "userName",
-          "key": "name",
-          "nameOverride": null,
-          "schema": {
-            "availability": null,
-            "description": null,
-            "generatedName": "userName",
-            "groupName": [],
-            "nameOverride": null,
-            "title": null,
-            "type": "optional",
-            "value": {
-              "availability": null,
-              "description": null,
-              "generatedName": "UserName",
-              "groupName": [],
-              "nameOverride": null,
-              "schema": {
-                "default": null,
-                "format": null,
-                "maxLength": null,
-                "minLength": null,
-                "pattern": null,
-                "type": "string",
-              },
-              "title": null,
-              "type": "primitive",
-            },
-          },
-        },
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "userStreamed",
-          "key": "streamed",
-          "nameOverride": null,
-          "schema": {
-            "availability": null,
-            "description": null,
-            "generatedName": "userStreamed",
-            "groupName": [],
-            "nameOverride": null,
-            "title": null,
-            "type": "optional",
-            "value": {
-              "availability": null,
-              "description": null,
-              "generatedName": "UserStreamed",
-              "groupName": [],
-              "nameOverride": null,
-              "title": null,
-              "type": "literal",
-=======
               "type": "optional",
->>>>>>> 30dc3ebe9d (working, need to polish)
               "value": {
                 "availability": null,
                 "description": null,
@@ -1564,6 +1372,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
                   "pattern": null,
                   "type": "string",
                 },
+                "title": null,
                 "type": "primitive",
               },
             },
@@ -1581,6 +1390,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
               "generatedName": "userName",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -1596,6 +1406,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
                   "pattern": null,
                   "type": "string",
                 },
+                "title": null,
                 "type": "primitive",
               },
             },
@@ -1613,6 +1424,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
               "generatedName": "userStreamed",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -1620,6 +1432,7 @@ exports[`open api parser > streaming > parse open api 1`] = `
                 "generatedName": "UserStreamed",
                 "groupName": [],
                 "nameOverride": null,
+                "title": null,
                 "type": "literal",
                 "value": {
                   "type": "boolean",
@@ -1633,13 +1446,9 @@ exports[`open api parser > streaming > parse open api 1`] = `
           "file": "streaming/openapi.yml",
           "type": "openapi",
         },
+        "title": null,
         "type": "object",
       },
-<<<<<<< HEAD
-      "title": null,
-      "type": "object",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
     },
   },
   "securitySchemes": {},

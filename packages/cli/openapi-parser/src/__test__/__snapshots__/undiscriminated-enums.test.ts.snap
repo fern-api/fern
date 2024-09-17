@@ -94,6 +94,7 @@ exports[`open api parser > undiscriminated-enums > parse open api 1`] = `
                 "file": "undiscriminated-enums/openapi.yml",
                 "type": "openapi",
               },
+              "title": null,
               "type": "reference",
             },
             "hello": {
@@ -107,6 +108,7 @@ exports[`open api parser > undiscriminated-enums > parse open api 1`] = `
                 "file": "undiscriminated-enums/openapi.yml",
                 "type": "openapi",
               },
+              "title": null,
               "type": "reference",
             },
           },
@@ -114,6 +116,7 @@ exports[`open api parser > undiscriminated-enums > parse open api 1`] = `
             "file": "undiscriminated-enums/openapi.yml",
             "type": "openapi",
           },
+          "title": null,
           "type": "discriminated",
         },
       },
@@ -140,6 +143,7 @@ exports[`open api parser > undiscriminated-enums > parse open api 1`] = `
               "generatedName": "farewellMessage",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -155,42 +159,18 @@ exports[`open api parser > undiscriminated-enums > parse open api 1`] = `
                   "pattern": null,
                   "type": "string",
                 },
+                "title": null,
                 "type": "primitive",
               },
             },
-<<<<<<< HEAD
-            "title": null,
-            "type": "reference",
-          },
-          "hello": {
-            "availability": null,
-            "description": null,
-            "generatedName": "ComponentsSchemasGreeting",
-            "groupName": null,
-            "nameOverride": null,
-            "schema": "Greeting",
-            "source": {
-              "file": "undiscriminated-enums/openapi.yml",
-              "type": "openapi",
-            },
-            "title": null,
-            "type": "reference",
-          },
-        },
-=======
           },
         ],
->>>>>>> 30dc3ebe9d (working, need to polish)
         "source": {
           "file": "undiscriminated-enums/openapi.yml",
           "type": "openapi",
         },
-<<<<<<< HEAD
         "title": null,
-        "type": "discriminated",
-=======
         "type": "object",
->>>>>>> 30dc3ebe9d (working, need to polish)
       },
       "FarewellEnum": {
         "availability": null,
@@ -203,113 +183,17 @@ exports[`open api parser > undiscriminated-enums > parse open api 1`] = `
           "file": "undiscriminated-enums/openapi.yml",
           "type": "openapi",
         },
+        "title": null,
         "type": "enum",
         "values": [
           {
             "availability": null,
-<<<<<<< HEAD
-            "description": null,
-            "generatedName": "farewellMessage",
-            "groupName": [],
-            "nameOverride": null,
-            "title": null,
-            "type": "optional",
-            "value": {
-              "availability": null,
-              "description": null,
-              "generatedName": "FarewellMessage",
-              "groupName": [],
-              "nameOverride": null,
-              "schema": {
-                "default": null,
-                "format": null,
-                "maxLength": null,
-                "minLength": null,
-                "pattern": null,
-                "type": "string",
-              },
-              "title": null,
-              "type": "primitive",
-            },
-          },
-        },
-      ],
-      "source": {
-        "file": "undiscriminated-enums/openapi.yml",
-        "type": "openapi",
-      },
-      "title": null,
-      "type": "object",
-    },
-    "FarewellEnum": {
-      "availability": null,
-      "default": null,
-      "description": null,
-      "generatedName": "FarewellEnum",
-      "groupName": [],
-      "nameOverride": null,
-      "source": {
-        "file": "undiscriminated-enums/openapi.yml",
-        "type": "openapi",
-      },
-      "title": null,
-      "type": "enum",
-      "values": [
-        {
-          "availability": null,
-          "casing": {
-            "camel": null,
-            "pascal": null,
-            "screamingSnake": null,
-            "snake": null,
-          },
-          "description": null,
-          "generatedName": "goodbye",
-          "nameOverride": null,
-          "value": "goodbye",
-        },
-        {
-          "availability": null,
-          "casing": {
-            "camel": null,
-            "pascal": null,
-            "screamingSnake": null,
-            "snake": null,
-          },
-          "description": null,
-          "generatedName": "GOODBYE",
-          "nameOverride": null,
-          "value": "GOODBYE",
-        },
-      ],
-    },
-    "Greeting": {
-      "additionalProperties": false,
-      "allOf": [],
-      "allOfPropertyConflicts": [],
-      "availability": null,
-      "description": null,
-      "generatedName": "Greeting",
-      "groupName": [],
-      "nameOverride": null,
-      "properties": [
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "greetingMessage",
-          "key": "message",
-          "nameOverride": null,
-          "schema": {
-            "availability": null,
-=======
             "casing": {
               "camel": null,
               "pascal": null,
               "screamingSnake": null,
               "snake": null,
             },
->>>>>>> 30dc3ebe9d (working, need to polish)
             "description": null,
             "generatedName": "goodbye",
             "nameOverride": null,
@@ -347,18 +231,13 @@ exports[`open api parser > undiscriminated-enums > parse open api 1`] = `
             "generatedName": "greetingMessage",
             "key": "message",
             "nameOverride": null,
-<<<<<<< HEAD
-            "title": null,
-            "type": "optional",
-            "value": {
-=======
             "schema": {
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
               "generatedName": "greetingMessage",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -374,13 +253,9 @@ exports[`open api parser > undiscriminated-enums > parse open api 1`] = `
                   "pattern": null,
                   "type": "string",
                 },
+                "title": null,
                 "type": "primitive",
               },
-<<<<<<< HEAD
-              "title": null,
-              "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
         ],
@@ -388,54 +263,9 @@ exports[`open api parser > undiscriminated-enums > parse open api 1`] = `
           "file": "undiscriminated-enums/openapi.yml",
           "type": "openapi",
         },
+        "title": null,
         "type": "object",
       },
-<<<<<<< HEAD
-      "title": null,
-      "type": "object",
-    },
-    "GreetingEnum": {
-      "availability": null,
-      "default": null,
-      "description": null,
-      "generatedName": "GreetingEnum",
-      "groupName": [],
-      "nameOverride": null,
-      "source": {
-        "file": "undiscriminated-enums/openapi.yml",
-        "type": "openapi",
-      },
-      "title": null,
-      "type": "enum",
-      "values": [
-        {
-          "availability": null,
-          "casing": {
-            "camel": null,
-            "pascal": null,
-            "screamingSnake": null,
-            "snake": null,
-          },
-          "description": null,
-          "generatedName": "hello",
-          "nameOverride": null,
-          "value": "hello",
-        },
-        {
-          "availability": null,
-          "casing": {
-            "camel": null,
-            "pascal": null,
-            "screamingSnake": null,
-            "snake": null,
-          },
-          "description": null,
-          "generatedName": "HELLO",
-          "nameOverride": null,
-          "value": "HELLO",
-        },
-      ],
-=======
       "GreetingEnum": {
         "availability": null,
         "default": null,
@@ -447,6 +277,7 @@ exports[`open api parser > undiscriminated-enums > parse open api 1`] = `
           "file": "undiscriminated-enums/openapi.yml",
           "type": "openapi",
         },
+        "title": null,
         "type": "enum",
         "values": [
           {
@@ -477,7 +308,6 @@ exports[`open api parser > undiscriminated-enums > parse open api 1`] = `
           },
         ],
       },
->>>>>>> 30dc3ebe9d (working, need to polish)
     },
   },
   "securitySchemes": {},

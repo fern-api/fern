@@ -31,18 +31,13 @@ exports[`open api parser > gen-yml-use-title > parse open api 1`] = `
             "generatedName": "schemaWithALongNameIsRightHereAndNotSomewhereElseId",
             "key": "id",
             "nameOverride": null,
-<<<<<<< HEAD
-            "title": "EnticingTitle",
-            "type": "optional",
-            "value": {
-=======
             "schema": {
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
               "generatedName": "schemaWithALongNameIsRightHereAndNotSomewhereElseId",
               "groupName": [],
               "nameOverride": null,
+              "title": "EnticingTitle",
               "type": "optional",
               "value": {
                 "availability": null,
@@ -58,13 +53,9 @@ exports[`open api parser > gen-yml-use-title > parse open api 1`] = `
                   "pattern": null,
                   "type": "string",
                 },
+                "title": null,
                 "type": "primitive",
               },
-<<<<<<< HEAD
-              "title": null,
-              "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
         ],
@@ -72,13 +63,9 @@ exports[`open api parser > gen-yml-use-title > parse open api 1`] = `
           "file": "gen-yml-use-title/openapi.yml",
           "type": "openapi",
         },
+        "title": "EnticingTitle",
         "type": "object",
       },
-<<<<<<< HEAD
-      "title": "EnticingTitle",
-      "type": "object",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
     },
   },
   "securitySchemes": {},

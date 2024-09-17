@@ -136,24 +136,14 @@ exports[`open api parser > anyOf > parse open api 1`] = `
             "generatedName": "requestId",
             "key": "id",
             "nameOverride": null,
-<<<<<<< HEAD
-            "title": null,
-            "type": "optional",
-            "value": {
-=======
             "schema": {
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
               "generatedName": "requestId",
               "groupName": [],
               "nameOverride": null,
-<<<<<<< HEAD
               "title": null,
-              "type": "nullable",
-=======
               "type": "optional",
->>>>>>> 30dc3ebe9d (working, need to polish)
               "value": {
                 "availability": null,
                 "description": "An optional string value.
@@ -161,6 +151,7 @@ exports[`open api parser > anyOf > parse open api 1`] = `
                 "generatedName": "RequestId",
                 "groupName": [],
                 "nameOverride": null,
+                "title": null,
                 "type": "nullable",
                 "value": {
                   "availability": null,
@@ -176,13 +167,9 @@ exports[`open api parser > anyOf > parse open api 1`] = `
                     "pattern": null,
                     "type": "string",
                   },
+                  "title": null,
                   "type": "primitive",
                 },
-<<<<<<< HEAD
-                "title": null,
-                "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
               },
             },
           },
@@ -191,26 +178,15 @@ exports[`open api parser > anyOf > parse open api 1`] = `
           "file": "anyOf/openapi.yml",
           "type": "openapi",
         },
+        "title": null,
         "type": "object",
       },
-<<<<<<< HEAD
-      "title": null,
-      "type": "object",
-    },
-    "Response": {
-      "additionalProperties": false,
-      "allOf": [],
-      "allOfPropertyConflicts": [],
-      "availability": null,
-      "description": "A generic response type used throughout the API.
-=======
       "Response": {
         "additionalProperties": false,
         "allOf": [],
         "allOfPropertyConflicts": [],
         "availability": null,
         "description": "A generic response type used throughout the API.
->>>>>>> 30dc3ebe9d (working, need to polish)
 ",
         "generatedName": "Response",
         "groupName": [],
@@ -223,24 +199,14 @@ exports[`open api parser > anyOf > parse open api 1`] = `
             "generatedName": "responseValue",
             "key": "value",
             "nameOverride": null,
-<<<<<<< HEAD
-            "title": null,
-            "type": "optional",
-            "value": {
-=======
             "schema": {
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
               "generatedName": "responseValue",
               "groupName": [],
               "nameOverride": null,
-<<<<<<< HEAD
               "title": null,
-              "type": "nullable",
-=======
               "type": "optional",
->>>>>>> 30dc3ebe9d (working, need to polish)
               "value": {
                 "availability": null,
                 "description": "An optional numerical value.
@@ -248,6 +214,7 @@ exports[`open api parser > anyOf > parse open api 1`] = `
                 "generatedName": "ResponseValue",
                 "groupName": [],
                 "nameOverride": null,
+                "title": null,
                 "type": "nullable",
                 "value": {
                   "availability": null,
@@ -264,13 +231,9 @@ exports[`open api parser > anyOf > parse open api 1`] = `
                     "multipleOf": null,
                     "type": "double",
                   },
+                  "title": null,
                   "type": "primitive",
                 },
-<<<<<<< HEAD
-                "title": null,
-                "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
               },
             },
           },
@@ -279,13 +242,9 @@ exports[`open api parser > anyOf > parse open api 1`] = `
           "file": "anyOf/openapi.yml",
           "type": "openapi",
         },
+        "title": null,
         "type": "object",
       },
-<<<<<<< HEAD
-      "title": null,
-      "type": "object",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
     },
   },
   "securitySchemes": {},

@@ -4077,65 +4077,9 @@ exports[`open api parser > dopt > parse open api 1`] = `
           {
             "audiences": [],
             "availability": null,
-<<<<<<< HEAD
-            "default": null,
-            "description": null,
-            "generatedName": "BadRequestErrorResponseBodyCode",
-            "groupName": [],
-            "nameOverride": null,
-            "source": {
-              "file": "dopt/openapi.json",
-              "type": "openapi",
-            },
-            "title": null,
-            "type": "enum",
-            "values": [
-              {
-                "availability": null,
-                "casing": {
-                  "camel": null,
-                  "pascal": null,
-                  "screamingSnake": null,
-                  "snake": null,
-                },
-                "description": null,
-                "generatedName": "invalid_request_error",
-                "nameOverride": null,
-                "value": "invalid_request_error",
-              },
-              {
-                "availability": null,
-                "casing": {
-                  "camel": null,
-                  "pascal": null,
-                  "screamingSnake": null,
-                  "snake": null,
-                },
-                "description": null,
-                "generatedName": "intent_request_error",
-                "nameOverride": null,
-                "value": "intent_request_error",
-              },
-            ],
-          },
-        },
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "badRequestErrorResponseBodyDetails",
-          "key": "details",
-          "nameOverride": null,
-          "schema": {
-            "availability": null,
-            "description": null,
-            "generatedName": "BadRequestErrorResponseBodyDetails",
-            "groupName": [],
-=======
             "conflict": {},
             "generatedName": "badRequestErrorResponseBodyCode",
             "key": "code",
->>>>>>> 30dc3ebe9d (working, need to polish)
             "nameOverride": null,
             "schema": {
               "availability": null,
@@ -4148,6 +4092,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
                 "file": "dopt/openapi.json",
                 "type": "openapi",
               },
+              "title": null,
               "type": "enum",
               "values": [
                 {
@@ -4178,54 +4123,15 @@ exports[`open api parser > dopt > parse open api 1`] = `
                 },
               ],
             },
-<<<<<<< HEAD
-            "title": null,
-            "type": "primitive",
-          },
-        },
-      ],
-      "source": {
-        "file": "dopt/openapi.json",
-        "type": "openapi",
-      },
-      "title": "BadRequestErrorResponseBody",
-      "type": "object",
-    },
-    "BlockTransitionQueryString": {
-      "additionalProperties": false,
-      "allOf": [],
-      "allOfPropertyConflicts": [],
-      "availability": null,
-      "description": null,
-      "generatedName": "BlockTransitionQueryString",
-      "groupName": [],
-      "nameOverride": null,
-      "properties": [
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "blockTransitionQueryStringTransitions",
-          "key": "transitions",
-          "nameOverride": null,
-          "schema": {
-=======
           },
           {
             "audiences": [],
->>>>>>> 30dc3ebe9d (working, need to polish)
             "availability": null,
             "conflict": {},
             "generatedName": "badRequestErrorResponseBodyDetails",
             "key": "details",
             "nameOverride": null,
-<<<<<<< HEAD
-            "title": null,
-            "type": "array",
-            "value": {
-=======
             "schema": {
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
               "generatedName": "BadRequestErrorResponseBodyDetails",
@@ -4248,6 +4154,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
           "file": "dopt/openapi.json",
           "type": "openapi",
         },
+        "title": "BadRequestErrorResponseBody",
         "type": "object",
       },
       "BlockTransitionQueryString": {
@@ -4273,6 +4180,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
               "generatedName": "BlockTransitionQueryStringTransitions",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "array",
               "value": {
                 "availability": null,
@@ -4288,14 +4196,10 @@ exports[`open api parser > dopt > parse open api 1`] = `
                   "pattern": null,
                   "type": "string",
                 },
+                "title": null,
                 "type": "primitive",
               },
             },
-<<<<<<< HEAD
-            "title": null,
-            "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
           },
           {
             "audiences": [],
@@ -4319,13 +4223,9 @@ exports[`open api parser > dopt > parse open api 1`] = `
                 "multipleOf": null,
                 "type": "double",
               },
+              "title": null,
               "type": "primitive",
             },
-<<<<<<< HEAD
-            "title": null,
-            "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
           },
           {
             "audiences": [],
@@ -4348,6 +4248,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -4358,18 +4259,13 @@ exports[`open api parser > dopt > parse open api 1`] = `
             "generatedName": "blockTransitionQueryStringGroupIdentifier",
             "key": "groupIdentifier",
             "nameOverride": null,
-<<<<<<< HEAD
-            "title": null,
-            "type": "optional",
-            "value": {
-=======
             "schema": {
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
               "generatedName": "blockTransitionQueryStringGroupIdentifier",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -4385,6 +4281,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
                   "pattern": null,
                   "type": "string",
                 },
+                "title": null,
                 "type": "primitive",
               },
             },
@@ -4394,6 +4291,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
           "file": "dopt/openapi.json",
           "type": "openapi",
         },
+        "title": null,
         "type": "object",
       },
       "BlockTransitionRequestParams": {
@@ -4436,31 +4334,9 @@ exports[`open api parser > dopt > parse open api 1`] = `
           "file": "dopt/openapi.json",
           "type": "openapi",
         },
+        "title": null,
         "type": "object",
       },
-<<<<<<< HEAD
-      "title": null,
-      "type": "object",
-    },
-    "BlockTransitionRequestParams": {
-      "additionalProperties": false,
-      "allOf": [],
-      "allOfPropertyConflicts": [],
-      "availability": null,
-      "description": null,
-      "generatedName": "BlockTransitionRequestParams",
-      "groupName": [],
-      "nameOverride": null,
-      "properties": [
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "blockTransitionRequestParamsUid",
-          "key": "uid",
-          "nameOverride": null,
-          "schema": {
-=======
       "FlowIntentQueryString": {
         "additionalProperties": false,
         "allOf": [],
@@ -4473,7 +4349,6 @@ exports[`open api parser > dopt > parse open api 1`] = `
         "properties": [
           {
             "audiences": [],
->>>>>>> 30dc3ebe9d (working, need to polish)
             "availability": null,
             "conflict": {},
             "generatedName": "flowIntentQueryStringVersion",
@@ -4494,44 +4369,12 @@ exports[`open api parser > dopt > parse open api 1`] = `
                 "multipleOf": null,
                 "type": "double",
               },
+              "title": null,
               "type": "primitive",
             },
-<<<<<<< HEAD
-            "title": null,
-            "type": "primitive",
-          },
-        },
-      ],
-      "source": {
-        "file": "dopt/openapi.json",
-        "type": "openapi",
-      },
-      "title": null,
-      "type": "object",
-    },
-    "FlowIntentQueryString": {
-      "additionalProperties": false,
-      "allOf": [],
-      "allOfPropertyConflicts": [],
-      "availability": null,
-      "description": null,
-      "generatedName": "FlowIntentQueryString",
-      "groupName": [],
-      "nameOverride": null,
-      "properties": [
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "flowIntentQueryStringVersion",
-          "key": "version",
-          "nameOverride": null,
-          "schema": {
-=======
           },
           {
             "audiences": [],
->>>>>>> 30dc3ebe9d (working, need to polish)
             "availability": null,
             "conflict": {},
             "generatedName": "flowIntentQueryStringUserIdentifier",
@@ -4551,62 +4394,24 @@ exports[`open api parser > dopt > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
-<<<<<<< HEAD
-            "title": null,
-            "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
           },
           {
             "audiences": [],
             "availability": null,
-<<<<<<< HEAD
-            "description": null,
-            "generatedName": "FlowIntentQueryStringUserIdentifier",
-            "groupName": [],
-            "nameOverride": null,
-            "schema": {
-              "default": null,
-              "format": null,
-              "maxLength": null,
-              "minLength": null,
-              "pattern": null,
-              "type": "string",
-            },
-            "title": null,
-            "type": "primitive",
-          },
-        },
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "flowIntentQueryStringGroupIdentifier",
-          "key": "groupIdentifier",
-          "nameOverride": null,
-          "schema": {
-            "availability": null,
-            "description": null,
-=======
             "conflict": {},
->>>>>>> 30dc3ebe9d (working, need to polish)
             "generatedName": "flowIntentQueryStringGroupIdentifier",
             "key": "groupIdentifier",
             "nameOverride": null,
-<<<<<<< HEAD
-            "title": null,
-            "type": "optional",
-            "value": {
-=======
             "schema": {
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
               "generatedName": "flowIntentQueryStringGroupIdentifier",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -4622,6 +4427,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
                   "pattern": null,
                   "type": "string",
                 },
+                "title": null,
                 "type": "primitive",
               },
             },
@@ -4631,6 +4437,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
           "file": "dopt/openapi.json",
           "type": "openapi",
         },
+        "title": null,
         "type": "object",
       },
       "FlowIntentRequestParams": {
@@ -4668,38 +4475,8 @@ exports[`open api parser > dopt > parse open api 1`] = `
               "type": "primitive",
             },
           },
-<<<<<<< HEAD
-        },
-      ],
-      "source": {
-        "file": "dopt/openapi.json",
-        "type": "openapi",
-      },
-      "title": null,
-      "type": "object",
-    },
-    "FlowIntentRequestParams": {
-      "additionalProperties": false,
-      "allOf": [],
-      "allOfPropertyConflicts": [],
-      "availability": null,
-      "description": null,
-      "generatedName": "FlowIntentRequestParams",
-      "groupName": [],
-      "nameOverride": null,
-      "properties": [
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "flowIntentRequestParamsUid",
-          "key": "uid",
-          "nameOverride": null,
-          "schema": {
-=======
           {
             "audiences": [],
->>>>>>> 30dc3ebe9d (working, need to polish)
             "availability": null,
             "conflict": {},
             "generatedName": "flowIntentRequestParamsIntent",
@@ -4708,51 +4485,6 @@ exports[`open api parser > dopt > parse open api 1`] = `
             "schema": {
               "availability": null,
               "default": null,
-<<<<<<< HEAD
-              "format": null,
-              "maxLength": null,
-              "minLength": null,
-              "pattern": null,
-              "type": "string",
-            },
-            "title": null,
-            "type": "primitive",
-          },
-        },
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "flowIntentRequestParamsIntent",
-          "key": "intent",
-          "nameOverride": null,
-          "schema": {
-            "availability": null,
-            "default": null,
-            "description": null,
-            "generatedName": "FlowIntentRequestParamsIntent",
-            "groupName": [],
-            "nameOverride": null,
-            "source": {
-              "file": "dopt/openapi.json",
-              "type": "openapi",
-            },
-            "title": "Flow_Intent",
-            "type": "enum",
-            "values": [
-              {
-                "availability": null,
-                "casing": {
-                  "camel": null,
-                  "pascal": null,
-                  "screamingSnake": null,
-                  "snake": null,
-                },
-                "description": null,
-                "generatedName": "finish",
-                "nameOverride": null,
-                "value": "finish",
-=======
               "description": null,
               "generatedName": "FlowIntentRequestParamsIntent",
               "groupName": [],
@@ -4760,8 +4492,8 @@ exports[`open api parser > dopt > parse open api 1`] = `
               "source": {
                 "file": "dopt/openapi.json",
                 "type": "openapi",
->>>>>>> 30dc3ebe9d (working, need to polish)
               },
+              "title": "Flow_Intent",
               "type": "enum",
               "values": [
                 {
@@ -4824,31 +4556,9 @@ exports[`open api parser > dopt > parse open api 1`] = `
           "file": "dopt/openapi.json",
           "type": "openapi",
         },
+        "title": null,
         "type": "object",
       },
-<<<<<<< HEAD
-      "title": null,
-      "type": "object",
-    },
-    "GetBlockQueryString": {
-      "additionalProperties": false,
-      "allOf": [],
-      "allOfPropertyConflicts": [],
-      "availability": null,
-      "description": null,
-      "generatedName": "GetBlockQueryString",
-      "groupName": [],
-      "nameOverride": null,
-      "properties": [
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "getBlockQueryStringVersion",
-          "key": "version",
-          "nameOverride": null,
-          "schema": {
-=======
       "GetBlockQueryString": {
         "additionalProperties": false,
         "allOf": [],
@@ -4861,156 +4571,12 @@ exports[`open api parser > dopt > parse open api 1`] = `
         "properties": [
           {
             "audiences": [],
->>>>>>> 30dc3ebe9d (working, need to polish)
             "availability": null,
             "conflict": {},
             "generatedName": "getBlockQueryStringVersion",
             "key": "version",
             "nameOverride": null,
             "schema": {
-<<<<<<< HEAD
-              "default": null,
-              "exclusiveMaximum": null,
-              "exclusiveMinimum": null,
-              "maximum": null,
-              "minimum": null,
-              "multipleOf": null,
-              "type": "double",
-            },
-            "title": null,
-            "type": "primitive",
-          },
-        },
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "getBlockQueryStringUserIdentifier",
-          "key": "userIdentifier",
-          "nameOverride": null,
-          "schema": {
-            "availability": null,
-            "description": null,
-            "generatedName": "GetBlockQueryStringUserIdentifier",
-            "groupName": [],
-            "nameOverride": null,
-            "schema": {
-              "default": null,
-              "format": null,
-              "maxLength": null,
-              "minLength": null,
-              "pattern": null,
-              "type": "string",
-            },
-            "title": null,
-            "type": "primitive",
-          },
-        },
-      ],
-      "source": {
-        "file": "dopt/openapi.json",
-        "type": "openapi",
-      },
-      "title": null,
-      "type": "object",
-    },
-    "GetBlockRequestParams": {
-      "additionalProperties": false,
-      "allOf": [],
-      "allOfPropertyConflicts": [],
-      "availability": null,
-      "description": null,
-      "generatedName": "GetBlockRequestParams",
-      "groupName": [],
-      "nameOverride": null,
-      "properties": [
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "getBlockRequestParamsUid",
-          "key": "uid",
-          "nameOverride": null,
-          "schema": {
-            "availability": null,
-            "description": null,
-            "generatedName": "GetBlockRequestParamsUid",
-            "groupName": [],
-            "nameOverride": null,
-            "schema": {
-              "default": null,
-              "format": null,
-              "maxLength": null,
-              "minLength": null,
-              "pattern": null,
-              "type": "string",
-            },
-            "title": null,
-            "type": "primitive",
-          },
-        },
-      ],
-      "source": {
-        "file": "dopt/openapi.json",
-        "type": "openapi",
-      },
-      "title": null,
-      "type": "object",
-    },
-    "GetFlowQueryString": {
-      "additionalProperties": false,
-      "allOf": [],
-      "allOfPropertyConflicts": [],
-      "availability": null,
-      "description": null,
-      "generatedName": "GetFlowQueryString",
-      "groupName": [],
-      "nameOverride": null,
-      "properties": [
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "getFlowQueryStringVersion",
-          "key": "version",
-          "nameOverride": null,
-          "schema": {
-            "availability": null,
-            "description": null,
-            "generatedName": "GetFlowQueryStringVersion",
-            "groupName": [],
-            "nameOverride": null,
-            "schema": {
-              "default": null,
-              "exclusiveMaximum": null,
-              "exclusiveMinimum": null,
-              "maximum": null,
-              "minimum": null,
-              "multipleOf": null,
-              "type": "double",
-            },
-            "title": null,
-            "type": "primitive",
-          },
-        },
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "getFlowQueryStringInclude",
-          "key": "include",
-          "nameOverride": null,
-          "schema": {
-            "availability": null,
-            "description": null,
-            "generatedName": "getFlowQueryStringInclude",
-            "groupName": [],
-            "nameOverride": null,
-            "title": null,
-            "type": "optional",
-            "value": {
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
               "generatedName": "GetBlockQueryStringVersion",
@@ -5025,6 +4591,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
                 "multipleOf": null,
                 "type": "double",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -5049,6 +4616,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -5057,6 +4625,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
           "file": "dopt/openapi.json",
           "type": "openapi",
         },
+        "title": null,
         "type": "object",
       },
       "GetBlockRequestParams": {
@@ -5090,6 +4659,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -5098,6 +4668,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
           "file": "dopt/openapi.json",
           "type": "openapi",
         },
+        "title": null,
         "type": "object",
       },
       "GetFlowQueryString": {
@@ -5132,6 +4703,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
                 "multipleOf": null,
                 "type": "double",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -5148,6 +4720,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
               "generatedName": "getFlowQueryStringInclude",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -5155,6 +4728,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
                 "generatedName": "GetFlowQueryStringInclude",
                 "groupName": [],
                 "nameOverride": null,
+                "title": null,
                 "type": "literal",
                 "value": {
                   "type": "string",
@@ -5184,6 +4758,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -5200,6 +4775,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
               "generatedName": "getFlowQueryStringGroupIdentifier",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -5215,6 +4791,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
                   "pattern": null,
                   "type": "string",
                 },
+                "title": null,
                 "type": "primitive",
               },
             },
@@ -5224,6 +4801,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
           "file": "dopt/openapi.json",
           "type": "openapi",
         },
+        "title": null,
         "type": "object",
       },
       "GetFlowRequestParams": {
@@ -5257,6 +4835,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -5265,6 +4844,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
           "file": "dopt/openapi.json",
           "type": "openapi",
         },
+        "title": null,
         "type": "object",
       },
       "HealthCheckResponseBody": {
@@ -5298,6 +4878,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -5323,6 +4904,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
                 "multipleOf": null,
                 "type": "int",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -5331,6 +4913,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
           "file": "dopt/openapi.json",
           "type": "openapi",
         },
+        "title": null,
         "type": "object",
       },
       "InternalServerErrorResponseBody": {
@@ -5372,36 +4955,6 @@ exports[`open api parser > dopt > parse open api 1`] = `
             "key": "details",
             "nameOverride": null,
             "schema": {
-<<<<<<< HEAD
-              "default": null,
-              "format": null,
-              "maxLength": null,
-              "minLength": null,
-              "pattern": null,
-              "type": "string",
-            },
-            "title": null,
-            "type": "primitive",
-          },
-        },
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "getFlowQueryStringGroupIdentifier",
-          "key": "groupIdentifier",
-          "nameOverride": null,
-          "schema": {
-            "availability": null,
-            "description": null,
-            "generatedName": "getFlowQueryStringGroupIdentifier",
-            "groupName": [],
-            "nameOverride": null,
-            "title": null,
-            "type": "optional",
-            "value": {
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
               "generatedName": "InternalServerErrorResponseBodyDetails",
@@ -5424,31 +4977,9 @@ exports[`open api parser > dopt > parse open api 1`] = `
           "file": "dopt/openapi.json",
           "type": "openapi",
         },
+        "title": "InternalServerErrorResponseBody",
         "type": "object",
       },
-<<<<<<< HEAD
-      "title": null,
-      "type": "object",
-    },
-    "GetFlowRequestParams": {
-      "additionalProperties": false,
-      "allOf": [],
-      "allOfPropertyConflicts": [],
-      "availability": null,
-      "description": null,
-      "generatedName": "GetFlowRequestParams",
-      "groupName": [],
-      "nameOverride": null,
-      "properties": [
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "getFlowRequestParamsSid",
-          "key": "sid",
-          "nameOverride": null,
-          "schema": {
-=======
       "NotFoundErrorResponseBody": {
         "additionalProperties": false,
         "allOf": [],
@@ -5461,7 +4992,6 @@ exports[`open api parser > dopt > parse open api 1`] = `
         "properties": [
           {
             "audiences": [],
->>>>>>> 30dc3ebe9d (working, need to polish)
             "availability": null,
             "conflict": {},
             "generatedName": "notFoundErrorResponseBodyCode",
@@ -5473,48 +5003,16 @@ exports[`open api parser > dopt > parse open api 1`] = `
               "generatedName": "NotFoundErrorResponseBodyCode",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "literal",
               "value": {
                 "type": "string",
                 "value": "not_found_error",
               },
             },
-<<<<<<< HEAD
-            "title": null,
-            "type": "primitive",
-          },
-        },
-      ],
-      "source": {
-        "file": "dopt/openapi.json",
-        "type": "openapi",
-      },
-      "title": null,
-      "type": "object",
-    },
-    "HealthCheckResponseBody": {
-      "additionalProperties": false,
-      "allOf": [],
-      "allOfPropertyConflicts": [],
-      "availability": null,
-      "description": null,
-      "generatedName": "HealthCheckResponseBody",
-      "groupName": [],
-      "nameOverride": null,
-      "properties": [
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "healthCheckResponseBodyApplication",
-          "key": "application",
-          "nameOverride": null,
-          "schema": {
-=======
           },
           {
             "audiences": [],
->>>>>>> 30dc3ebe9d (working, need to polish)
             "availability": null,
             "conflict": {},
             "generatedName": "notFoundErrorResponseBodyDetails",
@@ -5534,19 +5032,16 @@ exports[`open api parser > dopt > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
-<<<<<<< HEAD
-            "title": null,
-            "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
           },
         ],
         "source": {
           "file": "dopt/openapi.json",
           "type": "openapi",
         },
+        "title": "NotFoundErrorResponseBody",
         "type": "object",
       },
       "TimeoutErrorResponseBody": {
@@ -5567,67 +5062,17 @@ exports[`open api parser > dopt > parse open api 1`] = `
             "key": "code",
             "nameOverride": null,
             "schema": {
-<<<<<<< HEAD
-              "default": null,
-              "exclusiveMaximum": null,
-              "exclusiveMinimum": null,
-              "maximum": null,
-              "minimum": null,
-              "multipleOf": null,
-              "type": "int",
-            },
-            "title": null,
-            "type": "primitive",
-          },
-        },
-      ],
-      "source": {
-        "file": "dopt/openapi.json",
-        "type": "openapi",
-      },
-      "title": null,
-      "type": "object",
-    },
-    "InternalServerErrorResponseBody": {
-      "additionalProperties": false,
-      "allOf": [],
-      "allOfPropertyConflicts": [],
-      "availability": null,
-      "description": null,
-      "generatedName": "InternalServerErrorResponseBody",
-      "groupName": [],
-      "nameOverride": "InternalServerErrorResponseBody",
-      "properties": [
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "internalServerErrorResponseBodyCode",
-          "key": "code",
-          "nameOverride": null,
-          "schema": {
-            "availability": null,
-            "description": null,
-            "generatedName": "InternalServerErrorResponseBodyCode",
-            "groupName": [],
-            "nameOverride": null,
-            "title": null,
-            "type": "literal",
-            "value": {
-              "type": "string",
-              "value": "internal_server_error",
-=======
               "availability": null,
               "description": null,
               "generatedName": "TimeoutErrorResponseBodyCode",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "literal",
               "value": {
                 "type": "string",
                 "value": "internal_server_error",
               },
->>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
           {
@@ -5651,118 +5096,18 @@ exports[`open api parser > dopt > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
-<<<<<<< HEAD
-            "title": null,
-            "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
           },
         ],
         "source": {
           "file": "dopt/openapi.json",
           "type": "openapi",
         },
+        "title": "TimeoutErrorResponseBody",
         "type": "object",
       },
-<<<<<<< HEAD
-      "title": "InternalServerErrorResponseBody",
-      "type": "object",
-    },
-    "NotFoundErrorResponseBody": {
-      "additionalProperties": false,
-      "allOf": [],
-      "allOfPropertyConflicts": [],
-      "availability": null,
-      "description": null,
-      "generatedName": "NotFoundErrorResponseBody",
-      "groupName": [],
-      "nameOverride": "NotFoundErrorResponseBody",
-      "properties": [
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "notFoundErrorResponseBodyCode",
-          "key": "code",
-          "nameOverride": null,
-          "schema": {
-            "availability": null,
-            "description": null,
-            "generatedName": "NotFoundErrorResponseBodyCode",
-            "groupName": [],
-            "nameOverride": null,
-            "title": null,
-            "type": "literal",
-            "value": {
-              "type": "string",
-              "value": "not_found_error",
-            },
-          },
-        },
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "notFoundErrorResponseBodyDetails",
-          "key": "details",
-          "nameOverride": null,
-          "schema": {
-            "availability": null,
-            "description": null,
-            "generatedName": "NotFoundErrorResponseBodyDetails",
-            "groupName": [],
-            "nameOverride": null,
-            "schema": {
-              "default": null,
-              "format": null,
-              "maxLength": null,
-              "minLength": null,
-              "pattern": null,
-              "type": "string",
-            },
-            "title": null,
-            "type": "primitive",
-          },
-        },
-      ],
-      "source": {
-        "file": "dopt/openapi.json",
-        "type": "openapi",
-      },
-      "title": "NotFoundErrorResponseBody",
-      "type": "object",
-    },
-    "TimeoutErrorResponseBody": {
-      "additionalProperties": false,
-      "allOf": [],
-      "allOfPropertyConflicts": [],
-      "availability": null,
-      "description": null,
-      "generatedName": "TimeoutErrorResponseBody",
-      "groupName": [],
-      "nameOverride": "TimeoutErrorResponseBody",
-      "properties": [
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "timeoutErrorResponseBodyCode",
-          "key": "code",
-          "nameOverride": null,
-          "schema": {
-            "availability": null,
-            "description": null,
-            "generatedName": "TimeoutErrorResponseBodyCode",
-            "groupName": [],
-            "nameOverride": null,
-            "title": null,
-            "type": "literal",
-            "value": {
-              "type": "string",
-              "value": "internal_server_error",
-=======
       "UnauthorizedErrorResponseBody": {
         "additionalProperties": false,
         "allOf": [],
@@ -5786,12 +5131,12 @@ exports[`open api parser > dopt > parse open api 1`] = `
               "generatedName": "UnauthorizedErrorResponseBodyCode",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "literal",
               "value": {
                 "type": "string",
                 "value": "unauthorized_error",
               },
->>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
           {
@@ -5815,90 +5160,18 @@ exports[`open api parser > dopt > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
-<<<<<<< HEAD
-            "title": null,
-            "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
           },
         ],
         "source": {
           "file": "dopt/openapi.json",
           "type": "openapi",
         },
+        "title": "UnauthorizedErrorResponseBody",
         "type": "object",
       },
-<<<<<<< HEAD
-      "title": "TimeoutErrorResponseBody",
-      "type": "object",
-    },
-    "UnauthorizedErrorResponseBody": {
-      "additionalProperties": false,
-      "allOf": [],
-      "allOfPropertyConflicts": [],
-      "availability": null,
-      "description": null,
-      "generatedName": "UnauthorizedErrorResponseBody",
-      "groupName": [],
-      "nameOverride": "UnauthorizedErrorResponseBody",
-      "properties": [
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "unauthorizedErrorResponseBodyCode",
-          "key": "code",
-          "nameOverride": null,
-          "schema": {
-            "availability": null,
-            "description": null,
-            "generatedName": "UnauthorizedErrorResponseBodyCode",
-            "groupName": [],
-            "nameOverride": null,
-            "title": null,
-            "type": "literal",
-            "value": {
-              "type": "string",
-              "value": "unauthorized_error",
-            },
-          },
-        },
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "unauthorizedErrorResponseBodyDetails",
-          "key": "details",
-          "nameOverride": null,
-          "schema": {
-            "availability": null,
-            "description": null,
-            "generatedName": "UnauthorizedErrorResponseBodyDetails",
-            "groupName": [],
-            "nameOverride": null,
-            "schema": {
-              "default": null,
-              "format": null,
-              "maxLength": null,
-              "minLength": null,
-              "pattern": null,
-              "type": "string",
-            },
-            "title": null,
-            "type": "primitive",
-          },
-        },
-      ],
-      "source": {
-        "file": "dopt/openapi.json",
-        "type": "openapi",
-      },
-      "title": "UnauthorizedErrorResponseBody",
-      "type": "object",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
     },
   },
   "securitySchemes": {

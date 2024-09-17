@@ -35,54 +35,9 @@ exports[`open api parser > gen-yml-make-undisc-unions > parse open api 1`] = `
                 "file": "gen-yml-make-undisc-unions/openapi.json",
                 "type": "openapi",
               },
+              "title": null,
               "type": "reference",
             },
-<<<<<<< HEAD
-            "title": null,
-            "type": "reference",
-          },
-          {
-            "availability": null,
-            "description": null,
-            "generatedName": "ComponentsSchemasUnionJobJobInference",
-            "groupName": null,
-            "nameOverride": null,
-            "schema": "UnionJob_Job<Inference>",
-            "source": {
-              "file": "gen-yml-make-undisc-unions/openapi.json",
-              "type": "openapi",
-            },
-            "title": null,
-            "type": "reference",
-          },
-          {
-            "availability": null,
-            "description": null,
-            "generatedName": "ComponentsSchemasUnionJobJobTlInference",
-            "groupName": null,
-            "nameOverride": null,
-            "schema": "UnionJob_Job<TlInference>",
-            "source": {
-              "file": "gen-yml-make-undisc-unions/openapi.json",
-              "type": "openapi",
-            },
-            "title": null,
-            "type": "reference",
-          },
-          {
-            "availability": null,
-            "description": null,
-            "generatedName": "ComponentsSchemasUnionJobJobTraining",
-            "groupName": null,
-            "nameOverride": null,
-            "schema": "UnionJob_Job<Training>",
-            "source": {
-              "file": "gen-yml-make-undisc-unions/openapi.json",
-              "type": "openapi",
-            },
-            "title": null,
-            "type": "reference",
-=======
             {
               "availability": null,
               "description": null,
@@ -94,6 +49,7 @@ exports[`open api parser > gen-yml-make-undisc-unions > parse open api 1`] = `
                 "file": "gen-yml-make-undisc-unions/openapi.json",
                 "type": "openapi",
               },
+              "title": null,
               "type": "reference",
             },
             {
@@ -107,6 +63,7 @@ exports[`open api parser > gen-yml-make-undisc-unions > parse open api 1`] = `
                 "file": "gen-yml-make-undisc-unions/openapi.json",
                 "type": "openapi",
               },
+              "title": null,
               "type": "reference",
             },
             {
@@ -120,21 +77,17 @@ exports[`open api parser > gen-yml-make-undisc-unions > parse open api 1`] = `
                 "file": "gen-yml-make-undisc-unions/openapi.json",
                 "type": "openapi",
               },
+              "title": null,
               "type": "reference",
             },
           ],
           "source": {
             "file": "gen-yml-make-undisc-unions/openapi.json",
             "type": "openapi",
->>>>>>> 30dc3ebe9d (working, need to polish)
           },
+          "title": null,
           "type": "undisciminated",
         },
-<<<<<<< HEAD
-        "title": null,
-        "type": "undisciminated",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
       },
     },
   },

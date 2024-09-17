@@ -32,57 +32,6 @@ exports[`open api parser > webhooks > parse open api 1`] = `
             "key": "id",
             "nameOverride": null,
             "schema": {
-<<<<<<< HEAD
-              "default": null,
-              "type": "int64",
-            },
-            "title": null,
-            "type": "primitive",
-          },
-        },
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "petName",
-          "key": "name",
-          "nameOverride": null,
-          "schema": {
-            "availability": null,
-            "description": null,
-            "generatedName": "PetName",
-            "groupName": [],
-            "nameOverride": null,
-            "schema": {
-              "default": null,
-              "format": null,
-              "maxLength": null,
-              "minLength": null,
-              "pattern": null,
-              "type": "string",
-            },
-            "title": null,
-            "type": "primitive",
-          },
-        },
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "petTag",
-          "key": "tag",
-          "nameOverride": null,
-          "schema": {
-            "availability": null,
-            "description": null,
-            "generatedName": "petTag",
-            "groupName": [],
-            "nameOverride": null,
-            "title": null,
-            "type": "optional",
-            "value": {
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
               "generatedName": "PetId",
@@ -92,6 +41,7 @@ exports[`open api parser > webhooks > parse open api 1`] = `
                 "default": null,
                 "type": "int64",
               },
+              "title": null,
               "type": "primitive",
             },
           },
@@ -133,6 +83,7 @@ exports[`open api parser > webhooks > parse open api 1`] = `
               "generatedName": "petTag",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -148,6 +99,7 @@ exports[`open api parser > webhooks > parse open api 1`] = `
                   "pattern": null,
                   "type": "string",
                 },
+                "title": null,
                 "type": "primitive",
               },
             },
@@ -157,13 +109,9 @@ exports[`open api parser > webhooks > parse open api 1`] = `
           "file": "webhooks/openapi.yml",
           "type": "openapi",
         },
+        "title": null,
         "type": "object",
       },
-<<<<<<< HEAD
-      "title": null,
-      "type": "object",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
     },
   },
   "securitySchemes": {},

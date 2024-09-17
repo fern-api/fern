@@ -115,34 +115,6 @@ exports[`non alphanumeric characters > non-alphanumeric-characters > parse open 
     "DocumentIDSeparators",
   ],
   "schemas": {
-<<<<<<< HEAD
-    "DocumentIDSeparators": {
-      "availability": null,
-      "default": null,
-      "description": null,
-      "generatedName": "DocumentIdSeparators",
-      "groupName": [],
-      "nameOverride": null,
-      "source": {
-        "file": "non-alphanumeric-characters/openapi.yml",
-        "type": "openapi",
-      },
-      "title": null,
-      "type": "enum",
-      "values": [
-        {
-          "availability": null,
-          "casing": {
-            "camel": null,
-            "pascal": null,
-            "screamingSnake": null,
-            "snake": null,
-          },
-          "description": null,
-          "generatedName": "SLASH",
-          "nameOverride": null,
-          "value": "/",
-=======
     "__no_namespace__": {
       "DocumentIDSeparators": {
         "availability": null,
@@ -154,8 +126,8 @@ exports[`non alphanumeric characters > non-alphanumeric-characters > parse open 
         "source": {
           "file": "non-alphanumeric-characters/openapi.yml",
           "type": "openapi",
->>>>>>> 30dc3ebe9d (working, need to polish)
         },
+        "title": null,
         "type": "enum",
         "values": [
           {
@@ -169,11 +141,6 @@ exports[`non alphanumeric characters > non-alphanumeric-characters > parse open 
             "description": null,
             "generatedName": "SLASH",
             "nameOverride": null,
-<<<<<<< HEAD
-            "title": null,
-            "type": "optional",
-            "value": {
-=======
             "value": "/",
           },
           {
@@ -248,12 +215,12 @@ exports[`non alphanumeric characters > non-alphanumeric-characters > parse open 
             "key": "separator",
             "nameOverride": null,
             "schema": {
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
               "generatedName": "settingsSeparator",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -266,13 +233,9 @@ exports[`non alphanumeric characters > non-alphanumeric-characters > parse open 
                   "file": "non-alphanumeric-characters/openapi.yml",
                   "type": "openapi",
                 },
+                "title": null,
                 "type": "reference",
               },
-<<<<<<< HEAD
-              "title": null,
-              "type": "reference",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
         ],
@@ -280,13 +243,9 @@ exports[`non alphanumeric characters > non-alphanumeric-characters > parse open 
           "file": "non-alphanumeric-characters/openapi.yml",
           "type": "openapi",
         },
+        "title": null,
         "type": "object",
       },
-<<<<<<< HEAD
-      "title": null,
-      "type": "object",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
     },
   },
   "securitySchemes": {},

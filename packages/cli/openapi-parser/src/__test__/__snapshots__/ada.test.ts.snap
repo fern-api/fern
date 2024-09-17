@@ -1495,18 +1495,13 @@ exports[`open api parser > ada > parse open api 1`] = `
             "generatedName": "endUserCreatedWebhookPayloadType",
             "key": "type",
             "nameOverride": null,
-<<<<<<< HEAD
-            "title": null,
-            "type": "optional",
-            "value": {
-=======
             "schema": {
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
               "generatedName": "endUserCreatedWebhookPayloadType",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -1522,13 +1517,9 @@ exports[`open api parser > ada > parse open api 1`] = `
                   "pattern": null,
                   "type": "string",
                 },
+                "title": null,
                 "type": "primitive",
               },
-<<<<<<< HEAD
-              "title": null,
-              "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
           {
@@ -1538,18 +1529,13 @@ exports[`open api parser > ada > parse open api 1`] = `
             "generatedName": "endUserCreatedWebhookPayloadTimestamp",
             "key": "timestamp",
             "nameOverride": null,
-<<<<<<< HEAD
-            "title": null,
-            "type": "optional",
-            "value": {
-=======
             "schema": {
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
               "generatedName": "endUserCreatedWebhookPayloadTimestamp",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -1565,13 +1551,9 @@ exports[`open api parser > ada > parse open api 1`] = `
                   "pattern": null,
                   "type": "string",
                 },
+                "title": null,
                 "type": "primitive",
               },
-<<<<<<< HEAD
-              "title": null,
-              "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
           {
@@ -1581,19 +1563,13 @@ exports[`open api parser > ada > parse open api 1`] = `
             "generatedName": "endUserCreatedWebhookPayloadData",
             "key": "data",
             "nameOverride": null,
-<<<<<<< HEAD
-            "title": null,
-            "type": "optional",
-            "value": {
-              "generatedName": "EndUserCreatedWebhookPayloadData",
-=======
             "schema": {
               "availability": null,
               "description": null,
               "generatedName": "endUserCreatedWebhookPayloadData",
               "groupName": [],
->>>>>>> 30dc3ebe9d (working, need to polish)
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "generatedName": "EndUserCreatedWebhookPayloadData",
@@ -1607,36 +1583,9 @@ exports[`open api parser > ada > parse open api 1`] = `
           "file": "ada/openapi.json",
           "type": "openapi",
         },
+        "title": null,
         "type": "object",
       },
-<<<<<<< HEAD
-      "title": null,
-      "type": "object",
-    },
-    "EndUserRequest": {
-      "generatedName": "EndUserRequest",
-      "nameOverride": null,
-      "type": "unknown",
-    },
-    "EndUserUpdatedWebhookPayload": {
-      "additionalProperties": false,
-      "allOf": [],
-      "allOfPropertyConflicts": [],
-      "availability": null,
-      "description": null,
-      "generatedName": "EndUserUpdatedWebhookPayload",
-      "groupName": [],
-      "nameOverride": null,
-      "properties": [
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "endUserUpdatedWebhookPayloadType",
-          "key": "type",
-          "nameOverride": null,
-          "schema": {
-=======
       "EndUserRequest": {
         "generatedName": "EndUserRequest",
         "nameOverride": null,
@@ -1654,24 +1603,18 @@ exports[`open api parser > ada > parse open api 1`] = `
         "properties": [
           {
             "audiences": [],
->>>>>>> 30dc3ebe9d (working, need to polish)
             "availability": null,
             "conflict": {},
             "generatedName": "endUserUpdatedWebhookPayloadType",
             "key": "type",
             "nameOverride": null,
-<<<<<<< HEAD
-            "title": null,
-            "type": "optional",
-            "value": {
-=======
             "schema": {
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
               "generatedName": "endUserUpdatedWebhookPayloadType",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -1687,13 +1630,9 @@ exports[`open api parser > ada > parse open api 1`] = `
                   "pattern": null,
                   "type": "string",
                 },
+                "title": null,
                 "type": "primitive",
               },
-<<<<<<< HEAD
-              "title": null,
-              "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
           {
@@ -1703,18 +1642,13 @@ exports[`open api parser > ada > parse open api 1`] = `
             "generatedName": "endUserUpdatedWebhookPayloadTimestamp",
             "key": "timestamp",
             "nameOverride": null,
-<<<<<<< HEAD
-            "title": null,
-            "type": "optional",
-            "value": {
-=======
             "schema": {
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
               "generatedName": "endUserUpdatedWebhookPayloadTimestamp",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -1730,13 +1664,9 @@ exports[`open api parser > ada > parse open api 1`] = `
                   "pattern": null,
                   "type": "string",
                 },
+                "title": null,
                 "type": "primitive",
               },
-<<<<<<< HEAD
-              "title": null,
-              "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
           {
@@ -1746,19 +1676,13 @@ exports[`open api parser > ada > parse open api 1`] = `
             "generatedName": "endUserUpdatedWebhookPayloadData",
             "key": "data",
             "nameOverride": null,
-<<<<<<< HEAD
-            "title": null,
-            "type": "optional",
-            "value": {
-              "generatedName": "EndUserUpdatedWebhookPayloadData",
-=======
             "schema": {
               "availability": null,
               "description": null,
               "generatedName": "endUserUpdatedWebhookPayloadData",
               "groupName": [],
->>>>>>> 30dc3ebe9d (working, need to polish)
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "generatedName": "EndUserUpdatedWebhookPayloadData",
@@ -1772,6 +1696,7 @@ exports[`open api parser > ada > parse open api 1`] = `
           "file": "ada/openapi.json",
           "type": "openapi",
         },
+        "title": null,
         "type": "object",
       },
       "EndUsers": {
@@ -1789,26 +1714,6 @@ exports[`open api parser > ada > parse open api 1`] = `
         "nameOverride": null,
         "type": "unknown",
       },
-<<<<<<< HEAD
-      "title": null,
-      "type": "object",
-    },
-    "EndUsers": {
-      "generatedName": "EndUsers",
-      "nameOverride": null,
-      "type": "unknown",
-    },
-    "Error": {
-      "generatedName": "Error",
-      "nameOverride": null,
-      "type": "unknown",
-    },
-    "Errors": {
-      "generatedName": "Errors",
-      "nameOverride": null,
-      "type": "unknown",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
     },
   },
   "securitySchemes": {

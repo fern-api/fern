@@ -143,18 +143,13 @@ exports[`float > float > parse open api 1`] = `
             "generatedName": "requestId",
             "key": "id",
             "nameOverride": null,
-<<<<<<< HEAD
-            "title": null,
-            "type": "optional",
-            "value": {
-=======
             "schema": {
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
               "generatedName": "requestId",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -165,13 +160,9 @@ exports[`float > float > parse open api 1`] = `
                 "schema": {
                   "type": "float",
                 },
+                "title": null,
                 "type": "primitive",
               },
-<<<<<<< HEAD
-              "title": null,
-              "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
         ],
@@ -179,26 +170,15 @@ exports[`float > float > parse open api 1`] = `
           "file": "float/openapi.yml",
           "type": "openapi",
         },
+        "title": null,
         "type": "object",
       },
-<<<<<<< HEAD
-      "title": null,
-      "type": "object",
-    },
-    "Response": {
-      "additionalProperties": false,
-      "allOf": [],
-      "allOfPropertyConflicts": [],
-      "availability": null,
-      "description": "A generic response type used throughout the API.
-=======
       "Response": {
         "additionalProperties": false,
         "allOf": [],
         "allOfPropertyConflicts": [],
         "availability": null,
         "description": "A generic response type used throughout the API.
->>>>>>> 30dc3ebe9d (working, need to polish)
 ",
         "generatedName": "Response",
         "groupName": [],
@@ -211,18 +191,13 @@ exports[`float > float > parse open api 1`] = `
             "generatedName": "responseId",
             "key": "id",
             "nameOverride": null,
-<<<<<<< HEAD
-            "title": null,
-            "type": "optional",
-            "value": {
-=======
             "schema": {
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
               "generatedName": "responseId",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -233,13 +208,9 @@ exports[`float > float > parse open api 1`] = `
                 "schema": {
                   "type": "float",
                 },
+                "title": null,
                 "type": "primitive",
               },
-<<<<<<< HEAD
-              "title": null,
-              "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
           {
@@ -249,18 +220,13 @@ exports[`float > float > parse open api 1`] = `
             "generatedName": "responseValue",
             "key": "value",
             "nameOverride": null,
-<<<<<<< HEAD
-            "title": null,
-            "type": "optional",
-            "value": {
-=======
             "schema": {
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
               "generatedName": "responseValue",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -271,13 +237,9 @@ exports[`float > float > parse open api 1`] = `
                 "schema": {
                   "type": "float",
                 },
+                "title": null,
                 "type": "primitive",
               },
-<<<<<<< HEAD
-              "title": null,
-              "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
         ],
@@ -285,13 +247,9 @@ exports[`float > float > parse open api 1`] = `
           "file": "float/openapi.yml",
           "type": "openapi",
         },
+        "title": null,
         "type": "object",
       },
-<<<<<<< HEAD
-      "title": null,
-      "type": "object",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
     },
   },
   "securitySchemes": {},

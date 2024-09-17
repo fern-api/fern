@@ -45,13 +45,9 @@ exports[`open api parser > defaults > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
-<<<<<<< HEAD
-            "title": null,
-            "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
           },
           {
             "audiences": [],
@@ -74,13 +70,9 @@ exports[`open api parser > defaults > parse open api 1`] = `
                 "pattern": null,
                 "type": "string",
               },
+              "title": null,
               "type": "primitive",
             },
-<<<<<<< HEAD
-            "title": null,
-            "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
           },
           {
             "audiences": [],
@@ -99,13 +91,9 @@ exports[`open api parser > defaults > parse open api 1`] = `
                 "default": 1000000,
                 "type": "int64",
               },
+              "title": null,
               "type": "primitive",
             },
-<<<<<<< HEAD
-            "title": null,
-            "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
           },
           {
             "audiences": [],
@@ -124,26 +112,18 @@ exports[`open api parser > defaults > parse open api 1`] = `
                 "default": false,
                 "type": "boolean",
               },
+              "title": null,
               "type": "primitive",
             },
-<<<<<<< HEAD
-            "title": null,
-            "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
           },
         ],
         "source": {
           "file": "defaults/openapi.yml",
           "type": "openapi",
         },
+        "title": "Joint Owner Invitation Fields (v1.0.0)",
         "type": "object",
       },
-<<<<<<< HEAD
-      "title": "Joint Owner Invitation Fields (v1.0.0)",
-      "type": "object",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
     },
   },
   "securitySchemes": {},

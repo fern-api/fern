@@ -26,17 +26,7 @@ export const ArraySchemaWithExample: core.serialization.ObjectSchema<
     .extend(WithTitle);
 
 export declare namespace ArraySchemaWithExample {
-<<<<<<< HEAD
-    interface Raw
-        extends WithSdkGroupName.Raw,
-            WithSchemaId.Raw,
-            WithName.Raw,
-            WithDescription.Raw,
-            WithAvailability.Raw,
-            WithTitle.Raw {
-=======
-    interface Raw extends WithSdkGroupName.Raw, WithName.Raw, WithDescription.Raw, WithAvailability.Raw {
->>>>>>> cafb0600e0 (not fully working)
+    interface Raw extends WithSdkGroupName.Raw, WithName.Raw, WithDescription.Raw, WithAvailability.Raw, WithTitle.Raw {
         value: serializers.SchemaWithExample.Raw;
         example?: unknown[] | null;
     }

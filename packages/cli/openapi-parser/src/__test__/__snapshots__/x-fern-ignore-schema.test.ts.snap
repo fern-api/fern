@@ -31,18 +31,13 @@ exports[`x-fern-ignore-schema > x-fern-ignore-schema > parse open api 1`] = `
             "generatedName": "schemaToKeepId",
             "key": "id",
             "nameOverride": null,
-<<<<<<< HEAD
-            "title": null,
-            "type": "optional",
-            "value": {
-=======
             "schema": {
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
               "generatedName": "schemaToKeepId",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -58,13 +53,9 @@ exports[`x-fern-ignore-schema > x-fern-ignore-schema > parse open api 1`] = `
                   "pattern": null,
                   "type": "string",
                 },
+                "title": null,
                 "type": "primitive",
               },
-<<<<<<< HEAD
-              "title": null,
-              "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
         ],
@@ -72,13 +63,9 @@ exports[`x-fern-ignore-schema > x-fern-ignore-schema > parse open api 1`] = `
           "file": "x-fern-ignore-schema/openapi.yml",
           "type": "openapi",
         },
+        "title": null,
         "type": "object",
       },
-<<<<<<< HEAD
-      "title": null,
-      "type": "object",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
     },
   },
   "securitySchemes": {},

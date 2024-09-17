@@ -131,116 +131,15 @@ exports[`examples > enum-casing > parse open api 1`] = `
             "generatedName": "exampleResponseStatus",
             "key": "status",
             "nameOverride": null,
-<<<<<<< HEAD
-            "title": null,
-            "type": "optional",
-            "value": {
-=======
             "schema": {
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
               "generatedName": "exampleResponseStatus",
               "groupName": [],
               "nameOverride": null,
-<<<<<<< HEAD
-              "source": {
-                "file": "enum-casing/openapi.yml",
-                "type": "openapi",
-              },
               "title": null,
-              "type": "enum",
-              "values": [
-                {
-                  "availability": null,
-                  "casing": {
-                    "camel": null,
-                    "pascal": null,
-                    "screamingSnake": null,
-                    "snake": null,
-                  },
-                  "description": null,
-                  "generatedName": "success",
-                  "nameOverride": null,
-                  "value": "success",
-                },
-                {
-                  "availability": null,
-                  "casing": {
-                    "camel": null,
-                    "pascal": null,
-                    "screamingSnake": null,
-                    "snake": null,
-                  },
-                  "description": null,
-                  "generatedName": "failure",
-                  "nameOverride": null,
-                  "value": "failure",
-                },
-              ],
-            },
-          },
-        },
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "exampleResponseMessage",
-          "key": "message",
-          "nameOverride": null,
-          "schema": {
-            "availability": null,
-            "description": null,
-            "generatedName": "exampleResponseMessage",
-            "groupName": [],
-            "nameOverride": null,
-            "title": null,
-            "type": "optional",
-            "value": {
-              "availability": null,
-              "description": null,
-              "generatedName": "ExampleResponseMessage",
-              "groupName": [],
-              "nameOverride": null,
-              "schema": {
-                "default": null,
-                "format": null,
-                "maxLength": null,
-                "minLength": null,
-                "pattern": null,
-                "type": "string",
-              },
-              "title": null,
-              "type": "primitive",
-            },
-          },
-        },
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "exampleResponseCustomFields",
-          "key": "custom_fields",
-          "nameOverride": null,
-          "schema": {
-            "availability": null,
-            "description": null,
-            "generatedName": "exampleResponseCustomFields",
-            "groupName": [],
-            "nameOverride": null,
-            "title": null,
-            "type": "optional",
-            "value": {
-              "availability": null,
-              "description": null,
-              "encoding": null,
-              "generatedName": "ExampleResponseCustomFields",
-              "groupName": [],
-              "key": {
-=======
               "type": "optional",
               "value": {
->>>>>>> 30dc3ebe9d (working, need to polish)
                 "availability": null,
                 "default": null,
                 "description": null,
@@ -251,9 +150,7 @@ exports[`examples > enum-casing > parse open api 1`] = `
                   "file": "enum-casing/openapi.yml",
                   "type": "openapi",
                 },
-<<<<<<< HEAD
                 "title": null,
-=======
                 "type": "enum",
                 "values": [
                   {
@@ -283,7 +180,6 @@ exports[`examples > enum-casing > parse open api 1`] = `
                     "value": "failure",
                   },
                 ],
->>>>>>> 30dc3ebe9d (working, need to polish)
               },
             },
           },
@@ -300,12 +196,8 @@ exports[`examples > enum-casing > parse open api 1`] = `
               "generatedName": "exampleResponseMessage",
               "groupName": [],
               "nameOverride": null,
-<<<<<<< HEAD
               "title": null,
-              "type": "map",
-=======
               "type": "optional",
->>>>>>> 30dc3ebe9d (working, need to polish)
               "value": {
                 "availability": null,
                 "description": null,
@@ -325,38 +217,6 @@ exports[`examples > enum-casing > parse open api 1`] = `
               },
             },
           },
-<<<<<<< HEAD
-        },
-      ],
-      "source": {
-        "file": "enum-casing/openapi.yml",
-        "type": "openapi",
-      },
-      "title": null,
-      "type": "object",
-    },
-    "GrantTypeEnum": {
-      "availability": null,
-      "default": null,
-      "description": null,
-      "generatedName": "GrantTypeEnum",
-      "groupName": [],
-      "nameOverride": null,
-      "source": {
-        "file": "enum-casing/openapi.yml",
-        "type": "openapi",
-      },
-      "title": null,
-      "type": "enum",
-      "values": [
-        {
-          "availability": null,
-          "casing": {
-            "camel": null,
-            "pascal": null,
-            "screamingSnake": null,
-            "snake": null,
-=======
           {
             "audiences": [],
             "availability": null,
@@ -370,6 +230,7 @@ exports[`examples > enum-casing > parse open api 1`] = `
               "generatedName": "exampleResponseCustomFields",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -391,8 +252,10 @@ exports[`examples > enum-casing > parse open api 1`] = `
                     "pattern": null,
                     "type": "string",
                   },
+                  "title": null,
                 },
                 "nameOverride": null,
+                "title": null,
                 "type": "map",
                 "value": {
                   "availability": null,
@@ -408,17 +271,18 @@ exports[`examples > enum-casing > parse open api 1`] = `
                     "pattern": null,
                     "type": "string",
                   },
+                  "title": null,
                   "type": "primitive",
                 },
               },
             },
->>>>>>> 30dc3ebe9d (working, need to polish)
           },
         ],
         "source": {
           "file": "enum-casing/openapi.yml",
           "type": "openapi",
         },
+        "title": null,
         "type": "object",
       },
       "GrantTypeEnum": {
@@ -432,6 +296,7 @@ exports[`examples > enum-casing > parse open api 1`] = `
           "file": "enum-casing/openapi.yml",
           "type": "openapi",
         },
+        "title": null,
         "type": "enum",
         "values": [
           {

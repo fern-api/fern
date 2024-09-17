@@ -247,18 +247,13 @@ exports[`inline-schema-reference > inline-schema-reference > parse open api 1`] 
             "generatedName": "schema1Id",
             "key": "id",
             "nameOverride": null,
-<<<<<<< HEAD
-            "title": null,
-            "type": "optional",
-            "value": {
-=======
             "schema": {
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
               "generatedName": "schema1Id",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -275,13 +270,9 @@ exports[`inline-schema-reference > inline-schema-reference > parse open api 1`] 
                   "multipleOf": null,
                   "type": "int",
                 },
+                "title": null,
                 "type": "primitive",
               },
-<<<<<<< HEAD
-              "title": null,
-              "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
           {
@@ -291,18 +282,13 @@ exports[`inline-schema-reference > inline-schema-reference > parse open api 1`] 
             "generatedName": "schema1Name",
             "key": "name",
             "nameOverride": null,
-<<<<<<< HEAD
-            "title": null,
-            "type": "optional",
-            "value": {
-=======
             "schema": {
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
               "generatedName": "schema1Name",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -318,13 +304,9 @@ exports[`inline-schema-reference > inline-schema-reference > parse open api 1`] 
                   "pattern": null,
                   "type": "string",
                 },
+                "title": null,
                 "type": "primitive",
               },
-<<<<<<< HEAD
-              "title": null,
-              "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
         ],
@@ -332,31 +314,9 @@ exports[`inline-schema-reference > inline-schema-reference > parse open api 1`] 
           "file": "inline-schema-reference/openapi.yml",
           "type": "openapi",
         },
+        "title": null,
         "type": "object",
       },
-<<<<<<< HEAD
-      "title": null,
-      "type": "object",
-    },
-    "Schema2": {
-      "additionalProperties": false,
-      "allOf": [],
-      "allOfPropertyConflicts": [],
-      "availability": null,
-      "description": null,
-      "generatedName": "Schema2",
-      "groupName": [],
-      "nameOverride": null,
-      "properties": [
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "schema2Email",
-          "key": "email",
-          "nameOverride": null,
-          "schema": {
-=======
       "Schema2": {
         "additionalProperties": false,
         "allOf": [],
@@ -369,24 +329,18 @@ exports[`inline-schema-reference > inline-schema-reference > parse open api 1`] 
         "properties": [
           {
             "audiences": [],
->>>>>>> 30dc3ebe9d (working, need to polish)
             "availability": null,
             "conflict": {},
             "generatedName": "schema2Email",
             "key": "email",
             "nameOverride": null,
-<<<<<<< HEAD
-            "title": null,
-            "type": "optional",
-            "value": {
-=======
             "schema": {
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
               "generatedName": "schema2Email",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -402,13 +356,9 @@ exports[`inline-schema-reference > inline-schema-reference > parse open api 1`] 
                   "pattern": null,
                   "type": "string",
                 },
+                "title": null,
                 "type": "primitive",
               },
-<<<<<<< HEAD
-              "title": null,
-              "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
           {
@@ -418,18 +368,13 @@ exports[`inline-schema-reference > inline-schema-reference > parse open api 1`] 
             "generatedName": "schema2Age",
             "key": "age",
             "nameOverride": null,
-<<<<<<< HEAD
-            "title": null,
-            "type": "optional",
-            "value": {
-=======
             "schema": {
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
               "generatedName": "schema2Age",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -446,13 +391,9 @@ exports[`inline-schema-reference > inline-schema-reference > parse open api 1`] 
                   "multipleOf": null,
                   "type": "int",
                 },
+                "title": null,
                 "type": "primitive",
               },
-<<<<<<< HEAD
-              "title": null,
-              "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
         ],
@@ -460,13 +401,9 @@ exports[`inline-schema-reference > inline-schema-reference > parse open api 1`] 
           "file": "inline-schema-reference/openapi.yml",
           "type": "openapi",
         },
+        "title": null,
         "type": "object",
       },
-<<<<<<< HEAD
-      "title": null,
-      "type": "object",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
     },
   },
   "securitySchemes": {},

@@ -26,17 +26,7 @@ export const PrimitiveSchema: core.serialization.ObjectSchema<
     .extend(WithTitle);
 
 export declare namespace PrimitiveSchema {
-<<<<<<< HEAD
-    interface Raw
-        extends WithDescription.Raw,
-            WithSchemaId.Raw,
-            WithName.Raw,
-            WithSdkGroupName.Raw,
-            WithAvailability.Raw,
-            WithTitle.Raw {
-=======
-    interface Raw extends WithDescription.Raw, WithName.Raw, WithSdkGroupName.Raw, WithAvailability.Raw {
->>>>>>> cafb0600e0 (not fully working)
+    interface Raw extends WithDescription.Raw, WithName.Raw, WithSdkGroupName.Raw, WithAvailability.Raw, WithTitle.Raw {
         schema: PrimitiveSchemaValue.Raw;
     }
 }

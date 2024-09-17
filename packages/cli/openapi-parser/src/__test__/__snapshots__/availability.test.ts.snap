@@ -1087,31 +1087,9 @@ exports[`open api parser > availability > parse open api 1`] = `
           "pattern": null,
           "type": "string",
         },
+        "title": null,
         "type": "primitive",
       },
-<<<<<<< HEAD
-      "title": null,
-      "type": "primitive",
-    },
-    "NotDeprecatedSettings": {
-      "additionalProperties": false,
-      "allOf": [],
-      "allOfPropertyConflicts": [],
-      "availability": null,
-      "description": null,
-      "generatedName": "NotDeprecatedSettings",
-      "groupName": [],
-      "nameOverride": null,
-      "properties": [
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "notDeprecatedSettingsNotDeprecatedSetting",
-          "key": "not_deprecated_setting",
-          "nameOverride": null,
-          "schema": {
-=======
       "NotDeprecatedSettings": {
         "additionalProperties": false,
         "allOf": [],
@@ -1124,24 +1102,18 @@ exports[`open api parser > availability > parse open api 1`] = `
         "properties": [
           {
             "audiences": [],
->>>>>>> 30dc3ebe9d (working, need to polish)
             "availability": null,
             "conflict": {},
             "generatedName": "notDeprecatedSettingsNotDeprecatedSetting",
             "key": "not_deprecated_setting",
             "nameOverride": null,
-<<<<<<< HEAD
-            "title": null,
-            "type": "optional",
-            "value": {
-=======
             "schema": {
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
               "generatedName": "notDeprecatedSettingsNotDeprecatedSetting",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -1153,13 +1125,9 @@ exports[`open api parser > availability > parse open api 1`] = `
                   "default": null,
                   "type": "boolean",
                 },
+                "title": null,
                 "type": "primitive",
               },
-<<<<<<< HEAD
-              "title": null,
-              "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
         ],
@@ -1167,31 +1135,9 @@ exports[`open api parser > availability > parse open api 1`] = `
           "file": "availability/openapi.yml",
           "type": "openapi",
         },
+        "title": null,
         "type": "object",
       },
-<<<<<<< HEAD
-      "title": null,
-      "type": "object",
-    },
-    "Settings": {
-      "additionalProperties": false,
-      "allOf": [],
-      "allOfPropertyConflicts": [],
-      "availability": null,
-      "description": null,
-      "generatedName": "Settings",
-      "groupName": [],
-      "nameOverride": null,
-      "properties": [
-        {
-          "audiences": [],
-          "availability": "Deprecated",
-          "conflict": {},
-          "generatedName": "settingsDeprecatedSetting",
-          "key": "deprecated_setting",
-          "nameOverride": null,
-          "schema": {
-=======
       "Settings": {
         "additionalProperties": false,
         "allOf": [],
@@ -1204,24 +1150,18 @@ exports[`open api parser > availability > parse open api 1`] = `
         "properties": [
           {
             "audiences": [],
->>>>>>> 30dc3ebe9d (working, need to polish)
             "availability": "Deprecated",
             "conflict": {},
             "generatedName": "settingsDeprecatedSetting",
             "key": "deprecated_setting",
             "nameOverride": null,
-<<<<<<< HEAD
-            "title": null,
-            "type": "optional",
-            "value": {
-=======
             "schema": {
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": "Deprecated",
               "description": null,
               "generatedName": "settingsDeprecatedSetting",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": "Deprecated",
@@ -1233,13 +1173,9 @@ exports[`open api parser > availability > parse open api 1`] = `
                   "default": null,
                   "type": "boolean",
                 },
+                "title": null,
                 "type": "primitive",
               },
-<<<<<<< HEAD
-              "title": null,
-              "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
           {
@@ -1249,18 +1185,13 @@ exports[`open api parser > availability > parse open api 1`] = `
             "generatedName": "settingsNewSetting",
             "key": "new_setting",
             "nameOverride": null,
-<<<<<<< HEAD
-            "title": null,
-            "type": "optional",
-            "value": {
-=======
             "schema": {
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
               "generatedName": "settingsNewSetting",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -1272,13 +1203,9 @@ exports[`open api parser > availability > parse open api 1`] = `
                   "default": null,
                   "type": "boolean",
                 },
+                "title": null,
                 "type": "primitive",
               },
-<<<<<<< HEAD
-              "title": null,
-              "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
         ],
@@ -1286,31 +1213,9 @@ exports[`open api parser > availability > parse open api 1`] = `
           "file": "availability/openapi.yml",
           "type": "openapi",
         },
+        "title": null,
         "type": "object",
       },
-<<<<<<< HEAD
-      "title": null,
-      "type": "object",
-    },
-    "WholeDeprecatedSettings": {
-      "additionalProperties": false,
-      "allOf": [],
-      "allOfPropertyConflicts": [],
-      "availability": "Deprecated",
-      "description": null,
-      "generatedName": "WholeDeprecatedSettings",
-      "groupName": [],
-      "nameOverride": null,
-      "properties": [
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "wholeDeprecatedSettingsFineSetting",
-          "key": "fine_setting",
-          "nameOverride": null,
-          "schema": {
-=======
       "WholeDeprecatedSettings": {
         "additionalProperties": false,
         "allOf": [],
@@ -1323,24 +1228,18 @@ exports[`open api parser > availability > parse open api 1`] = `
         "properties": [
           {
             "audiences": [],
->>>>>>> 30dc3ebe9d (working, need to polish)
             "availability": null,
             "conflict": {},
             "generatedName": "wholeDeprecatedSettingsFineSetting",
             "key": "fine_setting",
             "nameOverride": null,
-<<<<<<< HEAD
-            "title": null,
-            "type": "optional",
-            "value": {
-=======
             "schema": {
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
               "generatedName": "wholeDeprecatedSettingsFineSetting",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -1352,13 +1251,9 @@ exports[`open api parser > availability > parse open api 1`] = `
                   "default": null,
                   "type": "boolean",
                 },
+                "title": null,
                 "type": "primitive",
               },
-<<<<<<< HEAD
-              "title": null,
-              "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
         ],
@@ -1366,13 +1261,9 @@ exports[`open api parser > availability > parse open api 1`] = `
           "file": "availability/openapi.yml",
           "type": "openapi",
         },
+        "title": null,
         "type": "object",
       },
-<<<<<<< HEAD
-      "title": null,
-      "type": "object",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
     },
   },
   "securitySchemes": {},

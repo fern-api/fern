@@ -360,18 +360,13 @@ exports[`x-fern-header > x-fern-header > parse open api 1`] = `
             "generatedName": "streamUserId",
             "key": "id",
             "nameOverride": null,
-<<<<<<< HEAD
-            "title": null,
-            "type": "optional",
-            "value": {
-=======
             "schema": {
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
               "generatedName": "streamUserId",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -387,13 +382,9 @@ exports[`x-fern-header > x-fern-header > parse open api 1`] = `
                   "pattern": null,
                   "type": "string",
                 },
+                "title": null,
                 "type": "primitive",
               },
-<<<<<<< HEAD
-              "title": null,
-              "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
           {
@@ -403,69 +394,13 @@ exports[`x-fern-header > x-fern-header > parse open api 1`] = `
             "generatedName": "streamUserStreamed",
             "key": "streamed",
             "nameOverride": null,
-<<<<<<< HEAD
-            "title": null,
-            "type": "optional",
-            "value": {
-              "availability": null,
-              "description": null,
-              "generatedName": "StreamUserStreamed",
-              "groupName": null,
-              "nameOverride": null,
-              "title": null,
-              "type": "literal",
-              "value": {
-                "type": "boolean",
-                "value": true,
-              },
-            },
-          },
-        },
-      ],
-      "source": {
-        "file": "x-fern-header/openapi.yml",
-        "type": "openapi",
-      },
-      "title": null,
-      "type": "object",
-    },
-    "User": {
-      "additionalProperties": false,
-      "allOf": [],
-      "allOfPropertyConflicts": [],
-      "availability": null,
-      "description": null,
-      "generatedName": "User",
-      "groupName": [],
-      "nameOverride": null,
-      "properties": [
-        {
-          "audiences": [],
-          "availability": null,
-          "conflict": {},
-          "generatedName": "userId",
-          "key": "id",
-          "nameOverride": null,
-          "schema": {
-            "availability": null,
-            "description": null,
-            "generatedName": "userId",
-            "groupName": [],
-            "nameOverride": null,
-            "title": null,
-            "type": "optional",
-            "value": {
-              "availability": null,
-              "description": null,
-              "generatedName": "UserId",
-=======
             "schema": {
               "availability": null,
               "description": null,
               "generatedName": "streamUserStreamed",
->>>>>>> 30dc3ebe9d (working, need to polish)
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -473,17 +408,13 @@ exports[`x-fern-header > x-fern-header > parse open api 1`] = `
                 "generatedName": "StreamUserStreamed",
                 "groupName": null,
                 "nameOverride": null,
+                "title": null,
                 "type": "literal",
                 "value": {
                   "type": "boolean",
                   "value": true,
                 },
               },
-<<<<<<< HEAD
-              "title": null,
-              "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
         ],
@@ -491,6 +422,7 @@ exports[`x-fern-header > x-fern-header > parse open api 1`] = `
           "file": "x-fern-header/openapi.yml",
           "type": "openapi",
         },
+        "title": null,
         "type": "object",
       },
       "User": {
@@ -510,24 +442,14 @@ exports[`x-fern-header > x-fern-header > parse open api 1`] = `
             "generatedName": "userId",
             "key": "id",
             "nameOverride": null,
-<<<<<<< HEAD
-            "title": null,
-            "type": "optional",
-            "value": {
-=======
             "schema": {
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
               "generatedName": "userId",
               "groupName": [],
               "nameOverride": null,
-<<<<<<< HEAD
               "title": null,
-              "type": "literal",
-=======
               "type": "optional",
->>>>>>> 30dc3ebe9d (working, need to polish)
               "value": {
                 "availability": null,
                 "description": null,
@@ -542,6 +464,7 @@ exports[`x-fern-header > x-fern-header > parse open api 1`] = `
                   "pattern": null,
                   "type": "string",
                 },
+                "title": null,
                 "type": "primitive",
               },
             },
@@ -559,6 +482,7 @@ exports[`x-fern-header > x-fern-header > parse open api 1`] = `
               "generatedName": "userStreamed",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -566,6 +490,7 @@ exports[`x-fern-header > x-fern-header > parse open api 1`] = `
                 "generatedName": "UserStreamed",
                 "groupName": null,
                 "nameOverride": null,
+                "title": null,
                 "type": "literal",
                 "value": {
                   "type": "boolean",
@@ -579,13 +504,9 @@ exports[`x-fern-header > x-fern-header > parse open api 1`] = `
           "file": "x-fern-header/openapi.yml",
           "type": "openapi",
         },
+        "title": null,
         "type": "object",
       },
-<<<<<<< HEAD
-      "title": null,
-      "type": "object",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
     },
   },
   "securitySchemes": {

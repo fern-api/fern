@@ -29,22 +29,15 @@ exports[`x-fern-property-name > x-fern-property-name > parse open api 1`] = `
             "availability": null,
             "conflict": {},
             "generatedName": "baseUserId",
-<<<<<<< HEAD
-            "groupName": [],
-            "nameOverride": null,
-            "title": null,
-            "type": "optional",
-            "value": {
-=======
             "key": "id",
             "nameOverride": "renamed_id",
             "schema": {
->>>>>>> 30dc3ebe9d (working, need to polish)
               "availability": null,
               "description": null,
               "generatedName": "baseUserId",
               "groupName": [],
               "nameOverride": null,
+              "title": null,
               "type": "optional",
               "value": {
                 "availability": null,
@@ -60,13 +53,9 @@ exports[`x-fern-property-name > x-fern-property-name > parse open api 1`] = `
                   "pattern": null,
                   "type": "string",
                 },
+                "title": null,
                 "type": "primitive",
               },
-<<<<<<< HEAD
-              "title": null,
-              "type": "primitive",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
             },
           },
         ],
@@ -74,13 +63,9 @@ exports[`x-fern-property-name > x-fern-property-name > parse open api 1`] = `
           "file": "x-fern-property-name/openapi.yml",
           "type": "openapi",
         },
+        "title": null,
         "type": "object",
       },
-<<<<<<< HEAD
-      "title": null,
-      "type": "object",
-=======
->>>>>>> 30dc3ebe9d (working, need to polish)
     },
   },
   "securitySchemes": {},

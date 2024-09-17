@@ -56,12 +56,8 @@ export function buildTypeReference({
     fileContainingReference: RelativeFilePath;
     declarationFile?: RelativeFilePath;
     context: OpenApiIrConverterContext;
-<<<<<<< HEAD
-}): RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema {
-=======
     namespace: string | undefined;
-}): RawSchemas.TypeReferenceWithDocsSchema {
->>>>>>> cafb0600e0 (not fully working)
+}): RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema {
     switch (schema.type) {
         case "primitive": {
             return buildPrimitiveTypeReference(schema);
@@ -406,14 +402,9 @@ export function buildReferenceTypeReference({
     schema: ReferencedSchema;
     fileContainingReference: RelativeFilePath;
     context: OpenApiIrConverterContext;
-<<<<<<< HEAD
-}): RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema {
-    const resolvedSchema = context.getSchema(schema.schema);
-=======
     namespace: string | undefined;
-}): RawSchemas.TypeReferenceWithDocsSchema {
+}): RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema {
     const resolvedSchema = context.getSchema(schema.schema, namespace);
->>>>>>> cafb0600e0 (not fully working)
     if (resolvedSchema == null) {
         return "unknown";
     }
@@ -450,12 +441,8 @@ export function buildArrayTypeReference({
     fileContainingReference: RelativeFilePath;
     declarationFile: RelativeFilePath;
     context: OpenApiIrConverterContext;
-<<<<<<< HEAD
-}): RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema {
-    const item = buildTypeReference({ schema: schema.value, fileContainingReference, declarationFile, context });
-=======
     namespace: string | undefined;
-}): RawSchemas.TypeReferenceWithDocsSchema {
+}): RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema {
     const item = buildTypeReference({
         schema: schema.value,
         fileContainingReference,
@@ -463,7 +450,6 @@ export function buildArrayTypeReference({
         context,
         namespace
     });
->>>>>>> cafb0600e0 (not fully working)
     const type = `list<${getTypeFromTypeReference(item)}>`;
     if (schema.description == null && schema.title == null) {
         return type;
@@ -487,12 +473,8 @@ export function buildMapTypeReference({
     fileContainingReference: RelativeFilePath;
     declarationFile: RelativeFilePath;
     context: OpenApiIrConverterContext;
-<<<<<<< HEAD
-}): RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema {
-=======
     namespace: string | undefined;
-}): RawSchemas.TypeReferenceWithDocsSchema {
->>>>>>> cafb0600e0 (not fully working)
+}): RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema {
     const keyTypeReference = buildPrimitiveTypeReference(schema.key);
     const valueTypeReference = buildTypeReference({
         schema: schema.value,
@@ -535,12 +517,8 @@ export function buildOptionalTypeReference({
     fileContainingReference: RelativeFilePath;
     declarationFile: RelativeFilePath;
     context: OpenApiIrConverterContext;
-<<<<<<< HEAD
-}): RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema {
-=======
     namespace: string | undefined;
-}): RawSchemas.TypeReferenceWithDocsSchema {
->>>>>>> cafb0600e0 (not fully working)
+}): RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema {
     const itemTypeReference = buildTypeReference({
         schema: schema.value,
         fileContainingReference,
@@ -666,12 +644,8 @@ export function buildObjectTypeReference({
     fileContainingReference: RelativeFilePath;
     declarationFile: RelativeFilePath;
     context: OpenApiIrConverterContext;
-<<<<<<< HEAD
-}): RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema {
-=======
     namespace: string | undefined;
-}): RawSchemas.TypeReferenceWithDocsSchema {
->>>>>>> cafb0600e0 (not fully working)
+}): RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema {
     const objectTypeDeclaration = buildObjectTypeDeclaration({
         schema,
         declarationFile,
@@ -706,12 +680,8 @@ export function buildOneOfTypeReference({
     fileContainingReference: RelativeFilePath;
     declarationFile: RelativeFilePath;
     context: OpenApiIrConverterContext;
-<<<<<<< HEAD
-}): RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema {
-=======
     namespace: string | undefined;
-}): RawSchemas.TypeReferenceWithDocsSchema {
->>>>>>> cafb0600e0 (not fully working)
+}): RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema {
     const unionTypeDeclaration = buildOneOfTypeDeclaration({
         schema,
         declarationFile,
