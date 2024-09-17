@@ -24,7 +24,7 @@ class BasicCustomFiles extends SerializableType
      */
     public NonVoidFunctionSignature $signature;
 
-    #[JsonProperty("additionalFiles"), ArrayType([Language => Files])]
+    #[JsonProperty("additionalFiles"), ArrayType([Language::class => Files::class])]
     /**
      * @var array<Language, Files> $additionalFiles
      */

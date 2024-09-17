@@ -9,7 +9,7 @@ use Seed\Commons\SinglyLinkedListNodeValue;
 
 class SinglyLinkedListValue extends SerializableType
 {
-    #[JsonProperty("nodes"), ArrayType(["string" => SinglyLinkedListNodeValue])]
+    #[JsonProperty("nodes"), ArrayType(["string" => SinglyLinkedListNodeValue::class])]
     /**
      * @var array<string, SinglyLinkedListNodeValue> $nodes
      */

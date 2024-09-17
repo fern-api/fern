@@ -10,7 +10,7 @@ use Seed\V2\Problem\Types\ProblemInfoV2;
 
 class TestSubmissionStatusV2 extends SerializableType
 {
-    #[JsonProperty("updates"), ArrayType([TestSubmissionUpdate])]
+    #[JsonProperty("updates"), ArrayType([TestSubmissionUpdate::class])]
     /**
      * @var array<TestSubmissionUpdate> $updates
      */

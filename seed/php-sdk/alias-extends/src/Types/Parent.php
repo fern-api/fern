@@ -9,16 +9,16 @@ class parent extends SerializableType
 {
     #[JsonProperty("parent")]
     /**
-     * @var string $parent
+     * @var string $parent_
      */
-    public string $parent;
+    public string $parent_;
 
     /**
-     * @param string $parent
+     * @param string $parent_
      */
     public function __construct(
-        string $parent,
+        string $parent_,
     ) {
-        $this->parent = $parent;
+        $this->parent_ = $parent_;
     }
 }

@@ -21,7 +21,7 @@ class Patient extends SerializableType
      */
     public string $name;
 
-    #[JsonProperty("scripts"), ArrayType([Script])]
+    #[JsonProperty("scripts"), ArrayType([Script::class])]
     /**
      * @var array<Script> $scripts
      */

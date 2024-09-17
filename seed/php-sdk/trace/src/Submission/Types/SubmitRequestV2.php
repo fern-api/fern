@@ -22,7 +22,7 @@ class SubmitRequestV2 extends SerializableType
      */
     public Language $language;
 
-    #[JsonProperty("submissionFiles"), ArrayType([SubmissionFileInfo])]
+    #[JsonProperty("submissionFiles"), ArrayType([SubmissionFileInfo::class])]
     /**
      * @var array<SubmissionFileInfo> $submissionFiles
      */

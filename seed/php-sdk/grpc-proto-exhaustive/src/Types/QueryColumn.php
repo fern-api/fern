@@ -23,9 +23,9 @@ class QueryColumn extends SerializableType
 
     #[JsonProperty("namespace")]
     /**
-     * @var ?string $namespace
+     * @var ?string $namespace_
      */
-    public ?string $namespace;
+    public ?string $namespace_;
 
     #[JsonProperty("filter")]
     /**
@@ -42,20 +42,20 @@ class QueryColumn extends SerializableType
     /**
      * @param array<float> $values
      * @param ?int $topK
-     * @param ?string $namespace
+     * @param ?string $namespace_
      * @param mixed $filter
      * @param ?IndexedData $indexedData
      */
     public function __construct(
         array $values,
         ?int $topK = null,
-        ?string $namespace = null,
+        ?string $namespace_ = null,
         mixed $filter,
         ?IndexedData $indexedData = null,
     ) {
         $this->values = $values;
         $this->topK = $topK;
-        $this->namespace = $namespace;
+        $this->namespace_ = $namespace_;
         $this->filter = $filter;
         $this->indexedData = $indexedData;
     }

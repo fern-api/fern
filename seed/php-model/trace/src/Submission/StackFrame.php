@@ -21,7 +21,7 @@ class StackFrame extends SerializableType
      */
     public int $lineNumber;
 
-    #[JsonProperty("scopes"), ArrayType([Scope])]
+    #[JsonProperty("scopes"), ArrayType([Scope::class])]
     /**
      * @var array<Scope> $scopes
      */

@@ -10,7 +10,7 @@ use Seed\Problem\ProblemFiles;
 
 class GetDefaultStarterFilesResponse extends SerializableType
 {
-    #[JsonProperty("files"), ArrayType([Language => ProblemFiles])]
+    #[JsonProperty("files"), ArrayType([Language::class => ProblemFiles::class])]
     /**
      * @var array<Language, ProblemFiles> $files
      */

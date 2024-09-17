@@ -10,7 +10,7 @@ use Seed\V2\Problem\FileInfoV2;
 
 class GetBasicSolutionFileResponse extends SerializableType
 {
-    #[JsonProperty("solutionFileByLanguage"), ArrayType([Language => FileInfoV2])]
+    #[JsonProperty("solutionFileByLanguage"), ArrayType([Language::class => FileInfoV2::class])]
     /**
      * @var array<Language, FileInfoV2> $solutionFileByLanguage
      */

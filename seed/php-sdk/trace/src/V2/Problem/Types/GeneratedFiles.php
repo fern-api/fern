@@ -10,19 +10,19 @@ use Seed\V2\Problem\Types\Files;
 
 class GeneratedFiles extends SerializableType
 {
-    #[JsonProperty("generatedTestCaseFiles"), ArrayType([Language => Files])]
+    #[JsonProperty("generatedTestCaseFiles"), ArrayType([Language::class => Files::class])]
     /**
      * @var array<Language, Files> $generatedTestCaseFiles
      */
     public array $generatedTestCaseFiles;
 
-    #[JsonProperty("generatedTemplateFiles"), ArrayType([Language => Files])]
+    #[JsonProperty("generatedTemplateFiles"), ArrayType([Language::class => Files::class])]
     /**
      * @var array<Language, Files> $generatedTemplateFiles
      */
     public array $generatedTemplateFiles;
 
-    #[JsonProperty("other"), ArrayType([Language => Files])]
+    #[JsonProperty("other"), ArrayType([Language::class => Files::class])]
     /**
      * @var array<Language, Files> $other
      */

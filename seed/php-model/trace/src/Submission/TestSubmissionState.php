@@ -15,13 +15,13 @@ class TestSubmissionState extends SerializableType
      */
     public string $problemId;
 
-    #[JsonProperty("defaultTestCases"), ArrayType([TestCase])]
+    #[JsonProperty("defaultTestCases"), ArrayType([TestCase::class])]
     /**
      * @var array<TestCase> $defaultTestCases
      */
     public array $defaultTestCases;
 
-    #[JsonProperty("customTestCases"), ArrayType([TestCase])]
+    #[JsonProperty("customTestCases"), ArrayType([TestCase::class])]
     /**
      * @var array<TestCase> $customTestCases
      */

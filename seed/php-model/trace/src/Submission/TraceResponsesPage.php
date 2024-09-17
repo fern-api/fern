@@ -9,7 +9,7 @@ use Seed\Submission\TraceResponse;
 
 class TraceResponsesPage extends SerializableType
 {
-    #[JsonProperty("traceResponses"), ArrayType([TraceResponse])]
+    #[JsonProperty("traceResponses"), ArrayType([TraceResponse::class])]
     /**
      * @var array<TraceResponse> $traceResponses
      */

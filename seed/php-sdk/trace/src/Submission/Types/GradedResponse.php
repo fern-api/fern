@@ -15,7 +15,7 @@ class GradedResponse extends SerializableType
      */
     public string $submissionId;
 
-    #[JsonProperty("testCases"), ArrayType(["string" => TestCaseResultWithStdout])]
+    #[JsonProperty("testCases"), ArrayType(["string" => TestCaseResultWithStdout::class])]
     /**
      * @var array<string, TestCaseResultWithStdout> $testCases
      */

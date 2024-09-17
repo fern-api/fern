@@ -9,7 +9,7 @@ use Seed\Types\NamespaceSummary;
 
 class DescribeResponse extends SerializableType
 {
-    #[JsonProperty("namespaces"), ArrayType(["string" => NamespaceSummary])]
+    #[JsonProperty("namespaces"), ArrayType(["string" => NamespaceSummary::class])]
     /**
      * @var ?array<string, NamespaceSummary> $namespaces
      */

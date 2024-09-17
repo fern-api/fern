@@ -9,7 +9,7 @@ use Seed\V2\Problem\Parameter;
 
 class VoidFunctionSignatureThatTakesActualResult extends SerializableType
 {
-    #[JsonProperty("parameters"), ArrayType([Parameter])]
+    #[JsonProperty("parameters"), ArrayType([Parameter::class])]
     /**
      * @var array<Parameter> $parameters
      */

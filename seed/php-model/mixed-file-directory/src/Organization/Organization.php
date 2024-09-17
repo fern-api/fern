@@ -21,7 +21,7 @@ class Organization extends SerializableType
      */
     public string $name;
 
-    #[JsonProperty("users"), ArrayType([User])]
+    #[JsonProperty("users"), ArrayType([User::class])]
     /**
      * @var array<User> $users
      */

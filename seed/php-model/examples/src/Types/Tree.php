@@ -9,7 +9,7 @@ use Seed\Types\Node;
 
 class Tree extends SerializableType
 {
-    #[JsonProperty("nodes"), ArrayType([Node])]
+    #[JsonProperty("nodes"), ArrayType([Node::class])]
     /**
      * @var ?array<Node> $nodes
      */

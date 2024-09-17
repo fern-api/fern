@@ -16,13 +16,13 @@ class Directory extends SerializableType
      */
     public string $name;
 
-    #[JsonProperty("files"), ArrayType([File])]
+    #[JsonProperty("files"), ArrayType([File::class])]
     /**
      * @var ?array<File> $files
      */
     public ?array $files;
 
-    #[JsonProperty("directories"), ArrayType([Directory])]
+    #[JsonProperty("directories"), ArrayType([Directory::class])]
     /**
      * @var ?array<Directory> $directories
      */

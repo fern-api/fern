@@ -9,7 +9,7 @@ use Seed\Users\Types\User;
 
 class UserOptionalListContainer extends SerializableType
 {
-    #[JsonProperty("users"), ArrayType([User])]
+    #[JsonProperty("users"), ArrayType([User::class])]
     /**
      * @var ?array<User> $users
      */

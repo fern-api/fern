@@ -9,7 +9,7 @@ use Seed\Commons\BinaryTreeNodeValue;
 
 class BinaryTreeValue extends SerializableType
 {
-    #[JsonProperty("nodes"), ArrayType(["string" => BinaryTreeNodeValue])]
+    #[JsonProperty("nodes"), ArrayType(["string" => BinaryTreeNodeValue::class])]
     /**
      * @var array<string, BinaryTreeNodeValue> $nodes
      */

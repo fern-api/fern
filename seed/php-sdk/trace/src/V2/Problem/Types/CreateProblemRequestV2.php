@@ -30,19 +30,19 @@ class CreateProblemRequestV2 extends SerializableType
      */
     public mixed $customFiles;
 
-    #[JsonProperty("customTestCaseTemplates"), ArrayType([TestCaseTemplate])]
+    #[JsonProperty("customTestCaseTemplates"), ArrayType([TestCaseTemplate::class])]
     /**
      * @var array<TestCaseTemplate> $customTestCaseTemplates
      */
     public array $customTestCaseTemplates;
 
-    #[JsonProperty("testcases"), ArrayType([TestCaseV2])]
+    #[JsonProperty("testcases"), ArrayType([TestCaseV2::class])]
     /**
      * @var array<TestCaseV2> $testcases
      */
     public array $testcases;
 
-    #[JsonProperty("supportedLanguages"), ArrayType([Language])]
+    #[JsonProperty("supportedLanguages"), ArrayType([Language::class])]
     /**
      * @var array<Language> $supportedLanguages
      */

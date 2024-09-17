@@ -11,7 +11,7 @@ use Seed\Types\Usage;
 
 class ListResponse extends SerializableType
 {
-    #[JsonProperty("columns"), ArrayType([ListElement])]
+    #[JsonProperty("columns"), ArrayType([ListElement::class])]
     /**
      * @var ?array<ListElement> $columns
      */
@@ -25,9 +25,9 @@ class ListResponse extends SerializableType
 
     #[JsonProperty("namespace")]
     /**
-     * @var ?string $namespace
+     * @var ?string $namespace_
      */
-    public ?string $namespace;
+    public ?string $namespace_;
 
     #[JsonProperty("usage")]
     /**
@@ -38,18 +38,18 @@ class ListResponse extends SerializableType
     /**
      * @param ?array<ListElement> $columns
      * @param ?Pagination $pagination
-     * @param ?string $namespace
+     * @param ?string $namespace_
      * @param ?Usage $usage
      */
     public function __construct(
         ?array $columns = null,
         ?Pagination $pagination = null,
-        ?string $namespace = null,
+        ?string $namespace_ = null,
         ?Usage $usage = null,
     ) {
         $this->columns = $columns;
         $this->pagination = $pagination;
-        $this->namespace = $namespace;
+        $this->namespace_ = $namespace_;
         $this->usage = $usage;
     }
 }

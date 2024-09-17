@@ -9,7 +9,7 @@ use Seed\Commons\Types\DoublyLinkedListNodeValue;
 
 class DoublyLinkedListValue extends SerializableType
 {
-    #[JsonProperty("nodes"), ArrayType(["string" => DoublyLinkedListNodeValue])]
+    #[JsonProperty("nodes"), ArrayType(["string" => DoublyLinkedListNodeValue::class])]
     /**
      * @var array<string, DoublyLinkedListNodeValue> $nodes
      */

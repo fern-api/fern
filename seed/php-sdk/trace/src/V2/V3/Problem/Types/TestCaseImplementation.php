@@ -16,19 +16,19 @@ class TestCaseImplementation extends SerializableType
 
     #[JsonProperty("function")]
     /**
-     * @var mixed $function
+     * @var mixed $function_
      */
-    public mixed $function;
+    public mixed $function_;
 
     /**
      * @param TestCaseImplementationDescription $description
-     * @param mixed $function
+     * @param mixed $function_
      */
     public function __construct(
         TestCaseImplementationDescription $description,
-        mixed $function,
+        mixed $function_,
     ) {
         $this->description = $description;
-        $this->function = $function;
+        $this->function_ = $function_;
     }
 }

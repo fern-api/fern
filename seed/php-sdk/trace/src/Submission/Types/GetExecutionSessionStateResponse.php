@@ -9,7 +9,7 @@ use Seed\Submission\Types\ExecutionSessionState;
 
 class GetExecutionSessionStateResponse extends SerializableType
 {
-    #[JsonProperty("states"), ArrayType(["string" => ExecutionSessionState])]
+    #[JsonProperty("states"), ArrayType(["string" => ExecutionSessionState::class])]
     /**
      * @var array<string, ExecutionSessionState> $states
      */

@@ -10,7 +10,7 @@ use Seed\V2\Problem\Types\FunctionImplementation;
 
 class FunctionImplementationForMultipleLanguages extends SerializableType
 {
-    #[JsonProperty("codeByLanguage"), ArrayType([Language => FunctionImplementation])]
+    #[JsonProperty("codeByLanguage"), ArrayType([Language::class => FunctionImplementation::class])]
     /**
      * @var array<Language, FunctionImplementation> $codeByLanguage
      */

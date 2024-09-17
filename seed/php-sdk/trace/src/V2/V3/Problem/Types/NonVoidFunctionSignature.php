@@ -9,7 +9,7 @@ use Seed\V2\V3\Problem\Types\Parameter;
 
 class NonVoidFunctionSignature extends SerializableType
 {
-    #[JsonProperty("parameters"), ArrayType([Parameter])]
+    #[JsonProperty("parameters"), ArrayType([Parameter::class])]
     /**
      * @var array<Parameter> $parameters
      */

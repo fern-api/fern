@@ -9,7 +9,7 @@ use Seed\ScoredColumn;
 
 class QueryResult extends SerializableType
 {
-    #[JsonProperty("matches"), ArrayType([ScoredColumn])]
+    #[JsonProperty("matches"), ArrayType([ScoredColumn::class])]
     /**
      * @var ?array<ScoredColumn> $matches
      */
@@ -17,19 +17,19 @@ class QueryResult extends SerializableType
 
     #[JsonProperty("namespace")]
     /**
-     * @var ?string $namespace
+     * @var ?string $namespace_
      */
-    public ?string $namespace;
+    public ?string $namespace_;
 
     /**
      * @param ?array<ScoredColumn> $matches
-     * @param ?string $namespace
+     * @param ?string $namespace_
      */
     public function __construct(
         ?array $matches = null,
-        ?string $namespace = null,
+        ?string $namespace_ = null,
     ) {
         $this->matches = $matches;
-        $this->namespace = $namespace;
+        $this->namespace_ = $namespace_;
     }
 }

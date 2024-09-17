@@ -9,7 +9,7 @@ use Seed\Commons\DebugKeyValuePairs;
 
 class DebugMapValue extends SerializableType
 {
-    #[JsonProperty("keyValuePairs"), ArrayType([DebugKeyValuePairs])]
+    #[JsonProperty("keyValuePairs"), ArrayType([DebugKeyValuePairs::class])]
     /**
      * @var array<DebugKeyValuePairs> $keyValuePairs
      */

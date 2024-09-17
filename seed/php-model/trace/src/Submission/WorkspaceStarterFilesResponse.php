@@ -10,7 +10,7 @@ use Seed\Submission\WorkspaceFiles;
 
 class WorkspaceStarterFilesResponse extends SerializableType
 {
-    #[JsonProperty("files"), ArrayType([Language => WorkspaceFiles])]
+    #[JsonProperty("files"), ArrayType([Language::class => WorkspaceFiles::class])]
     /**
      * @var array<Language, WorkspaceFiles> $files
      */

@@ -25,13 +25,13 @@ class CreateProblemRequest extends SerializableType
      */
     public ProblemDescription $problemDescription;
 
-    #[JsonProperty("files"), ArrayType([Language => ProblemFiles])]
+    #[JsonProperty("files"), ArrayType([Language::class => ProblemFiles::class])]
     /**
      * @var array<Language, ProblemFiles> $files
      */
     public array $files;
 
-    #[JsonProperty("inputParams"), ArrayType([VariableTypeAndName])]
+    #[JsonProperty("inputParams"), ArrayType([VariableTypeAndName::class])]
     /**
      * @var array<VariableTypeAndName> $inputParams
      */
@@ -43,7 +43,7 @@ class CreateProblemRequest extends SerializableType
      */
     public mixed $outputType;
 
-    #[JsonProperty("testcases"), ArrayType([TestCaseWithExpectedResult])]
+    #[JsonProperty("testcases"), ArrayType([TestCaseWithExpectedResult::class])]
     /**
      * @var array<TestCaseWithExpectedResult> $testcases
      */

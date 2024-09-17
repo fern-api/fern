@@ -15,7 +15,7 @@ class Response extends SerializableType
      */
     public mixed $response;
 
-    #[JsonProperty("identifiers"), ArrayType([Identifier])]
+    #[JsonProperty("identifiers"), ArrayType([Identifier::class])]
     /**
      * @var array<Identifier> $identifiers
      */

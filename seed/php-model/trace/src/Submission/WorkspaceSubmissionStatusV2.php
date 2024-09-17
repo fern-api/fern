@@ -9,7 +9,7 @@ use Seed\Submission\WorkspaceSubmissionUpdate;
 
 class WorkspaceSubmissionStatusV2 extends SerializableType
 {
-    #[JsonProperty("updates"), ArrayType([WorkspaceSubmissionUpdate])]
+    #[JsonProperty("updates"), ArrayType([WorkspaceSubmissionUpdate::class])]
     /**
      * @var array<WorkspaceSubmissionUpdate> $updates
      */

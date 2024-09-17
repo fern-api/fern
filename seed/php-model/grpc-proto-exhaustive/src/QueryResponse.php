@@ -11,13 +11,13 @@ use Seed\Usage;
 
 class QueryResponse extends SerializableType
 {
-    #[JsonProperty("results"), ArrayType([QueryResult])]
+    #[JsonProperty("results"), ArrayType([QueryResult::class])]
     /**
      * @var ?array<QueryResult> $results
      */
     public ?array $results;
 
-    #[JsonProperty("matches"), ArrayType([ScoredColumn])]
+    #[JsonProperty("matches"), ArrayType([ScoredColumn::class])]
     /**
      * @var ?array<ScoredColumn> $matches
      */
@@ -25,9 +25,9 @@ class QueryResponse extends SerializableType
 
     #[JsonProperty("namespace")]
     /**
-     * @var ?string $namespace
+     * @var ?string $namespace_
      */
-    public ?string $namespace;
+    public ?string $namespace_;
 
     #[JsonProperty("usage")]
     /**
@@ -38,18 +38,18 @@ class QueryResponse extends SerializableType
     /**
      * @param ?array<QueryResult> $results
      * @param ?array<ScoredColumn> $matches
-     * @param ?string $namespace
+     * @param ?string $namespace_
      * @param ?Usage $usage
      */
     public function __construct(
         ?array $results = null,
         ?array $matches = null,
-        ?string $namespace = null,
+        ?string $namespace_ = null,
         ?Usage $usage = null,
     ) {
         $this->results = $results;
         $this->matches = $matches;
-        $this->namespace = $namespace;
+        $this->namespace_ = $namespace_;
         $this->usage = $usage;
     }
 }

@@ -9,7 +9,7 @@ use Seed\V2\Problem\Types\FileInfoV2;
 
 class Files extends SerializableType
 {
-    #[JsonProperty("files"), ArrayType([FileInfoV2])]
+    #[JsonProperty("files"), ArrayType([FileInfoV2::class])]
     /**
      * @var array<FileInfoV2> $files
      */

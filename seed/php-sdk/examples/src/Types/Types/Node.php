@@ -16,13 +16,13 @@ class Node extends SerializableType
      */
     public string $name;
 
-    #[JsonProperty("nodes"), ArrayType([Node])]
+    #[JsonProperty("nodes"), ArrayType([Node::class])]
     /**
      * @var ?array<Node> $nodes
      */
     public ?array $nodes;
 
-    #[JsonProperty("trees"), ArrayType([Tree])]
+    #[JsonProperty("trees"), ArrayType([Tree::class])]
     /**
      * @var ?array<Tree> $trees
      */

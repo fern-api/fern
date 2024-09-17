@@ -9,7 +9,7 @@ use Seed\Commons\Language;
 
 class GetFunctionSignatureResponse extends SerializableType
 {
-    #[JsonProperty("functionByLanguage"), ArrayType([Language => "string"])]
+    #[JsonProperty("functionByLanguage"), ArrayType([Language::class => "string"])]
     /**
      * @var array<Language, string> $functionByLanguage
      */

@@ -9,7 +9,7 @@ use Seed\Commons\Types\KeyValuePair;
 
 class MapValue extends SerializableType
 {
-    #[JsonProperty("keyValuePairs"), ArrayType([KeyValuePair])]
+    #[JsonProperty("keyValuePairs"), ArrayType([KeyValuePair::class])]
     /**
      * @var array<KeyValuePair> $keyValuePairs
      */

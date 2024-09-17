@@ -10,7 +10,7 @@ use Seed\V2\Problem\Types\FunctionImplementationForMultipleLanguages;
 
 class VoidFunctionDefinition extends SerializableType
 {
-    #[JsonProperty("parameters"), ArrayType([Parameter])]
+    #[JsonProperty("parameters"), ArrayType([Parameter::class])]
     /**
      * @var array<Parameter> $parameters
      */

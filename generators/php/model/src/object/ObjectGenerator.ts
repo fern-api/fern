@@ -10,6 +10,7 @@ import {
     Type,
     TypeDeclaration
 } from "@fern-fern/ir-sdk/api";
+import { CsharpProtobufFileOptions } from "@fern-fern/ir-sdk/serialization";
 import { assertNever } from "../../../codegen/node_modules/@fern-api/core-utils/src";
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
@@ -164,8 +165,13 @@ export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSch
                     classReference: this.context.getUnionClassReference(),
                     arguments_: [this.getArrayTypeAttributeArgument(type.internalType.value), php.codeblock('"null"')]
                 });
-            case "reference":
-                return type.internalType.value;
+            case "reference": {
+                const reference = type.internalType.value;
+                return php.codeblock((writer) => {
+                    writer.writeNode(reference);
+                    writer.write("::class");
+                });
+            }
             default:
                 assertNever(type.internalType);
         }

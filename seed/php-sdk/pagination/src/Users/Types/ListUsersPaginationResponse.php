@@ -16,7 +16,7 @@ class ListUsersPaginationResponse extends SerializableType
      */
     public int $totalCount;
 
-    #[JsonProperty("data"), ArrayType([User])]
+    #[JsonProperty("data"), ArrayType([User::class])]
     /**
      * @var array<User> $data
      */

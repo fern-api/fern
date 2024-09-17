@@ -37,7 +37,7 @@ class ProblemInfoV2 extends SerializableType
      */
     public int $problemVersion;
 
-    #[JsonProperty("supportedLanguages"), ArrayType([Language])]
+    #[JsonProperty("supportedLanguages"), ArrayType([Language::class])]
     /**
      * @var array<Language> $supportedLanguages
      */
@@ -55,13 +55,13 @@ class ProblemInfoV2 extends SerializableType
      */
     public GeneratedFiles $generatedFiles;
 
-    #[JsonProperty("customTestCaseTemplates"), ArrayType([TestCaseTemplate])]
+    #[JsonProperty("customTestCaseTemplates"), ArrayType([TestCaseTemplate::class])]
     /**
      * @var array<TestCaseTemplate> $customTestCaseTemplates
      */
     public array $customTestCaseTemplates;
 
-    #[JsonProperty("testcases"), ArrayType([TestCaseV2])]
+    #[JsonProperty("testcases"), ArrayType([TestCaseV2::class])]
     /**
      * @var array<TestCaseV2> $testcases
      */

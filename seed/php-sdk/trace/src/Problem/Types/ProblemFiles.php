@@ -15,7 +15,7 @@ class ProblemFiles extends SerializableType
      */
     public FileInfo $solutionFile;
 
-    #[JsonProperty("readOnlyFiles"), ArrayType([FileInfo])]
+    #[JsonProperty("readOnlyFiles"), ArrayType([FileInfo::class])]
     /**
      * @var array<FileInfo> $readOnlyFiles
      */
