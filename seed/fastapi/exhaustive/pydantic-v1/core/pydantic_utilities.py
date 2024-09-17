@@ -104,10 +104,10 @@ class UniversalBaseModel(pydantic.BaseModel):
 
     @classmethod
     def model_construct(
-        cls: type[Model],
+        cls: typing.Type["Model"],
         _fields_set: typing.Optional[typing.Set[str]] = None,
         **values: typing.Any,
-    ) -> Model:
+    ) -> "Model":
         dealiased_object = convert_and_respect_annotation_metadata(
             object_=values, annotation=cls, direction="read"
         )
@@ -115,10 +115,10 @@ class UniversalBaseModel(pydantic.BaseModel):
 
     @classmethod
     def construct(
-        cls: type[Model],
+        cls: typing.Type["Model"],
         _fields_set: typing.Optional[typing.Set[str]] = None,
         **values: typing.Any,
-    ) -> Model:
+    ) -> "Model":
         dealiased_object = convert_and_respect_annotation_metadata(
             object_=values, annotation=cls, direction="read"
         )

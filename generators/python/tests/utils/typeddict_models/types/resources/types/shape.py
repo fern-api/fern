@@ -6,7 +6,6 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
 import pydantic
 import typing_extensions
-from ...core.serialization import FieldMetadata
 from ...core.unchecked_base_model import UnionMetadata
 
 
@@ -24,12 +23,10 @@ class Base(UncheckedBaseModel):
 
 
 class Shape_Circle(Base):
-    shape_type: typing_extensions.Annotated[
-        typing.Literal["circle"], FieldMetadata(alias="shapeType")
-    ] = "circle"
-    radius_measurement: typing_extensions.Annotated[
-        float, FieldMetadata(alias="radiusMeasurement")
-    ]
+    shape_type: typing.Literal["circle"] = pydantic.Field(
+        alias="shapeType", default="circle"
+    )
+    radius_measurement: float = pydantic.Field(alias="radiusMeasurement")
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
@@ -42,12 +39,10 @@ class Shape_Circle(Base):
 
 
 class Shape_Square(Base):
-    shape_type: typing_extensions.Annotated[
-        typing.Literal["square"], FieldMetadata(alias="shapeType")
-    ] = "square"
-    length_measurement: typing_extensions.Annotated[
-        float, FieldMetadata(alias="lengthMeasurement")
-    ]
+    shape_type: typing.Literal["square"] = pydantic.Field(
+        alias="shapeType", default="square"
+    )
+    length_measurement: float = pydantic.Field(alias="lengthMeasurement")
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(

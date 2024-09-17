@@ -147,7 +147,7 @@ client.admin.send_test_submission_update(
         "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ),
     update_time=datetime.datetime.fromisoformat(
-        "datetime=datetime.datetime(2024, 1, 15, 9, 30, tzinfo=TzInfo(UTC)) raw='2024-01-15T09:30:00Z'",
+        "2024-01-15 09:30:00+00:00",
     ),
     update_info=TestSubmissionUpdateInfo_Running(value="QUEUEING_SUBMISSION"),
 )
@@ -301,7 +301,7 @@ client.admin.send_workspace_submission_update(
         "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ),
     update_time=datetime.datetime.fromisoformat(
-        "datetime=datetime.datetime(2024, 1, 15, 9, 30, tzinfo=TzInfo(UTC)) raw='2024-01-15T09:30:00Z'",
+        "2024-01-15 09:30:00+00:00",
     ),
     update_info=WorkspaceSubmissionUpdateInfo_Running(
         value="QUEUEING_SUBMISSION"
@@ -1048,10 +1048,10 @@ client = SeedTrace(
 client.playlist.create_playlist(
     service_param=1,
     datetime=datetime.datetime.fromisoformat(
-        "datetime=datetime.datetime(2024, 1, 15, 9, 30, tzinfo=TzInfo(UTC)) raw='2024-01-15T09:30:00Z'",
+        "2024-01-15 09:30:00+00:00",
     ),
     optional_datetime=datetime.datetime.fromisoformat(
-        "datetime=datetime.datetime(2024, 1, 15, 9, 30, tzinfo=TzInfo(UTC)) raw='2024-01-15T09:30:00Z'",
+        "2024-01-15 09:30:00+00:00",
     ),
     name="string",
     problems=["string"],
