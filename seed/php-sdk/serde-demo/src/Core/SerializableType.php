@@ -218,7 +218,7 @@ abstract class SerializableType
      */
     public static function fromJson(string $json): static
     {
-        $arrayData = json_decode($json, true);
+        $arrayData = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
 
         if (!is_array($arrayData)) {
             throw new InvalidArgumentException('Invalid JSON provided or JSON does not decode to an array.');
