@@ -2,60 +2,69 @@
 
 namespace Seed;
 
+use GuzzleHttp\ClientInterface;
 use Seed\Core\RawClient;
+use Seed\Commons\CommonsClient;
+use Seed\File\FileClient;
+use Seed\Health\HealthClient;
+use Seed\Service\ServiceClient;
+use Seed\Types\TypesClient;
 use GuzzleHttp\Client;
 
 class SeedClient
 {
+    /**
+     * @var ?array{baseUrl?: string, client?: ClientInterface} $options
+     */
+    private ?array $options;
+
     /**
      * @var RawClient $client
      */
     private RawClient $client;
 
     /**
-     * @var array<mixed> $commons
+     * @var CommonsClient $commons
      */
-    public array $commons;
+    public CommonsClient $commons;
 
     /**
-     * @var array<mixed> $file
+     * @var FileClient $file
      */
-    public array $file;
+    public FileClient $file;
 
     /**
-     * @var array<mixed> $health
+     * @var HealthClient $health
      */
-    public array $health;
+    public HealthClient $health;
 
     /**
-     * @var array<mixed> $service
+     * @var ServiceClient $service
      */
-    public array $service;
+    public ServiceClient $service;
 
     /**
-     * @var array<mixed> $types
+     * @var TypesClient $types
      */
-    public array $types;
+    public TypesClient $types;
 
     /**
-     * @param ?array<string, mixed> $clientOptions
+     * @param ?array{baseUrl?: string, client?: ClientInterface} $options
      */
     public function __construct(
-        ?array $clientOptions = null,
+        ?array $options = null,
     ) {
         $defaultHeaders = [
             "X-Fern-Language" => "PHP",
             "X-Fern-SDK-Name" => "Seed",
             "X-Fern-SDK-Version" => "0.0.1",
         ];
-        $this->client = new RawClient(
-            client: isset($clientOptions['client']) ? $clientOptions['client'] : new Client(),
-            headers: $defaultHeaders,
-        );
-        $this->commons = [];
-        $this->file = [];
-        $this->health = [];
-        $this->service = [];
-        $this->types = [];
+        $this->options = $options ?? [];
+        $this->client = new RawClient(client: $this->options['client'] ?? new Client(), headers: $defaultHeaders);
+        $this->commons = new CommonsClient($this->client);
+        $this->file = new FileClient($this->client);
+        $this->health = new HealthClient($this->client);
+        $this->service = new ServiceClient($this->client);
+        $this->types = new TypesClient($this->client);
     }
 }

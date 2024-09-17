@@ -13,6 +13,7 @@ export declare namespace RawClient {
  */
 export class RawClient {
     public static CLASS_NAME = "RawClient";
+    public static FIELD_NAME = "client";
 
     private context: SdkGeneratorContext;
 
@@ -24,6 +25,18 @@ export class RawClient {
         return php.classReference({
             name: RawClient.CLASS_NAME,
             namespace: this.context.getCoreNamespace()
+        });
+    }
+
+    public getFieldName(): string {
+        return RawClient.FIELD_NAME;
+    }
+
+    public getField(): php.Field {
+        return php.field({
+            access: "private",
+            name: `$${this.getFieldName()}`,
+            type: php.Type.reference(this.context.rawClient.getClassReference())
         });
     }
 

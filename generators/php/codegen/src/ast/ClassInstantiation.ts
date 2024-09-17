@@ -37,16 +37,18 @@ export class ClassInstantiation extends AstNode {
             return;
         }
 
-        writer.writeLine("(");
+        writer.write("(");
         writer.indent();
-        this.arguments_.forEach((argument, idx) => {
+        this.arguments_.forEach((argument, index) => {
+            if (index > 0) {
+                writer.write(", ");
+            }
             if (isNamedArgument(argument)) {
                 writer.write(`${argument.name}: `);
                 argument.assignment.write(writer);
             } else {
                 argument.write(writer);
             }
-            writer.writeLine(",");
         });
         writer.dedent();
         writer.write(")");

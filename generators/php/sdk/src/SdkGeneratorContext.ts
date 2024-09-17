@@ -1,5 +1,5 @@
-import { HttpService, ServiceId } from "@fern-fern/ir-sdk/api";
-import { AbstractPhpGeneratorContext } from "@fern-api/php-codegen";
+import { DeclaredErrorName, HttpService, ServiceId, Subpackage, SubpackageId, TypeId } from "@fern-fern/ir-sdk/api";
+import { AbstractPhpGeneratorContext, FileLocation } from "@fern-api/php-codegen";
 import { GeneratorNotificationService } from "@fern-api/generator-commons";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
@@ -8,6 +8,9 @@ import { AsIsFiles, php } from "@fern-api/php-codegen";
 import { camelCase, upperFirst } from "lodash-es";
 import { RawClient } from "./core/RawClient";
 import { GuzzleClient } from "./external/GuzzleClient";
+import { RelativeFilePath } from "@fern-api/fs-utils";
+import { ErrorId, ErrorDeclaration } from "@fern-fern/ir-sdk/api";
+import { TYPES_DIRECTORY, ERRORS_DIRECTORY, REQUESTS_DIRECTORY } from "./constants";
 
 export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomConfigSchema> {
     public guzzleClient: GuzzleClient;
@@ -31,6 +34,29 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return service;
     }
 
+    public getErrorDeclarationOrThrow(errorId: ErrorId): ErrorDeclaration {
+        const error = this.ir.errors[errorId];
+        if (error == null) {
+            throw new Error(`Error with id ${errorId} not found`);
+        }
+        return error;
+    }
+
+    public getSubpackageField(subpackage: Subpackage): php.Field {
+        return php.field({
+            name: `$${subpackage.name.camelCase.safeName}`,
+            access: "public",
+            type: php.Type.reference(this.getSubpackageClassReference(subpackage))
+        });
+    }
+
+    public getSubpackageClassReference(subpackage: Subpackage): php.ClassReference {
+        return php.classReference({
+            name: `${subpackage.name.pascalCase.unsafeName}Client`,
+            namespace: this.getFileLocation(subpackage.fernFilepath).namespace
+        });
+    }
+
     public getRootClientClassName(): string {
         if (this.customConfig["client-class-name"] != null) {
             return this.customConfig["client-class-name"];
@@ -38,12 +64,31 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return this.getComputedClientName();
     }
 
-    public getClientOptionsParameterName(): string {
-        return "$clientOptions";
+    public getBaseUrlOptionName(): string {
+        return "baseUrl";
+    }
+
+    public getGuzzleClientOptionName(): string {
+        return "client";
+    }
+
+    public getClientOptionsName(): string {
+        return "options";
     }
 
     public getClientOptionsType(): php.Type {
-        return php.Type.map(php.Type.string(), php.Type.mixed());
+        return php.Type.typeDict([
+            {
+                key: this.getBaseUrlOptionName(),
+                valueType: php.Type.string(),
+                optional: true
+            },
+            {
+                key: this.getGuzzleClientOptionName(),
+                valueType: php.Type.reference(this.guzzleClient.getClientInterfaceClassReference()),
+                optional: true
+            }
+        ]);
     }
 
     private getComputedClientName(): string {
@@ -55,10 +100,45 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     public getCoreAsIsFiles(): string[] {
-        return [AsIsFiles.BaseApiRequest, AsIsFiles.HttpMethod, AsIsFiles.JsonApiRequest, AsIsFiles.RawClient];
+        return [
+            AsIsFiles.BaseApiRequest,
+            AsIsFiles.HttpMethod,
+            AsIsFiles.JsonApiRequest,
+            AsIsFiles.RawClient,
+            ...this.getCoreSerializationAsIsFiles()
+        ];
     }
 
     public getCoreTestAsIsFiles(): string[] {
-        return [AsIsFiles.RawClientTest];
+        return [AsIsFiles.RawClientTest, ...this.getCoreSerializationTestAsIsFiles()];
+    }
+
+    public getLocationForTypeId(typeId: TypeId): FileLocation {
+        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
+        return this.getFileLocation(typeDeclaration.name.fernFilepath, TYPES_DIRECTORY);
+    }
+
+    public getLocationForSubpackageId(subpackageId: SubpackageId): FileLocation {
+        const subpackage = this.getSubpackageOrThrow(subpackageId);
+        return this.getLocationForSubpackage(subpackage);
+    }
+
+    public getLocationForSubpackage(subpackage: Subpackage): FileLocation {
+        return this.getFileLocation(subpackage.fernFilepath);
+    }
+
+    public getLocationForServiceId(serviceId: ServiceId): FileLocation {
+        const httpService = this.getHttpServiceOrThrow(serviceId);
+        return this.getFileLocation(httpService.name.fernFilepath);
+    }
+
+    public getLocationForWrappedRequest(serviceId: ServiceId): FileLocation {
+        const httpService = this.getHttpServiceOrThrow(serviceId);
+        return this.getFileLocation(httpService.name.fernFilepath, REQUESTS_DIRECTORY);
+    }
+
+    public getLocationForErrorId(errorId: ErrorId): FileLocation {
+        const errorDeclaration = this.getErrorDeclarationOrThrow(errorId);
+        return this.getFileLocation(errorDeclaration.name.fernFilepath, ERRORS_DIRECTORY);
     }
 }

@@ -2,46 +2,57 @@
 
 namespace Seed;
 
+use GuzzleHttp\ClientInterface;
 use Seed\Core\RawClient;
+use Seed\Headers\HeadersClient;
+use Seed\Inlined\InlinedClient;
+use Seed\Path\PathClient;
+use Seed\Query\QueryClient;
+use Seed\Reference\ReferenceClient;
 use GuzzleHttp\Client;
 
 class SeedClient
 {
+    /**
+     * @var ?array{baseUrl?: string, client?: ClientInterface} $options
+     */
+    private ?array $options;
+
     /**
      * @var RawClient $client
      */
     private RawClient $client;
 
     /**
-     * @var array<mixed> $headers
+     * @var HeadersClient $headers
      */
-    public array $headers;
+    public HeadersClient $headers;
 
     /**
-     * @var array<mixed> $inlined
+     * @var InlinedClient $inlined
      */
-    public array $inlined;
+    public InlinedClient $inlined;
 
     /**
-     * @var array<mixed> $path
+     * @var PathClient $path
      */
-    public array $path;
+    public PathClient $path;
 
     /**
-     * @var array<mixed> $query
+     * @var QueryClient $query
      */
-    public array $query;
+    public QueryClient $query;
 
     /**
-     * @var array<mixed> $reference
+     * @var ReferenceClient $reference
      */
-    public array $reference;
+    public ReferenceClient $reference;
 
     /**
-     * @param ?array<string, mixed> $clientOptions
+     * @param ?array{baseUrl?: string, client?: ClientInterface} $options
      */
     public function __construct(
-        ?array $clientOptions = null,
+        ?array $options = null,
     ) {
         $defaultHeaders = [
             "X-API-Version" => "02-02-2024",
@@ -50,14 +61,12 @@ class SeedClient
             "X-Fern-SDK-Name" => "Seed",
             "X-Fern-SDK-Version" => "0.0.1",
         ];
-        $this->client = new RawClient(
-            client: isset($clientOptions['client']) ? $clientOptions['client'] : new Client(),
-            headers: $defaultHeaders,
-        );
-        $this->headers = [];
-        $this->inlined = [];
-        $this->path = [];
-        $this->query = [];
-        $this->reference = [];
+        $this->options = $options ?? [];
+        $this->client = new RawClient(client: $this->options['client'] ?? new Client(), headers: $defaultHeaders);
+        $this->headers = new HeadersClient($this->client);
+        $this->inlined = new InlinedClient($this->client);
+        $this->path = new PathClient($this->client);
+        $this->query = new QueryClient($this->client);
+        $this->reference = new ReferenceClient($this->client);
     }
 }

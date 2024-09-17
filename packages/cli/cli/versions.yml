@@ -1,5 +1,32 @@
 - changelogEntry:
   - summary: | 
+      Previously the OpenAPI converter would incorrectly mark 
+      the values of `additionalProperties` as optional. Now, we have 
+      introduced a feature flag to turn this behavior off. 
+
+      The feature flag can be configured in generators.yml: 
+      ```yml
+      api: 
+        specs: 
+          - openapi: /path/to/openapi
+            settings: 
+              optional-additional-properties: false
+      ```
+    type: fix
+  irVersion: 53
+  version: 0.41.16
+
+- changelogEntry:
+  - summary: | 
+      Performance improvements for stringifiying large Intermediate Representations. If 
+      you have a large OpenAPI spec or Fern Definition, this can potentially shave off 
+      minutes from `fern generate`. 
+    type: internal
+  irVersion: 53
+  version: 0.41.15
+
+- changelogEntry:
+  - summary: | 
       The Fern Definition now supports `conten-type` on multipart request properties. 
       For example, to specify an `application/octet-stream` and `application/json`
       contnet types, use the snippet below: 

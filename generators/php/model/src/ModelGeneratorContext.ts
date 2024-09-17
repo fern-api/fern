@@ -1,4 +1,5 @@
-import { AbstractPhpGeneratorContext, AsIsFiles } from "@fern-api/php-codegen";
+import { RelativeFilePath } from "@fern-api/fs-utils";
+import { AbstractPhpGeneratorContext, AsIsFiles, FileLocation } from "@fern-api/php-codegen";
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
 
 export class ModelGeneratorContext extends AbstractPhpGeneratorContext<ModelCustomConfigSchema> {
@@ -6,11 +7,16 @@ export class ModelGeneratorContext extends AbstractPhpGeneratorContext<ModelCust
         return [AsIsFiles.GitIgnore, AsIsFiles.PhpStanNeon, AsIsFiles.PhpUnitXml];
     }
 
+    public getLocationForTypeId(typeId: string): FileLocation {
+        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
+        return this.getFileLocation(typeDeclaration.name.fernFilepath);
+    }
+
     public getCoreAsIsFiles(): string[] {
-        return [];
+        return [...this.getCoreSerializationAsIsFiles()];
     }
 
     public getCoreTestAsIsFiles(): string[] {
-        return [];
+        return [...this.getCoreSerializationTestAsIsFiles()];
     }
 }
