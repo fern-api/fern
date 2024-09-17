@@ -5,20 +5,20 @@ namespace Seed\Types;
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 
-class parent extends SerializableType
+class Parent_ extends SerializableType
 {
     #[JsonProperty("parent")]
     /**
-     * @var string $parent_
+     * @var string $parent
      */
-    public string $parent_;
+    public string $parent;
 
     /**
-     * @param string $parent_
+     * @param string $parent
      */
     public function __construct(
-        string $parent_,
+        string $parent,
     ) {
-        $this->parent_ = $parent_;
+        $this->parent = $parent;
     }
 }

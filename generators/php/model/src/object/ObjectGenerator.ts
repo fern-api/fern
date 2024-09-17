@@ -46,7 +46,7 @@ export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSch
             const type = this.context.phpTypeMapper.convert({ reference: property.valueType });
             clazz.addField(
                 php.field({
-                    name: property.name.name.camelCase.safeName,
+                    name: property.name.name.camelCase.unsafeName,
                     type,
                     access: "public",
                     docs: property.docs,
@@ -56,7 +56,7 @@ export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSch
         });
         const parameters = orderedProperties.map((property) =>
             php.parameter({
-                name: property.name.name.camelCase.safeName,
+                name: property.name.name.camelCase.unsafeName,
                 type: this.context.phpTypeMapper.convert({ reference: property.valueType }),
                 docs: property.docs
             })
@@ -65,7 +65,7 @@ export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSch
             parameters,
             body: php.codeblock((writer) => {
                 orderedProperties.forEach((property) => {
-                    const propertyName = property.name.name.camelCase.safeName;
+                    const propertyName = property.name.name.camelCase.unsafeName;
                     writer.writeTextStatement(`$this->${propertyName} = $${propertyName}`);
                 });
             })

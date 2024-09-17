@@ -6,8 +6,9 @@ use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 use Seed\Core\ArrayType;
 
-class Record extends SerializableType
-{
+
+class Record
+ extends SerializableType {
     #[JsonProperty("foo"), ArrayType(["string" => "string"])]
     /**
      * @var array<string, string> $foo
@@ -16,19 +17,20 @@ class Record extends SerializableType
 
     #[JsonProperty("3d")]
     /**
-     * @var int $_3D
+     * @var int $3D
      */
-    public int $_3D;
+    public int $3D;
 
     /**
      * @param array<string, string> $foo
-     * @param int $_3D
+     * @param int $3D
      */
-    public function __construct(
+    function __construct(
         array $foo,
-        int $_3D,
-    ) {
+        int $3D,
+    )
+    {
         $this->foo = $foo;
-        $this->_3D = $_3D;
+        $this->3D = $3D;
     }
 }

@@ -25,9 +25,9 @@ class ListResponse extends SerializableType
 
     #[JsonProperty("namespace")]
     /**
-     * @var ?string $namespace_
+     * @var ?string $namespace
      */
-    public ?string $namespace_;
+    public ?string $namespace;
 
     #[JsonProperty("usage")]
     /**
@@ -38,18 +38,18 @@ class ListResponse extends SerializableType
     /**
      * @param ?array<ListElement> $columns
      * @param ?Pagination $pagination
-     * @param ?string $namespace_
+     * @param ?string $namespace
      * @param ?Usage $usage
      */
     public function __construct(
         ?array $columns = null,
         ?Pagination $pagination = null,
-        ?string $namespace_ = null,
+        ?string $namespace = null,
         ?Usage $usage = null,
     ) {
         $this->columns = $columns;
         $this->pagination = $pagination;
-        $this->namespace_ = $namespace_;
+        $this->namespace = $namespace;
         $this->usage = $usage;
     }
 }

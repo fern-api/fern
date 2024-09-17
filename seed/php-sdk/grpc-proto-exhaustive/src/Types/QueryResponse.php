@@ -25,9 +25,9 @@ class QueryResponse extends SerializableType
 
     #[JsonProperty("namespace")]
     /**
-     * @var ?string $namespace_
+     * @var ?string $namespace
      */
-    public ?string $namespace_;
+    public ?string $namespace;
 
     #[JsonProperty("usage")]
     /**
@@ -38,18 +38,18 @@ class QueryResponse extends SerializableType
     /**
      * @param ?array<QueryResult> $results
      * @param ?array<ScoredColumn> $matches
-     * @param ?string $namespace_
+     * @param ?string $namespace
      * @param ?Usage $usage
      */
     public function __construct(
         ?array $results = null,
         ?array $matches = null,
-        ?string $namespace_ = null,
+        ?string $namespace = null,
         ?Usage $usage = null,
     ) {
         $this->results = $results;
         $this->matches = $matches;
-        $this->namespace_ = $namespace_;
+        $this->namespace = $namespace;
         $this->usage = $usage;
     }
 }
