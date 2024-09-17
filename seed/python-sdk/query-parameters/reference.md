@@ -31,7 +31,7 @@ client.user.get_username(
         "2023-01-15",
     ),
     deadline=datetime.datetime.fromisoformat(
-        "datetime=datetime.datetime(2024, 1, 15, 9, 30, tzinfo=TzInfo(UTC)) raw='2024-01-15T09:30:00Z'",
+        "2024-01-15 09:30:00+00:00",
     ),
     bytes="SGVsbG8gd29ybGQh",
     user=User(
@@ -45,7 +45,7 @@ client.user.get_username(
         )
     ],
     optional_deadline=datetime.datetime.fromisoformat(
-        "datetime=datetime.datetime(2024, 1, 15, 9, 30, tzinfo=TzInfo(UTC)) raw='2024-01-15T09:30:00Z'",
+        "2024-01-15 09:30:00+00:00",
     ),
     key_value={"string": "string"},
     optional_string="string",
