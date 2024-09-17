@@ -273,7 +273,7 @@ async function parseApiConfigurationV2Schema({
                     shouldUseTitleAsName: undefined,
                     shouldUseUndiscriminatedUnionsWithLiterals: undefined,
                     asyncApiMessageNaming: undefined,
-                    shouldUseOptionalAdditionalProperties: spec.settings?.optionalAdditionalProperties ?? true
+                    shouldUseOptionalAdditionalProperties: spec.settings?.["optional-additional-properties"] ?? true
                 }
             };
             if (spec.namespace == null) {

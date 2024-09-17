@@ -4,7 +4,7 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 /*********** OpenAPI Spec ***********/
 
 export const OpenAPISettingsSchema = z.strictObject({
-    optionalAdditionalProperties: z.optional(z.boolean())
+    "optional-additional-properties": z.optional(z.boolean())
 });
 
 export type OpenAPISettingsSchema = z.infer<typeof OpenAPISettingsSchema>;
@@ -21,7 +21,7 @@ export type OpenAPISpecSchema = z.infer<typeof OpenAPISpecSchema>;
 /*********** AsyncAPI Spec ***********/
 
 export const AsyncAPISettingsSchema = z.strictObject({
-    optionalAdditionalProperties: z.optional(z.boolean())
+    "optional-additional-properties": z.optional(z.boolean())
 });
 
 export type AsyncAPISettingsSchema = z.infer<typeof AsyncAPISettingsSchema>;
