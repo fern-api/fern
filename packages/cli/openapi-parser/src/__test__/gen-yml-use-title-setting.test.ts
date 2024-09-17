@@ -4,6 +4,7 @@ describe("open api parser", () => {
     testParseOpenAPI("gen-yml-use-title", "openapi.yml", undefined, {
         audiences: [],
         shouldUseTitleAsName: false,
-        shouldUseUndiscriminatedUnionsWithLiterals: false
+        shouldUseUndiscriminatedUnionsWithLiterals: false,
+        optionalAdditionalProperties: true,
     });
 });

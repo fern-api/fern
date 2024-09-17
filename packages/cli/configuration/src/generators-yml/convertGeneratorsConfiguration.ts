@@ -94,7 +94,8 @@ async function parseAPIConfigurationToApiLocations(
                 settings: {
                     shouldUseTitleAsName: undefined,
                     shouldUseUndiscriminatedUnionsWithLiterals: undefined,
-                    asyncApiMessageNaming: undefined
+                    asyncApiMessageNaming: undefined,
+                    shouldUseOptionalAdditionalProperties: undefined
                 }
             });
         } else if (isRawProtobufAPIDefinitionSchema(apiConfiguration)) {
@@ -111,7 +112,8 @@ async function parseAPIConfigurationToApiLocations(
                 settings: {
                     shouldUseTitleAsName: undefined,
                     shouldUseUndiscriminatedUnionsWithLiterals: undefined,
-                    asyncApiMessageNaming: undefined
+                    asyncApiMessageNaming: undefined,
+                    shouldUseOptionalAdditionalProperties: undefined
                 }
             });
         } else if (Array.isArray(apiConfiguration)) {
@@ -128,7 +130,8 @@ async function parseAPIConfigurationToApiLocations(
                         settings: {
                             shouldUseTitleAsName: undefined,
                             shouldUseUndiscriminatedUnionsWithLiterals: undefined,
-                            asyncApiMessageNaming: undefined
+                            asyncApiMessageNaming: undefined,
+                            shouldUseOptionalAdditionalProperties: undefined
                         }
                     });
                 } else if (isRawProtobufAPIDefinitionSchema(definition)) {
@@ -145,7 +148,8 @@ async function parseAPIConfigurationToApiLocations(
                         settings: {
                             shouldUseTitleAsName: undefined,
                             shouldUseUndiscriminatedUnionsWithLiterals: undefined,
-                            asyncApiMessageNaming: undefined
+                            asyncApiMessageNaming: undefined,
+                            shouldUseOptionalAdditionalProperties: undefined
                         }
                     });
                 } else {
@@ -160,7 +164,8 @@ async function parseAPIConfigurationToApiLocations(
                         settings: {
                             shouldUseTitleAsName: definition.settings?.["use-title"],
                             shouldUseUndiscriminatedUnionsWithLiterals: definition.settings?.unions === "v1",
-                            asyncApiMessageNaming: definition.settings?.["message-naming"]
+                            asyncApiMessageNaming: definition.settings?.["message-naming"],
+                            shouldUseOptionalAdditionalProperties: undefined
                         }
                     });
                 }
@@ -177,7 +182,8 @@ async function parseAPIConfigurationToApiLocations(
                 settings: {
                     shouldUseTitleAsName: apiConfiguration.settings?.["use-title"],
                     shouldUseUndiscriminatedUnionsWithLiterals: apiConfiguration.settings?.unions === "v1",
-                    asyncApiMessageNaming: apiConfiguration.settings?.["message-naming"]
+                    asyncApiMessageNaming: apiConfiguration.settings?.["message-naming"],
+                    shouldUseOptionalAdditionalProperties: undefined
                 }
             });
         }
@@ -199,7 +205,8 @@ async function parseAPIConfigurationToApiLocations(
                 settings: {
                     shouldUseTitleAsName: settings?.["use-title"],
                     shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1",
-                    asyncApiMessageNaming: undefined
+                    asyncApiMessageNaming: undefined,
+                    shouldUseOptionalAdditionalProperties: undefined
                 }
             });
         } else if (openapi != null) {
@@ -214,7 +221,8 @@ async function parseAPIConfigurationToApiLocations(
                 settings: {
                     shouldUseTitleAsName: openapi.settings?.["use-title"],
                     shouldUseUndiscriminatedUnionsWithLiterals: openapi.settings?.unions === "v1",
-                    asyncApiMessageNaming: undefined
+                    asyncApiMessageNaming: undefined,
+                    shouldUseOptionalAdditionalProperties: undefined
                 }
             });
         }
@@ -231,7 +239,8 @@ async function parseAPIConfigurationToApiLocations(
                 settings: {
                     shouldUseTitleAsName: settings?.["use-title"],
                     shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1",
-                    asyncApiMessageNaming: settings?.["message-naming"]
+                    asyncApiMessageNaming: settings?.["message-naming"],
+                    shouldUseOptionalAdditionalProperties: undefined
                 }
             });
         }
@@ -263,7 +272,8 @@ async function parseApiConfigurationV2Schema({
                 settings: {
                     shouldUseTitleAsName: undefined,
                     shouldUseUndiscriminatedUnionsWithLiterals: undefined,
-                    asyncApiMessageNaming: undefined
+                    asyncApiMessageNaming: undefined,
+                    shouldUseOptionalAdditionalProperties: spec.settings?.optionalAdditionalProperties ?? true
                 }
             };
             if (spec.namespace == null) {

@@ -39,6 +39,11 @@ export declare namespace OSSWorkspace {
          * as it allows the documentation to more closely mirror the OpenAPI spec.
          */
         detectGlobalHeaders?: boolean;
+        /*
+         * Whether or not to let additional properties (maps) in OpenAPI come through as
+         * optional.
+         */
+        optionalAdditionalProperties?: boolean;
     }
 }
 
@@ -210,6 +215,9 @@ function getOptionsOverridesFromSettings(settings?: OSSWorkspace.Settings): Part
     const result: Partial<ParseOpenAPIOptions> = {};
     if (settings.enableDiscriminatedUnionV2) {
         result.discriminatedUnionV2 = true;
+    }
+    if (settings.optionalAdditionalProperties) {
+        result.optionalAdditionalProperties = true;
     }
     return result;
 }
