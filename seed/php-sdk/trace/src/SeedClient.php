@@ -84,12 +84,7 @@ class SeedClient
     public function __construct(
         ?array $options = null,
     ) {
-        $defaultHeaders = [
-            "X-Random-Header" => $xRandomHeader,
-            "X-Fern-Language" => "PHP",
-            "X-Fern-SDK-Name" => "Seed",
-            "X-Fern-SDK-Version" => "0.0.1",
-        ];
+        $defaultHeaders = ["X-Random-Header" => $xRandomHeader,"X-Fern-Language" => "PHP","X-Fern-SDK-Name" => "Seed","X-Fern-SDK-Version" => "0.0.1"];
         $this->options = $options ?? [];
         $this->client = new RawClient(client: $this->options['client'] ?? new Client(), headers: $defaultHeaders);
         $this->v2 = new V2Client($this->client);

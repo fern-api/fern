@@ -14,8 +14,6 @@ abstract class SerializableType
 {
     /**
      * Serializes the object to a JSON string.
-     *
-     * @throws JsonException
      */
     public function toJson(): string
     {
@@ -35,6 +33,9 @@ abstract class SerializableType
 
         foreach ($reflectionClass->getProperties() as $property) {
             $jsonKey = self::getJsonKey($property);
+            if ($jsonKey == null) {
+                continue;
+            }
             $value = $property->getValue($this);
 
             // Handle DateTime properties
@@ -121,6 +122,10 @@ abstract class SerializableType
             return $type === 'date' ? $data->format(Constant::DateFormat) : $data->format(Constant::DateTimeFormat);
         }
 
+        if ($type === 'mixed') {
+            return $data;
+        }
+
         if (class_exists($type) && $data instanceof $type) {
             if (method_exists($data, 'toArray')) {
                 return $data->toArray();
@@ -178,12 +183,12 @@ abstract class SerializableType
      * Helper function to retrieve the JSON key for a property.
      *
      * @param ReflectionProperty $property
-     * @return string
+     * @return string|null
      */
-    private static function getJsonKey(ReflectionProperty $property): string
+    private static function getJsonKey(ReflectionProperty $property): ?string
     {
         $jsonPropertyAttr = $property->getAttributes(JsonProperty::class)[0] ?? null;
-        return $jsonPropertyAttr ? $jsonPropertyAttr->newInstance()->name : $property->getName();
+        return $jsonPropertyAttr?->newInstance()?->name;
     }
 
     /**
@@ -261,7 +266,7 @@ abstract class SerializableType
                 continue;
             }
 
-            $jsonKey = self::getJsonKey($property);
+            $jsonKey = self::getJsonKey($property) ?? $property->getName();
             if (array_key_exists($jsonKey, $data)) {
                 $value = $data[$jsonKey];
 
@@ -273,7 +278,7 @@ abstract class SerializableType
                         throw new Exception("Unexpected non-string type for date.");
                     }
                     $value = ($dateType === DateType::TYPE_DATE)
-                        ? DateTime::createFromFormat(Constant::DeserializationDateFormat, $value)
+                        ? DateTime::createFromFormat(Constant::DateDeserializationFormat, $value)
                         : new DateTime($value);
                 }
 
@@ -351,11 +356,15 @@ abstract class SerializableType
         }
 
         if ($type === 'date' && is_string($data)) {
-            return DateTime::createFromFormat(Constant::DeserializationDateFormat, $data);
+            return DateTime::createFromFormat(Constant::DateDeserializationFormat, $data);
         }
 
         if ($type === 'datetime' && is_string($data)) {
             return new DateTime($data);
+        }
+
+        if ($type === 'mixed') {
+            return $data;
         }
 
         if (class_exists($type) && is_array($data)) {

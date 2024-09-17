@@ -10,7 +10,7 @@ class DateType
     public const TYPE_DATE = 'date';
     public const TYPE_DATETIME = 'datetime';
 
-    public function __construct(public string $type)
+    public function __construct(public ?string $type = null)
     {
     }
 }
