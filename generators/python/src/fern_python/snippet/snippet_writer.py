@@ -170,7 +170,7 @@ class SnippetWriter:
                             "fromisoformat",
                         ),
                     ),
-                    args=[AST.Expression(f'"{str(datetime)}"')],
+                    args=[AST.Expression(f'"{str(datetime.datetime)}"')],
                 ),
             ),
             date=lambda date: AST.Expression(
