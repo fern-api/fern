@@ -5,7 +5,7 @@ export { CodeBlock } from "./CodeBlock";
 export { Writer } from "./core/Writer";
 export { Field } from "./Field";
 export { Map } from "./Map";
-export { Array } from "./Array";
+export { Array_ as Array } from "./Array";
 export { Parameter } from "./Parameter";
 export { Type } from "./Type";
 export { Attribute } from "./Attribute";

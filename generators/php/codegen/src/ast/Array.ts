@@ -1,16 +1,16 @@
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
-export declare namespace Array {
+export declare namespace Array_ {
     interface Args {
         entries: AstNode[] | undefined;
     }
 }
 
-export class Array extends AstNode {
+export class Array_ extends AstNode {
     private entries: AstNode[];
 
-    constructor({ entries }: Array.Args) {
+    constructor({ entries }: Array_.Args) {
         super();
         this.entries = entries ?? [];
     }

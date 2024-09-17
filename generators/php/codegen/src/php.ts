@@ -1,4 +1,14 @@
-import { Class, ClassInstantiation, ClassReference, CodeBlock, Field, Map, Parameter, Array, Enum } from "./ast";
+import {
+    Class,
+    ClassInstantiation,
+    ClassReference,
+    CodeBlock,
+    Field,
+    Map,
+    Parameter,
+    Array as Array_,
+    Enum
+} from "./ast";
 import { Attribute } from "./ast/Attribute";
 
 export function class_(args: Class.Args): Class {
@@ -29,8 +39,8 @@ export function map(args: Map.Args): Map {
     return new Map(args);
 }
 
-export function array(args: Array.Args): Array {
-    return new Array(args);
+export function array(args: Array_.Args): Array_ {
+    return new Array_(args);
 }
 
 export function parameter(args: Parameter.Args): Parameter {
