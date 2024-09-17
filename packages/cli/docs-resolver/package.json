@@ -36,7 +36,7 @@
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/register": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "dayjs": "^1.11.11",
+    "dayjs": "^1.11.13",
     "gray-matter": "^4.0.3",
     "lodash-es": "^4.17.21",
     "url-join": "^5.0.0"
