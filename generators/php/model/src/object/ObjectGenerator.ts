@@ -43,39 +43,13 @@ export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSch
         const orderedProperties = [...requiredProperties, ...optionalProperties];
         orderedProperties.forEach((property) => {
             const type = this.context.phpTypeMapper.convert({ reference: property.valueType });
-            const attributes: php.Attribute[] = [];
-            attributes.push(
-                php.attribute({
-                    reference: this.context.getJsonPropertyAttributeClassReference(),
-                    arguments: [`"${property.name.wireValue}"`]
-                })
-            );
-            const underlyingInternalType = type.underlyingType().internalType;
-            if (underlyingInternalType.type === "date" || underlyingInternalType.type === "dateTime") {
-                attributes.push(
-                    php.attribute({
-                        reference: this.context.getDateTypeAttributeClassReference(),
-                        arguments: [`DateType::TYPE_${underlyingInternalType.type.toUpperCase()}`]
-                    })
-                );
-            }
-            if (underlyingInternalType.type === "array" || underlyingInternalType.type === "map") {
-                attributes.push(
-                    php.attribute({
-                        reference: this.context.getArrayTypeClassReference(),
-                        arguments: [this.getArrayTypeAttributeArgument(type.underlyingType())]
-                    })
-                );
-            }
-
             clazz.addField(
                 php.field({
                     name: property.name.name.camelCase.safeName,
                     type,
                     access: "public",
                     docs: property.docs,
-                    attributes
-                    // jsonPropertyName: property.name.wireValue
+                    attributes: this.getAllAttributesForProperty({ property, type })
                 })
             );
         });
@@ -108,7 +82,41 @@ export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSch
         return this.context.getLocationForTypeId(this.typeDeclaration.name.typeId).directory;
     }
 
-    public getArrayTypeAttributeArgument(type: php.Type): php.AstNode {
+    private getAllAttributesForProperty({
+        property,
+        type
+    }: {
+        property: ObjectProperty;
+        type: php.Type;
+    }): php.Attribute[] {
+        const attributes: php.Attribute[] = [];
+        attributes.push(
+            php.attribute({
+                reference: this.context.getJsonPropertyAttributeClassReference(),
+                arguments: [`"${property.name.wireValue}"`]
+            })
+        );
+        const underlyingInternalType = type.underlyingType().internalType;
+        if (underlyingInternalType.type === "date" || underlyingInternalType.type === "dateTime") {
+            attributes.push(
+                php.attribute({
+                    reference: this.context.getDateTypeAttributeClassReference(),
+                    arguments: [`DateType::TYPE_${underlyingInternalType.type.toUpperCase()}`]
+                })
+            );
+        }
+        if (underlyingInternalType.type === "array" || underlyingInternalType.type === "map") {
+            attributes.push(
+                php.attribute({
+                    reference: this.context.getArrayTypeClassReference(),
+                    arguments: [this.getArrayTypeAttributeArgument(type.underlyingType())]
+                })
+            );
+        }
+        return attributes;
+    }
+
+    private getArrayTypeAttributeArgument(type: php.Type): php.AstNode {
         switch (type.internalType.type) {
             case "int":
                 return php.codeblock('"integer"');
