@@ -1,4 +1,10 @@
 # For unreleased changes, use unreleased.yml
+- version: 1.5.0
+  irVersion: 53
+  changelogEntry:
+    - type: feat
+      summary: The FastAPI server generation now supports endpoints with file upload.
+
 - version: 1.4.9
   irVersion: 53
   changelogEntry:

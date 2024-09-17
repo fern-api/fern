@@ -1,6 +1,7 @@
 from typing import List
 
 import fern.ir.resources as ir_types
+from fern_python.generators.fastapi.service_generator.endpoint_parameters.request.file_upload_request_endpoint_parameter import FileUploadRequestEndpointParameters
 from typing_extensions import Never
 
 from fern_python.codegen import AST
@@ -40,17 +41,19 @@ class EndpointGenerator:
 
         self._parameters: List[EndpointParameter] = []
         if endpoint.request_body is not None:
-            self._parameters.append(
+            self._parameters.extend(
                 endpoint.request_body.visit(
-                    inlined_request_body=lambda request: InlinedRequestEndpointParameter(
+                    inlined_request_body=lambda request: [InlinedRequestEndpointParameter(
                         context=context,
                         request=request,
                         service_name=self._service.name,
-                    ),
-                    reference=lambda request: ReferencedRequestEndpointParameter(
+                    )],
+                    reference=lambda request: [ReferencedRequestEndpointParameter(
                         context=context, request_type=request.request_body_type
-                    ),
-                    file_upload=lambda request: raise_file_upload_unsupported(),
+                    )],
+                    file_upload=lambda request: FileUploadRequestEndpointParameters(
+                        context=context, request=request
+                    ).get_parameters(),
                     bytes=lambda request: raise_bytes_unsupported(),
                 )
             )
@@ -380,10 +383,6 @@ def raise_streaming_unsupported() -> Never:
 
 def raise_bytes_unsupported() -> Never:
     raise RuntimeError("bytes request is not supported")
-
-
-def raise_file_upload_unsupported() -> Never:
-    raise RuntimeError("File upload is not supported")
 
 
 def raise_file_download_unsupported(file_download_response: ir_types.FileDownloadResponse) -> Never:

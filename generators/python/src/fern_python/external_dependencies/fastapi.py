@@ -47,15 +47,6 @@ class APIRouter:
 class FastAPI:
     FastAPI = AST.TypeHint(type=_export("FastAPI"))
 
-    Body = AST.Expression(
-        AST.FunctionInvocation(
-            function_definition=_export(
-                "Body",
-            ),
-            args=[AST.Expression(AST.CodeWriter("..."))],
-        )
-    )
-
     Path = AST.Expression(
         AST.FunctionInvocation(
             function_definition=_export(
@@ -83,6 +74,30 @@ class FastAPI:
             import_=AST.ReferenceImport(module=FAST_API_MODULE, named_import="params"),
         )
     )
+
+    @staticmethod
+    def Body(
+        *,
+        variable_name: Optional[str] = None,
+        wire_value: Optional[str] = None
+    ) -> AST.Expression:
+        body_function_definition = _export(
+            "Body",
+        )
+        
+        if variable_name is not None and wire_value is not None and variable_name != wire_value:
+            return AST.Expression(
+                AST.FunctionInvocation(
+                    function_definition=body_function_definition,
+                    kwargs=[("alias", AST.Expression(AST.CodeWriter(f'"{wire_value}"')))],
+                )
+            )
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=body_function_definition,
+                args=[AST.Expression(AST.CodeWriter("..."))],
+            )
+        )
 
     @staticmethod
     def Depends(dependency: AST.Expression) -> AST.Expression:
@@ -135,6 +150,58 @@ class FastAPI:
                     "Query",
                 ),
                 kwargs=kwargs,
+            )
+        )
+
+    @staticmethod
+    def UploadFileType(
+        *,
+        is_optional: bool,
+        is_list: bool,
+    ) -> AST.TypeHint:
+        inner_type = AST.TypeHint(_export("UploadFile"))
+        if is_list:
+            inner_type = AST.TypeHint.list(inner_type)
+        if is_optional:
+            inner_type = AST.TypeHint.union(inner_type, AST.TypeHint.none())
+        
+        return inner_type
+
+    @staticmethod
+    def UploadFile(
+        *,
+        is_optional: bool,
+        is_list: bool,
+        variable_name: str,
+        wire_value: str,
+        docs: Optional[str],
+    ) -> AST.Expression:
+        kwargs: List[Tuple[str, AST.Expression]] = []
+        if variable_name != wire_value:
+            kwargs.append(("alias", AST.Expression(AST.CodeWriter(f'"{wire_value}"'))))
+        if docs is not None:
+            kwargs.append(
+                (
+                    "description",
+                    AST.Expression(AST.CodeWriter('"' + docs.replace("\n", "\\n").replace("\r", "\\r") + '"')),
+                )
+            )
+        
+        inner_type = FastAPI.UploadFileType(is_optional=is_optional, is_list=is_list)
+        
+        # The type hint here should be:
+        # UploadFile
+        # Annotated[UploadFile, File(description="A file read as UploadFile")]
+        # etc.
+        return AST.Expression(inner_type) if len(kwargs) == 0 else AST.Expression(
+            AST.TypeHint.annotated(
+                inner_type,
+                AST.Expression(AST.FunctionInvocation(
+                    function_definition=_export(
+                        "File",
+                    ),
+                    kwargs=kwargs,
+                ))
             )
         )
 
