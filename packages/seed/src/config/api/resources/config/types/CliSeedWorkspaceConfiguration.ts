@@ -5,6 +5,7 @@
 import * as FernSeedConfig from "../../..";
 
 export interface CliSeedWorkspaceConfiguration {
+    allowedTags: string[];
     publishGa: FernSeedConfig.PublishCommand;
     publishRc: FernSeedConfig.PublishCommand;
     publishDev: FernSeedConfig.PublishCommand;

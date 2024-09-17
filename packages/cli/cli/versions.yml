@@ -13,6 +13,8 @@
               optional-additional-properties: false
       ```
     type: fix
+    links:
+      - https://github.com/fern-api/fern/pull/4667
   irVersion: 53
   version: 0.41.16
 

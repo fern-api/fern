@@ -31,17 +31,24 @@ export async function validateGenerator({
         return;
     }
 
-    await validateGeneratorChangelog({ absolutePathToChangelog, context, generatorId });
+    await validateGeneratorChangelog({
+        absolutePathToChangelog,
+        context,
+        generatorId,
+        allowedTags: generatorConfig.allowedTags
+    });
 }
 
 async function validateGeneratorChangelog({
     generatorId,
     absolutePathToChangelog,
-    context
+    context,
+    allowedTags
 }: {
     generatorId: string;
     absolutePathToChangelog: AbsoluteFilePath;
     context: TaskContext;
+    allowedTags: string[] | undefined;
 }): Promise<void> {
     let hasErrors = false;
     const changelogs = yaml.load((await readFile(absolutePathToChangelog)).toString());
@@ -49,6 +56,16 @@ async function validateGeneratorChangelog({
         for (const entry of changelogs) {
             try {
                 const release = serializers.generators.GeneratorReleaseRequest.parseOrThrow({ generatorId, ...entry });
+                if (release.tags != null) {
+                    for (const tag of release.tags) {
+                        if (allowedTags != null && !allowedTags.includes(tag)) {
+                            context.logger.error(`Tag ${tag} is not allowed`);
+                            throw new Error(
+                                `Invalid tag! ${tag} is not allowed, allowed tags are: ${allowedTags.join(", ")}`
+                            );
+                        }
+                    }
+                }
                 context.logger.debug(chalk.green(`${release.version} is valid`));
             } catch (e) {
                 hasErrors = true;

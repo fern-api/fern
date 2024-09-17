@@ -29,15 +29,21 @@ export async function validateCliRelease({ context }: { context: TaskContext }):
         return;
     }
 
-    await validateCliChangelog({ absolutePathToChangelog, context });
+    await validateCliChangelog({
+        absolutePathToChangelog,
+        context,
+        allowedTags: cliWorkspace.workspaceConfig.allowedTags
+    });
 }
 
 async function validateCliChangelog({
     absolutePathToChangelog,
-    context
+    context,
+    allowedTags
 }: {
     absolutePathToChangelog: AbsoluteFilePath;
     context: TaskContext;
+    allowedTags: string[] | undefined;
 }): Promise<void> {
     let hasErrors = false;
     const changelogs = yaml.load((await readFile(absolutePathToChangelog)).toString());
@@ -45,6 +51,16 @@ async function validateCliChangelog({
         for (const entry of changelogs) {
             try {
                 const release = serializers.generators.CliReleaseRequest.parseOrThrow(entry);
+                if (release.tags != null) {
+                    for (const tag of release.tags) {
+                        if (allowedTags != null && !allowedTags.includes(tag)) {
+                            context.logger.error(`Tag ${tag} is not allowed`);
+                            throw new Error(
+                                `Invalid tag! ${tag} is not allowed, allowed tags are: ${allowedTags.join(", ")}`
+                            );
+                        }
+                    }
+                }
                 context.logger.debug(chalk.green(`${release.version} is valid`));
             } catch (e) {
                 hasErrors = true;
