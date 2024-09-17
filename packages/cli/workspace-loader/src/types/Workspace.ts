@@ -67,6 +67,7 @@ export interface SpecImportSettings {
     audiences: string[];
     shouldUseTitleAsName: boolean;
     shouldUseUndiscriminatedUnionsWithLiterals: boolean;
+    optionalAdditionalProperties: boolean;
     asyncApiNaming?: "v1" | "v2";
 }
 

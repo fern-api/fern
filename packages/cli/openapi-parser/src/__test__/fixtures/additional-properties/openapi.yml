@@ -1,0 +1,21 @@
+openapi: 3.1.0
+info:
+  title: Additional Properties
+  version: "0"
+paths: {}
+components: 
+  schemas: 
+    CheckFlagRequestBody:
+      type: object
+      properties:
+        company:
+          additionalProperties:
+            type: string
+          type: object
+          nullable: true
+        user:
+          additionalProperties:
+            type: string
+          type: object
+          nullable: true
+  
