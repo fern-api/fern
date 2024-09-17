@@ -1,8 +1,7 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
 import { PhpFile } from "@fern-api/php-codegen";
 import { EnumTypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
-import { php } from "@fern-api/php-codegen";
+import { ObjectGenerator } from "./object/ObjectGenerator";
 
 export function generateModels({ context }: { context: ModelGeneratorContext }): PhpFile[] {
     const files: PhpFile[] = [];

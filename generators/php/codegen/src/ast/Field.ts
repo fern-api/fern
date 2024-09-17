@@ -49,7 +49,7 @@ export class Field extends AstNode {
         }
 
         this.type.write(writer);
-        writer.write(` ${this.name}`);
+        writer.write(` ${this.name.startsWith("$") ? "" : "$"}${this.name}`);
 
         if (this.initializer != null) {
             writer.write(" = ");
@@ -63,7 +63,7 @@ export class Field extends AstNode {
         comment.addTag({
             tagType: "var",
             type: this.type,
-            name: this.name,
+            name: `${this.name.startsWith("$") ? "" : "$"}${this.name}`,
             docs: this.docs
         });
         comment.write(writer);

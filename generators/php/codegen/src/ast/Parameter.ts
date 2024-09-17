@@ -44,7 +44,7 @@ export class Parameter extends AstNode {
         return {
             tagType: "param",
             type: this.type,
-            name: this.name,
+            name: `${this.name.startsWith("$") ? "" : "$"}${this.name}`,
             docs: this.docs
         };
     }
@@ -57,10 +57,12 @@ export class Parameter extends AstNode {
             writer.write("readonly ");
         }
         this.type.write(writer);
-        writer.write(` ${this.name}`);
+        writer.write(` ${this.name.startsWith("$") ? "" : "$"}${this.name}`);
         if (this.initializer != null) {
             writer.write(" = ");
             this.initializer.write(writer);
+        } else if (this.type.isOptional()) {
+            writer.write(" = null");
         }
     }
 }
