@@ -36,6 +36,7 @@ export interface APIDefinitionSettings {
     shouldUseTitleAsName: boolean | undefined;
     shouldUseUndiscriminatedUnionsWithLiterals: boolean | undefined;
     asyncApiMessageNaming: "v1" | "v2" | undefined;
+    shouldUseOptionalAdditionalProperties: boolean | undefined;
 }
 
 export interface APIDefinitionLocation {

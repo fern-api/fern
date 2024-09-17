@@ -19,6 +19,8 @@ export declare namespace Field {
         initializer?: CodeBlock;
         /* The docs (used for describing the field) */
         docs?: string;
+        /* Docs included in-line */
+        inlineDocs?: string;
     }
 }
 
@@ -29,8 +31,9 @@ export class Field extends AstNode {
     private readonly_: boolean;
     private initializer: CodeBlock | undefined;
     private docs: string | undefined;
+    private inlineDocs: string | undefined;
 
-    constructor({ name, type, access, readonly_, initializer, docs }: Field.Args) {
+    constructor({ name, type, access, readonly_, initializer, docs, inlineDocs }: Field.Args) {
         super();
         this.name = name;
         this.type = type;
@@ -38,6 +41,7 @@ export class Field extends AstNode {
         this.readonly_ = readonly_ ?? false;
         this.initializer = initializer;
         this.docs = docs;
+        this.inlineDocs = inlineDocs;
     }
 
     public write(writer: Writer): void {
@@ -55,7 +59,12 @@ export class Field extends AstNode {
             writer.write(" = ");
             this.initializer.write(writer);
         }
-        writer.writeLine(";");
+        writer.write(";");
+
+        if (this.inlineDocs != null) {
+            writer.write(` // ${this.inlineDocs}`);
+        }
+        writer.newLine();
     }
 
     private writeComment(writer: Writer): void {

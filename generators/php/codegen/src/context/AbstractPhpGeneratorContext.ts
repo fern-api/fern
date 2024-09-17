@@ -148,11 +148,11 @@ export abstract class AbstractPhpGeneratorContext<
     public abstract getLocationForTypeId(typeId: TypeId): FileLocation;
 
     protected getFileLocation(filepath: FernFilepath, suffix?: string): FileLocation {
-        let parts = [this.getRootNamespace(), ...filepath.packagePath.map((path) => path.pascalCase.safeName)];
+        let parts = [this.getRootNamespace(), ...filepath.allParts.map((path) => path.pascalCase.safeName)];
         parts = suffix != null ? [...parts, suffix] : parts;
         return {
             namespace: parts.join("\\"),
-            directory: RelativeFilePath.of(parts.join("/"))
+            directory: RelativeFilePath.of(parts.slice(1).join("/"))
         };
     }
 }

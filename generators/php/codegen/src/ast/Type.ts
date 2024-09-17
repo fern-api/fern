@@ -14,6 +14,7 @@ type InternalType =
     | Object_
     | Array_
     | Map
+    | TypeDict
     | Optional
     | Reference;
 
@@ -58,6 +59,17 @@ interface Map {
     type: "map";
     keyType: Type;
     valueType: Type;
+}
+
+interface TypeDict {
+    type: "typeDict";
+    entries: TypeDictEntry[];
+}
+
+interface TypeDictEntry {
+    key: string;
+    valueType: Type;
+    optional?: boolean;
 }
 
 interface Optional {
@@ -123,6 +135,26 @@ export class Type extends AstNode {
                 writer.write(", ");
                 this.internalType.valueType.write(writer, { parentType: this, comment });
                 writer.write(">");
+                break;
+            }
+            case "typeDict": {
+                if (!comment) {
+                    writer.write("array");
+                    break;
+                }
+                writer.write("array{");
+                this.internalType.entries.forEach((entry, index) => {
+                    if (index > 0) {
+                        writer.write(", ");
+                    }
+                    writer.write(entry.key);
+                    if (entry.optional) {
+                        writer.write("?");
+                    }
+                    writer.write(": ");
+                    entry.valueType.write(writer, { parentType: this, comment });
+                });
+                writer.write("}");
                 break;
             }
             case "optional":
@@ -223,6 +255,13 @@ export class Type extends AstNode {
             type: "map",
             keyType,
             valueType
+        });
+    }
+
+    public static typeDict(entries: TypeDictEntry[]): Type {
+        return new this({
+            type: "typeDict",
+            entries
         });
     }
 

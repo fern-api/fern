@@ -2,72 +2,83 @@
 
 namespace Seed;
 
+use GuzzleHttp\ClientInterface;
 use Seed\Core\RawClient;
+use Seed\Endpoints\EndpointsClient;
+use Seed\GeneralErrors\GeneralErrorsClient;
+use Seed\InlinedRequests\InlinedRequestsClient;
+use Seed\NoAuth\NoAuthClient;
+use Seed\NoReqBody\NoReqBodyClient;
+use Seed\ReqWithHeaders\ReqWithHeadersClient;
+use Seed\Types\TypesClient;
 use GuzzleHttp\Client;
 
 class SeedClient
 {
+    /**
+     * @var ?array{baseUrl?: string, client?: ClientInterface} $options
+     */
+    private ?array $options;
+
     /**
      * @var RawClient $client
      */
     private RawClient $client;
 
     /**
-     * @var array<mixed> $endpoints
+     * @var EndpointsClient $endpoints
      */
-    public array $endpoints;
+    public EndpointsClient $endpoints;
 
     /**
-     * @var array<mixed> $generalErrors
+     * @var GeneralErrorsClient $generalErrors
      */
-    public array $generalErrors;
+    public GeneralErrorsClient $generalErrors;
 
     /**
-     * @var array<mixed> $inlinedRequests
+     * @var InlinedRequestsClient $inlinedRequests
      */
-    public array $inlinedRequests;
+    public InlinedRequestsClient $inlinedRequests;
 
     /**
-     * @var array<mixed> $noAuth
+     * @var NoAuthClient $noAuth
      */
-    public array $noAuth;
+    public NoAuthClient $noAuth;
 
     /**
-     * @var array<mixed> $noReqBody
+     * @var NoReqBodyClient $noReqBody
      */
-    public array $noReqBody;
+    public NoReqBodyClient $noReqBody;
 
     /**
-     * @var array<mixed> $reqWithHeaders
+     * @var ReqWithHeadersClient $reqWithHeaders
      */
-    public array $reqWithHeaders;
+    public ReqWithHeadersClient $reqWithHeaders;
 
     /**
-     * @var array<mixed> $types
+     * @var TypesClient $types
      */
-    public array $types;
+    public TypesClient $types;
 
     /**
-     * @param ?array<string, mixed> $clientOptions
+     * @param ?array{baseUrl?: string, client?: ClientInterface} $options
      */
     public function __construct(
-        ?array $clientOptions = null,
+        ?array $options = null,
     ) {
         $defaultHeaders = [
             "X-Fern-Language" => "PHP",
             "X-Fern-SDK-Name" => "Seed",
             "X-Fern-SDK-Version" => "0.0.1",
         ];
-        $this->client = new RawClient(
-            client: isset($clientOptions['client']) ? $clientOptions['client'] : new Client(),
-            headers: $defaultHeaders,
-        );
-        $this->endpoints = [];
-        $this->generalErrors = [];
-        $this->inlinedRequests = [];
-        $this->noAuth = [];
-        $this->noReqBody = [];
-        $this->reqWithHeaders = [];
-        $this->types = [];
+        $this->options = $options ?? [];
+        $this->client = new RawClient(client: $this->options['client'] ?? new Client(), headers: $defaultHeaders);
+        $this->endpoints = new EndpointsClient($this->client);
+        $this->generalErrors = new GeneralErrorsClient($this->client);
+        $this->inlinedRequests = new InlinedRequestsClient($this->client);
+        $this->noAuth = new NoAuthClient($this->client);
+        $this->noReqBody = new NoReqBodyClient($this->client);
+        $this->reqWithHeaders = new ReqWithHeadersClient($this->client);
+        $this->types = new TypesClient($this->client);
     }
 }

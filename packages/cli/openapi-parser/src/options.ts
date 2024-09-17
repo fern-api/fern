@@ -9,11 +9,14 @@ export interface ParseOpenAPIOptions {
     useTitlesAsName: boolean;
     /* The audiences that the OpenAPI must be filtered down into */
     audiences: string[] | undefined;
+    /* Whether or not to make additional property values optional */
+    optionalAdditionalProperties: boolean;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     disableExamples: false,
     discriminatedUnionV2: false,
     useTitlesAsName: true,
-    audiences: undefined
+    audiences: undefined,
+    optionalAdditionalProperties: true
 };

@@ -66,7 +66,8 @@ export async function loadSingleNamespaceAPIWorkspace({
                     audiences: definition.audiences ?? [],
                     shouldUseTitleAsName: definition.settings?.shouldUseTitleAsName ?? true,
                     shouldUseUndiscriminatedUnionsWithLiterals:
-                        definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false
+                        definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
+                    optionalAdditionalProperties: definition.settings?.shouldUseOptionalAdditionalProperties ?? true
                 }
             });
             continue;
@@ -105,7 +106,8 @@ export async function loadSingleNamespaceAPIWorkspace({
                 shouldUseTitleAsName: definition.settings?.shouldUseTitleAsName ?? true,
                 shouldUseUndiscriminatedUnionsWithLiterals:
                     definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
-                asyncApiNaming: definition.settings?.asyncApiMessageNaming
+                asyncApiNaming: definition.settings?.asyncApiMessageNaming,
+                optionalAdditionalProperties: definition.settings?.shouldUseOptionalAdditionalProperties ?? true
             },
             source: {
                 type: "openapi",

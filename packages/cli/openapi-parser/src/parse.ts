@@ -26,6 +26,7 @@ export interface SpecImportSettings {
     shouldUseTitleAsName: boolean;
     shouldUseUndiscriminatedUnionsWithLiterals: boolean;
     asyncApiNaming?: "v1" | "v2";
+    optionalAdditionalProperties: boolean;
 }
 
 export type Source = AsyncAPISource | OpenAPISource | ProtobufSource;
@@ -180,7 +181,11 @@ function getParseOptions({
             overrides?.useTitlesAsName ??
             specSettings?.shouldUseTitleAsName ??
             DEFAULT_PARSE_OPENAPI_SETTINGS.useTitlesAsName,
-        audiences: overrides?.audiences ?? specSettings?.audiences ?? DEFAULT_PARSE_OPENAPI_SETTINGS.audiences
+        audiences: overrides?.audiences ?? specSettings?.audiences ?? DEFAULT_PARSE_OPENAPI_SETTINGS.audiences,
+        optionalAdditionalProperties:
+            overrides?.optionalAdditionalProperties ??
+            specSettings?.optionalAdditionalProperties ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.optionalAdditionalProperties
     };
 }
 
