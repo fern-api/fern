@@ -1,7 +1,7 @@
 import { Audiences, generatorsYml } from "@fern-api/configuration";
 import { runDocker } from "@fern-api/docker-utils";
-import { AbsoluteFilePath, waitUntilPathExists } from "@fern-api/fs-utils";
-import { ApiDefinitionSource, SourceConfig } from "@fern-api/ir-sdk";
+import { AbsoluteFilePath, streamObjectToFile, waitUntilPathExists } from "@fern-api/fs-utils";
+import { ApiDefinitionSource, IntermediateRepresentation, SourceConfig } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
 import * as FernGeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
@@ -18,6 +18,7 @@ import { getIntermediateRepresentation } from "./getIntermediateRepresentation";
 import { LocalTaskHandler } from "./LocalTaskHandler";
 
 export interface GeneratorRunResponse {
+    ir: IntermediateRepresentation;
     /* Path to the generated IR */
     absolutePathToIr: AbsoluteFilePath;
     /* Path to the generated config.json */
@@ -59,14 +60,20 @@ export async function writeFilesToDiskAndRunGenerator({
     generateOauthClients: boolean;
     generatePaginatedClients: boolean;
 }): Promise<GeneratorRunResponse> {
-    const absolutePathToIr = await writeIrToFile({
+    const { latest, migrated } = await getIntermediateRepresentation({
         workspace,
         audiences,
         generatorInvocation,
-        workspaceTempDir,
         context,
         irVersionOverride,
-        outputVersionOverride
+        packageName: generatorsYml.getPackageName({ generatorInvocation }),
+        version: outputVersionOverride,
+        sourceConfig: getSourceConfig(workspace)
+    });
+    const absolutePathToIr = await writeIrToFile({
+        workspaceTempDir,
+        context,
+        ir: migrated
     });
     context.logger.debug("Wrote IR to: " + absolutePathToIr);
 
@@ -131,43 +138,26 @@ export async function writeFilesToDiskAndRunGenerator({
 
     return {
         absolutePathToIr,
-        absolutePathToConfigJson: absolutePathToWriteConfigJson
+        absolutePathToConfigJson: absolutePathToWriteConfigJson,
+        ir: latest
     };
 }
 
 async function writeIrToFile({
-    workspace,
-    audiences,
-    generatorInvocation,
+    ir,
     workspaceTempDir,
-    context,
-    irVersionOverride,
-    outputVersionOverride
+    context
 }: {
-    workspace: FernWorkspace;
-    audiences: Audiences;
-    generatorInvocation: generatorsYml.GeneratorInvocation;
+    ir: unknown;
     workspaceTempDir: DirectoryResult;
     context: TaskContext;
-    irVersionOverride: string | undefined;
-    outputVersionOverride: string | undefined;
 }): Promise<AbsoluteFilePath> {
-    const intermediateRepresentation = await getIntermediateRepresentation({
-        workspace,
-        audiences,
-        generatorInvocation,
-        context,
-        irVersionOverride,
-        packageName: generatorsYml.getPackageName({ generatorInvocation }),
-        version: outputVersionOverride,
-        sourceConfig: getSourceConfig(workspace)
-    });
     context.logger.debug("Migrated IR");
     const irFile = await tmp.file({
         tmpdir: workspaceTempDir.path
     });
     const absolutePathToIr = AbsoluteFilePath.of(irFile.path);
-    await writeFile(absolutePathToIr, JSON.stringify(intermediateRepresentation, undefined, 4));
+    await streamObjectToFile(absolutePathToIr, ir, { pretty: false });
     context.logger.debug(`Wrote IR to ${absolutePathToIr}`);
     return absolutePathToIr;
 }

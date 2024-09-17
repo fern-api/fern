@@ -18,8 +18,12 @@ async def test_create_playlist(client: SeedTrace, async_client: AsyncSeedTrace) 
     expected_types: typing.Any = {"playlist_id": None, "owner-id": None, "name": None, "problems": ("list", {0: None})}
     response = client.playlist.create_playlist(
         service_param=1,
-        datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"),
-        optional_datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"),
+        datetime=datetime.datetime.fromisoformat(
+            "datetime=datetime.datetime(2024, 1, 15, 9, 30, tzinfo=TzInfo(UTC)) raw='2024-01-15T09:30:00Z'"
+        ),
+        optional_datetime=datetime.datetime.fromisoformat(
+            "datetime=datetime.datetime(2024, 1, 15, 9, 30, tzinfo=TzInfo(UTC)) raw='2024-01-15T09:30:00Z'"
+        ),
         name="string",
         problems=["string"],
     )
@@ -27,8 +31,12 @@ async def test_create_playlist(client: SeedTrace, async_client: AsyncSeedTrace) 
 
     async_response = await async_client.playlist.create_playlist(
         service_param=1,
-        datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"),
-        optional_datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"),
+        datetime=datetime.datetime.fromisoformat(
+            "datetime=datetime.datetime(2024, 1, 15, 9, 30, tzinfo=TzInfo(UTC)) raw='2024-01-15T09:30:00Z'"
+        ),
+        optional_datetime=datetime.datetime.fromisoformat(
+            "datetime=datetime.datetime(2024, 1, 15, 9, 30, tzinfo=TzInfo(UTC)) raw='2024-01-15T09:30:00Z'"
+        ),
         name="string",
         problems=["string"],
     )

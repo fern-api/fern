@@ -1,0 +1,27 @@
+service:
+  base-path: /
+  auth: false
+  endpoints:
+    json:
+      path: ""
+      method: POST
+      request:
+        name: ExampleReq
+        body:
+          properties:
+            foo: integer
+            baz: 
+              type: string
+              content-type: "application/json"
+
+    multipart:
+      path: ""
+      method: PUT
+      request:
+        name: MultipartReq
+        body:
+          properties:
+            foo: file
+            baz: 
+              type: string
+              content-type: "application/json"

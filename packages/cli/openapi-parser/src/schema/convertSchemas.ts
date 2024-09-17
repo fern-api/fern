@@ -169,7 +169,6 @@ export function convertSchemaObject(
     const title = schema.title;
     const description = schema.description;
     const availability = convertAvailability(schema);
-
     const examples = getExtension<Record<string, OpenAPIV3.ExampleObject>>(schema, OpenAPIExtension.EXAMPLES);
 
     const fullExamples: NamedFullExample[] = [];
@@ -976,6 +975,7 @@ function maybeInjectDescriptionOrGroupName(
         return SchemaWithExample.reference({
             ...schema,
             description,
+            availability: schema.availability,
             groupName
         });
     } else if (schema.type === "optional") {

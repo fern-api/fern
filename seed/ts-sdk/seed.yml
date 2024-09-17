@@ -1,4 +1,5 @@
 irVersion: v53
+displayName: TypeScript SDK
 image: fernapi/fern-typescript-node-sdk
 publish:
   workingDirectory: generators/typescript
@@ -120,6 +121,9 @@ fixtures:
     - outputFolder: jsr
       customConfig:
         publishToJsr: true
+    - outputFolder: bigint
+      customConfig:
+        useBigInt: true        
   error-property:
     - customConfig:
         private: true
@@ -206,7 +210,6 @@ scripts:
   - docker: fernapi/ts-seed
     commands:
       - mkdir cache
-      - cp -r /yarn-cache-template ./cache
       - yarn install --cache-folder ./cache
       - yarn build
       - if grep -q '"test"' package.json && grep -q 'exhaustive' package.json; then yarn test --passWithNoTests --testPathPattern='exhaustive.*\.test\.ts$'; fi

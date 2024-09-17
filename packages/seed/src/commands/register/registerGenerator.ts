@@ -22,9 +22,10 @@ export async function registerGenerator({
     // Register generator itself
     fdrClient.generators.upsertGenerator({
         id: generatorId,
+        displayName: generatorConfig.displayName,
         generatorType: convertGeneratorType(generatorConfig.generatorType),
         generatorLanguage: generatorConfig.language,
-        dockerImage: generatorConfig.test.docker.image
+        dockerImage: generatorConfig.image
     });
 
     // Register generator versions
@@ -51,7 +52,7 @@ export async function registerGenerator({
                 await fdrClient.generators.versions.upsertGeneratorRelease(release);
             }
         });
-        context.logger.info(`Registration complete.`);
+        context.logger.info("Registration complete.");
     }
 }
 

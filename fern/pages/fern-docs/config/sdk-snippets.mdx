@@ -57,6 +57,7 @@ groups:
 </Callout>
 
 ### Add the package name to your docs configuration
+Add the package name for the corresponding SDK to your `docs.yml` file. For Go, use the exact URL where the SDK repository is located. 
 
 <CodeBlock title="docs.yml">
 ```yaml 
@@ -65,7 +66,6 @@ navigation:
     snippets:
       python: your-package-name  # <--- needs to match the naming in generators.yml
       typescript: your-package-name
-      ruby: your-package-name
       go: https://github.com/your-organization/your-repository # <--- needs the https://github.com/ prefix
 ```
 </CodeBlock>

@@ -12,10 +12,12 @@ import {
     ExitStatusUpdate,
     GeneratorUpdate,
     LogLevel,
-    parseGeneratorConfig
+    parseGeneratorConfig,
+    parseIR
 } from "@fern-api/generator-commons";
 import { writePostmanGithubWorkflows } from "./writePostmanGithubWorkflows";
 import { startCase } from "lodash";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 
 const DEFAULT_COLLECTION_OUTPUT_FILENAME = "collection.json";
 
@@ -211,11 +213,8 @@ async function publishCollection({
 }
 
 async function loadIntermediateRepresentation(pathToFile: string): Promise<IntermediateRepresentation> {
-    const irString = (await readFile(pathToFile)).toString();
-    const irJson = JSON.parse(irString);
-    return IrSerialization.IntermediateRepresentation.parseOrThrow(irJson, {
-        unrecognizedObjectKeys: "passthrough",
-        allowUnrecognizedUnionMembers: true,
-        allowUnrecognizedEnumValues: true
+    return await parseIR<IntermediateRepresentation>({
+        absolutePathToIR: AbsoluteFilePath.of(pathToFile),
+        parse: IrSerialization.IntermediateRepresentation.parse
     });
 }

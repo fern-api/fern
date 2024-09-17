@@ -5,10 +5,57 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.39.8] - 2024-08-27
+## [0.40.4] - 2024-09-12
 
-- Fix: The generated enum examples now reference the value of the enum directly instead 
-  of using the enum itself. 
+- Fix: Upgrades dependency `stream-json` which improves the performance when reading 
+  large API specs. This version will improve your `fern generate` performance. 
+
+## [0.40.3] - 2024-09-12
+
+- Fix: If the serde layer is enabled, then all the serializers are exported under the 
+  namespace `serializers`. 
+
+  ```ts
+  import { serializers } from "@plantstore/sdk"; 
+
+  export function main(): void { 
+    // serialize to json
+
+    const json = serializers.Plant.toJson({
+      name: "fern",
+    });
+
+    const parsed = serializers.Plant.parseOrThrow(`{ "name": "fern" }`);
+  }
+  ```
+
+## [0.40.2] - 2024-09-12
+
+- Fix: The generated SDK now handles reading IR JSONs that are larger than 500MB. In order to 
+  to this, the function `streamObjectFromFile` is used instead of `JSON.parse`. 
+
+## [0.40.1] - 2024-09-12
+
+- Fix: The generated snippets now inline referenced request objects given they are not named, they need to be inlined.
+
+## [0.40.0] - 2024-09-12
+
+- Feat: A new configuration flag has now been added that will automatically generate
+  `BigInt` for `long` and `bigint` primitive types. To turn this flag on:
+
+  ```yml
+  groups:
+    ts-sdk:
+      name: fernapi/fern-typescript-node-sdk
+      version: 0.40.0
+      config:
+        useBigInt: true
+  ```
+
+## [0.39.8] - 2024-09-11
+
+- Fix: The generated enum examples now reference the value of the enum directly instead
+  of using the enum itself.
 
   ### Before
 
@@ -26,11 +73,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   }
   ```
 
-
 ## [0.39.7] - 2024-08-27
 
-- Chore: The SDK now produces a `version.ts` file where we export a constant called `SDK_VERSION`. 
-  This constant can be used by different utilities to dynamically import in the version (for example, if someone wants to customize the user agent). 
+- Chore: The SDK now produces a `version.ts` file where we export a constant called `SDK_VERSION`.
+  This constant can be used by different utilities to dynamically import in the version (for example, if someone wants to customize the user agent).
 
 ## [0.39.6] - 2024-08-27
 

@@ -77,14 +77,38 @@ def to_jsonable_with_fallback(
 class UniversalBaseModel(pydantic.BaseModel):
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            # Allow fields begining with `model_` to be used in the model
             protected_namespaces=(),
-            json_encoders={dt.datetime: serialize_datetime},
         )  # type: ignore # Pydantic v2
+
+        @pydantic.model_serializer(mode="wrap", when_used="json")  # type: ignore # Pydantic v2
+        def serialize_model(self, handler: pydantic.SerializerFunctionWrapHandler) -> typing.Any:  # type: ignore # Pydantic v2
+            serialized = handler(self)
+            data = {k: serialize_datetime(v) if isinstance(v, dt.datetime) else v for k, v in serialized.items()}
+            return data
+
     else:
 
         class Config:
             smart_union = True
             json_encoders = {dt.datetime: serialize_datetime}
+
+    @classmethod
+    def model_construct(
+        cls: type[Model], _fields_set: typing.Optional[typing.Set[str]] = None, **values: typing.Any
+    ) -> Model:
+        dealiased_object = convert_and_respect_annotation_metadata(object_=values, annotation=cls, direction="read")
+        return cls.construct(_fields_set, **dealiased_object)
+
+    @classmethod
+    def construct(
+        cls: type[Model], _fields_set: typing.Optional[typing.Set[str]] = None, **values: typing.Any
+    ) -> Model:
+        dealiased_object = convert_and_respect_annotation_metadata(object_=values, annotation=cls, direction="read")
+        if IS_PYDANTIC_V2:
+            return super().model_construct(_fields_set, **dealiased_object)  # type: ignore # Pydantic v2
+        else:
+            return super().construct(_fields_set, **dealiased_object)
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {

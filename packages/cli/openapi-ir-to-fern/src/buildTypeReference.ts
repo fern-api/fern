@@ -35,6 +35,7 @@ import {
     getValidationFromTypeReference
 } from "./utils/getTypeFromTypeReference";
 import { convertSdkGroupNameToFile } from "./utils/convertSdkGroupName";
+import { convertAvailability } from "./utils/convertAvailability";
 
 const MIN_INT_32 = -2147483648;
 const MAX_INT_32 = 2147483647;
@@ -148,7 +149,10 @@ export function buildPrimitiveTypeReference(
     return {
         ...(primitiveSchema.title != null ? { "display-name": primitiveSchema.title } : {}),
         type: typeReference,
-        ...(primitiveSchema.description != null ? { docs: primitiveSchema.description } : {})
+        ...(primitiveSchema.description != null ? { docs: primitiveSchema.description } : {}),
+        ...(primitiveSchema.availability != null
+            ? { availability: convertAvailability(primitiveSchema.availability) }
+            : {})
     };
 }
 
@@ -422,7 +426,8 @@ export function buildReferenceTypeReference({
     return {
         ...(displayName != null ? { "display-name": displayName } : {}),
         type: resolvedSchema.type === "nullable" ? `optional<${typeWithPrefix}>` : typeWithPrefix,
-        ...(schema.description != null ? { docs: schema.description } : {})
+        ...(schema.description != null ? { docs: schema.description } : {}),
+        ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {})
     };
 }
 
@@ -453,6 +458,7 @@ export function buildArrayTypeReference({
     return {
         ...(schema.title != null ? { "display-name": schema.title } : {}),
         ...(schema.description != null ? { docs: schema.description } : {}),
+        ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {}),
         type
     };
 }
@@ -495,6 +501,9 @@ export function buildMapTypeReference({
     if (schema.title != null) {
         result["display-name"] = schema.title;
     }
+    if (schema.availability != null) {
+        result.availability = convertAvailability(schema.availability);
+    }
     return result;
 }
 
@@ -524,6 +533,7 @@ export function buildOptionalTypeReference({
     const itemValidation = getValidationFromTypeReference(itemTypeReference);
     const type = itemType.startsWith("optional<") ? itemType : `optional<${itemType}>`;
     if (
+        schema.availability == null &&
         schema.description == null &&
         itemDocs == null &&
         itemDefault == null &&
@@ -546,6 +556,9 @@ export function buildOptionalTypeReference({
     }
     if (schema.title != null) {
         result["display-name"] = schema.title;
+    }
+    if (schema.availability != null) {
+        result.availability = convertAvailability(schema.availability);
     }
     return result;
 }
@@ -576,7 +589,8 @@ export function buildLiteralTypeReference(
     return {
         ...(schema.title != null ? { "display-name": schema.title } : {}),
         type: value,
-        ...(schema.description != null ? { docs: schema.description } : {})
+        ...(schema.description != null ? { docs: schema.description } : {}),
+        ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {})
     };
 }
 
@@ -613,6 +627,10 @@ export function buildEnumTypeReference({
     if (schema.title != null) {
         result["display-name"] = schema.title;
     }
+    if (schema.availability != null) {
+        result.availability = convertAvailability(schema.availability);
+    }
+
     return result;
 }
 
@@ -647,7 +665,8 @@ export function buildObjectTypeReference({
     return {
         ...(schema.title != null ? { "display-name": schema.title } : {}),
         type: prefixedType,
-        ...(schema.description != null ? { docs: schema.description } : {})
+        ...(schema.description != null ? { docs: schema.description } : {}),
+        ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {})
     };
 }
 
@@ -682,7 +701,8 @@ export function buildOneOfTypeReference({
     return {
         ...(schema.title != null ? { "display-name": schema.title } : {}),
         type: prefixedType,
-        ...(schema.description != null ? { docs: schema.description } : {})
+        ...(schema.description != null ? { docs: schema.description } : {}),
+        ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {})
     };
 }
 

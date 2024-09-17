@@ -128,10 +128,6 @@ export {
     Type,
     Type as Types,
     Writer,
-    type Argument,
-    type Arguments,
-    type NamedArgument,
-    type UnnamedArgument,
     VALID_READ_ONLY_MEMORY_TYPES,
     convertReadOnlyPrimitiveTypes
 } from "./ast";

@@ -4,9 +4,16 @@ import {
     migrateIntermediateRepresentationForGenerator,
     migrateIntermediateRepresentationThroughVersion
 } from "@fern-api/ir-migrations";
-import { SourceConfig } from "@fern-api/ir-sdk";
+import { IntermediateRepresentation, SourceConfig } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
+
+export declare namespace getIntermediateRepresentation {
+    interface Return {
+        latest: IntermediateRepresentation;
+        migrated: unknown;
+    }
+}
 
 export async function getIntermediateRepresentation({
     workspace,
@@ -26,7 +33,7 @@ export async function getIntermediateRepresentation({
     version: string | undefined;
     packageName: string | undefined;
     sourceConfig: SourceConfig | undefined;
-}): Promise<unknown> {
+}): Promise<getIntermediateRepresentation.Return> {
     const intermediateRepresentation = await generateIntermediateRepresentation({
         workspace,
         audiences,
@@ -58,5 +65,8 @@ export async function getIntermediateRepresentation({
                       version: generatorInvocation.version
                   }
               });
-    return migratedIntermediateRepresentation;
+    return {
+        latest: intermediateRepresentation,
+        migrated: migratedIntermediateRepresentation
+    };
 }

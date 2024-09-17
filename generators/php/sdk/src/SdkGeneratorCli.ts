@@ -5,6 +5,8 @@ import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { generateModels } from "@fern-api/php-model";
+import { RootClientGenerator } from "./root-client/RootClientGenerator";
+import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
 
 export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -46,6 +48,21 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
         for (const file of models) {
             context.project.addSourceFiles(file);
         }
+
+        const rootClient = new RootClientGenerator(context);
+        context.project.addSourceFiles(rootClient.generate());
+
+        for (const subpackage of Object.values(context.ir.subpackages)) {
+            const service = subpackage.service != null ? context.getHttpServiceOrThrow(subpackage.service) : undefined;
+            const subClient = new SubPackageClientGenerator({
+                context,
+                subpackage,
+                serviceId: subpackage.service,
+                service
+            });
+            context.project.addSourceFiles(subClient.generate());
+        }
+
         await context.project.persist();
     }
 }

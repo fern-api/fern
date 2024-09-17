@@ -19,6 +19,7 @@ export declare namespace OSSWorkspace {
         specs: Spec[];
         changelog: APIChangelog | undefined;
         generatorsConfiguration: generatorsYml.GeneratorsConfiguration | undefined;
+        cliVersion: string;
     }
 
     export interface Settings {
@@ -38,6 +39,11 @@ export declare namespace OSSWorkspace {
          * as it allows the documentation to more closely mirror the OpenAPI spec.
          */
         detectGlobalHeaders?: boolean;
+        /*
+         * Whether or not to let additional property values in OpenAPI come through as
+         * optional.
+         */
+        optionalAdditionalProperties?: boolean;
     }
 }
 
@@ -49,8 +55,16 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
     public changelog: APIChangelog | undefined;
     public generatorsConfiguration: generatorsYml.GeneratorsConfiguration | undefined;
     public sources: IdentifiableSource[];
+    public cliVersion: string;
 
-    constructor({ absoluteFilepath, workspaceName, specs, changelog, generatorsConfiguration }: OSSWorkspace.Args) {
+    constructor({
+        absoluteFilepath,
+        workspaceName,
+        specs,
+        changelog,
+        generatorsConfiguration,
+        cliVersion
+    }: OSSWorkspace.Args) {
         super();
         this.absoluteFilepath = absoluteFilepath;
         this.workspaceName = workspaceName;
@@ -58,6 +72,7 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
         this.changelog = changelog;
         this.generatorsConfiguration = generatorsConfiguration;
         this.sources = this.convertSpecsToIdentifiableSources(specs);
+        this.cliVersion = cliVersion;
     }
 
     public async getDefinition(
@@ -135,7 +150,8 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
             },
             definition,
             changelog: this.changelog,
-            sources: this.sources
+            sources: this.sources,
+            cliVersion: this.cliVersion
         });
     }
 
@@ -199,6 +215,9 @@ function getOptionsOverridesFromSettings(settings?: OSSWorkspace.Settings): Part
     const result: Partial<ParseOpenAPIOptions> = {};
     if (settings.enableDiscriminatedUnionV2) {
         result.discriminatedUnionV2 = true;
+    }
+    if (settings.optionalAdditionalProperties) {
+        result.optionalAdditionalProperties = true;
     }
     return result;
 }

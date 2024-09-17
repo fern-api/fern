@@ -112,4 +112,32 @@ public partial class ServiceClient
             responseBody
         );
     }
+
+    public async Task WithContentTypeAsync(
+        WithContentTypeRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Post,
+                Path = "/with-content-type",
+                Options = options,
+            },
+            cancellationToken
+        );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedFileUploadApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
+    }
 }

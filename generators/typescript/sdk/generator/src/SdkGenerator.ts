@@ -124,6 +124,7 @@ export declare namespace SdkGenerator {
         organization: string;
         apiName: string;
         packageJson: Record<string, unknown> | undefined;
+        useBigInt: boolean;
     }
 }
 
@@ -414,7 +415,13 @@ export class SdkGenerator {
             this.generateTypeSchemas();
             this.generateEndpointTypeSchemas();
             this.generateInlinedRequestBodySchemas();
-            this.context.logger.debug("Generated serde layer.");
+            const serializationDirectory = this.rootDirectory.getDirectory(RelativeFilePath.of("src/serialization"));
+            if (serializationDirectory != null && serializationDirectory?.getSourceFiles().length > 0) {
+                this.exportsManager.addExportsForDirectories([
+                    { nameOnDisk: "serialization", exportDeclaration: { namespaceExport: "serializers" } }
+                ]);
+                this.context.logger.debug("Generated serde layer.");
+            }
         }
 
         if (this.generateOAuthClients) {
@@ -555,16 +562,21 @@ export class SdkGenerator {
         }
     }
 
-    private generateTypeSchemas() {
+    private generateTypeSchemas(): { generated: boolean } {
+        let generated = false;
         for (const typeDeclaration of Object.values(this.intermediateRepresentation.types)) {
             this.withSourceFile({
                 filepath: this.typeSchemaDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
                 run: ({ sourceFile, importsManager }) => {
+                    if (!generated) {
+                        generated = true;
+                    }
                     const context = this.generateSdkContext({ sourceFile, importsManager });
                     context.typeSchema.getGeneratedTypeSchema(typeDeclaration.name).writeToFile(context);
                 }
             });
         }
+        return { generated };
     }
 
     private generateErrorDeclarations() {
@@ -610,7 +622,8 @@ export class SdkGenerator {
         });
     }
 
-    private generateEndpointTypeSchemas() {
+    private generateEndpointTypeSchemas(): { generated: boolean } {
+        let generated = false;
         this.forEachService((service, packageId) => {
             for (const endpoint of service.endpoints) {
                 this.withSourceFile({
@@ -623,10 +636,14 @@ export class SdkGenerator {
                         context.sdkEndpointTypeSchemas
                             .getGeneratedEndpointTypeSchemas(packageId, endpoint.name)
                             .writeToFile(context);
+                        if (!generated) {
+                            generated = true;
+                        }
                     }
                 });
             }
         });
+        return { generated };
     }
 
     private generateRequestWrappers() {
@@ -651,7 +668,8 @@ export class SdkGenerator {
         });
     }
 
-    private generateInlinedRequestBodySchemas() {
+    private generateInlinedRequestBodySchemas(): { generated: boolean } {
+        let generated = false;
         this.forEachService((service, packageId) => {
             for (const endpoint of service.endpoints) {
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
@@ -665,11 +683,15 @@ export class SdkGenerator {
                             context.sdkInlinedRequestBodySchema
                                 .getGeneratedInlinedRequestBodySchema(packageId, endpoint.name)
                                 .writeToFile(context);
+                            if (!generated) {
+                                generated = true;
+                            }
                         }
                     });
                 }
             }
         });
+        return { generated };
     }
 
     private generateServiceDeclarations() {
@@ -1264,7 +1286,8 @@ export class SdkGenerator {
             targetRuntime: this.config.targetRuntime,
             inlineFileProperties: this.config.inlineFileProperties,
             generateOAuthClients: this.generateOAuthClients,
-            omitUndefined: this.config.omitUndefined
+            omitUndefined: this.config.omitUndefined,
+            useBigInt: this.config.useBigInt
         });
     }
 }

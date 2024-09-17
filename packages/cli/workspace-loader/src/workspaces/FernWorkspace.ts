@@ -16,6 +16,7 @@ export declare namespace FernWorkspace {
         dependenciesConfiguration: dependenciesYml.DependenciesConfiguration;
         definition: FernDefinition;
         sources: IdentifiableSource[] | undefined;
+        cliVersion: string;
     }
 }
 
@@ -28,6 +29,7 @@ export class FernWorkspace extends AbstractAPIWorkspace<void> {
     public definition: FernDefinition;
     public changelog: APIChangelog | undefined;
     public sources: IdentifiableSource[];
+    public cliVersion: string;
 
     constructor({
         absoluteFilepath,
@@ -36,7 +38,8 @@ export class FernWorkspace extends AbstractAPIWorkspace<void> {
         dependenciesConfiguration,
         definition,
         changelog,
-        sources
+        sources,
+        cliVersion
     }: FernWorkspace.Args) {
         super();
         this.absoluteFilepath = absoluteFilepath;
@@ -46,6 +49,7 @@ export class FernWorkspace extends AbstractAPIWorkspace<void> {
         this.dependenciesConfiguration = dependenciesConfiguration;
         this.definition = definition;
         this.sources = sources ?? [];
+        this.cliVersion = cliVersion;
     }
 
     public async getDefinition(): Promise<FernDefinition> {
@@ -171,7 +175,8 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
                     importedDefinitions: processPackageMarkersResult.importedDefinitions
                 },
                 changelog: this.changelog,
-                sources: undefined
+                sources: undefined,
+                cliVersion: this.cliVersion
             });
 
             this.fernWorkspaces[key] = workspace;

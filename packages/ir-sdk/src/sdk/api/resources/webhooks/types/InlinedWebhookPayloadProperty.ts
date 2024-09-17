@@ -4,7 +4,7 @@
 
 import * as FernIr from "../../../index";
 
-export interface InlinedWebhookPayloadProperty extends FernIr.WithDocs {
+export interface InlinedWebhookPayloadProperty extends FernIr.WithDocsAndAvailability {
     name: FernIr.NameAndWireValue;
     valueType: FernIr.TypeReference;
 }

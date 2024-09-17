@@ -112,6 +112,7 @@ export declare namespace SdkContextImpl {
         generateOAuthClients: boolean;
         inlineFileProperties: boolean;
         omitUndefined: boolean;
+        useBigInt: boolean;
     }
 }
 
@@ -198,7 +199,8 @@ export class SdkContextImpl implements SdkContext {
         targetRuntime,
         inlineFileProperties,
         generateOAuthClients,
-        omitUndefined
+        omitUndefined,
+        useBigInt
     }: SdkContextImpl.Init) {
         this.logger = logger;
         this.ir = ir;
@@ -243,7 +245,8 @@ export class SdkContextImpl implements SdkContext {
             typeReferenceExampleGenerator,
             treatUnknownAsAny,
             includeSerdeLayer,
-            retainOriginalCasing
+            retainOriginalCasing,
+            useBigInt
         });
         this.typeSchema = new TypeSchemaContextImpl({
             sourceFile,
@@ -256,7 +259,8 @@ export class SdkContextImpl implements SdkContext {
             typeSchemaGenerator,
             treatUnknownAsAny,
             includeSerdeLayer,
-            retainOriginalCasing
+            retainOriginalCasing,
+            useBigInt
         });
         this.sdkError = new SdkErrorContextImpl({
             sourceFile,
