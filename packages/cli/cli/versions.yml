@@ -24,7 +24,7 @@
         form requests. Previously these descriptions would be ignored. 
 
         For example, previously the description `The file to upload` would be 
-        ignored in the xample below. 
+        ignored in the example below. 
         ```yml 
         requestBody:
           content:
