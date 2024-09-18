@@ -19,6 +19,7 @@ import {
     UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 import { FdrSnippetTemplate } from "@fern-fern/snippet-sdk";
+import { TemplateInput } from "@fern-fern/snippet-sdk/api";
 import * as FDRAPIV1Read from "@fern-fern/snippet-sdk/api/resources/api/resources/v1/resources/read";
 import { GetReferenceOpts, getTextOfTsNode, NpmPackage, PackageId } from "@fern-typescript/commons";
 import { GeneratedEnumType, SdkContext } from "@fern-typescript/contexts";
@@ -747,21 +748,12 @@ export class TemplateGenerator {
                     prop._visit<FdrSnippetTemplate.TemplateInput | undefined>({
                         file: (file) =>
                             file._visit({
-                                file: (f) => this.getTemplateInputFromTemplate(this.fileUploadTemplate(f.key)),
+                                file: (f) => this.getTemplateInputFromTemplate(this.fileUploadTemplate()),
                                 fileArray: (fa) =>
                                     this.getTemplateInputFromTemplate(this.fileUploadArrayTemplate(fa.key)),
                                 _other: () => undefined
                             }),
-                        bodyProperty: (bp) =>
-                            this.getTemplateInputFromTypeReference({
-                                typeReference: bp.valueType,
-                                name: this.getPropertyKey(bp.name.name),
-                                location: FdrSnippetTemplate.PayloadLocation.Body,
-                                wireOrOriginalName: bp.name.wireValue,
-                                nameBreadcrumbs: undefined,
-                                indentationLevel: 2,
-                                isObjectInlined: false
-                            }),
+                        bodyProperty: () => undefined,
                         _other: () => undefined
                     })
                 ),
@@ -860,8 +852,52 @@ export class TemplateGenerator {
                     isObjectInlined: true
                 })
             ],
-            // File properties are handled separately
-            fileUpload: (fu) => undefined,
+            fileUpload: (fu) =>
+                fu.properties.flatMap((prop) =>
+                    prop._visit<FdrSnippetTemplate.TemplateInput | undefined>({
+                        file: (fileProperty) => {
+                            const propertyKey = this.getPropertyKey(fileProperty.key.name);
+                            if (this.inlineFileProperties) {
+                                const template = fileProperty._visit({
+                                    file: () =>
+                                        FdrSnippetTemplate.Template.generic({
+                                            imports: [],
+                                            templateString: `${propertyKey}: ${TEMPLATE_SENTINEL}`,
+                                            isOptional: fileProperty.isOptional,
+                                            templateInputs: [
+                                                this.getTemplateInputFromTemplate(this.fileUploadTemplate())
+                                            ]
+                                        }),
+                                    fileArray: () =>
+                                        FdrSnippetTemplate.Template.generic({
+                                            imports: [],
+                                            templateString: `${propertyKey}: [${TEMPLATE_SENTINEL}]`,
+                                            isOptional: fileProperty.isOptional,
+                                            templateInputs: [
+                                                this.getTemplateInputFromTemplate(this.fileUploadTemplate())
+                                            ]
+                                        }),
+                                    _other: () => undefined
+                                });
+                                if (template != null) {
+                                    return this.getTemplateInputFromTemplate(template);
+                                }
+                            }
+                            return undefined;
+                        },
+                        bodyProperty: (bp) =>
+                            this.getTemplateInputFromTypeReference({
+                                typeReference: bp.valueType,
+                                name: this.getPropertyKey(bp.name.name),
+                                location: FdrSnippetTemplate.PayloadLocation.Body,
+                                wireOrOriginalName: bp.name.wireValue,
+                                nameBreadcrumbs: undefined,
+                                indentationLevel: 2,
+                                isObjectInlined
+                            }),
+                        _other: () => undefined
+                    })
+                ),
             // Bytes currently not supported
             bytes: () => undefined,
             // No sense in throwing, just ignore this.
@@ -882,11 +918,9 @@ export class TemplateGenerator {
         const containerTemplateString = `[\n\t\t${TEMPLATE_SENTINEL}\n\t]`;
         return FdrSnippetTemplate.Template.iterable({
             isOptional: true,
-            containerTemplateString: this.inlineFileProperties
-                ? `${this.getPropertyKey(key.name)}: ${containerTemplateString}`
-                : containerTemplateString,
+            containerTemplateString,
             delimiter: ",\n\t\t",
-            innerTemplate: this.fileUploadTemplate(key, true),
+            innerTemplate: this.fileUploadTemplate(),
             templateInput: FdrSnippetTemplate.TemplateInput.payload({
                 location: FdrSnippetTemplate.PayloadLocation.Body,
                 path: key.wireValue
@@ -894,23 +928,13 @@ export class TemplateGenerator {
         });
     }
 
-    private fileUploadTemplate(key: NameAndWireValue, isNested?: boolean) {
-        const templateString = `fs.createReadStream('${TEMPLATE_SENTINEL}')`;
+    private fileUploadTemplate() {
+        const templateString = `fs.createReadStream("/path/to/your/file")`;
         return FdrSnippetTemplate.Template.generic({
             imports: ['import fs from "fs";'],
-            templateString:
-                this.inlineFileProperties && !isNested
-                    ? `${this.getPropertyKey(key.name)}: ${templateString}`
-                    : templateString,
+            templateString,
             isOptional: false,
-            templateInputs: !isNested
-                ? [
-                      FdrSnippetTemplate.TemplateInput.payload({
-                          location: FdrSnippetTemplate.PayloadLocation.Body,
-                          path: key.wireValue
-                      })
-                  ]
-                : []
+            templateInputs: []
         });
     }
 
@@ -1137,9 +1161,6 @@ export class TemplateGenerator {
 
         // Finally, if there's a request param, build that.
         const requestParamInputs = this.getRequestParametersFromEndpoint();
-        if (this.inlineFileProperties) {
-            requestParamInputs.push(...fileParamInputs);
-        }
         if (requestParamInputs.length > 0) {
             topLevelTemplateInputs.push(
                 FdrSnippetTemplate.TemplateInput.template(

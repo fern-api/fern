@@ -2,7 +2,12 @@
 import { SeedFileUploadClient } from "@fern/file-upload";
 
 const client = new SeedFileUploadClient({ environment: "YOUR_BASE_URL" });
-undefined;
+await client.service.post({
+  file: fs.createReadStream("/path/to/your/file"),
+  fileList: [fs.createReadStream("/path/to/your/file")],
+  maybeFile: fs.createReadStream("/path/to/your/file"),
+  maybeFileList: [fs.createReadStream("/path/to/your/file")],
+});
  
 ```                        
 
@@ -11,7 +16,9 @@ undefined;
 import { SeedFileUploadClient } from "@fern/file-upload";
 
 const client = new SeedFileUploadClient({ environment: "YOUR_BASE_URL" });
-undefined;
+await client.service.justFile({
+  file: fs.createReadStream("/path/to/your/file"),
+});
  
 ```                        
 
@@ -26,6 +33,7 @@ await client.service.justFileWithQueryParams({
   maybeInteger: 1,
   listOfStrings: "string",
   optionalListOfStrings: "string",
+  file: fs.createReadStream("/path/to/your/file"),
 });
  
 ```                        
@@ -35,7 +43,9 @@ await client.service.justFileWithQueryParams({
 import { SeedFileUploadClient } from "@fern/file-upload";
 
 const client = new SeedFileUploadClient({ environment: "YOUR_BASE_URL" });
-undefined;
+await client.service.withContentType({
+  file: fs.createReadStream("/path/to/your/file"),
+});
  
 ```                        
 
