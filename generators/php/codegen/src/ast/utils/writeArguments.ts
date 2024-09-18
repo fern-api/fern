@@ -29,7 +29,7 @@ function writeMultiline({ writer, arguments_ }: { writer: Writer; arguments_: Ar
         writer.writeLine(",");
     }
     writer.dedent();
-    writer.writeLine(")");
+    writer.write(")");
 }
 
 function writeCompact({ writer, arguments_ }: { writer: Writer; arguments_: Arguments }): void {

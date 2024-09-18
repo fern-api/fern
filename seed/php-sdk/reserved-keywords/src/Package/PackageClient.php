@@ -42,8 +42,7 @@ class PackageClient
                     method: HttpMethod::POST,
                     query: $query,
                 ),
-            )
-            ;
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;

@@ -42,8 +42,7 @@ class DummyClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
-            )
-            ;
+            );
             $statusCode = $response->getStatusCode();
         } catch (ClientExceptionInterface $e) {
             throw new Exception($e->getMessage());
@@ -66,8 +65,7 @@ class DummyClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
-            )
-            ;
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);

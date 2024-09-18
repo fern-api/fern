@@ -41,8 +41,7 @@ class ServiceClient
                     path: "/test/$pathParam/$serviceParam/$endpointParam/$resourceParam",
                     method: HttpMethod::POST,
                 ),
-            )
-            ;
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;

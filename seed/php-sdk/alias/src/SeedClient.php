@@ -47,8 +47,7 @@ class SeedClient
                     path: "/$typeId",
                     method: HttpMethod::GET,
                 ),
-            )
-            ;
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;

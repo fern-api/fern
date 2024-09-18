@@ -41,8 +41,7 @@ class SubmissionClient
                     path: "/sessions/create-session/$language",
                     method: HttpMethod::POST,
                 ),
-            )
-            ;
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
@@ -70,8 +69,7 @@ class SubmissionClient
                     path: "/sessions/$sessionId",
                     method: HttpMethod::GET,
                 ),
-            )
-            ;
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
@@ -99,8 +97,7 @@ class SubmissionClient
                     path: "/sessions/stop/$sessionId",
                     method: HttpMethod::DELETE,
                 ),
-            )
-            ;
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
@@ -124,8 +121,7 @@ class SubmissionClient
                     path: "/sessions/execution-sessions-state",
                     method: HttpMethod::GET,
                 ),
-            )
-            ;
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);

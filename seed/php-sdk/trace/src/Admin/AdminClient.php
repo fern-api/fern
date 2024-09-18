@@ -45,8 +45,7 @@ class AdminClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
-            )
-            ;
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
@@ -73,8 +72,7 @@ class AdminClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
-            )
-            ;
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
@@ -101,8 +99,7 @@ class AdminClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
-            )
-            ;
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
@@ -129,8 +126,7 @@ class AdminClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
-            )
-            ;
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
@@ -158,8 +154,7 @@ class AdminClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
-            )
-            ;
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
@@ -187,8 +182,7 @@ class AdminClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
-            )
-            ;
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
@@ -215,8 +209,7 @@ class AdminClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
-            )
-            ;
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
@@ -243,8 +236,7 @@ class AdminClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
-            )
-            ;
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;

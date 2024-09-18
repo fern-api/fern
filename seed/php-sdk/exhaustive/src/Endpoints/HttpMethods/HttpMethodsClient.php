@@ -41,8 +41,7 @@ class HttpMethodsClient
                     path: "/http-methods/$id",
                     method: HttpMethod::GET,
                 ),
-            )
-            ;
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
@@ -70,8 +69,7 @@ class HttpMethodsClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
-            )
-            ;
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
@@ -100,8 +98,7 @@ class HttpMethodsClient
                     method: HttpMethod::PUT,
                     body: $request,
                 ),
-            )
-            ;
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
@@ -130,8 +127,7 @@ class HttpMethodsClient
                     method: HttpMethod::PATCH,
                     body: $request,
                 ),
-            )
-            ;
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
@@ -158,8 +154,7 @@ class HttpMethodsClient
                     path: "/http-methods/$id",
                     method: HttpMethod::DELETE,
                 ),
-            )
-            ;
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);

@@ -43,8 +43,7 @@ class ProblemClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
-            )
-            ;
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
@@ -74,8 +73,7 @@ class ProblemClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
-            )
-            ;
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
@@ -103,8 +101,7 @@ class ProblemClient
                     path: "/problem-crud/delete/$problemId",
                     method: HttpMethod::DELETE,
                 ),
-            )
-            ;
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
@@ -131,8 +128,7 @@ class ProblemClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
-            )
-            ;
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);

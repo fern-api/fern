@@ -37,8 +37,7 @@ class ServiceClient
                     path: "",
                     method: HttpMethod::POST,
                 ),
-            )
-            ;
+            );
             $statusCode = $response->getStatusCode();
         } catch (ClientExceptionInterface $e) {
             throw new Exception($e->getMessage());

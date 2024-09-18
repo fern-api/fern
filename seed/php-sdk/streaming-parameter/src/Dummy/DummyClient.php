@@ -40,8 +40,7 @@ class DummyClient
                     method: HttpMethod::POST,
                     body: $request,
                 ),
-            )
-            ;
+            );
             $statusCode = $response->getStatusCode();
         } catch (ClientExceptionInterface $e) {
             throw new Exception($e->getMessage());

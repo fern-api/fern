@@ -51,8 +51,7 @@ class V2Client
                     path: "",
                     method: HttpMethod::GET,
                 ),
-            )
-            ;
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;

@@ -42,8 +42,7 @@ class PathParamClient
                     path: "path/$operand/$maybeOperand/$operandOrColor/$maybeOperandOrColor",
                     method: HttpMethod::POST,
                 ),
-            )
-            ;
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;

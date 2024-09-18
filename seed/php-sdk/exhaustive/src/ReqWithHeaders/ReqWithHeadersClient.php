@@ -44,8 +44,7 @@ class ReqWithHeadersClient
                     headers: $headers,
                     body: $request->body,
                 ),
-            )
-            ;
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;

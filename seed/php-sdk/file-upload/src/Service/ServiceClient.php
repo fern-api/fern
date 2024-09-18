@@ -42,8 +42,7 @@ class ServiceClient
                     path: "",
                     method: HttpMethod::POST,
                 ),
-            )
-            ;
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
@@ -68,8 +67,7 @@ class ServiceClient
                     path: "/just-file",
                     method: HttpMethod::POST,
                 ),
-            )
-            ;
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
@@ -107,8 +105,7 @@ class ServiceClient
                     method: HttpMethod::POST,
                     query: $query,
                 ),
-            )
-            ;
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
@@ -133,8 +130,7 @@ class ServiceClient
                     path: "/with-content-type",
                     method: HttpMethod::POST,
                 ),
-            )
-            ;
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
