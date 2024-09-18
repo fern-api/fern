@@ -75,7 +75,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
                 );
             },
             inlinedRequestBody: (request) => {
-                for (const property of [...request.properties, ...(request.extendedProperties ?? [])]) {
+                for (const property of request.properties) {
                     const type = this.context.phpTypeMapper.convert({ reference: property.valueType });
                     class_.addField(
                         php.field({

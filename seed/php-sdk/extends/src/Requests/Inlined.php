@@ -12,16 +12,4 @@ class Inlined
     #[JsonProperty("unique")]
     public string $unique;
 
-    /**
-     * @var string $name
-     */
-    #[JsonProperty("name")]
-    public string $name;
-
-    /**
-     * @var string $docs
-     */
-    #[JsonProperty("docs")]
-    public string $docs;
-
 }

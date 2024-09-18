@@ -12,10 +12,4 @@ class InlinedChildRequest
     #[JsonProperty("child")]
     public string $child;
 
-    /**
-     * @var string $parent
-     */
-    #[JsonProperty("parent")]
-    public string $parent;
-
 }
