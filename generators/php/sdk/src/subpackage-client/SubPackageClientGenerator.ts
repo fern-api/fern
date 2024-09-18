@@ -16,11 +16,15 @@ export declare namespace SubClientGenerator {
 export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     private classReference: php.ClassReference;
     private subpackage: Subpackage;
+    private serviceId: ServiceId | undefined;
+    private service: HttpService | undefined;
 
-    constructor({ subpackage, context }: SubClientGenerator.Args) {
+    constructor({ subpackage, context, serviceId, service }: SubClientGenerator.Args) {
         super(context);
         this.classReference = this.context.getSubpackageClassReference(subpackage);
         this.subpackage = subpackage;
+        this.serviceId = serviceId;
+        this.service = service;
     }
 
     public doGenerate(): PhpFile {
@@ -34,6 +38,16 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
         class_.addConstructor(this.getConstructorMethod({ subpackages }));
         for (const subpackage of subpackages) {
             class_.addField(this.context.getSubpackageField(subpackage));
+        }
+
+        if (this.service != null && this.serviceId != null) {
+            for (const endpoint of this.service.endpoints) {
+                const method = this.context.endpointGenerator.generate({
+                    serviceId: this.serviceId,
+                    endpoint
+                });
+                class_.addMethod(method);
+            }
         }
 
         return new PhpFile({

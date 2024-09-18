@@ -2,13 +2,18 @@
 
 namespace Seed;
 
+use Seed\User\UserClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\RawClient;
-use Seed\User\UserClient;
 use GuzzleHttp\Client;
 
 class SeedClient
 {
+    /**
+     * @var UserClient $user
+     */
+    public UserClient $user;
+
     /**
      * @var ?array{baseUrl?: string, client?: ClientInterface} $options
      */
@@ -18,11 +23,6 @@ class SeedClient
      * @var RawClient $client
      */
     private RawClient $client;
-
-    /**
-     * @var UserClient $user
-     */
-    public UserClient $user;
 
     /**
      * @param ?array{baseUrl?: string, client?: ClientInterface} $options

@@ -263,21 +263,22 @@ export function buildEndpoint({
             "status-code": parseInt(statusCode)
         };
 
+        const errorDeclarationFile = resolveLocationWithNamespace({
+            location: ERROR_DECLARATIONS_FILENAME,
+            namespaceOverride: maybeEndpointNamespace
+        });
+
         if (httpError.schema != null) {
             const typeReference = buildTypeReference({
                 schema: httpError.schema,
                 context,
-                fileContainingReference,
+                fileContainingReference: errorDeclarationFile,
+                declarationFile: errorDeclarationFile,
                 namespace: maybeEndpointNamespace
             });
             errorDeclaration.type = getTypeFromTypeReference(typeReference);
             errorDeclaration.docs = httpError.description;
         }
-
-        const errorDeclarationFile = resolveLocationWithNamespace({
-            location: ERROR_DECLARATIONS_FILENAME,
-            namespaceOverride: maybeEndpointNamespace
-        });
 
         context.builder.addError(errorDeclarationFile, {
             name: errorName,
@@ -522,15 +523,38 @@ function getRequest({
         const properties = Object.fromEntries(
             request.properties.map((property) => {
                 if (property.schema.type === "file") {
-                    const fileType = property.schema.isArray ? "list<file>" : "file";
-                    return [property.key, property.schema.isOptional ? `optional<${fileType}>` : fileType];
+                    let fileType = property.schema.isArray ? "list<file>" : "file";
+                    fileType = property.schema.isOptional ? `optional<${fileType}>` : fileType;
+                    if (property.description != null || property.contentType != null) {
+                        const propertyTypeReference: RawSchemas.HttpInlineRequestBodyPropertySchema = {
+                            type: fileType
+                        };
+                        if (property.description != null) {
+                            propertyTypeReference.docs = property.description;
+                        }
+                        if (property.contentType != null) {
+                            propertyTypeReference["content-type"] = property.contentType;
+                        }
+                        return [property.key, propertyTypeReference];
+                    }
+                    return [property.key, fileType];
                 } else {
-                    const propertyTypeReference = buildTypeReference({
+                    let propertyTypeReference: RawSchemas.HttpInlineRequestBodyPropertySchema = buildTypeReference({
                         schema: property.schema.value,
                         fileContainingReference: declarationFile,
                         context,
                         namespace
                     });
+                    if (property.contentType != null) {
+                        if (typeof propertyTypeReference === "string") {
+                            propertyTypeReference = {
+                                type: propertyTypeReference,
+                                "content-type": property.contentType
+                            };
+                        } else {
+                            propertyTypeReference["content-type"] = property.contentType;
+                        }
+                    }
                     return [property.key, propertyTypeReference];
                 }
             })

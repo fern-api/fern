@@ -2,20 +2,20 @@
 
 namespace Seed\FolderA;
 
-use Seed\Core\RawClient;
 use Seed\FolderA\Service\ServiceClient;
+use Seed\Core\RawClient;
 
 class FolderAClient
 {
     /**
-     * @var RawClient $client
-     */
-    private RawClient $client;
-
-    /**
      * @var ServiceClient $service
      */
     public ServiceClient $service;
+
+    /**
+     * @var RawClient $client
+     */
+    private RawClient $client;
 
     /**
      * @param RawClient $client

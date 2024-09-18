@@ -1,7 +1,7 @@
 errors:
   BadRequestError:
     status-code: 400
-    type: root.Problem
+    type: Problem
     docs: Bad Request
     examples:
       - value:
@@ -11,7 +11,7 @@ errors:
           detail: The request is invalid or missing required parameters.
   UnauthorizedError:
     status-code: 401
-    type: root.Problem
+    type: Problem
     docs: Unauthorized
     examples:
       - value:
@@ -21,7 +21,7 @@ errors:
           detail: You do not have the necessary permissions.
   ForbiddenError:
     status-code: 403
-    type: root.Problem
+    type: Problem
     docs: Forbidden
     examples:
       - value:
@@ -31,7 +31,7 @@ errors:
           detail: Access is forbidden with the provided credentials.
   TooManyRequestsError:
     status-code: 429
-    type: root.Problem
+    type: Problem
     docs: Too Many Requests
     examples:
       - value:
@@ -41,7 +41,7 @@ errors:
           detail: You have exceeded the rate limit.
   InternalServerError:
     status-code: 500
-    type: root.Problem
+    type: Problem
     docs: Internal Server Error
     examples:
       - value:
@@ -51,7 +51,7 @@ errors:
           detail: An unexpected error occurred.
   NotFoundError:
     status-code: 404
-    type: root.Problem
+    type: Problem
     docs: Not Found
     examples:
       - value:
@@ -61,7 +61,7 @@ errors:
           detail: The requested resource was not found.
   ConflictError:
     status-code: 409
-    type: root.Problem
+    type: Problem
     docs: Conflict
     examples:
       - value:

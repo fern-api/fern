@@ -2,13 +2,18 @@
 
 namespace Seed;
 
+use Seed\Imdb\ImdbClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\RawClient;
-use Seed\Imdb\ImdbClient;
 use GuzzleHttp\Client;
 
 class SeedClient
 {
+    /**
+     * @var ImdbClient $imdb
+     */
+    public ImdbClient $imdb;
+
     /**
      * @var ?array{baseUrl?: string, client?: ClientInterface} $options
      */
@@ -18,11 +23,6 @@ class SeedClient
      * @var RawClient $client
      */
     private RawClient $client;
-
-    /**
-     * @var ImdbClient $imdb
-     */
-    public ImdbClient $imdb;
 
     /**
      * @param ?array{baseUrl?: string, client?: ClientInterface} $options

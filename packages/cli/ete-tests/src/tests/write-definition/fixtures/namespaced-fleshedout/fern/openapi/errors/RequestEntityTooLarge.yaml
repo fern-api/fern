@@ -1,0 +1,9 @@
+description: |
+  This error is returned when the request size is too large.
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        data:
+          type: string

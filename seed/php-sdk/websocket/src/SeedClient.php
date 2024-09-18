@@ -2,13 +2,18 @@
 
 namespace Seed;
 
+use Seed\Realtime\RealtimeClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\RawClient;
-use Seed\Realtime\RealtimeClient;
 use GuzzleHttp\Client;
 
 class SeedClient
 {
+    /**
+     * @var RealtimeClient $realtime
+     */
+    public RealtimeClient $realtime;
+
     /**
      * @var ?array{baseUrl?: string, client?: ClientInterface} $options
      */
@@ -18,11 +23,6 @@ class SeedClient
      * @var RawClient $client
      */
     private RawClient $client;
-
-    /**
-     * @var RealtimeClient $realtime
-     */
-    public RealtimeClient $realtime;
 
     /**
      * @param ?array{baseUrl?: string, client?: ClientInterface} $options

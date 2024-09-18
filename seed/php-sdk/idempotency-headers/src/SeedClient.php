@@ -2,13 +2,18 @@
 
 namespace Seed;
 
+use Seed\Payment\PaymentClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\RawClient;
-use Seed\Payment\PaymentClient;
 use GuzzleHttp\Client;
 
 class SeedClient
 {
+    /**
+     * @var PaymentClient $payment
+     */
+    public PaymentClient $payment;
+
     /**
      * @var ?array{baseUrl?: string, client?: ClientInterface} $options
      */
@@ -18,11 +23,6 @@ class SeedClient
      * @var RawClient $client
      */
     private RawClient $client;
-
-    /**
-     * @var PaymentClient $payment
-     */
-    public PaymentClient $payment;
 
     /**
      * @param ?array{baseUrl?: string, client?: ClientInterface} $options

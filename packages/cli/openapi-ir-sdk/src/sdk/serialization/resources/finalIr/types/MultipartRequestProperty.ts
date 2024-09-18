@@ -15,6 +15,7 @@ export const MultipartRequestProperty: core.serialization.ObjectSchema<
     .objectWithoutOptionalProperties({
         key: core.serialization.string(),
         schema: MultipartSchema,
+        contentType: core.serialization.string().optional(),
     })
     .extend(WithDescription);
 
@@ -22,5 +23,6 @@ export declare namespace MultipartRequestProperty {
     interface Raw extends WithDescription.Raw {
         key: string;
         schema: MultipartSchema.Raw;
+        contentType?: string | null;
     }
 }

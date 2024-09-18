@@ -19,12 +19,21 @@ exports[`open api parser > file-upload > docs 1`] = `
           ],
           "method": "POST",
           "pagination": undefined,
-          "path": "/upload",
+          "path": "/upload-with-content-type",
           "request": {
             "body": {
               "properties": {
-                "file": "file",
+                "file": {
+                  "content-type": "application/octet-stream",
+                  "docs": "The file to upload",
+                  "type": "file",
+                },
                 "maybe_file": "optional<file>",
+                "metadata": {
+                  "content-type": "application/json",
+                  "docs": "This is a metadata field",
+                  "type": "optional<map<string, unknown>>",
+                },
               },
             },
             "content-type": "multipart/form-data",
@@ -68,12 +77,21 @@ exports[`open api parser > file-upload > simple 1`] = `
           ],
           "method": "POST",
           "pagination": undefined,
-          "path": "/upload",
+          "path": "/upload-with-content-type",
           "request": {
             "body": {
               "properties": {
-                "file": "file",
+                "file": {
+                  "content-type": "application/octet-stream",
+                  "docs": "The file to upload",
+                  "type": "file",
+                },
                 "maybe_file": "optional<file>",
+                "metadata": {
+                  "content-type": "application/json",
+                  "docs": "This is a metadata field",
+                  "type": "optional<map<string, unknown>>",
+                },
               },
             },
             "content-type": "multipart/form-data",

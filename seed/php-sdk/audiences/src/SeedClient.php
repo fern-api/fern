@@ -2,28 +2,18 @@
 
 namespace Seed;
 
-use GuzzleHttp\ClientInterface;
-use Seed\Core\RawClient;
 use Seed\Commons\CommonsClient;
 use Seed\FolderA\FolderAClient;
 use Seed\FolderB\FolderBClient;
 use Seed\FolderC\FolderCClient;
 use Seed\FolderD\FolderDClient;
 use Seed\Foo\FooClient;
+use GuzzleHttp\ClientInterface;
+use Seed\Core\RawClient;
 use GuzzleHttp\Client;
 
 class SeedClient
 {
-    /**
-     * @var ?array{baseUrl?: string, client?: ClientInterface} $options
-     */
-    private ?array $options;
-
-    /**
-     * @var RawClient $client
-     */
-    private RawClient $client;
-
     /**
      * @var CommonsClient $commons
      */
@@ -53,6 +43,16 @@ class SeedClient
      * @var FooClient $foo
      */
     public FooClient $foo;
+
+    /**
+     * @var ?array{baseUrl?: string, client?: ClientInterface} $options
+     */
+    private ?array $options;
+
+    /**
+     * @var RawClient $client
+     */
+    private RawClient $client;
 
     /**
      * @param ?array{baseUrl?: string, client?: ClientInterface} $options

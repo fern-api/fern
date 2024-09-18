@@ -2,10 +2,7 @@ import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Endpoint, HttpMethod } from "@fern-api/openapi-ir-sdk";
 import { camelCase, compact, isEqual } from "lodash-es";
-import {
-    convertEndpointSdkNameToFileWithoutExtension,
-    convertSdkGroupNameToFileWithoutExtension
-} from "./convertSdkGroupName";
+import { convertEndpointSdkNameToFileWithoutExtension } from "./convertSdkGroupName";
 
 export interface EndpointLocation {
     file: RelativeFilePath;
@@ -30,7 +27,10 @@ function resolveEndpointLocationWithNamespaceOverride({
 }
 
 function getUnresolvedEndpointLocation(endpoint: Endpoint): EndpointLocation {
-    const tag = endpoint.tags[0];
+    const namespace = endpoint.namespace;
+
+    // Ignore the namespace tag as we'll apply that later, universally
+    const tag = endpoint.tags.filter((tag) => tag !== namespace)[0];
     const operationId = endpoint.operationId;
 
     if (operationId == null) {
