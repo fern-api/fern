@@ -42,11 +42,15 @@ export async function getFernUpgradeMessage({
 
     // To start we're truncating the list and recommending the user use a different command
     // to see the full list so as to not overwhelm them
-    message += await getGeneratorUpgradeMessage({
+    const generatorUpgradeMessage = await getGeneratorUpgradeMessage({
         generatorUpgradeInfo: upgradeInfo.generatorUpgradeInfo,
         limit: 2,
         includeBoxen: false
     });
+    if (generatorUpgradeMessage != null) {
+        message += generatorUpgradeMessage;
+    }
+
     const generatorsNeedingUpgrades = upgradeInfo.generatorUpgradeInfo.filter((gui) => gui.isUpgradeAvailable);
     if (generatorsNeedingUpgrades.length > 0) {
         message += `\nRun ${chalk.cyan("fern generator upgrade")} to upgrade your generators.`;
