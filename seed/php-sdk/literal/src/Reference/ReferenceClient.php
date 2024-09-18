@@ -29,7 +29,7 @@ class ReferenceClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function send(SendRequest $request, ?array $options): mixed
+    public function send(SendRequest $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

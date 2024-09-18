@@ -34,7 +34,7 @@ class PlaylistClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function createPlaylist(int $serviceParam, CreatePlaylistRequest $request, ?array $options): mixed
+    public function createPlaylist(int $serviceParam, CreatePlaylistRequest $request, ?array $options = null): mixed
     {
         $query = [];
         $query['datetime'] = $request->datetime->format(Constant::DateTimeFormat);
@@ -62,7 +62,7 @@ class PlaylistClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getPlaylists(int $serviceParam, GetPlaylistsRequest $request, ?array $options): mixed
+    public function getPlaylists(int $serviceParam, GetPlaylistsRequest $request, ?array $options = null): mixed
     {
         $query = [];
         $query['otherField'] = $request->otherField;
@@ -93,7 +93,7 @@ class PlaylistClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getPlaylist(int $serviceParam, string $playlistId, ?array $options): mixed
+    public function getPlaylist(int $serviceParam, string $playlistId, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -117,7 +117,7 @@ class PlaylistClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function updatePlaylist(int $serviceParam, string $playlistId, ?UpdatePlaylistRequest $request, ?array $options): mixed
+    public function updatePlaylist(int $serviceParam, string $playlistId, ?UpdatePlaylistRequest $request = null, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -140,7 +140,7 @@ class PlaylistClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function deletePlaylist(int $serviceParam, string $playlistId, ?array $options): mixed
+    public function deletePlaylist(int $serviceParam, string $playlistId, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

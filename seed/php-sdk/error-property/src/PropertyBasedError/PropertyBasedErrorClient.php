@@ -28,7 +28,7 @@ class PropertyBasedErrorClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function throwError(?array $options): mixed
+    public function throwError(?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

@@ -30,7 +30,7 @@ class AuthClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getTokenWithClientCredentials(GetTokenRequest $request, ?array $options): mixed
+    public function getTokenWithClientCredentials(GetTokenRequest $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -51,7 +51,7 @@ class AuthClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function refreshToken(RefreshTokenRequest $request, ?array $options): mixed
+    public function refreshToken(RefreshTokenRequest $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

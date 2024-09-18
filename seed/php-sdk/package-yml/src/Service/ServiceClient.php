@@ -28,7 +28,7 @@ class ServiceClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function nop(string $id, string $nestedId, ?array $options): mixed
+    public function nop(string $id, string $nestedId, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

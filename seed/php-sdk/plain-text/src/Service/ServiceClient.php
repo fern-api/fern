@@ -26,7 +26,7 @@ class ServiceClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getText(?array $options): mixed
+    public function getText(?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

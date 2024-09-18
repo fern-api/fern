@@ -29,7 +29,7 @@ class NoAuthClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function postWithNoAuth(mixed $request, ?array $options): mixed
+    public function postWithNoAuth(mixed $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

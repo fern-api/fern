@@ -28,7 +28,7 @@ class ServiceClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getWithBearerToken(?array $options): mixed
+    public function getWithBearerToken(?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

@@ -29,7 +29,7 @@ class PaymentClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function create(CreatePaymentRequest $request, ?array $options): mixed
+    public function create(CreatePaymentRequest $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -50,7 +50,7 @@ class PaymentClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function delete(string $paymentId, ?array $options): mixed
+    public function delete(string $paymentId, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

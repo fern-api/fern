@@ -28,7 +28,7 @@ class OptionalClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function sendOptionalBody(?array $request, ?array $options): mixed
+    public function sendOptionalBody(?array $request = null, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

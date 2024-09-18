@@ -31,7 +31,7 @@ class ProblemClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function createProblem(CreateProblemRequest $request, ?array $options): mixed
+    public function createProblem(CreateProblemRequest $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -54,7 +54,7 @@ class ProblemClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function updateProblem(string $problemId, CreateProblemRequest $request, ?array $options): mixed
+    public function updateProblem(string $problemId, CreateProblemRequest $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -76,7 +76,7 @@ class ProblemClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function deleteProblem(string $problemId, ?array $options): mixed
+    public function deleteProblem(string $problemId, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -96,7 +96,7 @@ class ProblemClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getDefaultStarterFiles(GetDefaultStarterFilesRequest $request, ?array $options): mixed
+    public function getDefaultStarterFiles(GetDefaultStarterFilesRequest $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

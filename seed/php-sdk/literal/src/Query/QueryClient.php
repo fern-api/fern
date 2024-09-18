@@ -29,7 +29,7 @@ class QueryClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function send(SendLiteralsInQueryRequest $request, ?array $options): mixed
+    public function send(SendLiteralsInQueryRequest $request, ?array $options = null): mixed
     {
         $query = [];
         $query['prompt'] = $request->prompt;

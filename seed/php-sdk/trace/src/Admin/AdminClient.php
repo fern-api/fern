@@ -33,7 +33,7 @@ class AdminClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function updateTestSubmissionStatus(string $submissionId, mixed $request, ?array $options): mixed
+    public function updateTestSubmissionStatus(string $submissionId, mixed $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -53,7 +53,7 @@ class AdminClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function sendTestSubmissionUpdate(string $submissionId, TestSubmissionUpdate $request, ?array $options): mixed
+    public function sendTestSubmissionUpdate(string $submissionId, TestSubmissionUpdate $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -73,7 +73,7 @@ class AdminClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function updateWorkspaceSubmissionStatus(string $submissionId, mixed $request, ?array $options): mixed
+    public function updateWorkspaceSubmissionStatus(string $submissionId, mixed $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -93,7 +93,7 @@ class AdminClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function sendWorkspaceSubmissionUpdate(string $submissionId, WorkspaceSubmissionUpdate $request, ?array $options): mixed
+    public function sendWorkspaceSubmissionUpdate(string $submissionId, WorkspaceSubmissionUpdate $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -114,7 +114,7 @@ class AdminClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function storeTracedTestCase(string $submissionId, string $testCaseId, StoreTracedTestCaseRequest $request, ?array $options): mixed
+    public function storeTracedTestCase(string $submissionId, string $testCaseId, StoreTracedTestCaseRequest $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -135,7 +135,7 @@ class AdminClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function storeTracedTestCaseV2(string $submissionId, string $testCaseId, array $request, ?array $options): mixed
+    public function storeTracedTestCaseV2(string $submissionId, string $testCaseId, array $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -155,7 +155,7 @@ class AdminClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function storeTracedWorkspace(string $submissionId, StoreTracedWorkspaceRequest $request, ?array $options): mixed
+    public function storeTracedWorkspace(string $submissionId, StoreTracedWorkspaceRequest $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -175,7 +175,7 @@ class AdminClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function storeTracedWorkspaceV2(string $submissionId, array $request, ?array $options): mixed
+    public function storeTracedWorkspaceV2(string $submissionId, array $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

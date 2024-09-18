@@ -28,7 +28,7 @@ class BasicAuthClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getWithBasicAuth(?array $options): mixed
+    public function getWithBasicAuth(?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -50,7 +50,7 @@ class BasicAuthClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function postWithBasicAuth(mixed $request, ?array $options): mixed
+    public function postWithBasicAuth(mixed $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

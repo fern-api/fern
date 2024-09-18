@@ -5,7 +5,7 @@ namespace Seed\Types;
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 
-class Parent_ extends SerializableType
+class parent extends SerializableType
 {
     #[JsonProperty("parent")]
     /**

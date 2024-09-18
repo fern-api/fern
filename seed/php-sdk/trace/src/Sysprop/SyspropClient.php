@@ -30,7 +30,7 @@ class SyspropClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function setNumWarmInstances(Language $language, int $numWarmInstances, ?array $options): mixed
+    public function setNumWarmInstances(Language $language, int $numWarmInstances, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -48,7 +48,7 @@ class SyspropClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getNumWarmInstances(?array $options): mixed
+    public function getNumWarmInstances(?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

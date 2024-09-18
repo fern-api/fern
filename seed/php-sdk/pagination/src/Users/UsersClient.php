@@ -38,7 +38,7 @@ class UsersClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function listWithCursorPagination(ListUsersCursorPaginationRequest $request, ?array $options): mixed
+    public function listWithCursorPagination(ListUsersCursorPaginationRequest $request, ?array $options = null): mixed
     {
         $query = [];
         if ($request->page != null) {
@@ -72,7 +72,7 @@ class UsersClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function listWithBodyCursorPagination(ListUsersBodyCursorPaginationRequest $request, ?array $options): mixed
+    public function listWithBodyCursorPagination(ListUsersBodyCursorPaginationRequest $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -93,7 +93,7 @@ class UsersClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function listWithOffsetPagination(ListUsersOffsetPaginationRequest $request, ?array $options): mixed
+    public function listWithOffsetPagination(ListUsersOffsetPaginationRequest $request, ?array $options = null): mixed
     {
         $query = [];
         if ($request->page != null) {
@@ -127,7 +127,7 @@ class UsersClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function listWithBodyOffsetPagination(ListUsersBodyOffsetPaginationRequest $request, ?array $options): mixed
+    public function listWithBodyOffsetPagination(ListUsersBodyOffsetPaginationRequest $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -148,7 +148,7 @@ class UsersClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function listWithOffsetStepPagination(ListUsersOffsetStepPaginationRequest $request, ?array $options): mixed
+    public function listWithOffsetStepPagination(ListUsersOffsetStepPaginationRequest $request, ?array $options = null): mixed
     {
         $query = [];
         if ($request->page != null) {
@@ -179,7 +179,7 @@ class UsersClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function listWithOffsetPaginationHasNextPage(ListWithOffsetPaginationHasNextPageRequest $request, ?array $options): mixed
+    public function listWithOffsetPaginationHasNextPage(ListWithOffsetPaginationHasNextPageRequest $request, ?array $options = null): mixed
     {
         $query = [];
         if ($request->page != null) {
@@ -210,7 +210,7 @@ class UsersClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function listWithExtendedResults(ListUsersExtendedRequest $request, ?array $options): mixed
+    public function listWithExtendedResults(ListUsersExtendedRequest $request, ?array $options = null): mixed
     {
         $query = [];
         if ($request->cursor != null) {
@@ -235,7 +235,7 @@ class UsersClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function listWithExtendedResultsAndOptionalData(ListUsersExtendedRequestForOptionalData $request, ?array $options): mixed
+    public function listWithExtendedResultsAndOptionalData(ListUsersExtendedRequestForOptionalData $request, ?array $options = null): mixed
     {
         $query = [];
         if ($request->cursor != null) {
@@ -260,7 +260,7 @@ class UsersClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function listUsernames(ListUsernamesRequest $request, ?array $options): mixed
+    public function listUsernames(ListUsernamesRequest $request, ?array $options = null): mixed
     {
         $query = [];
         if ($request->startingAfter != null) {
@@ -285,7 +285,7 @@ class UsersClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function listWithGlobalConfig(ListWithGlobalConfigRequest $request, ?array $options): mixed
+    public function listWithGlobalConfig(ListWithGlobalConfigRequest $request, ?array $options = null): mixed
     {
         $query = [];
         if ($request->offset != null) {

@@ -29,12 +29,10 @@ class MigrationClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getAttemptedMigrations(GetAttemptedMigrationsRequest $request, ?array $options): mixed
+    public function getAttemptedMigrations(GetAttemptedMigrationsRequest $request, ?array $options = null): mixed
     {
         $headers = [];
-        [
-            'admin-key-header' => $request->adminKeyHeader,
-        ];
+        ['admin-key-header' => $request->adminKeyHeader];
         try {
             $response = $this->client->sendRequest();
             $statusCode = $response->getStatusCode();

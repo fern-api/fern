@@ -28,7 +28,7 @@ class PathClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function send(string $id, ?array $options): mixed
+    public function send(string $id, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

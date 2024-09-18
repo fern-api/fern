@@ -33,7 +33,7 @@ class ObjectClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getAndReturnWithOptionalField(ObjectWithOptionalField $request, ?array $options): mixed
+    public function getAndReturnWithOptionalField(ObjectWithOptionalField $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -54,7 +54,7 @@ class ObjectClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getAndReturnWithRequiredField(ObjectWithRequiredField $request, ?array $options): mixed
+    public function getAndReturnWithRequiredField(ObjectWithRequiredField $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -75,7 +75,7 @@ class ObjectClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getAndReturnWithMapOfMap(ObjectWithMapOfMap $request, ?array $options): mixed
+    public function getAndReturnWithMapOfMap(ObjectWithMapOfMap $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -96,7 +96,7 @@ class ObjectClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getAndReturnNestedWithOptionalField(NestedObjectWithOptionalField $request, ?array $options): mixed
+    public function getAndReturnNestedWithOptionalField(NestedObjectWithOptionalField $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -118,7 +118,7 @@ class ObjectClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getAndReturnNestedWithRequiredField(string $string, NestedObjectWithRequiredField $request, ?array $options): mixed
+    public function getAndReturnNestedWithRequiredField(string $string, NestedObjectWithRequiredField $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -139,7 +139,7 @@ class ObjectClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getAndReturnNestedWithRequiredFieldAsList(array $request, ?array $options): mixed
+    public function getAndReturnNestedWithRequiredFieldAsList(array $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

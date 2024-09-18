@@ -27,7 +27,7 @@ class NoReqBodyClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getWithNoRequestBody(?array $options): mixed
+    public function getWithNoRequestBody(?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -47,7 +47,7 @@ class NoReqBodyClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function postWithNoRequestBody(?array $options): mixed
+    public function postWithNoRequestBody(?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

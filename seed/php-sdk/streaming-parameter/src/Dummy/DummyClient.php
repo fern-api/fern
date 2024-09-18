@@ -28,7 +28,7 @@ class DummyClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function generate(GenerateRequest $request, ?array $options): mixed
+    public function generate(GenerateRequest $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

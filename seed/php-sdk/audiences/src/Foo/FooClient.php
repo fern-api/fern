@@ -29,7 +29,7 @@ class FooClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function find(FindRequest $request, ?array $options): mixed
+    public function find(FindRequest $request, ?array $options = null): mixed
     {
         $query = [];
         if ($request->optionalString != null) {

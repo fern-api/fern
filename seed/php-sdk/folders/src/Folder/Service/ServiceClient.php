@@ -26,7 +26,7 @@ class ServiceClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function endpoint(?array $options): mixed
+    public function endpoint(?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -45,7 +45,7 @@ class ServiceClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function unknownRequest(mixed $request, ?array $options): mixed
+    public function unknownRequest(mixed $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

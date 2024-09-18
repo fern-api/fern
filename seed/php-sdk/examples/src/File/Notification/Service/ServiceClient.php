@@ -28,7 +28,7 @@ class ServiceClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getException(string $notificationId, ?array $options): mixed
+    public function getException(string $notificationId, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

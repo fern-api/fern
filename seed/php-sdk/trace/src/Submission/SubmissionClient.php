@@ -30,7 +30,7 @@ class SubmissionClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function createExecutionSession(Language $language, ?array $options): mixed
+    public function createExecutionSession(Language $language, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -52,7 +52,7 @@ class SubmissionClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getExecutionSession(string $sessionId, ?array $options): mixed
+    public function getExecutionSession(string $sessionId, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -74,7 +74,7 @@ class SubmissionClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function stopExecutionSession(string $sessionId, ?array $options): mixed
+    public function stopExecutionSession(string $sessionId, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -92,7 +92,7 @@ class SubmissionClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getExecutionSessionsState(?array $options): mixed
+    public function getExecutionSessionsState(?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

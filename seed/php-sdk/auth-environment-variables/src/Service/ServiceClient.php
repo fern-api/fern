@@ -29,7 +29,7 @@ class ServiceClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getWithApiKey(?array $options): mixed
+    public function getWithApiKey(?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -51,12 +51,10 @@ class ServiceClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getWithHeader(HeaderAuthRequest $request, ?array $options): mixed
+    public function getWithHeader(HeaderAuthRequest $request, ?array $options = null): mixed
     {
         $headers = [];
-        [
-            'X-Endpoint-Header' => $request->xEndpointHeader,
-        ];
+        ['X-Endpoint-Header' => $request->xEndpointHeader];
         try {
             $response = $this->client->sendRequest();
             $statusCode = $response->getStatusCode();

@@ -31,7 +31,7 @@ class PathParamClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function send(Operand $operand, ?Operand $maybeOperand, mixed $operandOrColor, mixed $maybeOperandOrColor, ?array $options): mixed
+    public function send(Operand $operand, ?Operand $maybeOperand = null, mixed $operandOrColor, mixed $maybeOperandOrColor, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

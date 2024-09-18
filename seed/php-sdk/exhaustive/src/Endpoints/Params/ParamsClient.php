@@ -32,7 +32,7 @@ class ParamsClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getWithPath(string $param, ?array $options): mixed
+    public function getWithPath(string $param, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -54,7 +54,7 @@ class ParamsClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getWithQuery(GetWithQuery $request, ?array $options): mixed
+    public function getWithQuery(GetWithQuery $request, ?array $options = null): mixed
     {
         $query = [];
         $query['query'] = $request->query;
@@ -77,7 +77,7 @@ class ParamsClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getWithAllowMultipleQuery(GetWithMultipleQuery $request, ?array $options): mixed
+    public function getWithAllowMultipleQuery(GetWithMultipleQuery $request, ?array $options = null): mixed
     {
         $query = [];
         $query['query'] = $request->query;
@@ -101,7 +101,7 @@ class ParamsClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getWithPathAndQuery(string $param, GetWithPathAndQuery $request, ?array $options): mixed
+    public function getWithPathAndQuery(string $param, GetWithPathAndQuery $request, ?array $options = null): mixed
     {
         $query = [];
         $query['query'] = $request->query;
@@ -124,7 +124,7 @@ class ParamsClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function modifyWithPath(string $param, string $request, ?array $options): mixed
+    public function modifyWithPath(string $param, string $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

@@ -30,7 +30,7 @@ class ServiceClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getMovie(string $movieId, ?array $options): mixed
+    public function getMovie(string $movieId, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -51,7 +51,7 @@ class ServiceClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function createMovie(Movie $request, ?array $options): mixed
+    public function createMovie(Movie $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -72,7 +72,7 @@ class ServiceClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getMetadata(GetMetadataRequest $request, ?array $options): mixed
+    public function getMetadata(GetMetadataRequest $request, ?array $options = null): mixed
     {
         $query = [];
         $query['tag'] = $request->tag;
@@ -80,9 +80,7 @@ class ServiceClient
             $query['shallow'] = $request->shallow;
         }
         $headers = [];
-        [
-            'X-API-Version' => $request->xApiVersion,
-        ];
+        ['X-API-Version' => $request->xApiVersion];
         try {
             $response = $this->client->sendRequest();
             $statusCode = $response->getStatusCode();
@@ -101,7 +99,7 @@ class ServiceClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getResponse(?array $options): mixed
+    public function getResponse(?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

@@ -30,7 +30,7 @@ class HttpMethodsClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function testGet(string $id, ?array $options): mixed
+    public function testGet(string $id, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -51,7 +51,7 @@ class HttpMethodsClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function testPost(ObjectWithRequiredField $request, ?array $options): mixed
+    public function testPost(ObjectWithRequiredField $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -73,7 +73,7 @@ class HttpMethodsClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function testPut(string $id, ObjectWithRequiredField $request, ?array $options): mixed
+    public function testPut(string $id, ObjectWithRequiredField $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -95,7 +95,7 @@ class HttpMethodsClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function testPatch(string $id, ObjectWithOptionalField $request, ?array $options): mixed
+    public function testPatch(string $id, ObjectWithOptionalField $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -116,7 +116,7 @@ class HttpMethodsClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function testDelete(string $id, ?array $options): mixed
+    public function testDelete(string $id, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

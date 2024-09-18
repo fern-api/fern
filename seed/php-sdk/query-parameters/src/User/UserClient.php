@@ -30,7 +30,7 @@ class UserClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getUsername(GetUsersRequest $request, ?array $options): mixed
+    public function getUsername(GetUsersRequest $request, ?array $options = null): mixed
     {
         $query = [];
         $query['limit'] = $request->limit;

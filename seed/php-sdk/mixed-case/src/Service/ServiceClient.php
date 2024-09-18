@@ -30,7 +30,7 @@ class ServiceClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getResource(string $resourceId, ?array $options): mixed
+    public function getResource(string $resourceId, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -51,7 +51,7 @@ class ServiceClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function listResources(ListResourcesRequest $request, ?array $options): mixed
+    public function listResources(ListResourcesRequest $request, ?array $options = null): mixed
     {
         $query = [];
         $query['page_limit'] = $request->pageLimit;

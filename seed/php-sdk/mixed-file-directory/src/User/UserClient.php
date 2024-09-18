@@ -37,7 +37,7 @@ class UserClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function list(ListUsersRequest $request, ?array $options): mixed
+    public function list(ListUsersRequest $request, ?array $options = null): mixed
     {
         $query = [];
         if ($request->limit != null) {

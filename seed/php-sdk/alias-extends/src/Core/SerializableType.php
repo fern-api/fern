@@ -176,7 +176,7 @@ abstract class SerializableType
     private static function serializeList(array $data, array $type): array
     {
         $valueType = $type[0];
-        return array_map(fn($item) => self::serializeValue($item, $valueType), $data);
+        return array_map(fn ($item) => self::serializeValue($item, $valueType), $data);
     }
 
     /**
@@ -232,8 +232,6 @@ abstract class SerializableType
     public static function fromJson(string $json): static
     {
         $arrayData = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
-        $arrayData = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
-
 
         if (!is_array($arrayData)) {
             throw new InvalidArgumentException('Invalid JSON provided or JSON does not decode to an array.');
@@ -411,6 +409,6 @@ abstract class SerializableType
     private static function deserializeList(array $data, array $type): array
     {
         $valueType = $type[0];
-        return array_map(fn($item) => self::deserializeValue($item, $valueType), $data);
+        return array_map(fn ($item) => self::deserializeValue($item, $valueType), $data);
     }
 }

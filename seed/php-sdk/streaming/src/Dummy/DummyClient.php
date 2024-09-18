@@ -30,7 +30,7 @@ class DummyClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function generateStream(GenerateStreamRequest $request, ?array $options): mixed
+    public function generateStream(GenerateStreamRequest $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -46,7 +46,7 @@ class DummyClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function generate(Generateequest $request, ?array $options): mixed
+    public function generate(Generateequest $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

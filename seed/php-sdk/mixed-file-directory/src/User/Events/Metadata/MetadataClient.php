@@ -30,7 +30,7 @@ class MetadataClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getMetadata(GetEventMetadataRequest $request, ?array $options): mixed
+    public function getMetadata(GetEventMetadataRequest $request, ?array $options = null): mixed
     {
         $query = [];
         $query['id'] = $request->id;

@@ -30,7 +30,7 @@ class ImdbClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function createMovie(CreateMovieRequest $request, ?array $options): mixed
+    public function createMovie(CreateMovieRequest $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -51,7 +51,7 @@ class ImdbClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getMovie(string $movieId, ?array $options): mixed
+    public function getMovie(string $movieId, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

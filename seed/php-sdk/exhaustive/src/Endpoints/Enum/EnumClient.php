@@ -29,7 +29,7 @@ class EnumClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getAndReturnEnum(WeatherReport $request, ?array $options): mixed
+    public function getAndReturnEnum(WeatherReport $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

@@ -27,7 +27,7 @@ class HomepageClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getHomepageProblems(?array $options): mixed
+    public function getHomepageProblems(?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -48,7 +48,7 @@ class HomepageClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function setHomepageProblems(array $request, ?array $options): mixed
+    public function setHomepageProblems(array $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

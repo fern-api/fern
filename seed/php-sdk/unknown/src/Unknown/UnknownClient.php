@@ -29,7 +29,7 @@ class UnknownClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function post(mixed $request, ?array $options): mixed
+    public function post(mixed $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -50,7 +50,7 @@ class UnknownClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function postObject(MyObject $request, ?array $options): mixed
+    public function postObject(MyObject $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

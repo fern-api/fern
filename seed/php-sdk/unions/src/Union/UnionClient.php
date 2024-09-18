@@ -28,7 +28,7 @@ class UnionClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function get(string $id, ?array $options): mixed
+    public function get(string $id, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -49,7 +49,7 @@ class UnionClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function update(mixed $request, ?array $options): mixed
+    public function update(mixed $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

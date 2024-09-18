@@ -27,7 +27,7 @@ class UserClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function get(?array $options): mixed
+    public function get(?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

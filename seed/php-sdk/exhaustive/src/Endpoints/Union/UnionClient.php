@@ -28,7 +28,7 @@ class UnionClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getAndReturnUnion(mixed $request, ?array $options): mixed
+    public function getAndReturnUnion(mixed $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

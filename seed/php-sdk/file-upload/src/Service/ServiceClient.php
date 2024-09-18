@@ -30,7 +30,7 @@ class ServiceClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function post(MyRequest $request, ?array $options): mixed
+    public function post(MyRequest $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -49,7 +49,7 @@ class ServiceClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function justFile(JustFileRequet $request, ?array $options): mixed
+    public function justFile(JustFileRequet $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -68,7 +68,7 @@ class ServiceClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function justFileWithQueryParams(JustFileWithQueryParamsRequet $request, ?array $options): mixed
+    public function justFileWithQueryParams(JustFileWithQueryParamsRequet $request, ?array $options = null): mixed
     {
         $query = [];
         $query['integer'] = $request->integer;

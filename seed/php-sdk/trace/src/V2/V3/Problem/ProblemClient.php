@@ -28,7 +28,7 @@ class ProblemClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getLightweightProblems(?array $options): mixed
+    public function getLightweightProblems(?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -49,7 +49,7 @@ class ProblemClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getProblems(?array $options): mixed
+    public function getProblems(?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -71,7 +71,7 @@ class ProblemClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getLatestProblem(string $problemId, ?array $options): mixed
+    public function getLatestProblem(string $problemId, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -94,7 +94,7 @@ class ProblemClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getProblemVersion(string $problemId, int $problemVersion, ?array $options): mixed
+    public function getProblemVersion(string $problemId, int $problemVersion, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

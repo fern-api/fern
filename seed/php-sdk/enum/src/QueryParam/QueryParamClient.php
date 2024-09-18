@@ -29,7 +29,7 @@ class QueryParamClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function send(SendEnumAsQueryParamRequest $request, ?array $options): mixed
+    public function send(SendEnumAsQueryParamRequest $request, ?array $options = null): mixed
     {
         $query = [];
         $query['operand'] = $request->operand->value;
@@ -57,7 +57,7 @@ class QueryParamClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function sendList(SendEnumListAsQueryParamRequest $request, ?array $options): mixed
+    public function sendList(SendEnumListAsQueryParamRequest $request, ?array $options = null): mixed
     {
         $query = [];
         $query['operand'] = $request->operand->value;

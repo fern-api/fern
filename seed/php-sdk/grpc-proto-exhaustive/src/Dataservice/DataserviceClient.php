@@ -35,7 +35,7 @@ class DataserviceClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function upload(UploadRequest $request, ?array $options): mixed
+    public function upload(UploadRequest $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -56,7 +56,7 @@ class DataserviceClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function delete(DeleteRequest $request, ?array $options): mixed
+    public function delete(DeleteRequest $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -77,7 +77,7 @@ class DataserviceClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function describe(DescribeRequest $request, ?array $options): mixed
+    public function describe(DescribeRequest $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -98,7 +98,7 @@ class DataserviceClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function fetch(FetchRequest $request, ?array $options): mixed
+    public function fetch(FetchRequest $request, ?array $options = null): mixed
     {
         $query = [];
         $query['ids'] = $request->ids;
@@ -124,7 +124,7 @@ class DataserviceClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function list(ListRequest $request, ?array $options): mixed
+    public function list(ListRequest $request, ?array $options = null): mixed
     {
         $query = [];
         if ($request->prefix != null) {
@@ -158,7 +158,7 @@ class DataserviceClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function query(QueryRequest $request, ?array $options): mixed
+    public function query(QueryRequest $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -179,7 +179,7 @@ class DataserviceClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function update(UpdateRequest $request, ?array $options): mixed
+    public function update(UpdateRequest $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

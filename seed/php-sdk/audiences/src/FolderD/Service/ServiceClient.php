@@ -27,7 +27,7 @@ class ServiceClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getDirectThread(?array $options): mixed
+    public function getDirectThread(?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

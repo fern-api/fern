@@ -30,7 +30,7 @@ class InlinedRequestsClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function postWithObjectBodyandResponse(PostWithObjectBody $request, ?array $options): mixed
+    public function postWithObjectBodyandResponse(PostWithObjectBody $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

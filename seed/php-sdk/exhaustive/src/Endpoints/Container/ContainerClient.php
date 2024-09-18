@@ -29,7 +29,7 @@ class ContainerClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getAndReturnListOfPrimitives(array $request, ?array $options): mixed
+    public function getAndReturnListOfPrimitives(array $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -50,7 +50,7 @@ class ContainerClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getAndReturnListOfObjects(array $request, ?array $options): mixed
+    public function getAndReturnListOfObjects(array $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -71,7 +71,7 @@ class ContainerClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getAndReturnSetOfPrimitives(array $request, ?array $options): mixed
+    public function getAndReturnSetOfPrimitives(array $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -92,7 +92,7 @@ class ContainerClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getAndReturnSetOfObjects(array $request, ?array $options): mixed
+    public function getAndReturnSetOfObjects(array $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -113,7 +113,7 @@ class ContainerClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getAndReturnMapPrimToPrim(array $request, ?array $options): mixed
+    public function getAndReturnMapPrimToPrim(array $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -134,7 +134,7 @@ class ContainerClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getAndReturnMapOfPrimToObject(array $request, ?array $options): mixed
+    public function getAndReturnMapOfPrimToObject(array $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -155,7 +155,7 @@ class ContainerClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getAndReturnOptional(?ObjectWithRequiredField $request, ?array $options): mixed
+    public function getAndReturnOptional(?ObjectWithRequiredField $request = null, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

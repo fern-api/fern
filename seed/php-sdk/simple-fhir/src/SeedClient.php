@@ -37,7 +37,7 @@ class SeedClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getAccount(string $accountId, ?array $options): mixed
+    public function getAccount(string $accountId, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

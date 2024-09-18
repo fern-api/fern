@@ -29,7 +29,7 @@ class S3Client
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getPresignedUrl(GetPresignedUrlRequest $request, ?array $options): mixed
+    public function getPresignedUrl(GetPresignedUrlRequest $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

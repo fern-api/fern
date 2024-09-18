@@ -31,12 +31,10 @@ class ServiceClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getFile(string $filename, GetFileRequest $request, ?array $options): mixed
+    public function getFile(string $filename, GetFileRequest $request, ?array $options = null): mixed
     {
         $headers = [];
-        [
-            'X-File-API-Version' => $request->xFileApiVersion,
-        ];
+        ['X-File-API-Version' => $request->xFileApiVersion];
         try {
             $response = $this->client->sendRequest();
             $statusCode = $response->getStatusCode();

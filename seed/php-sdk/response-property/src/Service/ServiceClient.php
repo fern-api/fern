@@ -28,7 +28,7 @@ class ServiceClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getMovie(string $request, ?array $options): mixed
+    public function getMovie(string $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -49,7 +49,7 @@ class ServiceClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getMovieDocs(string $request, ?array $options): mixed
+    public function getMovieDocs(string $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -70,7 +70,7 @@ class ServiceClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getMovieName(string $request, ?array $options): mixed
+    public function getMovieName(string $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -91,7 +91,7 @@ class ServiceClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getMovieMetadata(string $request, ?array $options): mixed
+    public function getMovieMetadata(string $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -112,7 +112,7 @@ class ServiceClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getOptionalMovie(string $request, ?array $options): mixed
+    public function getOptionalMovie(string $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -133,7 +133,7 @@ class ServiceClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getOptionalMovieDocs(string $request, ?array $options): mixed
+    public function getOptionalMovieDocs(string $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -154,7 +154,7 @@ class ServiceClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getOptionalMovieName(string $request, ?array $options): mixed
+    public function getOptionalMovieName(string $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

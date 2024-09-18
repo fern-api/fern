@@ -29,13 +29,10 @@ class HeadersClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function send(SendLiteralsInHeadersRequest $request, ?array $options): mixed
+    public function send(SendLiteralsInHeadersRequest $request, ?array $options = null): mixed
     {
         $headers = [];
-        [
-            'X-Endpoint-Version' => $request->endpointVersion,
-            'X-Async' => $request->async,
-        ];
+        ['X-Endpoint-Version' => $request->endpointVersion,'X-Async' => $request->async];
         try {
             $response = $this->client->sendRequest();
             $statusCode = $response->getStatusCode();

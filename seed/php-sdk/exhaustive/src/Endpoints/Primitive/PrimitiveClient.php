@@ -29,7 +29,7 @@ class PrimitiveClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getAndReturnString(string $request, ?array $options): mixed
+    public function getAndReturnString(string $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -50,7 +50,7 @@ class PrimitiveClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getAndReturnInt(int $request, ?array $options): mixed
+    public function getAndReturnInt(int $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -71,7 +71,7 @@ class PrimitiveClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getAndReturnLong(int $request, ?array $options): mixed
+    public function getAndReturnLong(int $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -92,7 +92,7 @@ class PrimitiveClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getAndReturnDouble(float $request, ?array $options): mixed
+    public function getAndReturnDouble(float $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -113,7 +113,7 @@ class PrimitiveClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getAndReturnBool(bool $request, ?array $options): mixed
+    public function getAndReturnBool(bool $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -134,7 +134,7 @@ class PrimitiveClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getAndReturnDatetime(DateTime $request, ?array $options): mixed
+    public function getAndReturnDatetime(DateTime $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -155,7 +155,7 @@ class PrimitiveClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getAndReturnDate(DateTime $request, ?array $options): mixed
+    public function getAndReturnDate(DateTime $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -176,7 +176,7 @@ class PrimitiveClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getAndReturnUuid(string $request, ?array $options): mixed
+    public function getAndReturnUuid(string $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -197,7 +197,7 @@ class PrimitiveClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function getAndReturnBase64(string $request, ?array $options): mixed
+    public function getAndReturnBase64(string $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

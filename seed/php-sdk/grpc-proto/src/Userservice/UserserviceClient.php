@@ -29,7 +29,7 @@ class UserserviceClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function create(CreateRequest $request, ?array $options): mixed
+    public function create(CreateRequest $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

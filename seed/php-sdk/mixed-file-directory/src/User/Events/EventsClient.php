@@ -37,7 +37,7 @@ class EventsClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function listEvents(ListUserEventsRequest $request, ?array $options): mixed
+    public function listEvents(ListUserEventsRequest $request, ?array $options = null): mixed
     {
         $query = [];
         if ($request->limit != null) {

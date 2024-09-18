@@ -29,7 +29,7 @@ class ServiceClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function check(string $id, ?array $options): mixed
+    public function check(string $id, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();
@@ -48,7 +48,7 @@ class ServiceClient
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function ping(?array $options): mixed
+    public function ping(?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

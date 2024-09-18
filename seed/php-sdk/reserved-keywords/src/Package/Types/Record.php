@@ -7,8 +7,8 @@ use Seed\Core\JsonProperty;
 use Seed\Core\ArrayType;
 
 
-class Record
- extends SerializableType {
+class Record 
+extends SerializableType{
     #[JsonProperty("foo"), ArrayType(["string" => "string"])]
     /**
      * @var array<string, string> $foo
