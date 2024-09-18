@@ -10,6 +10,7 @@ import { upgradeGenerator } from "./commands/upgrade/upgradeGenerator";
 import { getProjectGeneratorUpgrades } from "./cli-context/upgrade-utils/getGeneratorVersions";
 import { getGeneratorUpgradeMessage } from "./cli-context/upgrade-utils/getFernUpgradeMessage";
 import { writeFile } from "fs/promises";
+import { convertExampleTypeReference } from "@fern-api/ir-migrations/src/migrations/v5-to-v4/convertExampleTypeReference";
 
 export function addGetOrganizationCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext): void {
     cli.command(
@@ -219,6 +220,16 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                             boolean: true,
                             default: false,
                             description: "Get the version of the specified generator."
+                        })
+                        .option("language", {
+                            boolean: true,
+                            default: false,
+                            description: "Get the language of the specified generator."
+                        })
+                        .option("repository", {
+                            boolean: true,
+                            default: false,
+                            description: "Get repository for the generator invocation, if one is specified."
                         }),
                 async (argv) => {
                     await cliContext.instrumentPostHogEvent({
@@ -241,20 +252,66 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                             defaultToAllApiWorkspaces: true
                         })
                     });
+
+                    interface GeneratorMetadata {
+                        version?: string;
+                        language?: string;
+                        repository?: string;
+                    }
+
                     if (generator == null) {
                         const maybeApiFilter = argv.api ? ` for API ${argv.api}` : "";
                         cliContext.failAndThrow(
                             `Generator ${argv.generator}, in group ${argv.group}${maybeApiFilter} was not found.`
                         );
                     }
+
+                    const generatorMetadata: GeneratorMetadata = {};
                     if (argv.version) {
+                        generatorMetadata.version = generator.version;
                         if (argv.output == null) {
                             process.stdout.write(generator.version);
                             return;
                         }
+                    }
 
+                    if (argv.language) {
+                        if (generator.language != null) {
+                            generatorMetadata.language = generator.language;
+                            if (argv.output == null) {
+                                process.stdout.write(generator.language);
+                                return;
+                            }
+                        } else {
+                            cliContext.logger.warn(
+                                `Language information is not available for generator ${generator.name} in group ${argv.group}`
+                            );
+                        }
+                    }
+
+                    if (argv.repository) {
+                        const repository =
+                            generator.outputMode.type === "github"
+                                ? generator.outputMode.repo
+                                : generator.outputMode.type === "githubV2"
+                                ? generator.outputMode.githubV2.repo
+                                : undefined;
+                        if (repository != null) {
+                            generatorMetadata.repository = repository;
+                            if (argv.output == null) {
+                                process.stdout.write(generatorMetadata.repository);
+                                return;
+                            }
+                        } else {
+                            cliContext.logger.warn(
+                                `Repository information is not available for generator ${generator.name} in group ${argv.group}`
+                            );
+                        }
+                    }
+
+                    if (argv.output) {
                         try {
-                            await writeFile(argv.output, generator.version);
+                            await writeFile(argv.output, JSON.stringify(generatorMetadata, null, 2));
                         } catch (error) {
                             cliContext.failAndThrow(
                                 `Could not write file to the specified location: ${argv.output}`,
