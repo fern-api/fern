@@ -7,10 +7,10 @@ use Seed\Core\JsonProperty;
 
 class DeepEqualityCorrectnessCheck extends SerializableType
 {
-    #[JsonProperty("expectedValueParameterId")]
     /**
      * @var string $expectedValueParameterId
      */
+    #[JsonProperty("expectedValueParameterId")]
     public string $expectedValueParameterId;
 
     /**

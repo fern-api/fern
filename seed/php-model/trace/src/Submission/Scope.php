@@ -8,10 +8,10 @@ use Seed\Core\ArrayType;
 
 class Scope extends SerializableType
 {
-    #[JsonProperty("variables"), ArrayType(["string" => "mixed"])]
     /**
      * @var array<string, mixed> $variables
      */
+    #[JsonProperty("variables"), ArrayType(["string" => "mixed"])]
     public array $variables;
 
     /**

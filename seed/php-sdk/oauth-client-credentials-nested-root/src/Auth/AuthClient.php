@@ -25,7 +25,7 @@ class AuthClient
     }
 
     /**
-     * @param GetTokenRequest $request
+     * @param GetTokenRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

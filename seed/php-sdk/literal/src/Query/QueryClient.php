@@ -25,16 +25,16 @@ class QueryClient
     }
 
     /**
-     * @param SendLiteralsInQueryRequest $request
+     * @param SendLiteralsInQueryRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function send(SendLiteralsInQueryRequest $request, ?array $options = null): mixed
     {
         $query = [];
-        $query['prompt'] = $request->prompt;
-        $query['query'] = $request->query;
-        $query['stream'] = $request->stream;
+        $query['prompt'] = request->prompt;
+        $query['query'] = request->query;
+        $query['stream'] = request->stream;
         try {
             $response = $this->client->sendRequest();
             $statusCode = $response->getStatusCode();

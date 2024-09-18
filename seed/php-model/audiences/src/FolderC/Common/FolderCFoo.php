@@ -7,10 +7,10 @@ use Seed\Core\JsonProperty;
 
 class FolderCFoo extends SerializableType
 {
-    #[JsonProperty("bar_property")]
     /**
      * @var string $barProperty
      */
+    #[JsonProperty("bar_property")]
     public string $barProperty;
 
     /**

@@ -26,14 +26,14 @@ class MetadataClient
 
     /**
     * Get event metadata.
-     * @param GetEventMetadataRequest $request
+     * @param GetEventMetadataRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function getMetadata(GetEventMetadataRequest $request, ?array $options = null): mixed
     {
         $query = [];
-        $query['id'] = $request->id;
+        $query['id'] = request->id;
         try {
             $response = $this->client->sendRequest();
             $statusCode = $response->getStatusCode();

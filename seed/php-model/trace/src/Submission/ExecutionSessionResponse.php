@@ -5,32 +5,31 @@ namespace Seed\Submission;
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 use Seed\Commons\Language;
-use Seed\Submission\ExecutionSessionStatus;
 
 class ExecutionSessionResponse extends SerializableType
 {
-    #[JsonProperty("sessionId")]
     /**
      * @var string $sessionId
      */
+    #[JsonProperty("sessionId")]
     public string $sessionId;
 
-    #[JsonProperty("language")]
     /**
      * @var Language $language
      */
+    #[JsonProperty("language")]
     public Language $language;
 
-    #[JsonProperty("status")]
     /**
      * @var ExecutionSessionStatus $status
      */
+    #[JsonProperty("status")]
     public ExecutionSessionStatus $status;
 
-    #[JsonProperty("executionSessionUrl")]
     /**
      * @var ?string $executionSessionUrl
      */
+    #[JsonProperty("executionSessionUrl")]
     public ?string $executionSessionUrl;
 
     /**

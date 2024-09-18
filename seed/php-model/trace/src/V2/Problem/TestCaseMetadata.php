@@ -7,22 +7,22 @@ use Seed\Core\JsonProperty;
 
 class TestCaseMetadata extends SerializableType
 {
-    #[JsonProperty("id")]
     /**
      * @var string $id
      */
+    #[JsonProperty("id")]
     public string $id;
 
-    #[JsonProperty("name")]
     /**
      * @var string $name
      */
+    #[JsonProperty("name")]
     public string $name;
 
-    #[JsonProperty("hidden")]
     /**
      * @var bool $hidden
      */
+    #[JsonProperty("hidden")]
     public bool $hidden;
 
     /**

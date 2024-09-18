@@ -5,26 +5,25 @@ namespace Seed\Types;
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 use Seed\Core\ArrayType;
-use Seed\Types\Memo;
 
 class BaseResource extends SerializableType
 {
-    #[JsonProperty("id")]
     /**
      * @var string $id
      */
+    #[JsonProperty("id")]
     public string $id;
 
-    #[JsonProperty("related_resources"), ArrayType(["mixed"])]
     /**
      * @var array<mixed> $relatedResources
      */
+    #[JsonProperty("related_resources"), ArrayType(["mixed"])]
     public array $relatedResources;
 
-    #[JsonProperty("memo")]
     /**
      * @var Memo $memo
      */
+    #[JsonProperty("memo")]
     public Memo $memo;
 
     /**

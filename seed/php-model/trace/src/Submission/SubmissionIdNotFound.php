@@ -7,10 +7,10 @@ use Seed\Core\JsonProperty;
 
 class SubmissionIdNotFound extends SerializableType
 {
-    #[JsonProperty("missingSubmissionId")]
     /**
      * @var string $missingSubmissionId
      */
+    #[JsonProperty("missingSubmissionId")]
     public string $missingSubmissionId;
 
     /**

@@ -27,7 +27,7 @@ class ProblemClient
 
     /**
     * Creates a problem
-     * @param CreateProblemRequest $request
+     * @param CreateProblemRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -49,8 +49,8 @@ class ProblemClient
 
     /**
     * Updates a problem
-     * @param string $problemId
-     * @param CreateProblemRequest $request
+     * @param string problemId
+     * @param CreateProblemRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -72,7 +72,7 @@ class ProblemClient
 
     /**
     * Soft deletes a problem
-     * @param string $problemId
+     * @param string problemId
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -92,7 +92,7 @@ class ProblemClient
 
     /**
     * Returns default starter files for problem
-     * @param GetDefaultStarterFilesRequest $request
+     * @param GetDefaultStarterFilesRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

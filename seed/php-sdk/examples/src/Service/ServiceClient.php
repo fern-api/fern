@@ -26,7 +26,7 @@ class ServiceClient
     }
 
     /**
-     * @param string $movieId
+     * @param string movieId
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -47,7 +47,7 @@ class ServiceClient
     }
 
     /**
-     * @param Movie $request
+     * @param Movie request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -68,21 +68,21 @@ class ServiceClient
     }
 
     /**
-     * @param GetMetadataRequest $request
+     * @param GetMetadataRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function getMetadata(GetMetadataRequest $request, ?array $options = null): mixed
     {
         $query = [];
-        if ($request->shallow != null) {
-            $query['shallow'] = $request->shallow;
+        if (request->shallow != null) {
+            $query['shallow'] = request->shallow;
         }
-        if ($request->tag != null) {
-            $query['tag'] = $request->tag;
+        if (request->tag != null) {
+            $query['tag'] = request->tag;
         }
         $headers = [];
-        $headers['X-API-Version'] = $request->xApiVersion;
+        $headers['X-API-Version'] = request->xApiVersion;
         try {
             $response = $this->client->sendRequest();
             $statusCode = $response->getStatusCode();

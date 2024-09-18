@@ -8,28 +8,28 @@ use Seed\Core\ArrayType;
 
 class LightweightProblemInfoV2 extends SerializableType
 {
-    #[JsonProperty("problemId")]
     /**
      * @var string $problemId
      */
+    #[JsonProperty("problemId")]
     public string $problemId;
 
-    #[JsonProperty("problemName")]
     /**
      * @var string $problemName
      */
+    #[JsonProperty("problemName")]
     public string $problemName;
 
-    #[JsonProperty("problemVersion")]
     /**
      * @var int $problemVersion
      */
+    #[JsonProperty("problemVersion")]
     public int $problemVersion;
 
-    #[JsonProperty("variableTypes"), ArrayType(["mixed"])]
     /**
      * @var array<mixed> $variableTypes
      */
+    #[JsonProperty("variableTypes"), ArrayType(["mixed"])]
     public array $variableTypes;
 
     /**

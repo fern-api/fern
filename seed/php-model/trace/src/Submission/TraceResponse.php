@@ -4,67 +4,65 @@ namespace Seed\Submission;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\Submission\StackInformation;
-use Seed\Submission\ExpressionLocation;
 
 class TraceResponse extends SerializableType
 {
-    #[JsonProperty("submissionId")]
     /**
      * @var string $submissionId
      */
+    #[JsonProperty("submissionId")]
     public string $submissionId;
 
-    #[JsonProperty("lineNumber")]
     /**
      * @var int $lineNumber
      */
+    #[JsonProperty("lineNumber")]
     public int $lineNumber;
 
-    #[JsonProperty("stack")]
-    /**
-     * @var StackInformation $stack
-     */
-    public StackInformation $stack;
-
-    #[JsonProperty("returnValue")]
     /**
      * @var mixed $returnValue
      */
+    #[JsonProperty("returnValue")]
     public mixed $returnValue;
 
-    #[JsonProperty("expressionLocation")]
+    /**
+     * @var StackInformation $stack
+     */
+    #[JsonProperty("stack")]
+    public StackInformation $stack;
+
     /**
      * @var ?ExpressionLocation $expressionLocation
      */
+    #[JsonProperty("expressionLocation")]
     public ?ExpressionLocation $expressionLocation;
 
-    #[JsonProperty("stdout")]
     /**
      * @var ?string $stdout
      */
+    #[JsonProperty("stdout")]
     public ?string $stdout;
 
     /**
      * @param string $submissionId
      * @param int $lineNumber
-     * @param StackInformation $stack
      * @param mixed $returnValue
+     * @param StackInformation $stack
      * @param ?ExpressionLocation $expressionLocation
      * @param ?string $stdout
      */
     public function __construct(
         string $submissionId,
         int $lineNumber,
-        StackInformation $stack,
         mixed $returnValue,
+        StackInformation $stack,
         ?ExpressionLocation $expressionLocation = null,
         ?string $stdout = null,
     ) {
         $this->submissionId = $submissionId;
         $this->lineNumber = $lineNumber;
-        $this->stack = $stack;
         $this->returnValue = $returnValue;
+        $this->stack = $stack;
         $this->expressionLocation = $expressionLocation;
         $this->stdout = $stdout;
     }

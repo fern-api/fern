@@ -25,7 +25,7 @@ class InlinedClient
     }
 
     /**
-     * @param SendLiteralsInlinedRequest $request
+     * @param SendLiteralsInlinedRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

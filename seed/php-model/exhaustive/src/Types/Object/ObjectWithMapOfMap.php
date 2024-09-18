@@ -8,10 +8,10 @@ use Seed\Core\ArrayType;
 
 class ObjectWithMapOfMap extends SerializableType
 {
-    #[JsonProperty("map"), ArrayType(["string" => ["string" => "string"]])]
     /**
      * @var array<string, array<string, string>> $map
      */
+    #[JsonProperty("map"), ArrayType(["string" => ["string" => "string"]])]
     public array $map;
 
     /**

@@ -5,26 +5,25 @@ namespace Seed\Submission;
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 use Seed\Core\ArrayType;
-use Seed\Submission\Scope;
 
 class StackFrame extends SerializableType
 {
-    #[JsonProperty("methodName")]
     /**
      * @var string $methodName
      */
+    #[JsonProperty("methodName")]
     public string $methodName;
 
-    #[JsonProperty("lineNumber")]
     /**
      * @var int $lineNumber
      */
+    #[JsonProperty("lineNumber")]
     public int $lineNumber;
 
-    #[JsonProperty("scopes"), ArrayType([Scope::class])]
     /**
      * @var array<Scope> $scopes
      */
+    #[JsonProperty("scopes"), ArrayType([Scope::class])]
     public array $scopes;
 
     /**

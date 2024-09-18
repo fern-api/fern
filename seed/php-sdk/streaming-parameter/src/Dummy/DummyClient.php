@@ -24,7 +24,7 @@ class DummyClient
     }
 
     /**
-     * @param GenerateRequest $request
+     * @param GenerateRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

@@ -10,16 +10,16 @@ use Seed\Core\JsonProperty;
  */
 class ObjectFieldValue extends SerializableType
 {
-    #[JsonProperty("name")]
     /**
      * @var string $name
      */
+    #[JsonProperty("name")]
     public string $name;
 
-    #[JsonProperty("value")]
     /**
      * @var mixed $value
      */
+    #[JsonProperty("value")]
     public mixed $value;
 
     /**

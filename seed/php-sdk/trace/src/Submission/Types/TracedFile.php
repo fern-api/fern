@@ -7,16 +7,16 @@ use Seed\Core\JsonProperty;
 
 class TracedFile extends SerializableType
 {
-    #[JsonProperty("filename")]
     /**
      * @var string $filename
      */
+    #[JsonProperty("filename")]
     public string $filename;
 
-    #[JsonProperty("directory")]
     /**
      * @var string $directory
      */
+    #[JsonProperty("directory")]
     public string $directory;
 
     /**

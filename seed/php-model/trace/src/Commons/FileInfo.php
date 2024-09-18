@@ -7,16 +7,16 @@ use Seed\Core\JsonProperty;
 
 class FileInfo extends SerializableType
 {
-    #[JsonProperty("filename")]
     /**
      * @var string $filename
      */
+    #[JsonProperty("filename")]
     public string $filename;
 
-    #[JsonProperty("contents")]
     /**
      * @var string $contents
      */
+    #[JsonProperty("contents")]
     public string $contents;
 
     /**

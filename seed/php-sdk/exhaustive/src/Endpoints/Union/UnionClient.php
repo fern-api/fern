@@ -24,7 +24,7 @@ class UnionClient
     }
 
     /**
-     * @param mixed $request
+     * @param mixed request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

@@ -3,17 +3,16 @@
 namespace Seed\V2\V3\Problem\Types;
 
 use Seed\Core\SerializableType;
+use Seed\Commons\Types\Language;
 use Seed\Core\JsonProperty;
 use Seed\Core\ArrayType;
-use Seed\Commons\Types\Language;
-use Seed\V2\V3\Problem\Types\FileInfoV2;
 
 class GetBasicSolutionFileResponse extends SerializableType
 {
-    #[JsonProperty("solutionFileByLanguage"), ArrayType([Language::class => FileInfoV2::class])]
     /**
      * @var array<Language, FileInfoV2> $solutionFileByLanguage
      */
+    #[JsonProperty("solutionFileByLanguage"), ArrayType([Language::class => FileInfoV2::class])]
     public array $solutionFileByLanguage;
 
     /**

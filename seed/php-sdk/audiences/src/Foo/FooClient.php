@@ -25,15 +25,15 @@ class FooClient
     }
 
     /**
-     * @param FindRequest $request
+     * @param FindRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function find(FindRequest $request, ?array $options = null): mixed
     {
         $query = [];
-        if ($request->optionalString != null) {
-            $query['optionalString'] = $request->optionalString;
+        if (request->optionalString != null) {
+            $query['optionalString'] = request->optionalString;
         }
         try {
             $response = $this->client->sendRequest();

@@ -8,10 +8,10 @@ use Seed\Core\ArrayType;
 
 class UsernameContainer extends SerializableType
 {
-    #[JsonProperty("results"), ArrayType(["string"])]
     /**
      * @var array<string> $results
      */
+    #[JsonProperty("results"), ArrayType(["string"])]
     public array $results;
 
     /**

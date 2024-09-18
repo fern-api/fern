@@ -7,10 +7,10 @@ use Seed\Core\JsonProperty;
 
 class TestCaseHiddenGrade extends SerializableType
 {
-    #[JsonProperty("passed")]
     /**
      * @var bool $passed
      */
+    #[JsonProperty("passed")]
     public bool $passed;
 
     /**

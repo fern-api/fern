@@ -7,10 +7,10 @@ use Seed\Core\JsonProperty;
 
 class Child extends SerializableType
 {
-    #[JsonProperty("child")]
     /**
      * @var string $child
      */
+    #[JsonProperty("child")]
     public string $child;
 
     /**

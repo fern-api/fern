@@ -27,7 +27,7 @@ class UserClient
     /**
     * Retrieve a user.
     * This endpoint is used to retrieve a user.
-     * @param string $userId The ID of the user to retrieve.
+     * @param string userId The ID of the user to retrieve.
     This ID is unique to each user.
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
@@ -49,7 +49,7 @@ class UserClient
     /**
     * Create a new user.
     * This endpoint is used to create a new user.
-     * @param CreateUserRequest $request
+     * @param CreateUserRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

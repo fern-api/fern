@@ -7,16 +7,16 @@ use Seed\Core\JsonProperty;
 
 class CustomTestCasesUnsupported extends SerializableType
 {
-    #[JsonProperty("problemId")]
     /**
      * @var string $problemId
      */
+    #[JsonProperty("problemId")]
     public string $problemId;
 
-    #[JsonProperty("submissionId")]
     /**
      * @var string $submissionId
      */
+    #[JsonProperty("submissionId")]
     public string $submissionId;
 
     /**

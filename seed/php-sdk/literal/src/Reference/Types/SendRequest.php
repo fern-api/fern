@@ -7,34 +7,34 @@ use Seed\Core\JsonProperty;
 
 class SendRequest extends SerializableType
 {
-    #[JsonProperty("prompt")]
     /**
      * @var string $prompt
      */
+    #[JsonProperty("prompt")]
     public string $prompt;
 
-    #[JsonProperty("query")]
     /**
      * @var string $query
      */
+    #[JsonProperty("query")]
     public string $query;
 
-    #[JsonProperty("stream")]
     /**
      * @var bool $stream
      */
+    #[JsonProperty("stream")]
     public bool $stream;
 
-    #[JsonProperty("context")]
     /**
      * @var string $context
      */
+    #[JsonProperty("context")]
     public string $context;
 
-    #[JsonProperty("maybeContext")]
     /**
      * @var ?string $maybeContext
      */
+    #[JsonProperty("maybeContext")]
     public ?string $maybeContext;
 
     /**

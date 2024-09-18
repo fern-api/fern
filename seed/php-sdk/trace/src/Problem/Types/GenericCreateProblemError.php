@@ -7,22 +7,22 @@ use Seed\Core\JsonProperty;
 
 class GenericCreateProblemError extends SerializableType
 {
-    #[JsonProperty("message")]
     /**
      * @var string $message
      */
+    #[JsonProperty("message")]
     public string $message;
 
-    #[JsonProperty("type")]
     /**
      * @var string $type
      */
+    #[JsonProperty("type")]
     public string $type;
 
-    #[JsonProperty("stacktrace")]
     /**
      * @var string $stacktrace
      */
+    #[JsonProperty("stacktrace")]
     public string $stacktrace;
 
     /**

@@ -7,45 +7,45 @@ use Seed\Core\JsonProperty;
 
 class TestCaseNonHiddenGrade extends SerializableType
 {
-    #[JsonProperty("passed")]
     /**
      * @var bool $passed
      */
+    #[JsonProperty("passed")]
     public bool $passed;
 
-    #[JsonProperty("stdout")]
-    /**
-     * @var string $stdout
-     */
-    public string $stdout;
-
-    #[JsonProperty("actualResult")]
     /**
      * @var mixed $actualResult
      */
+    #[JsonProperty("actualResult")]
     public mixed $actualResult;
 
-    #[JsonProperty("exception")]
     /**
      * @var mixed $exception
      */
+    #[JsonProperty("exception")]
     public mixed $exception;
 
     /**
+     * @var string $stdout
+     */
+    #[JsonProperty("stdout")]
+    public string $stdout;
+
+    /**
      * @param bool $passed
-     * @param string $stdout
      * @param mixed $actualResult
      * @param mixed $exception
+     * @param string $stdout
      */
     public function __construct(
         bool $passed,
-        string $stdout,
         mixed $actualResult,
         mixed $exception,
+        string $stdout,
     ) {
         $this->passed = $passed;
-        $this->stdout = $stdout;
         $this->actualResult = $actualResult;
         $this->exception = $exception;
+        $this->stdout = $stdout;
     }
 }

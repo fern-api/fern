@@ -7,16 +7,16 @@ use Seed\Core\JsonProperty;
 
 class Playlist extends SerializableType
 {
-    #[JsonProperty("playlist_id")]
     /**
      * @var string $playlistId
      */
+    #[JsonProperty("playlist_id")]
     public string $playlistId;
 
-    #[JsonProperty("owner-id")]
     /**
      * @var string $ownerId
      */
+    #[JsonProperty("owner-id")]
     public string $ownerId;
 
     /**

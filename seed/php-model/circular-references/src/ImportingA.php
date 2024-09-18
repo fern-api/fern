@@ -3,15 +3,15 @@
 namespace Seed;
 
 use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
 use Seed\A\A;
+use Seed\Core\JsonProperty;
 
 class ImportingA extends SerializableType
 {
-    #[JsonProperty("a")]
     /**
      * @var ?A $a
      */
+    #[JsonProperty("a")]
     public ?A $a;
 
     /**

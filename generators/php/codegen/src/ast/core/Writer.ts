@@ -64,7 +64,11 @@ ${this.buffer}`;
         }
         let result = referenceKeys
             // Filter out the current namespace.
-            .filter((referenceNamespace) => referenceNamespace !== this.namespace)
+            .filter(
+                (referenceNamespace) =>
+                    // eslint-disable-next-line @typescript-eslint/prefer-string-starts-ends-with
+                    referenceNamespace.substring(0, referenceNamespace.lastIndexOf("\\")) !== this.namespace
+            )
             .map((ref) => `use ${ref};`)
             .join("\n");
 

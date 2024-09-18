@@ -7,16 +7,16 @@ use Seed\Core\JsonProperty;
 
 class ExpressionLocation extends SerializableType
 {
-    #[JsonProperty("start")]
     /**
      * @var int $start
      */
+    #[JsonProperty("start")]
     public int $start;
 
-    #[JsonProperty("offset")]
     /**
      * @var int $offset
      */
+    #[JsonProperty("offset")]
     public int $offset;
 
     /**

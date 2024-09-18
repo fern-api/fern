@@ -4,20 +4,19 @@ namespace Seed\V2\V3\Problem\Types;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\V2\V3\Problem\Types\NonVoidFunctionSignature;
 
 class GetBasicSolutionFileRequest extends SerializableType
 {
-    #[JsonProperty("methodName")]
     /**
      * @var string $methodName
      */
+    #[JsonProperty("methodName")]
     public string $methodName;
 
-    #[JsonProperty("signature")]
     /**
      * @var NonVoidFunctionSignature $signature
      */
+    #[JsonProperty("signature")]
     public NonVoidFunctionSignature $signature;
 
     /**

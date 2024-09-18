@@ -34,24 +34,24 @@ class UsersClient
     }
 
     /**
-     * @param ListUsersCursorPaginationRequest $request
+     * @param ListUsersCursorPaginationRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function listWithCursorPagination(ListUsersCursorPaginationRequest $request, ?array $options = null): mixed
     {
         $query = [];
-        if ($request->page != null) {
-            $query['page'] = $request->page;
+        if (request->page != null) {
+            $query['page'] = request->page;
         }
-        if ($request->perPage != null) {
-            $query['per_page'] = $request->perPage;
+        if (request->perPage != null) {
+            $query['per_page'] = request->perPage;
         }
-        if ($request->order != null) {
-            $query['order'] = $request->order->value;
+        if (request->order != null) {
+            $query['order'] = request->order->value;
         }
-        if ($request->startingAfter != null) {
-            $query['starting_after'] = $request->startingAfter;
+        if (request->startingAfter != null) {
+            $query['starting_after'] = request->startingAfter;
         }
         try {
             $response = $this->client->sendRequest();
@@ -68,7 +68,7 @@ class UsersClient
     }
 
     /**
-     * @param ListUsersBodyCursorPaginationRequest $request
+     * @param ListUsersBodyCursorPaginationRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -89,24 +89,24 @@ class UsersClient
     }
 
     /**
-     * @param ListUsersOffsetPaginationRequest $request
+     * @param ListUsersOffsetPaginationRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function listWithOffsetPagination(ListUsersOffsetPaginationRequest $request, ?array $options = null): mixed
     {
         $query = [];
-        if ($request->page != null) {
-            $query['page'] = $request->page;
+        if (request->page != null) {
+            $query['page'] = request->page;
         }
-        if ($request->perPage != null) {
-            $query['per_page'] = $request->perPage;
+        if (request->perPage != null) {
+            $query['per_page'] = request->perPage;
         }
-        if ($request->order != null) {
-            $query['order'] = $request->order->value;
+        if (request->order != null) {
+            $query['order'] = request->order->value;
         }
-        if ($request->startingAfter != null) {
-            $query['starting_after'] = $request->startingAfter;
+        if (request->startingAfter != null) {
+            $query['starting_after'] = request->startingAfter;
         }
         try {
             $response = $this->client->sendRequest();
@@ -123,7 +123,7 @@ class UsersClient
     }
 
     /**
-     * @param ListUsersBodyOffsetPaginationRequest $request
+     * @param ListUsersBodyOffsetPaginationRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -144,21 +144,21 @@ class UsersClient
     }
 
     /**
-     * @param ListUsersOffsetStepPaginationRequest $request
+     * @param ListUsersOffsetStepPaginationRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function listWithOffsetStepPagination(ListUsersOffsetStepPaginationRequest $request, ?array $options = null): mixed
     {
         $query = [];
-        if ($request->page != null) {
-            $query['page'] = $request->page;
+        if (request->page != null) {
+            $query['page'] = request->page;
         }
-        if ($request->limit != null) {
-            $query['limit'] = $request->limit;
+        if (request->limit != null) {
+            $query['limit'] = request->limit;
         }
-        if ($request->order != null) {
-            $query['order'] = $request->order->value;
+        if (request->order != null) {
+            $query['order'] = request->order->value;
         }
         try {
             $response = $this->client->sendRequest();
@@ -175,21 +175,21 @@ class UsersClient
     }
 
     /**
-     * @param ListWithOffsetPaginationHasNextPageRequest $request
+     * @param ListWithOffsetPaginationHasNextPageRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function listWithOffsetPaginationHasNextPage(ListWithOffsetPaginationHasNextPageRequest $request, ?array $options = null): mixed
     {
         $query = [];
-        if ($request->page != null) {
-            $query['page'] = $request->page;
+        if (request->page != null) {
+            $query['page'] = request->page;
         }
-        if ($request->limit != null) {
-            $query['limit'] = $request->limit;
+        if (request->limit != null) {
+            $query['limit'] = request->limit;
         }
-        if ($request->order != null) {
-            $query['order'] = $request->order->value;
+        if (request->order != null) {
+            $query['order'] = request->order->value;
         }
         try {
             $response = $this->client->sendRequest();
@@ -206,15 +206,15 @@ class UsersClient
     }
 
     /**
-     * @param ListUsersExtendedRequest $request
+     * @param ListUsersExtendedRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function listWithExtendedResults(ListUsersExtendedRequest $request, ?array $options = null): mixed
     {
         $query = [];
-        if ($request->cursor != null) {
-            $query['cursor'] = $request->cursor;
+        if (request->cursor != null) {
+            $query['cursor'] = request->cursor;
         }
         try {
             $response = $this->client->sendRequest();
@@ -231,15 +231,15 @@ class UsersClient
     }
 
     /**
-     * @param ListUsersExtendedRequestForOptionalData $request
+     * @param ListUsersExtendedRequestForOptionalData request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function listWithExtendedResultsAndOptionalData(ListUsersExtendedRequestForOptionalData $request, ?array $options = null): mixed
     {
         $query = [];
-        if ($request->cursor != null) {
-            $query['cursor'] = $request->cursor;
+        if (request->cursor != null) {
+            $query['cursor'] = request->cursor;
         }
         try {
             $response = $this->client->sendRequest();
@@ -256,15 +256,15 @@ class UsersClient
     }
 
     /**
-     * @param ListUsernamesRequest $request
+     * @param ListUsernamesRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function listUsernames(ListUsernamesRequest $request, ?array $options = null): mixed
     {
         $query = [];
-        if ($request->startingAfter != null) {
-            $query['starting_after'] = $request->startingAfter;
+        if (request->startingAfter != null) {
+            $query['starting_after'] = request->startingAfter;
         }
         try {
             $response = $this->client->sendRequest();
@@ -281,15 +281,15 @@ class UsersClient
     }
 
     /**
-     * @param ListWithGlobalConfigRequest $request
+     * @param ListWithGlobalConfigRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function listWithGlobalConfig(ListWithGlobalConfigRequest $request, ?array $options = null): mixed
     {
         $query = [];
-        if ($request->offset != null) {
-            $query['offset'] = $request->offset;
+        if (request->offset != null) {
+            $query['offset'] = request->offset;
         }
         try {
             $response = $this->client->sendRequest();

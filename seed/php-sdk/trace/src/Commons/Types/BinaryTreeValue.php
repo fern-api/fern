@@ -5,20 +5,19 @@ namespace Seed\Commons\Types;
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 use Seed\Core\ArrayType;
-use Seed\Commons\Types\BinaryTreeNodeValue;
 
 class BinaryTreeValue extends SerializableType
 {
-    #[JsonProperty("nodes"), ArrayType(["string" => BinaryTreeNodeValue::class])]
     /**
      * @var array<string, BinaryTreeNodeValue> $nodes
      */
+    #[JsonProperty("nodes"), ArrayType(["string" => BinaryTreeNodeValue::class])]
     public array $nodes;
 
-    #[JsonProperty("root")]
     /**
      * @var ?string $root
      */
+    #[JsonProperty("root")]
     public ?string $root;
 
     /**

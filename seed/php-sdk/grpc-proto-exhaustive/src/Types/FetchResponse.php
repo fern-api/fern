@@ -5,27 +5,25 @@ namespace Seed\Types;
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 use Seed\Core\ArrayType;
-use Seed\Types\Column;
-use Seed\Types\Usage;
 
 class FetchResponse extends SerializableType
 {
-    #[JsonProperty("columns"), ArrayType(["string" => Column::class])]
     /**
      * @var ?array<string, Column> $columns
      */
+    #[JsonProperty("columns"), ArrayType(["string" => Column::class])]
     public ?array $columns;
 
-    #[JsonProperty("namespace")]
     /**
      * @var ?string $namespace
      */
+    #[JsonProperty("namespace")]
     public ?string $namespace;
 
-    #[JsonProperty("usage")]
     /**
      * @var ?Usage $usage
      */
+    #[JsonProperty("usage")]
     public ?Usage $usage;
 
     /**

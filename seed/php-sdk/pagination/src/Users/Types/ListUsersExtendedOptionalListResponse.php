@@ -7,10 +7,10 @@ use Seed\Core\JsonProperty;
 
 class ListUsersExtendedOptionalListResponse extends SerializableType
 {
-    #[JsonProperty("total_count")]
     /**
      * @var int $totalCount The totall number of /users
      */
+    #[JsonProperty("total_count")]
     public int $totalCount;
 
     /**

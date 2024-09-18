@@ -8,16 +8,16 @@ use Seed\Core\ArrayType;
 
 class UsernamePage extends SerializableType
 {
-    #[JsonProperty("data"), ArrayType(["string"])]
     /**
      * @var array<string> $data
      */
+    #[JsonProperty("data"), ArrayType(["string"])]
     public array $data;
 
-    #[JsonProperty("after")]
     /**
      * @var ?string $after
      */
+    #[JsonProperty("after")]
     public ?string $after;
 
     /**

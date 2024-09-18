@@ -7,10 +7,10 @@ use Seed\Core\JsonProperty;
 
 class WithPage extends SerializableType
 {
-    #[JsonProperty("page")]
     /**
      * @var ?int $page
      */
+    #[JsonProperty("page")]
     public ?int $page;
 
     /**

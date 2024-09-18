@@ -24,10 +24,10 @@ class PathParamClient
     }
 
     /**
-     * @param Operand $operand
-     * @param ?Operand $maybeOperand
-     * @param mixed $operandOrColor
-     * @param mixed $maybeOperandOrColor
+     * @param Operand operand
+     * @param ?Operand maybeOperand
+     * @param mixed operandOrColor
+     * @param mixed maybeOperandOrColor
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

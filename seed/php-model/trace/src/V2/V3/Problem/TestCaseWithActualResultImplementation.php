@@ -4,20 +4,19 @@ namespace Seed\V2\V3\Problem;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\V2\V3\Problem\NonVoidFunctionDefinition;
 
 class TestCaseWithActualResultImplementation extends SerializableType
 {
-    #[JsonProperty("getActualResult")]
     /**
      * @var NonVoidFunctionDefinition $getActualResult
      */
+    #[JsonProperty("getActualResult")]
     public NonVoidFunctionDefinition $getActualResult;
 
-    #[JsonProperty("assertCorrectnessCheck")]
     /**
      * @var mixed $assertCorrectnessCheck
      */
+    #[JsonProperty("assertCorrectnessCheck")]
     public mixed $assertCorrectnessCheck;
 
     /**

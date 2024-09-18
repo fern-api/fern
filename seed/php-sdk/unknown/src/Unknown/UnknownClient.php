@@ -25,7 +25,7 @@ class UnknownClient
     }
 
     /**
-     * @param mixed $request
+     * @param mixed request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -46,7 +46,7 @@ class UnknownClient
     }
 
     /**
-     * @param MyObject $request
+     * @param MyObject request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

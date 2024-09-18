@@ -4,20 +4,19 @@ namespace Seed\Submission;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\Submission\TestCaseResult;
 
 class TestCaseResultWithStdout extends SerializableType
 {
-    #[JsonProperty("result")]
     /**
      * @var TestCaseResult $result
      */
+    #[JsonProperty("result")]
     public TestCaseResult $result;
 
-    #[JsonProperty("stdout")]
     /**
      * @var string $stdout
      */
+    #[JsonProperty("stdout")]
     public string $stdout;
 
     /**

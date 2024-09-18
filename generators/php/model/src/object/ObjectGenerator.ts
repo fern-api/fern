@@ -35,38 +35,35 @@ export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSch
             parentClassReference: this.context.getSerializableTypeClassReference()
         });
         // todo: handle extended properties
-        const requiredProperties = this.objectDeclaration.properties.filter(
-            (property) => !this.context.isOptional(property.valueType)
-        );
-        const optionalProperties = this.objectDeclaration.properties.filter((property) =>
-            this.context.isOptional(property.valueType)
-        );
+        const properties = this.objectDeclaration.properties.map((property) => ({
+            property,
+            type: this.context.phpTypeMapper.convert({ reference: property.valueType }),
+            name: this.context.getPropertyName(property.name.name),
+            docs: property.docs
+        }));
+
+        const requiredProperties = properties.filter(({ type }) => type.internalType.type !== "optional");
+        const optionalProperties = properties.filter(({ type }) => type.internalType.type === "optional");
+
         const orderedProperties = [...requiredProperties, ...optionalProperties];
+
         orderedProperties.forEach((property) => {
-            const type = this.context.phpTypeMapper.convert({ reference: property.valueType });
             clazz.addField(
                 php.field({
-                    name: property.name.name.camelCase.unsafeName,
-                    type,
+                    ...property,
                     access: "public",
-                    docs: property.docs,
-                    attributes: this.getAllAttributesForProperty({ property, type })
+                    attributes: this.getAllAttributesForProperty(property)
                 })
             );
         });
-        const parameters = orderedProperties.map((property) =>
-            php.parameter({
-                name: property.name.name.camelCase.unsafeName,
-                type: this.context.phpTypeMapper.convert({ reference: property.valueType }),
-                docs: property.docs
-            })
-        );
+
+        const parameters = orderedProperties.map((property) => php.parameter(property));
+
         clazz.addConstructor({
             parameters,
             body: php.codeblock((writer) => {
-                orderedProperties.forEach((property) => {
-                    const propertyName = property.name.name.camelCase.unsafeName;
-                    writer.writeTextStatement(`$this->${propertyName} = $${propertyName}`);
+                orderedProperties.forEach(({ name }) => {
+                    writer.writeTextStatement(`$this->${name} = $${name}`);
                 });
             })
         });

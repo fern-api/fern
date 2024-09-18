@@ -7,22 +7,22 @@ use Seed\Core\JsonProperty;
 
 class Movie extends SerializableType
 {
-    #[JsonProperty("id")]
     /**
      * @var string $id
      */
+    #[JsonProperty("id")]
     public string $id;
 
-    #[JsonProperty("title")]
     /**
      * @var string $title
      */
+    #[JsonProperty("title")]
     public string $title;
 
-    #[JsonProperty("rating")]
     /**
      * @var float $rating The rating scale is one to five stars
      */
+    #[JsonProperty("rating")]
     public float $rating;
 
     /**

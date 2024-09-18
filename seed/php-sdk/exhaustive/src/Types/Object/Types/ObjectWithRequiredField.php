@@ -7,10 +7,10 @@ use Seed\Core\JsonProperty;
 
 class ObjectWithRequiredField extends SerializableType
 {
-    #[JsonProperty("string")]
     /**
      * @var string $string
      */
+    #[JsonProperty("string")]
     public string $string;
 
     /**

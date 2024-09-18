@@ -8,22 +8,22 @@ use Seed\Commons\Metadata\Types\Metadata;
 
 class Node extends SerializableType
 {
-    #[JsonProperty("id")]
     /**
      * @var string $id
      */
+    #[JsonProperty("id")]
     public string $id;
 
-    #[JsonProperty("label")]
     /**
      * @var ?string $label
      */
+    #[JsonProperty("label")]
     public ?string $label;
 
-    #[JsonProperty("metadata")]
     /**
      * @var ?Metadata $metadata
      */
+    #[JsonProperty("metadata")]
     public ?Metadata $metadata;
 
     /**

@@ -5,72 +5,69 @@ namespace Seed\V2\Problem\Types;
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 use Seed\Problem\Types\ProblemDescription;
-use Seed\Core\ArrayType;
 use Seed\Commons\Types\Language;
-use Seed\V2\Problem\Types\GeneratedFiles;
-use Seed\V2\Problem\Types\TestCaseTemplate;
-use Seed\V2\Problem\Types\TestCaseV2;
+use Seed\Core\ArrayType;
 
 class ProblemInfoV2 extends SerializableType
 {
-    #[JsonProperty("problemId")]
     /**
      * @var string $problemId
      */
+    #[JsonProperty("problemId")]
     public string $problemId;
 
-    #[JsonProperty("problemDescription")]
     /**
      * @var ProblemDescription $problemDescription
      */
+    #[JsonProperty("problemDescription")]
     public ProblemDescription $problemDescription;
 
-    #[JsonProperty("problemName")]
     /**
      * @var string $problemName
      */
+    #[JsonProperty("problemName")]
     public string $problemName;
 
-    #[JsonProperty("problemVersion")]
     /**
      * @var int $problemVersion
      */
+    #[JsonProperty("problemVersion")]
     public int $problemVersion;
 
-    #[JsonProperty("supportedLanguages"), ArrayType([Language::class])]
     /**
      * @var array<Language> $supportedLanguages
      */
+    #[JsonProperty("supportedLanguages"), ArrayType([Language::class])]
     public array $supportedLanguages;
 
-    #[JsonProperty("customFiles")]
     /**
      * @var mixed $customFiles
      */
+    #[JsonProperty("customFiles")]
     public mixed $customFiles;
 
-    #[JsonProperty("generatedFiles")]
     /**
      * @var GeneratedFiles $generatedFiles
      */
+    #[JsonProperty("generatedFiles")]
     public GeneratedFiles $generatedFiles;
 
-    #[JsonProperty("customTestCaseTemplates"), ArrayType([TestCaseTemplate::class])]
     /**
      * @var array<TestCaseTemplate> $customTestCaseTemplates
      */
+    #[JsonProperty("customTestCaseTemplates"), ArrayType([TestCaseTemplate::class])]
     public array $customTestCaseTemplates;
 
-    #[JsonProperty("testcases"), ArrayType([TestCaseV2::class])]
     /**
      * @var array<TestCaseV2> $testcases
      */
+    #[JsonProperty("testcases"), ArrayType([TestCaseV2::class])]
     public array $testcases;
 
-    #[JsonProperty("isPublic")]
     /**
      * @var bool $isPublic
      */
+    #[JsonProperty("isPublic")]
     public bool $isPublic;
 
     /**

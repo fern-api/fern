@@ -7,16 +7,16 @@ use Seed\Core\JsonProperty;
 
 class RecordedTestCaseUpdate extends SerializableType
 {
-    #[JsonProperty("testCaseId")]
     /**
      * @var string $testCaseId
      */
+    #[JsonProperty("testCaseId")]
     public string $testCaseId;
 
-    #[JsonProperty("traceResponsesSize")]
     /**
      * @var int $traceResponsesSize
      */
+    #[JsonProperty("traceResponsesSize")]
     public int $traceResponsesSize;
 
     /**

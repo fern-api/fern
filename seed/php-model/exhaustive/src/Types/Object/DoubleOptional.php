@@ -7,10 +7,10 @@ use Seed\Core\JsonProperty;
 
 class DoubleOptional extends SerializableType
 {
-    #[JsonProperty("optionalAlias")]
     /**
      * @var ?string $optionalAlias
      */
+    #[JsonProperty("optionalAlias")]
     public ?string $optionalAlias;
 
     /**

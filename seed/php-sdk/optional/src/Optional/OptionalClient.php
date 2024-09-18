@@ -24,7 +24,7 @@ class OptionalClient
     }
 
     /**
-     * @param ?array<string, mixed> $request
+     * @param ?array<string, mixed> request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

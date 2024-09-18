@@ -7,16 +7,16 @@ use Seed\Core\JsonProperty;
 
 class LightweightStackframeInformation extends SerializableType
 {
-    #[JsonProperty("numStackFrames")]
     /**
      * @var int $numStackFrames
      */
+    #[JsonProperty("numStackFrames")]
     public int $numStackFrames;
 
-    #[JsonProperty("topStackFrameMethodName")]
     /**
      * @var string $topStackFrameMethodName
      */
+    #[JsonProperty("topStackFrameMethodName")]
     public string $topStackFrameMethodName;
 
     /**

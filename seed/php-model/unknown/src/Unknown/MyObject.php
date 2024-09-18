@@ -7,10 +7,10 @@ use Seed\Core\JsonProperty;
 
 class MyObject extends SerializableType
 {
-    #[JsonProperty("unknown")]
     /**
      * @var mixed $unknown
      */
+    #[JsonProperty("unknown")]
     public mixed $unknown;
 
     /**

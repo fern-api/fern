@@ -26,7 +26,7 @@ class ServiceClient
     }
 
     /**
-     * @param string $resourceId
+     * @param string resourceId
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -47,15 +47,15 @@ class ServiceClient
     }
 
     /**
-     * @param ListResourcesRequest $request
+     * @param ListResourcesRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function listResources(ListResourcesRequest $request, ?array $options = null): mixed
     {
         $query = [];
-        $query['page_limit'] = $request->pageLimit;
-        $query['beforeDate'] = $request->beforeDate->format(Constant::DateFormat);
+        $query['page_limit'] = request->pageLimit;
+        $query['beforeDate'] = request->beforeDate->format(Constant::DateFormat);
         try {
             $response = $this->client->sendRequest();
             $statusCode = $response->getStatusCode();

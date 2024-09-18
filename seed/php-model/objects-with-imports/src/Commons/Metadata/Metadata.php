@@ -8,16 +8,16 @@ use Seed\Core\ArrayType;
 
 class Metadata extends SerializableType
 {
-    #[JsonProperty("id")]
     /**
      * @var string $id
      */
+    #[JsonProperty("id")]
     public string $id;
 
-    #[JsonProperty("data"), ArrayType(["string" => "string"])]
     /**
      * @var ?array<string, string> $data
      */
+    #[JsonProperty("data"), ArrayType(["string" => "string"])]
     public ?array $data;
 
     /**

@@ -24,14 +24,14 @@ class PackageClient
     }
 
     /**
-     * @param TestRequest $request
+     * @param TestRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function test(TestRequest $request, ?array $options = null): mixed
     {
         $query = [];
-        $query['for'] = $request->for;
+        $query['for'] = request->for;
         try {
             $response = $this->client->sendRequest();
             $statusCode = $response->getStatusCode();

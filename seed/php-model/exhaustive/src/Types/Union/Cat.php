@@ -7,16 +7,16 @@ use Seed\Core\JsonProperty;
 
 class Cat extends SerializableType
 {
-    #[JsonProperty("name")]
     /**
      * @var string $name
      */
+    #[JsonProperty("name")]
     public string $name;
 
-    #[JsonProperty("likesToMeow")]
     /**
      * @var bool $likesToMeow
      */
+    #[JsonProperty("likesToMeow")]
     public bool $likesToMeow;
 
     /**

@@ -24,7 +24,7 @@ class ServiceClient
     }
 
     /**
-     * @param string $request
+     * @param string request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -45,7 +45,7 @@ class ServiceClient
     }
 
     /**
-     * @param string $request
+     * @param string request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -66,7 +66,7 @@ class ServiceClient
     }
 
     /**
-     * @param string $request
+     * @param string request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -87,7 +87,7 @@ class ServiceClient
     }
 
     /**
-     * @param string $request
+     * @param string request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -108,7 +108,7 @@ class ServiceClient
     }
 
     /**
-     * @param string $request
+     * @param string request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -129,7 +129,7 @@ class ServiceClient
     }
 
     /**
-     * @param string $request
+     * @param string request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -150,7 +150,7 @@ class ServiceClient
     }
 
     /**
-     * @param string $request
+     * @param string request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

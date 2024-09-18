@@ -5,20 +5,19 @@ namespace Seed;
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 use Seed\Core\ArrayType;
-use Seed\ScoredColumn;
 
 class QueryResult extends SerializableType
 {
-    #[JsonProperty("matches"), ArrayType([ScoredColumn::class])]
     /**
      * @var ?array<ScoredColumn> $matches
      */
+    #[JsonProperty("matches"), ArrayType([ScoredColumn::class])]
     public ?array $matches;
 
-    #[JsonProperty("namespace")]
     /**
      * @var ?string $namespace
      */
+    #[JsonProperty("namespace")]
     public ?string $namespace;
 
     /**

@@ -3,29 +3,28 @@
 namespace Seed\V2\Problem\Types;
 
 use Seed\Core\SerializableType;
+use Seed\Commons\Types\Language;
 use Seed\Core\JsonProperty;
 use Seed\Core\ArrayType;
-use Seed\Commons\Types\Language;
-use Seed\V2\Problem\Types\Files;
 
 class GeneratedFiles extends SerializableType
 {
-    #[JsonProperty("generatedTestCaseFiles"), ArrayType([Language::class => Files::class])]
     /**
      * @var array<Language, Files> $generatedTestCaseFiles
      */
+    #[JsonProperty("generatedTestCaseFiles"), ArrayType([Language::class => Files::class])]
     public array $generatedTestCaseFiles;
 
-    #[JsonProperty("generatedTemplateFiles"), ArrayType([Language::class => Files::class])]
     /**
      * @var array<Language, Files> $generatedTemplateFiles
      */
+    #[JsonProperty("generatedTemplateFiles"), ArrayType([Language::class => Files::class])]
     public array $generatedTemplateFiles;
 
-    #[JsonProperty("other"), ArrayType([Language::class => Files::class])]
     /**
      * @var array<Language, Files> $other
      */
+    #[JsonProperty("other"), ArrayType([Language::class => Files::class])]
     public array $other;
 
     /**

@@ -7,10 +7,10 @@ use Seed\Core\JsonProperty;
 
 class Pagination extends SerializableType
 {
-    #[JsonProperty("next")]
     /**
      * @var ?string $next
      */
+    #[JsonProperty("next")]
     public ?string $next;
 
     /**

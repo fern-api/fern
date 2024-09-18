@@ -3,22 +3,22 @@
 namespace Seed\Problem\Types;
 
 use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
 use Seed\Commons\Types\FileInfo;
+use Seed\Core\JsonProperty;
 use Seed\Core\ArrayType;
 
 class ProblemFiles extends SerializableType
 {
-    #[JsonProperty("solutionFile")]
     /**
      * @var FileInfo $solutionFile
      */
+    #[JsonProperty("solutionFile")]
     public FileInfo $solutionFile;
 
-    #[JsonProperty("readOnlyFiles"), ArrayType([FileInfo::class])]
     /**
      * @var array<FileInfo> $readOnlyFiles
      */
+    #[JsonProperty("readOnlyFiles"), ArrayType([FileInfo::class])]
     public array $readOnlyFiles;
 
     /**

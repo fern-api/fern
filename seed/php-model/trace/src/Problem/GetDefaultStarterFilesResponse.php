@@ -3,17 +3,16 @@
 namespace Seed\Problem;
 
 use Seed\Core\SerializableType;
+use Seed\Commons\Language;
 use Seed\Core\JsonProperty;
 use Seed\Core\ArrayType;
-use Seed\Commons\Language;
-use Seed\Problem\ProblemFiles;
 
 class GetDefaultStarterFilesResponse extends SerializableType
 {
-    #[JsonProperty("files"), ArrayType([Language::class => ProblemFiles::class])]
     /**
      * @var array<Language, ProblemFiles> $files
      */
+    #[JsonProperty("files"), ArrayType([Language::class => ProblemFiles::class])]
     public array $files;
 
     /**

@@ -5,58 +5,57 @@ namespace Seed\Types;
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 use Seed\Core\ArrayType;
-use Seed\Types\IndexedData;
 
 class ScoredColumn extends SerializableType
 {
-    #[JsonProperty("id")]
     /**
      * @var string $id
      */
+    #[JsonProperty("id")]
     public string $id;
 
-    #[JsonProperty("score")]
-    /**
-     * @var ?float $score
-     */
-    public ?float $score;
-
-    #[JsonProperty("values"), ArrayType(["float"])]
-    /**
-     * @var ?array<float> $values
-     */
-    public ?array $values;
-
-    #[JsonProperty("metadata")]
     /**
      * @var mixed $metadata
      */
+    #[JsonProperty("metadata")]
     public mixed $metadata;
 
-    #[JsonProperty("indexedData")]
+    /**
+     * @var ?float $score
+     */
+    #[JsonProperty("score")]
+    public ?float $score;
+
+    /**
+     * @var ?array<float> $values
+     */
+    #[JsonProperty("values"), ArrayType(["float"])]
+    public ?array $values;
+
     /**
      * @var ?IndexedData $indexedData
      */
+    #[JsonProperty("indexedData")]
     public ?IndexedData $indexedData;
 
     /**
      * @param string $id
+     * @param mixed $metadata
      * @param ?float $score
      * @param ?array<float> $values
-     * @param mixed $metadata
      * @param ?IndexedData $indexedData
      */
     public function __construct(
         string $id,
+        mixed $metadata,
         ?float $score = null,
         ?array $values = null,
-        mixed $metadata,
         ?IndexedData $indexedData = null,
     ) {
         $this->id = $id;
+        $this->metadata = $metadata;
         $this->score = $score;
         $this->values = $values;
-        $this->metadata = $metadata;
         $this->indexedData = $indexedData;
     }
 }

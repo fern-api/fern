@@ -24,7 +24,7 @@ class Ec2Client
     }
 
     /**
-     * @param BootInstanceRequest $request
+     * @param BootInstanceRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

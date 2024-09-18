@@ -29,7 +29,7 @@ class ObjectClient
     }
 
     /**
-     * @param ObjectWithOptionalField $request
+     * @param ObjectWithOptionalField request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -50,7 +50,7 @@ class ObjectClient
     }
 
     /**
-     * @param ObjectWithRequiredField $request
+     * @param ObjectWithRequiredField request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -71,7 +71,7 @@ class ObjectClient
     }
 
     /**
-     * @param ObjectWithMapOfMap $request
+     * @param ObjectWithMapOfMap request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -92,7 +92,7 @@ class ObjectClient
     }
 
     /**
-     * @param NestedObjectWithOptionalField $request
+     * @param NestedObjectWithOptionalField request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -113,8 +113,8 @@ class ObjectClient
     }
 
     /**
-     * @param string $string
-     * @param NestedObjectWithRequiredField $request
+     * @param string string
+     * @param NestedObjectWithRequiredField request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -135,7 +135,7 @@ class ObjectClient
     }
 
     /**
-     * @param array<NestedObjectWithRequiredField> $request
+     * @param array<NestedObjectWithRequiredField> request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

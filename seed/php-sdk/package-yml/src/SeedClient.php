@@ -41,12 +41,12 @@ class SeedClient
     }
 
     /**
-     * @param string $id
-     * @param EchoRequest $request
+     * @param string id
+     * @param EchoRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
-    public function echo(string $id, EchoRequest $request, ?array $options = null): mixed
+    public function echo_(string $id, EchoRequest $request, ?array $options = null): mixed
     {
         try {
             $response = $this->client->sendRequest();

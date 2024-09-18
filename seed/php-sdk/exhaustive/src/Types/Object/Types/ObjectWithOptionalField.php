@@ -4,88 +4,88 @@ namespace Seed\Types\Object\Types;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\Core\DateType;
 use DateTime;
+use Seed\Core\DateType;
 use Seed\Core\ArrayType;
 
 class ObjectWithOptionalField extends SerializableType
 {
-    #[JsonProperty("string")]
     /**
      * @var ?string $string This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
      */
+    #[JsonProperty("string")]
     public ?string $string;
 
-    #[JsonProperty("integer")]
     /**
      * @var ?int $integer
      */
+    #[JsonProperty("integer")]
     public ?int $integer;
 
-    #[JsonProperty("long")]
     /**
      * @var ?int $long
      */
+    #[JsonProperty("long")]
     public ?int $long;
 
-    #[JsonProperty("double")]
     /**
      * @var ?float $double
      */
+    #[JsonProperty("double")]
     public ?float $double;
 
-    #[JsonProperty("bool")]
     /**
      * @var ?bool $bool
      */
+    #[JsonProperty("bool")]
     public ?bool $bool;
 
-    #[JsonProperty("datetime"), DateType(DateType::TYPE_DATETIME)]
     /**
      * @var ?DateTime $datetime
      */
+    #[JsonProperty("datetime"), DateType(DateType::TYPE_DATETIME)]
     public ?DateTime $datetime;
 
-    #[JsonProperty("date"), DateType(DateType::TYPE_DATE)]
     /**
      * @var ?DateTime $date
      */
+    #[JsonProperty("date"), DateType(DateType::TYPE_DATE)]
     public ?DateTime $date;
 
-    #[JsonProperty("uuid")]
     /**
      * @var ?string $uuid
      */
+    #[JsonProperty("uuid")]
     public ?string $uuid;
 
-    #[JsonProperty("base64")]
     /**
      * @var ?string $base64
      */
+    #[JsonProperty("base64")]
     public ?string $base64;
 
-    #[JsonProperty("list"), ArrayType(["string"])]
     /**
      * @var ?array<string> $list
      */
+    #[JsonProperty("list"), ArrayType(["string"])]
     public ?array $list;
 
-    #[JsonProperty("set"), ArrayType(["string"])]
     /**
      * @var ?array<string> $set
      */
+    #[JsonProperty("set"), ArrayType(["string"])]
     public ?array $set;
 
-    #[JsonProperty("map"), ArrayType(["integer" => "string"])]
     /**
      * @var ?array<int, string> $map
      */
+    #[JsonProperty("map"), ArrayType(["integer" => "string"])]
     public ?array $map;
 
-    #[JsonProperty("bigint")]
     /**
      * @var ?string $bigint
      */
+    #[JsonProperty("bigint")]
     public ?string $bigint;
 
     /**

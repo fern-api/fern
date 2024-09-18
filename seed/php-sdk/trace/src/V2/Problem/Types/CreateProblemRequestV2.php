@@ -6,52 +6,50 @@ use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 use Seed\Problem\Types\ProblemDescription;
 use Seed\Core\ArrayType;
-use Seed\V2\Problem\Types\TestCaseTemplate;
-use Seed\V2\Problem\Types\TestCaseV2;
 use Seed\Commons\Types\Language;
 
 class CreateProblemRequestV2 extends SerializableType
 {
-    #[JsonProperty("problemName")]
     /**
      * @var string $problemName
      */
+    #[JsonProperty("problemName")]
     public string $problemName;
 
-    #[JsonProperty("problemDescription")]
     /**
      * @var ProblemDescription $problemDescription
      */
+    #[JsonProperty("problemDescription")]
     public ProblemDescription $problemDescription;
 
-    #[JsonProperty("customFiles")]
     /**
      * @var mixed $customFiles
      */
+    #[JsonProperty("customFiles")]
     public mixed $customFiles;
 
-    #[JsonProperty("customTestCaseTemplates"), ArrayType([TestCaseTemplate::class])]
     /**
      * @var array<TestCaseTemplate> $customTestCaseTemplates
      */
+    #[JsonProperty("customTestCaseTemplates"), ArrayType([TestCaseTemplate::class])]
     public array $customTestCaseTemplates;
 
-    #[JsonProperty("testcases"), ArrayType([TestCaseV2::class])]
     /**
      * @var array<TestCaseV2> $testcases
      */
+    #[JsonProperty("testcases"), ArrayType([TestCaseV2::class])]
     public array $testcases;
 
-    #[JsonProperty("supportedLanguages"), ArrayType([Language::class])]
     /**
      * @var array<Language> $supportedLanguages
      */
+    #[JsonProperty("supportedLanguages"), ArrayType([Language::class])]
     public array $supportedLanguages;
 
-    #[JsonProperty("isPublic")]
     /**
      * @var bool $isPublic
      */
+    #[JsonProperty("isPublic")]
     public bool $isPublic;
 
     /**

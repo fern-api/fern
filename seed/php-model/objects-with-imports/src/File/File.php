@@ -4,26 +4,25 @@ namespace Seed\File;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\File\FileInfo;
 
 class File extends SerializableType
 {
-    #[JsonProperty("name")]
     /**
      * @var string $name
      */
+    #[JsonProperty("name")]
     public string $name;
 
-    #[JsonProperty("contents")]
     /**
      * @var string $contents
      */
+    #[JsonProperty("contents")]
     public string $contents;
 
-    #[JsonProperty("info")]
     /**
      * @var FileInfo $info
      */
+    #[JsonProperty("info")]
     public FileInfo $info;
 
     /**

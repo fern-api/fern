@@ -4,36 +4,33 @@ namespace Seed\V2\Problem;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\V2\Problem\NonVoidFunctionSignature;
-use Seed\Core\ArrayType;
 use Seed\Commons\Language;
-use Seed\V2\Problem\Files;
-use Seed\V2\Problem\BasicTestCaseTemplate;
+use Seed\Core\ArrayType;
 
 class BasicCustomFiles extends SerializableType
 {
-    #[JsonProperty("methodName")]
     /**
      * @var string $methodName
      */
+    #[JsonProperty("methodName")]
     public string $methodName;
 
-    #[JsonProperty("signature")]
     /**
      * @var NonVoidFunctionSignature $signature
      */
+    #[JsonProperty("signature")]
     public NonVoidFunctionSignature $signature;
 
-    #[JsonProperty("additionalFiles"), ArrayType([Language::class => Files::class])]
     /**
      * @var array<Language, Files> $additionalFiles
      */
+    #[JsonProperty("additionalFiles"), ArrayType([Language::class => Files::class])]
     public array $additionalFiles;
 
-    #[JsonProperty("basicTestCaseTemplate")]
     /**
      * @var BasicTestCaseTemplate $basicTestCaseTemplate
      */
+    #[JsonProperty("basicTestCaseTemplate")]
     public BasicTestCaseTemplate $basicTestCaseTemplate;
 
     /**

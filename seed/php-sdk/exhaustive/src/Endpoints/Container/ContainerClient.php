@@ -25,7 +25,7 @@ class ContainerClient
     }
 
     /**
-     * @param array<string> $request
+     * @param array<string> request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -46,7 +46,7 @@ class ContainerClient
     }
 
     /**
-     * @param array<ObjectWithRequiredField> $request
+     * @param array<ObjectWithRequiredField> request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -67,7 +67,7 @@ class ContainerClient
     }
 
     /**
-     * @param array<string> $request
+     * @param array<string> request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -88,7 +88,7 @@ class ContainerClient
     }
 
     /**
-     * @param array<ObjectWithRequiredField> $request
+     * @param array<ObjectWithRequiredField> request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -109,7 +109,7 @@ class ContainerClient
     }
 
     /**
-     * @param array<string, string> $request
+     * @param array<string, string> request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -130,7 +130,7 @@ class ContainerClient
     }
 
     /**
-     * @param array<string, ObjectWithRequiredField> $request
+     * @param array<string, ObjectWithRequiredField> request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -151,7 +151,7 @@ class ContainerClient
     }
 
     /**
-     * @param ?ObjectWithRequiredField $request
+     * @param ?ObjectWithRequiredField request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

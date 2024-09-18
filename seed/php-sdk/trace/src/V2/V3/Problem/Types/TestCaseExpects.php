@@ -7,10 +7,10 @@ use Seed\Core\JsonProperty;
 
 class TestCaseExpects extends SerializableType
 {
-    #[JsonProperty("expectedStdout")]
     /**
      * @var ?string $expectedStdout
      */
+    #[JsonProperty("expectedStdout")]
     public ?string $expectedStdout;
 
     /**

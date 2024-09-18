@@ -10,16 +10,16 @@ use Seed\Core\JsonProperty;
  */
 class TokenResponse extends SerializableType
 {
-    #[JsonProperty("access_token")]
     /**
      * @var string $accessToken
      */
+    #[JsonProperty("access_token")]
     public string $accessToken;
 
-    #[JsonProperty("expires_in")]
     /**
      * @var int $expiresIn
      */
+    #[JsonProperty("expires_in")]
     public int $expiresIn;
 
     /**

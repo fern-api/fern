@@ -29,17 +29,17 @@ class PlaylistClient
 
     /**
     * Create a new playlist
-     * @param int $serviceParam
-     * @param CreatePlaylistRequest $request
+     * @param int serviceParam
+     * @param CreatePlaylistRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function createPlaylist(int $serviceParam, CreatePlaylistRequest $request, ?array $options = null): mixed
     {
         $query = [];
-        $query['datetime'] = $request->datetime->format(Constant::DateTimeFormat);
-        if ($request->optionalDatetime != null) {
-            $query['optionalDatetime'] = $request->optionalDatetime;
+        $query['datetime'] = request->datetime->format(Constant::DateTimeFormat);
+        if (request->optionalDatetime != null) {
+            $query['optionalDatetime'] = request->optionalDatetime;
         }
         try {
             $response = $this->client->sendRequest();
@@ -57,22 +57,22 @@ class PlaylistClient
 
     /**
     * Returns the user's playlists
-     * @param int $serviceParam
-     * @param GetPlaylistsRequest $request
+     * @param int serviceParam
+     * @param GetPlaylistsRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function getPlaylists(int $serviceParam, GetPlaylistsRequest $request, ?array $options = null): mixed
     {
         $query = [];
-        $query['otherField'] = $request->otherField;
-        $query['multiLineDocs'] = $request->multiLineDocs;
-        $query['multipleField'] = $request->multipleField;
-        if ($request->limit != null) {
-            $query['limit'] = $request->limit;
+        $query['otherField'] = request->otherField;
+        $query['multiLineDocs'] = request->multiLineDocs;
+        $query['multipleField'] = request->multipleField;
+        if (request->limit != null) {
+            $query['limit'] = request->limit;
         }
-        if ($request->optionalMultipleField != null) {
-            $query['optionalMultipleField'] = $request->optionalMultipleField;
+        if (request->optionalMultipleField != null) {
+            $query['optionalMultipleField'] = request->optionalMultipleField;
         }
         try {
             $response = $this->client->sendRequest();
@@ -90,8 +90,8 @@ class PlaylistClient
 
     /**
     * Returns a playlist
-     * @param int $serviceParam
-     * @param string $playlistId
+     * @param int serviceParam
+     * @param string playlistId
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -113,9 +113,9 @@ class PlaylistClient
 
     /**
     * Updates a playlist
-     * @param int $serviceParam
-     * @param string $playlistId
-     * @param ?UpdatePlaylistRequest $request
+     * @param int serviceParam
+     * @param string playlistId
+     * @param ?UpdatePlaylistRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -137,8 +137,8 @@ class PlaylistClient
 
     /**
     * Deletes a playlist
-     * @param int $serviceParam
-     * @param string $playlistId
+     * @param int serviceParam
+     * @param string playlistId
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

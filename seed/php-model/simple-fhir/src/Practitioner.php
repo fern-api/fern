@@ -7,16 +7,16 @@ use Seed\Core\JsonProperty;
 
 class Practitioner extends SerializableType
 {
-    #[JsonProperty("resource_type")]
     /**
      * @var string $resourceType
      */
+    #[JsonProperty("resource_type")]
     public string $resourceType;
 
-    #[JsonProperty("name")]
     /**
      * @var string $name
      */
+    #[JsonProperty("name")]
     public string $name;
 
     /**

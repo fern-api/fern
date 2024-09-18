@@ -4,14 +4,13 @@ namespace Seed\Types;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\Types\UsernamePage;
 
 class UsernameCursor extends SerializableType
 {
-    #[JsonProperty("cursor")]
     /**
      * @var UsernamePage $cursor
      */
+    #[JsonProperty("cursor")]
     public UsernamePage $cursor;
 
     /**

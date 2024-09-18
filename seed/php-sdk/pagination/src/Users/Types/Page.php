@@ -4,32 +4,31 @@ namespace Seed\Users\Types;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\Users\Types\NextPage;
 
 class Page extends SerializableType
 {
-    #[JsonProperty("page")]
     /**
      * @var int $page The current page
      */
+    #[JsonProperty("page")]
     public int $page;
 
-    #[JsonProperty("per_page")]
     /**
      * @var int $perPage
      */
+    #[JsonProperty("per_page")]
     public int $perPage;
 
-    #[JsonProperty("total_page")]
     /**
      * @var int $totalPage
      */
+    #[JsonProperty("total_page")]
     public int $totalPage;
 
-    #[JsonProperty("next")]
     /**
      * @var ?NextPage $next
      */
+    #[JsonProperty("next")]
     public ?NextPage $next;
 
     /**

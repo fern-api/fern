@@ -3,17 +3,16 @@
 namespace Seed\V2\V3\Problem\Types;
 
 use Seed\Core\SerializableType;
+use Seed\Commons\Types\Language;
 use Seed\Core\JsonProperty;
 use Seed\Core\ArrayType;
-use Seed\Commons\Types\Language;
-use Seed\V2\V3\Problem\Types\FunctionImplementation;
 
 class FunctionImplementationForMultipleLanguages extends SerializableType
 {
-    #[JsonProperty("codeByLanguage"), ArrayType([Language::class => FunctionImplementation::class])]
     /**
      * @var array<Language, FunctionImplementation> $codeByLanguage
      */
+    #[JsonProperty("codeByLanguage"), ArrayType([Language::class => FunctionImplementation::class])]
     public array $codeByLanguage;
 
     /**

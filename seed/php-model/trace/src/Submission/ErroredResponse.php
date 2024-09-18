@@ -7,16 +7,16 @@ use Seed\Core\JsonProperty;
 
 class ErroredResponse extends SerializableType
 {
-    #[JsonProperty("submissionId")]
     /**
      * @var string $submissionId
      */
+    #[JsonProperty("submissionId")]
     public string $submissionId;
 
-    #[JsonProperty("errorInfo")]
     /**
      * @var mixed $errorInfo
      */
+    #[JsonProperty("errorInfo")]
     public mixed $errorInfo;
 
     /**

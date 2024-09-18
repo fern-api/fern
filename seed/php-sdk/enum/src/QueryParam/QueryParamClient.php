@@ -25,20 +25,20 @@ class QueryParamClient
     }
 
     /**
-     * @param SendEnumAsQueryParamRequest $request
+     * @param SendEnumAsQueryParamRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function send(SendEnumAsQueryParamRequest $request, ?array $options = null): mixed
     {
         $query = [];
-        $query['operand'] = $request->operand->value;
-        $query['operandOrColor'] = $request->operandOrColor;
-        if ($request->maybeOperand != null) {
-            $query['maybeOperand'] = $request->maybeOperand->value;
+        $query['operand'] = request->operand->value;
+        $query['operandOrColor'] = request->operandOrColor;
+        if (request->maybeOperand != null) {
+            $query['maybeOperand'] = request->maybeOperand->value;
         }
-        if ($request->maybeOperandOrColor != null) {
-            $query['maybeOperandOrColor'] = $request->maybeOperandOrColor;
+        if (request->maybeOperandOrColor != null) {
+            $query['maybeOperandOrColor'] = request->maybeOperandOrColor;
         }
         try {
             $response = $this->client->sendRequest();
@@ -53,20 +53,20 @@ class QueryParamClient
     }
 
     /**
-     * @param SendEnumListAsQueryParamRequest $request
+     * @param SendEnumListAsQueryParamRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function sendList(SendEnumListAsQueryParamRequest $request, ?array $options = null): mixed
     {
         $query = [];
-        $query['operand'] = $request->operand->value;
-        $query['operandOrColor'] = $request->operandOrColor;
-        if ($request->maybeOperand != null) {
-            $query['maybeOperand'] = $request->maybeOperand->value;
+        $query['operand'] = request->operand->value;
+        $query['operandOrColor'] = request->operandOrColor;
+        if (request->maybeOperand != null) {
+            $query['maybeOperand'] = request->maybeOperand->value;
         }
-        if ($request->maybeOperandOrColor != null) {
-            $query['maybeOperandOrColor'] = $request->maybeOperandOrColor;
+        if (request->maybeOperandOrColor != null) {
+            $query['maybeOperandOrColor'] = request->maybeOperandOrColor;
         }
         try {
             $response = $this->client->sendRequest();

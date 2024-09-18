@@ -7,22 +7,22 @@ use Seed\Core\JsonProperty;
 
 class RecordedResponseNotification extends SerializableType
 {
-    #[JsonProperty("submissionId")]
     /**
      * @var string $submissionId
      */
+    #[JsonProperty("submissionId")]
     public string $submissionId;
 
-    #[JsonProperty("traceResponsesSize")]
     /**
      * @var int $traceResponsesSize
      */
+    #[JsonProperty("traceResponsesSize")]
     public int $traceResponsesSize;
 
-    #[JsonProperty("testCaseId")]
     /**
      * @var ?string $testCaseId
      */
+    #[JsonProperty("testCaseId")]
     public ?string $testCaseId;
 
     /**

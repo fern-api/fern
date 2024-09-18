@@ -47,14 +47,14 @@ class ServiceClient
 
     /**
     * GET request with custom api key
-     * @param HeaderAuthRequest $request
+     * @param HeaderAuthRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function getWithHeader(HeaderAuthRequest $request, ?array $options = null): mixed
     {
         $headers = [];
-        $headers['X-Endpoint-Header'] = $request->xEndpointHeader;
+        $headers['X-Endpoint-Header'] = request->xEndpointHeader;
         try {
             $response = $this->client->sendRequest();
             $statusCode = $response->getStatusCode();

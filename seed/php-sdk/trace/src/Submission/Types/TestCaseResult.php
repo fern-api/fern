@@ -7,22 +7,22 @@ use Seed\Core\JsonProperty;
 
 class TestCaseResult extends SerializableType
 {
-    #[JsonProperty("expectedResult")]
     /**
      * @var mixed $expectedResult
      */
+    #[JsonProperty("expectedResult")]
     public mixed $expectedResult;
 
-    #[JsonProperty("actualResult")]
     /**
      * @var mixed $actualResult
      */
+    #[JsonProperty("actualResult")]
     public mixed $actualResult;
 
-    #[JsonProperty("passed")]
     /**
      * @var bool $passed
      */
+    #[JsonProperty("passed")]
     public bool $passed;
 
     /**

@@ -25,7 +25,7 @@ class S3Client
     }
 
     /**
-     * @param GetPresignedUrlRequest $request
+     * @param GetPresignedUrlRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

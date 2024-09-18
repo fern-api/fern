@@ -5,32 +5,31 @@ namespace Seed\Types;
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 use Seed\Core\ArrayType;
-use Seed\Types\IndexedData;
 
 class Column extends SerializableType
 {
-    #[JsonProperty("id")]
     /**
      * @var string $id
      */
+    #[JsonProperty("id")]
     public string $id;
 
-    #[JsonProperty("values"), ArrayType(["float"])]
     /**
      * @var array<float> $values
      */
+    #[JsonProperty("values"), ArrayType(["float"])]
     public array $values;
 
-    #[JsonProperty("metadata")]
     /**
      * @var mixed $metadata
      */
+    #[JsonProperty("metadata")]
     public mixed $metadata;
 
-    #[JsonProperty("indexedData")]
     /**
      * @var ?IndexedData $indexedData
      */
+    #[JsonProperty("indexedData")]
     public ?IndexedData $indexedData;
 
     /**

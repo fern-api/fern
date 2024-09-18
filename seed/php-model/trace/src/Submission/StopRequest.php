@@ -7,10 +7,10 @@ use Seed\Core\JsonProperty;
 
 class StopRequest extends SerializableType
 {
-    #[JsonProperty("submissionId")]
     /**
      * @var string $submissionId
      */
+    #[JsonProperty("submissionId")]
     public string $submissionId;
 
     /**

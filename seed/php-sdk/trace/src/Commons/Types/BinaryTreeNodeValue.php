@@ -7,28 +7,28 @@ use Seed\Core\JsonProperty;
 
 class BinaryTreeNodeValue extends SerializableType
 {
-    #[JsonProperty("nodeId")]
     /**
      * @var string $nodeId
      */
+    #[JsonProperty("nodeId")]
     public string $nodeId;
 
-    #[JsonProperty("val")]
     /**
      * @var float $val
      */
+    #[JsonProperty("val")]
     public float $val;
 
-    #[JsonProperty("right")]
     /**
      * @var ?string $right
      */
+    #[JsonProperty("right")]
     public ?string $right;
 
-    #[JsonProperty("left")]
     /**
      * @var ?string $left
      */
+    #[JsonProperty("left")]
     public ?string $left;
 
     /**

@@ -28,8 +28,8 @@ class AdminClient
     }
 
     /**
-     * @param string $submissionId
-     * @param mixed $request
+     * @param string submissionId
+     * @param mixed request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -48,8 +48,8 @@ class AdminClient
     }
 
     /**
-     * @param string $submissionId
-     * @param TestSubmissionUpdate $request
+     * @param string submissionId
+     * @param TestSubmissionUpdate request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -68,8 +68,8 @@ class AdminClient
     }
 
     /**
-     * @param string $submissionId
-     * @param mixed $request
+     * @param string submissionId
+     * @param mixed request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -88,8 +88,8 @@ class AdminClient
     }
 
     /**
-     * @param string $submissionId
-     * @param WorkspaceSubmissionUpdate $request
+     * @param string submissionId
+     * @param WorkspaceSubmissionUpdate request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -108,9 +108,9 @@ class AdminClient
     }
 
     /**
-     * @param string $submissionId
-     * @param string $testCaseId
-     * @param StoreTracedTestCaseRequest $request
+     * @param string submissionId
+     * @param string testCaseId
+     * @param StoreTracedTestCaseRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -129,9 +129,9 @@ class AdminClient
     }
 
     /**
-     * @param string $submissionId
-     * @param string $testCaseId
-     * @param array<TraceResponseV2> $request
+     * @param string submissionId
+     * @param string testCaseId
+     * @param array<TraceResponseV2> request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -150,8 +150,8 @@ class AdminClient
     }
 
     /**
-     * @param string $submissionId
-     * @param StoreTracedWorkspaceRequest $request
+     * @param string submissionId
+     * @param StoreTracedWorkspaceRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -170,8 +170,8 @@ class AdminClient
     }
 
     /**
-     * @param string $submissionId
-     * @param array<TraceResponseV2> $request
+     * @param string submissionId
+     * @param array<TraceResponseV2> request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
