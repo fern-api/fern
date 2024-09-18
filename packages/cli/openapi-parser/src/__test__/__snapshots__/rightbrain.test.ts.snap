@@ -4671,6 +4671,7 @@ Brain Core API. 🚀
         "name": "Body_org_update_avatar_org__org_id__avatar_post",
         "properties": [
           {
+            "contentType": null,
             "description": null,
             "key": "file",
             "schema": {
@@ -5109,6 +5110,7 @@ Brain Core API. 🚀
         "name": "Body_user_update_avatar_user_avatar_post",
         "properties": [
           {
+            "contentType": null,
             "description": null,
             "key": "file",
             "schema": {
@@ -7392,6 +7394,7 @@ Brain Core API. 🚀
         "name": "Body_project_update_avatar_org__org_id__project__project_id__avatar_post",
         "properties": [
           {
+            "contentType": null,
             "description": null,
             "key": "file",
             "schema": {
@@ -15906,6 +15909,7 @@ Brain Core API. 🚀
         "name": "Body_document_create_org__org_id__project__project_id__document_post",
         "properties": [
           {
+            "contentType": null,
             "description": null,
             "key": "data",
             "schema": {
@@ -15930,6 +15934,7 @@ Brain Core API. 🚀
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "files",
             "schema": {
@@ -16335,6 +16340,7 @@ Brain Core API. 🚀
         "name": "Body_document_upload_org__org_id__project__project_id__document_upload_post",
         "properties": [
           {
+            "contentType": null,
             "description": null,
             "key": "data",
             "schema": {
@@ -16359,6 +16365,7 @@ Brain Core API. 🚀
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "files",
             "schema": {
@@ -54147,6 +54154,7 @@ Brain Core API. 🚀
         "name": "Body_Task_Run_Parameters",
         "properties": [
           {
+            "contentType": null,
             "description": null,
             "key": "task_input",
             "schema": {
@@ -54185,6 +54193,7 @@ Brain Core API. 🚀
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "task_file",
             "schema": {

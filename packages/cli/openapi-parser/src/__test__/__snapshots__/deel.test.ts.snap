@@ -8091,6 +8091,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         "name": null,
         "properties": [
           {
+            "contentType": null,
             "description": null,
             "key": "file",
             "schema": {
@@ -8412,6 +8413,7 @@ exports[`open api parser > deel > parse open api 1`] = `
         "name": null,
         "properties": [
           {
+            "contentType": null,
             "description": null,
             "key": "file",
             "schema": {
