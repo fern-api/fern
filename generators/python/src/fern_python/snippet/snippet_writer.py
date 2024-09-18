@@ -1,4 +1,3 @@
-import json
 from typing import Any, Dict, List, Optional
 
 import fern.ir.resources as ir_types

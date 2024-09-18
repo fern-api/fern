@@ -83,12 +83,13 @@ def convert_and_respect_annotation_metadata(
                 annotation=annotation,
                 inner_type=key_type,
                 direction=direction,
-            ) : convert_and_respect_annotation_metadata(
+            ): convert_and_respect_annotation_metadata(
                 object_=value,
                 annotation=annotation,
                 inner_type=value_type,
                 direction=direction,
-            ) for key, value in object_.items()
+            )
+            for key, value in object_.items()
         }
 
     # If you're iterating on a string, do not bother to coerce it to a sequence.
@@ -183,9 +184,9 @@ def _convert_mapping(
                 object_=value, annotation=type_, direction=direction
             )
         else:
-            converted_object[_alias_key(key, type_, direction, aliases_to_field_names)] = (
-                convert_and_respect_annotation_metadata(object_=value, annotation=type_, direction=direction)
-            )
+            converted_object[
+                _alias_key(key, type_, direction, aliases_to_field_names)
+            ] = convert_and_respect_annotation_metadata(object_=value, annotation=type_, direction=direction)
     return converted_object
 
 
