@@ -929,10 +929,9 @@ export class TemplateGenerator {
     }
 
     private fileUploadTemplate() {
-        const templateString = `fs.createReadStream("/path/to/your/file")`;
         return FdrSnippetTemplate.Template.generic({
             imports: ['import fs from "fs";'],
-            templateString,
+            templateString: 'fs.createReadStream("/path/to/your/file")',
             isOptional: false,
             templateInputs: []
         });
