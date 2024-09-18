@@ -7,12 +7,15 @@ import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { getApplicationJsonSchemaMediaObject } from "./getApplicationJsonSchema";
 
-function getMultipartFormDataRequest(
-    requestBody: OpenAPIV3.RequestBodyObject
-): OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined {
+function getMultipartFormDataRequest(requestBody: OpenAPIV3.RequestBodyObject):
+    | {
+          schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined;
+          encoding: Record<string, OpenAPIV3.EncodingObject> | undefined;
+      }
+    | undefined {
     for (const [mediaType, mediaTypeObject] of Object.entries(requestBody.content)) {
         if (MediaType.parse(mediaType)?.isMultipart()) {
-            return mediaTypeObject.schema;
+            return { schema: mediaTypeObject.schema, encoding: mediaTypeObject.encoding };
         }
     }
     return undefined;
@@ -63,7 +66,10 @@ export function convertRequest({
         ? context.resolveRequestBodyReference(requestBody)
         : requestBody;
 
-    const multipartSchema = getMultipartFormDataRequest(resolvedRequestBody);
+    const multipartFormData = getMultipartFormDataRequest(resolvedRequestBody);
+    const multipartSchema = multipartFormData?.schema;
+    const multipartEncoding = multipartFormData?.encoding;
+
     const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedRequestBody.content, context);
 
     // convert as application/octet-stream
@@ -104,7 +110,9 @@ export function convertRequest({
                     properties.push({
                         key: property.key,
                         schema: MultipartSchema.file({ isOptional: false, isArray: false }),
-                        description: property.schema.description
+                        description: property.schema.description,
+                        contentType:
+                            multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined
                     });
                     continue;
                 }
@@ -118,7 +126,9 @@ export function convertRequest({
                     properties.push({
                         key: property.key,
                         schema: MultipartSchema.file({ isOptional: true, isArray: false }),
-                        description: property.schema.description
+                        description: property.schema.description,
+                        contentType:
+                            multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined
                     });
                     continue;
                 }
@@ -132,7 +142,9 @@ export function convertRequest({
                     properties.push({
                         key: property.key,
                         schema: MultipartSchema.file({ isOptional: false, isArray: true }),
-                        description: property.schema.description
+                        description: property.schema.description,
+                        contentType:
+                            multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined
                     });
                     continue;
                 }
@@ -147,7 +159,9 @@ export function convertRequest({
                     properties.push({
                         key: property.key,
                         schema: MultipartSchema.file({ isOptional: true, isArray: true }),
-                        description: property.schema.description
+                        description: property.schema.description,
+                        contentType:
+                            multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined
                     });
                     continue;
                 }
@@ -155,7 +169,8 @@ export function convertRequest({
                 properties.push({
                     key: property.key,
                     schema: MultipartSchema.json(property.schema),
-                    description: undefined
+                    description: undefined,
+                    contentType: multipartEncoding != null ? multipartEncoding[property.key]?.contentType : undefined
                 });
             }
         }

@@ -2331,7 +2331,7 @@ The client secret is auto generated on the server and returned. The client does 
             "request": {
               "body": {
                 "properties": {
-                  "file": "optional<file>",
+                  "file": "optional<optional<file>>",
                 },
               },
               "content-type": "multipart/form-data",
@@ -3145,7 +3145,7 @@ The client secret is auto generated on the server and returned. The client does 
             "request": {
               "body": {
                 "properties": {
-                  "file": "optional<file>",
+                  "file": "optional<optional<file>>",
                 },
               },
               "content-type": "multipart/form-data",
@@ -3318,7 +3318,7 @@ The client secret is auto generated on the server and returned. The client does 
             "request": {
               "body": {
                 "properties": {
-                  "file": "optional<file>",
+                  "file": "optional<optional<file>>",
                 },
               },
               "content-type": "multipart/form-data",
@@ -3522,7 +3522,7 @@ The client secret is auto generated on the server and returned. The client does 
             "request": {
               "body": {
                 "properties": {
-                  "file": "optional<file>",
+                  "file": "optional<optional<file>>",
                 },
               },
               "content-type": "multipart/form-data",
@@ -23513,7 +23513,7 @@ The client secret is auto generated on the server and returned. The client does 
             "request": {
               "body": {
                 "properties": {
-                  "file": "optional<file>",
+                  "file": "optional<optional<file>>",
                 },
               },
               "content-type": "multipart/form-data",
@@ -24327,7 +24327,7 @@ The client secret is auto generated on the server and returned. The client does 
             "request": {
               "body": {
                 "properties": {
-                  "file": "optional<file>",
+                  "file": "optional<optional<file>>",
                 },
               },
               "content-type": "multipart/form-data",
@@ -24500,7 +24500,7 @@ The client secret is auto generated on the server and returned. The client does 
             "request": {
               "body": {
                 "properties": {
-                  "file": "optional<file>",
+                  "file": "optional<optional<file>>",
                 },
               },
               "content-type": "multipart/form-data",
@@ -24704,7 +24704,7 @@ The client secret is auto generated on the server and returned. The client does 
             "request": {
               "body": {
                 "properties": {
-                  "file": "optional<file>",
+                  "file": "optional<optional<file>>",
                 },
               },
               "content-type": "multipart/form-data",

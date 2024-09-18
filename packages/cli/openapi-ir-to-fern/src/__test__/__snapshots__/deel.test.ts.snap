@@ -1733,7 +1733,7 @@ exports[`open api parser > deel > docs 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "file": "optional<file>",
+                  "file": "optional<optional<file>>",
                 },
               },
               "content-type": "multipart/form-data",
@@ -1960,7 +1960,7 @@ exports[`open api parser > deel > docs 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "file": "optional<file>",
+                  "file": "optional<optional<file>>",
                 },
               },
               "content-type": "multipart/form-data",
@@ -17071,7 +17071,7 @@ exports[`open api parser > deel > simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "file": "optional<file>",
+                  "file": "optional<optional<file>>",
                 },
               },
               "content-type": "multipart/form-data",
@@ -17298,7 +17298,7 @@ exports[`open api parser > deel > simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "file": "optional<file>",
+                  "file": "optional<optional<file>>",
                 },
               },
               "content-type": "multipart/form-data",
