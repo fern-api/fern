@@ -71,6 +71,35 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
                             self._types_with_non_union_self_referencing_dependencies[id] = OrderedSet()
                         self._types_with_non_union_self_referencing_dependencies[id].add(referenced_id)
 
+    # TODO: need to also see if they're indirectly referenced
+    def is_type_reference_directly_referenced_by_itself(self, type_reference: ir_types.TypeReference) -> bool:
+        return type_reference.visit(
+            primitive=lambda primitive: False,
+            unknown=lambda: False,
+            named=lambda named: self.is_type_id_directly_referenced_by_itself(named.type_id),
+            container=lambda container: container.visit(
+                list_=lambda list_: self.is_type_reference_directly_referenced_by_itself(list_),
+                map_=lambda map_: (
+                    self.is_type_reference_directly_referenced_by_itself(map_.key_type) or
+                    self.is_type_reference_directly_referenced_by_itself(map_.value_type)
+                ),
+                optional=lambda optional: self.is_type_reference_directly_referenced_by_itself(optional),
+                set_=lambda set_: self.is_type_reference_directly_referenced_by_itself(set_),
+                literal=lambda literal: False,
+            ),
+        )
+
+
+    def is_type_id_directly_referenced_by_itself(self, type_id: ir_types.TypeId) -> bool:
+        type = self.ir.types[type_id]
+        return type.shape.visit(
+            enum=lambda enum: False,
+            alias=lambda alias: self.is_type_reference_directly_referenced_by_itself(alias.type_reference),
+            object_=lambda object_: "TODO",
+            union=lambda union: "TODO",
+            undiscriminated_union=lambda union: "TODO",
+        )
+
     def get_module_path_in_project(self, module_path: AST.ModulePath) -> AST.ModulePath:
         return self._project_module_path + module_path
 

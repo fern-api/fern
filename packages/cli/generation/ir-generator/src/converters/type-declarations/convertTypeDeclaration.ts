@@ -48,6 +48,8 @@ export async function convertTypeDeclaration({
         file
     });
 
+    const isInvolvedInCycle = true;
+    const referencedTypesWithoutSelf: Set<string> = new Set();
     const referencedTypes = getReferencedTypesFromRawDeclaration({ typeDeclaration, file, typeResolver });
 
     let propertiesByAudience: Record<AudienceId, Set<string>> = {};
@@ -69,6 +71,8 @@ export async function convertTypeDeclaration({
             name: declaredTypeName,
             shape: await convertType({ typeDeclaration, file, typeResolver }),
             referencedTypes: new Set(referencedTypes.map((referencedType) => referencedType.typeId)),
+            isInvolvedInCycle,
+            referencedTypesWithoutSelf,
             encoding: convertTypeDeclarationEncoding({ typeDeclaration, source }),
             source,
             userProvidedExamples:
