@@ -36,6 +36,18 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
     protected doGenerate(): PhpFile {
         const class_ = php.class_(this.classReference);
 
+        const service = this.context.getHttpServiceOrThrow(this.serviceId);
+        for (const header of [...service.headers, ...this.endpoint.headers]) {
+            class_.addField(
+                php.field({
+                    name: this.context.getPropertyName(header.name.name),
+                    type: this.context.phpTypeMapper.convert({ reference: header.valueType }),
+                    access: "public",
+                    docs: header.docs
+                })
+            );
+        }
+
         for (const query of this.endpoint.queryParameters) {
             const type = query.allowMultiple
                 ? php.Type.array(this.context.phpTypeMapper.convert({ reference: query.valueType }))
@@ -47,18 +59,6 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
                     type,
                     access: "public",
                     docs: query.docs
-                })
-            );
-        }
-
-        const service = this.context.getHttpServiceOrThrow(this.serviceId);
-        for (const header of [...service.headers, ...this.endpoint.headers]) {
-            class_.addField(
-                php.field({
-                    name: this.context.getPropertyName(header.name.name),
-                    type: this.context.phpTypeMapper.convert({ reference: header.valueType }),
-                    access: "public",
-                    docs: header.docs
                 })
             );
         }

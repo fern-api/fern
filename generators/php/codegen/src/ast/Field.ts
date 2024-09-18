@@ -8,7 +8,7 @@ import { Attribute } from "./Attribute";
 import { convertToPhpVariableName } from "./utils/convertToPhpVariableName";
 
 export declare namespace Field {
-    interface Args {
+    export interface Args {
         /* The name of the field */
         name: string;
         /* The type of the field */

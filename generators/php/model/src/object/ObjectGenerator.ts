@@ -27,24 +27,24 @@ export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSch
         });
 
         // TODO: handle extended properties
-        const properties = this.objectDeclaration.properties.map((property) => ({
-            property,
-            type: this.context.phpTypeMapper.convert({ reference: property.valueType }),
-            name: this.context.getPropertyName(property.name.name),
-            docs: property.docs
-        }));
+        const properties: php.Field.Args[] = this.objectDeclaration.properties.map((property) => {
+            const convertedType = this.context.phpTypeMapper.convert({ reference: property.valueType });
+            return {
+                type: convertedType,
+                name: this.context.getPropertyName(property.name.name),
+                access: "public",
+                docs: property.docs,
+                attributes: this.context.phpAttributeMapper.convert({
+                    type: convertedType,
+                    property
+                })
+            };
+        });
         const requiredProperties = properties.filter(({ type }) => type.internalType.type !== "optional");
         const optionalProperties = properties.filter(({ type }) => type.internalType.type === "optional");
         const orderedProperties = [...requiredProperties, ...optionalProperties];
         orderedProperties.forEach((property) => {
-            clazz.addField(
-                php.field({
-                    ...property,
-                    access: "public",
-                    docs: property.docs,
-                    attributes: this.context.phpAttributeMapper.convert(property)
-                })
-            );
+            clazz.addField(php.field(property));
         });
 
         const parameters = orderedProperties.map((property) => php.parameter(property));
