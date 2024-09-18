@@ -18,6 +18,9 @@ types:
   MyObject:
     properties:
       unknown: unknown
-    examples: 
+    examples:
       - name: Example0
-        value: {}
+        value:
+          unknown:
+            boolVal: true
+            strVal: string
