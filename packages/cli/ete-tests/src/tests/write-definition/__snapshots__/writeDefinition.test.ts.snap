@@ -1290,7 +1290,7 @@ webhooks:
 ]
 `;
 
-exports[`validate namespaced API > namespaced-fleshedout 1`] = `
+exports[`validate namespaced API from Cohere > namespaced-fleshedout 1`] = `
 [
   {
     "contents": "{}
