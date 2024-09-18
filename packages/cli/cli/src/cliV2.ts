@@ -10,7 +10,6 @@ import { upgradeGenerator } from "./commands/upgrade/upgradeGenerator";
 import { getProjectGeneratorUpgrades } from "./cli-context/upgrade-utils/getGeneratorVersions";
 import { getGeneratorUpgradeMessage } from "./cli-context/upgrade-utils/getFernUpgradeMessage";
 import { writeFile } from "fs/promises";
-import { convertExampleTypeReference } from "@fern-api/ir-migrations/src/migrations/v5-to-v4/convertExampleTypeReference";
 
 export function addGetOrganizationCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext): void {
     cli.command(
