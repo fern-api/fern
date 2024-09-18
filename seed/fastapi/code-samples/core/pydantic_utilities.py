@@ -85,7 +85,7 @@ class UniversalBaseModel(pydantic.BaseModel):
             protected_namespaces=(),
         )  # type: ignore # Pydantic v2
 
-        @pydantic.model_serializer(mode="wrap")  # type: ignore # Pydantic v2
+        @pydantic.model_serializer(mode="wrap", when_used="json")  # type: ignore # Pydantic v2
         def serialize_model(
             self, handler: pydantic.SerializerFunctionWrapHandler
         ) -> typing.Any:  # type: ignore # Pydantic v2
@@ -100,13 +100,14 @@ class UniversalBaseModel(pydantic.BaseModel):
 
         class Config:
             smart_union = True
+            json_encoders = {dt.datetime: serialize_datetime}
 
     @classmethod
     def model_construct(
-        cls: type[Model],
+        cls: typing.Type["Model"],
         _fields_set: typing.Optional[typing.Set[str]] = None,
         **values: typing.Any,
-    ) -> Model:
+    ) -> "Model":
         dealiased_object = convert_and_respect_annotation_metadata(
             object_=values, annotation=cls, direction="read"
         )
@@ -114,10 +115,10 @@ class UniversalBaseModel(pydantic.BaseModel):
 
     @classmethod
     def construct(
-        cls: type[Model],
+        cls: typing.Type["Model"],
         _fields_set: typing.Optional[typing.Set[str]] = None,
         **values: typing.Any,
-    ) -> Model:
+    ) -> "Model":
         dealiased_object = convert_and_respect_annotation_metadata(
             object_=values, annotation=cls, direction="read"
         )

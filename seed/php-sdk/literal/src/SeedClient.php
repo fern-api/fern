@@ -54,13 +54,7 @@ class SeedClient
     public function __construct(
         ?array $options = null,
     ) {
-        $defaultHeaders = [
-            "X-API-Version" => "02-02-2024",
-            "X-API-Enable-Audit-Logging" => "true",
-            "X-Fern-Language" => "PHP",
-            "X-Fern-SDK-Name" => "Seed",
-            "X-Fern-SDK-Version" => "0.0.1",
-        ];
+        $defaultHeaders = ["X-API-Version" => "02-02-2024","X-API-Enable-Audit-Logging" => "true","X-Fern-Language" => "PHP","X-Fern-SDK-Name" => "Seed","X-Fern-SDK-Version" => "0.0.1"];
         $this->options = $options ?? [];
         $this->client = new RawClient(client: $this->options['client'] ?? new Client(), headers: $defaultHeaders);
         $this->headers = new HeadersClient($this->client);

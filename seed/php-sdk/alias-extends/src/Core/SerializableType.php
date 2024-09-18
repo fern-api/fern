@@ -14,8 +14,6 @@ abstract class SerializableType
 {
     /**
      * Serializes the object to a JSON string.
-     *
-     * @throws JsonException
      */
     public function toJson(): string
     {
@@ -35,6 +33,9 @@ abstract class SerializableType
 
         foreach ($reflectionClass->getProperties() as $property) {
             $jsonKey = self::getJsonKey($property);
+            if ($jsonKey == null) {
+                continue;
+            }
             $value = $property->getValue($this);
 
             // Handle DateTime properties
@@ -121,6 +122,10 @@ abstract class SerializableType
             return $type === 'date' ? $data->format(Constant::DateFormat) : $data->format(Constant::DateTimeFormat);
         }
 
+        if ($type === 'mixed') {
+            return $data;
+        }
+
         if (class_exists($type) && $data instanceof $type) {
             if (method_exists($data, 'toArray')) {
                 return $data->toArray();
@@ -171,19 +176,19 @@ abstract class SerializableType
     private static function serializeList(array $data, array $type): array
     {
         $valueType = $type[0];
-        return array_map(fn ($item) => self::serializeValue($item, $valueType), $data);
+        return array_map(fn($item) => self::serializeValue($item, $valueType), $data);
     }
 
     /**
      * Helper function to retrieve the JSON key for a property.
      *
      * @param ReflectionProperty $property
-     * @return string
+     * @return ?string
      */
-    private static function getJsonKey(ReflectionProperty $property): string
+    private static function getJsonKey(ReflectionProperty $property): ?string
     {
         $jsonPropertyAttr = $property->getAttributes(JsonProperty::class)[0] ?? null;
-        return $jsonPropertyAttr ? $jsonPropertyAttr->newInstance()->name : $property->getName();
+        return $jsonPropertyAttr?->newInstance()?->name;
     }
 
     /**
@@ -226,7 +231,9 @@ abstract class SerializableType
      */
     public static function fromJson(string $json): static
     {
-        $arrayData = json_decode($json, true);
+        $arrayData = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
+        $arrayData = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
+
 
         if (!is_array($arrayData)) {
             throw new InvalidArgumentException('Invalid JSON provided or JSON does not decode to an array.');
@@ -261,7 +268,7 @@ abstract class SerializableType
                 continue;
             }
 
-            $jsonKey = self::getJsonKey($property);
+            $jsonKey = self::getJsonKey($property) ?? $property->getName();
             if (array_key_exists($jsonKey, $data)) {
                 $value = $data[$jsonKey];
 
@@ -358,6 +365,10 @@ abstract class SerializableType
             return new DateTime($data);
         }
 
+        if ($type === 'mixed') {
+            return $data;
+        }
+
         if (class_exists($type) && is_array($data)) {
             return $type::fromArray($data);
         }
@@ -400,6 +411,6 @@ abstract class SerializableType
     private static function deserializeList(array $data, array $type): array
     {
         $valueType = $type[0];
-        return array_map(fn ($item) => self::deserializeValue($item, $valueType), $data);
+        return array_map(fn($item) => self::deserializeValue($item, $valueType), $data);
     }
 }

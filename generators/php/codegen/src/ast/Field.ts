@@ -4,6 +4,7 @@ import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { Type } from "./Type";
 import { Comment } from "./Comment";
+import { Attribute } from "./Attribute";
 
 export declare namespace Field {
     interface Args {
@@ -21,6 +22,8 @@ export declare namespace Field {
         docs?: string;
         /* Docs included in-line */
         inlineDocs?: string;
+        /* Field attributes */
+        attributes?: Attribute[];
     }
 }
 
@@ -32,8 +35,9 @@ export class Field extends AstNode {
     private initializer: CodeBlock | undefined;
     private docs: string | undefined;
     private inlineDocs: string | undefined;
+    private attributes: Attribute[];
 
-    constructor({ name, type, access, readonly_, initializer, docs, inlineDocs }: Field.Args) {
+    constructor({ name, type, access, readonly_, initializer, docs, inlineDocs, attributes }: Field.Args) {
         super();
         this.name = name;
         this.type = type;
@@ -42,9 +46,11 @@ export class Field extends AstNode {
         this.initializer = initializer;
         this.docs = docs;
         this.inlineDocs = inlineDocs;
+        this.attributes = attributes ?? [];
     }
 
     public write(writer: Writer): void {
+        this.writeAttributesIfPresent(writer);
         this.writeComment(writer);
 
         writer.write(`${this.access} `);
@@ -53,7 +59,7 @@ export class Field extends AstNode {
         }
 
         this.type.write(writer);
-        writer.write(` ${this.name}`);
+        writer.write(` ${this.name.startsWith("$") ? "" : "$"}${this.name}`);
 
         if (this.initializer != null) {
             writer.write(" = ");
@@ -72,9 +78,22 @@ export class Field extends AstNode {
         comment.addTag({
             tagType: "var",
             type: this.type,
-            name: this.name,
+            name: `${this.name.startsWith("$") ? "" : "$"}${this.name}`,
             docs: this.docs
         });
         comment.write(writer);
+    }
+
+    private writeAttributesIfPresent(writer: Writer): void {
+        if (this.attributes.length > 0) {
+            writer.write("#[");
+            this.attributes.forEach((attribute, index) => {
+                if (index > 0) {
+                    writer.write(", ");
+                }
+                attribute.write(writer);
+            });
+            writer.writeLine("]");
+        }
     }
 }

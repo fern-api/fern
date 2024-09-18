@@ -109,79 +109,6 @@ exports[`validate namespaced API > namespaced 1`] = `
         docs: Write access
     source:
       openapi: openapi/trains/openapi.yml
-imports:
-  root: trains/__package__.yml
-errors:
-  BadRequestError:
-    status-code: 400
-    type: root.Problem
-    docs: Bad Request
-    examples:
-      - value:
-          type: https://example.com/errors/bad-request
-          title: Bad Request
-          status: 400
-          detail: The request is invalid or missing required parameters.
-  UnauthorizedError:
-    status-code: 401
-    type: root.Problem
-    docs: Unauthorized
-    examples:
-      - value:
-          type: https://example.com/errors/unauthorized
-          title: Unauthorized
-          status: 401
-          detail: You do not have the necessary permissions.
-  ForbiddenError:
-    status-code: 403
-    type: root.Problem
-    docs: Forbidden
-    examples:
-      - value:
-          type: https://example.com/errors/forbidden
-          title: Forbidden
-          status: 403
-          detail: Access is forbidden with the provided credentials.
-  TooManyRequestsError:
-    status-code: 429
-    type: root.Problem
-    docs: Too Many Requests
-    examples:
-      - value:
-          type: https://example.com/errors/too-many-requests
-          title: Too Many Requests
-          status: 429
-          detail: You have exceeded the rate limit.
-  InternalServerError:
-    status-code: 500
-    type: root.Problem
-    docs: Internal Server Error
-    examples:
-      - value:
-          type: https://example.com/errors/internal-server-error
-          title: Internal Server Error
-          status: 500
-          detail: An unexpected error occurred.
-  NotFoundError:
-    status-code: 404
-    type: root.Problem
-    docs: Not Found
-    examples:
-      - value:
-          type: https://example.com/errors/not-found
-          title: Not Found
-          status: 404
-          detail: The requested resource was not found.
-  ConflictError:
-    status-code: 409
-    type: root.Problem
-    docs: Conflict
-    examples:
-      - value:
-          type: https://example.com/errors/conflict
-          title: Conflict
-          status: 409
-          detail: There is a conflict with an existing resource.
 ",
     "name": "__package__.yml",
     "type": "file",
@@ -211,6 +138,7 @@ auth: BearerAuthScheme
       id: long
       name: string
       tag: optional<string>
+      messages: optional<V2ChatMessages>
     source:
       openapi: openapi/petstore/openapi.yml
   Pets: list<Pet>
@@ -220,17 +148,23 @@ auth: BearerAuthScheme
       message: string
     source:
       openapi: openapi/petstore/openapi.yml
+  V2ChatMessages:
+    docs: >
+      A list of chat messages in chronological order, representing a
+      conversation between the user and the model.
+
+
+      Messages can be from \`User\`, \`Assistant\`, \`Tool\` and \`System\` roles. Learn
+      more about messages and roles in [the Chat API
+      guide](https://docs.cohere.com/docs/chat-api).
+    type: list<unknown>
 ",
         "name": "__package__.yml",
         "type": "file",
       },
-    ],
-    "name": "neopets",
-    "type": "directory",
-  },
-  {
-    "contents": "imports:
-  root: neopets/__package__.yml
+      {
+        "contents": "imports:
+  neopetsRoot: __package__.yml
 service:
   auth: false
   base-path: ''
@@ -248,13 +182,15 @@ service:
             docs: How many items to return at one time (max 100)
       response:
         docs: A paged array of pets
-        type: root.Pets
+        type: neopetsRoot.Pets
       examples:
         - response:
             body:
               - id: 1000000
                 name: name
                 tag: tag
+                messages:
+                  - key: value
     createPets:
       path: /pets
       method: POST
@@ -273,7 +209,7 @@ service:
       display-name: Info for a specific pet
       response:
         docs: Expected response to a valid request
-        type: root.Pet
+        type: neopetsRoot.Pet
       examples:
         - path-parameters:
             petId: petId
@@ -282,11 +218,17 @@ service:
               id: 1000000
               name: name
               tag: tag
+              messages:
+                - key: value
   source:
     openapi: openapi/petstore/openapi.yml
 ",
-    "name": "neopets.yml",
-    "type": "file",
+        "name": "neopets.yml",
+        "type": "file",
+      },
+    ],
+    "name": "neopets",
+    "type": "directory",
   },
   {
     "contents": [
@@ -450,7 +392,84 @@ types:
   {
     "contents": [
       {
-        "contents": "types:
+        "contents": "errors:
+  BadRequestError:
+    status-code: 400
+    type: Problem
+    docs: Bad Request
+    examples:
+      - value:
+          type: https://example.com/errors/bad-request
+          title: Bad Request
+          status: 400
+          detail: The request is invalid or missing required parameters.
+  UnauthorizedError:
+    status-code: 401
+    type: Problem
+    docs: Unauthorized
+    examples:
+      - value:
+          type: https://example.com/errors/unauthorized
+          title: Unauthorized
+          status: 401
+          detail: You do not have the necessary permissions.
+  ForbiddenError:
+    status-code: 403
+    type: Problem
+    docs: Forbidden
+    examples:
+      - value:
+          type: https://example.com/errors/forbidden
+          title: Forbidden
+          status: 403
+          detail: Access is forbidden with the provided credentials.
+  TooManyRequestsError:
+    status-code: 429
+    type: Problem
+    docs: Too Many Requests
+    examples:
+      - value:
+          type: https://example.com/errors/too-many-requests
+          title: Too Many Requests
+          status: 429
+          detail: You have exceeded the rate limit.
+  InternalServerError:
+    status-code: 500
+    type: Problem
+    docs: Internal Server Error
+    examples:
+      - value:
+          type: https://example.com/errors/internal-server-error
+          title: Internal Server Error
+          status: 500
+          detail: An unexpected error occurred.
+  NotFoundError:
+    status-code: 404
+    type: Problem
+    docs: Not Found
+    examples:
+      - value:
+          type: https://example.com/errors/not-found
+          title: Not Found
+          status: 404
+          detail: The requested resource was not found.
+  ConflictError:
+    status-code: 409
+    type: Problem
+    docs: Conflict
+    examples:
+      - value:
+          type: https://example.com/errors/conflict
+          title: Conflict
+          status: 409
+          detail: There is a conflict with an existing resource.
+types:
+  Pet:
+    properties:
+      id: long
+      name: string
+    source:
+      openapi: openapi/trains/openapi.yml
   Station:
     properties:
       id:
@@ -472,6 +491,8 @@ types:
         docs: >-
           The timezone of the station in the [IANA Time Zone Database
           format](https://www.iana.org/time-zones).
+      messages: optional<V2ChatMessages>
+      pet: optional<Pet>
     source:
       openapi: openapi/trains/openapi.yml
   LinksSelf:
@@ -742,90 +763,96 @@ types:
           format: uri
     source:
       openapi: openapi/trains/openapi.yml
+  V2ChatMessages:
+    docs: >
+      A list of chat messages in chronological order, representing a
+      conversation between the user and the model.
+
+
+      Messages can be from \`User\`, \`Assistant\`, \`Tool\` and \`System\` roles. Learn
+      more about messages and roles in [the Chat API
+      guide](https://docs.cohere.com/docs/chat-api).
+    type: list<unknown>
 ",
         "name": "__package__.yml",
         "type": "file",
       },
-    ],
-    "name": "trains",
-    "type": "directory",
-  },
-  {
-    "contents": "imports:
-  root: trains/__package__.yml
+      {
+        "contents": "imports:
+  trainsRoot: __package__.yml
 types:
   GetStationsResponseLinks:
     properties: {}
     extends:
-      - root.LinksSelf
-      - root.LinksPagination
+      - trainsRoot.LinksSelf
+      - trainsRoot.LinksPagination
     source:
       openapi: openapi/trains/openapi.yml
   GetStationsResponse:
     properties:
-      data: optional<list<root.Station>>
+      data: optional<list<trainsRoot.Station>>
       links: optional<GetStationsResponseLinks>
     source:
       openapi: openapi/trains/openapi.yml
   GetTripsResponseLinks:
     properties: {}
     extends:
-      - root.LinksSelf
-      - root.LinksPagination
+      - trainsRoot.LinksSelf
+      - trainsRoot.LinksPagination
     source:
       openapi: openapi/trains/openapi.yml
   GetTripsResponse:
     properties:
-      data: optional<list<root.Trip>>
+      data: optional<list<trainsRoot.Trip>>
       links: optional<GetTripsResponseLinks>
     source:
       openapi: openapi/trains/openapi.yml
   GetBookingsResponseLinks:
     properties: {}
     extends:
-      - root.LinksSelf
-      - root.LinksPagination
+      - trainsRoot.LinksSelf
+      - trainsRoot.LinksPagination
     source:
       openapi: openapi/trains/openapi.yml
   GetBookingsResponse:
     properties:
-      data: optional<list<root.Booking>>
+      data: optional<list<trainsRoot.Booking>>
       links: optional<GetBookingsResponseLinks>
     source:
       openapi: openapi/trains/openapi.yml
   CreateBookingResponse:
     properties:
-      links: optional<root.LinksSelf>
+      links: optional<trainsRoot.LinksSelf>
     extends:
-      - root.Booking
+      - trainsRoot.Booking
     source:
       openapi: openapi/trains/openapi.yml
   GetBookingResponse:
     properties:
-      links: optional<root.LinksSelf>
+      links: optional<trainsRoot.LinksSelf>
     extends:
-      - root.Booking
+      - trainsRoot.Booking
     source:
       openapi: openapi/trains/openapi.yml
   CreateBookingPaymentResponse:
     properties:
-      links: optional<root.LinksBooking>
+      links: optional<trainsRoot.LinksBooking>
     extends:
-      - root.BookingPayment
+      - trainsRoot.BookingPayment
     source:
       openapi: openapi/trains/openapi.yml
   NewBookingPayloadLinks:
     properties: {}
     extends:
-      - root.LinksSelf
-      - root.LinksPagination
+      - trainsRoot.LinksSelf
+      - trainsRoot.LinksPagination
     source:
       openapi: openapi/trains/openapi.yml
   NewBookingPayload:
     properties:
       links: optional<NewBookingPayloadLinks>
     extends:
-      - root.Booking
+      - trainsRoot.Booking
     source:
       openapi: openapi/trains/openapi.yml
 service:
@@ -842,11 +869,11 @@ service:
         docs: A list of train stations
         type: GetStationsResponse
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
-        - root.ForbiddenError
-        - root.TooManyRequestsError
-        - root.InternalServerError
+        - trainsRoot.BadRequestError
+        - trainsRoot.UnauthorizedError
+        - trainsRoot.ForbiddenError
+        - trainsRoot.TooManyRequestsError
+        - trainsRoot.InternalServerError
       examples:
         - response:
             body:
@@ -856,11 +883,17 @@ service:
                   address: Invalidenstraße 10557 Berlin, Germany
                   country_code: DE
                   timezone: Europe/Berlin
+                  pet:
+                    id: 1000000
+                    name: name
                 - id: b2e783e1-c824-4d63-b37a-d8d698862f1d
                   name: Paris Gare du Nord
                   address: 18 Rue de Dunkerque 75010 Paris, France
                   country_code: FR
                   timezone: Europe/Paris
+                  pet:
+                    id: 1000000
+                    name: name
               links:
                 next: https://api.example.com/stations?page=3
                 prev: https://api.example.com/stations?page=1
@@ -898,11 +931,11 @@ service:
         docs: A list of available train trips
         type: GetTripsResponse
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
-        - root.ForbiddenError
-        - root.TooManyRequestsError
-        - root.InternalServerError
+        - trainsRoot.BadRequestError
+        - trainsRoot.UnauthorizedError
+        - trainsRoot.ForbiddenError
+        - trainsRoot.TooManyRequestsError
+        - trainsRoot.InternalServerError
       examples:
         - query-parameters:
             origin: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
@@ -945,11 +978,11 @@ service:
         docs: A list of bookings
         type: GetBookingsResponse
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
-        - root.ForbiddenError
-        - root.TooManyRequestsError
-        - root.InternalServerError
+        - trainsRoot.BadRequestError
+        - trainsRoot.UnauthorizedError
+        - trainsRoot.ForbiddenError
+        - trainsRoot.TooManyRequestsError
+        - trainsRoot.InternalServerError
       examples:
         - response:
             body:
@@ -977,17 +1010,17 @@ service:
         payment is processed.
       display-name: Create a booking
       request:
-        body: root.Booking
+        body: trainsRoot.Booking
       response:
         docs: Booking successful
         type: CreateBookingResponse
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
-        - root.NotFoundError
-        - root.ConflictError
-        - root.TooManyRequestsError
-        - root.InternalServerError
+        - trainsRoot.BadRequestError
+        - trainsRoot.UnauthorizedError
+        - trainsRoot.NotFoundError
+        - trainsRoot.ConflictError
+        - trainsRoot.TooManyRequestsError
+        - trainsRoot.InternalServerError
       examples:
         - request: {}
           response:
@@ -1014,12 +1047,12 @@ service:
         docs: The booking details
         type: GetBookingResponse
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
-        - root.ForbiddenError
-        - root.NotFoundError
-        - root.TooManyRequestsError
-        - root.InternalServerError
+        - trainsRoot.BadRequestError
+        - trainsRoot.UnauthorizedError
+        - trainsRoot.ForbiddenError
+        - trainsRoot.NotFoundError
+        - trainsRoot.TooManyRequestsError
+        - trainsRoot.InternalServerError
       examples:
         - path-parameters:
             bookingId: 1725ff48-ab45-4bb5-9d02-88745177dedb
@@ -1044,12 +1077,12 @@ service:
           docs: The ID of the booking to retrieve.
       display-name: Delete a booking
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
-        - root.ForbiddenError
-        - root.NotFoundError
-        - root.TooManyRequestsError
-        - root.InternalServerError
+        - trainsRoot.BadRequestError
+        - trainsRoot.UnauthorizedError
+        - trainsRoot.ForbiddenError
+        - trainsRoot.NotFoundError
+        - trainsRoot.TooManyRequestsError
+        - trainsRoot.InternalServerError
       examples:
         - path-parameters:
             bookingId: 1725ff48-ab45-4bb5-9d02-88745177dedb
@@ -1066,16 +1099,16 @@ service:
           docs: The ID of the booking to pay for.
       display-name: Pay for a Booking
       request:
-        body: root.BookingPayment
+        body: trainsRoot.BookingPayment
       response:
         docs: Payment successful
         type: CreateBookingPaymentResponse
       errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
-        - root.ForbiddenError
-        - root.TooManyRequestsError
-        - root.InternalServerError
+        - trainsRoot.BadRequestError
+        - trainsRoot.UnauthorizedError
+        - trainsRoot.ForbiddenError
+        - trainsRoot.TooManyRequestsError
+        - trainsRoot.InternalServerError
       examples:
         - name: Card Payment
           path-parameters:
@@ -1151,7 +1184,7 @@ service:
               links:
                 booking: >-
                   https://api.example.com/bookings/1725ff48-ab45-4bb5-9d02-88745177dedb/payment
-        - name: Card Payment
+        - name: Card Payment 2
           path-parameters:
             bookingId: 1725ff48-ab45-4bb5-9d02-88745177dedb
           request:
@@ -1190,7 +1223,7 @@ service:
               links:
                 booking: >-
                   https://api.example.com/bookings/1725ff48-ab45-4bb5-9d02-88745177dedb/payment
-        - name: Bank Account Payment
+        - name: Bank Account Payment 2
           path-parameters:
             bookingId: 1725ff48-ab45-4bb5-9d02-88745177dedb
           request:
@@ -1247,8 +1280,746 @@ webhooks:
       Subscribe to new bookings being created, to update integrations for your
       users.  Related data is available via the links provided in the request.
 ",
-    "name": "trains.yml",
+        "name": "trains.yml",
+        "type": "file",
+      },
+    ],
+    "name": "trains",
+    "type": "directory",
+  },
+]
+`;
+
+exports[`validate namespaced API from Cohere > namespaced-fleshedout 1`] = `
+[
+  {
+    "contents": "{}
+",
+    "name": "__package__.yml",
     "type": "file",
+  },
+  {
+    "contents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: API Reference
+default-environment: Production
+environments:
+  Production: https://api.cohere.com
+auth-schemes:
+  BearerAuthScheme:
+    scheme: bearer
+    token:
+      env: CO_API_KEY
+auth: BearerAuthScheme
+",
+    "name": "api.yml",
+    "type": "file",
+  },
+  {
+    "contents": [
+      {
+        "contents": "types:
+  BadRequestErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere.yaml
+  UnauthorizedErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere.yaml
+  ForbiddenErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere.yaml
+  NotFoundErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere.yaml
+  UnprocessableEntityErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere.yaml
+  TooManyRequestsErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere.yaml
+  ClientClosedRequestErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere.yaml
+  InternalServerErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere.yaml
+  NotImplementedErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere.yaml
+  ServiceUnavailableErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere.yaml
+  GatewayTimeoutErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere.yaml
+errors:
+  BadRequestError:
+    status-code: 400
+    type: BadRequestErrorBody
+    docs: >
+      This error is returned when the request is not well formed. This could be
+      because:
+        - JSON is invalid
+        - The request is missing required fields
+        - The request contains an invalid combination of fields
+  UnauthorizedError:
+    status-code: 401
+    type: UnauthorizedErrorBody
+    docs: >
+      This error indicates that the operation attempted to be performed is not
+      allowed. This could be because:
+        - The api token is invalid
+        - The user does not have the necessary permissions
+  ForbiddenError:
+    status-code: 403
+    type: ForbiddenErrorBody
+    docs: >
+      This error indicates that the operation attempted to be performed is not
+      allowed. This could be because:
+        - The api token is invalid
+        - The user does not have the necessary permissions
+  NotFoundError:
+    status-code: 404
+    type: NotFoundErrorBody
+    docs: >
+      This error is returned when a resource is not found. This could be
+      because:
+        - The endpoint does not exist
+        - The resource does not exist eg model id, dataset id
+  UnprocessableEntityError:
+    status-code: 422
+    type: UnprocessableEntityErrorBody
+    docs: >
+      This error is returned when the request is not well formed. This could be
+      because:
+        - JSON is invalid
+        - The request is missing required fields
+        - The request contains an invalid combination of fields
+  TooManyRequestsError:
+    status-code: 429
+    type: TooManyRequestsErrorBody
+    docs: Too many requests
+  ClientClosedRequestError:
+    status-code: 499
+    type: ClientClosedRequestErrorBody
+    docs: |
+      This error is returned when a request is cancelled by the user.
+  InternalServerError:
+    status-code: 500
+    type: InternalServerErrorBody
+    docs: |
+      This error is returned when an uncategorised internal server error occurs.
+  NotImplementedError:
+    status-code: 501
+    type: NotImplementedErrorBody
+    docs: |
+      This error is returned when the requested feature is not implemented.
+  ServiceUnavailableError:
+    status-code: 503
+    type: ServiceUnavailableErrorBody
+    docs: >
+      This error is returned when the service is unavailable. This could be due
+      to:
+        - Too many users trying to access the service at the same time
+  GatewayTimeoutError:
+    status-code: 504
+    type: GatewayTimeoutErrorBody
+    docs: >
+      This error is returned when a request to the server times out. This could
+      be due to:
+        - An internal services taking too long to respond
+",
+        "name": "__package__.yml",
+        "type": "file",
+      },
+      {
+        "contents": "types:
+  ChatRequestPromptTruncation:
+    enum:
+      - 'OFF'
+      - AUTO
+      - AUTO_PRESERVE_ORDER
+    docs: >
+      Defaults to \`AUTO\` when \`connectors\` are specified and \`OFF\` in all other
+      cases.
+
+
+      Dictates how the prompt will be constructed.
+
+
+      With \`prompt_truncation\` set to "AUTO", some elements from \`chat_history\`
+      and \`documents\` will be dropped in an attempt to construct a prompt that
+      fits within the model's context length limit. During this process the
+      order of the documents and chat history will be changed and ranked by
+      relevance.
+
+
+      With \`prompt_truncation\` set to "AUTO_PRESERVE_ORDER", some elements from
+      \`chat_history\` and \`documents\` will be dropped in an attempt to construct
+      a prompt that fits within the model's context length limit. During this
+      process the order of the documents and chat history will be preserved as
+      they are inputted into the API.
+
+
+      With \`prompt_truncation\` set to "OFF", no elements will be dropped. If the
+      sum of the inputs exceeds the model's context length limit, a
+      \`TooManyTokens\` error will be returned.
+
+
+      Compatible Deployments: 
+       - AUTO: Cohere Platform Only
+       - AUTO_PRESERVE_ORDER: Azure, AWS Sagemaker/Bedrock, Private Deployments
+    source:
+      openapi: openapi/cohere.yaml
+  ChatRequestSafetyMode:
+    enum:
+      - CONTEXTUAL
+      - STRICT
+      - NONE
+    docs: >
+      Used to select the [safety instruction](/docs/safety-modes) inserted into
+      the prompt. Defaults to \`CONTEXTUAL\`.
+
+      When \`NONE\` is specified, the safety instruction will be omitted.
+
+
+      Safety modes are not yet configurable in combination with \`tools\`,
+      \`tool_results\` and \`documents\` parameters.
+
+
+      **Note**: This parameter is only compatible with models [Command R
+      08-2024](/docs/command-r#august-2024-release), [Command R+
+      08-2024](/docs/command-r-plus#august-2024-release) and newer.
+
+
+      Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock,
+      Private Deployments
+    source:
+      openapi: openapi/cohere.yaml
+imports:
+  v1Root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    chat:
+      path: /v1/chat
+      method: POST
+      auth: true
+      docs: >
+        Generates a text response to a user message.
+
+        To learn how to use the Chat API and RAG follow our [Text Generation
+        guides](https://docs.cohere.com/docs/chat-api).
+      display-name: Chat
+      request:
+        name: ChatRequest
+        headers:
+          Accepts:
+            type: optional<literal<"text/event-stream">>
+            name: accepts
+            docs: >
+              Pass text/event-stream to receive the streamed response as
+              server-sent events. The default is \`\\n\` delimited events.
+        body:
+          properties:
+            message:
+              type: string
+              docs: >
+                Text input for the model to respond to.
+
+
+                Compatible Deployments: Cohere Platform, Azure, AWS
+                Sagemaker/Bedrock, Private Deployments
+              audiences:
+                - public
+            model:
+              type: optional<string>
+              docs: >
+                Defaults to \`command-r-plus-08-2024\`.
+
+
+                The name of a compatible [Cohere
+                model](https://docs.cohere.com/docs/models) or the ID of a
+                [fine-tuned](https://docs.cohere.com/docs/chat-fine-tuning)
+                model.
+
+
+                Compatible Deployments: Cohere Platform, Private Deployments
+              audiences:
+                - public
+            stream:
+              type: optional<boolean>
+              docs: >
+                Defaults to \`false\`.
+
+
+                When \`true\`, the response will be a JSON stream of events. The
+                final event will contain the complete response, and will have an
+                \`event_type\` of \`"stream-end"\`.
+
+
+                Streaming is beneficial for user interfaces that render the
+                contents of the response piece by piece, as it gets generated.
+
+
+                Compatible Deployments: Cohere Platform, Azure, AWS
+                Sagemaker/Bedrock, Private Deployments
+              audiences:
+                - public
+            preamble:
+              type: optional<string>
+              docs: >
+                When specified, the default Cohere preamble will be replaced
+                with the provided one. Preambles are a part of the prompt used
+                to adjust the model's overall behavior and conversation style,
+                and use the \`SYSTEM\` role.
+
+
+                The \`SYSTEM\` role is also used for the contents of the optional
+                \`chat_history=\` parameter. When used with the \`chat_history=\`
+                parameter it adds content throughout a conversation. Conversely,
+                when used with the \`preamble=\` parameter it adds content at the
+                start of the conversation only.
+
+
+                Compatible Deployments: Cohere Platform, Azure, AWS
+                Sagemaker/Bedrock, Private Deployments
+              audiences:
+                - public
+            chat_history:
+              type: optional<list<unknown>>
+              docs: >
+                A list of previous messages between the user and the model,
+                giving the model conversational context for responding to the
+                user's \`message\`.
+
+
+                Each item represents a single message in the chat history,
+                excluding the current user turn. It has two properties: \`role\`
+                and \`message\`. The \`role\` identifies the sender (\`CHATBOT\`,
+                \`SYSTEM\`, or \`USER\`), while the \`message\` contains the text
+                content.
+
+
+                The chat_history parameter should not be used for \`SYSTEM\`
+                messages in most cases. Instead, to add a \`SYSTEM\` role message
+                at the beginning of a conversation, the \`preamble\` parameter
+                should be used.
+
+
+                Compatible Deployments: Cohere Platform, Azure, AWS
+                Sagemaker/Bedrock, Private Deployments
+              audiences:
+                - public
+            conversation_id:
+              type: optional<string>
+              docs: >
+                An alternative to \`chat_history\`.
+
+
+                Providing a \`conversation_id\` creates or resumes a persisted
+                conversation with the specified ID. The ID can be any non empty
+                string.
+
+
+                Compatible Deployments: Cohere Platform
+              audiences:
+                - public
+            prompt_truncation:
+              type: optional<ChatRequestPromptTruncation>
+              docs: >
+                Defaults to \`AUTO\` when \`connectors\` are specified and \`OFF\` in
+                all other cases.
+
+
+                Dictates how the prompt will be constructed.
+
+
+                With \`prompt_truncation\` set to "AUTO", some elements from
+                \`chat_history\` and \`documents\` will be dropped in an attempt to
+                construct a prompt that fits within the model's context length
+                limit. During this process the order of the documents and chat
+                history will be changed and ranked by relevance.
+
+
+                With \`prompt_truncation\` set to "AUTO_PRESERVE_ORDER", some
+                elements from \`chat_history\` and \`documents\` will be dropped in
+                an attempt to construct a prompt that fits within the model's
+                context length limit. During this process the order of the
+                documents and chat history will be preserved as they are
+                inputted into the API.
+
+
+                With \`prompt_truncation\` set to "OFF", no elements will be
+                dropped. If the sum of the inputs exceeds the model's context
+                length limit, a \`TooManyTokens\` error will be returned.
+
+
+                Compatible Deployments: 
+                 - AUTO: Cohere Platform Only
+                 - AUTO_PRESERVE_ORDER: Azure, AWS Sagemaker/Bedrock, Private Deployments
+              audiences:
+                - public
+            force_single_step:
+              type: optional<boolean>
+              docs: Forces the chat to be single step. Defaults to \`false\`.
+              audiences:
+                - public
+            safety_mode:
+              type: optional<ChatRequestSafetyMode>
+              docs: >
+                Used to select the [safety instruction](/docs/safety-modes)
+                inserted into the prompt. Defaults to \`CONTEXTUAL\`.
+
+                When \`NONE\` is specified, the safety instruction will be
+                omitted.
+
+
+                Safety modes are not yet configurable in combination with
+                \`tools\`, \`tool_results\` and \`documents\` parameters.
+
+
+                **Note**: This parameter is only compatible with models [Command
+                R 08-2024](/docs/command-r#august-2024-release), [Command R+
+                08-2024](/docs/command-r-plus#august-2024-release) and newer.
+
+
+                Compatible Deployments: Cohere Platform, Azure, AWS
+                Sagemaker/Bedrock, Private Deployments
+              audiences:
+                - public
+              availability: pre-release
+      response:
+        docs: OK
+        type: list<string>
+      errors:
+        - v1Root.BadRequestError
+        - v1Root.UnauthorizedError
+        - v1Root.ForbiddenError
+        - v1Root.NotFoundError
+        - v1Root.UnprocessableEntityError
+        - v1Root.TooManyRequestsError
+        - v1Root.ClientClosedRequestError
+        - v1Root.InternalServerError
+        - v1Root.NotImplementedError
+        - v1Root.ServiceUnavailableError
+        - v1Root.GatewayTimeoutError
+      examples:
+        - request:
+            message: message
+          response:
+            body:
+              - string
+      audiences:
+        - public
+  source:
+    openapi: openapi/cohere.yaml
+",
+        "name": "v1.yml",
+        "type": "file",
+      },
+    ],
+    "name": "v1",
+    "type": "directory",
+  },
+  {
+    "contents": [
+      {
+        "contents": "types:
+  V2ChatRequestSafetyMode:
+    enum:
+      - CONTEXTUAL
+      - STRICT
+      - NONE
+    docs: >
+      Used to select the [safety instruction](/docs/safety-modes) inserted into
+      the prompt. Defaults to \`CONTEXTUAL\`.
+
+      When \`NONE\` is specified, the safety instruction will be omitted.
+
+
+      Safety modes are not yet configurable in combination with \`tools\`,
+      \`tool_results\` and \`documents\` parameters.
+
+
+      **Note**: This parameter is only compatible with models [Command R
+      08-2024](/docs/command-r#august-2024-release), [Command R+
+      08-2024](/docs/command-r-plus#august-2024-release) and newer.
+
+
+      Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock,
+      Private Deployments
+    source:
+      openapi: openapi/cohere-v2.yaml
+  BadRequestErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere-v2.yaml
+  UnauthorizedErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere-v2.yaml
+  ForbiddenErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere-v2.yaml
+  NotFoundErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere-v2.yaml
+  UnprocessableEntityErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere-v2.yaml
+  TooManyRequestsErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere-v2.yaml
+  ClientClosedRequestErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere-v2.yaml
+  InternalServerErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere-v2.yaml
+  NotImplementedErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere-v2.yaml
+  ServiceUnavailableErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere-v2.yaml
+  GatewayTimeoutErrorBody:
+    properties:
+      data: optional<string>
+    source:
+      openapi: openapi/cohere-v2.yaml
+errors:
+  BadRequestError:
+    status-code: 400
+    type: BadRequestErrorBody
+    docs: >
+      This error is returned when the request is not well formed. This could be
+      because:
+        - JSON is invalid
+        - The request is missing required fields
+        - The request contains an invalid combination of fields
+  UnauthorizedError:
+    status-code: 401
+    type: UnauthorizedErrorBody
+    docs: >
+      This error indicates that the operation attempted to be performed is not
+      allowed. This could be because:
+        - The api token is invalid
+        - The user does not have the necessary permissions
+  ForbiddenError:
+    status-code: 403
+    type: ForbiddenErrorBody
+    docs: >
+      This error indicates that the operation attempted to be performed is not
+      allowed. This could be because:
+        - The api token is invalid
+        - The user does not have the necessary permissions
+  NotFoundError:
+    status-code: 404
+    type: NotFoundErrorBody
+    docs: >
+      This error is returned when a resource is not found. This could be
+      because:
+        - The endpoint does not exist
+        - The resource does not exist eg model id, dataset id
+  UnprocessableEntityError:
+    status-code: 422
+    type: UnprocessableEntityErrorBody
+    docs: >
+      This error is returned when the request is not well formed. This could be
+      because:
+        - JSON is invalid
+        - The request is missing required fields
+        - The request contains an invalid combination of fields
+  TooManyRequestsError:
+    status-code: 429
+    type: TooManyRequestsErrorBody
+    docs: Too many requests
+  ClientClosedRequestError:
+    status-code: 499
+    type: ClientClosedRequestErrorBody
+    docs: |
+      This error is returned when a request is cancelled by the user.
+  InternalServerError:
+    status-code: 500
+    type: InternalServerErrorBody
+    docs: |
+      This error is returned when an uncategorised internal server error occurs.
+  NotImplementedError:
+    status-code: 501
+    type: NotImplementedErrorBody
+    docs: |
+      This error is returned when the requested feature is not implemented.
+  ServiceUnavailableError:
+    status-code: 503
+    type: ServiceUnavailableErrorBody
+    docs: >
+      This error is returned when the service is unavailable. This could be due
+      to:
+        - Too many users trying to access the service at the same time
+  GatewayTimeoutError:
+    status-code: 504
+    type: GatewayTimeoutErrorBody
+    docs: >
+      This error is returned when a request to the server times out. This could
+      be due to:
+        - An internal services taking too long to respond
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    chat:
+      path: /v2/chat
+      method: POST
+      auth: true
+      docs: >
+        Generates a message from the model in response to a provided
+        conversation. To learn how to use the Chat API with Streaming and RAG
+        follow our Text Generation guides.
+      display-name: Chat with the model
+      request:
+        name: V2ChatRequest
+        body:
+          properties:
+            model:
+              type: string
+              docs: >-
+                The name of a compatible [Cohere
+                model](https://docs.cohere.com/docs/models) (such as command-r
+                or command-r-plus) or the ID of a
+                [fine-tuned](https://docs.cohere.com/docs/chat-fine-tuning)
+                model.
+            documents:
+              type: optional<list<string>>
+              docs: >
+                A list of relevant documents that the model can cite to generate
+                a more accurate reply. Each document is either a string or
+                document object with content and metadata.
+            safety_mode:
+              type: optional<V2ChatRequestSafetyMode>
+              docs: >
+                Used to select the [safety instruction](/docs/safety-modes)
+                inserted into the prompt. Defaults to \`CONTEXTUAL\`.
+
+                When \`NONE\` is specified, the safety instruction will be
+                omitted.
+
+
+                Safety modes are not yet configurable in combination with
+                \`tools\`, \`tool_results\` and \`documents\` parameters.
+
+
+                **Note**: This parameter is only compatible with models [Command
+                R 08-2024](/docs/command-r#august-2024-release), [Command R+
+                08-2024](/docs/command-r-plus#august-2024-release) and newer.
+
+
+                Compatible Deployments: Cohere Platform, Azure, AWS
+                Sagemaker/Bedrock, Private Deployments
+            max_tokens:
+              type: optional<integer>
+              docs: >
+                The maximum number of tokens the model will generate as part of
+                the response. Note: Setting a low value may result in incomplete
+                generations.
+            stop_sequences:
+              type: optional<list<string>>
+              docs: >
+                A list of up to 5 strings that the model will use to stop
+                generation. If the model generates a string that matches any of
+                the strings in the list, it will stop generating tokens and
+                return the generated text up to that point not including the
+                stop sequence.
+            temperature:
+              type: optional<float>
+              docs: >
+                Defaults to \`0.3\`.
+
+
+                A non-negative float that tunes the degree of randomness in
+                generation. Lower temperatures mean less random generations, and
+                higher temperatures mean more random generations.
+
+
+                Randomness can be further maximized by increasing the  value of
+                the \`p\` parameter.
+            return_prompt:
+              type: optional<boolean>
+              docs: Whether to return the prompt in the response.
+      response:
+        docs: OK
+        type: list<string>
+      errors:
+        - BadRequestError
+        - UnauthorizedError
+        - ForbiddenError
+        - NotFoundError
+        - UnprocessableEntityError
+        - TooManyRequestsError
+        - ClientClosedRequestError
+        - InternalServerError
+        - NotImplementedError
+        - ServiceUnavailableError
+        - GatewayTimeoutError
+      examples:
+        - request:
+            model: model
+          response:
+            body:
+              - string
+      audiences:
+        - v2-beta
+  source:
+    openapi: openapi/cohere-v2.yaml
+",
+        "name": "__package__.yml",
+        "type": "file",
+      },
+    ],
+    "name": "v2",
+    "type": "directory",
   },
 ]
 `;

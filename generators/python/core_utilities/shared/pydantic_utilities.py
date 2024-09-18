@@ -95,15 +95,15 @@ class UniversalBaseModel(pydantic.BaseModel):
 
     @classmethod
     def model_construct(
-        cls: type[Model], _fields_set: typing.Optional[typing.Set[str]] = None, **values: typing.Any
-    ) -> Model:
+        cls: typing.Type["Model"], _fields_set: typing.Optional[typing.Set[str]] = None, **values: typing.Any
+    ) -> "Model":
         dealiased_object = convert_and_respect_annotation_metadata(object_=values, annotation=cls, direction="read")
         return cls.construct(_fields_set, **dealiased_object)
 
     @classmethod
     def construct(
-        cls: type[Model], _fields_set: typing.Optional[typing.Set[str]] = None, **values: typing.Any
-    ) -> Model:
+        cls: typing.Type["Model"], _fields_set: typing.Optional[typing.Set[str]] = None, **values: typing.Any
+    ) -> "Model":
         dealiased_object = convert_and_respect_annotation_metadata(object_=values, annotation=cls, direction="read")
         if IS_PYDANTIC_V2:
             return super().model_construct(_fields_set, **dealiased_object)  # type: ignore # Pydantic v2
@@ -238,9 +238,7 @@ def universal_root_validator(
 def universal_field_validator(field_name: str, pre: bool = False) -> typing.Callable[[AnyCallable], AnyCallable]:
     def decorator(func: AnyCallable) -> AnyCallable:
         if IS_PYDANTIC_V2:
-            return pydantic.field_validator(field_name, mode="before" if pre else "after")(
-                func
-            )  # type: ignore # Pydantic v2
+            return pydantic.field_validator(field_name, mode="before" if pre else "after")(func)  # type: ignore # Pydantic v2
         else:
             return pydantic.validator(field_name, pre=pre)(func)  # type: ignore # Pydantic v1
 

@@ -30,11 +30,7 @@ class SeedClient
     public function __construct(
         ?array $options = null,
     ) {
-        $defaultHeaders = [
-            "X-Fern-Language" => "PHP",
-            "X-Fern-SDK-Name" => "Seed",
-            "X-Fern-SDK-Version" => "0.0.1",
-        ];
+        $defaultHeaders = ["X-Fern-Language" => "PHP","X-Fern-SDK-Name" => "Seed","X-Fern-SDK-Version" => "0.0.1"];
         $this->options = $options ?? [];
         $this->client = new RawClient(client: $this->options['client'] ?? new Client(), headers: $defaultHeaders);
         $this->dataservice = new DataserviceClient($this->client);

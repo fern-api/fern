@@ -106,7 +106,7 @@ export function convertAdditionalProperties({
         },
         valueSchema: convertSchema(
             additionalProperties,
-            wrapAsNullable,
+            context.options.optionalAdditionalProperties ? wrapAsNullable : false,
             context,
             [...breadcrumbs, "Value"],
             source,

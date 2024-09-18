@@ -1,11 +1,14 @@
+export { Array_ as Array } from "./Array";
+export { Attribute } from "./Attribute";
 export { Class } from "./Class";
 export { ClassInstantiation } from "./ClassInstantiation";
 export { ClassReference } from "./ClassReference";
 export { CodeBlock } from "./CodeBlock";
-export { Writer } from "./core/Writer";
+export { Enum } from "./Enum";
 export { Field } from "./Field";
 export { Map } from "./Map";
 export { Method } from "./Method";
 export { MethodInvocation } from "./MethodInvocation";
 export { Parameter } from "./Parameter";
 export { Type } from "./Type";
+export { Writer } from "./core/Writer";

@@ -231,7 +231,12 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         if (file === fileToImport) {
             return undefined;
         }
-        const importPrefix = camelCase(basename(fileToImport, extname(fileToImport)).replaceAll("__package__", "root"));
+        const importPrefix = camelCase(
+            (dirname(fileToImport) + "/" + basename(fileToImport, extname(fileToImport))).replaceAll(
+                "__package__",
+                "root"
+            )
+        );
 
         if (file === RelativeFilePath.of(ROOT_API_FILENAME)) {
             if (this.rootApiFile.imports == null) {

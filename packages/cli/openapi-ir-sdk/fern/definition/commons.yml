@@ -123,6 +123,9 @@ types:
       url: string
       audiences: optional<list<string>>
 
+  NamespaceId:
+    type: string
+
   Namespace:
     properties:
       type: literal<"namespace">
@@ -141,3 +144,7 @@ types:
   WithSdkGroupName:
     properties:
       groupName: optional<SdkGroupName>
+
+  WithNamespace:
+    properties:
+      namespace: optional<string>

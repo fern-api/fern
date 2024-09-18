@@ -1,14 +1,25 @@
 import {
+    Array as Array_,
+    Attribute,
     Class,
     ClassInstantiation,
     ClassReference,
     CodeBlock,
+    Enum,
     Field,
     Map,
     Method,
     MethodInvocation,
     Parameter
 } from "./ast";
+
+export function array(args: Array_.Args): Array_ {
+    return new Array_(args);
+}
+
+export function attribute(args: Attribute.Args): Attribute {
+    return new Attribute(args);
+}
 
 export function class_(args: Class.Args): Class {
     return new Class(args);
@@ -20,6 +31,10 @@ export function classReference(args: ClassReference.Args): ClassReference {
 
 export function codeblock(arg: CodeBlock.Arg): CodeBlock {
     return new CodeBlock(arg);
+}
+
+export function enum_(args: Enum.Args): Enum {
+    return new Enum(args);
 }
 
 export function field(args: Field.Args): Field {
@@ -48,10 +63,13 @@ export function parameter(args: Parameter.Args): Parameter {
 
 export { AstNode } from "./ast/core/AstNode";
 export {
+    Array,
+    Attribute,
     Class,
     ClassInstantiation,
     ClassReference,
     CodeBlock,
+    Enum,
     Field,
     Map,
     Method,

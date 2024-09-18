@@ -17,6 +17,8 @@ export declare namespace Class {
         abstract?: boolean;
         /* Docs associated with the class */
         docs?: string;
+        /* The class to inherit from if any */
+        parentClassReference?: AstNode;
     }
 
     interface Constructor {
@@ -34,17 +36,19 @@ export class Class extends AstNode {
     public readonly namespace: string;
     public readonly abstract: boolean;
     public readonly docs: string | undefined;
+    public readonly parentClassReference: AstNode | undefined;
 
     private constructor_: Class.Constructor | undefined;
     private fields: Field[] = [];
     private methods: Method[] = [];
 
-    constructor({ name, namespace, abstract, docs }: Class.Args) {
+    constructor({ name, namespace, abstract, docs, parentClassReference }: Class.Args) {
         super();
         this.name = name;
         this.namespace = namespace;
         this.abstract = abstract ?? false;
         this.docs = docs;
+        this.parentClassReference = parentClassReference;
     }
 
     public addConstructor(constructor: Class.Constructor): void {
@@ -64,7 +68,11 @@ export class Class extends AstNode {
             writer.write("abstract ");
         }
         this.writeComment(writer);
-        writer.writeLine(`class ${this.name}`);
+        writer.writeLine(`class ${this.name} `);
+        if (this.parentClassReference != null) {
+            writer.write("extends ");
+            this.parentClassReference.write(writer);
+        }
         writer.writeLine("{");
         writer.indent();
 

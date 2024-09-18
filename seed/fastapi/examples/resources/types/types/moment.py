@@ -25,7 +25,7 @@ class Moment(UniversalBaseModel):
             "1994-01-01",
         ),
         datetime=datetime.datetime.fromisoformat(
-            "datetime=datetime.datetime(1994, 1, 1, 1, 1, 1, tzinfo=TzInfo(UTC)) raw='1994-01-01T01:01:01Z'",
+            "1994-01-01 01:01:01+00:00",
         ),
     )
     """
