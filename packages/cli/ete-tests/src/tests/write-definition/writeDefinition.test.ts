@@ -22,6 +22,10 @@ describe("validate namespaced API from Cohere", () => {
     itFixture("namespaced-fleshedout");
 });
 
+describe("validate header overrides", () => {
+    itFixture("header-overrides");
+});
+
 function itFixture(fixtureName: string) {
     it(
         // eslint-disable-next-line jest/valid-title

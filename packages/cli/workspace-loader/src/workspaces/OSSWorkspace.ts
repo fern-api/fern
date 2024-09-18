@@ -105,7 +105,7 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
                     : undefined,
             globalHeaderOverrides:
                 this.generatorsConfiguration?.api?.headers != null
-                    ? this.generatorsConfiguration?.api?.headers
+                    ? { ...this.generatorsConfiguration?.api }
                     : undefined,
             taskContext: context,
             ir: openApiIr,
