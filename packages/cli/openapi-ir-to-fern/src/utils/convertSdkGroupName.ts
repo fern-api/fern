@@ -4,18 +4,25 @@ import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { EndpointSdkName, SdkGroupName } from "@fern-api/openapi-ir-sdk";
 import { camelCase } from "lodash-es";
 
+function cleanSdkGroupName(groupName: SdkGroupName): SdkGroupName {
+    const maybeNamespace = groupName.find((group) => typeof group === "object" && group.type === "namespace");
+    const noNamespace = groupName.filter((group) => typeof group === "string" || group.type !== "namespace");
+    return maybeNamespace ? [maybeNamespace, ...noNamespace] : noNamespace;
+}
+
 export function convertSdkGroupNameToFileWithoutExtension(groupName: SdkGroupName | undefined): string {
-    if (groupName == null || groupName.length === 0) {
+    const cleanedGroupName = groupName ? cleanSdkGroupName(groupName) : undefined;
+    if (cleanedGroupName == null || cleanedGroupName.length === 0) {
         return FERN_PACKAGE_MARKER_FILENAME_NO_EXTENSION;
     }
     const fileNames: string[] = [];
-    for (const [index, group] of groupName.entries()) {
+    for (const [index, group] of cleanedGroupName.entries()) {
         if (typeof group === "string") {
             fileNames.push(camelCase(group));
         } else if (typeof group === "object") {
             switch (group.type) {
                 case "namespace": {
-                    if (index < groupName.length - 1) {
+                    if (index < cleanedGroupName.length - 1) {
                         fileNames.push(camelCase(group.name));
                     } else {
                         // For the last namespace, make it a true namespace (ie. a directory with it's contents in the root package marker)
@@ -29,6 +36,9 @@ export function convertSdkGroupNameToFileWithoutExtension(groupName: SdkGroupNam
         } else {
             assertNever(group);
         }
+    }
+    if (fileNames[-1]?.toLowerCase() === "v1") {
+        throw new Error(`[TESTING HERE] ${JSON.stringify(groupName)}, ${JSON.stringify(fileNames)}`);
     }
     return fileNames.join("/");
 }
@@ -48,7 +58,11 @@ export function convertEndpointSdkNameToFileWithoutExtension({
     if (sdkName == null || (sdkName.groupName.length === 0 && namespaceOverride == null)) {
         return FERN_PACKAGE_MARKER_FILENAME_NO_EXTENSION;
     } else if (namespaceOverride != null) {
-        groupName = [{ type: "namespace", name: namespaceOverride }];
+        // Override the namespace in the event it doesn't have one or it has one and we want to change it
+        groupName = [
+            { type: "namespace", name: namespaceOverride },
+            ...sdkName.groupName.filter((group) => typeof group === "string" || group.type !== "namespace")
+        ];
     } else {
         groupName = sdkName.groupName;
     }

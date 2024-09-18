@@ -223,7 +223,7 @@ service:
   source:
     openapi: openapi/petstore/openapi.yml
 ",
-        "name": "neopets.yml",
+        "name": "pets.yml",
         "type": "file",
       },
     ],
@@ -781,32 +781,6 @@ types:
         "contents": "imports:
   trainsRoot: __package__.yml
 types:
-  GetStationsResponseLinks:
-    properties: {}
-    extends:
-      - trainsRoot.LinksSelf
-      - trainsRoot.LinksPagination
-    source:
-      openapi: openapi/trains/openapi.yml
-  GetStationsResponse:
-    properties:
-      data: optional<list<trainsRoot.Station>>
-      links: optional<GetStationsResponseLinks>
-    source:
-      openapi: openapi/trains/openapi.yml
-  GetTripsResponseLinks:
-    properties: {}
-    extends:
-      - trainsRoot.LinksSelf
-      - trainsRoot.LinksPagination
-    source:
-      openapi: openapi/trains/openapi.yml
-  GetTripsResponse:
-    properties:
-      data: optional<list<trainsRoot.Trip>>
-      links: optional<GetTripsResponseLinks>
-    source:
-      openapi: openapi/trains/openapi.yml
   GetBookingsResponseLinks:
     properties: {}
     extends:
@@ -834,140 +808,10 @@ types:
       - trainsRoot.Booking
     source:
       openapi: openapi/trains/openapi.yml
-  CreateBookingPaymentResponse:
-    properties:
-      links: optional<trainsRoot.LinksBooking>
-    extends:
-      - trainsRoot.BookingPayment
-    source:
-      openapi: openapi/trains/openapi.yml
-  NewBookingPayloadLinks:
-    properties: {}
-    extends:
-      - trainsRoot.LinksSelf
-      - trainsRoot.LinksPagination
-    source:
-      openapi: openapi/trains/openapi.yml
-  NewBookingPayload:
-    properties:
-      links: optional<NewBookingPayloadLinks>
-    extends:
-      - trainsRoot.Booking
-    source:
-      openapi: openapi/trains/openapi.yml
 service:
   auth: false
   base-path: ''
   endpoints:
-    get-stations:
-      path: /stations
-      method: GET
-      auth: true
-      docs: Returns a list of all train stations in the system.
-      display-name: Get a list of train stations
-      response:
-        docs: A list of train stations
-        type: GetStationsResponse
-      errors:
-        - trainsRoot.BadRequestError
-        - trainsRoot.UnauthorizedError
-        - trainsRoot.ForbiddenError
-        - trainsRoot.TooManyRequestsError
-        - trainsRoot.InternalServerError
-      examples:
-        - response:
-            body:
-              data:
-                - id: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
-                  name: Berlin Hauptbahnhof
-                  address: Invalidenstraße 10557 Berlin, Germany
-                  country_code: DE
-                  timezone: Europe/Berlin
-                  pet:
-                    id: 1000000
-                    name: name
-                - id: b2e783e1-c824-4d63-b37a-d8d698862f1d
-                  name: Paris Gare du Nord
-                  address: 18 Rue de Dunkerque 75010 Paris, France
-                  country_code: FR
-                  timezone: Europe/Paris
-                  pet:
-                    id: 1000000
-                    name: name
-              links:
-                next: https://api.example.com/stations?page=3
-                prev: https://api.example.com/stations?page=1
-                self: https://api.example.com/stations&page=2
-    get-trips:
-      path: /trips
-      method: GET
-      auth: true
-      docs: >-
-        Returns a list of available train trips between the specified origin and
-        destination stations on the given date, and allows for filtering by
-        bicycle and dog allowances.
-      display-name: Get available train trips
-      request:
-        name: GetTripsRequest
-        query-parameters:
-          origin:
-            type: string
-            docs: The ID of the origin station
-          destination:
-            type: string
-            docs: The ID of the destination station
-          date:
-            type: datetime
-            docs: >-
-              The date and time of the trip in ISO 8601 format in origin
-              station's timezone.
-          bicycles:
-            type: optional<boolean>
-            docs: Only return trips where bicycles are known to be allowed
-          dogs:
-            type: optional<boolean>
-            docs: Only return trips where dogs are known to be allowed
-      response:
-        docs: A list of available train trips
-        type: GetTripsResponse
-      errors:
-        - trainsRoot.BadRequestError
-        - trainsRoot.UnauthorizedError
-        - trainsRoot.ForbiddenError
-        - trainsRoot.TooManyRequestsError
-        - trainsRoot.InternalServerError
-      examples:
-        - query-parameters:
-            origin: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
-            destination: b2e783e1-c824-4d63-b37a-d8d698862f1d
-            date: '2024-02-01T09:00:00Z'
-          response:
-            body:
-              data:
-                - id: ea399ba1-6d95-433f-92d1-83f67b775594
-                  origin: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
-                  destination: b2e783e1-c824-4d63-b37a-d8d698862f1d
-                  departure_time: '2024-02-01T10:00:00Z'
-                  arrival_time: '2024-02-01T16:00:00Z'
-                  operator: Deutsche Bahn
-                  price: 50
-                  bicycles_allowed: true
-                  dogs_allowed: true
-                - id: 4d67459c-af07-40bb-bb12-178dbb88e09f
-                  origin: b2e783e1-c824-4d63-b37a-d8d698862f1d
-                  destination: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
-                  departure_time: '2024-02-01T12:00:00Z'
-                  arrival_time: '2024-02-01T18:00:00Z'
-                  operator: SNCF
-                  price: 50
-                  bicycles_allowed: true
-                  dogs_allowed: true
-              links:
-                next: >-
-                  https://api.example.com/trips?origin=efdbb9d1-02c2-4bc3-afb7-6788d8782b1e&destination=b2e783e1-c824-4d63-b37a-d8d698862f1d&date=2024-02-01&page=2
-                prev: prev
-                self: >-
-                  https://api.example.com/trips?origin=efdbb9d1-02c2-4bc3-afb7-6788d8782b1e&destination=b2e783e1-c824-4d63-b37a-d8d698862f1d&date=2024-02-01
     get-bookings:
       path: /bookings
       method: GET
@@ -1086,6 +930,31 @@ service:
       examples:
         - path-parameters:
             bookingId: 1725ff48-ab45-4bb5-9d02-88745177dedb
+  source:
+    openapi: openapi/trains/openapi.yml
+  display-name: Bookings
+docs: |
+  Create and manage bookings for train trips, including passenger details
+  and optional extras.
+",
+        "name": "bookings.yml",
+        "type": "file",
+      },
+      {
+        "contents": "imports:
+  trainsRoot: __package__.yml
+types:
+  CreateBookingPaymentResponse:
+    properties:
+      links: optional<trainsRoot.LinksBooking>
+    extends:
+      - trainsRoot.BookingPayment
+    source:
+      openapi: openapi/trains/openapi.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
     create-booking-payment:
       path: /bookings/{bookingId}/payment
       method: POST
@@ -1260,6 +1129,106 @@ service:
                   https://api.example.com/bookings/1725ff48-ab45-4bb5-9d02-88745177dedb
   source:
     openapi: openapi/trains/openapi.yml
+  display-name: Payments
+docs: |
+  Pay for bookings using a card or bank account, and view payment
+  status and history.
+
+  > warn
+  > Bookings usually expire within 1 hour so you'll need to make your payment
+  > before the expiry date 
+",
+        "name": "payments.yml",
+        "type": "file",
+      },
+      {
+        "contents": "imports:
+  trainsRoot: __package__.yml
+types:
+  GetStationsResponseLinks:
+    properties: {}
+    extends:
+      - trainsRoot.LinksSelf
+      - trainsRoot.LinksPagination
+    source:
+      openapi: openapi/trains/openapi.yml
+  GetStationsResponse:
+    properties:
+      data: optional<list<trainsRoot.Station>>
+      links: optional<GetStationsResponseLinks>
+    source:
+      openapi: openapi/trains/openapi.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    get-stations:
+      path: /stations
+      method: GET
+      auth: true
+      docs: Returns a list of all train stations in the system.
+      display-name: Get a list of train stations
+      response:
+        docs: A list of train stations
+        type: GetStationsResponse
+      errors:
+        - trainsRoot.BadRequestError
+        - trainsRoot.UnauthorizedError
+        - trainsRoot.ForbiddenError
+        - trainsRoot.TooManyRequestsError
+        - trainsRoot.InternalServerError
+      examples:
+        - response:
+            body:
+              data:
+                - id: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
+                  name: Berlin Hauptbahnhof
+                  address: Invalidenstraße 10557 Berlin, Germany
+                  country_code: DE
+                  timezone: Europe/Berlin
+                  pet:
+                    id: 1000000
+                    name: name
+                - id: b2e783e1-c824-4d63-b37a-d8d698862f1d
+                  name: Paris Gare du Nord
+                  address: 18 Rue de Dunkerque 75010 Paris, France
+                  country_code: FR
+                  timezone: Europe/Paris
+                  pet:
+                    id: 1000000
+                    name: name
+              links:
+                next: https://api.example.com/stations?page=3
+                prev: https://api.example.com/stations?page=1
+                self: https://api.example.com/stations&page=2
+  source:
+    openapi: openapi/trains/openapi.yml
+  display-name: Stations
+docs: |
+  Find and filter train stations across Europe, including their location
+  and local timezone.
+",
+        "name": "stations.yml",
+        "type": "file",
+      },
+      {
+        "contents": "imports:
+  trainsRoot: __package__.yml
+types:
+  NewBookingPayloadLinks:
+    properties: {}
+    extends:
+      - trainsRoot.LinksSelf
+      - trainsRoot.LinksPagination
+    source:
+      openapi: openapi/trains/openapi.yml
+  NewBookingPayload:
+    properties:
+      links: optional<NewBookingPayloadLinks>
+    extends:
+      - trainsRoot.Booking
+    source:
+      openapi: openapi/trains/openapi.yml
 webhooks:
   new-booking:
     method: POST
@@ -1281,6 +1250,107 @@ webhooks:
       users.  Related data is available via the links provided in the request.
 ",
         "name": "trains.yml",
+        "type": "file",
+      },
+      {
+        "contents": "imports:
+  trainsRoot: __package__.yml
+types:
+  GetTripsResponseLinks:
+    properties: {}
+    extends:
+      - trainsRoot.LinksSelf
+      - trainsRoot.LinksPagination
+    source:
+      openapi: openapi/trains/openapi.yml
+  GetTripsResponse:
+    properties:
+      data: optional<list<trainsRoot.Trip>>
+      links: optional<GetTripsResponseLinks>
+    source:
+      openapi: openapi/trains/openapi.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    get-trips:
+      path: /trips
+      method: GET
+      auth: true
+      docs: >-
+        Returns a list of available train trips between the specified origin and
+        destination stations on the given date, and allows for filtering by
+        bicycle and dog allowances.
+      display-name: Get available train trips
+      request:
+        name: GetTripsRequest
+        query-parameters:
+          origin:
+            type: string
+            docs: The ID of the origin station
+          destination:
+            type: string
+            docs: The ID of the destination station
+          date:
+            type: datetime
+            docs: >-
+              The date and time of the trip in ISO 8601 format in origin
+              station's timezone.
+          bicycles:
+            type: optional<boolean>
+            docs: Only return trips where bicycles are known to be allowed
+          dogs:
+            type: optional<boolean>
+            docs: Only return trips where dogs are known to be allowed
+      response:
+        docs: A list of available train trips
+        type: GetTripsResponse
+      errors:
+        - trainsRoot.BadRequestError
+        - trainsRoot.UnauthorizedError
+        - trainsRoot.ForbiddenError
+        - trainsRoot.TooManyRequestsError
+        - trainsRoot.InternalServerError
+      examples:
+        - query-parameters:
+            origin: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
+            destination: b2e783e1-c824-4d63-b37a-d8d698862f1d
+            date: '2024-02-01T09:00:00Z'
+          response:
+            body:
+              data:
+                - id: ea399ba1-6d95-433f-92d1-83f67b775594
+                  origin: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
+                  destination: b2e783e1-c824-4d63-b37a-d8d698862f1d
+                  departure_time: '2024-02-01T10:00:00Z'
+                  arrival_time: '2024-02-01T16:00:00Z'
+                  operator: Deutsche Bahn
+                  price: 50
+                  bicycles_allowed: true
+                  dogs_allowed: true
+                - id: 4d67459c-af07-40bb-bb12-178dbb88e09f
+                  origin: b2e783e1-c824-4d63-b37a-d8d698862f1d
+                  destination: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
+                  departure_time: '2024-02-01T12:00:00Z'
+                  arrival_time: '2024-02-01T18:00:00Z'
+                  operator: SNCF
+                  price: 50
+                  bicycles_allowed: true
+                  dogs_allowed: true
+              links:
+                next: >-
+                  https://api.example.com/trips?origin=efdbb9d1-02c2-4bc3-afb7-6788d8782b1e&destination=b2e783e1-c824-4d63-b37a-d8d698862f1d&date=2024-02-01&page=2
+                prev: prev
+                self: >-
+                  https://api.example.com/trips?origin=efdbb9d1-02c2-4bc3-afb7-6788d8782b1e&destination=b2e783e1-c824-4d63-b37a-d8d698862f1d&date=2024-02-01
+  source:
+    openapi: openapi/trains/openapi.yml
+  display-name: Trips
+docs: |
+  Timetables and routes for train trips between stations, including pricing
+  and availability.
+",
+        "name": "trips.yml",
         "type": "file",
       },
     ],
@@ -1320,6 +1390,68 @@ auth: BearerAuthScheme
     "contents": [
       {
         "contents": "types:
+  ChatRequestPromptTruncation:
+    enum:
+      - 'OFF'
+      - AUTO
+      - AUTO_PRESERVE_ORDER
+    docs: >
+      Defaults to \`AUTO\` when \`connectors\` are specified and \`OFF\` in all other
+      cases.
+
+
+      Dictates how the prompt will be constructed.
+
+
+      With \`prompt_truncation\` set to "AUTO", some elements from \`chat_history\`
+      and \`documents\` will be dropped in an attempt to construct a prompt that
+      fits within the model's context length limit. During this process the
+      order of the documents and chat history will be changed and ranked by
+      relevance.
+
+
+      With \`prompt_truncation\` set to "AUTO_PRESERVE_ORDER", some elements from
+      \`chat_history\` and \`documents\` will be dropped in an attempt to construct
+      a prompt that fits within the model's context length limit. During this
+      process the order of the documents and chat history will be preserved as
+      they are inputted into the API.
+
+
+      With \`prompt_truncation\` set to "OFF", no elements will be dropped. If the
+      sum of the inputs exceeds the model's context length limit, a
+      \`TooManyTokens\` error will be returned.
+
+
+      Compatible Deployments: 
+       - AUTO: Cohere Platform Only
+       - AUTO_PRESERVE_ORDER: Azure, AWS Sagemaker/Bedrock, Private Deployments
+    source:
+      openapi: openapi/cohere.yaml
+  ChatRequestSafetyMode:
+    enum:
+      - CONTEXTUAL
+      - STRICT
+      - NONE
+    docs: >
+      Used to select the [safety instruction](/docs/safety-modes) inserted into
+      the prompt. Defaults to \`CONTEXTUAL\`.
+
+      When \`NONE\` is specified, the safety instruction will be omitted.
+
+
+      Safety modes are not yet configurable in combination with \`tools\`,
+      \`tool_results\` and \`documents\` parameters.
+
+
+      **Note**: This parameter is only compatible with models [Command R
+      08-2024](/docs/command-r#august-2024-release), [Command R+
+      08-2024](/docs/command-r-plus#august-2024-release) and newer.
+
+
+      Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock,
+      Private Deployments
+    source:
+      openapi: openapi/cohere.yaml
   BadRequestErrorBody:
     properties:
       data: optional<string>
@@ -1451,76 +1583,6 @@ errors:
       This error is returned when a request to the server times out. This could
       be due to:
         - An internal services taking too long to respond
-",
-        "name": "__package__.yml",
-        "type": "file",
-      },
-      {
-        "contents": "types:
-  ChatRequestPromptTruncation:
-    enum:
-      - 'OFF'
-      - AUTO
-      - AUTO_PRESERVE_ORDER
-    docs: >
-      Defaults to \`AUTO\` when \`connectors\` are specified and \`OFF\` in all other
-      cases.
-
-
-      Dictates how the prompt will be constructed.
-
-
-      With \`prompt_truncation\` set to "AUTO", some elements from \`chat_history\`
-      and \`documents\` will be dropped in an attempt to construct a prompt that
-      fits within the model's context length limit. During this process the
-      order of the documents and chat history will be changed and ranked by
-      relevance.
-
-
-      With \`prompt_truncation\` set to "AUTO_PRESERVE_ORDER", some elements from
-      \`chat_history\` and \`documents\` will be dropped in an attempt to construct
-      a prompt that fits within the model's context length limit. During this
-      process the order of the documents and chat history will be preserved as
-      they are inputted into the API.
-
-
-      With \`prompt_truncation\` set to "OFF", no elements will be dropped. If the
-      sum of the inputs exceeds the model's context length limit, a
-      \`TooManyTokens\` error will be returned.
-
-
-      Compatible Deployments: 
-       - AUTO: Cohere Platform Only
-       - AUTO_PRESERVE_ORDER: Azure, AWS Sagemaker/Bedrock, Private Deployments
-    source:
-      openapi: openapi/cohere.yaml
-  ChatRequestSafetyMode:
-    enum:
-      - CONTEXTUAL
-      - STRICT
-      - NONE
-    docs: >
-      Used to select the [safety instruction](/docs/safety-modes) inserted into
-      the prompt. Defaults to \`CONTEXTUAL\`.
-
-      When \`NONE\` is specified, the safety instruction will be omitted.
-
-
-      Safety modes are not yet configurable in combination with \`tools\`,
-      \`tool_results\` and \`documents\` parameters.
-
-
-      **Note**: This parameter is only compatible with models [Command R
-      08-2024](/docs/command-r#august-2024-release), [Command R+
-      08-2024](/docs/command-r-plus#august-2024-release) and newer.
-
-
-      Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock,
-      Private Deployments
-    source:
-      openapi: openapi/cohere.yaml
-imports:
-  v1Root: __package__.yml
 service:
   auth: false
   base-path: ''
@@ -1717,17 +1779,17 @@ service:
         docs: OK
         type: list<string>
       errors:
-        - v1Root.BadRequestError
-        - v1Root.UnauthorizedError
-        - v1Root.ForbiddenError
-        - v1Root.NotFoundError
-        - v1Root.UnprocessableEntityError
-        - v1Root.TooManyRequestsError
-        - v1Root.ClientClosedRequestError
-        - v1Root.InternalServerError
-        - v1Root.NotImplementedError
-        - v1Root.ServiceUnavailableError
-        - v1Root.GatewayTimeoutError
+        - BadRequestError
+        - UnauthorizedError
+        - ForbiddenError
+        - NotFoundError
+        - UnprocessableEntityError
+        - TooManyRequestsError
+        - ClientClosedRequestError
+        - InternalServerError
+        - NotImplementedError
+        - ServiceUnavailableError
+        - GatewayTimeoutError
       examples:
         - request:
             message: message
@@ -1739,7 +1801,7 @@ service:
   source:
     openapi: openapi/cohere.yaml
 ",
-        "name": "v1.yml",
+        "name": "__package__.yml",
         "type": "file",
       },
     ],
@@ -1750,31 +1812,6 @@ service:
     "contents": [
       {
         "contents": "types:
-  V2ChatRequestSafetyMode:
-    enum:
-      - CONTEXTUAL
-      - STRICT
-      - NONE
-    docs: >
-      Used to select the [safety instruction](/docs/safety-modes) inserted into
-      the prompt. Defaults to \`CONTEXTUAL\`.
-
-      When \`NONE\` is specified, the safety instruction will be omitted.
-
-
-      Safety modes are not yet configurable in combination with \`tools\`,
-      \`tool_results\` and \`documents\` parameters.
-
-
-      **Note**: This parameter is only compatible with models [Command R
-      08-2024](/docs/command-r#august-2024-release), [Command R+
-      08-2024](/docs/command-r-plus#august-2024-release) and newer.
-
-
-      Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock,
-      Private Deployments
-    source:
-      openapi: openapi/cohere-v2.yaml
   BadRequestErrorBody:
     properties:
       data: optional<string>
@@ -1906,6 +1943,39 @@ errors:
       This error is returned when a request to the server times out. This could
       be due to:
         - An internal services taking too long to respond
+",
+        "name": "__package__.yml",
+        "type": "file",
+      },
+      {
+        "contents": "types:
+  V2ChatRequestSafetyMode:
+    enum:
+      - CONTEXTUAL
+      - STRICT
+      - NONE
+    docs: >
+      Used to select the [safety instruction](/docs/safety-modes) inserted into
+      the prompt. Defaults to \`CONTEXTUAL\`.
+
+      When \`NONE\` is specified, the safety instruction will be omitted.
+
+
+      Safety modes are not yet configurable in combination with \`tools\`,
+      \`tool_results\` and \`documents\` parameters.
+
+
+      **Note**: This parameter is only compatible with models [Command R
+      08-2024](/docs/command-r#august-2024-release), [Command R+
+      08-2024](/docs/command-r-plus#august-2024-release) and newer.
+
+
+      Compatible Deployments: Cohere Platform, Azure, AWS Sagemaker/Bedrock,
+      Private Deployments
+    source:
+      openapi: openapi/cohere-v2.yaml
+imports:
+  v2Root: __package__.yml
 service:
   auth: false
   base-path: ''
@@ -1992,17 +2062,17 @@ service:
         docs: OK
         type: list<string>
       errors:
-        - BadRequestError
-        - UnauthorizedError
-        - ForbiddenError
-        - NotFoundError
-        - UnprocessableEntityError
-        - TooManyRequestsError
-        - ClientClosedRequestError
-        - InternalServerError
-        - NotImplementedError
-        - ServiceUnavailableError
-        - GatewayTimeoutError
+        - v2Root.BadRequestError
+        - v2Root.UnauthorizedError
+        - v2Root.ForbiddenError
+        - v2Root.NotFoundError
+        - v2Root.UnprocessableEntityError
+        - v2Root.TooManyRequestsError
+        - v2Root.ClientClosedRequestError
+        - v2Root.InternalServerError
+        - v2Root.NotImplementedError
+        - v2Root.ServiceUnavailableError
+        - v2Root.GatewayTimeoutError
       examples:
         - request:
             model: model
@@ -2014,7 +2084,7 @@ service:
   source:
     openapi: openapi/cohere-v2.yaml
 ",
-        "name": "__package__.yml",
+        "name": "v2.yml",
         "type": "file",
       },
     ],

@@ -1,4 +1,13 @@
 - changelogEntry:
+    - summary: |
+        Namespaced APIs now:
+          - No longer contain duplicative nesting of some endpoint within another package of the same name as the namespace
+          - Respect the `x-fern-sdk-group-name` annotation for endpoints
+      type: fix
+  irVersion: 53
+  version: 0.42.4
+
+- changelogEntry:
     - summary: | 
         The OpenAPI importer now supports handling encoding on multipart requests. 
         Previously, the generators would not respect the `contentType` field for 
