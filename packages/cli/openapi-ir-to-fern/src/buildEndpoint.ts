@@ -263,21 +263,22 @@ export function buildEndpoint({
             "status-code": parseInt(statusCode)
         };
 
+        const errorDeclarationFile = resolveLocationWithNamespace({
+            location: ERROR_DECLARATIONS_FILENAME,
+            namespaceOverride: maybeEndpointNamespace
+        });
+
         if (httpError.schema != null) {
             const typeReference = buildTypeReference({
                 schema: httpError.schema,
                 context,
-                fileContainingReference,
+                fileContainingReference: errorDeclarationFile,
+                declarationFile: errorDeclarationFile,
                 namespace: maybeEndpointNamespace
             });
             errorDeclaration.type = getTypeFromTypeReference(typeReference);
             errorDeclaration.docs = httpError.description;
         }
-
-        const errorDeclarationFile = resolveLocationWithNamespace({
-            location: ERROR_DECLARATIONS_FILENAME,
-            namespaceOverride: maybeEndpointNamespace
-        });
 
         context.builder.addError(errorDeclarationFile, {
             name: errorName,
