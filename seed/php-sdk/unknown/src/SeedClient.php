@@ -2,13 +2,18 @@
 
 namespace Seed;
 
+use Seed\Unknown\UnknownClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\RawClient;
-use Seed\Unknown\UnknownClient;
 use GuzzleHttp\Client;
 
 class SeedClient
 {
+    /**
+     * @var UnknownClient $unknown
+     */
+    public UnknownClient $unknown;
+
     /**
      * @var ?array{baseUrl?: string, client?: ClientInterface} $options
      */
@@ -18,11 +23,6 @@ class SeedClient
      * @var RawClient $client
      */
     private RawClient $client;
-
-    /**
-     * @var UnknownClient $unknown
-     */
-    public UnknownClient $unknown;
 
     /**
      * @param ?array{baseUrl?: string, client?: ClientInterface} $options

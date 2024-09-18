@@ -1,6 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { AstNode } from "./core/AstNode";
-import { GLOBAL_NAMESPACE, Writer } from "./core/Writer";
+import { GLOBAL_NAMESPACE } from "./core/Constant";
+import { Writer } from "./core/Writer";
 import { ClassReference } from "./ClassReference";
 
 type InternalType =

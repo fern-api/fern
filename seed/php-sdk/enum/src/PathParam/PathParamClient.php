@@ -3,6 +3,9 @@
 namespace Seed\PathParam;
 
 use Seed\Core\RawClient;
+use Seed\Types\Operand;
+use Psr\Http\Client\ClientExceptionInterface;
+use Exception;
 
 class PathParamClient
 {
@@ -19,4 +22,27 @@ class PathParamClient
     ) {
         $this->client = $client;
     }
+
+    /**
+     * @param Operand $operand
+     * @param ?Operand $maybeOperand
+     * @param mixed $operandOrColor
+     * @param mixed $maybeOperandOrColor
+     * @param ?array{baseUrl?: string} $options
+     * @returns mixed
+     */
+    public function send(Operand $operand, ?Operand $maybeOperand = null, mixed $operandOrColor, mixed $maybeOperandOrColor, ?array $options = null): mixed
+    {
+        try {
+            $response = $this->client->sendRequest();
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return;
+            }
+        } catch (ClientExceptionInterface $e) {
+            throw new Exception($e->getMessage());
+        }
+        throw new Exception("Error with status code " . $statusCode);
+    }
+
 }

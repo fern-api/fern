@@ -577,7 +577,10 @@ Log.d("TAG", file.toString())
                   "expire": "optional<root.ExpireType>",
                   "metadata[{key}]": "optional<root.MetadataValue>",
                   "signature": "optional<root.SignatureType>",
-                  "{filename}": "list<file>",
+                  "{filename}": {
+                    "docs": "File's content",
+                    "type": "list<file>",
+                  },
                 },
               },
               "content-type": "multipart/form-data",
@@ -5100,7 +5103,10 @@ Log.d("TAG", file.toString())
                   "expire": "optional<root.ExpireType>",
                   "metadata[{key}]": "optional<root.MetadataValue>",
                   "signature": "optional<root.SignatureType>",
-                  "{filename}": "list<file>",
+                  "{filename}": {
+                    "docs": "File's content",
+                    "type": "list<file>",
+                  },
                 },
               },
               "content-type": "multipart/form-data",
