@@ -4,7 +4,7 @@ import { Writer } from "./core/Writer";
 
 export declare namespace Attribute {
     interface Args {
-        /* Reference to the Attribute */
+        /* Reference to the attribute class reference */
         reference: ClassReference;
 
         arguments?: (string | AstNode)[];

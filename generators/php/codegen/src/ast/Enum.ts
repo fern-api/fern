@@ -8,7 +8,7 @@ export declare namespace Enum {
         name: string;
         /* The namespace of the PHP enum*/
         namespace: string;
-        /* If present, specified that the enum is backed by this type */
+        /* If present, specifies that the enum is backed by this type */
         backing?: "string" | "int";
         /* Docs associated with the class */
         docs?: string;

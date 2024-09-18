@@ -176,14 +176,14 @@ abstract class SerializableType
     private static function serializeList(array $data, array $type): array
     {
         $valueType = $type[0];
-        return array_map(fn ($item) => self::serializeValue($item, $valueType), $data);
+        return array_map(fn($item) => self::serializeValue($item, $valueType), $data);
     }
 
     /**
      * Helper function to retrieve the JSON key for a property.
      *
      * @param ReflectionProperty $property
-     * @return string|null
+     * @return ?string
      */
     private static function getJsonKey(ReflectionProperty $property): ?string
     {
@@ -411,6 +411,6 @@ abstract class SerializableType
     private static function deserializeList(array $data, array $type): array
     {
         $valueType = $type[0];
-        return array_map(fn ($item) => self::deserializeValue($item, $valueType), $data);
+        return array_map(fn($item) => self::deserializeValue($item, $valueType), $data);
     }
 }

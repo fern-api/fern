@@ -9,11 +9,11 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
     for (const [typeId, typeDeclaration] of Object.entries(context.ir.types)) {
         const file = typeDeclaration.shape._visit<PhpFile | undefined>({
             alias: () => undefined,
-            enum: (etd: EnumTypeDeclaration) => {
-                return new EnumGenerator(context, typeDeclaration, etd).generate();
+            enum: (enumDeclaration: EnumTypeDeclaration) => {
+                return new EnumGenerator(context, typeDeclaration, enumDeclaration).generate();
             },
-            object: (otd) => {
-                return new ObjectGenerator(context, typeDeclaration, otd).generate();
+            object: (objectDeclaration) => {
+                return new ObjectGenerator(context, typeDeclaration, objectDeclaration).generate();
             },
             undiscriminatedUnion: () => undefined,
             union: () => undefined,
