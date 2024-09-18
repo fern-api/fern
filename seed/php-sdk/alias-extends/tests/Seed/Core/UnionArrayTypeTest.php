@@ -7,6 +7,8 @@ use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 use Seed\Core\ArrayType;
 use Seed\Core\Union;
+use Seed\Types\SomeEnum;
+use Seed\Types\WeatherReport;
 
 class UnionArrayType extends SerializableType
 {
@@ -45,5 +47,11 @@ class UnionArrayTypeTest extends TestCase
         $serializedJson = $object->toJson();
 
         $this->assertJsonStringEqualsJsonString($json, $serializedJson, 'Serialized JSON does not match original JSON for mixed_array.');
+    }
+
+    public function testEnum(): void {
+        $cloudy = WeatherReport::$CLOUDY;
+        $random = WeatherReport::fromString("random");
+        $hello = SomeEnum::HELLO;
     }
 }

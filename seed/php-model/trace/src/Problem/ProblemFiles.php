@@ -1,0 +1,35 @@
+<?php
+
+namespace Seed\Problem;
+
+use Seed\Core\SerializableType;
+use Seed\Core\JsonProperty;
+use Seed\Commons\FileInfo;
+use Seed\Core\ArrayType;
+
+class ProblemFiles extends SerializableType
+{
+    #[JsonProperty("solutionFile")]
+    /**
+     * @var FileInfo $solutionFile
+     */
+    public FileInfo $solutionFile;
+
+    #[JsonProperty("readOnlyFiles"), ArrayType([FileInfo::class])]
+    /**
+     * @var array<FileInfo> $readOnlyFiles
+     */
+    public array $readOnlyFiles;
+
+    /**
+     * @param FileInfo $solutionFile
+     * @param array<FileInfo> $readOnlyFiles
+     */
+    public function __construct(
+        FileInfo $solutionFile,
+        array $readOnlyFiles,
+    ) {
+        $this->solutionFile = $solutionFile;
+        $this->readOnlyFiles = $readOnlyFiles;
+    }
+}

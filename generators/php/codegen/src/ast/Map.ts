@@ -13,28 +13,23 @@ export declare namespace Map {
 }
 
 export class Map extends AstNode {
-    private entries: Map.Entry[] | undefined;
+    private entries: Map.Entry[];
 
     constructor({ entries }: Map.Args) {
         super();
-        this.entries = entries;
+        this.entries = entries ?? [];
     }
 
     public write(writer: Writer): void {
-        if (this.entries == null) {
-            writer.write("[]");
-            return;
-        }
-
-        writer.writeLine("[");
-        writer.indent();
-        for (const { key, value } of this.entries) {
+        writer.write("[");
+        for (const [index, { key, value }] of this.entries.entries()) {
+            if (index > 0) {
+                writer.write(",");
+            }
             key.write(writer);
             writer.write(" => ");
             value.write(writer);
-            writer.writeLine(", ");
         }
-        writer.dedent();
         writer.write("]");
     }
 }

@@ -8,7 +8,8 @@ import {
     TypeDeclaration,
     Subpackage,
     SubpackageId,
-    FernFilepath
+    FernFilepath,
+    PrimitiveType
 } from "@fern-fern/ir-sdk/api";
 import { BasePhpCustomConfigSchema } from "../custom-config/BasePhpCustomConfigSchema";
 import { PhpProject } from "../project";
@@ -16,6 +17,7 @@ import { camelCase, upperFirst } from "lodash-es";
 import { PhpTypeMapper } from "./PhpTypeMapper";
 import { AsIsFiles } from "../AsIs";
 import { RelativeFilePath } from "@fern-api/fs-utils";
+import { php } from "..";
 
 export interface FileLocation {
     namespace: string;
@@ -74,6 +76,37 @@ export abstract class AbstractPhpGeneratorContext<
 
     public getLiteralAsString(literal: Literal): string {
         return literal.type === "string" ? `"${literal.string}"` : literal.boolean ? '"true"' : '"false"';
+    }
+
+    public getDateTypeAttributeClassReference(): php.ClassReference {
+        return this.getCoreClassReference("DateType");
+    }
+
+    public getConstantClassReference(): php.ClassReference {
+        return this.getCoreClassReference("Constant");
+    }
+
+    public getJsonPropertyAttributeClassReference(): php.ClassReference {
+        return this.getCoreClassReference("JsonProperty");
+    }
+
+    public getSerializableTypeClassReference(): php.ClassReference {
+        return this.getCoreClassReference("SerializableType");
+    }
+
+    public getUnionClassReference(): php.ClassReference {
+        return this.getCoreClassReference("Union");
+    }
+
+    public getArrayTypeClassReference(): php.ClassReference {
+        return this.getCoreClassReference("ArrayType");
+    }
+
+    private getCoreClassReference(name: string): php.ClassReference {
+        return php.classReference({
+            name,
+            namespace: this.getCoreNamespace()
+        });
     }
 
     public isOptional(typeReference: TypeReference): boolean {
@@ -148,11 +181,11 @@ export abstract class AbstractPhpGeneratorContext<
     public abstract getLocationForTypeId(typeId: TypeId): FileLocation;
 
     protected getFileLocation(filepath: FernFilepath, suffix?: string): FileLocation {
-        let parts = [this.getRootNamespace(), ...filepath.allParts.map((path) => path.pascalCase.safeName)];
+        let parts = filepath.allParts.map((path) => path.pascalCase.safeName);
         parts = suffix != null ? [...parts, suffix] : parts;
         return {
-            namespace: parts.join("\\"),
-            directory: RelativeFilePath.of(parts.slice(1).join("/"))
+            namespace: [this.getRootNamespace(), ...parts].join("\\"),
+            directory: RelativeFilePath.of(parts.join("/"))
         };
     }
 }

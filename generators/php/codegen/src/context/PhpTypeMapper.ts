@@ -86,7 +86,7 @@ export class PhpTypeMapper {
             uuid: () => php.Type.string(),
             base64: () => php.Type.string(),
             bigInteger: () => php.Type.string(),
-            _other: () => php.Type.object()
+            _other: () => php.Type.mixed()
         });
     }
 
