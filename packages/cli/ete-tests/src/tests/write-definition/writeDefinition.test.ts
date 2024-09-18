@@ -18,7 +18,7 @@ describe("validate namespaced API", () => {
     itFixture("namespaced");
 });
 
-describe("validate namespaced API", () => {
+describe("validate namespaced API from Cohere", () => {
     itFixture("namespaced-fleshedout");
 });
 
