@@ -52,7 +52,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         const requiredQueryParameters: QueryParameter[] = [];
         const optionalQueryParameters: QueryParameter[] = [];
         for (const queryParameter of this.endpoint.queryParameters) {
-            if (!queryParameter.allowMultiple && this.context.isOptional(queryParameter.valueType)) {
+            if (this.context.isOptional(queryParameter.valueType)) {
                 optionalQueryParameters.push(queryParameter);
             } else {
                 requiredQueryParameters.push(queryParameter);
@@ -77,11 +77,6 @@ export class WrappedEndpointRequest extends EndpointRequest {
         };
     }
 
-    private writeQueryParameter(writer: php.Writer, query: QueryParameter): void {
-        writer.write(`${QUERY_PARAMETER_BAG_NAME}['${query.name.wireValue}'] = `);
-        writer.writeNodeStatement(this.stringify({ reference: query.valueType, name: query.name.name }));
-    }
-
     public getHeaderParameterCodeBlock(): HeaderParameterCodeBlock | undefined {
         const service = this.context.getHttpServiceOrThrow(this.serviceId);
         const headers = [...service.headers, ...this.endpoint.headers];
@@ -100,31 +95,29 @@ export class WrappedEndpointRequest extends EndpointRequest {
         return {
             code: php.codeblock((writer) => {
                 writer.writeTextStatement(`${HEADER_BAG_NAME} = []`);
-                writer.writeNodeStatement(
-                    php.map({
-                        entries: requiredHeaders.map((header) => {
-                            return {
-                                key: php.codeblock(`'${header.name.wireValue}'`),
-                                value: this.stringify({
-                                    reference: header.valueType,
-                                    name: header.name.name
-                                })
-                            };
-                        })
-                    })
-                );
+                for (const header of requiredHeaders) {
+                    this.writeHeader(writer, header);
+                }
                 for (const header of optionalHeaders) {
-                    const headerReference = `${this.getRequestParameterName()}->${this.context.getPropertyName(
-                        header.name.name
-                    )}`;
-                    writer.controlFlow("if", php.codeblock(`${headerReference} != null`));
-                    writer.write(`${HEADER_BAG_NAME}['${header.name.wireValue}'] = `);
-                    writer.writeNodeStatement(this.stringify({ reference: header.valueType, name: header.name.name }));
+                    const headerPropertyName = this.context.getPropertyName(header.name.name);
+                    const headerParameterReference = `${this.getRequestParameterName()}->${headerPropertyName}`;
+                    writer.controlFlow("if", php.codeblock(`${headerParameterReference} != null`));
+                    this.writeHeader(writer, header);
                     writer.endControlFlow();
                 }
             }),
             headerParameterBagReference: HEADER_BAG_NAME
         };
+    }
+
+    private writeQueryParameter(writer: php.Writer, query: QueryParameter): void {
+        writer.write(`${QUERY_PARAMETER_BAG_NAME}['${query.name.wireValue}'] = `);
+        writer.writeNodeStatement(this.stringify({ reference: query.valueType, name: query.name.name }));
+    }
+
+    private writeHeader(writer: php.Writer, header: HttpHeader): void {
+        writer.write(`${HEADER_BAG_NAME}['${header.name.wireValue}'] = `);
+        writer.writeNodeStatement(this.stringify({ reference: header.valueType, name: header.name.name }));
     }
 
     private stringify({ reference, name }: { reference: TypeReference; name: Name }): php.CodeBlock {
@@ -161,7 +154,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                     )}`
                 };
             },
-            inlinedRequestBody: (inlinedRequestBody) => {
+            inlinedRequestBody: (_inlinedRequestBody) => {
                 return {
                     requestBodyReference: `${this.getRequestParameterName()}`
                 };

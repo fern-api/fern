@@ -101,7 +101,9 @@ class DataserviceClient
     public function fetch(FetchRequest $request, ?array $options = null): mixed
     {
         $query = [];
-        $query['ids'] = $request->ids;
+        if ($request->ids != null) {
+            $query['ids'] = $request->ids;
+        }
         if ($request->namespace != null) {
             $query['namespace'] = $request->namespace;
         }

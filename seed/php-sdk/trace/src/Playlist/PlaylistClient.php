@@ -67,10 +67,12 @@ class PlaylistClient
         $query = [];
         $query['otherField'] = $request->otherField;
         $query['multiLineDocs'] = $request->multiLineDocs;
-        $query['optionalMultipleField'] = $request->optionalMultipleField;
         $query['multipleField'] = $request->multipleField;
         if ($request->limit != null) {
             $query['limit'] = $request->limit;
+        }
+        if ($request->optionalMultipleField != null) {
+            $query['optionalMultipleField'] = $request->optionalMultipleField;
         }
         try {
             $response = $this->client->sendRequest();

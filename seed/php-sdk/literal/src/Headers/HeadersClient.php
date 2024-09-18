@@ -32,7 +32,8 @@ class HeadersClient
     public function send(SendLiteralsInHeadersRequest $request, ?array $options = null): mixed
     {
         $headers = [];
-        ['X-Endpoint-Version' => $request->endpointVersion,'X-Async' => $request->async];
+        $headers['X-Endpoint-Version'] = $request->endpointVersion;
+        $headers['X-Async'] = $request->async;
         try {
             $response = $this->client->sendRequest();
             $statusCode = $response->getStatusCode();

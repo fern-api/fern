@@ -54,7 +54,7 @@ class ServiceClient
     public function getWithHeader(HeaderAuthRequest $request, ?array $options = null): mixed
     {
         $headers = [];
-        ['X-Endpoint-Header' => $request->xEndpointHeader];
+        $headers['X-Endpoint-Header'] = $request->xEndpointHeader;
         try {
             $response = $this->client->sendRequest();
             $statusCode = $response->getStatusCode();

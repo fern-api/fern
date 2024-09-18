@@ -61,9 +61,13 @@ class QueryParamClient
     {
         $query = [];
         $query['operand'] = $request->operand->value;
-        $query['maybeOperand'] = $request->maybeOperand->value;
         $query['operandOrColor'] = $request->operandOrColor;
-        $query['maybeOperandOrColor'] = $request->maybeOperandOrColor;
+        if ($request->maybeOperand != null) {
+            $query['maybeOperand'] = $request->maybeOperand->value;
+        }
+        if ($request->maybeOperandOrColor != null) {
+            $query['maybeOperandOrColor'] = $request->maybeOperandOrColor;
+        }
         try {
             $response = $this->client->sendRequest();
             $statusCode = $response->getStatusCode();

@@ -34,7 +34,7 @@ class ServiceClient
     public function getFile(string $filename, GetFileRequest $request, ?array $options = null): mixed
     {
         $headers = [];
-        ['X-File-API-Version' => $request->xFileApiVersion];
+        $headers['X-File-API-Version'] = $request->xFileApiVersion;
         try {
             $response = $this->client->sendRequest();
             $statusCode = $response->getStatusCode();

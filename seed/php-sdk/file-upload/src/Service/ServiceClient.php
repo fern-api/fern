@@ -73,12 +73,14 @@ class ServiceClient
         $query = [];
         $query['integer'] = $request->integer;
         $query['listOfStrings'] = $request->listOfStrings;
-        $query['optionalListOfStrings'] = $request->optionalListOfStrings;
         if ($request->maybeString != null) {
             $query['maybeString'] = $request->maybeString;
         }
         if ($request->maybeInteger != null) {
             $query['maybeInteger'] = $request->maybeInteger;
+        }
+        if ($request->optionalListOfStrings != null) {
+            $query['optionalListOfStrings'] = $request->optionalListOfStrings;
         }
         try {
             $response = $this->client->sendRequest();

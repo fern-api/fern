@@ -31,7 +31,8 @@ class ReqWithHeadersClient
     public function getWithCustomHeader(ReqWithHeaders $request, ?array $options = null): mixed
     {
         $headers = [];
-        ['X-TEST-SERVICE-HEADER' => $request->xTestServiceHeader,'X-TEST-ENDPOINT-HEADER' => $request->xTestEndpointHeader];
+        $headers['X-TEST-SERVICE-HEADER'] = $request->xTestServiceHeader;
+        $headers['X-TEST-ENDPOINT-HEADER'] = $request->xTestEndpointHeader;
         try {
             $response = $this->client->sendRequest();
             $statusCode = $response->getStatusCode();

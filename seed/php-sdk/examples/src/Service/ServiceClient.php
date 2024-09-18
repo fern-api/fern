@@ -75,12 +75,14 @@ class ServiceClient
     public function getMetadata(GetMetadataRequest $request, ?array $options = null): mixed
     {
         $query = [];
-        $query['tag'] = $request->tag;
         if ($request->shallow != null) {
             $query['shallow'] = $request->shallow;
         }
+        if ($request->tag != null) {
+            $query['tag'] = $request->tag;
+        }
         $headers = [];
-        ['X-API-Version' => $request->xApiVersion];
+        $headers['X-API-Version'] = $request->xApiVersion;
         try {
             $response = $this->client->sendRequest();
             $statusCode = $response->getStatusCode();
