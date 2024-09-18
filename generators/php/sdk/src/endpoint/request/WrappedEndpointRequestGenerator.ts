@@ -34,9 +34,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
     }
 
     protected doGenerate(): PhpFile {
-        const class_ = php.class_({
-            ...this.classReference
-        });
+        const class_ = php.class_(this.classReference);
 
         for (const query of this.endpoint.queryParameters) {
             const type = query.allowMultiple
