@@ -94,11 +94,11 @@ export abstract class AbstractPhpGeneratorContext<
     }
 
     public getParameterName(name: Name): string {
-        return `$${name.camelCase.safeName}`;
+        return `$${name.camelCase.unsafeName}`;
     }
 
     public getPropertyName(name: Name): string {
-        return name.camelCase.safeName;
+        return name.camelCase.unsafeName;
     }
 
     public getLiteralAsString(literal: Literal): string {
