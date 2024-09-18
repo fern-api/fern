@@ -2,7 +2,7 @@
     - summary: Adds additional metadata retrievable by `fern generator get` so you can now get the langauage and the target repo.
       type: feat
   irVersion: 53
-  version: 0.42.3
+  version: 0.42.5
 
 - changelogEntry:
     - summary: |
