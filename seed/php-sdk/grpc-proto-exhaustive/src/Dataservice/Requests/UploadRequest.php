@@ -20,4 +20,15 @@ class UploadRequest
     #[JsonProperty("namespace")]
     public ?string $namespace;
 
+    /**
+     * @param array<Column> $columns
+     * @param ?string $namespace
+     */
+    public function __construct(
+        array $columns,
+        ?string $namespace = null,
+    ) {
+        $this->columns = $columns;
+        $this->namespace = $namespace;
+    }
 }

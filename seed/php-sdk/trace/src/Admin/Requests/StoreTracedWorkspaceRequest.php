@@ -21,4 +21,15 @@ class StoreTracedWorkspaceRequest
     #[JsonProperty("traceResponses"), ArrayType([TraceResponse::class])]
     public array $traceResponses;
 
+    /**
+     * @param WorkspaceRunDetails $workspaceRunDetails
+     * @param array<TraceResponse> $traceResponses
+     */
+    public function __construct(
+        WorkspaceRunDetails $workspaceRunDetails,
+        array $traceResponses,
+    ) {
+        $this->workspaceRunDetails = $workspaceRunDetails;
+        $this->traceResponses = $traceResponses;
+    }
 }

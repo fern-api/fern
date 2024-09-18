@@ -32,4 +32,24 @@ class GetDefaultStarterFilesRequest
     #[JsonProperty("methodName")]
     public string $methodName;
 
+    /**
+     * @param array<VariableTypeAndName> $inputParams
+     * @param mixed $outputType
+     * @param string $methodName The name of the `method` that the student has to complete.
+    The method name cannot include the following characters:
+      - Greater Than `>`
+      - Less Than `<``
+      - Equals `=`
+      - Period `.`
+
+     */
+    public function __construct(
+        array $inputParams,
+        mixed $outputType,
+        string $methodName,
+    ) {
+        $this->inputParams = $inputParams;
+        $this->outputType = $outputType;
+        $this->methodName = $methodName;
+    }
 }

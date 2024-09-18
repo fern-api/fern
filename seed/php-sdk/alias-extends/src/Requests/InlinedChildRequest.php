@@ -12,4 +12,12 @@ class InlinedChildRequest
     #[JsonProperty("child")]
     public string $child;
 
+    /**
+     * @param string $child
+     */
+    public function __construct(
+        string $child,
+    ) {
+        $this->child = $child;
+    }
 }

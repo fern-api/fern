@@ -25,4 +25,18 @@ class PostWithObjectBody
     #[JsonProperty("NestedObject")]
     public ObjectWithOptionalField $nestedObject;
 
+    /**
+     * @param string $string
+     * @param int $integer
+     * @param ObjectWithOptionalField $nestedObject
+     */
+    public function __construct(
+        string $string,
+        int $integer,
+        ObjectWithOptionalField $nestedObject,
+    ) {
+        $this->string = $string;
+        $this->integer = $integer;
+        $this->nestedObject = $nestedObject;
+    }
 }

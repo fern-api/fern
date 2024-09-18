@@ -42,4 +42,27 @@ class RefreshTokenRequest
     #[JsonProperty("scope")]
     public ?string $scope;
 
+    /**
+     * @param string $clientId
+     * @param string $clientSecret
+     * @param string $refreshToken
+     * @param string $audience
+     * @param string $grantType
+     * @param ?string $scope
+     */
+    public function __construct(
+        string $clientId,
+        string $clientSecret,
+        string $refreshToken,
+        string $audience,
+        string $grantType,
+        ?string $scope = null,
+    ) {
+        $this->clientId = $clientId;
+        $this->clientSecret = $clientSecret;
+        $this->refreshToken = $refreshToken;
+        $this->audience = $audience;
+        $this->grantType = $grantType;
+        $this->scope = $scope;
+    }
 }

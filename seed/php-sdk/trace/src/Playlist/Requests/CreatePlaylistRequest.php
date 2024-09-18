@@ -13,13 +13,27 @@ class CreatePlaylistRequest
     public DateTime $datetime;
 
     /**
+     * @var PlaylistCreateRequest $body
+     */
+    public PlaylistCreateRequest $body;
+
+    /**
      * @var ?DateTime $optionalDatetime
      */
     public ?DateTime $optionalDatetime;
 
     /**
-     * @var PlaylistCreateRequest $body
+     * @param DateTime $datetime
+     * @param PlaylistCreateRequest $body
+     * @param ?DateTime $optionalDatetime
      */
-    public PlaylistCreateRequest $body;
-
+    public function __construct(
+        DateTime $datetime,
+        PlaylistCreateRequest $body,
+        ?DateTime $optionalDatetime = null,
+    ) {
+        $this->datetime = $datetime;
+        $this->body = $body;
+        $this->optionalDatetime = $optionalDatetime;
+    }
 }

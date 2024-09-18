@@ -9,4 +9,12 @@ class GetFileRequest
      */
     public string $xFileApiVersion;
 
+    /**
+     * @param string $xFileApiVersion
+     */
+    public function __construct(
+        string $xFileApiVersion,
+    ) {
+        $this->xFileApiVersion = $xFileApiVersion;
+    }
 }

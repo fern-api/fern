@@ -19,4 +19,18 @@ class GetRequest
      */
     public string $name;
 
+    /**
+     * @param float $decimal
+     * @param int $even
+     * @param string $name
+     */
+    public function __construct(
+        float $decimal,
+        int $even,
+        string $name,
+    ) {
+        $this->decimal = $decimal;
+        $this->even = $even;
+        $this->name = $name;
+    }
 }

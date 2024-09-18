@@ -16,4 +16,15 @@ class ListResourcesRequest
      */
     public DateTime $beforeDate;
 
+    /**
+     * @param int $pageLimit
+     * @param DateTime $beforeDate
+     */
+    public function __construct(
+        int $pageLimit,
+        DateTime $beforeDate,
+    ) {
+        $this->pageLimit = $pageLimit;
+        $this->beforeDate = $beforeDate;
+    }
 }

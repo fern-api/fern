@@ -9,4 +9,12 @@ class GetAttemptedMigrationsRequest
      */
     public string $adminKeyHeader;
 
+    /**
+     * @param string $adminKeyHeader
+     */
+    public function __construct(
+        string $adminKeyHeader,
+    ) {
+        $this->adminKeyHeader = $adminKeyHeader;
+    }
 }

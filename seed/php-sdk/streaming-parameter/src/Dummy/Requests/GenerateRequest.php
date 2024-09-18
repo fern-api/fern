@@ -18,4 +18,15 @@ class GenerateRequest
     #[JsonProperty("num_events")]
     public int $numEvents;
 
+    /**
+     * @param bool $stream
+     * @param int $numEvents
+     */
+    public function __construct(
+        bool $stream,
+        int $numEvents,
+    ) {
+        $this->stream = $stream;
+        $this->numEvents = $numEvents;
+    }
 }

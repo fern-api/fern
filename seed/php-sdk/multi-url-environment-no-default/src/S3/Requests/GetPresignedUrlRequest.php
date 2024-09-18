@@ -12,4 +12,12 @@ class GetPresignedUrlRequest
     #[JsonProperty("s3Key")]
     public string $s3Key;
 
+    /**
+     * @param string $s3Key
+     */
+    public function __construct(
+        string $s3Key,
+    ) {
+        $this->s3Key = $s3Key;
+    }
 }

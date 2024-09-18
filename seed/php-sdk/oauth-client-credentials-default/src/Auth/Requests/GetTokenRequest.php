@@ -24,4 +24,18 @@ class GetTokenRequest
     #[JsonProperty("grant_type")]
     public string $grantType;
 
+    /**
+     * @param string $clientId
+     * @param string $clientSecret
+     * @param string $grantType
+     */
+    public function __construct(
+        string $clientId,
+        string $clientSecret,
+        string $grantType,
+    ) {
+        $this->clientId = $clientId;
+        $this->clientSecret = $clientSecret;
+        $this->grantType = $grantType;
+    }
 }

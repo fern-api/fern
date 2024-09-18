@@ -9,4 +9,12 @@ class GetWithPathAndQuery
      */
     public string $query;
 
+    /**
+     * @param string $query
+     */
+    public function __construct(
+        string $query,
+    ) {
+        $this->query = $query;
+    }
 }

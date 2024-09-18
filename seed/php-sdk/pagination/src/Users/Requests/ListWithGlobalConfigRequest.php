@@ -9,4 +9,12 @@ class ListWithGlobalConfigRequest
      */
     public ?int $offset;
 
+    /**
+     * @param ?int $offset
+     */
+    public function __construct(
+        ?int $offset = null,
+    ) {
+        $this->offset = $offset;
+    }
 }

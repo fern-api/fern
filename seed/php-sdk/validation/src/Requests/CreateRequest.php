@@ -31,4 +31,21 @@ class CreateRequest
     #[JsonProperty("shape")]
     public Shape $shape;
 
+    /**
+     * @param float $decimal
+     * @param int $even
+     * @param string $name
+     * @param Shape $shape
+     */
+    public function __construct(
+        float $decimal,
+        int $even,
+        string $name,
+        Shape $shape,
+    ) {
+        $this->decimal = $decimal;
+        $this->even = $even;
+        $this->name = $name;
+        $this->shape = $shape;
+    }
 }

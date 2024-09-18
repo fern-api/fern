@@ -40,6 +40,7 @@ export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSch
                 })
             };
         });
+
         const requiredProperties = properties.filter(({ type }) => type.internalType.type !== "optional");
         const optionalProperties = properties.filter(({ type }) => type.internalType.type === "optional");
         const orderedProperties = [...requiredProperties, ...optionalProperties];
@@ -47,7 +48,7 @@ export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSch
             clazz.addField(php.field(property));
         });
 
-        const parameters = orderedProperties.map((property) => php.parameter(property));
+        const parameters = orderedProperties.map((property) => php.parameter({ ...property, access: undefined }));
         clazz.addConstructor({
             parameters,
             body: php.codeblock((writer) => {

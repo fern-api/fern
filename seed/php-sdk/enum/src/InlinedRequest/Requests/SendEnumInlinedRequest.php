@@ -14,12 +14,6 @@ class SendEnumInlinedRequest
     public Operand $operand;
 
     /**
-     * @var ?Operand $maybeOperand
-     */
-    #[JsonProperty("maybeOperand")]
-    public ?Operand $maybeOperand;
-
-    /**
      * @var mixed $operandOrColor
      */
     #[JsonProperty("operandOrColor")]
@@ -31,4 +25,27 @@ class SendEnumInlinedRequest
     #[JsonProperty("maybeOperandOrColor")]
     public mixed $maybeOperandOrColor;
 
+    /**
+     * @var ?Operand $maybeOperand
+     */
+    #[JsonProperty("maybeOperand")]
+    public ?Operand $maybeOperand;
+
+    /**
+     * @param Operand $operand
+     * @param mixed $operandOrColor
+     * @param mixed $maybeOperandOrColor
+     * @param ?Operand $maybeOperand
+     */
+    public function __construct(
+        Operand $operand,
+        mixed $operandOrColor,
+        mixed $maybeOperandOrColor,
+        ?Operand $maybeOperand = null,
+    ) {
+        $this->operand = $operand;
+        $this->operandOrColor = $operandOrColor;
+        $this->maybeOperandOrColor = $maybeOperandOrColor;
+        $this->maybeOperand = $maybeOperand;
+    }
 }

@@ -21,4 +21,15 @@ class StoreTracedTestCaseRequest
     #[JsonProperty("traceResponses"), ArrayType([TraceResponse::class])]
     public array $traceResponses;
 
+    /**
+     * @param TestCaseResultWithStdout $result
+     * @param array<TraceResponse> $traceResponses
+     */
+    public function __construct(
+        TestCaseResultWithStdout $result,
+        array $traceResponses,
+    ) {
+        $this->result = $result;
+        $this->traceResponses = $traceResponses;
+    }
 }

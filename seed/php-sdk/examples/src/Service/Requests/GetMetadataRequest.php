@@ -5,9 +5,9 @@ namespace Seed\Service\Requests;
 class GetMetadataRequest
 {
     /**
-     * @var ?bool $shallow
+     * @var string $xApiVersion
      */
-    public ?bool $shallow;
+    public string $xApiVersion;
 
     /**
      * @var array<?string> $tag
@@ -15,8 +15,22 @@ class GetMetadataRequest
     public array $tag;
 
     /**
-     * @var string $xApiVersion
+     * @var ?bool $shallow
      */
-    public string $xApiVersion;
+    public ?bool $shallow;
 
+    /**
+     * @param string $xApiVersion
+     * @param array<?string> $tag
+     * @param ?bool $shallow
+     */
+    public function __construct(
+        string $xApiVersion,
+        array $tag,
+        ?bool $shallow = null,
+    ) {
+        $this->xApiVersion = $xApiVersion;
+        $this->tag = $tag;
+        $this->shallow = $shallow;
+    }
 }

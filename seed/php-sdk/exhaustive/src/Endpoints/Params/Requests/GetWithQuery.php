@@ -14,4 +14,15 @@ class GetWithQuery
      */
     public int $number;
 
+    /**
+     * @param string $query
+     * @param int $number
+     */
+    public function __construct(
+        string $query,
+        int $number,
+    ) {
+        $this->query = $query;
+        $this->number = $number;
+    }
 }

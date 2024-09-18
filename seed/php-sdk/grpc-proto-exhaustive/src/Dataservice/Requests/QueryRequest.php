@@ -10,12 +10,6 @@ use Seed\Types\IndexedData;
 class QueryRequest
 {
     /**
-     * @var ?string $namespace
-     */
-    #[JsonProperty("namespace")]
-    public ?string $namespace;
-
-    /**
      * @var int $topK
      */
     #[JsonProperty("topK")]
@@ -26,6 +20,12 @@ class QueryRequest
      */
     #[JsonProperty("filter")]
     public mixed $filter;
+
+    /**
+     * @var ?string $namespace
+     */
+    #[JsonProperty("namespace")]
+    public ?string $namespace;
 
     /**
      * @var ?bool $includeValues
@@ -63,4 +63,36 @@ class QueryRequest
     #[JsonProperty("indexedData")]
     public ?IndexedData $indexedData;
 
+    /**
+     * @param int $topK
+     * @param mixed $filter
+     * @param ?string $namespace
+     * @param ?bool $includeValues
+     * @param ?bool $includeMetadata
+     * @param ?array<QueryColumn> $queries
+     * @param ?array<float> $column
+     * @param ?string $id
+     * @param ?IndexedData $indexedData
+     */
+    public function __construct(
+        int $topK,
+        mixed $filter,
+        ?string $namespace = null,
+        ?bool $includeValues = null,
+        ?bool $includeMetadata = null,
+        ?array $queries = null,
+        ?array $column = null,
+        ?string $id = null,
+        ?IndexedData $indexedData = null,
+    ) {
+        $this->topK = $topK;
+        $this->filter = $filter;
+        $this->namespace = $namespace;
+        $this->includeValues = $includeValues;
+        $this->includeMetadata = $includeMetadata;
+        $this->queries = $queries;
+        $this->column = $column;
+        $this->id = $id;
+        $this->indexedData = $indexedData;
+    }
 }

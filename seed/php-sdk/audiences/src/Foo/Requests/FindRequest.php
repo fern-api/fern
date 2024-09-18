@@ -23,4 +23,18 @@ class FindRequest
     #[JsonProperty("privateProperty")]
     public ?int $privateProperty;
 
+    /**
+     * @param ?string $optionalString
+     * @param ?string $publicProperty
+     * @param ?int $privateProperty
+     */
+    public function __construct(
+        ?string $optionalString = null,
+        ?string $publicProperty = null,
+        ?int $privateProperty = null,
+    ) {
+        $this->optionalString = $optionalString;
+        $this->publicProperty = $publicProperty;
+        $this->privateProperty = $privateProperty;
+    }
 }

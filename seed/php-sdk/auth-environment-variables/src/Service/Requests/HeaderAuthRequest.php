@@ -9,4 +9,12 @@ class HeaderAuthRequest
      */
     public string $xEndpointHeader;
 
+    /**
+     * @param string $xEndpointHeader Specifies the endpoint key.
+     */
+    public function __construct(
+        string $xEndpointHeader,
+    ) {
+        $this->xEndpointHeader = $xEndpointHeader;
+    }
 }

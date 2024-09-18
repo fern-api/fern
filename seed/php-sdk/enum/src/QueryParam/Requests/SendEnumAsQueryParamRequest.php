@@ -12,11 +12,6 @@ class SendEnumAsQueryParamRequest
     public Operand $operand;
 
     /**
-     * @var ?Operand $maybeOperand
-     */
-    public ?Operand $maybeOperand;
-
-    /**
      * @var mixed $operandOrColor
      */
     public mixed $operandOrColor;
@@ -26,4 +21,26 @@ class SendEnumAsQueryParamRequest
      */
     public mixed $maybeOperandOrColor;
 
+    /**
+     * @var ?Operand $maybeOperand
+     */
+    public ?Operand $maybeOperand;
+
+    /**
+     * @param Operand $operand
+     * @param mixed $operandOrColor
+     * @param mixed $maybeOperandOrColor
+     * @param ?Operand $maybeOperand
+     */
+    public function __construct(
+        Operand $operand,
+        mixed $operandOrColor,
+        mixed $maybeOperandOrColor,
+        ?Operand $maybeOperand = null,
+    ) {
+        $this->operand = $operand;
+        $this->operandOrColor = $operandOrColor;
+        $this->maybeOperandOrColor = $maybeOperandOrColor;
+        $this->maybeOperand = $maybeOperand;
+    }
 }

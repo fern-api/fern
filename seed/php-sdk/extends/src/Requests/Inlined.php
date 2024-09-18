@@ -12,4 +12,12 @@ class Inlined
     #[JsonProperty("unique")]
     public string $unique;
 
+    /**
+     * @param string $unique
+     */
+    public function __construct(
+        string $unique,
+    ) {
+        $this->unique = $unique;
+    }
 }

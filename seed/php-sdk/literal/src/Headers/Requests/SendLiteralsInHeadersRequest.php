@@ -22,4 +22,18 @@ class SendLiteralsInHeadersRequest
     #[JsonProperty("query")]
     public string $query;
 
+    /**
+     * @param string $endpointVersion
+     * @param bool $async
+     * @param string $query
+     */
+    public function __construct(
+        string $endpointVersion,
+        bool $async,
+        string $query,
+    ) {
+        $this->endpointVersion = $endpointVersion;
+        $this->async = $async;
+        $this->query = $query;
+    }
 }

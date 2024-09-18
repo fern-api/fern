@@ -7,6 +7,12 @@ use Seed\Core\JsonProperty;
 class CreateRequest
 {
     /**
+     * @var mixed $metadata
+     */
+    #[JsonProperty("metadata")]
+    public mixed $metadata;
+
+    /**
      * @var ?string $username
      */
     #[JsonProperty("username")]
@@ -31,9 +37,23 @@ class CreateRequest
     public ?float $weight;
 
     /**
-     * @var mixed $metadata
+     * @param mixed $metadata
+     * @param ?string $username
+     * @param ?string $email
+     * @param ?int $age
+     * @param ?float $weight
      */
-    #[JsonProperty("metadata")]
-    public mixed $metadata;
-
+    public function __construct(
+        mixed $metadata,
+        ?string $username = null,
+        ?string $email = null,
+        ?int $age = null,
+        ?float $weight = null,
+    ) {
+        $this->metadata = $metadata;
+        $this->username = $username;
+        $this->email = $email;
+        $this->age = $age;
+        $this->weight = $weight;
+    }
 }

@@ -24,4 +24,18 @@ class CreateUserRequest
     #[JsonProperty("name")]
     public string $name;
 
+    /**
+     * @param string $type
+     * @param string $version
+     * @param string $name
+     */
+    public function __construct(
+        string $type,
+        string $version,
+        string $name,
+    ) {
+        $this->type = $type;
+        $this->version = $version;
+        $this->name = $name;
+    }
 }

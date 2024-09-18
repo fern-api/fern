@@ -14,4 +14,15 @@ class GetWithMultipleQuery
      */
     public array $numer;
 
+    /**
+     * @param array<string> $query
+     * @param array<int> $numer
+     */
+    public function __construct(
+        array $query,
+        array $numer,
+    ) {
+        $this->query = $query;
+        $this->numer = $numer;
+    }
 }
