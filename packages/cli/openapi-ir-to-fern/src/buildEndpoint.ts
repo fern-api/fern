@@ -537,7 +537,7 @@ function getRequest({
                         }
                         return [property.key, propertyTypeReference];
                     }
-                    return [property.key, property.schema.isOptional ? `optional<${fileType}>` : fileType];
+                    return [property.key, fileType];
                 } else {
                     let propertyTypeReference: RawSchemas.HttpInlineRequestBodyPropertySchema = buildTypeReference({
                         schema: property.schema.value,

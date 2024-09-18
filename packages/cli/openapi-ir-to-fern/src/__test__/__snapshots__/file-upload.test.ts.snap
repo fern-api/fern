@@ -28,7 +28,7 @@ exports[`open api parser > file-upload > docs 1`] = `
                   "docs": "The file to upload",
                   "type": "file",
                 },
-                "maybe_file": "optional<optional<file>>",
+                "maybe_file": "optional<file>",
                 "metadata": {
                   "content-type": "application/json",
                   "docs": "This is a metadata field",
@@ -86,7 +86,7 @@ exports[`open api parser > file-upload > simple 1`] = `
                   "docs": "The file to upload",
                   "type": "file",
                 },
-                "maybe_file": "optional<optional<file>>",
+                "maybe_file": "optional<file>",
                 "metadata": {
                   "content-type": "application/json",
                   "docs": "This is a metadata field",

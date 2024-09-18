@@ -4945,7 +4945,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "data": "string",
-                  "files": "optional<optional<list<file>>>",
+                  "files": "optional<list<file>>",
                 },
               },
               "content-type": "multipart/form-data",
@@ -5394,7 +5394,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "data": "string",
-                  "files": "optional<optional<list<file>>>",
+                  "files": "optional<list<file>>",
                 },
               },
               "content-type": "multipart/form-data",
@@ -9037,7 +9037,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "request": {
               "body": {
                 "properties": {
-                  "task_file": "optional<optional<file>>",
+                  "task_file": "optional<file>",
                   "task_input": {
                     "display-name": "Task Input",
                     "docs": "The data input to the Task. This should be relevant to the \`user_prompt\` and cover any dynamic \`{...}\` parameters that are referenced in the prompt. Not required if \`image_required\` is set to \`true\` and there are no dynamic parameters in the prompt.",
@@ -22444,7 +22444,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "data": "string",
-                  "files": "optional<optional<list<file>>>",
+                  "files": "optional<list<file>>",
                 },
               },
               "content-type": "multipart/form-data",
@@ -22893,7 +22893,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "data": "string",
-                  "files": "optional<optional<list<file>>>",
+                  "files": "optional<list<file>>",
                 },
               },
               "content-type": "multipart/form-data",
@@ -26536,7 +26536,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "request": {
               "body": {
                 "properties": {
-                  "task_file": "optional<optional<file>>",
+                  "task_file": "optional<file>",
                   "task_input": {
                     "display-name": "Task Input",
                     "docs": "The data input to the Task. This should be relevant to the \`user_prompt\` and cover any dynamic \`{...}\` parameters that are referenced in the prompt. Not required if \`image_required\` is set to \`true\` and there are no dynamic parameters in the prompt.",
