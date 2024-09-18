@@ -34,11 +34,7 @@ public class StoreTracedTestCaseV2Test : BaseMockServerTest
                     "lineNumber": 1,
                     "scopes": [
                       {
-                        "variables": {
-                          "string": {
-                            "key": "value"
-                          }
-                        }
+                        "variables": {}
                       }
                     ]
                   }
@@ -85,16 +81,7 @@ public class StoreTracedTestCaseV2Test : BaseMockServerTest
                                     {
                                         new Scope
                                         {
-                                            Variables = new Dictionary<string, object>()
-                                            {
-                                                {
-                                                    "string",
-                                                    new Dictionary<object, object?>()
-                                                    {
-                                                        { "key", "value" },
-                                                    }
-                                                },
-                                            },
+                                            Variables = new Dictionary<string, object>() { },
                                         },
                                     },
                                 },
