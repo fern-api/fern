@@ -4,21 +4,19 @@ namespace Seed\V2\Problem;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\V2\Problem\NonVoidFunctionSignature;
-use Seed\V2\Problem\FunctionImplementationForMultipleLanguages;
 
 class NonVoidFunctionDefinition extends SerializableType
 {
-    #[JsonProperty("signature")]
     /**
      * @var NonVoidFunctionSignature $signature
      */
+    #[JsonProperty("signature")]
     public NonVoidFunctionSignature $signature;
 
-    #[JsonProperty("code")]
     /**
      * @var FunctionImplementationForMultipleLanguages $code
      */
+    #[JsonProperty("code")]
     public FunctionImplementationForMultipleLanguages $code;
 
     /**

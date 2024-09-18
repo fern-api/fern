@@ -4,20 +4,19 @@ namespace Seed\Types;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\Types\Account;
 
 class Memo extends SerializableType
 {
-    #[JsonProperty("description")]
     /**
      * @var string $description
      */
+    #[JsonProperty("description")]
     public string $description;
 
-    #[JsonProperty("account")]
     /**
      * @var ?Account $account
      */
+    #[JsonProperty("account")]
     public ?Account $account;
 
     /**

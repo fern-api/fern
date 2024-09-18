@@ -7,10 +7,10 @@ use Seed\Core\JsonProperty;
 
 class StringResponse extends SerializableType
 {
-    #[JsonProperty("data")]
     /**
      * @var string $data
      */
+    #[JsonProperty("data")]
     public string $data;
 
     /**

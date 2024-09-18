@@ -4,14 +4,13 @@ namespace Seed\Inlined\Types;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\Inlined\Types\ANestedLiteral;
 
 class ATopLevelLiteral extends SerializableType
 {
-    #[JsonProperty("nestedLiteral")]
     /**
      * @var ANestedLiteral $nestedLiteral
      */
+    #[JsonProperty("nestedLiteral")]
     public ANestedLiteral $nestedLiteral;
 
     /**

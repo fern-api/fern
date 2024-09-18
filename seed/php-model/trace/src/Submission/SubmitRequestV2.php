@@ -6,44 +6,43 @@ use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 use Seed\Commons\Language;
 use Seed\Core\ArrayType;
-use Seed\Submission\SubmissionFileInfo;
 
 class SubmitRequestV2 extends SerializableType
 {
-    #[JsonProperty("submissionId")]
     /**
      * @var string $submissionId
      */
+    #[JsonProperty("submissionId")]
     public string $submissionId;
 
-    #[JsonProperty("language")]
     /**
      * @var Language $language
      */
+    #[JsonProperty("language")]
     public Language $language;
 
-    #[JsonProperty("submissionFiles"), ArrayType([SubmissionFileInfo::class])]
     /**
      * @var array<SubmissionFileInfo> $submissionFiles
      */
+    #[JsonProperty("submissionFiles"), ArrayType([SubmissionFileInfo::class])]
     public array $submissionFiles;
 
-    #[JsonProperty("problemId")]
     /**
      * @var string $problemId
      */
+    #[JsonProperty("problemId")]
     public string $problemId;
 
-    #[JsonProperty("problemVersion")]
     /**
      * @var ?int $problemVersion
      */
+    #[JsonProperty("problemVersion")]
     public ?int $problemVersion;
 
-    #[JsonProperty("userId")]
     /**
      * @var ?string $userId
      */
+    #[JsonProperty("userId")]
     public ?string $userId;
 
     /**

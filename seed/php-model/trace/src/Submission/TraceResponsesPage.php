@@ -5,21 +5,20 @@ namespace Seed\Submission;
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 use Seed\Core\ArrayType;
-use Seed\Submission\TraceResponse;
 
 class TraceResponsesPage extends SerializableType
 {
-    #[JsonProperty("traceResponses"), ArrayType([TraceResponse::class])]
     /**
      * @var array<TraceResponse> $traceResponses
      */
+    #[JsonProperty("traceResponses"), ArrayType([TraceResponse::class])]
     public array $traceResponses;
 
-    #[JsonProperty("offset")]
     /**
      * @var ?int $offset If present, use this to load subseqent pages.
     The offset is the id of the next trace response to load.
      */
+    #[JsonProperty("offset")]
     public ?int $offset;
 
     /**

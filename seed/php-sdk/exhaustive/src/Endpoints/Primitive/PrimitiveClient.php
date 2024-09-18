@@ -25,7 +25,7 @@ class PrimitiveClient
     }
 
     /**
-     * @param string $request
+     * @param string request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -46,7 +46,7 @@ class PrimitiveClient
     }
 
     /**
-     * @param int $request
+     * @param int request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -67,7 +67,7 @@ class PrimitiveClient
     }
 
     /**
-     * @param int $request
+     * @param int request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -88,7 +88,7 @@ class PrimitiveClient
     }
 
     /**
-     * @param float $request
+     * @param float request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -109,7 +109,7 @@ class PrimitiveClient
     }
 
     /**
-     * @param bool $request
+     * @param bool request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -130,7 +130,7 @@ class PrimitiveClient
     }
 
     /**
-     * @param DateTime $request
+     * @param DateTime request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -151,7 +151,7 @@ class PrimitiveClient
     }
 
     /**
-     * @param DateTime $request
+     * @param DateTime request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -172,7 +172,7 @@ class PrimitiveClient
     }
 
     /**
-     * @param string $request
+     * @param string request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -193,7 +193,7 @@ class PrimitiveClient
     }
 
     /**
-     * @param string $request
+     * @param string request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

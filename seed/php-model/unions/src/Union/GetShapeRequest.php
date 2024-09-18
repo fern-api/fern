@@ -7,10 +7,10 @@ use Seed\Core\JsonProperty;
 
 class GetShapeRequest extends SerializableType
 {
-    #[JsonProperty("id")]
     /**
      * @var string $id
      */
+    #[JsonProperty("id")]
     public string $id;
 
     /**

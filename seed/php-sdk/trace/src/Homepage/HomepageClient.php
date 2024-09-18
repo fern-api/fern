@@ -44,7 +44,7 @@ class HomepageClient
     }
 
     /**
-     * @param array<string> $request
+     * @param array<string> request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

@@ -4,55 +4,52 @@ namespace Seed\Problem;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\Problem\ProblemDescription;
-use Seed\Core\ArrayType;
 use Seed\Commons\Language;
-use Seed\Problem\ProblemFiles;
-use Seed\Problem\VariableTypeAndName;
+use Seed\Core\ArrayType;
 use Seed\Commons\TestCaseWithExpectedResult;
 
 class CreateProblemRequest extends SerializableType
 {
-    #[JsonProperty("problemName")]
     /**
      * @var string $problemName
      */
+    #[JsonProperty("problemName")]
     public string $problemName;
 
-    #[JsonProperty("problemDescription")]
     /**
      * @var ProblemDescription $problemDescription
      */
+    #[JsonProperty("problemDescription")]
     public ProblemDescription $problemDescription;
 
-    #[JsonProperty("files"), ArrayType([Language::class => ProblemFiles::class])]
     /**
      * @var array<Language, ProblemFiles> $files
      */
+    #[JsonProperty("files"), ArrayType([Language::class => ProblemFiles::class])]
     public array $files;
 
-    #[JsonProperty("inputParams"), ArrayType([VariableTypeAndName::class])]
     /**
      * @var array<VariableTypeAndName> $inputParams
      */
+    #[JsonProperty("inputParams"), ArrayType([VariableTypeAndName::class])]
     public array $inputParams;
 
-    #[JsonProperty("outputType")]
     /**
      * @var mixed $outputType
      */
+    #[JsonProperty("outputType")]
     public mixed $outputType;
 
-    #[JsonProperty("testcases"), ArrayType([TestCaseWithExpectedResult::class])]
     /**
      * @var array<TestCaseWithExpectedResult> $testcases
      */
+    #[JsonProperty("testcases"), ArrayType([TestCaseWithExpectedResult::class])]
     public array $testcases;
 
-    #[JsonProperty("methodName")]
     /**
      * @var string $methodName
      */
+    #[JsonProperty("methodName")]
     public string $methodName;
 
     /**

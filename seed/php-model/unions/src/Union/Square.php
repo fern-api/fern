@@ -7,10 +7,10 @@ use Seed\Core\JsonProperty;
 
 class Square extends SerializableType
 {
-    #[JsonProperty("length")]
     /**
      * @var float $length
      */
+    #[JsonProperty("length")]
     public float $length;
 
     /**

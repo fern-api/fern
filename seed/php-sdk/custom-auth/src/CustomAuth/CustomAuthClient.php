@@ -46,7 +46,7 @@ class CustomAuthClient
 
     /**
     * POST request with custom auth scheme
-     * @param mixed $request
+     * @param mixed request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

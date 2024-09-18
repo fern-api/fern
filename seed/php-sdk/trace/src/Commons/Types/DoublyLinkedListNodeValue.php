@@ -7,28 +7,28 @@ use Seed\Core\JsonProperty;
 
 class DoublyLinkedListNodeValue extends SerializableType
 {
-    #[JsonProperty("nodeId")]
     /**
      * @var string $nodeId
      */
+    #[JsonProperty("nodeId")]
     public string $nodeId;
 
-    #[JsonProperty("val")]
     /**
      * @var float $val
      */
+    #[JsonProperty("val")]
     public float $val;
 
-    #[JsonProperty("next")]
     /**
      * @var ?string $next
      */
+    #[JsonProperty("next")]
     public ?string $next;
 
-    #[JsonProperty("prev")]
     /**
      * @var ?string $prev
      */
+    #[JsonProperty("prev")]
     public ?string $prev;
 
     /**

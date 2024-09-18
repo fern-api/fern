@@ -7,16 +7,16 @@ use Seed\Core\JsonProperty;
 
 class InitializeProblemRequest extends SerializableType
 {
-    #[JsonProperty("problemId")]
     /**
      * @var string $problemId
      */
+    #[JsonProperty("problemId")]
     public string $problemId;
 
-    #[JsonProperty("problemVersion")]
     /**
      * @var ?int $problemVersion
      */
+    #[JsonProperty("problemVersion")]
     public ?int $problemVersion;
 
     /**

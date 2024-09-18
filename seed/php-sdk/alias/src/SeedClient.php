@@ -32,7 +32,7 @@ class SeedClient
     }
 
     /**
-     * @param string $typeId
+     * @param string typeId
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

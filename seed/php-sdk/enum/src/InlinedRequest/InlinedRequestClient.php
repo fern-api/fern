@@ -24,7 +24,7 @@ class InlinedRequestClient
     }
 
     /**
-     * @param SendEnumInlinedRequest $request
+     * @param SendEnumInlinedRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

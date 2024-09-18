@@ -7,10 +7,10 @@ use Seed\Core\JsonProperty;
 
 class Circle extends SerializableType
 {
-    #[JsonProperty("radius")]
     /**
      * @var float $radius
      */
+    #[JsonProperty("radius")]
     public float $radius;
 
     /**

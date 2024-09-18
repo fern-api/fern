@@ -26,7 +26,7 @@ class DummyClient
     }
 
     /**
-     * @param GenerateStreamRequest $request
+     * @param GenerateStreamRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -42,7 +42,7 @@ class DummyClient
     }
 
     /**
-     * @param Generateequest $request
+     * @param Generateequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

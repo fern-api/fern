@@ -7,22 +7,22 @@ use Seed\Core\JsonProperty;
 
 class SendResponse extends SerializableType
 {
-    #[JsonProperty("message")]
     /**
      * @var string $message
      */
+    #[JsonProperty("message")]
     public string $message;
 
-    #[JsonProperty("status")]
     /**
      * @var int $status
      */
+    #[JsonProperty("status")]
     public int $status;
 
-    #[JsonProperty("success")]
     /**
      * @var bool $success
      */
+    #[JsonProperty("success")]
     public bool $success;
 
     /**

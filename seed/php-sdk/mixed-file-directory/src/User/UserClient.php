@@ -33,15 +33,15 @@ class UserClient
 
     /**
     * List all users.
-     * @param ListUsersRequest $request
+     * @param ListUsersRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function list(ListUsersRequest $request, ?array $options = null): mixed
     {
         $query = [];
-        if ($request->limit != null) {
-            $query['limit'] = $request->limit;
+        if (request->limit != null) {
+            $query['limit'] = request->limit;
         }
         try {
             $response = $this->client->sendRequest();

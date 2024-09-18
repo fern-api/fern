@@ -23,7 +23,7 @@ class ServiceClient
     }
 
     /**
-     * @param string $endpointParam
+     * @param string endpointParam
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

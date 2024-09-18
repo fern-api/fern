@@ -24,7 +24,7 @@ class UserClient
     }
 
     /**
-     * @param string $userId
+     * @param string userId
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

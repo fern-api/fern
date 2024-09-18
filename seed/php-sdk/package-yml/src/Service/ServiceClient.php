@@ -23,8 +23,8 @@ class ServiceClient
     }
 
     /**
-     * @param string $id
-     * @param string $nestedId
+     * @param string id
+     * @param string nestedId
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

@@ -7,16 +7,16 @@ use Seed\Core\JsonProperty;
 
 class CreateMovieRequest extends SerializableType
 {
-    #[JsonProperty("title")]
     /**
      * @var string $title
      */
+    #[JsonProperty("title")]
     public string $title;
 
-    #[JsonProperty("rating")]
     /**
      * @var float $rating
      */
+    #[JsonProperty("rating")]
     public float $rating;
 
     /**

@@ -25,7 +25,7 @@ class PaymentClient
     }
 
     /**
-     * @param CreatePaymentRequest $request
+     * @param CreatePaymentRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -46,7 +46,7 @@ class PaymentClient
     }
 
     /**
-     * @param string $paymentId
+     * @param string paymentId
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

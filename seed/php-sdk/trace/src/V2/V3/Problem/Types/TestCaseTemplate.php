@@ -4,26 +4,25 @@ namespace Seed\V2\V3\Problem\Types;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\V2\V3\Problem\Types\TestCaseImplementation;
 
 class TestCaseTemplate extends SerializableType
 {
-    #[JsonProperty("templateId")]
     /**
      * @var string $templateId
      */
+    #[JsonProperty("templateId")]
     public string $templateId;
 
-    #[JsonProperty("name")]
     /**
      * @var string $name
      */
+    #[JsonProperty("name")]
     public string $name;
 
-    #[JsonProperty("implementation")]
     /**
      * @var TestCaseImplementation $implementation
      */
+    #[JsonProperty("implementation")]
     public TestCaseImplementation $implementation;
 
     /**

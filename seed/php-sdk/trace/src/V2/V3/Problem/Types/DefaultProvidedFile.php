@@ -4,21 +4,20 @@ namespace Seed\V2\V3\Problem\Types;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\V2\V3\Problem\Types\FileInfoV2;
 use Seed\Core\ArrayType;
 
 class DefaultProvidedFile extends SerializableType
 {
-    #[JsonProperty("file")]
     /**
      * @var FileInfoV2 $file
      */
+    #[JsonProperty("file")]
     public FileInfoV2 $file;
 
-    #[JsonProperty("relatedTypes"), ArrayType(["mixed"])]
     /**
      * @var array<mixed> $relatedTypes
      */
+    #[JsonProperty("relatedTypes"), ArrayType(["mixed"])]
     public array $relatedTypes;
 
     /**

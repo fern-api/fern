@@ -7,22 +7,22 @@ use Seed\Core\JsonProperty;
 
 class SubmissionFileInfo extends SerializableType
 {
-    #[JsonProperty("directory")]
     /**
      * @var string $directory
      */
+    #[JsonProperty("directory")]
     public string $directory;
 
-    #[JsonProperty("filename")]
     /**
      * @var string $filename
      */
+    #[JsonProperty("filename")]
     public string $filename;
 
-    #[JsonProperty("contents")]
     /**
      * @var string $contents
      */
+    #[JsonProperty("contents")]
     public string $contents;
 
     /**

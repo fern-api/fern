@@ -25,7 +25,7 @@ class UserClient
     }
 
     /**
-     * @param CreateUserRequest $request
+     * @param CreateUserRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

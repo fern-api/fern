@@ -4,20 +4,19 @@ namespace Seed\Commons\Types;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\Commons\Types\DoublyLinkedListValue;
 
 class DoublyLinkedListNodeAndListValue extends SerializableType
 {
-    #[JsonProperty("nodeId")]
     /**
      * @var string $nodeId
      */
+    #[JsonProperty("nodeId")]
     public string $nodeId;
 
-    #[JsonProperty("fullList")]
     /**
      * @var DoublyLinkedListValue $fullList
      */
+    #[JsonProperty("fullList")]
     public DoublyLinkedListValue $fullList;
 
     /**

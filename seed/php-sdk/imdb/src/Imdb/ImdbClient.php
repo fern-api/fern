@@ -26,7 +26,7 @@ class ImdbClient
 
     /**
     * Add a movie to the database
-     * @param CreateMovieRequest $request
+     * @param CreateMovieRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -47,7 +47,7 @@ class ImdbClient
     }
 
     /**
-     * @param string $movieId
+     * @param string movieId
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

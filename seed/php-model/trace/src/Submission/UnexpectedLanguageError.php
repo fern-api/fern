@@ -3,21 +3,21 @@
 namespace Seed\Submission;
 
 use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
 use Seed\Commons\Language;
+use Seed\Core\JsonProperty;
 
 class UnexpectedLanguageError extends SerializableType
 {
-    #[JsonProperty("expectedLanguage")]
     /**
      * @var Language $expectedLanguage
      */
+    #[JsonProperty("expectedLanguage")]
     public Language $expectedLanguage;
 
-    #[JsonProperty("actualLanguage")]
     /**
      * @var Language $actualLanguage
      */
+    #[JsonProperty("actualLanguage")]
     public Language $actualLanguage;
 
     /**

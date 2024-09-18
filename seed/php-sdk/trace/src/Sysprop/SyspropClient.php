@@ -25,8 +25,8 @@ class SyspropClient
     }
 
     /**
-     * @param Language $language
-     * @param int $numWarmInstances
+     * @param Language language
+     * @param int numWarmInstances
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

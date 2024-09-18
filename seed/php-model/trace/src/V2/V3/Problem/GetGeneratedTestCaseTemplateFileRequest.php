@@ -4,14 +4,13 @@ namespace Seed\V2\V3\Problem;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\V2\V3\Problem\TestCaseTemplate;
 
 class GetGeneratedTestCaseTemplateFileRequest extends SerializableType
 {
-    #[JsonProperty("template")]
     /**
      * @var TestCaseTemplate $template
      */
+    #[JsonProperty("template")]
     public TestCaseTemplate $template;
 
     /**

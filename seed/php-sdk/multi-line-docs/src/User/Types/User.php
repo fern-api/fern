@@ -13,13 +13,12 @@ use Seed\Core\JsonProperty;
  */
 class User extends SerializableType
 {
-    #[JsonProperty("id")]
     /**
      * @var string $id
      */
+    #[JsonProperty("id")]
     public string $id;
 
-    #[JsonProperty("name")]
     /**
      * @var string $name The user's name. This name is unique to each user. A few examples are included below:
 
@@ -27,12 +26,13 @@ class User extends SerializableType
     - Bob
     - Charlie
      */
+    #[JsonProperty("name")]
     public string $name;
 
-    #[JsonProperty("age")]
     /**
      * @var ?int $age The user's age.
      */
+    #[JsonProperty("age")]
     public ?int $age;
 
     /**

@@ -8,10 +8,10 @@ use Seed\Core\ArrayType;
 
 class ExtendedMovie extends SerializableType
 {
-    #[JsonProperty("cast"), ArrayType(["string"])]
     /**
      * @var array<string> $cast
      */
+    #[JsonProperty("cast"), ArrayType(["string"])]
     public array $cast;
 
     /**

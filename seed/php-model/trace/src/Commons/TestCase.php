@@ -8,16 +8,16 @@ use Seed\Core\ArrayType;
 
 class TestCase extends SerializableType
 {
-    #[JsonProperty("id")]
     /**
      * @var string $id
      */
+    #[JsonProperty("id")]
     public string $id;
 
-    #[JsonProperty("params"), ArrayType(["mixed"])]
     /**
      * @var array<mixed> $params
      */
+    #[JsonProperty("params"), ArrayType(["mixed"])]
     public array $params;
 
     /**

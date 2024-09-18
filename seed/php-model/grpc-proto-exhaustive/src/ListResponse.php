@@ -5,34 +5,31 @@ namespace Seed;
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 use Seed\Core\ArrayType;
-use Seed\ListElement;
-use Seed\Pagination;
-use Seed\Usage;
 
 class ListResponse extends SerializableType
 {
-    #[JsonProperty("columns"), ArrayType([ListElement::class])]
     /**
      * @var ?array<ListElement> $columns
      */
+    #[JsonProperty("columns"), ArrayType([ListElement::class])]
     public ?array $columns;
 
-    #[JsonProperty("pagination")]
     /**
      * @var ?Pagination $pagination
      */
+    #[JsonProperty("pagination")]
     public ?Pagination $pagination;
 
-    #[JsonProperty("namespace")]
     /**
      * @var ?string $namespace
      */
+    #[JsonProperty("namespace")]
     public ?string $namespace;
 
-    #[JsonProperty("usage")]
     /**
      * @var ?Usage $usage
      */
+    #[JsonProperty("usage")]
     public ?Usage $usage;
 
     /**

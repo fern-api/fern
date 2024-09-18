@@ -4,40 +4,39 @@ namespace Seed\Submission\Types;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\Submission\Types\ExceptionInfo;
 
 class WorkspaceRunDetails extends SerializableType
 {
-    #[JsonProperty("stdout")]
-    /**
-     * @var string $stdout
-     */
-    public string $stdout;
-
-    #[JsonProperty("exceptionV2")]
     /**
      * @var mixed $exceptionV2
      */
+    #[JsonProperty("exceptionV2")]
     public mixed $exceptionV2;
 
-    #[JsonProperty("exception")]
+    /**
+     * @var string $stdout
+     */
+    #[JsonProperty("stdout")]
+    public string $stdout;
+
     /**
      * @var ?ExceptionInfo $exception
      */
+    #[JsonProperty("exception")]
     public ?ExceptionInfo $exception;
 
     /**
-     * @param string $stdout
      * @param mixed $exceptionV2
+     * @param string $stdout
      * @param ?ExceptionInfo $exception
      */
     public function __construct(
-        string $stdout,
         mixed $exceptionV2,
+        string $stdout,
         ?ExceptionInfo $exception = null,
     ) {
-        $this->stdout = $stdout;
         $this->exceptionV2 = $exceptionV2;
+        $this->stdout = $stdout;
         $this->exception = $exception;
     }
 }

@@ -67,7 +67,7 @@ class ProblemClient
 
     /**
     * Returns latest version of a problem
-     * @param string $problemId
+     * @param string problemId
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -89,8 +89,8 @@ class ProblemClient
 
     /**
     * Returns requested version of a problem
-     * @param string $problemId
-     * @param int $problemVersion
+     * @param string problemId
+     * @param int problemVersion
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

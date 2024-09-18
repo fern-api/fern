@@ -5,33 +5,33 @@ namespace Seed\Submission\Types;
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 use Seed\Commons\Types\Language;
-use Seed\Core\DateType;
 use DateTime;
+use Seed\Core\DateType;
 
 class GetSubmissionStateResponse extends SerializableType
 {
-    #[JsonProperty("submission")]
     /**
      * @var string $submission
      */
+    #[JsonProperty("submission")]
     public string $submission;
 
-    #[JsonProperty("language")]
     /**
      * @var Language $language
      */
+    #[JsonProperty("language")]
     public Language $language;
 
-    #[JsonProperty("submissionTypeState")]
     /**
      * @var mixed $submissionTypeState
      */
+    #[JsonProperty("submissionTypeState")]
     public mixed $submissionTypeState;
 
-    #[JsonProperty("timeSubmitted"), DateType(DateType::TYPE_DATETIME)]
     /**
      * @var ?DateTime $timeSubmitted
      */
+    #[JsonProperty("timeSubmitted"), DateType(DateType::TYPE_DATETIME)]
     public ?DateTime $timeSubmitted;
 
     /**

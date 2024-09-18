@@ -7,16 +7,16 @@ use Seed\Core\JsonProperty;
 
 class StuntDouble extends SerializableType
 {
-    #[JsonProperty("name")]
     /**
      * @var string $name
      */
+    #[JsonProperty("name")]
     public string $name;
 
-    #[JsonProperty("actorOrActressId")]
     /**
      * @var string $actorOrActressId
      */
+    #[JsonProperty("actorOrActressId")]
     public string $actorOrActressId;
 
     /**

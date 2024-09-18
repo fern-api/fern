@@ -7,16 +7,16 @@ use Seed\Core\JsonProperty;
 
 class Name extends SerializableType
 {
-    #[JsonProperty("id")]
     /**
      * @var string $id
      */
+    #[JsonProperty("id")]
     public string $id;
 
-    #[JsonProperty("value")]
     /**
      * @var string $value
      */
+    #[JsonProperty("value")]
     public string $value;
 
     /**

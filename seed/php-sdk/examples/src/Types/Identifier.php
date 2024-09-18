@@ -7,22 +7,22 @@ use Seed\Core\JsonProperty;
 
 class Identifier extends SerializableType
 {
-    #[JsonProperty("type")]
     /**
      * @var mixed $type
      */
+    #[JsonProperty("type")]
     public mixed $type;
 
-    #[JsonProperty("value")]
     /**
      * @var string $value
      */
+    #[JsonProperty("value")]
     public string $value;
 
-    #[JsonProperty("label")]
     /**
      * @var string $label
      */
+    #[JsonProperty("label")]
     public string $label;
 
     /**

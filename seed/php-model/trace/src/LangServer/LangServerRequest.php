@@ -7,10 +7,10 @@ use Seed\Core\JsonProperty;
 
 class LangServerRequest extends SerializableType
 {
-    #[JsonProperty("request")]
     /**
      * @var mixed $request
      */
+    #[JsonProperty("request")]
     public mixed $request;
 
     /**

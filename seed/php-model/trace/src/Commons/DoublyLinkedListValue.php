@@ -5,20 +5,19 @@ namespace Seed\Commons;
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 use Seed\Core\ArrayType;
-use Seed\Commons\DoublyLinkedListNodeValue;
 
 class DoublyLinkedListValue extends SerializableType
 {
-    #[JsonProperty("nodes"), ArrayType(["string" => DoublyLinkedListNodeValue::class])]
     /**
      * @var array<string, DoublyLinkedListNodeValue> $nodes
      */
+    #[JsonProperty("nodes"), ArrayType(["string" => DoublyLinkedListNodeValue::class])]
     public array $nodes;
 
-    #[JsonProperty("head")]
     /**
      * @var ?string $head
      */
+    #[JsonProperty("head")]
     public ?string $head;
 
     /**

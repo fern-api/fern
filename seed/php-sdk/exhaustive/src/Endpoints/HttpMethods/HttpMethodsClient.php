@@ -26,7 +26,7 @@ class HttpMethodsClient
     }
 
     /**
-     * @param string $id
+     * @param string id
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -47,7 +47,7 @@ class HttpMethodsClient
     }
 
     /**
-     * @param ObjectWithRequiredField $request
+     * @param ObjectWithRequiredField request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -68,8 +68,8 @@ class HttpMethodsClient
     }
 
     /**
-     * @param string $id
-     * @param ObjectWithRequiredField $request
+     * @param string id
+     * @param ObjectWithRequiredField request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -90,8 +90,8 @@ class HttpMethodsClient
     }
 
     /**
-     * @param string $id
-     * @param ObjectWithOptionalField $request
+     * @param string id
+     * @param ObjectWithOptionalField request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -112,7 +112,7 @@ class HttpMethodsClient
     }
 
     /**
-     * @param string $id
+     * @param string id
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

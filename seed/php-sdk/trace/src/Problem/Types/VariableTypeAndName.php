@@ -7,16 +7,16 @@ use Seed\Core\JsonProperty;
 
 class VariableTypeAndName extends SerializableType
 {
-    #[JsonProperty("variableType")]
     /**
      * @var mixed $variableType
      */
+    #[JsonProperty("variableType")]
     public mixed $variableType;
 
-    #[JsonProperty("name")]
     /**
      * @var string $name
      */
+    #[JsonProperty("name")]
     public string $name;
 
     /**

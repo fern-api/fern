@@ -5,58 +5,57 @@ namespace Seed;
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 use Seed\Core\ArrayType;
-use Seed\IndexedData;
 
 class QueryColumn extends SerializableType
 {
-    #[JsonProperty("values"), ArrayType(["float"])]
     /**
      * @var array<float> $values
      */
+    #[JsonProperty("values"), ArrayType(["float"])]
     public array $values;
 
-    #[JsonProperty("topK")]
-    /**
-     * @var ?int $topK
-     */
-    public ?int $topK;
-
-    #[JsonProperty("namespace")]
-    /**
-     * @var ?string $namespace
-     */
-    public ?string $namespace;
-
-    #[JsonProperty("filter")]
     /**
      * @var mixed $filter
      */
+    #[JsonProperty("filter")]
     public mixed $filter;
 
-    #[JsonProperty("indexedData")]
+    /**
+     * @var ?int $topK
+     */
+    #[JsonProperty("topK")]
+    public ?int $topK;
+
+    /**
+     * @var ?string $namespace
+     */
+    #[JsonProperty("namespace")]
+    public ?string $namespace;
+
     /**
      * @var ?IndexedData $indexedData
      */
+    #[JsonProperty("indexedData")]
     public ?IndexedData $indexedData;
 
     /**
      * @param array<float> $values
+     * @param mixed $filter
      * @param ?int $topK
      * @param ?string $namespace
-     * @param mixed $filter
      * @param ?IndexedData $indexedData
      */
     public function __construct(
         array $values,
+        mixed $filter,
         ?int $topK = null,
         ?string $namespace = null,
-        mixed $filter,
         ?IndexedData $indexedData = null,
     ) {
         $this->values = $values;
+        $this->filter = $filter;
         $this->topK = $topK;
         $this->namespace = $namespace;
-        $this->filter = $filter;
         $this->indexedData = $indexedData;
     }
 }

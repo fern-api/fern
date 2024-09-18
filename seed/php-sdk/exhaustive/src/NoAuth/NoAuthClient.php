@@ -25,7 +25,7 @@ class NoAuthClient
 
     /**
     * POST request with no auth
-     * @param mixed $request
+     * @param mixed request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

@@ -7,16 +7,16 @@ use Seed\Core\JsonProperty;
 
 class KeyValuePair extends SerializableType
 {
-    #[JsonProperty("key")]
     /**
      * @var mixed $key
      */
+    #[JsonProperty("key")]
     public mixed $key;
 
-    #[JsonProperty("value")]
     /**
      * @var mixed $value
      */
+    #[JsonProperty("value")]
     public mixed $value;
 
     /**

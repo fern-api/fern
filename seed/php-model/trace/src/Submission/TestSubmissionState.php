@@ -4,33 +4,33 @@ namespace Seed\Submission;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
 use Seed\Commons\TestCase;
+use Seed\Core\ArrayType;
 
 class TestSubmissionState extends SerializableType
 {
-    #[JsonProperty("problemId")]
     /**
      * @var string $problemId
      */
+    #[JsonProperty("problemId")]
     public string $problemId;
 
-    #[JsonProperty("defaultTestCases"), ArrayType([TestCase::class])]
     /**
      * @var array<TestCase> $defaultTestCases
      */
+    #[JsonProperty("defaultTestCases"), ArrayType([TestCase::class])]
     public array $defaultTestCases;
 
-    #[JsonProperty("customTestCases"), ArrayType([TestCase::class])]
     /**
      * @var array<TestCase> $customTestCases
      */
+    #[JsonProperty("customTestCases"), ArrayType([TestCase::class])]
     public array $customTestCases;
 
-    #[JsonProperty("status")]
     /**
      * @var mixed $status
      */
+    #[JsonProperty("status")]
     public mixed $status;
 
     /**

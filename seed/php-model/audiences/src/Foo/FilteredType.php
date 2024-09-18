@@ -7,16 +7,16 @@ use Seed\Core\JsonProperty;
 
 class FilteredType extends SerializableType
 {
-    #[JsonProperty("private_property")]
     /**
      * @var int $privateProperty
      */
+    #[JsonProperty("private_property")]
     public int $privateProperty;
 
-    #[JsonProperty("public_property")]
     /**
      * @var ?string $publicProperty
      */
+    #[JsonProperty("public_property")]
     public ?string $publicProperty;
 
     /**

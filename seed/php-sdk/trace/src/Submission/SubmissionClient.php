@@ -26,7 +26,7 @@ class SubmissionClient
 
     /**
     * Returns sessionId and execution server URL for session. Spins up server.
-     * @param Language $language
+     * @param Language language
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -48,7 +48,7 @@ class SubmissionClient
 
     /**
     * Returns execution server URL for session. Returns empty if session isn't registered.
-     * @param string $sessionId
+     * @param string sessionId
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -70,7 +70,7 @@ class SubmissionClient
 
     /**
     * Stops execution session.
-     * @param string $sessionId
+     * @param string sessionId
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

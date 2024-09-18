@@ -25,7 +25,7 @@ class ServiceClient
 
     /**
     * This endpoint checks the health of a resource.
-     * @param string $id The id to check
+     * @param string id The id to check
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

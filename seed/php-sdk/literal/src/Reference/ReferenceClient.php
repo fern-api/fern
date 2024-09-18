@@ -25,7 +25,7 @@ class ReferenceClient
     }
 
     /**
-     * @param SendRequest $request
+     * @param SendRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

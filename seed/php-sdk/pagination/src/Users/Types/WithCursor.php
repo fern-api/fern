@@ -7,10 +7,10 @@ use Seed\Core\JsonProperty;
 
 class WithCursor extends SerializableType
 {
-    #[JsonProperty("cursor")]
     /**
      * @var ?string $cursor
      */
+    #[JsonProperty("cursor")]
     public ?string $cursor;
 
     /**

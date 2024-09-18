@@ -4,20 +4,19 @@ namespace Seed\Submission\Types;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\Submission\Types\WorkspaceRunDetails;
 
 class WorkspaceRanResponse extends SerializableType
 {
-    #[JsonProperty("submissionId")]
     /**
      * @var string $submissionId
      */
+    #[JsonProperty("submissionId")]
     public string $submissionId;
 
-    #[JsonProperty("runDetails")]
     /**
      * @var WorkspaceRunDetails $runDetails
      */
+    #[JsonProperty("runDetails")]
     public WorkspaceRunDetails $runDetails;
 
     /**

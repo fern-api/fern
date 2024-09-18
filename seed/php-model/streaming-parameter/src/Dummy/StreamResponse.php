@@ -7,16 +7,16 @@ use Seed\Core\JsonProperty;
 
 class StreamResponse extends SerializableType
 {
-    #[JsonProperty("id")]
     /**
      * @var string $id
      */
+    #[JsonProperty("id")]
     public string $id;
 
-    #[JsonProperty("name")]
     /**
      * @var ?string $name
      */
+    #[JsonProperty("name")]
     public ?string $name;
 
     /**

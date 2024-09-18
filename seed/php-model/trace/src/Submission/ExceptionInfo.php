@@ -7,22 +7,22 @@ use Seed\Core\JsonProperty;
 
 class ExceptionInfo extends SerializableType
 {
-    #[JsonProperty("exceptionType")]
     /**
      * @var string $exceptionType
      */
+    #[JsonProperty("exceptionType")]
     public string $exceptionType;
 
-    #[JsonProperty("exceptionMessage")]
     /**
      * @var string $exceptionMessage
      */
+    #[JsonProperty("exceptionMessage")]
     public string $exceptionMessage;
 
-    #[JsonProperty("exceptionStacktrace")]
     /**
      * @var string $exceptionStacktrace
      */
+    #[JsonProperty("exceptionStacktrace")]
     public string $exceptionStacktrace;
 
     /**

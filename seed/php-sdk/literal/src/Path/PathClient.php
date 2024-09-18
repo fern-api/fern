@@ -24,7 +24,7 @@ class PathClient
     }
 
     /**
-     * @param string $id
+     * @param string id
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

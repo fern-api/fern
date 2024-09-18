@@ -4,35 +4,34 @@ namespace Seed\Types;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\Types\Shape;
 
 /**
 * Defines properties with default values and validation rules.
  */
 class Type extends SerializableType
 {
-    #[JsonProperty("decimal")]
     /**
      * @var float $decimal
      */
+    #[JsonProperty("decimal")]
     public float $decimal;
 
-    #[JsonProperty("even")]
     /**
      * @var int $even
      */
+    #[JsonProperty("even")]
     public int $even;
 
-    #[JsonProperty("name")]
     /**
      * @var string $name
      */
+    #[JsonProperty("name")]
     public string $name;
 
-    #[JsonProperty("shape")]
     /**
      * @var Shape $shape
      */
+    #[JsonProperty("shape")]
     public Shape $shape;
 
     /**

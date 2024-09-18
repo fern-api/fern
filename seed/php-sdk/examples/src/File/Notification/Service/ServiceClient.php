@@ -24,7 +24,7 @@ class ServiceClient
     }
 
     /**
-     * @param string $notificationId
+     * @param string notificationId
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

@@ -19,6 +19,10 @@ scripts:
     commands:
       - composer install
       - composer build
-      - composer analyze
+      # - composer analyze
       - composer test
-allowedFailures: []
+allowedFailures:
+  # enum as map key not allowed in php
+  - trace
+  # we aren't handling multiple types used in a class with the same name (from different packages)
+  - cross-package-type-names

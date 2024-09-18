@@ -7,10 +7,10 @@ use Seed\Core\JsonProperty;
 
 class WorkspaceTracedUpdate extends SerializableType
 {
-    #[JsonProperty("traceResponsesSize")]
     /**
      * @var int $traceResponsesSize
      */
+    #[JsonProperty("traceResponsesSize")]
     public int $traceResponsesSize;
 
     /**

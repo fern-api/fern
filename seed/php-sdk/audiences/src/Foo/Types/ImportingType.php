@@ -7,10 +7,10 @@ use Seed\Core\JsonProperty;
 
 class ImportingType extends SerializableType
 {
-    #[JsonProperty("imported")]
     /**
      * @var string $imported
      */
+    #[JsonProperty("imported")]
     public string $imported;
 
     /**

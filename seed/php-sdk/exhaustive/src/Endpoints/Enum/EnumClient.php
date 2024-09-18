@@ -25,7 +25,7 @@ class EnumClient
     }
 
     /**
-     * @param WeatherReport $request
+     * @param WeatherReport request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

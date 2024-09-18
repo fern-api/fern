@@ -5,14 +5,13 @@ namespace Seed\Submission;
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 use Seed\Core\ArrayType;
-use Seed\Submission\WorkspaceSubmissionUpdate;
 
 class WorkspaceSubmissionStatusV2 extends SerializableType
 {
-    #[JsonProperty("updates"), ArrayType([WorkspaceSubmissionUpdate::class])]
     /**
      * @var array<WorkspaceSubmissionUpdate> $updates
      */
+    #[JsonProperty("updates"), ArrayType([WorkspaceSubmissionUpdate::class])]
     public array $updates;
 
     /**

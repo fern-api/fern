@@ -7,16 +7,16 @@ use Seed\Core\JsonProperty;
 
 class GradedTestCaseUpdate extends SerializableType
 {
-    #[JsonProperty("testCaseId")]
     /**
      * @var string $testCaseId
      */
+    #[JsonProperty("testCaseId")]
     public string $testCaseId;
 
-    #[JsonProperty("grade")]
     /**
      * @var mixed $grade
      */
+    #[JsonProperty("grade")]
     public mixed $grade;
 
     /**

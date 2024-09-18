@@ -26,32 +26,32 @@ class UserClient
     }
 
     /**
-     * @param GetUsersRequest $request
+     * @param GetUsersRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function getUsername(GetUsersRequest $request, ?array $options = null): mixed
     {
         $query = [];
-        $query['limit'] = $request->limit;
-        $query['id'] = $request->id;
-        $query['date'] = $request->date->format(Constant::DateFormat);
-        $query['deadline'] = $request->deadline->format(Constant::DateTimeFormat);
-        $query['bytes'] = $request->bytes;
-        $query['user'] = $request->user;
-        $query['userList'] = $request->userList;
-        $query['keyValue'] = $request->keyValue;
-        $query['nestedUser'] = $request->nestedUser;
-        $query['excludeUser'] = $request->excludeUser;
-        $query['filter'] = $request->filter;
-        if ($request->optionalDeadline != null) {
-            $query['optionalDeadline'] = $request->optionalDeadline;
+        $query['limit'] = request->limit;
+        $query['id'] = request->id;
+        $query['date'] = request->date->format(Constant::DateFormat);
+        $query['deadline'] = request->deadline->format(Constant::DateTimeFormat);
+        $query['bytes'] = request->bytes;
+        $query['user'] = request->user;
+        $query['userList'] = request->userList;
+        $query['keyValue'] = request->keyValue;
+        $query['nestedUser'] = request->nestedUser;
+        $query['excludeUser'] = request->excludeUser;
+        $query['filter'] = request->filter;
+        if (request->optionalDeadline != null) {
+            $query['optionalDeadline'] = request->optionalDeadline;
         }
-        if ($request->optionalString != null) {
-            $query['optionalString'] = $request->optionalString;
+        if (request->optionalString != null) {
+            $query['optionalString'] = request->optionalString;
         }
-        if ($request->optionalUser != null) {
-            $query['optionalUser'] = $request->optionalUser;
+        if (request->optionalUser != null) {
+            $query['optionalUser'] = request->optionalUser;
         }
         try {
             $response = $this->client->sendRequest();

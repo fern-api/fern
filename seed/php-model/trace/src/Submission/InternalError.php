@@ -4,14 +4,13 @@ namespace Seed\Submission;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\Submission\ExceptionInfo;
 
 class InternalError extends SerializableType
 {
-    #[JsonProperty("exceptionInfo")]
     /**
      * @var ExceptionInfo $exceptionInfo
      */
+    #[JsonProperty("exceptionInfo")]
     public ExceptionInfo $exceptionInfo;
 
     /**

@@ -50,8 +50,8 @@ export class Field extends AstNode {
     }
 
     public write(writer: Writer): void {
-        this.writeAttributesIfPresent(writer);
         this.writeComment(writer);
+        this.writeAttributesIfPresent(writer);
 
         writer.write(`${this.access} `);
         if (this.readonly_) {

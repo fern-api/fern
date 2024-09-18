@@ -4,34 +4,32 @@ namespace Seed\V2\Problem;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\V2\Problem\TestCaseMetadata;
 use Seed\Core\ArrayType;
-use Seed\V2\Problem\TestCaseExpects;
 
 class TestCaseV2 extends SerializableType
 {
-    #[JsonProperty("metadata")]
     /**
      * @var TestCaseMetadata $metadata
      */
+    #[JsonProperty("metadata")]
     public TestCaseMetadata $metadata;
 
-    #[JsonProperty("implementation")]
     /**
      * @var mixed $implementation
      */
+    #[JsonProperty("implementation")]
     public mixed $implementation;
 
-    #[JsonProperty("arguments"), ArrayType(["string" => "mixed"])]
     /**
      * @var array<string, mixed> $arguments
      */
+    #[JsonProperty("arguments"), ArrayType(["string" => "mixed"])]
     public array $arguments;
 
-    #[JsonProperty("expects")]
     /**
      * @var ?TestCaseExpects $expects
      */
+    #[JsonProperty("expects")]
     public ?TestCaseExpects $expects;
 
     /**

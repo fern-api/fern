@@ -26,15 +26,15 @@ class ServiceClient
 
     /**
     * This endpoint returns a file by its name.
-     * @param string $filename This is a filename
-     * @param GetFileRequest $request
+     * @param string filename This is a filename
+     * @param GetFileRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function getFile(string $filename, GetFileRequest $request, ?array $options = null): mixed
     {
         $headers = [];
-        $headers['X-File-API-Version'] = $request->xFileApiVersion;
+        $headers['X-File-API-Version'] = request->xFileApiVersion;
         try {
             $response = $this->client->sendRequest();
             $statusCode = $response->getStatusCode();

@@ -3,15 +3,15 @@
 namespace Seed\FolderA\Service;
 
 use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
 use Seed\FolderB\Common\Foo;
+use Seed\Core\JsonProperty;
 
 class Response extends SerializableType
 {
-    #[JsonProperty("foo")]
     /**
      * @var ?Foo $foo
      */
+    #[JsonProperty("foo")]
     public ?Foo $foo;
 
     /**

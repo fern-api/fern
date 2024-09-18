@@ -7,10 +7,10 @@ use Seed\Core\JsonProperty;
 
 class ExistingSubmissionExecuting extends SerializableType
 {
-    #[JsonProperty("submissionId")]
     /**
      * @var string $submissionId
      */
+    #[JsonProperty("submissionId")]
     public string $submissionId;
 
     /**

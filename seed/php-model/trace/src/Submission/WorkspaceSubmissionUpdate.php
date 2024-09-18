@@ -3,22 +3,22 @@
 namespace Seed\Submission;
 
 use Seed\Core\SerializableType;
+use DateTime;
 use Seed\Core\JsonProperty;
 use Seed\Core\DateType;
-use DateTime;
 
 class WorkspaceSubmissionUpdate extends SerializableType
 {
-    #[JsonProperty("updateTime"), DateType(DateType::TYPE_DATETIME)]
     /**
      * @var DateTime $updateTime
      */
+    #[JsonProperty("updateTime"), DateType(DateType::TYPE_DATETIME)]
     public DateTime $updateTime;
 
-    #[JsonProperty("updateInfo")]
     /**
      * @var mixed $updateInfo
      */
+    #[JsonProperty("updateInfo")]
     public mixed $updateInfo;
 
     /**

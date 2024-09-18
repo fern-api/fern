@@ -3,17 +3,16 @@
 namespace Seed\Submission;
 
 use Seed\Core\SerializableType;
+use Seed\Commons\Language;
 use Seed\Core\JsonProperty;
 use Seed\Core\ArrayType;
-use Seed\Commons\Language;
-use Seed\Submission\WorkspaceFiles;
 
 class WorkspaceStarterFilesResponse extends SerializableType
 {
-    #[JsonProperty("files"), ArrayType([Language::class => WorkspaceFiles::class])]
     /**
      * @var array<Language, WorkspaceFiles> $files
      */
+    #[JsonProperty("files"), ArrayType([Language::class => WorkspaceFiles::class])]
     public array $files;
 
     /**

@@ -7,16 +7,16 @@ use Seed\Core\JsonProperty;
 
 class FunctionImplementation extends SerializableType
 {
-    #[JsonProperty("impl")]
     /**
      * @var string $impl
      */
+    #[JsonProperty("impl")]
     public string $impl;
 
-    #[JsonProperty("imports")]
     /**
      * @var ?string $imports
      */
+    #[JsonProperty("imports")]
     public ?string $imports;
 
     /**

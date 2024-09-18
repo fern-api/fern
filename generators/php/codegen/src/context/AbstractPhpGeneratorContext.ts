@@ -94,11 +94,19 @@ export abstract class AbstractPhpGeneratorContext<
     }
 
     public getParameterName(name: Name): string {
-        return `$${name.camelCase.unsafeName}`;
+        return this.prependUnderscoreIfNeeded(name.camelCase.unsafeName);
     }
 
     public getPropertyName(name: Name): string {
-        return name.camelCase.unsafeName;
+        return this.prependUnderscoreIfNeeded(name.camelCase.unsafeName);
+    }
+
+    private prependUnderscoreIfNeeded(input: string): string {
+        // https://www.php.net/manual/en/language.variables.basics.php
+        if (!/^[a-zA-Z_]/.test(input)) {
+            return `_${input}`;
+        }
+        return input;
     }
 
     public getLiteralAsString(literal: Literal): string {

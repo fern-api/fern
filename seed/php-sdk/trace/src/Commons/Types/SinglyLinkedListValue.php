@@ -5,20 +5,19 @@ namespace Seed\Commons\Types;
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 use Seed\Core\ArrayType;
-use Seed\Commons\Types\SinglyLinkedListNodeValue;
 
 class SinglyLinkedListValue extends SerializableType
 {
-    #[JsonProperty("nodes"), ArrayType(["string" => SinglyLinkedListNodeValue::class])]
     /**
      * @var array<string, SinglyLinkedListNodeValue> $nodes
      */
+    #[JsonProperty("nodes"), ArrayType(["string" => SinglyLinkedListNodeValue::class])]
     public array $nodes;
 
-    #[JsonProperty("head")]
     /**
      * @var ?string $head
      */
+    #[JsonProperty("head")]
     public ?string $head;
 
     /**

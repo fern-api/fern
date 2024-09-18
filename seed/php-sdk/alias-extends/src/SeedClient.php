@@ -33,7 +33,7 @@ class SeedClient
     }
 
     /**
-     * @param InlinedChildRequest $request
+     * @param InlinedChildRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

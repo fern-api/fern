@@ -24,7 +24,7 @@ class UnionClient
     }
 
     /**
-     * @param string $id
+     * @param string id
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -45,7 +45,7 @@ class UnionClient
     }
 
     /**
-     * @param mixed $request
+     * @param mixed request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

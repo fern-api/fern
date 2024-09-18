@@ -35,7 +35,7 @@ class SeedClient
     }
 
     /**
-     * @param CreateRequest $request
+     * @param CreateRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -56,16 +56,16 @@ class SeedClient
     }
 
     /**
-     * @param GetRequest $request
+     * @param GetRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function get(GetRequest $request, ?array $options = null): mixed
     {
         $query = [];
-        $query['decimal'] = $request->decimal;
-        $query['even'] = $request->even;
-        $query['name'] = $request->name;
+        $query['decimal'] = request->decimal;
+        $query['even'] = request->even;
+        $query['name'] = request->name;
         try {
             $response = $this->client->sendRequest();
             $statusCode = $response->getStatusCode();

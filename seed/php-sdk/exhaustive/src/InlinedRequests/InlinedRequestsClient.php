@@ -26,7 +26,7 @@ class InlinedRequestsClient
 
     /**
     * POST with custom object in request body, response is an object
-     * @param PostWithObjectBody $request
+     * @param PostWithObjectBody request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

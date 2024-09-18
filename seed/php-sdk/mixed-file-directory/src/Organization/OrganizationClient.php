@@ -26,7 +26,7 @@ class OrganizationClient
 
     /**
     * Create a new organization.
-     * @param CreateOrganizationRequest $request
+     * @param CreateOrganizationRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

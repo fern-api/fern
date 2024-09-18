@@ -28,7 +28,7 @@ class ParamsClient
 
     /**
     * GET with path param
-     * @param string $param
+     * @param string param
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -50,15 +50,15 @@ class ParamsClient
 
     /**
     * GET with query param
-     * @param GetWithQuery $request
+     * @param GetWithQuery request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function getWithQuery(GetWithQuery $request, ?array $options = null): mixed
     {
         $query = [];
-        $query['query'] = $request->query;
-        $query['number'] = $request->number;
+        $query['query'] = request->query;
+        $query['number'] = request->number;
         try {
             $response = $this->client->sendRequest();
             $statusCode = $response->getStatusCode();
@@ -73,15 +73,15 @@ class ParamsClient
 
     /**
     * GET with multiple of same query param
-     * @param GetWithMultipleQuery $request
+     * @param GetWithMultipleQuery request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function getWithAllowMultipleQuery(GetWithMultipleQuery $request, ?array $options = null): mixed
     {
         $query = [];
-        $query['query'] = $request->query;
-        $query['numer'] = $request->numer;
+        $query['query'] = request->query;
+        $query['numer'] = request->numer;
         try {
             $response = $this->client->sendRequest();
             $statusCode = $response->getStatusCode();
@@ -96,15 +96,15 @@ class ParamsClient
 
     /**
     * GET with path and query params
-     * @param string $param
-     * @param GetWithPathAndQuery $request
+     * @param string param
+     * @param GetWithPathAndQuery request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function getWithPathAndQuery(string $param, GetWithPathAndQuery $request, ?array $options = null): mixed
     {
         $query = [];
-        $query['query'] = $request->query;
+        $query['query'] = request->query;
         try {
             $response = $this->client->sendRequest();
             $statusCode = $response->getStatusCode();
@@ -119,8 +119,8 @@ class ParamsClient
 
     /**
     * PUT to update with path param
-     * @param string $param
-     * @param string $request
+     * @param string param
+     * @param string request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

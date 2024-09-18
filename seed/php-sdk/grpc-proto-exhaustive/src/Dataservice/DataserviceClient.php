@@ -31,7 +31,7 @@ class DataserviceClient
     }
 
     /**
-     * @param UploadRequest $request
+     * @param UploadRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -52,7 +52,7 @@ class DataserviceClient
     }
 
     /**
-     * @param DeleteRequest $request
+     * @param DeleteRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -73,7 +73,7 @@ class DataserviceClient
     }
 
     /**
-     * @param DescribeRequest $request
+     * @param DescribeRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -94,18 +94,18 @@ class DataserviceClient
     }
 
     /**
-     * @param FetchRequest $request
+     * @param FetchRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function fetch(FetchRequest $request, ?array $options = null): mixed
     {
         $query = [];
-        if ($request->ids != null) {
-            $query['ids'] = $request->ids;
+        if (request->ids != null) {
+            $query['ids'] = request->ids;
         }
-        if ($request->namespace != null) {
-            $query['namespace'] = $request->namespace;
+        if (request->namespace != null) {
+            $query['namespace'] = request->namespace;
         }
         try {
             $response = $this->client->sendRequest();
@@ -122,24 +122,24 @@ class DataserviceClient
     }
 
     /**
-     * @param ListRequest $request
+     * @param ListRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function list(ListRequest $request, ?array $options = null): mixed
     {
         $query = [];
-        if ($request->prefix != null) {
-            $query['prefix'] = $request->prefix;
+        if (request->prefix != null) {
+            $query['prefix'] = request->prefix;
         }
-        if ($request->limit != null) {
-            $query['limit'] = $request->limit;
+        if (request->limit != null) {
+            $query['limit'] = request->limit;
         }
-        if ($request->paginationToken != null) {
-            $query['paginationToken'] = $request->paginationToken;
+        if (request->paginationToken != null) {
+            $query['paginationToken'] = request->paginationToken;
         }
-        if ($request->namespace != null) {
-            $query['namespace'] = $request->namespace;
+        if (request->namespace != null) {
+            $query['namespace'] = request->namespace;
         }
         try {
             $response = $this->client->sendRequest();
@@ -156,7 +156,7 @@ class DataserviceClient
     }
 
     /**
-     * @param QueryRequest $request
+     * @param QueryRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
@@ -177,7 +177,7 @@ class DataserviceClient
     }
 
     /**
-     * @param UpdateRequest $request
+     * @param UpdateRequest request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */

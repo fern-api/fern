@@ -5,14 +5,13 @@ namespace Seed;
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 use Seed\Core\ArrayType;
-use Seed\Node;
 
 class Tree extends SerializableType
 {
-    #[JsonProperty("nodes"), ArrayType([Node::class])]
     /**
      * @var ?array<Node> $nodes
      */
+    #[JsonProperty("nodes"), ArrayType([Node::class])]
     public ?array $nodes;
 
     /**
