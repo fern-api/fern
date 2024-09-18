@@ -7,5 +7,3 @@ types:
         docs: Write access
     source:
       openapi: openapi/trains/openapi.yml
-imports:
-  root: trains/__package__.yml

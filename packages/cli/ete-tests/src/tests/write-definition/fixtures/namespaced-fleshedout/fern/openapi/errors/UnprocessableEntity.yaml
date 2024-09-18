@@ -1,0 +1,12 @@
+description: |
+  This error is returned when the request is not well formed. This could be because:
+    - JSON is invalid
+    - The request is missing required fields
+    - The request contains an invalid combination of fields
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        data:
+          type: string

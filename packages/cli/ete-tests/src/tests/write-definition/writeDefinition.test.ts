@@ -18,6 +18,10 @@ describe("validate namespaced API", () => {
     itFixture("namespaced");
 });
 
+describe("validate namespaced API", () => {
+    itFixture("namespaced-fleshedout");
+});
+
 function itFixture(fixtureName: string) {
     it(
         // eslint-disable-next-line jest/valid-title
@@ -34,6 +38,10 @@ function itFixture(fixtureName: string) {
             });
 
             expect(await getDirectoryContentsForSnapshot(AbsoluteFilePath.of(definitionOutputPath))).toMatchSnapshot();
+
+            await runFernCli(["check", "--log-level", "debug"], {
+                cwd: fixturePath
+            });
         },
         90_000
     );
