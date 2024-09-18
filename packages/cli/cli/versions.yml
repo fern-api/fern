@@ -1,4 +1,48 @@
 - changelogEntry:
+    - summary: | 
+        The OpenAPI importer now supports handling encoding on multipart requests. 
+        Previously, the generators would not respect the `contentType` field for 
+        each form input. But, now they do. 
+        ```yml 
+        requestBody:
+          content:
+            multipart/form-data:
+              schema:
+                type: object
+                properties:
+                  file:
+                    type: string
+                    format: binary
+                    description: The file to upload                 
+              encoding: 
+                file:   
+                  contentType: "application/octet-stream"      
+        ```
+      type: fix
+    - summary: | 
+        The OpenAPI importer now correctly parses descriptions of multipart 
+        form requests. Previously these descriptions would be ignored. 
+
+        For example, previously the description `The file to upload` would be 
+        ignored in the xample below. 
+        ```yml 
+        requestBody:
+          content:
+            multipart/form-data:
+              schema:
+                type: object
+                properties:
+                  file:
+                    type: string
+                    format: binary
+                    description: The file to upload                      
+        ```
+      type: fix      
+
+  irVersion: 53
+  version: 0.42.3
+
+- changelogEntry:
     - summary: Error bodies are now appropriately namespaced as well!
       type: fix
   irVersion: 53
