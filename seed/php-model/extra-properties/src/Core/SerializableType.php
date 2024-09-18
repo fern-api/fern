@@ -176,7 +176,7 @@ abstract class SerializableType
     private static function serializeList(array $data, array $type): array
     {
         $valueType = $type[0];
-        return array_map(fn($item) => self::serializeValue($item, $valueType), $data);
+        return array_map(fn ($item) => self::serializeValue($item, $valueType), $data);
     }
 
     /**
@@ -409,6 +409,6 @@ abstract class SerializableType
     private static function deserializeList(array $data, array $type): array
     {
         $valueType = $type[0];
-        return array_map(fn($item) => self::deserializeValue($item, $valueType), $data);
+        return array_map(fn ($item) => self::deserializeValue($item, $valueType), $data);
     }
 }

@@ -1,4 +1,4 @@
-import { DeclaredErrorName, HttpService, ServiceId, Subpackage, SubpackageId, TypeId } from "@fern-fern/ir-sdk/api";
+import { Name, HttpEndpoint, HttpService, ServiceId, Subpackage, SubpackageId, TypeId } from "@fern-fern/ir-sdk/api";
 import { AbstractPhpGeneratorContext, FileLocation } from "@fern-api/php-codegen";
 import { GeneratorNotificationService } from "@fern-api/generator-commons";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -8,11 +8,12 @@ import { AsIsFiles, php } from "@fern-api/php-codegen";
 import { camelCase, upperFirst } from "lodash-es";
 import { RawClient } from "./core/RawClient";
 import { GuzzleClient } from "./external/GuzzleClient";
-import { RelativeFilePath } from "@fern-api/fs-utils";
 import { ErrorId, ErrorDeclaration } from "@fern-fern/ir-sdk/api";
 import { TYPES_DIRECTORY, ERRORS_DIRECTORY, REQUESTS_DIRECTORY } from "./constants";
+import { EndpointGenerator } from "./endpoint/EndpointGenerator";
 
 export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomConfigSchema> {
+    public endpointGenerator: EndpointGenerator;
     public guzzleClient: GuzzleClient;
     public rawClient: RawClient;
     public constructor(
@@ -22,6 +23,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(ir, config, customConfig, generatorNotificationService);
+        this.endpointGenerator = new EndpointGenerator(this);
         this.guzzleClient = new GuzzleClient(this);
         this.rawClient = new RawClient(this);
     }
@@ -42,6 +44,17 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return error;
     }
 
+    public getSubpackageClassReference(subpackage: Subpackage): php.ClassReference {
+        return php.classReference({
+            name: `${subpackage.name.pascalCase.unsafeName}Client`,
+            namespace: this.getFileLocation(subpackage.fernFilepath).namespace
+        });
+    }
+
+    public getEndpointMethodName(endpoint: HttpEndpoint): string {
+        return endpoint.name.camelCase.safeName;
+    }
+
     public getSubpackageField(subpackage: Subpackage): php.Field {
         return php.field({
             name: `$${subpackage.name.camelCase.safeName}`,
@@ -50,11 +63,53 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         });
     }
 
-    public getSubpackageClassReference(subpackage: Subpackage): php.ClassReference {
+    public getExceptionClassReference(): php.ClassReference {
         return php.classReference({
-            name: `${subpackage.name.pascalCase.unsafeName}Client`,
-            namespace: this.getFileLocation(subpackage.fernFilepath).namespace
+            name: "Exception",
+            namespace: this.getGlobalNamespace()
         });
+    }
+
+    public getBaseExceptionClassReference(): php.ClassReference {
+        // TODO: Update this to the generated base exception class.
+        return php.classReference({
+            name: "Exception",
+            namespace: this.getGlobalNamespace()
+        });
+    }
+
+    public getBaseApiExceptionClassReference(): php.ClassReference {
+        // TODO: Update this to the generated base API exception class.
+        return php.classReference({
+            name: "Exception",
+            namespace: this.getGlobalNamespace()
+        });
+    }
+
+    public getJsonExceptionClassReference(): php.ClassReference {
+        return php.classReference({
+            name: "JsonException",
+            namespace: this.getGlobalNamespace()
+        });
+    }
+
+    public getClientExceptionInterfaceClassReference(): php.ClassReference {
+        return php.classReference({
+            name: "ClientExceptionInterface",
+            namespace: "Psr\\Http\\Client"
+        });
+    }
+
+    public getRequestWrapperReference(serviceId: ServiceId, requestName: Name): php.ClassReference {
+        return php.classReference({
+            name: requestName.pascalCase.safeName,
+            namespace: this.getLocationForWrappedRequest(serviceId).namespace
+        });
+    }
+
+    public getDefaultBaseUrlForEndpoint(endpoint: HttpEndpoint): php.AstNode {
+        // TODO: Add support for environments.
+        return php.codeblock("''");
     }
 
     public getRootClientClassName(): string {
@@ -73,6 +128,14 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     public getClientOptionsName(): string {
+        return this.getOptionsName();
+    }
+
+    public getRequestOptionsName(): string {
+        return this.getOptionsName();
+    }
+
+    public getOptionsName(): string {
         return "options";
     }
 
@@ -86,6 +149,16 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             {
                 key: this.getGuzzleClientOptionName(),
                 valueType: php.Type.reference(this.guzzleClient.getClientInterfaceClassReference()),
+                optional: true
+            }
+        ]);
+    }
+
+    public getRequestOptionsType(): php.Type {
+        return php.Type.typeDict([
+            {
+                key: this.getBaseUrlOptionName(),
+                valueType: php.Type.string(),
                 optional: true
             }
         ]);
