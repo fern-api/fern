@@ -103,6 +103,10 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
                 this.generatorsConfiguration?.api?.environments != null
                     ? { ...this.generatorsConfiguration?.api }
                     : undefined,
+            globalHeaderOverrides:
+                this.generatorsConfiguration?.api?.headers != null
+                    ? this.generatorsConfiguration?.api?.headers
+                    : undefined,
             taskContext: context,
             ir: openApiIr,
             enableUniqueErrorsPerEndpoint: settings?.enableUniqueErrorsPerEndpoint ?? false,

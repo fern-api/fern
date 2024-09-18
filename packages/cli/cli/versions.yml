@@ -1,3 +1,21 @@
+- changelogEntry: 
+    - summary: | 
+        The API V2 configuration (in beta) now supports global header 
+        overrides. To specify global headers that are not in your 
+        OpenAPI spec, simply add the following block in your `generators.yml`: 
+
+        ```yml generators.yml
+        api: 
+          headers: 
+            X-API-VERSION: string
+          specs: 
+            - openapi: /path/to/openapi
+              overrides: /path/to/overrides
+        ```
+      type: feat
+  irVersion: 53
+  version: 0.42.3
+
 - changelogEntry:
     - summary: Removes extraneous conditional error within namespacing configuration
       type: fix
