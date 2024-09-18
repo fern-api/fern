@@ -16,7 +16,6 @@ import {
 import { getGeneratorConfig } from "./getGeneratorConfig";
 import { getIntermediateRepresentation } from "./getIntermediateRepresentation";
 import { LocalTaskHandler } from "./LocalTaskHandler";
-
 export interface GeneratorRunResponse {
     /* Path to the generated IR */
     absolutePathToIr: AbsoluteFilePath;
@@ -40,7 +39,8 @@ export async function writeFilesToDiskAndRunGenerator({
     outputVersionOverride,
     writeUnitTests,
     generateOauthClients,
-    generatePaginatedClients
+    generatePaginatedClients,
+    serverless
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -58,6 +58,7 @@ export async function writeFilesToDiskAndRunGenerator({
     writeUnitTests: boolean;
     generateOauthClients: boolean;
     generatePaginatedClients: boolean;
+    serverless: boolean;
 }): Promise<GeneratorRunResponse> {
     const absolutePathToIr = await writeIrToFile({
         workspace,
@@ -110,8 +111,9 @@ export async function writeFilesToDiskAndRunGenerator({
         organization,
         outputVersion: outputVersionOverride,
         keepDocker,
-        generatorInvocation,
         context,
+        serverless,
+        generatorInvocation,
         writeUnitTests,
         generateOauthClients,
         generatePaginatedClients,
@@ -177,7 +179,6 @@ export declare namespace runGenerator {
         workspaceName: string;
         organization: string;
         outputVersion?: string | undefined;
-
         absolutePathToIr: AbsoluteFilePath;
         absolutePathToOutput: AbsoluteFilePath;
         absolutePathToSnippet: AbsoluteFilePath | undefined;
@@ -190,6 +191,7 @@ export declare namespace runGenerator {
         generateOauthClients: boolean;
         generatePaginatedClients: boolean;
         sources: IdentifiableSource[];
+        serverless: boolean;
     }
 }
 
@@ -203,11 +205,13 @@ export async function runGenerator({
     absolutePathToIr,
     absolutePathToWriteConfigJson,
     keepDocker,
+    context,
     generatorInvocation,
     writeUnitTests,
     generateOauthClients,
     generatePaginatedClients,
-    sources
+    sources,
+    serverless
 }: runGenerator.Args): Promise<void> {
     const { name, version, config: customConfig } = generatorInvocation;
     const imageName = `${name}:${version}`;
@@ -234,6 +238,7 @@ export async function runGenerator({
         generatePaginatedClients
     });
     binds.push(...bindsForGenerators);
+    context.logger.info("BIND", binds.toString());
 
     const parsedConfig = await FernGeneratorExecParsing.GeneratorConfig.json(config);
     if (!parsedConfig.ok) {

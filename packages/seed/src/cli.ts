@@ -95,6 +95,11 @@ function addTestCommand(cli: Argv) {
                 .option("log-level", {
                     default: LogLevel.Info,
                     choices: LOG_LEVELS
+                })
+                .option("serverless", {
+                    type: "boolean",
+                    default: false,
+                    description: "Run in serverless mode"
                 }),
         async (argv) => {
             const generators = await loadGeneratorWorkspaces();
@@ -120,6 +125,7 @@ function addTestCommand(cli: Argv) {
                         taskContextFactory,
                         skipScripts: argv.skipScripts,
                         scriptRunner,
+                        serverless: argv.serverless,
                         keepDocker: false // dummy
                     });
                 } else {
@@ -127,6 +133,7 @@ function addTestCommand(cli: Argv) {
                         generator,
                         lock,
                         taskContextFactory,
+                        serverless: argv.serverless,
                         skipScripts: argv.skipScripts,
                         keepDocker: argv.keepDocker,
                         scriptRunner

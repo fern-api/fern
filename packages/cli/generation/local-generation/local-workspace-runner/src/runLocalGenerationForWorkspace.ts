@@ -17,6 +17,7 @@ export async function runLocalGenerationForWorkspace({
     workspace,
     generatorGroup,
     keepDocker,
+    serverless,
     context
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
@@ -24,6 +25,7 @@ export async function runLocalGenerationForWorkspace({
     generatorGroup: generatorsYml.GeneratorGroup;
     keepDocker: boolean;
     context: TaskContext;
+    serverless: boolean;
 }): Promise<void> {
     const workspaceTempDir = await getWorkspaceTempDir();
 
@@ -64,7 +66,8 @@ export async function runLocalGenerationForWorkspace({
                         outputVersionOverride: undefined,
                         writeUnitTests: false,
                         generateOauthClients: false,
-                        generatePaginatedClients: false
+                        generatePaginatedClients: false,
+                        serverless
                     });
                     interactiveTaskContext.logger.info(
                         chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)

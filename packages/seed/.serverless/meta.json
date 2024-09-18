@@ -1,0 +1,79 @@
+{
+  "/Users/chukaebi/fern/packages/seed": {
+    "versionSfCore": null,
+    "versionFramework": "4.3.2",
+    "isWithinCompose": false,
+    "isCompose": false,
+    "composeOrgName": null,
+    "composeResolverProviders": {
+      "default-aws-credential-resolver": "<REDACTED>"
+    },
+    "composeServiceName": null,
+    "servicePath": "/Users/chukaebi/fern/packages/seed",
+    "serviceConfigFileName": "serverless.yml",
+    "service": {
+      "service": "my-service",
+      "provider": {
+        "name": "aws",
+        "runtime": "nodejs18.x",
+        "stage": "dev",
+        "region": "us-east-1",
+        "versionFunctions": true
+      },
+      "functions": {
+        "helloWorld": {
+          "handler": "helloWorld.handler",
+          "events": [
+            {
+              "http": {
+                "path": "hello",
+                "method": "get"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "serviceRawFile": "service: my-service\nprovider:\n  name: aws\n  runtime: nodejs18.x\nfunctions:\n  helloWorld:  # Added new function\n    handler: helloWorld.handler  # Specify the new handler\n    events:\n      - http:\n          path: hello  # Define a new path for the helloWorld function\n          method: get\n",
+    "command": [
+      "offline"
+    ],
+    "options": {},
+    "error": {
+      "message": "Serverless command \"offline\" not found. Run \"serverless help\" for a list of all available commands.",
+      "code": "UNRECOGNIZED_CLI_COMMAND"
+    },
+    "params": {},
+    "machineId": "c5893ee1c9597e9a72626480efc2dfaf",
+    "stage": "dev",
+    "accessKeyV2": "<REDACTED>",
+    "accessKeyV1": "<REDACTED>",
+    "orgId": "de72f260-b9ff-4cdc-ba27-b7d52a84b7dc",
+    "orgName": "fernapi",
+    "userId": "048JYSvqhc6NczVqhJ",
+    "dashboard": {
+      "isEnabledForService": false,
+      "requiredAuthentication": false,
+      "orgFeaturesInUse": null,
+      "orgObservabilityIntegrations": null,
+      "serviceAppId": null,
+      "serviceProvider": null,
+      "instanceParameters": null
+    },
+    "userName": "fernapi",
+    "subscription": null,
+    "userEmail": "chuka.ebi@outlook.com",
+    "serviceProviderAwsRegion": "us-east-1",
+    "serviceProviderAwsCredentials": "<REDACTED>",
+    "serviceProviderAwsAccountId": "730335383923",
+    "projectType": "traditional",
+    "versionSf": "4.3.2",
+    "serviceProviderAwsCfStackName": "my-service-dev",
+    "serviceUniqueId": null,
+    "serviceProviderAwsCfStackId": null,
+    "serviceProviderAwsCfStackCreated": null,
+    "serviceProviderAwsCfStackUpdated": null,
+    "serviceProviderAwsCfStackStatus": null,
+    "serviceProviderAwsCfStackOutputs": null
+  }
+}

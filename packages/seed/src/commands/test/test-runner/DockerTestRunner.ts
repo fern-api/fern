@@ -9,6 +9,7 @@ import { runScript } from "../../../runScript";
 import { ALL_AUDIENCES, DUMMY_ORGANIZATION } from "../../../utils/constants";
 import { getGeneratorInvocation } from "../../../utils/getGeneratorInvocation";
 import { TestRunner } from "./TestRunner";
+import { handler } from "../../../functions/helloWorld";
 
 export class DockerTestRunner extends TestRunner {
     async build(): Promise<void> {
@@ -45,8 +46,10 @@ export class DockerTestRunner extends TestRunner {
         outputMode,
         irVersion,
         publishMetadata,
-        readme
+        readme,
+        serverless
     }: TestRunner.DoRunArgs): Promise<void> {
+        taskContext.logger.info("HELLO", this.getParsedDockerName().name, this.getParsedDockerName().version);
         const generatorGroup: generatorsYml.GeneratorGroup = {
             groupName: "test",
             reviewers: undefined,
@@ -66,16 +69,33 @@ export class DockerTestRunner extends TestRunner {
                 })
             ]
         };
-        await runLocalGenerationForSeed({
-            organization: DUMMY_ORGANIZATION,
-            absolutePathToFernConfig: absolutePathToFernDefinition,
-            workspace: fernWorkspace,
-            generatorGroup,
-            keepDocker: keepDocker ?? false,
-            context: taskContext,
-            irVersionOverride: irVersion,
-            outputVersionOverride: outputVersion
-        });
+        if (serverless) {
+            const response = handler({});
+        } else {
+            await runLocalGenerationForSeed({
+                organization: DUMMY_ORGANIZATION,
+                absolutePathToFernConfig: absolutePathToFernDefinition,
+                workspace: fernWorkspace,
+                generatorGroup,
+                keepDocker: keepDocker ?? false,
+                serverless: serverless ?? false,
+                context: taskContext,
+                irVersionOverride: irVersion,
+                outputVersionOverride: outputVersion
+            });
+        }
+
+        // await runLocalGenerationForSeed({
+        //     organization: DUMMY_ORGANIZATION,
+        //     absolutePathToFernConfig: absolutePathToFernDefinition,
+        //     workspace: fernWorkspace,
+        //     generatorGroup,
+        //     keepDocker: keepDocker ?? false,
+        //     serverless: serverless ?? false,
+        //     context: taskContext,
+        //     irVersionOverride: irVersion,
+        //     outputVersionOverride: outputVersion
+        // });
     }
 
     async runGeneratorFromGroup({
@@ -99,6 +119,7 @@ export class DockerTestRunner extends TestRunner {
             keepDocker: true,
             context: taskContext,
             irVersionOverride: irVersion,
+            serverless: false,
             outputVersionOverride: undefined
         });
     }

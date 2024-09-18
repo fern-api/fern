@@ -3,6 +3,7 @@ import {
     GeneratorGroup,
     GeneratorInvocation,
     GeneratorsConfiguration
+    // eslint-disable-next-line import/no-internal-modules
 } from "@fern-api/configuration/src/generators-yml";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { LogLevel } from "@fern-api/logger";
@@ -50,7 +51,8 @@ export async function runWithCustomFixture({
         taskContextFactory,
         skipScripts: true,
         keepDocker: true,
-        scriptRunner: new ScriptRunner(workspace, false)
+        scriptRunner: new ScriptRunner(workspace, false),
+        serverless: true
     });
 
     const apiWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
@@ -124,7 +126,7 @@ function getGeneratorGroup({
                         ...group,
                         generators: [invocation]
                     },
-                    invocation: invocation
+                    invocation
                 };
             }
         }

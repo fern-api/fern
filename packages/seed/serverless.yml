@@ -1,0 +1,13 @@
+service: my-service
+provider:
+  name: aws
+  runtime: nodejs18.x
+plugins:
+  - serverless-offline
+functions:
+  helloWorld:  # Added new function
+    handler: src/functions/helloWorld.handler  # Specify the new handler
+    events:
+      - http:
+          path: hello  # Define a new path for the helloWorld function
+          method: get

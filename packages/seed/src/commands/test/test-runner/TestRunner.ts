@@ -12,7 +12,7 @@ import { convertGeneratorWorkspaceToFernWorkspace } from "../../../utils/convert
 import { ParsedDockerName, parseDockerOrThrow } from "../../../utils/parseDockerOrThrow";
 import { ScriptRunner } from "../ScriptRunner";
 import { TaskContextFactory } from "../TaskContextFactory";
-
+import { handler as helloWorldHandler } from "../../../functions/helloWorld";
 export declare namespace TestRunner {
     interface Args {
         generator: GeneratorWorkspace;
@@ -21,6 +21,7 @@ export declare namespace TestRunner {
         skipScripts: boolean;
         scriptRunner: ScriptRunner;
         keepDocker: boolean;
+        serverless: boolean;
     }
 
     interface RunArgs {
@@ -48,6 +49,7 @@ export declare namespace TestRunner {
         outputFolder: string;
         keepDocker: boolean | undefined;
         publishMetadata: unknown;
+        serverless: boolean | undefined;
         readme: generatorsYml.ReadmeSchema | undefined;
     }
 
@@ -85,14 +87,24 @@ export abstract class TestRunner {
     private readonly skipScripts: boolean;
     private readonly keepDocker: boolean;
     private scriptRunner: ScriptRunner;
+    private readonly serverless: boolean;
 
-    constructor({ generator, lock, taskContextFactory, skipScripts, keepDocker, scriptRunner }: TestRunner.Args) {
+    constructor({
+        generator,
+        lock,
+        taskContextFactory,
+        skipScripts,
+        keepDocker,
+        scriptRunner,
+        serverless
+    }: TestRunner.Args) {
         this.generator = generator;
         this.lock = lock;
         this.taskContextFactory = taskContextFactory;
         this.skipScripts = skipScripts;
         this.keepDocker = keepDocker;
         this.scriptRunner = scriptRunner;
+        this.serverless = serverless;
     }
 
     /**
@@ -182,7 +194,8 @@ export abstract class TestRunner {
                     outputFolder,
                     keepDocker: this.keepDocker,
                     publishMetadata,
-                    readme
+                    readme,
+                    serverless: this.serverless
                 });
                 generationStopwatch.stop();
                 metrics.generationTime = generationStopwatch.duration();

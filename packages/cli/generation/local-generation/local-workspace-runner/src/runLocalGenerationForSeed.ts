@@ -14,7 +14,8 @@ export async function runLocalGenerationForSeed({
     keepDocker,
     context,
     irVersionOverride,
-    outputVersionOverride
+    outputVersionOverride,
+    serverless
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -24,6 +25,7 @@ export async function runLocalGenerationForSeed({
     context: TaskContext;
     irVersionOverride: string;
     outputVersionOverride: string | undefined;
+    serverless: boolean;
 }): Promise<void> {
     const workspaceTempDir = await getWorkspaceTempDir();
 
@@ -60,6 +62,7 @@ export async function runLocalGenerationForSeed({
                         audiences: generatorGroup.audiences,
                         workspaceTempDir,
                         keepDocker,
+                        serverless,
                         context: interactiveTaskContext,
                         irVersionOverride,
                         outputVersionOverride,
@@ -88,7 +91,8 @@ export async function writeIrAndConfigJson({
     keepDocker,
     context,
     irVersionOverride,
-    outputVersionOverride
+    outputVersionOverride,
+    serverless
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -98,6 +102,7 @@ export async function writeIrAndConfigJson({
     context: TaskContext;
     irVersionOverride: string | undefined;
     outputVersionOverride: string | undefined;
+    serverless: boolean;
 }): Promise<void> {
     const workspaceTempDir = await getWorkspaceTempDir();
 
@@ -135,7 +140,8 @@ export async function writeIrAndConfigJson({
                         outputVersionOverride,
                         writeUnitTests: true,
                         generateOauthClients: true,
-                        generatePaginatedClients: true
+                        generatePaginatedClients: true,
+                        serverless
                     });
                     interactiveTaskContext.logger.info(
                         chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)

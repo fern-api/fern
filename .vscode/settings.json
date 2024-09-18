@@ -1,11 +1,11 @@
 {
   "search.exclude": {
     "**/.pnp.*": true,
-    "**/.yarn": true,
+    "**/.yarn": true
   },
   "eslint.nodePath": ".yarn/sdks",
   "eslint.execArgv": ["--max_old_space_size=16384"],
-  "eslint.workingDirectories": [ "./packages", "./generators" ],
+  "eslint.workingDirectories": ["./packages", "./generators"],
   "prettier.prettierPath": "node_modules/prettier/index.js",
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
