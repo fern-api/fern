@@ -2,8 +2,6 @@
 
 namespace Seed;
 
-use GuzzleHttp\ClientInterface;
-use Seed\Core\RawClient;
 use Seed\Endpoints\EndpointsClient;
 use Seed\GeneralErrors\GeneralErrorsClient;
 use Seed\InlinedRequests\InlinedRequestsClient;
@@ -11,20 +9,12 @@ use Seed\NoAuth\NoAuthClient;
 use Seed\NoReqBody\NoReqBodyClient;
 use Seed\ReqWithHeaders\ReqWithHeadersClient;
 use Seed\Types\TypesClient;
+use GuzzleHttp\ClientInterface;
+use Seed\Core\RawClient;
 use GuzzleHttp\Client;
 
 class SeedClient
 {
-    /**
-     * @var ?array{baseUrl?: string, client?: ClientInterface} $options
-     */
-    private ?array $options;
-
-    /**
-     * @var RawClient $client
-     */
-    private RawClient $client;
-
     /**
      * @var EndpointsClient $endpoints
      */
@@ -59,6 +49,16 @@ class SeedClient
      * @var TypesClient $types
      */
     public TypesClient $types;
+
+    /**
+     * @var ?array{baseUrl?: string, client?: ClientInterface} $options
+     */
+    private ?array $options;
+
+    /**
+     * @var RawClient $client
+     */
+    private RawClient $client;
 
     /**
      * @param ?array{baseUrl?: string, client?: ClientInterface} $options

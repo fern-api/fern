@@ -2,8 +2,6 @@
 
 namespace Seed;
 
-use GuzzleHttp\ClientInterface;
-use Seed\Core\RawClient;
 use Seed\V2\V2Client;
 use Seed\Admin\AdminClient;
 use Seed\Commons\CommonsClient;
@@ -14,20 +12,12 @@ use Seed\Playlist\PlaylistClient;
 use Seed\Problem\ProblemClient;
 use Seed\Submission\SubmissionClient;
 use Seed\Sysprop\SyspropClient;
+use GuzzleHttp\ClientInterface;
+use Seed\Core\RawClient;
 use GuzzleHttp\Client;
 
 class SeedClient
 {
-    /**
-     * @var ?array{baseUrl?: string, client?: ClientInterface} $options
-     */
-    private ?array $options;
-
-    /**
-     * @var RawClient $client
-     */
-    private RawClient $client;
-
     /**
      * @var V2Client $v2
      */
@@ -77,6 +67,16 @@ class SeedClient
      * @var SyspropClient $sysprop
      */
     public SyspropClient $sysprop;
+
+    /**
+     * @var ?array{baseUrl?: string, client?: ClientInterface} $options
+     */
+    private ?array $options;
+
+    /**
+     * @var RawClient $client
+     */
+    private RawClient $client;
 
     /**
      * @param ?array{baseUrl?: string, client?: ClientInterface} $options

@@ -2,20 +2,20 @@
 
 namespace Seed\Health;
 
-use Seed\Core\RawClient;
 use Seed\Health\Service\ServiceClient;
+use Seed\Core\RawClient;
 
 class HealthClient
 {
     /**
-     * @var RawClient $client
-     */
-    private RawClient $client;
-
-    /**
      * @var ServiceClient $service
      */
     public ServiceClient $service;
+
+    /**
+     * @var RawClient $client
+     */
+    private RawClient $client;
 
     /**
      * @param RawClient $client

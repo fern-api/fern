@@ -2,27 +2,17 @@
 
 namespace Seed;
 
-use GuzzleHttp\ClientInterface;
-use Seed\Core\RawClient;
 use Seed\Headers\HeadersClient;
 use Seed\Inlined\InlinedClient;
 use Seed\Path\PathClient;
 use Seed\Query\QueryClient;
 use Seed\Reference\ReferenceClient;
+use GuzzleHttp\ClientInterface;
+use Seed\Core\RawClient;
 use GuzzleHttp\Client;
 
 class SeedClient
 {
-    /**
-     * @var ?array{baseUrl?: string, client?: ClientInterface} $options
-     */
-    private ?array $options;
-
-    /**
-     * @var RawClient $client
-     */
-    private RawClient $client;
-
     /**
      * @var HeadersClient $headers
      */
@@ -47,6 +37,16 @@ class SeedClient
      * @var ReferenceClient $reference
      */
     public ReferenceClient $reference;
+
+    /**
+     * @var ?array{baseUrl?: string, client?: ClientInterface} $options
+     */
+    private ?array $options;
+
+    /**
+     * @var RawClient $client
+     */
+    private RawClient $client;
 
     /**
      * @param ?array{baseUrl?: string, client?: ClientInterface} $options

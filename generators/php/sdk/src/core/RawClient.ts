@@ -47,11 +47,8 @@ export class RawClient {
         });
     }
 
-    /**
-     * Sends a request with the RawClient.
-     */
-    public sendRequest(args: RawClient.SendRequestArgs): void {
+    public sendRequest(args: RawClient.SendRequestArgs): php.AstNode {
         // TODO: Implement me!
-        return;
+        return php.codeblock("$this->client->sendRequest()");
     }
 }

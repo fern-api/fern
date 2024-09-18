@@ -5,5 +5,7 @@ export { CodeBlock } from "./CodeBlock";
 export { Writer } from "./core/Writer";
 export { Field } from "./Field";
 export { Map } from "./Map";
+export { Method } from "./Method";
+export { MethodInvocation } from "./MethodInvocation";
 export { Parameter } from "./Parameter";
 export { Type } from "./Type";

@@ -5,6 +5,9 @@ namespace Seed;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\RawClient;
 use GuzzleHttp\Client;
+use Seed\Requests\InlinedChildRequest;
+use Psr\Http\Client\ClientExceptionInterface;
+use Exception;
 
 class SeedClient
 {
@@ -32,4 +35,24 @@ class SeedClient
         $this->options = $options ?? [];
         $this->client = new RawClient(client: $this->options['client'] ?? new Client(), headers: $defaultHeaders);
     }
+
+    /**
+     * @param InlinedChildRequest $request
+     * @param ?array{baseUrl?: string} $options
+     * @returns mixed
+     */
+    public function extendedInlineRequestBody(InlinedChildRequest $request, ?array $options): mixed
+    {
+        try {
+            $response = $this->client->sendRequest();
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return;
+            }
+        } catch (ClientExceptionInterface $e) {
+            throw new Exception($e->getMessage());
+        }
+        throw new Exception("Error with status code " . $statusCode);
+    }
+
 }

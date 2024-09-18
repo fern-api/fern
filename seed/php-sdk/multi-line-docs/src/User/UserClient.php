@@ -3,6 +3,10 @@
 namespace Seed\User;
 
 use Seed\Core\RawClient;
+use Psr\Http\Client\ClientExceptionInterface;
+use Exception;
+use Seed\User\Requests\CreateUserRequest;
+use JsonException;
 
 class UserClient
 {
@@ -19,4 +23,50 @@ class UserClient
     ) {
         $this->client = $client;
     }
+
+    /**
+    * Retrieve a user.
+    * This endpoint is used to retrieve a user.
+     * @param string $userId The ID of the user to retrieve.
+    This ID is unique to each user.
+     * @param ?array{baseUrl?: string} $options
+     * @returns mixed
+     */
+    public function getUser(string $userId, ?array $options): mixed
+    {
+        try {
+            $response = $this->client->sendRequest();
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return;
+            }
+        } catch (ClientExceptionInterface $e) {
+            throw new Exception($e->getMessage());
+        }
+        throw new Exception("Error with status code " . $statusCode);
+    }
+
+    /**
+    * Create a new user.
+    * This endpoint is used to create a new user.
+     * @param CreateUserRequest $request
+     * @param ?array{baseUrl?: string} $options
+     * @returns mixed
+     */
+    public function createUser(CreateUserRequest $request, ?array $options): mixed
+    {
+        try {
+            $response = $this->client->sendRequest();
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+            }
+        } catch (JsonException $e) {
+            throw new Exception("Failed to deserialize response", 0, $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new Exception($e->getMessage());
+        }
+        throw new Exception("Error with status code " . $statusCode);
+    }
+
 }

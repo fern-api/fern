@@ -2,18 +2,13 @@
 
 namespace Seed\Types;
 
-use Seed\Core\RawClient;
 use Seed\Types\Enum\EnumClient;
 use Seed\Types\Object\ObjectClient;
 use Seed\Types\Union\UnionClient;
+use Seed\Core\RawClient;
 
 class TypesClient
 {
-    /**
-     * @var RawClient $client
-     */
-    private RawClient $client;
-
     /**
      * @var EnumClient $enum
      */
@@ -28,6 +23,11 @@ class TypesClient
      * @var UnionClient $union
      */
     public UnionClient $union;
+
+    /**
+     * @var RawClient $client
+     */
+    private RawClient $client;
 
     /**
      * @param RawClient $client

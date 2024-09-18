@@ -2,7 +2,6 @@
 
 namespace Seed\Endpoints;
 
-use Seed\Core\RawClient;
 use Seed\Endpoints\Container\ContainerClient;
 use Seed\Endpoints\Enum\EnumClient;
 use Seed\Endpoints\HttpMethods\HttpMethodsClient;
@@ -10,14 +9,10 @@ use Seed\Endpoints\Object\ObjectClient;
 use Seed\Endpoints\Params\ParamsClient;
 use Seed\Endpoints\Primitive\PrimitiveClient;
 use Seed\Endpoints\Union\UnionClient;
+use Seed\Core\RawClient;
 
 class EndpointsClient
 {
-    /**
-     * @var RawClient $client
-     */
-    private RawClient $client;
-
     /**
      * @var ContainerClient $container
      */
@@ -52,6 +47,11 @@ class EndpointsClient
      * @var UnionClient $union
      */
     public UnionClient $union;
+
+    /**
+     * @var RawClient $client
+     */
+    private RawClient $client;
 
     /**
      * @param RawClient $client

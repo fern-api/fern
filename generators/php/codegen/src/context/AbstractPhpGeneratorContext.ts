@@ -8,7 +8,8 @@ import {
     TypeDeclaration,
     Subpackage,
     SubpackageId,
-    FernFilepath
+    FernFilepath,
+    PrimitiveTypeV1
 } from "@fern-fern/ir-sdk/api";
 import { BasePhpCustomConfigSchema } from "../custom-config/BasePhpCustomConfigSchema";
 import { PhpProject } from "../project";
@@ -16,6 +17,8 @@ import { camelCase, upperFirst } from "lodash-es";
 import { PhpTypeMapper } from "./PhpTypeMapper";
 import { AsIsFiles } from "../AsIs";
 import { RelativeFilePath } from "@fern-api/fs-utils";
+import { php } from "..";
+import { GLOBAL_NAMESPACE } from "../ast/core/Constant";
 
 export interface FileLocation {
     namespace: string;
@@ -52,8 +55,33 @@ export abstract class AbstractPhpGeneratorContext<
         return subpackage;
     }
 
+    public getConstantClassReference(): php.ClassReference {
+        return php.classReference({
+            name: "Constant",
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    public getDateFormat(): php.AstNode {
+        return php.codeblock((writer) => {
+            writer.writeNode(this.getConstantClassReference());
+            writer.write("::DateFormat");
+        });
+    }
+
+    public getDateTimeFormat(): php.AstNode {
+        return php.codeblock((writer) => {
+            writer.writeNode(this.getConstantClassReference());
+            writer.write("::DateTimeFormat");
+        });
+    }
+
     public getClassName(name: Name): string {
         return name.pascalCase.safeName;
+    }
+
+    public getGlobalNamespace(): string {
+        return GLOBAL_NAMESPACE;
     }
 
     public getRootNamespace(): string {
@@ -70,6 +98,14 @@ export abstract class AbstractPhpGeneratorContext<
 
     public getCoreTestsNamespace(): string {
         return `${this.rootNamespace}\\Tests\\Core`;
+    }
+
+    public getParameterName(name: Name): string {
+        return `$${name.camelCase.safeName}`;
+    }
+
+    public getPropertyName(name: Name): string {
+        return name.camelCase.safeName;
     }
 
     public getLiteralAsString(literal: Literal): string {
@@ -91,6 +127,69 @@ export abstract class AbstractPhpGeneratorContext<
                 return false;
             case "primitive":
                 return false;
+        }
+    }
+
+    public isEnum(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "container":
+                if (typeReference.container.type === "optional") {
+                    return this.isEnum(typeReference.container.optional);
+                }
+                return false;
+            case "named": {
+                const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (declaration.shape.type === "alias") {
+                    return this.isEnum(declaration.shape.aliasOf);
+                }
+                return declaration.shape.type === "enum";
+            }
+            case "primitive": {
+                return false;
+            }
+            case "unknown": {
+                return false;
+            }
+        }
+    }
+
+    public isDate(typeReference: TypeReference): boolean {
+        return this.isPrimitive({ typeReference, primitive: PrimitiveTypeV1.Date });
+    }
+
+    public isDateTime(typeReference: TypeReference): boolean {
+        return this.isPrimitive({ typeReference, primitive: PrimitiveTypeV1.DateTime });
+    }
+
+    public isPrimitive({
+        typeReference,
+        primitive
+    }: {
+        typeReference: TypeReference;
+        primitive?: PrimitiveTypeV1;
+    }): boolean {
+        switch (typeReference.type) {
+            case "container":
+                if (typeReference.container.type === "optional") {
+                    return this.isDate(typeReference.container.optional);
+                }
+                return false;
+            case "named": {
+                const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (declaration.shape.type === "alias") {
+                    return this.isDate(declaration.shape.aliasOf);
+                }
+                return false;
+            }
+            case "primitive": {
+                if (primitive == null) {
+                    return true;
+                }
+                return typeReference.primitive.v1 === primitive;
+            }
+            case "unknown": {
+                return false;
+            }
         }
     }
 

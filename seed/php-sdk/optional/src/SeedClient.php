@@ -2,13 +2,18 @@
 
 namespace Seed;
 
+use Seed\Optional\OptionalClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\RawClient;
-use Seed\Optional\OptionalClient;
 use GuzzleHttp\Client;
 
 class SeedClient
 {
+    /**
+     * @var OptionalClient $optional
+     */
+    public OptionalClient $optional;
+
     /**
      * @var ?array{baseUrl?: string, client?: ClientInterface} $options
      */
@@ -18,11 +23,6 @@ class SeedClient
      * @var RawClient $client
      */
     private RawClient $client;
-
-    /**
-     * @var OptionalClient $optional
-     */
-    public OptionalClient $optional;
 
     /**
      * @param ?array{baseUrl?: string, client?: ClientInterface} $options

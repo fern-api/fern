@@ -1,4 +1,14 @@
-import { Class, ClassInstantiation, ClassReference, CodeBlock, Field, Map, Parameter } from "./ast";
+import {
+    Class,
+    ClassInstantiation,
+    ClassReference,
+    CodeBlock,
+    Field,
+    Map,
+    Method,
+    MethodInvocation,
+    Parameter
+} from "./ast";
 
 export function class_(args: Class.Args): Class {
     return new Class(args);
@@ -20,8 +30,16 @@ export function instantiateClass(args: ClassInstantiation.Args): ClassInstantiat
     return new ClassInstantiation(args);
 }
 
+export function invokeMethod(args: MethodInvocation.Args): MethodInvocation {
+    return new MethodInvocation(args);
+}
+
 export function map(args: Map.Args): Map {
     return new Map(args);
+}
+
+export function method(args: Method.Args): Method {
+    return new Method(args);
 }
 
 export function parameter(args: Parameter.Args): Parameter {
@@ -29,4 +47,16 @@ export function parameter(args: Parameter.Args): Parameter {
 }
 
 export { AstNode } from "./ast/core/AstNode";
-export { Class, ClassInstantiation, ClassReference, CodeBlock, Field, Map, Parameter, Type, Writer } from "./ast";
+export {
+    Class,
+    ClassInstantiation,
+    ClassReference,
+    CodeBlock,
+    Field,
+    Map,
+    Method,
+    MethodInvocation,
+    Parameter,
+    Type,
+    Writer
+} from "./ast";

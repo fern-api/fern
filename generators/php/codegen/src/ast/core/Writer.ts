@@ -1,10 +1,9 @@
 import { AbstractWriter } from "@fern-api/generator-commons";
 import { BasePhpCustomConfigSchema } from "../../custom-config/BasePhpCustomConfigSchema";
 import { ClassReference } from "../ClassReference";
+import { GLOBAL_NAMESPACE } from "./Constant";
 
 type Namespace = string;
-
-export const GLOBAL_NAMESPACE = "";
 
 export declare namespace Writer {
     interface Args {

@@ -2,13 +2,18 @@
 
 namespace Seed;
 
+use Seed\Dataservice\DataserviceClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\RawClient;
-use Seed\Dataservice\DataserviceClient;
 use GuzzleHttp\Client;
 
 class SeedClient
 {
+    /**
+     * @var DataserviceClient $dataservice
+     */
+    public DataserviceClient $dataservice;
+
     /**
      * @var ?array{baseUrl?: string, client?: ClientInterface} $options
      */
@@ -18,11 +23,6 @@ class SeedClient
      * @var RawClient $client
      */
     private RawClient $client;
-
-    /**
-     * @var DataserviceClient $dataservice
-     */
-    public DataserviceClient $dataservice;
 
     /**
      * @param ?array{baseUrl?: string, client?: ClientInterface} $options

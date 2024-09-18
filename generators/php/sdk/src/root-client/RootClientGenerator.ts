@@ -50,6 +50,18 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             class_.addField(this.context.getSubpackageField(subpackage));
         }
 
+        const rootServiceId = this.context.ir.rootPackage.service;
+        if (rootServiceId != null) {
+            const service = this.context.getHttpServiceOrThrow(rootServiceId);
+            for (const endpoint of service.endpoints) {
+                const method = this.context.endpointGenerator.generate({
+                    serviceId: rootServiceId,
+                    endpoint
+                });
+                class_.addMethod(method);
+            }
+        }
+
         return new PhpFile({
             clazz: class_,
             directory: RelativeFilePath.of(""),
@@ -119,9 +131,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 value: php.codeblock(`"${platformHeaders.userAgent.value}"`)
             });
         }
-        const headers = php.map({
-            entries: headerEntries
-        });
+        const headers = php.map({ entries: headerEntries });
         return {
             access: "public",
             parameters,
