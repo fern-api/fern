@@ -1,7 +1,7 @@
 import { FERN_PACKAGE_MARKER_FILENAME_NO_EXTENSION } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
-import { RelativeFilePath } from "@fern-api/fs-utils";
-import { SdkGroupName } from "@fern-api/openapi-ir-sdk";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { EndpointSdkName, SdkGroupName } from "@fern-api/openapi-ir-sdk";
 import { camelCase } from "lodash-es";
 
 export function convertSdkGroupNameToFileWithoutExtension(groupName: SdkGroupName | undefined): string {
@@ -35,4 +35,46 @@ export function convertSdkGroupNameToFileWithoutExtension(groupName: SdkGroupNam
 
 export function convertSdkGroupNameToFile(groupName: SdkGroupName | undefined): RelativeFilePath {
     return RelativeFilePath.of(`${convertSdkGroupNameToFileWithoutExtension(groupName)}.yml`);
+}
+
+export function convertEndpointSdkNameToFileWithoutExtension({
+    sdkName,
+    namespaceOverride
+}: {
+    sdkName: EndpointSdkName | undefined;
+    namespaceOverride: string | undefined;
+}): string {
+    let groupName: SdkGroupName;
+    if (sdkName == null || (sdkName.groupName.length === 0 && namespaceOverride == null)) {
+        return FERN_PACKAGE_MARKER_FILENAME_NO_EXTENSION;
+    } else if (namespaceOverride != null) {
+        groupName = [{ type: "namespace", name: namespaceOverride }];
+    } else {
+        groupName = sdkName.groupName;
+    }
+
+    return convertSdkGroupNameToFileWithoutExtension(groupName);
+}
+
+export function convertEndpointSdkNameToFile({
+    sdkName,
+    namespaceOverride
+}: {
+    sdkName: EndpointSdkName | undefined;
+    namespaceOverride: string | undefined;
+}): RelativeFilePath {
+    return RelativeFilePath.of(`${convertEndpointSdkNameToFileWithoutExtension({ sdkName, namespaceOverride })}.yml`);
+}
+
+export function resolveLocationWithNamespace({
+    location,
+    namespaceOverride
+}: {
+    location: RelativeFilePath;
+    namespaceOverride: string | undefined;
+}): RelativeFilePath {
+    if (namespaceOverride != null) {
+        return join(RelativeFilePath.of(namespaceOverride), location);
+    }
+    return location;
 }

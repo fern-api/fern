@@ -111,77 +111,6 @@ exports[`validate namespaced API > namespaced 1`] = `
       openapi: openapi/trains/openapi.yml
 imports:
   root: trains/__package__.yml
-errors:
-  BadRequestError:
-    status-code: 400
-    type: root.Problem
-    docs: Bad Request
-    examples:
-      - value:
-          type: https://example.com/errors/bad-request
-          title: Bad Request
-          status: 400
-          detail: The request is invalid or missing required parameters.
-  UnauthorizedError:
-    status-code: 401
-    type: root.Problem
-    docs: Unauthorized
-    examples:
-      - value:
-          type: https://example.com/errors/unauthorized
-          title: Unauthorized
-          status: 401
-          detail: You do not have the necessary permissions.
-  ForbiddenError:
-    status-code: 403
-    type: root.Problem
-    docs: Forbidden
-    examples:
-      - value:
-          type: https://example.com/errors/forbidden
-          title: Forbidden
-          status: 403
-          detail: Access is forbidden with the provided credentials.
-  TooManyRequestsError:
-    status-code: 429
-    type: root.Problem
-    docs: Too Many Requests
-    examples:
-      - value:
-          type: https://example.com/errors/too-many-requests
-          title: Too Many Requests
-          status: 429
-          detail: You have exceeded the rate limit.
-  InternalServerError:
-    status-code: 500
-    type: root.Problem
-    docs: Internal Server Error
-    examples:
-      - value:
-          type: https://example.com/errors/internal-server-error
-          title: Internal Server Error
-          status: 500
-          detail: An unexpected error occurred.
-  NotFoundError:
-    status-code: 404
-    type: root.Problem
-    docs: Not Found
-    examples:
-      - value:
-          type: https://example.com/errors/not-found
-          title: Not Found
-          status: 404
-          detail: The requested resource was not found.
-  ConflictError:
-    status-code: 409
-    type: root.Problem
-    docs: Conflict
-    examples:
-      - value:
-          type: https://example.com/errors/conflict
-          title: Conflict
-          status: 409
-          detail: There is a conflict with an existing resource.
 ",
     "name": "__package__.yml",
     "type": "file",
@@ -211,6 +140,7 @@ auth: BearerAuthScheme
       id: long
       name: string
       tag: optional<string>
+      messages: optional<V2ChatMessages>
     source:
       openapi: openapi/petstore/openapi.yml
   Pets: list<Pet>
@@ -220,17 +150,23 @@ auth: BearerAuthScheme
       message: string
     source:
       openapi: openapi/petstore/openapi.yml
+  V2ChatMessages:
+    docs: >
+      A list of chat messages in chronological order, representing a
+      conversation between the user and the model.
+
+
+      Messages can be from \`User\`, \`Assistant\`, \`Tool\` and \`System\` roles. Learn
+      more about messages and roles in [the Chat API
+      guide](https://docs.cohere.com/docs/chat-api).
+    type: list<unknown>
 ",
         "name": "__package__.yml",
         "type": "file",
       },
-    ],
-    "name": "neopets",
-    "type": "directory",
-  },
-  {
-    "contents": "imports:
-  root: neopets/__package__.yml
+      {
+        "contents": "imports:
+  root: __package__.yml
 service:
   auth: false
   base-path: ''
@@ -255,6 +191,8 @@ service:
               - id: 1000000
                 name: name
                 tag: tag
+                messages:
+                  - key: value
     createPets:
       path: /pets
       method: POST
@@ -282,11 +220,17 @@ service:
               id: 1000000
               name: name
               tag: tag
+              messages:
+                - key: value
   source:
     openapi: openapi/petstore/openapi.yml
 ",
-    "name": "neopets.yml",
-    "type": "file",
+        "name": "neopets.yml",
+        "type": "file",
+      },
+    ],
+    "name": "neopets",
+    "type": "directory",
   },
   {
     "contents": [
@@ -450,7 +394,84 @@ types:
   {
     "contents": [
       {
-        "contents": "types:
+        "contents": "errors:
+  BadRequestError:
+    status-code: 400
+    type: root.Problem
+    docs: Bad Request
+    examples:
+      - value:
+          type: https://example.com/errors/bad-request
+          title: Bad Request
+          status: 400
+          detail: The request is invalid or missing required parameters.
+  UnauthorizedError:
+    status-code: 401
+    type: root.Problem
+    docs: Unauthorized
+    examples:
+      - value:
+          type: https://example.com/errors/unauthorized
+          title: Unauthorized
+          status: 401
+          detail: You do not have the necessary permissions.
+  ForbiddenError:
+    status-code: 403
+    type: root.Problem
+    docs: Forbidden
+    examples:
+      - value:
+          type: https://example.com/errors/forbidden
+          title: Forbidden
+          status: 403
+          detail: Access is forbidden with the provided credentials.
+  TooManyRequestsError:
+    status-code: 429
+    type: root.Problem
+    docs: Too Many Requests
+    examples:
+      - value:
+          type: https://example.com/errors/too-many-requests
+          title: Too Many Requests
+          status: 429
+          detail: You have exceeded the rate limit.
+  InternalServerError:
+    status-code: 500
+    type: root.Problem
+    docs: Internal Server Error
+    examples:
+      - value:
+          type: https://example.com/errors/internal-server-error
+          title: Internal Server Error
+          status: 500
+          detail: An unexpected error occurred.
+  NotFoundError:
+    status-code: 404
+    type: root.Problem
+    docs: Not Found
+    examples:
+      - value:
+          type: https://example.com/errors/not-found
+          title: Not Found
+          status: 404
+          detail: The requested resource was not found.
+  ConflictError:
+    status-code: 409
+    type: root.Problem
+    docs: Conflict
+    examples:
+      - value:
+          type: https://example.com/errors/conflict
+          title: Conflict
+          status: 409
+          detail: There is a conflict with an existing resource.
+types:
+  Pet:
+    properties:
+      id: long
+      name: string
+    source:
+      openapi: openapi/trains/openapi.yml
   Station:
     properties:
       id:
@@ -472,6 +493,8 @@ types:
         docs: >-
           The timezone of the station in the [IANA Time Zone Database
           format](https://www.iana.org/time-zones).
+      messages: optional<V2ChatMessages>
+      pet: optional<Pet>
     source:
       openapi: openapi/trains/openapi.yml
   LinksSelf:
@@ -742,17 +765,23 @@ types:
           format: uri
     source:
       openapi: openapi/trains/openapi.yml
+  V2ChatMessages:
+    docs: >
+      A list of chat messages in chronological order, representing a
+      conversation between the user and the model.
+
+
+      Messages can be from \`User\`, \`Assistant\`, \`Tool\` and \`System\` roles. Learn
+      more about messages and roles in [the Chat API
+      guide](https://docs.cohere.com/docs/chat-api).
+    type: list<unknown>
 ",
         "name": "__package__.yml",
         "type": "file",
       },
-    ],
-    "name": "trains",
-    "type": "directory",
-  },
-  {
-    "contents": "imports:
-  root: trains/__package__.yml
+      {
+        "contents": "imports:
+  root: __package__.yml
 types:
   GetStationsResponseLinks:
     properties: {}
@@ -856,11 +885,17 @@ service:
                   address: Invalidenstraße 10557 Berlin, Germany
                   country_code: DE
                   timezone: Europe/Berlin
+                  pet:
+                    id: 1000000
+                    name: name
                 - id: b2e783e1-c824-4d63-b37a-d8d698862f1d
                   name: Paris Gare du Nord
                   address: 18 Rue de Dunkerque 75010 Paris, France
                   country_code: FR
                   timezone: Europe/Paris
+                  pet:
+                    id: 1000000
+                    name: name
               links:
                 next: https://api.example.com/stations?page=3
                 prev: https://api.example.com/stations?page=1
@@ -1247,8 +1282,12 @@ webhooks:
       Subscribe to new bookings being created, to update integrations for your
       users.  Related data is available via the links provided in the request.
 ",
-    "name": "trains.yml",
-    "type": "file",
+        "name": "trains.yml",
+        "type": "file",
+      },
+    ],
+    "name": "trains",
+    "type": "directory",
   },
 ]
 `;

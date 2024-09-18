@@ -1,5 +1,5 @@
 imports:
-  root: trains/__package__.yml
+  root: __package__.yml
 types:
   GetStationsResponseLinks:
     properties: {}
@@ -103,11 +103,17 @@ service:
                   address: Invalidenstraße 10557 Berlin, Germany
                   country_code: DE
                   timezone: Europe/Berlin
+                  pet:
+                    id: 1000000
+                    name: name
                 - id: b2e783e1-c824-4d63-b37a-d8d698862f1d
                   name: Paris Gare du Nord
                   address: 18 Rue de Dunkerque 75010 Paris, France
                   country_code: FR
                   timezone: Europe/Paris
+                  pet:
+                    id: 1000000
+                    name: name
               links:
                 next: https://api.example.com/stations?page=3
                 prev: https://api.example.com/stations?page=1
