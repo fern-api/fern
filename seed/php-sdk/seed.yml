@@ -19,7 +19,7 @@ scripts:
     commands:
       - composer install
       - composer build
-      # - composer analyze
+      - composer analyze
       - composer test
 allowedFailures:
   # enum as map key not allowed in php

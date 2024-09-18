@@ -6,6 +6,8 @@ use GuzzleHttp\ClientInterface;
 use Seed\Core\RawClient;
 use GuzzleHttp\Client;
 use Seed\Requests\Inlined;
+use Seed\Core\JsonApiRequest;
+use Seed\Core\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
 use Exception;
 
@@ -33,14 +35,22 @@ class SeedClient
     }
 
     /**
-     * @param Inlined request
+     * @param Inlined $request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function extendedInlineRequestBody(Inlined $request, ?array $options = null): mixed
     {
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? '',
+                    path: "/extends/extended-inline-request-body",
+                    method: HttpMethod::POST,
+                    body: $request,
+                ),
+            )
+            ;
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;

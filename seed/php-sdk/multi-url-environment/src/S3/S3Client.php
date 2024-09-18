@@ -4,6 +4,8 @@ namespace Seed\S3;
 
 use Seed\Core\RawClient;
 use Seed\S3\Requests\GetPresignedUrlRequest;
+use Seed\Core\JsonApiRequest;
+use Seed\Core\HttpMethod;
 use JsonException;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -25,14 +27,22 @@ class S3Client
     }
 
     /**
-     * @param GetPresignedUrlRequest request
+     * @param GetPresignedUrlRequest $request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function getPresignedUrl(GetPresignedUrlRequest $request, ?array $options = null): mixed
     {
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? '',
+                    path: "/s3/presigned-url",
+                    method: HttpMethod::POST,
+                    body: $request,
+                ),
+            )
+            ;
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);

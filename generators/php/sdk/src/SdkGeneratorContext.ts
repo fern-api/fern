@@ -1,4 +1,14 @@
-import { Name, HttpEndpoint, HttpService, ServiceId, Subpackage, SubpackageId, TypeId } from "@fern-fern/ir-sdk/api";
+import { assertNever } from "@fern-api/core-utils";
+import {
+    Name,
+    HttpEndpoint,
+    HttpService,
+    ServiceId,
+    Subpackage,
+    SubpackageId,
+    TypeId,
+    HttpMethod
+} from "@fern-fern/ir-sdk/api";
 import { AbstractPhpGeneratorContext, FileLocation } from "@fern-api/php-codegen";
 import { GeneratorNotificationService } from "@fern-api/generator-commons";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -100,10 +110,25 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         });
     }
 
+    public getJsonApiRequestClassReference(): php.ClassReference {
+        return this.getCoreClassReference("JsonApiRequest");
+    }
+
     public getRequestWrapperReference(serviceId: ServiceId, requestName: Name): php.ClassReference {
         return php.classReference({
             name: requestName.pascalCase.safeName,
             namespace: this.getLocationForWrappedRequest(serviceId).namespace
+        });
+    }
+
+    public getHttpMethodClassReference(): php.ClassReference {
+        return this.getCoreClassReference("HttpMethod");
+    }
+
+    public getHttpMethod(method: HttpMethod): php.CodeBlock {
+        return php.codeblock((writer) => {
+            writer.writeNode(this.getHttpMethodClassReference());
+            writer.write(`::${method}`);
         });
     }
 

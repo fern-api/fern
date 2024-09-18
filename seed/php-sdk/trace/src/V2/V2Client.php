@@ -5,6 +5,8 @@ namespace Seed\V2;
 use Seed\V2\Problem\ProblemClient;
 use Seed\V2\V3\V3Client;
 use Seed\Core\RawClient;
+use Seed\Core\JsonApiRequest;
+use Seed\Core\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
 use Exception;
 
@@ -43,7 +45,14 @@ class V2Client
     public function test(?array $options = null): mixed
     {
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? '',
+                    path: "",
+                    method: HttpMethod::GET,
+                ),
+            )
+            ;
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;

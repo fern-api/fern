@@ -3,6 +3,8 @@
 namespace Seed\Optional;
 
 use Seed\Core\RawClient;
+use Seed\Core\JsonApiRequest;
+use Seed\Core\HttpMethod;
 use JsonException;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -24,14 +26,22 @@ class OptionalClient
     }
 
     /**
-     * @param ?array<string, mixed> request
+     * @param ?array<string, mixed> $request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function sendOptionalBody(?array $request = null, ?array $options = null): mixed
     {
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? '',
+                    path: "send-optional-body",
+                    method: HttpMethod::POST,
+                    body: $request,
+                ),
+            )
+            ;
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
