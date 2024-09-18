@@ -44,6 +44,7 @@ import { getWebhooksPathsObject } from "./getWebhookPathsObject";
 import { hasIncompleteExample } from "./hasIncompleteExample";
 import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext";
 import { runResolutions } from "./runResolutions";
+import { getSchemas } from "../../utils/getSchemas";
 
 export function generateIr({
     openApi,
@@ -311,7 +312,7 @@ export function generateIr({
         endpoints,
         webhooks,
         channel: [],
-        schemas,
+        groupedSchemas: getSchemas(namespace, schemas),
         securitySchemes,
         hasEndpointsMarkedInternal: endpoints.some((endpoint) => endpoint.internal),
         nonRequestReferencedSchemas: context.getReferencedSchemas(),

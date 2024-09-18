@@ -1,7 +1,7 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { assertNever, MediaType } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { Endpoint, EndpointExample, Request, Schema, SchemaId } from "@fern-api/openapi-ir-sdk";
+import { Endpoint, EndpointExample, Namespace, Request, Schema, SchemaId } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { buildEndpointExample } from "./buildEndpointExample";
 import { ERROR_DECLARATIONS_FILENAME, EXTERNAL_AUDIENCE } from "./buildFernDefinition";
@@ -14,6 +14,8 @@ import { convertAvailability } from "./utils/convertAvailability";
 import { convertFullExample } from "./utils/convertFullExample";
 import { convertToHttpMethod } from "./utils/convertToHttpMethod";
 import { getDocsFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
+import { getEndpointNamespace } from "./utils/getNamespaceFromGroup";
+import { resolveLocationWithNamespace } from "./utils/convertSdkGroupName";
 
 export interface ConvertedEndpoint {
     value: RawSchemas.HttpEndpointSchema;
@@ -37,6 +39,8 @@ export function buildEndpoint({
 
     let path = endpoint.path;
 
+    const maybeEndpointNamespace = getEndpointNamespace(endpoint.sdkName, endpoint.namespace);
+
     const pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> = {};
     for (const pathParameter of endpoint.pathParameters) {
         if (pathParameter.parameterNameOverride) {
@@ -45,7 +49,8 @@ export function buildEndpoint({
         pathParameters[pathParameter.parameterNameOverride ?? pathParameter.name] = buildPathParameter({
             pathParameter,
             context,
-            fileContainingReference: declarationFile
+            fileContainingReference: declarationFile,
+            namespace: maybeEndpointNamespace
         });
         names.add(pathParameter.name);
     }
@@ -55,7 +60,8 @@ export function buildEndpoint({
         const convertedQueryParameter = buildQueryParameter({
             queryParameter,
             context,
-            fileContainingReference: declarationFile
+            fileContainingReference: declarationFile,
+            namespace: maybeEndpointNamespace
         });
         if (convertedQueryParameter == null) {
             // TODO(dsinghvi): HACKHACK we are just excluding certain query params from the SDK
@@ -105,7 +111,12 @@ export function buildEndpoint({
         return !globalHeaderNames.has(header.name);
     });
     for (const header of endpointSpecificHeaders) {
-        const headerSchema = buildHeader({ header, context, fileContainingReference: declarationFile });
+        const headerSchema = buildHeader({
+            header,
+            context,
+            fileContainingReference: declarationFile,
+            namespace: maybeEndpointNamespace
+        });
         headers[header.name] = headerSchema;
         names.add(typeof headerSchema === "string" ? header.name : headerSchema.name ?? header.name);
     }
@@ -120,7 +131,8 @@ export function buildEndpoint({
             queryParameters: Object.keys(queryParameters).length > 0 ? queryParameters : undefined,
             nonRequestReferencedSchemas: Array.from(nonRequestReferencedSchemas),
             headers: Object.keys(headers).length > 0 ? headers : undefined,
-            usedNames: names
+            usedNames: names,
+            namespace: maybeEndpointNamespace
         });
         convertedEndpoint.request = convertedRequest.value;
         schemaIdsToExclude = [...schemaIdsToExclude, ...(convertedRequest.schemaIdsToExclude ?? [])];
@@ -151,7 +163,8 @@ export function buildEndpoint({
                 const responseTypeReference = buildTypeReference({
                     schema: jsonResponse.schema,
                     context,
-                    fileContainingReference: declarationFile
+                    fileContainingReference: declarationFile,
+                    namespace: maybeEndpointNamespace
                 });
                 convertedEndpoint.response = {
                     docs: jsonResponse.description ?? undefined,
@@ -165,7 +178,8 @@ export function buildEndpoint({
                 const responseTypeReference = buildTypeReference({
                     schema: jsonResponse.schema,
                     context,
-                    fileContainingReference: declarationFile
+                    fileContainingReference: declarationFile,
+                    namespace: maybeEndpointNamespace
                 });
                 convertedEndpoint["response-stream"] = {
                     docs: jsonResponse.description ?? undefined,
@@ -177,7 +191,8 @@ export function buildEndpoint({
                 const responseTypeReference = buildTypeReference({
                     schema: jsonResponse.schema,
                     context,
-                    fileContainingReference: declarationFile
+                    fileContainingReference: declarationFile,
+                    namespace: maybeEndpointNamespace
                 });
                 convertedEndpoint["response-stream"] = {
                     docs: jsonResponse.description ?? undefined,
@@ -252,13 +267,19 @@ export function buildEndpoint({
             const typeReference = buildTypeReference({
                 schema: httpError.schema,
                 context,
-                fileContainingReference
+                fileContainingReference,
+                namespace: maybeEndpointNamespace
             });
             errorDeclaration.type = getTypeFromTypeReference(typeReference);
             errorDeclaration.docs = httpError.description;
         }
 
-        context.builder.addError(ERROR_DECLARATIONS_FILENAME, {
+        const errorDeclarationFile = resolveLocationWithNamespace({
+            location: ERROR_DECLARATIONS_FILENAME,
+            namespaceOverride: maybeEndpointNamespace
+        });
+
+        context.builder.addError(errorDeclarationFile, {
             name: errorName,
             schema: errorDeclaration
         });
@@ -268,7 +289,7 @@ export function buildEndpoint({
         }
         const prefix = context.builder.addImport({
             file: declarationFile,
-            fileToImport: ERROR_DECLARATIONS_FILENAME
+            fileToImport: errorDeclarationFile
         });
         convertedEndpoint.errors.push(prefix != null ? `${prefix}.${errorName}` : errorName);
 
@@ -281,7 +302,7 @@ export function buildEndpoint({
                     docs: example.description
                 };
 
-                context.builder.addErrorExample(ERROR_DECLARATIONS_FILENAME, {
+                context.builder.addErrorExample(errorDeclarationFile, {
                     name: errorName,
                     example: convertedExample
                 });
@@ -341,7 +362,8 @@ function getRequest({
     queryParameters,
     nonRequestReferencedSchemas,
     headers,
-    usedNames
+    usedNames,
+    namespace
 }: {
     declarationFile: RelativeFilePath;
     context: OpenApiIrConverterContext;
@@ -352,11 +374,12 @@ function getRequest({
     nonRequestReferencedSchemas: SchemaId[];
     headers?: Record<string, RawSchemas.HttpHeaderSchema>;
     usedNames: Set<string>;
+    namespace: string | undefined;
 }): ConvertedRequest {
     if (request.type === "json") {
         const maybeSchemaId = request.schema.type === "reference" ? request.schema.schema : undefined;
         const resolvedSchema =
-            request.schema.type === "reference" ? context.getSchema(request.schema.schema) : request.schema;
+            request.schema.type === "reference" ? context.getSchema(request.schema.schema, namespace) : request.schema;
         // the request body is referenced if it is not an object or if other parts of the spec
         // refer to the same type
         if (
@@ -366,7 +389,8 @@ function getRequest({
             const requestTypeReference = buildTypeReference({
                 schema: request.schema,
                 fileContainingReference: declarationFile,
-                context
+                context,
+                namespace
             });
             const convertedRequest: ConvertedRequest = {
                 schemaIdsToExclude: [],
@@ -399,7 +423,8 @@ function getRequest({
                 const propertyTypeReference = buildTypeReference({
                     schema: property.schema,
                     fileContainingReference: declarationFile,
-                    context
+                    context,
+                    namespace
                 });
 
                 // TODO: clean up conditional logic
@@ -456,7 +481,8 @@ function getRequest({
             const allOfTypeReference = buildTypeReference({
                 schema: Schema.reference(referencedSchema),
                 fileContainingReference: declarationFile,
-                context
+                context,
+                namespace
             });
             return getTypeFromTypeReference(allOfTypeReference);
         });
@@ -502,7 +528,8 @@ function getRequest({
                     const propertyTypeReference = buildTypeReference({
                         schema: property.schema.value,
                         fileContainingReference: declarationFile,
-                        context
+                        context,
+                        namespace
                     });
                     return [property.key, propertyTypeReference];
                 }

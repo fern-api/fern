@@ -41,35 +41,37 @@ export interface ConvertedTypeDeclaration {
 export function buildTypeDeclaration({
     schema,
     context,
-    declarationFile
+    declarationFile,
+    namespace
 }: {
     schema: Schema;
     context: OpenApiIrConverterContext;
     /* The file the type declaration will be added to */
     declarationFile: RelativeFilePath;
+    namespace: string | undefined;
 }): ConvertedTypeDeclaration {
     switch (schema.type) {
         case "primitive":
             return buildPrimitiveTypeDeclaration(schema);
         case "array":
-            return buildArrayTypeDeclaration({ schema, context, declarationFile });
+            return buildArrayTypeDeclaration({ schema, context, declarationFile, namespace });
         case "map":
-            return buildMapTypeDeclaration({ schema, context, declarationFile });
+            return buildMapTypeDeclaration({ schema, context, declarationFile, namespace });
         case "reference":
-            return buildReferenceTypeDeclaration({ schema, context, declarationFile });
+            return buildReferenceTypeDeclaration({ schema, context, declarationFile, namespace });
         case "unknown":
             return buildUnknownTypeDeclaration(schema.nameOverride, schema.generatedName);
         case "optional":
         case "nullable":
-            return buildOptionalTypeDeclaration({ schema, context, declarationFile });
+            return buildOptionalTypeDeclaration({ schema, context, declarationFile, namespace });
         case "enum":
             return buildEnumTypeDeclaration(schema);
         case "literal":
             return buildLiteralTypeDeclaration(schema, schema.nameOverride, schema.generatedName);
         case "object":
-            return buildObjectTypeDeclaration({ schema, context, declarationFile });
+            return buildObjectTypeDeclaration({ schema, context, declarationFile, namespace });
         case "oneOf":
-            return buildOneOfTypeDeclaration({ schema: schema.value, context, declarationFile });
+            return buildOneOfTypeDeclaration({ schema: schema.value, context, declarationFile, namespace });
         default:
             assertNever(schema);
     }
@@ -78,11 +80,13 @@ export function buildTypeDeclaration({
 export function buildObjectTypeDeclaration({
     schema,
     context,
-    declarationFile
+    declarationFile,
+    namespace
 }: {
     schema: ObjectSchema;
     context: OpenApiIrConverterContext;
     declarationFile: RelativeFilePath;
+    namespace: string | undefined;
 }): ConvertedTypeDeclaration {
     const properties: Record<string, RawSchemas.ObjectPropertySchema> = {};
     const schemasToInline = new Set<SchemaId>();
@@ -98,7 +102,8 @@ export function buildObjectTypeDeclaration({
                     const parentSchemasToInine = getAllParentSchemasToInline({
                         property: property.key,
                         schemaId,
-                        context
+                        context,
+                        namespace
                     });
                     parentSchemasToInine.forEach((schemaToInline) => {
                         schemasToInline.add(schemaToInline);
@@ -109,7 +114,8 @@ export function buildObjectTypeDeclaration({
         const typeReference = buildTypeReference({
             schema: property.schema,
             context,
-            fileContainingReference: declarationFile
+            fileContainingReference: declarationFile,
+            namespace
         });
 
         const audiences = property.audiences;
@@ -134,7 +140,7 @@ export function buildObjectTypeDeclaration({
 
     const extendedSchemas: string[] = [];
     for (const allOf of schema.allOf) {
-        const resolvedSchemaId = getSchemaIdOfResolvedType({ schema: allOf.schema, context });
+        const resolvedSchemaId = getSchemaIdOfResolvedType({ schema: allOf.schema, context, namespace });
         if (resolvedSchemaId == null) {
             continue;
         }
@@ -144,13 +150,14 @@ export function buildObjectTypeDeclaration({
         const allOfTypeReference = buildTypeReference({
             schema: Schema.reference(allOf),
             context,
-            fileContainingReference: declarationFile
+            fileContainingReference: declarationFile,
+            namespace
         });
         extendedSchemas.push(getTypeFromTypeReference(allOfTypeReference));
     }
 
     for (const inlineSchemaId of schemasToInline) {
-        const inlinedSchemaPropertyInfo = getProperties(context, inlineSchemaId);
+        const inlinedSchemaPropertyInfo = getProperties(context, inlineSchemaId, namespace);
         for (const propertyToInline of inlinedSchemaPropertyInfo.properties) {
             if (properties[propertyToInline.key] == null) {
                 if (propertiesToSetToUnknown.has(propertyToInline.key)) {
@@ -159,7 +166,8 @@ export function buildObjectTypeDeclaration({
                 properties[propertyToInline.key] = buildTypeReference({
                     schema: propertyToInline.schema,
                     context,
-                    fileContainingReference: declarationFile
+                    fileContainingReference: declarationFile,
+                    namespace
                 });
             }
         }
@@ -170,7 +178,8 @@ export function buildObjectTypeDeclaration({
             const extendedSchemaTypeReference = buildTypeReference({
                 schema: Schema.reference(extendedSchema),
                 context,
-                fileContainingReference: declarationFile
+                fileContainingReference: declarationFile,
+                namespace
             });
             extendedSchemas.push(getTypeFromTypeReference(extendedSchemaTypeReference));
         }
@@ -220,27 +229,29 @@ export function buildObjectTypeDeclaration({
 function getAllParentSchemasToInline({
     property,
     schemaId,
-    context
+    context,
+    namespace
 }: {
     property: string;
     schemaId: SchemaId;
     context: OpenApiIrConverterContext;
+    namespace: string | undefined;
 }): SchemaId[] {
-    const schema = context.getSchema(schemaId);
+    const schema = context.getSchema(schemaId, namespace);
     if (schema == null) {
         return [];
     }
     if (schema.type === "reference") {
-        return getAllParentSchemasToInline({ property, schemaId: schema.schema, context });
+        return getAllParentSchemasToInline({ property, schemaId: schema.schema, context, namespace });
     }
     if (schema.type === "object") {
-        const { properties, allOf } = getProperties(context, schemaId);
+        const { properties, allOf } = getProperties(context, schemaId, namespace);
         const hasProperty = properties.some((p) => {
             return p.key === property;
         });
         const parentSchemasToInline = [
             ...allOf.flatMap((parent) => {
-                return getAllParentSchemasToInline({ property, context, schemaId: parent.schema });
+                return getAllParentSchemasToInline({ property, context, schemaId: parent.schema, namespace });
             })
         ];
         if (hasProperty || parentSchemasToInline.length > 0) {
@@ -252,19 +263,20 @@ function getAllParentSchemasToInline({
 
 function getProperties(
     context: OpenApiIrConverterContext,
-    schemaId: SchemaId
+    schemaId: SchemaId,
+    namespace: string | undefined
 ): {
     properties: ObjectProperty[];
     allOf: ReferencedSchema[];
 } {
-    const schema = context.getSchema(schemaId);
+    const schema = context.getSchema(schemaId, namespace);
     if (schema == null) {
         return { properties: [], allOf: [] };
     }
     if (schema.type === "object") {
         return { properties: schema.properties, allOf: schema.allOf };
     } else if (schema.type === "reference") {
-        return getProperties(context, schema.schema);
+        return getProperties(context, schema.schema, namespace);
     }
     throw new Error(`Cannot getAllProperties for a non-object schema. schemaId=${schemaId}, type=${schema.type}`);
 }
@@ -272,30 +284,46 @@ function getProperties(
 export function buildArrayTypeDeclaration({
     schema,
     context,
-    declarationFile
+    declarationFile,
+    namespace
 }: {
     schema: ArraySchema;
     context: OpenApiIrConverterContext;
     declarationFile: RelativeFilePath;
+    namespace: string | undefined;
 }): ConvertedTypeDeclaration {
     return {
         name: schema.nameOverride ?? schema.generatedName,
-        schema: buildArrayTypeReference({ schema, fileContainingReference: declarationFile, declarationFile, context })
+        schema: buildArrayTypeReference({
+            schema,
+            fileContainingReference: declarationFile,
+            declarationFile,
+            context,
+            namespace
+        })
     };
 }
 
 export function buildMapTypeDeclaration({
     schema,
     context,
-    declarationFile
+    declarationFile,
+    namespace
 }: {
     schema: MapSchema;
     context: OpenApiIrConverterContext;
     declarationFile: RelativeFilePath;
+    namespace: string | undefined;
 }): ConvertedTypeDeclaration {
     return {
         name: schema.nameOverride ?? schema.generatedName,
-        schema: buildMapTypeReference({ schema, fileContainingReference: declarationFile, declarationFile, context })
+        schema: buildMapTypeReference({
+            schema,
+            fileContainingReference: declarationFile,
+            declarationFile,
+            context,
+            namespace
+        })
     };
 }
 
@@ -398,26 +426,30 @@ export function buildEnumTypeDeclaration(schema: EnumSchema): ConvertedTypeDecla
 export function buildReferenceTypeDeclaration({
     schema,
     context,
-    declarationFile
+    declarationFile,
+    namespace
 }: {
     schema: ReferencedSchema;
     context: OpenApiIrConverterContext;
     declarationFile: RelativeFilePath;
+    namespace: string | undefined;
 }): ConvertedTypeDeclaration {
     return {
         name: schema.nameOverride ?? schema.generatedName,
-        schema: buildReferenceTypeReference({ schema, context, fileContainingReference: declarationFile })
+        schema: buildReferenceTypeReference({ schema, context, fileContainingReference: declarationFile, namespace })
     };
 }
 
 export function buildOptionalTypeDeclaration({
     schema,
     context,
-    declarationFile
+    declarationFile,
+    namespace
 }: {
     schema: OptionalSchema;
     context: OpenApiIrConverterContext;
     declarationFile: RelativeFilePath;
+    namespace: string | undefined;
 }): ConvertedTypeDeclaration {
     return {
         name: schema.nameOverride ?? schema.generatedName,
@@ -425,7 +457,8 @@ export function buildOptionalTypeDeclaration({
             schema,
             context,
             fileContainingReference: declarationFile,
-            declarationFile
+            declarationFile,
+            namespace
         })
     };
 }
@@ -454,11 +487,13 @@ export function buildLiteralTypeDeclaration(
 export function buildOneOfTypeDeclaration({
     schema,
     context,
-    declarationFile
+    declarationFile,
+    namespace
 }: {
     schema: OneOfSchema;
     context: OpenApiIrConverterContext;
     declarationFile: RelativeFilePath;
+    namespace: string | undefined;
 }): ConvertedTypeDeclaration {
     const encoding = schema.encoding != null ? convertToEncodingSchema(schema.encoding) : undefined;
     if (schema.type === "discriminated") {
@@ -467,7 +502,8 @@ export function buildOneOfTypeDeclaration({
             baseProperties[property.key] = buildTypeReference({
                 schema: property.schema,
                 fileContainingReference: declarationFile,
-                context
+                context,
+                namespace
             });
         }
         const union: Record<string, RawSchemas.SingleUnionTypeSchema> = {};
@@ -475,7 +511,8 @@ export function buildOneOfTypeDeclaration({
             union[discriminantValue] = buildTypeReference({
                 schema: subSchema,
                 context,
-                fileContainingReference: declarationFile
+                fileContainingReference: declarationFile,
+                namespace
             });
         }
         return {
@@ -498,7 +535,8 @@ export function buildOneOfTypeDeclaration({
             buildTypeReference({
                 schema: subSchema,
                 fileContainingReference: declarationFile,
-                context
+                context,
+                namespace
             })
         );
     }
@@ -521,17 +559,19 @@ function startsWithNumber(str: string): boolean {
 
 function getSchemaIdOfResolvedType({
     schema,
-    context
+    context,
+    namespace
 }: {
     schema: SchemaId;
     context: OpenApiIrConverterContext;
+    namespace: string | undefined;
 }): SchemaId | undefined {
-    const resolvedSchema = context.getSchema(schema);
+    const resolvedSchema = context.getSchema(schema, namespace);
     if (resolvedSchema == null) {
         return undefined;
     }
     if (resolvedSchema.type === "reference") {
-        return getSchemaIdOfResolvedType({ context, schema: resolvedSchema.schema });
+        return getSchemaIdOfResolvedType({ context, schema: resolvedSchema.schema, namespace });
     }
     return schema;
 }

@@ -1,5 +1,10 @@
 import { AbsoluteFilePath, join, relative, RelativeFilePath } from "@fern-api/fs-utils";
-import { OpenApiIntermediateRepresentation, Source as OpenApiIrSource } from "@fern-api/openapi-ir-sdk";
+import {
+    OpenApiIntermediateRepresentation,
+    Schema,
+    Schemas,
+    Source as OpenApiIrSource
+} from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -84,7 +89,10 @@ export async function parse({
         endpoints: [],
         webhooks: [],
         channel: [],
-        schemas: {},
+        groupedSchemas: {
+            rootSchemas: {},
+            namespacedSchemas: {}
+        },
         variables: {},
         nonRequestReferencedSchemas: new Set(),
         securitySchemes: {},
@@ -147,11 +155,8 @@ export async function parse({
             if (parsedAsyncAPI.channel != null) {
                 ir.channel.push(parsedAsyncAPI.channel);
             }
-            if (parsedAsyncAPI.schemas != null) {
-                ir.schemas = {
-                    ...ir.schemas,
-                    ...parsedAsyncAPI.schemas
-                };
+            if (parsedAsyncAPI.groupedSchemas != null) {
+                ir.groupedSchemas = mergeSchemaMaps(ir.groupedSchemas, parsedAsyncAPI.groupedSchemas);
             }
             if (parsedAsyncAPI.basePath != null) {
                 ir.basePath = parsedAsyncAPI.basePath;
@@ -225,10 +230,7 @@ function merge(
         endpoints: [...ir1.endpoints, ...ir2.endpoints],
         webhooks: [...ir1.webhooks, ...ir2.webhooks],
         channel: [...ir1.channel, ...ir2.channel],
-        schemas: {
-            ...ir1.schemas,
-            ...ir2.schemas
-        },
+        groupedSchemas: mergeSchemaMaps(ir1.groupedSchemas, ir2.groupedSchemas),
         variables: {
             ...ir1.variables,
             ...ir2.variables
@@ -246,6 +248,22 @@ function merge(
             ...ir2.groups
         }
     };
+}
+
+function mergeSchemaMaps(schemas1: Schemas, schemas2: Schemas): Schemas {
+    schemas1.rootSchemas = { ...schemas1.rootSchemas, ...schemas2.rootSchemas };
+
+    for (const [namespace, namespaceSchemas] of Object.entries(schemas2.namespacedSchemas)) {
+        // If both share the namespace, merge the schemas within that namespace
+        if (schemas1.namespacedSchemas[namespace] != null) {
+            schemas1.namespacedSchemas[namespace] = { ...schemas1.namespacedSchemas[namespace], ...namespaceSchemas };
+        } else {
+            // Otherwise, just add the namespace to the schemas
+            schemas1.namespacedSchemas[namespace] = namespaceSchemas;
+        }
+    }
+
+    return schemas1;
 }
 
 async function loadAsyncAPI({
