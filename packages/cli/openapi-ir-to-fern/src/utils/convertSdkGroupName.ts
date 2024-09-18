@@ -37,9 +37,7 @@ export function convertSdkGroupNameToFileWithoutExtension(groupName: SdkGroupNam
             assertNever(group);
         }
     }
-    if (fileNames[-1]?.toLowerCase() === "v1") {
-        throw new Error(`[TESTING HERE] ${JSON.stringify(groupName)}, ${JSON.stringify(fileNames)}`);
-    }
+
     return fileNames.join("/");
 }
 
