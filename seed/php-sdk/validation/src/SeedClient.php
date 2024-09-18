@@ -6,6 +6,8 @@ use GuzzleHttp\ClientInterface;
 use Seed\Core\RawClient;
 use GuzzleHttp\Client;
 use Seed\Requests\CreateRequest;
+use Seed\Core\JsonApiRequest;
+use Seed\Core\HttpMethod;
 use JsonException;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -35,14 +37,21 @@ class SeedClient
     }
 
     /**
-     * @param CreateRequest request
+     * @param CreateRequest $request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function create(CreateRequest $request, ?array $options = null): mixed
     {
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? '',
+                    path: "/create",
+                    method: HttpMethod::POST,
+                    body: $request,
+                ),
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
@@ -56,18 +65,25 @@ class SeedClient
     }
 
     /**
-     * @param GetRequest request
+     * @param GetRequest $request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function get(GetRequest $request, ?array $options = null): mixed
     {
         $query = [];
-        $query['decimal'] = request->decimal;
-        $query['even'] = request->even;
-        $query['name'] = request->name;
+        $query['decimal'] = $request->decimal;
+        $query['even'] = $request->even;
+        $query['name'] = $request->name;
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? '',
+                    path: "",
+                    method: HttpMethod::GET,
+                    query: $query,
+                ),
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);

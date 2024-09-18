@@ -5,6 +5,8 @@ namespace Seed;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\RawClient;
 use GuzzleHttp\Client;
+use Seed\Core\JsonApiRequest;
+use Seed\Core\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
 use Exception;
 
@@ -32,14 +34,20 @@ class SeedClient
     }
 
     /**
-     * @param string typeId
+     * @param string $typeId
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function get(string $typeId, ?array $options = null): mixed
     {
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? '',
+                    path: "/$typeId",
+                    method: HttpMethod::GET,
+                ),
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;

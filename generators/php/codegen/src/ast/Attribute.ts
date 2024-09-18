@@ -6,7 +6,7 @@ export declare namespace Attribute {
     interface Args {
         /* Reference to the attribute class reference */
         reference: ClassReference;
-
+        /* Arguments included in the attribute, if any */
         arguments?: (string | AstNode)[];
     }
 }

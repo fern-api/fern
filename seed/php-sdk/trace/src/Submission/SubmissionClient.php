@@ -4,6 +4,8 @@ namespace Seed\Submission;
 
 use Seed\Core\RawClient;
 use Seed\Commons\Types\Language;
+use Seed\Core\JsonApiRequest;
+use Seed\Core\HttpMethod;
 use JsonException;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -26,14 +28,20 @@ class SubmissionClient
 
     /**
     * Returns sessionId and execution server URL for session. Spins up server.
-     * @param Language language
+     * @param Language $language
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function createExecutionSession(Language $language, ?array $options = null): mixed
     {
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? '',
+                    path: "/sessions/create-session/$language",
+                    method: HttpMethod::POST,
+                ),
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
@@ -48,14 +56,20 @@ class SubmissionClient
 
     /**
     * Returns execution server URL for session. Returns empty if session isn't registered.
-     * @param string sessionId
+     * @param string $sessionId
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function getExecutionSession(string $sessionId, ?array $options = null): mixed
     {
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? '',
+                    path: "/sessions/$sessionId",
+                    method: HttpMethod::GET,
+                ),
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
@@ -70,14 +84,20 @@ class SubmissionClient
 
     /**
     * Stops execution session.
-     * @param string sessionId
+     * @param string $sessionId
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function stopExecutionSession(string $sessionId, ?array $options = null): mixed
     {
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? '',
+                    path: "/sessions/stop/$sessionId",
+                    method: HttpMethod::DELETE,
+                ),
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
@@ -95,7 +115,13 @@ class SubmissionClient
     public function getExecutionSessionsState(?array $options = null): mixed
     {
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? '',
+                    path: "/sessions/execution-sessions-state",
+                    method: HttpMethod::GET,
+                ),
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);

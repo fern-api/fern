@@ -4,6 +4,8 @@ namespace Seed\Endpoints\Object;
 
 use Seed\Core\RawClient;
 use Seed\Types\Object\Types\ObjectWithOptionalField;
+use Seed\Core\JsonApiRequest;
+use Seed\Core\HttpMethod;
 use JsonException;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -29,14 +31,21 @@ class ObjectClient
     }
 
     /**
-     * @param ObjectWithOptionalField request
+     * @param ObjectWithOptionalField $request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function getAndReturnWithOptionalField(ObjectWithOptionalField $request, ?array $options = null): mixed
     {
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? '',
+                    path: "/object/get-and-return-with-optional-field",
+                    method: HttpMethod::POST,
+                    body: $request,
+                ),
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
@@ -50,14 +59,21 @@ class ObjectClient
     }
 
     /**
-     * @param ObjectWithRequiredField request
+     * @param ObjectWithRequiredField $request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function getAndReturnWithRequiredField(ObjectWithRequiredField $request, ?array $options = null): mixed
     {
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? '',
+                    path: "/object/get-and-return-with-required-field",
+                    method: HttpMethod::POST,
+                    body: $request,
+                ),
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
@@ -71,14 +87,21 @@ class ObjectClient
     }
 
     /**
-     * @param ObjectWithMapOfMap request
+     * @param ObjectWithMapOfMap $request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function getAndReturnWithMapOfMap(ObjectWithMapOfMap $request, ?array $options = null): mixed
     {
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? '',
+                    path: "/object/get-and-return-with-map-of-map",
+                    method: HttpMethod::POST,
+                    body: $request,
+                ),
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
@@ -92,14 +115,21 @@ class ObjectClient
     }
 
     /**
-     * @param NestedObjectWithOptionalField request
+     * @param NestedObjectWithOptionalField $request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function getAndReturnNestedWithOptionalField(NestedObjectWithOptionalField $request, ?array $options = null): mixed
     {
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? '',
+                    path: "/object/get-and-return-nested-with-optional-field",
+                    method: HttpMethod::POST,
+                    body: $request,
+                ),
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
@@ -113,15 +143,22 @@ class ObjectClient
     }
 
     /**
-     * @param string string
-     * @param NestedObjectWithRequiredField request
+     * @param string $string
+     * @param NestedObjectWithRequiredField $request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function getAndReturnNestedWithRequiredField(string $string, NestedObjectWithRequiredField $request, ?array $options = null): mixed
     {
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? '',
+                    path: "/object/get-and-return-nested-with-required-field/$string",
+                    method: HttpMethod::POST,
+                    body: $request,
+                ),
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
@@ -135,14 +172,21 @@ class ObjectClient
     }
 
     /**
-     * @param array<NestedObjectWithRequiredField> request
+     * @param array<NestedObjectWithRequiredField> $request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function getAndReturnNestedWithRequiredFieldAsList(array $request, ?array $options = null): mixed
     {
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? '',
+                    path: "/object/get-and-return-nested-with-required-field-list",
+                    method: HttpMethod::POST,
+                    body: $request,
+                ),
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);

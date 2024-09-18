@@ -5,6 +5,8 @@ namespace Seed\User;
 use Seed\User\Events\EventsClient;
 use Seed\Core\RawClient;
 use Seed\User\Requests\ListUsersRequest;
+use Seed\Core\JsonApiRequest;
+use Seed\Core\HttpMethod;
 use JsonException;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -33,18 +35,25 @@ class UserClient
 
     /**
     * List all users.
-     * @param ListUsersRequest request
+     * @param ListUsersRequest $request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function list(ListUsersRequest $request, ?array $options = null): mixed
     {
         $query = [];
-        if (request->limit != null) {
-            $query['limit'] = request->limit;
+        if ($request->limit != null) {
+            $query['limit'] = $request->limit;
         }
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? '',
+                    path: "/users/",
+                    method: HttpMethod::GET,
+                    query: $query,
+                ),
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);

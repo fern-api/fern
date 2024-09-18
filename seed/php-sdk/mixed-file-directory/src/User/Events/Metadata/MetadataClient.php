@@ -4,6 +4,8 @@ namespace Seed\User\Events\Metadata;
 
 use Seed\Core\RawClient;
 use Seed\User\Events\Metadata\Requests\GetEventMetadataRequest;
+use Seed\Core\JsonApiRequest;
+use Seed\Core\HttpMethod;
 use JsonException;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -26,16 +28,23 @@ class MetadataClient
 
     /**
     * Get event metadata.
-     * @param GetEventMetadataRequest request
+     * @param GetEventMetadataRequest $request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function getMetadata(GetEventMetadataRequest $request, ?array $options = null): mixed
     {
         $query = [];
-        $query['id'] = request->id;
+        $query['id'] = $request->id;
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? '',
+                    path: "/users/events/metadata/",
+                    method: HttpMethod::GET,
+                    query: $query,
+                ),
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);

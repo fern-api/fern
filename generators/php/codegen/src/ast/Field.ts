@@ -5,9 +5,10 @@ import { Writer } from "./core/Writer";
 import { Type } from "./Type";
 import { Comment } from "./Comment";
 import { Attribute } from "./Attribute";
+import { convertToPhpVariableName } from "./utils/convertToPhpVariableName";
 
 export declare namespace Field {
-    interface Args {
+    export interface Args {
         /* The name of the field */
         name: string;
         /* The type of the field */
@@ -39,7 +40,7 @@ export class Field extends AstNode {
 
     constructor({ name, type, access, readonly_, initializer, docs, inlineDocs, attributes }: Field.Args) {
         super();
-        this.name = name;
+        this.name = convertToPhpVariableName(name);
         this.type = type;
         this.access = access;
         this.readonly_ = readonly_ ?? false;
@@ -59,7 +60,7 @@ export class Field extends AstNode {
         }
 
         this.type.write(writer);
-        writer.write(` ${this.name.startsWith("$") ? "" : "$"}${this.name}`);
+        writer.write(` ${this.name}`);
 
         if (this.initializer != null) {
             writer.write(" = ");
@@ -78,7 +79,7 @@ export class Field extends AstNode {
         comment.addTag({
             tagType: "var",
             type: this.type,
-            name: `${this.name.startsWith("$") ? "" : "$"}${this.name}`,
+            name: this.name,
             docs: this.docs
         });
         comment.write(writer);

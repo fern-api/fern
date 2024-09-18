@@ -1,13 +1,8 @@
-import {
-    Arguments,
-    hasNamedArgument,
-    isNamedArgument,
-    NamedArgument,
-    UnnamedArgument
-} from "@fern-api/generator-commons";
+import { Arguments } from "@fern-api/generator-commons";
 import { ClassReference } from "./ClassReference";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
+import { writeArguments } from "./utils/writeArguments";
 
 export declare namespace ClassInstantiation {
     interface Args {
@@ -15,42 +10,26 @@ export declare namespace ClassInstantiation {
         classReference: ClassReference;
         /* The arguments passed into the class constructor */
         arguments_: Arguments;
+        /* Write the instantiation across multiple lines */
+        multiline?: boolean;
     }
 }
 
 export class ClassInstantiation extends AstNode {
     public readonly classReference: ClassReference;
     public readonly arguments_: Arguments;
+    private multiline: boolean;
 
-    constructor({ classReference, arguments_ }: ClassInstantiation.Args) {
+    constructor({ classReference, arguments_, multiline }: ClassInstantiation.Args) {
         super();
         this.classReference = classReference;
         this.arguments_ = arguments_;
+        this.multiline = multiline ?? false;
     }
 
     public write(writer: Writer): void {
         writer.write("new ");
         writer.writeNode(this.classReference);
-
-        if (this.arguments_.length === 0) {
-            writer.write("()");
-            return;
-        }
-
-        writer.write("(");
-        writer.indent();
-        this.arguments_.forEach((argument, index) => {
-            if (index > 0) {
-                writer.write(", ");
-            }
-            if (isNamedArgument(argument)) {
-                writer.write(`${argument.name}: `);
-                argument.assignment.write(writer);
-            } else {
-                argument.write(writer);
-            }
-        });
-        writer.dedent();
-        writer.write(")");
+        writeArguments({ writer, arguments_: this.arguments_, multiline: this.multiline });
     }
 }

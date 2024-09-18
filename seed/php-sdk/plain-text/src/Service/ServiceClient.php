@@ -3,6 +3,8 @@
 namespace Seed\Service;
 
 use Seed\Core\RawClient;
+use Seed\Core\JsonApiRequest;
+use Seed\Core\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
 use Exception;
 
@@ -29,7 +31,13 @@ class ServiceClient
     public function getText(?array $options = null): mixed
     {
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? '',
+                    path: "text",
+                    method: HttpMethod::POST,
+                ),
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return $response->getBody()->getContents();
