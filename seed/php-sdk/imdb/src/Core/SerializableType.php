@@ -80,14 +80,14 @@ abstract class SerializableType implements \JsonSerializable
      *
      * @param array<string, mixed> $data The array to deserialize.
      * @return static
-     * @throws Exception
+     * @throws \JsonException
      */
     public static function jsonDeserialize(array $data): static
     {
         $reflectionClass = new \ReflectionClass(static::class);
         $constructor = $reflectionClass->getConstructor();
         if ($constructor == null) {
-            throw new Exception("No constructor found.");
+            throw new \JsonException("No constructor found.");
         }
         $parameters = $constructor->getParameters();
         $args = [];

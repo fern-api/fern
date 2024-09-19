@@ -38,6 +38,7 @@ class JsonDeserializer
      * @param mixed[]|array<string, mixed> $data The array to be deserialized.
      * @param mixed[]|array<string, mixed> $type The type definition from the annotation.
      * @return mixed[]|array<string, mixed> The deserialized array.
+     * @throws JsonException
      */
     public static function deserializeArray(array $data, array $type): array
     {
@@ -103,6 +104,9 @@ class JsonDeserializer
         }
 
         if (class_exists($type) && is_array($data)) {
+            if (!is_subclass_of($type, SerializableType::class)) {
+                throw new JsonException("$type is not a subclass of SerializableType.");
+            }
             return $type::jsonDeserialize($data);
         }
 

@@ -5,6 +5,7 @@ namespace Seed\Core;
 use DateTime;
 use Exception;
 use JsonException;
+use JsonSerializable;
 
 class JsonSerializer
 {
@@ -66,6 +67,7 @@ class JsonSerializer
      * @param mixed $data The value to serialize.
      * @param string $type The expected type.
      * @return mixed The serialized value.
+     * @throws JsonException
      */
     private static function serializeSingleValue(mixed $data, string $type): mixed
     {
@@ -82,11 +84,10 @@ class JsonSerializer
         }
 
         if (class_exists($type) && $data instanceof $type) {
-            if (method_exists($data, 'jsonSerialize')) {
-                return $data->jsonSerialize();
-            } else {
-                throw new \InvalidArgumentException("Class $type must implement toArray method.");
+            if (!is_subclass_of($data, JsonSerializable::class)) {
+                throw new \JsonException("Class $type must implement toArray method.");
             }
+            return $data->jsonSerialize();
         }
 
         if (gettype($data) === $type) {
