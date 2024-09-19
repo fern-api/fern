@@ -101,7 +101,7 @@ class EndpointGenerator:
             return True
         return self._endpoint.response.body.visit(
             file_download=lambda _: False,
-            text=lambda _: False,
+            text=lambda _: True,
             json=lambda json_response: True,
             streaming=lambda _: True,
             stream_parameter=lambda _: True,
@@ -199,10 +199,10 @@ class EndpointGenerator:
                 writer.write_line(f'path="{self._get_endpoint_path()}",')
 
                 # Void responses make more sense as response_class, but keeping as response_model to not modify existing users
-                if self._get_is_return_type_pydantic_model() or self._endpoint.response is None:
-                    writer.write("response_model=")
-                else:
+                if  not self._get_is_return_type_pydantic_model():
                     writer.write("response_class=")
+                else:
+                    writer.write("response_model=")
 
                 if self._endpoint.response is not None:
                     writer.write_node(self._get_return_type())
