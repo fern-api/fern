@@ -4,6 +4,8 @@ namespace Seed\Foo;
 
 use Seed\Core\RawClient;
 use Seed\Foo\Requests\FindRequest;
+use Seed\Core\JsonApiRequest;
+use Seed\Core\HttpMethod;
 use JsonException;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -25,18 +27,26 @@ class FooClient
     }
 
     /**
-     * @param FindRequest request
+     * @param FindRequest $request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function find(FindRequest $request, ?array $options = null): mixed
     {
         $query = [];
-        if (request->optionalString != null) {
-            $query['optionalString'] = request->optionalString;
+        if ($request->optionalString != null) {
+            $query['optionalString'] = $request->optionalString;
         }
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "",
+                    method: HttpMethod::POST,
+                    query: $query,
+                    body: $request,
+                ),
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);

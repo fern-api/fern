@@ -22,4 +22,4 @@ class RequestEndpointParameter(EndpointParameter):
         return self._context.pydantic_generator_context.get_type_hint_for_type_reference(self._request_type)
 
     def get_default(self) -> AST.Expression:
-        return FastAPI.Body
+        return FastAPI.Body()

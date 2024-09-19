@@ -4,6 +4,8 @@ namespace Seed\Users;
 
 use Seed\Core\RawClient;
 use Seed\Users\Requests\ListUsersCursorPaginationRequest;
+use Seed\Core\JsonApiRequest;
+use Seed\Core\HttpMethod;
 use JsonException;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -34,27 +36,34 @@ class UsersClient
     }
 
     /**
-     * @param ListUsersCursorPaginationRequest request
+     * @param ListUsersCursorPaginationRequest $request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function listWithCursorPagination(ListUsersCursorPaginationRequest $request, ?array $options = null): mixed
     {
         $query = [];
-        if (request->page != null) {
-            $query['page'] = request->page;
+        if ($request->page != null) {
+            $query['page'] = $request->page;
         }
-        if (request->perPage != null) {
-            $query['per_page'] = request->perPage;
+        if ($request->perPage != null) {
+            $query['per_page'] = $request->perPage;
         }
-        if (request->order != null) {
-            $query['order'] = request->order->value;
+        if ($request->order != null) {
+            $query['order'] = $request->order->value;
         }
-        if (request->startingAfter != null) {
-            $query['starting_after'] = request->startingAfter;
+        if ($request->startingAfter != null) {
+            $query['starting_after'] = $request->startingAfter;
         }
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/users",
+                    method: HttpMethod::GET,
+                    query: $query,
+                ),
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
@@ -68,14 +77,21 @@ class UsersClient
     }
 
     /**
-     * @param ListUsersBodyCursorPaginationRequest request
+     * @param ListUsersBodyCursorPaginationRequest $request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function listWithBodyCursorPagination(ListUsersBodyCursorPaginationRequest $request, ?array $options = null): mixed
     {
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/users",
+                    method: HttpMethod::POST,
+                    body: $request,
+                ),
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
@@ -89,27 +105,34 @@ class UsersClient
     }
 
     /**
-     * @param ListUsersOffsetPaginationRequest request
+     * @param ListUsersOffsetPaginationRequest $request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function listWithOffsetPagination(ListUsersOffsetPaginationRequest $request, ?array $options = null): mixed
     {
         $query = [];
-        if (request->page != null) {
-            $query['page'] = request->page;
+        if ($request->page != null) {
+            $query['page'] = $request->page;
         }
-        if (request->perPage != null) {
-            $query['per_page'] = request->perPage;
+        if ($request->perPage != null) {
+            $query['per_page'] = $request->perPage;
         }
-        if (request->order != null) {
-            $query['order'] = request->order->value;
+        if ($request->order != null) {
+            $query['order'] = $request->order->value;
         }
-        if (request->startingAfter != null) {
-            $query['starting_after'] = request->startingAfter;
+        if ($request->startingAfter != null) {
+            $query['starting_after'] = $request->startingAfter;
         }
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/users",
+                    method: HttpMethod::GET,
+                    query: $query,
+                ),
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
@@ -123,14 +146,21 @@ class UsersClient
     }
 
     /**
-     * @param ListUsersBodyOffsetPaginationRequest request
+     * @param ListUsersBodyOffsetPaginationRequest $request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function listWithBodyOffsetPagination(ListUsersBodyOffsetPaginationRequest $request, ?array $options = null): mixed
     {
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/users",
+                    method: HttpMethod::POST,
+                    body: $request,
+                ),
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
@@ -144,24 +174,31 @@ class UsersClient
     }
 
     /**
-     * @param ListUsersOffsetStepPaginationRequest request
+     * @param ListUsersOffsetStepPaginationRequest $request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function listWithOffsetStepPagination(ListUsersOffsetStepPaginationRequest $request, ?array $options = null): mixed
     {
         $query = [];
-        if (request->page != null) {
-            $query['page'] = request->page;
+        if ($request->page != null) {
+            $query['page'] = $request->page;
         }
-        if (request->limit != null) {
-            $query['limit'] = request->limit;
+        if ($request->limit != null) {
+            $query['limit'] = $request->limit;
         }
-        if (request->order != null) {
-            $query['order'] = request->order->value;
+        if ($request->order != null) {
+            $query['order'] = $request->order->value;
         }
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/users",
+                    method: HttpMethod::GET,
+                    query: $query,
+                ),
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
@@ -175,24 +212,31 @@ class UsersClient
     }
 
     /**
-     * @param ListWithOffsetPaginationHasNextPageRequest request
+     * @param ListWithOffsetPaginationHasNextPageRequest $request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function listWithOffsetPaginationHasNextPage(ListWithOffsetPaginationHasNextPageRequest $request, ?array $options = null): mixed
     {
         $query = [];
-        if (request->page != null) {
-            $query['page'] = request->page;
+        if ($request->page != null) {
+            $query['page'] = $request->page;
         }
-        if (request->limit != null) {
-            $query['limit'] = request->limit;
+        if ($request->limit != null) {
+            $query['limit'] = $request->limit;
         }
-        if (request->order != null) {
-            $query['order'] = request->order->value;
+        if ($request->order != null) {
+            $query['order'] = $request->order->value;
         }
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/users",
+                    method: HttpMethod::GET,
+                    query: $query,
+                ),
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
@@ -206,18 +250,25 @@ class UsersClient
     }
 
     /**
-     * @param ListUsersExtendedRequest request
+     * @param ListUsersExtendedRequest $request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function listWithExtendedResults(ListUsersExtendedRequest $request, ?array $options = null): mixed
     {
         $query = [];
-        if (request->cursor != null) {
-            $query['cursor'] = request->cursor;
+        if ($request->cursor != null) {
+            $query['cursor'] = $request->cursor;
         }
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/users",
+                    method: HttpMethod::GET,
+                    query: $query,
+                ),
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
@@ -231,18 +282,25 @@ class UsersClient
     }
 
     /**
-     * @param ListUsersExtendedRequestForOptionalData request
+     * @param ListUsersExtendedRequestForOptionalData $request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function listWithExtendedResultsAndOptionalData(ListUsersExtendedRequestForOptionalData $request, ?array $options = null): mixed
     {
         $query = [];
-        if (request->cursor != null) {
-            $query['cursor'] = request->cursor;
+        if ($request->cursor != null) {
+            $query['cursor'] = $request->cursor;
         }
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/users",
+                    method: HttpMethod::GET,
+                    query: $query,
+                ),
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
@@ -256,18 +314,25 @@ class UsersClient
     }
 
     /**
-     * @param ListUsernamesRequest request
+     * @param ListUsernamesRequest $request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function listUsernames(ListUsernamesRequest $request, ?array $options = null): mixed
     {
         $query = [];
-        if (request->startingAfter != null) {
-            $query['starting_after'] = request->startingAfter;
+        if ($request->startingAfter != null) {
+            $query['starting_after'] = $request->startingAfter;
         }
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/users",
+                    method: HttpMethod::GET,
+                    query: $query,
+                ),
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
@@ -281,18 +346,25 @@ class UsersClient
     }
 
     /**
-     * @param ListWithGlobalConfigRequest request
+     * @param ListWithGlobalConfigRequest $request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function listWithGlobalConfig(ListWithGlobalConfigRequest $request, ?array $options = null): mixed
     {
         $query = [];
-        if (request->offset != null) {
-            $query['offset'] = request->offset;
+        if ($request->offset != null) {
+            $query['offset'] = $request->offset;
         }
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/users",
+                    method: HttpMethod::GET,
+                    query: $query,
+                ),
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);

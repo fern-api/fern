@@ -1,10 +1,24 @@
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { php } from "@fern-api/php-codegen";
-import { Arguments } from "@fern-api/generator-commons";
+import { Arguments, NamedArgument } from "@fern-api/generator-commons";
+import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
 
 export declare namespace RawClient {
     export interface SendRequestArgs {
-        // TODO: Implement me!
+        /** The endpoint for the endpoint */
+        endpoint: HttpEndpoint;
+        /** The reference to the client variable */
+        clientReference: string;
+        /** The base URL used for the request */
+        baseUrl: php.AstNode;
+        /** The path parameter IDs to reference */
+        pathParameterReferences?: Record<string, string>;
+        /** The reference to the header values */
+        headerBagReference?: string;
+        /** The reference to the query values */
+        queryBagReference?: string;
+        /** The reference to the request body */
+        bodyReference?: string;
     }
 }
 
@@ -14,6 +28,7 @@ export declare namespace RawClient {
 export class RawClient {
     public static CLASS_NAME = "RawClient";
     public static FIELD_NAME = "client";
+    public static SEND_REQUEST_METHOD_NAME = "sendRequest";
 
     private context: SdkGeneratorContext;
 
@@ -43,12 +58,84 @@ export class RawClient {
     public instantiate({ arguments_ }: { arguments_: Arguments }): php.ClassInstantiation {
         return php.instantiateClass({
             classReference: this.getClassReference(),
-            arguments_
+            arguments_,
+            multiline: true
         });
     }
 
     public sendRequest(args: RawClient.SendRequestArgs): php.AstNode {
-        // TODO: Implement me!
-        return php.codeblock("$this->client->sendRequest()");
+        const arguments_: NamedArgument[] = [
+            {
+                name: "baseUrl",
+                assignment: args.baseUrl
+            },
+            {
+                name: "path",
+                assignment: php.codeblock(
+                    `"${this.getPathString({
+                        endpoint: args.endpoint,
+                        pathParameterReferences: args.pathParameterReferences ?? {}
+                    })}"`
+                )
+            },
+            {
+                name: "method",
+                assignment: this.context.getHttpMethod(args.endpoint.method)
+            }
+        ];
+        if (args.headerBagReference != null) {
+            arguments_.push({
+                name: "headers",
+                assignment: php.codeblock(args.headerBagReference)
+            });
+        }
+        if (args.queryBagReference != null) {
+            arguments_.push({
+                name: "query",
+                assignment: php.codeblock(args.queryBagReference)
+            });
+        }
+        if (args.bodyReference != null) {
+            arguments_.push({
+                name: "body",
+                assignment: php.codeblock(args.bodyReference)
+            });
+        }
+        return php.codeblock((writer) => {
+            writer.writeNode(
+                php.invokeMethod({
+                    on: php.codeblock(args.clientReference),
+                    method: RawClient.SEND_REQUEST_METHOD_NAME,
+                    arguments_: [
+                        php.instantiateClass({
+                            classReference: this.context.getJsonApiRequestClassReference(),
+                            arguments_,
+                            multiline: true
+                        })
+                    ],
+                    multiline: true
+                })
+            );
+        });
+    }
+
+    private getPathString({
+        endpoint,
+        pathParameterReferences
+    }: {
+        endpoint: HttpEndpoint;
+        pathParameterReferences: Record<string, string>;
+    }): string {
+        let path = endpoint.fullPath.head;
+        for (const part of endpoint.fullPath.parts) {
+            const reference = pathParameterReferences[part.pathParameter];
+            if (reference == null) {
+                throw new Error(
+                    `Failed to find request parameter for the endpoint ${endpoint.id} with path parameter ${part.pathParameter}`
+                );
+            }
+            path += `$${reference}${part.tail}`;
+        }
+        return path;
     }
 }

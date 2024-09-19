@@ -4,6 +4,8 @@ namespace Seed\InlinedRequest;
 
 use Seed\Core\RawClient;
 use Seed\InlinedRequest\Requests\SendEnumInlinedRequest;
+use Seed\Core\JsonApiRequest;
+use Seed\Core\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
 use Exception;
 
@@ -24,14 +26,21 @@ class InlinedRequestClient
     }
 
     /**
-     * @param SendEnumInlinedRequest request
+     * @param SendEnumInlinedRequest $request
      * @param ?array{baseUrl?: string} $options
      * @returns mixed
      */
     public function send(SendEnumInlinedRequest $request, ?array $options = null): mixed
     {
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "inlined",
+                    method: HttpMethod::POST,
+                    body: $request,
+                ),
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;

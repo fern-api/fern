@@ -37,10 +37,7 @@ export class ModelGeneratorCLI extends AbstractPhpGeneratorCli<ModelCustomConfig
     }
 
     protected async generate(context: ModelGeneratorContext): Promise<void> {
-        const generatedTypes = generateModels({ context });
-        for (const file of generatedTypes) {
-            context.project.addSourceFiles(file);
-        }
+        generateModels(context);
         await context.project.persist();
     }
 }

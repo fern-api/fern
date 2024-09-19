@@ -60,6 +60,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 writer.write(`${RESPONSE_VARIABLE_NAME} = `);
                 writer.writeNodeStatement(
                     this.context.rawClient.sendRequest({
+                        clientReference: `$this->${this.context.rawClient.getFieldName()}`,
                         baseUrl: this.getBaseURLForEndpoint({ endpoint }),
                         endpoint,
                         bodyReference: requestBodyCodeBlock?.requestBodyReference,
@@ -91,16 +92,16 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
     private getBaseURLForEndpoint({ endpoint }: { endpoint: HttpEndpoint }): php.CodeBlock {
         return php.codeblock((writer) => {
-            const baseUrlOptionName = this.context.getBaseUrlOptionName();
+            const rawClientFieldName = this.context.rawClient.getFieldName();
+            const clientOptionsName = this.context.getClientOptionsName();
             const requestOptionName = this.context.getRequestOptionsName();
+            const baseUrlOptionName = this.context.getBaseUrlOptionName();
             const defaultBaseUrl = this.context.getDefaultBaseUrlForEndpoint(endpoint);
-            // TODO: What's the best way to resolve the base URL associated with the raw client?
-            //
-            // const rawClientFieldName = this.context.rawClient.getFieldName();
-            // writer.write(
-            //     `$this->${requestOptionName}['${baseUrlOptionName}'] ?? $this->${rawClientFieldName}->${baseUrlOptionName} ?? ${defaultBaseUrl}`
-            // );
-            writer.write(`$this->${requestOptionName}['${baseUrlOptionName}'] ?? ${defaultBaseUrl}`);
+
+            writer.write(
+                `$this->${requestOptionName}['${baseUrlOptionName}'] ?? $this->${rawClientFieldName}->${clientOptionsName}['${baseUrlOptionName}'] ?? `
+            );
+            writer.writeNode(defaultBaseUrl);
         });
     }
 
