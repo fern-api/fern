@@ -4,7 +4,7 @@ import fern.ir.resources as ir_types
 from fern.generator_exec import GeneratorConfig
 
 from fern_python.cli.abstract_generator import AbstractGenerator
-from fern_python.codegen import Project, AST
+from fern_python.codegen import AST, Project
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.pydantic_model import (
     PydanticModelCustomConfig,
@@ -79,7 +79,6 @@ class FastApiGenerator(AbstractGenerator):
         if ir.sdk_config.has_file_download_endpoints or context.has_file_upload_endpoints():
             # This dependency isn't actually used anywhere explicitly, but it's needed by FastAPI when using File download
             project.add_dependency(AST.Dependency("python-multipart", "^0.0.9"))
-
 
         snippet_registry = SnippetRegistry(source_file_factory=context.source_file_factory)
         snippet_writer = build_snippet_writer(
