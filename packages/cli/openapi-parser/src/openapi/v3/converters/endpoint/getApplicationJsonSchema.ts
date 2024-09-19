@@ -15,7 +15,8 @@ export function getApplicationJsonSchemaMediaObject(
     context: AbstractOpenAPIV3ParserContext
 ): ApplicationJsonMediaObject | undefined {
     for (const contentType of Object.keys(media)) {
-        if (contentType.includes("json")) {
+        // See swagger.io/docs/specification/media-types for reference on "*/*"
+        if (contentType.includes("json") || contentType === "*/*") {
             const mediaObject = media[contentType];
             if (mediaObject == null) {
                 continue;
