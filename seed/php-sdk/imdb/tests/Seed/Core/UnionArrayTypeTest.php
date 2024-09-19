@@ -36,7 +36,7 @@ class UnionArrayTypeTest extends TestCase
 
         $json = json_encode($data, JSON_THROW_ON_ERROR);
 
-        $object = UnionArrayType::jsonDeserialize($data);
+        $object = UnionArrayType::fromJson($json);
 
         $this->assertEquals('one', $object->mixedArray[1], 'mixed_array[1] should be "one".');
         $this->assertEquals(2, $object->mixedArray[2], 'mixed_array[2] should be 2.');

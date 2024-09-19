@@ -75,6 +75,6 @@ class NestedUnionArrayTypeTest extends TestCase
 
         $serializedJson = $object->toJson();
 
-         $this->assertJsonStringEqualsJsonString($json, $serializedJson, 'Serialized JSON does not match original JSON for nested_array.');
+        $this->assertJsonStringEqualsJsonString($json, $serializedJson, 'Serialized JSON does not match original JSON for nested_array.');
     }
 }

@@ -37,6 +37,6 @@ class NullableArrayTypeTest extends TestCase
 
         $serializedJson = $object->toJson();
 
-         $this->assertJsonStringEqualsJsonString($json, $serializedJson, 'Serialized JSON does not match original JSON for nullable_string_array.');
+        $this->assertJsonStringEqualsJsonString($json, $serializedJson, 'Serialized JSON does not match original JSON for nullable_string_array.');
     }
 }
