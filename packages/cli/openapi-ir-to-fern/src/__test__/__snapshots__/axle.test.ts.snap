@@ -92,7 +92,6 @@ exports[`open api parser > axle > docs 1`] = `
             "carrier": "string",
             "createdAt": "string",
             "email": {
-              "display-name": "Account",
               "type": "optional<string>",
             },
             "firstName": "string",
@@ -100,7 +99,6 @@ exports[`open api parser > axle > docs 1`] = `
             "lastName": "string",
             "modifiedAt": "string",
             "phone": {
-              "display-name": "Account",
               "type": "optional<string>",
             },
             "policies": "list<string>",
@@ -699,27 +697,21 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "docs": undefined,
         "properties": {
           "addressLine1": {
-            "display-name": "Address",
             "type": "optional<string>",
           },
           "addressLine2": {
-            "display-name": "Address",
             "type": "optional<string>",
           },
           "city": {
-            "display-name": "Address",
             "type": "optional<string>",
           },
           "country": {
-            "display-name": "Address",
             "type": "optional<string>",
           },
           "postalCode": {
-            "display-name": "Address",
             "type": "optional<string>",
           },
           "state": {
-            "display-name": "Address",
             "type": "optional<string>",
           },
         },
@@ -737,7 +729,6 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "domain": "string",
           "id": "string",
           "logoUrl": {
-            "display-name": "Carrier",
             "type": "optional<string>",
           },
           "modifiedAt": "string",
@@ -753,20 +744,16 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "properties": {
           "code": "CoverageCode",
           "deductible": {
-            "display-name": "Coverage",
             "type": "optional<integer>",
           },
           "label": "string",
           "limitPerAccident": {
-            "display-name": "Coverage",
             "type": "optional<integer>",
           },
           "limitPerPerson": {
-            "display-name": "Coverage",
             "type": "optional<integer>",
           },
           "property": {
-            "display-name": "Coverage",
             "type": "optional<string>",
           },
         },
@@ -793,12 +780,10 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "docs": undefined,
         "properties": {
           "message": {
-            "display-name": "Error",
             "docs": "Provides a reason for why the operation failed, if available.",
             "type": "optional<string>",
           },
           "success": {
-            "display-name": "Error",
             "type": "optional<Success>",
           },
         },
@@ -810,33 +795,26 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "docs": undefined,
         "properties": {
           "dateOfBirth": {
-            "display-name": "Insured",
             "type": "optional<string>",
           },
           "dateOfBirthYear": {
-            "display-name": "Insured",
             "type": "optional<string>",
           },
           "firstName": "string",
           "lastName": "string",
           "licenseNo": {
-            "display-name": "Insured",
             "type": "optional<string>",
           },
           "licenseState": {
-            "display-name": "Insured",
             "type": "optional<string>",
           },
           "licenseStatus": {
-            "display-name": "Insured",
             "type": "optional<string>",
           },
           "property": {
-            "display-name": "Insured",
             "type": "optional<string>",
           },
           "type": {
-            "display-name": "Insured",
             "type": "optional<string>",
           },
         },
@@ -866,12 +844,10 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "docs": undefined,
         "properties": {
           "address": {
-            "display-name": "Third Party",
             "type": "optional<Address>",
           },
           "name": "string",
           "property": {
-            "display-name": "Third Party",
             "type": "optional<string>",
           },
           "type": {
@@ -898,12 +874,10 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "docs": "User to attach to Ignition session. If user is set, unique \`id\` must be provided.",
         "properties": {
           "email": {
-            "display-name": "User",
             "docs": "User's email address.",
             "type": "optional<string>",
           },
           "firstName": {
-            "display-name": "User",
             "docs": "User's first name.",
             "type": "optional<string>",
           },
@@ -912,12 +886,10 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
             "type": "string",
           },
           "lastName": {
-            "display-name": "User",
             "docs": "User's last name.",
             "type": "optional<string>",
           },
           "phone": {
-            "display-name": "User",
             "docs": "User's phone number in E.164 format.",
             "type": "optional<string>",
           },
@@ -930,7 +902,6 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "docs": undefined,
         "properties": {
           "bodyStyle": {
-            "display-name": "Vehicle",
             "type": "optional<string>",
           },
           "make": "string",
@@ -1044,7 +1015,6 @@ exports[`open api parser > axle > simple 1`] = `
             "carrier": "string",
             "createdAt": "string",
             "email": {
-              "display-name": "Account",
               "type": "optional<string>",
             },
             "firstName": "string",
@@ -1052,7 +1022,6 @@ exports[`open api parser > axle > simple 1`] = `
             "lastName": "string",
             "modifiedAt": "string",
             "phone": {
-              "display-name": "Account",
               "type": "optional<string>",
             },
             "policies": "list<string>",
@@ -1572,27 +1541,21 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "docs": undefined,
         "properties": {
           "addressLine1": {
-            "display-name": "Address",
             "type": "optional<string>",
           },
           "addressLine2": {
-            "display-name": "Address",
             "type": "optional<string>",
           },
           "city": {
-            "display-name": "Address",
             "type": "optional<string>",
           },
           "country": {
-            "display-name": "Address",
             "type": "optional<string>",
           },
           "postalCode": {
-            "display-name": "Address",
             "type": "optional<string>",
           },
           "state": {
-            "display-name": "Address",
             "type": "optional<string>",
           },
         },
@@ -1610,7 +1573,6 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "domain": "string",
           "id": "string",
           "logoUrl": {
-            "display-name": "Carrier",
             "type": "optional<string>",
           },
           "modifiedAt": "string",
@@ -1626,20 +1588,16 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "properties": {
           "code": "CoverageCode",
           "deductible": {
-            "display-name": "Coverage",
             "type": "optional<integer>",
           },
           "label": "string",
           "limitPerAccident": {
-            "display-name": "Coverage",
             "type": "optional<integer>",
           },
           "limitPerPerson": {
-            "display-name": "Coverage",
             "type": "optional<integer>",
           },
           "property": {
-            "display-name": "Coverage",
             "type": "optional<string>",
           },
         },
@@ -1666,12 +1624,10 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "docs": undefined,
         "properties": {
           "message": {
-            "display-name": "Error",
             "docs": "Provides a reason for why the operation failed, if available.",
             "type": "optional<string>",
           },
           "success": {
-            "display-name": "Error",
             "type": "optional<Success>",
           },
         },
@@ -1683,33 +1639,26 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "docs": undefined,
         "properties": {
           "dateOfBirth": {
-            "display-name": "Insured",
             "type": "optional<string>",
           },
           "dateOfBirthYear": {
-            "display-name": "Insured",
             "type": "optional<string>",
           },
           "firstName": "string",
           "lastName": "string",
           "licenseNo": {
-            "display-name": "Insured",
             "type": "optional<string>",
           },
           "licenseState": {
-            "display-name": "Insured",
             "type": "optional<string>",
           },
           "licenseStatus": {
-            "display-name": "Insured",
             "type": "optional<string>",
           },
           "property": {
-            "display-name": "Insured",
             "type": "optional<string>",
           },
           "type": {
-            "display-name": "Insured",
             "type": "optional<string>",
           },
         },
@@ -1739,12 +1688,10 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "docs": undefined,
         "properties": {
           "address": {
-            "display-name": "Third Party",
             "type": "optional<Address>",
           },
           "name": "string",
           "property": {
-            "display-name": "Third Party",
             "type": "optional<string>",
           },
           "type": {
@@ -1771,12 +1718,10 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "docs": "User to attach to Ignition session. If user is set, unique \`id\` must be provided.",
         "properties": {
           "email": {
-            "display-name": "User",
             "docs": "User's email address.",
             "type": "optional<string>",
           },
           "firstName": {
-            "display-name": "User",
             "docs": "User's first name.",
             "type": "optional<string>",
           },
@@ -1785,12 +1730,10 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
             "type": "string",
           },
           "lastName": {
-            "display-name": "User",
             "docs": "User's last name.",
             "type": "optional<string>",
           },
           "phone": {
-            "display-name": "User",
             "docs": "User's phone number in E.164 format.",
             "type": "optional<string>",
           },
@@ -1803,7 +1746,6 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "docs": undefined,
         "properties": {
           "bodyStyle": {
-            "display-name": "Vehicle",
             "type": "optional<string>",
           },
           "make": "string",

@@ -2,5 +2,5 @@
   "extends": "../../shared/tsconfig.shared.json",
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src/**/*"],
-  "references": [{ "path": "../cli/fern-definition/json-schema" }, { "path": "../commons/fs-utils" }]
+  "references": [{ "path": "../cli/fern-definition/schema" }, { "path": "../commons/fs-utils" }]
 }

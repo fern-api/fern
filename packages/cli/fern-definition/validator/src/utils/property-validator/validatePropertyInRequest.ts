@@ -85,7 +85,7 @@ export function validatePropertyInRequest({
     return validatePropertyInType({ path, typeResolver, file, resolvedType: resolvedBodyPropertyType, validate });
 }
 
-function getTypeFromTypeReference(typeReference: RawSchemas.TypeReferenceWithDocsSchema): string {
+function getTypeFromTypeReference(typeReference: RawSchemas.TypeReferenceSchema): string {
     if (typeof typeReference === "string") {
         return typeReference;
     }

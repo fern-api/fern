@@ -71,7 +71,7 @@ export function buildQueryParameter({
 }
 
 interface QueryParameterTypeReference {
-    value: RawSchemas.TypeReferenceWithDocsSchema;
+    value: RawSchemas.TypeReferenceSchema;
     allowMultiple: boolean;
 }
 

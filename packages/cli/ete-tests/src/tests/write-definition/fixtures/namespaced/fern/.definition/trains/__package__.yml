@@ -250,17 +250,13 @@ types:
         docs: Four-digit number representing the card's expiration year.
       address_line1:
         type: optional<string>
-        display-name: Card
       address_line2:
         type: optional<string>
-        display-name: Card
       address_city:
         type: optional<string>
-        display-name: Card
       address_country: string
       address_post_code:
         type: optional<string>
-        display-name: Card
     source:
       openapi: openapi/trains/openapi.yml
   BookingPaymentSourceBankAccountAccountType:
@@ -288,7 +284,6 @@ types:
         docs: >-
           The sort code for the bank account, in string form. Must be a
           six-digit number.
-        display-name: Bank Account
       account_type:
         type: BookingPaymentSourceBankAccountAccountType
         docs: >-
