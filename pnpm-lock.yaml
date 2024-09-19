@@ -5516,32 +5516,16 @@ importers:
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/scripts:
-    dependencies:
+    devDependencies:
       '@fern-api/fern-definition-json-schema':
         specifier: workspace:*
         version: link:../cli/fern-definition/json-schema
+      '@fern-api/fern-definition-schema':
+        specifier: workspace:*
+        version: link:../cli/fern-definition/schema
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../commons/fs-utils
-      chalk:
-        specifier: ^5.3.0
-        version: 5.3.0
-      execa:
-        specifier: ^5.1.1
-        version: 5.1.1
-      immer:
-        specifier: ^9.0.15
-        version: 9.0.15
-      js-yaml:
-        specifier: ^4.1.0
-        version: 4.1.0
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
-      yargs:
-        specifier: ^17.4.1
-        version: 17.7.2
-    devDependencies:
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
@@ -5560,6 +5544,9 @@ importers:
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
         version: 3.0.0-rc.14(esbuild@0.15.7)
+      chalk:
+        specifier: ^5.3.0
+        version: 5.3.0
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -5569,18 +5556,42 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
+      execa:
+        specifier: ^5.1.1
+        version: 5.1.1
+      immer:
+        specifier: ^9.0.15
+        version: 9.0.15
+      js-yaml:
+        specifier: ^4.1.0
+        version: 4.1.0
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
+      ts-node:
+        specifier: ^10.9.2
+        version: 10.9.2(@types/node@18.7.18)(typescript@4.6.4)
+      tsup:
+        specifier: ^8.0.2
+        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+      yargs:
+        specifier: ^17.4.1
+        version: 17.7.2
+      zod-to-json-schema:
+        specifier: 3.14.1
+        version: 3.14.1(zod@3.22.4)
 
   packages/seed:
     dependencies:

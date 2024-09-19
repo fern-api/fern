@@ -29,32 +29,34 @@
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck",
-    "dist:cli": "pnpm compile && node build.cjs",
-    "publish:cli": "pnpm dist:cli && cd dist && pnpm publish"
-  },
-  "dependencies": {
-    "@fern-api/fs-utils": "workspace:*",
-    "@fern-api/fern-definition-json-schema": "workspace:*",
-    "chalk": "^5.3.0",
-    "execa": "^5.1.1",
-    "immer": "^9.0.15",
-    "js-yaml": "^4.1.0",
-    "lodash-es": "^4.17.21",
-    "yargs": "^17.4.1"
+    "dist:cli": "pnpm compile && tsup ./src/cli.ts --format cjs",
+    "cli": "ts-node"
   },
   "devDependencies": {
+    "@fern-api/fern-definition-json-schema": "workspace:*",
+    "@fern-api/fern-definition-schema": "workspace:*",
+    "@fern-api/fs-utils": "workspace:*",
     "@types/jest": "^29.5.12",
     "@types/js-yaml": "^4.0.8",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^18.7.18",
     "@types/yargs": "^17.0.28",
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
+    "chalk": "^5.3.0",
     "depcheck": "^1.4.6",
     "esbuild": "^0.15.7",
     "eslint": "^8.56.0",
+    "execa": "^5.1.1",
+    "immer": "^9.0.15",
+    "js-yaml": "^4.1.0",
+    "lodash-es": "^4.17.21",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",
+    "ts-node": "^10.9.2",
+    "tsup": "^8.0.2",
     "typescript": "4.6.4",
-    "vitest": "^2.0.5"
+    "vitest": "^2.0.5",
+    "yargs": "^17.4.1",
+    "zod-to-json-schema": "3.14.1"
   }
 }
