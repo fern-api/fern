@@ -261,7 +261,13 @@ class SnippetWriter:
         self,
         unknown: Any,
     ) -> AST.Expression:
-        return AST.Expression(str(unknown))
+        if unknown is not None:
+            def write_unknown(writer: AST.NodeWriter) -> None:
+                maybe_stringify_unknown = repr(unknown) if type(unknown) is str else unknown
+                writer.write_line(f"{maybe_stringify_unknown}")
+
+            return AST.Expression(AST.CodeWriter(write_unknown))
+        return AST.Expression("None")
 
     def _get_snippet_for_list_or_set(
         self,
