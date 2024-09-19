@@ -21,14 +21,15 @@ class VoidFunctionSignatureThatTakesActualResult extends SerializableType
     public mixed $actualResultType;
 
     /**
-     * @param array<Parameter> $parameters
-     * @param mixed $actualResultType
+     * @param array{
+     *   parameters: array<Parameter>,
+     *   actualResultType: mixed,
+     * } $values
      */
     public function __construct(
-        array $parameters,
-        mixed $actualResultType,
+        array $values,
     ) {
-        $this->parameters = $parameters;
-        $this->actualResultType = $actualResultType;
+        $this->parameters = $values['parameters'];
+        $this->actualResultType = $values['actualResultType'];
     }
 }

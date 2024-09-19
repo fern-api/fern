@@ -8,12 +8,6 @@ use Seed\Core\JsonProperty;
 class UserModel extends SerializableType
 {
     /**
-     * @var mixed $metadata
-     */
-    #[JsonProperty("metadata")]
-    public mixed $metadata;
-
-    /**
      * @var ?string $username
      */
     #[JsonProperty("username")]
@@ -38,23 +32,27 @@ class UserModel extends SerializableType
     public ?float $weight;
 
     /**
-     * @param mixed $metadata
-     * @param ?string $username
-     * @param ?string $email
-     * @param ?int $age
-     * @param ?float $weight
+     * @var mixed $metadata
+     */
+    #[JsonProperty("metadata")]
+    public mixed $metadata;
+
+    /**
+     * @param array{
+     *   username?: ?string,
+     *   email?: ?string,
+     *   age?: ?int,
+     *   weight?: ?float,
+     *   metadata: mixed,
+     * } $values
      */
     public function __construct(
-        mixed $metadata,
-        ?string $username = null,
-        ?string $email = null,
-        ?int $age = null,
-        ?float $weight = null,
+        array $values,
     ) {
-        $this->metadata = $metadata;
-        $this->username = $username;
-        $this->email = $email;
-        $this->age = $age;
-        $this->weight = $weight;
+        $this->username = $values['username'] ?? null;
+        $this->email = $values['email'] ?? null;
+        $this->age = $values['age'] ?? null;
+        $this->weight = $values['weight'] ?? null;
+        $this->metadata = $values['metadata'];
     }
 }

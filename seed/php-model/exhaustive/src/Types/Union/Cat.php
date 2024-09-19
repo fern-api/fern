@@ -20,14 +20,15 @@ class Cat extends SerializableType
     public bool $likesToMeow;
 
     /**
-     * @param string $name
-     * @param bool $likesToMeow
+     * @param array{
+     *   name: string,
+     *   likesToMeow: bool,
+     * } $values
      */
     public function __construct(
-        string $name,
-        bool $likesToMeow,
+        array $values,
     ) {
-        $this->name = $name;
-        $this->likesToMeow = $likesToMeow;
+        $this->name = $values['name'];
+        $this->likesToMeow = $values['likesToMeow'];
     }
 }

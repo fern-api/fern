@@ -26,17 +26,17 @@ class File extends SerializableType
     public FileInfo $info;
 
     /**
-     * @param string $name
-     * @param string $contents
-     * @param FileInfo $info
+     * @param array{
+     *   name: string,
+     *   contents: string,
+     *   info: FileInfo,
+     * } $values
      */
     public function __construct(
-        string $name,
-        string $contents,
-        FileInfo $info,
+        array $values,
     ) {
-        $this->name = $name;
-        $this->contents = $contents;
-        $this->info = $info;
+        $this->name = $values['name'];
+        $this->contents = $values['contents'];
+        $this->info = $values['info'];
     }
 }

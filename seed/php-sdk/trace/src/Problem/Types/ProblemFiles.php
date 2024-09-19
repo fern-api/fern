@@ -22,14 +22,15 @@ class ProblemFiles extends SerializableType
     public array $readOnlyFiles;
 
     /**
-     * @param FileInfo $solutionFile
-     * @param array<FileInfo> $readOnlyFiles
+     * @param array{
+     *   solutionFile: FileInfo,
+     *   readOnlyFiles: array<FileInfo>,
+     * } $values
      */
     public function __construct(
-        FileInfo $solutionFile,
-        array $readOnlyFiles,
+        array $values,
     ) {
-        $this->solutionFile = $solutionFile;
-        $this->readOnlyFiles = $readOnlyFiles;
+        $this->solutionFile = $values['solutionFile'];
+        $this->readOnlyFiles = $values['readOnlyFiles'];
     }
 }

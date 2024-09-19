@@ -33,20 +33,19 @@ class ListResponse extends SerializableType
     public ?Usage $usage;
 
     /**
-     * @param ?array<ListElement> $columns
-     * @param ?Pagination $pagination
-     * @param ?string $namespace
-     * @param ?Usage $usage
+     * @param array{
+     *   columns?: ?array<ListElement>,
+     *   pagination?: ?Pagination,
+     *   namespace?: ?string,
+     *   usage?: ?Usage,
+     * } $values
      */
     public function __construct(
-        ?array $columns = null,
-        ?Pagination $pagination = null,
-        ?string $namespace = null,
-        ?Usage $usage = null,
+        array $values,
     ) {
-        $this->columns = $columns;
-        $this->pagination = $pagination;
-        $this->namespace = $namespace;
-        $this->usage = $usage;
+        $this->columns = $values['columns'] ?? null;
+        $this->pagination = $values['pagination'] ?? null;
+        $this->namespace = $values['namespace'] ?? null;
+        $this->usage = $values['usage'] ?? null;
     }
 }

@@ -10,11 +10,13 @@ class TestRequest
     public string $for;
 
     /**
-     * @param string $for
+     * @param array{
+     *   for: string,
+     * } $values
      */
     public function __construct(
-        string $for,
+        array $values,
     ) {
-        $this->for = $for;
+        $this->for = $values['for'];
     }
 }

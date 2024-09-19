@@ -26,17 +26,17 @@ class PostWithObjectBody
     public ObjectWithOptionalField $nestedObject;
 
     /**
-     * @param string $string
-     * @param int $integer
-     * @param ObjectWithOptionalField $nestedObject
+     * @param array{
+     *   string: string,
+     *   integer: int,
+     *   nestedObject: ObjectWithOptionalField,
+     * } $values
      */
     public function __construct(
-        string $string,
-        int $integer,
-        ObjectWithOptionalField $nestedObject,
+        array $values,
     ) {
-        $this->string = $string;
-        $this->integer = $integer;
-        $this->nestedObject = $nestedObject;
+        $this->string = $values['string'];
+        $this->integer = $values['integer'];
+        $this->nestedObject = $values['nestedObject'];
     }
 }

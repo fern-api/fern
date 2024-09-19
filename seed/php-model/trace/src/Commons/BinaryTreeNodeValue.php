@@ -32,20 +32,19 @@ class BinaryTreeNodeValue extends SerializableType
     public ?string $left;
 
     /**
-     * @param string $nodeId
-     * @param float $val
-     * @param ?string $right
-     * @param ?string $left
+     * @param array{
+     *   nodeId: string,
+     *   val: float,
+     *   right?: ?string,
+     *   left?: ?string,
+     * } $values
      */
     public function __construct(
-        string $nodeId,
-        float $val,
-        ?string $right = null,
-        ?string $left = null,
+        array $values,
     ) {
-        $this->nodeId = $nodeId;
-        $this->val = $val;
-        $this->right = $right;
-        $this->left = $left;
+        $this->nodeId = $values['nodeId'];
+        $this->val = $values['val'];
+        $this->right = $values['right'] ?? null;
+        $this->left = $values['left'] ?? null;
     }
 }

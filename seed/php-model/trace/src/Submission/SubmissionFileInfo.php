@@ -26,17 +26,17 @@ class SubmissionFileInfo extends SerializableType
     public string $contents;
 
     /**
-     * @param string $directory
-     * @param string $filename
-     * @param string $contents
+     * @param array{
+     *   directory: string,
+     *   filename: string,
+     *   contents: string,
+     * } $values
      */
     public function __construct(
-        string $directory,
-        string $filename,
-        string $contents,
+        array $values,
     ) {
-        $this->directory = $directory;
-        $this->filename = $filename;
-        $this->contents = $contents;
+        $this->directory = $values['directory'];
+        $this->filename = $values['filename'];
+        $this->contents = $values['contents'];
     }
 }

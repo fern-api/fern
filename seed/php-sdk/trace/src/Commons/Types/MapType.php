@@ -20,14 +20,15 @@ class MapType extends SerializableType
     public mixed $valueType;
 
     /**
-     * @param mixed $keyType
-     * @param mixed $valueType
+     * @param array{
+     *   keyType: mixed,
+     *   valueType: mixed,
+     * } $values
      */
     public function __construct(
-        mixed $keyType,
-        mixed $valueType,
+        array $values,
     ) {
-        $this->keyType = $keyType;
-        $this->valueType = $valueType;
+        $this->keyType = $values['keyType'];
+        $this->valueType = $values['valueType'];
     }
 }

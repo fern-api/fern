@@ -14,11 +14,13 @@ class Json extends SerializableType
     public string $raw;
 
     /**
-     * @param string $raw
+     * @param array{
+     *   raw: string,
+     * } $values
      */
     public function __construct(
-        string $raw,
+        array $values,
     ) {
-        $this->raw = $raw;
+        $this->raw = $values['raw'];
     }
 }

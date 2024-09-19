@@ -15,14 +15,15 @@ class FetchRequest
     public ?string $namespace;
 
     /**
-     * @param array<?string> $ids
-     * @param ?string $namespace
+     * @param array{
+     *   ids: array<?string>,
+     *   namespace?: ?string,
+     * } $values
      */
     public function __construct(
-        array $ids,
-        ?string $namespace = null,
+        array $values,
     ) {
-        $this->ids = $ids;
-        $this->namespace = $namespace;
+        $this->ids = $values['ids'];
+        $this->namespace = $values['namespace'] ?? null;
     }
 }

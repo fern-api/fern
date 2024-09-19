@@ -27,17 +27,17 @@ class FetchResponse extends SerializableType
     public ?Usage $usage;
 
     /**
-     * @param ?array<string, Column> $columns
-     * @param ?string $namespace
-     * @param ?Usage $usage
+     * @param array{
+     *   columns?: ?array<string, Column>,
+     *   namespace?: ?string,
+     *   usage?: ?Usage,
+     * } $values
      */
     public function __construct(
-        ?array $columns = null,
-        ?string $namespace = null,
-        ?Usage $usage = null,
+        array $values,
     ) {
-        $this->columns = $columns;
-        $this->namespace = $namespace;
-        $this->usage = $usage;
+        $this->columns = $values['columns'] ?? null;
+        $this->namespace = $values['namespace'] ?? null;
+        $this->usage = $values['usage'] ?? null;
     }
 }

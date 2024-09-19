@@ -53,29 +53,25 @@ class CreateProblemRequest extends SerializableType
     public string $methodName;
 
     /**
-     * @param string $problemName
-     * @param ProblemDescription $problemDescription
-     * @param array<Language, ProblemFiles> $files
-     * @param array<VariableTypeAndName> $inputParams
-     * @param mixed $outputType
-     * @param array<TestCaseWithExpectedResult> $testcases
-     * @param string $methodName
+     * @param array{
+     *   problemName: string,
+     *   problemDescription: ProblemDescription,
+     *   files: array<Language, ProblemFiles>,
+     *   inputParams: array<VariableTypeAndName>,
+     *   outputType: mixed,
+     *   testcases: array<TestCaseWithExpectedResult>,
+     *   methodName: string,
+     * } $values
      */
     public function __construct(
-        string $problemName,
-        ProblemDescription $problemDescription,
-        array $files,
-        array $inputParams,
-        mixed $outputType,
-        array $testcases,
-        string $methodName,
+        array $values,
     ) {
-        $this->problemName = $problemName;
-        $this->problemDescription = $problemDescription;
-        $this->files = $files;
-        $this->inputParams = $inputParams;
-        $this->outputType = $outputType;
-        $this->testcases = $testcases;
-        $this->methodName = $methodName;
+        $this->problemName = $values['problemName'];
+        $this->problemDescription = $values['problemDescription'];
+        $this->files = $values['files'];
+        $this->inputParams = $values['inputParams'];
+        $this->outputType = $values['outputType'];
+        $this->testcases = $values['testcases'];
+        $this->methodName = $values['methodName'];
     }
 }

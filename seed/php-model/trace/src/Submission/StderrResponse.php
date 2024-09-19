@@ -20,14 +20,15 @@ class StderrResponse extends SerializableType
     public string $stderr;
 
     /**
-     * @param string $submissionId
-     * @param string $stderr
+     * @param array{
+     *   submissionId: string,
+     *   stderr: string,
+     * } $values
      */
     public function __construct(
-        string $submissionId,
-        string $stderr,
+        array $values,
     ) {
-        $this->submissionId = $submissionId;
-        $this->stderr = $stderr;
+        $this->submissionId = $values['submissionId'];
+        $this->stderr = $values['stderr'];
     }
 }

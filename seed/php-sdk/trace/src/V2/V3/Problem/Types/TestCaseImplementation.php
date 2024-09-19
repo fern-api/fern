@@ -20,14 +20,15 @@ class TestCaseImplementation extends SerializableType
     public mixed $function;
 
     /**
-     * @param TestCaseImplementationDescription $description
-     * @param mixed $function
+     * @param array{
+     *   description: TestCaseImplementationDescription,
+     *   function: mixed,
+     * } $values
      */
     public function __construct(
-        TestCaseImplementationDescription $description,
-        mixed $function,
+        array $values,
     ) {
-        $this->description = $description;
-        $this->function = $function;
+        $this->description = $values['description'];
+        $this->function = $values['function'];
     }
 }

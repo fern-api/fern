@@ -22,14 +22,15 @@ class TestSubmissionUpdate extends SerializableType
     public mixed $updateInfo;
 
     /**
-     * @param DateTime $updateTime
-     * @param mixed $updateInfo
+     * @param array{
+     *   updateTime: DateTime,
+     *   updateInfo: mixed,
+     * } $values
      */
     public function __construct(
-        DateTime $updateTime,
-        mixed $updateInfo,
+        array $values,
     ) {
-        $this->updateTime = $updateTime;
-        $this->updateInfo = $updateInfo;
+        $this->updateTime = $values['updateTime'];
+        $this->updateInfo = $values['updateInfo'];
     }
 }

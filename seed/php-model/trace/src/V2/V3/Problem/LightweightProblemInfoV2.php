@@ -33,20 +33,19 @@ class LightweightProblemInfoV2 extends SerializableType
     public array $variableTypes;
 
     /**
-     * @param string $problemId
-     * @param string $problemName
-     * @param int $problemVersion
-     * @param array<mixed> $variableTypes
+     * @param array{
+     *   problemId: string,
+     *   problemName: string,
+     *   problemVersion: int,
+     *   variableTypes: array<mixed>,
+     * } $values
      */
     public function __construct(
-        string $problemId,
-        string $problemName,
-        int $problemVersion,
-        array $variableTypes,
+        array $values,
     ) {
-        $this->problemId = $problemId;
-        $this->problemName = $problemName;
-        $this->problemVersion = $problemVersion;
-        $this->variableTypes = $variableTypes;
+        $this->problemId = $values['problemId'];
+        $this->problemName = $values['problemName'];
+        $this->problemVersion = $values['problemVersion'];
+        $this->variableTypes = $values['variableTypes'];
     }
 }

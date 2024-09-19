@@ -20,14 +20,15 @@ class Practitioner extends SerializableType
     public string $name;
 
     /**
-     * @param string $resourceType
-     * @param string $name
+     * @param array{
+     *   resourceType: string,
+     *   name: string,
+     * } $values
      */
     public function __construct(
-        string $resourceType,
-        string $name,
+        array $values,
     ) {
-        $this->resourceType = $resourceType;
-        $this->name = $name;
+        $this->resourceType = $values['resourceType'];
+        $this->name = $values['name'];
     }
 }

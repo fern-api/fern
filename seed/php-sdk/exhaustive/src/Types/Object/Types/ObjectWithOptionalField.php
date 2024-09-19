@@ -89,47 +89,37 @@ class ObjectWithOptionalField extends SerializableType
     public ?string $bigint;
 
     /**
-     * @param ?string $string This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
-     * @param ?int $integer
-     * @param ?int $long
-     * @param ?float $double
-     * @param ?bool $bool
-     * @param ?DateTime $datetime
-     * @param ?DateTime $date
-     * @param ?string $uuid
-     * @param ?string $base64
-     * @param ?array<string> $list
-     * @param ?array<string> $set
-     * @param ?array<int, string> $map
-     * @param ?string $bigint
+     * @param array{
+     *   string?: ?string,
+     *   integer?: ?int,
+     *   long?: ?int,
+     *   double?: ?float,
+     *   bool?: ?bool,
+     *   datetime?: ?DateTime,
+     *   date?: ?DateTime,
+     *   uuid?: ?string,
+     *   base64?: ?string,
+     *   list?: ?array<string>,
+     *   set?: ?array<string>,
+     *   map?: ?array<int, string>,
+     *   bigint?: ?string,
+     * } $values
      */
     public function __construct(
-        ?string $string = null,
-        ?int $integer = null,
-        ?int $long = null,
-        ?float $double = null,
-        ?bool $bool = null,
-        ?DateTime $datetime = null,
-        ?DateTime $date = null,
-        ?string $uuid = null,
-        ?string $base64 = null,
-        ?array $list = null,
-        ?array $set = null,
-        ?array $map = null,
-        ?string $bigint = null,
+        array $values,
     ) {
-        $this->string = $string;
-        $this->integer = $integer;
-        $this->long = $long;
-        $this->double = $double;
-        $this->bool = $bool;
-        $this->datetime = $datetime;
-        $this->date = $date;
-        $this->uuid = $uuid;
-        $this->base64 = $base64;
-        $this->list = $list;
-        $this->set = $set;
-        $this->map = $map;
-        $this->bigint = $bigint;
+        $this->string = $values['string'] ?? null;
+        $this->integer = $values['integer'] ?? null;
+        $this->long = $values['long'] ?? null;
+        $this->double = $values['double'] ?? null;
+        $this->bool = $values['bool'] ?? null;
+        $this->datetime = $values['datetime'] ?? null;
+        $this->date = $values['date'] ?? null;
+        $this->uuid = $values['uuid'] ?? null;
+        $this->base64 = $values['base64'] ?? null;
+        $this->list = $values['list'] ?? null;
+        $this->set = $values['set'] ?? null;
+        $this->map = $values['map'] ?? null;
+        $this->bigint = $values['bigint'] ?? null;
     }
 }

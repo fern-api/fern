@@ -14,11 +14,13 @@ class ANestedLiteral extends SerializableType
     public string $myLiteral;
 
     /**
-     * @param string $myLiteral
+     * @param array{
+     *   myLiteral: string,
+     * } $values
      */
     public function __construct(
-        string $myLiteral,
+        array $values,
     ) {
-        $this->myLiteral = $myLiteral;
+        $this->myLiteral = $values['myLiteral'];
     }
 }

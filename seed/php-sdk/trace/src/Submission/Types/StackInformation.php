@@ -20,14 +20,15 @@ class StackInformation extends SerializableType
     public ?StackFrame $topStackFrame;
 
     /**
-     * @param int $numStackFrames
-     * @param ?StackFrame $topStackFrame
+     * @param array{
+     *   numStackFrames: int,
+     *   topStackFrame?: ?StackFrame,
+     * } $values
      */
     public function __construct(
-        int $numStackFrames,
-        ?StackFrame $topStackFrame = null,
+        array $values,
     ) {
-        $this->numStackFrames = $numStackFrames;
-        $this->topStackFrame = $topStackFrame;
+        $this->numStackFrames = $values['numStackFrames'];
+        $this->topStackFrame = $values['topStackFrame'] ?? null;
     }
 }

@@ -12,6 +12,7 @@ import {
     MethodInvocation,
     Parameter
 } from "./ast";
+import { DataClass } from "./ast/DataClass";
 
 export function array(args: Array_.Args): Array_ {
     return new Array_(args);
@@ -31,6 +32,10 @@ export function classReference(args: ClassReference.Args): ClassReference {
 
 export function codeblock(arg: CodeBlock.Arg): CodeBlock {
     return new CodeBlock(arg);
+}
+
+export function dataClass(args: DataClass.Args): DataClass {
+    return new DataClass(args);
 }
 
 export function enum_(args: Enum.Args): Enum {

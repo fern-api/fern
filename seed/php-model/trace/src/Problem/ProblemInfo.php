@@ -71,38 +71,31 @@ class ProblemInfo extends SerializableType
     public bool $supportsCustomTestCases;
 
     /**
-     * @param string $problemId
-     * @param ProblemDescription $problemDescription
-     * @param string $problemName
-     * @param int $problemVersion
-     * @param array<Language, ProblemFiles> $files
-     * @param array<VariableTypeAndName> $inputParams
-     * @param mixed $outputType
-     * @param array<TestCaseWithExpectedResult> $testcases
-     * @param string $methodName
-     * @param bool $supportsCustomTestCases
+     * @param array{
+     *   problemId: string,
+     *   problemDescription: ProblemDescription,
+     *   problemName: string,
+     *   problemVersion: int,
+     *   files: array<Language, ProblemFiles>,
+     *   inputParams: array<VariableTypeAndName>,
+     *   outputType: mixed,
+     *   testcases: array<TestCaseWithExpectedResult>,
+     *   methodName: string,
+     *   supportsCustomTestCases: bool,
+     * } $values
      */
     public function __construct(
-        string $problemId,
-        ProblemDescription $problemDescription,
-        string $problemName,
-        int $problemVersion,
-        array $files,
-        array $inputParams,
-        mixed $outputType,
-        array $testcases,
-        string $methodName,
-        bool $supportsCustomTestCases,
+        array $values,
     ) {
-        $this->problemId = $problemId;
-        $this->problemDescription = $problemDescription;
-        $this->problemName = $problemName;
-        $this->problemVersion = $problemVersion;
-        $this->files = $files;
-        $this->inputParams = $inputParams;
-        $this->outputType = $outputType;
-        $this->testcases = $testcases;
-        $this->methodName = $methodName;
-        $this->supportsCustomTestCases = $supportsCustomTestCases;
+        $this->problemId = $values['problemId'];
+        $this->problemDescription = $values['problemDescription'];
+        $this->problemName = $values['problemName'];
+        $this->problemVersion = $values['problemVersion'];
+        $this->files = $values['files'];
+        $this->inputParams = $values['inputParams'];
+        $this->outputType = $values['outputType'];
+        $this->testcases = $values['testcases'];
+        $this->methodName = $values['methodName'];
+        $this->supportsCustomTestCases = $values['supportsCustomTestCases'];
     }
 }

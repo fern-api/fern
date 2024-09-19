@@ -15,11 +15,13 @@ class ExtendedMovie extends SerializableType
     public array $cast;
 
     /**
-     * @param array<string> $cast
+     * @param array{
+     *   cast: array<string>,
+     * } $values
      */
     public function __construct(
-        array $cast,
+        array $values,
     ) {
-        $this->cast = $cast;
+        $this->cast = $values['cast'];
     }
 }

@@ -32,20 +32,19 @@ class FileInfoV2 extends SerializableType
     public bool $editable;
 
     /**
-     * @param string $filename
-     * @param string $directory
-     * @param string $contents
-     * @param bool $editable
+     * @param array{
+     *   filename: string,
+     *   directory: string,
+     *   contents: string,
+     *   editable: bool,
+     * } $values
      */
     public function __construct(
-        string $filename,
-        string $directory,
-        string $contents,
-        bool $editable,
+        array $values,
     ) {
-        $this->filename = $filename;
-        $this->directory = $directory;
-        $this->contents = $contents;
-        $this->editable = $editable;
+        $this->filename = $values['filename'];
+        $this->directory = $values['directory'];
+        $this->contents = $values['contents'];
+        $this->editable = $values['editable'];
     }
 }

@@ -27,20 +27,19 @@ class SendEnumListAsQueryParamRequest
     public array $maybeOperandOrColor;
 
     /**
-     * @param array<Operand> $operand
-     * @param array<?Operand> $maybeOperand
-     * @param array<mixed> $operandOrColor
-     * @param array<mixed> $maybeOperandOrColor
+     * @param array{
+     *   operand: array<Operand>,
+     *   maybeOperand: array<?Operand>,
+     *   operandOrColor: array<mixed>,
+     *   maybeOperandOrColor: array<mixed>,
+     * } $values
      */
     public function __construct(
-        array $operand,
-        array $maybeOperand,
-        array $operandOrColor,
-        array $maybeOperandOrColor,
+        array $values,
     ) {
-        $this->operand = $operand;
-        $this->maybeOperand = $maybeOperand;
-        $this->operandOrColor = $operandOrColor;
-        $this->maybeOperandOrColor = $maybeOperandOrColor;
+        $this->operand = $values['operand'];
+        $this->maybeOperand = $values['maybeOperand'];
+        $this->operandOrColor = $values['operandOrColor'];
+        $this->maybeOperandOrColor = $values['maybeOperandOrColor'];
     }
 }

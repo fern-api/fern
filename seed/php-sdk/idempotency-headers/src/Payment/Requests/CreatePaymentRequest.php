@@ -20,14 +20,15 @@ class CreatePaymentRequest
     public Currency $currency;
 
     /**
-     * @param int $amount
-     * @param Currency $currency
+     * @param array{
+     *   amount: int,
+     *   currency: Currency,
+     * } $values
      */
     public function __construct(
-        int $amount,
-        Currency $currency,
+        array $values,
     ) {
-        $this->amount = $amount;
-        $this->currency = $currency;
+        $this->amount = $values['amount'];
+        $this->currency = $values['currency'];
     }
 }

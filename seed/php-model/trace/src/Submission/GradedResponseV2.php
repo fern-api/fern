@@ -21,14 +21,15 @@ class GradedResponseV2 extends SerializableType
     public array $testCases;
 
     /**
-     * @param string $submissionId
-     * @param array<string, mixed> $testCases
+     * @param array{
+     *   submissionId: string,
+     *   testCases: array<string, mixed>,
+     * } $values
      */
     public function __construct(
-        string $submissionId,
-        array $testCases,
+        array $values,
     ) {
-        $this->submissionId = $submissionId;
-        $this->testCases = $testCases;
+        $this->submissionId = $values['submissionId'];
+        $this->testCases = $values['testCases'];
     }
 }

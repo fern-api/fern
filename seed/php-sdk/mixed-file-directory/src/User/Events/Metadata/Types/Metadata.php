@@ -20,14 +20,15 @@ class Metadata extends SerializableType
     public mixed $value;
 
     /**
-     * @param string $id
-     * @param mixed $value
+     * @param array{
+     *   id: string,
+     *   value: mixed,
+     * } $values
      */
     public function __construct(
-        string $id,
-        mixed $value,
+        array $values,
     ) {
-        $this->id = $id;
-        $this->value = $value;
+        $this->id = $values['id'];
+        $this->value = $values['value'];
     }
 }

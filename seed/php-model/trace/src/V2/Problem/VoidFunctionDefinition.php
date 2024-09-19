@@ -21,14 +21,15 @@ class VoidFunctionDefinition extends SerializableType
     public FunctionImplementationForMultipleLanguages $code;
 
     /**
-     * @param array<Parameter> $parameters
-     * @param FunctionImplementationForMultipleLanguages $code
+     * @param array{
+     *   parameters: array<Parameter>,
+     *   code: FunctionImplementationForMultipleLanguages,
+     * } $values
      */
     public function __construct(
-        array $parameters,
-        FunctionImplementationForMultipleLanguages $code,
+        array $values,
     ) {
-        $this->parameters = $parameters;
-        $this->code = $code;
+        $this->parameters = $values['parameters'];
+        $this->code = $values['code'];
     }
 }

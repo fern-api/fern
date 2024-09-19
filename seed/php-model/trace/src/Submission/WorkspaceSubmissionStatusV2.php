@@ -15,11 +15,13 @@ class WorkspaceSubmissionStatusV2 extends SerializableType
     public array $updates;
 
     /**
-     * @param array<WorkspaceSubmissionUpdate> $updates
+     * @param array{
+     *   updates: array<WorkspaceSubmissionUpdate>,
+     * } $values
      */
     public function __construct(
-        array $updates,
+        array $values,
     ) {
-        $this->updates = $updates;
+        $this->updates = $values['updates'];
     }
 }

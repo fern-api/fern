@@ -14,11 +14,13 @@ class Circle extends SerializableType
     public float $radius;
 
     /**
-     * @param float $radius
+     * @param array{
+     *   radius: float,
+     * } $values
      */
     public function __construct(
-        float $radius,
+        array $values,
     ) {
-        $this->radius = $radius;
+        $this->radius = $values['radius'];
     }
 }

@@ -5,9 +5,19 @@ namespace Seed\Service\Requests;
 class JustFileWithQueryParamsRequet
 {
     /**
+     * @var ?string $maybeString
+     */
+    public ?string $maybeString;
+
+    /**
      * @var int $integer
      */
     public int $integer;
+
+    /**
+     * @var ?int $maybeInteger
+     */
+    public ?int $maybeInteger;
 
     /**
      * @var array<string> $listOfStrings
@@ -20,33 +30,21 @@ class JustFileWithQueryParamsRequet
     public array $optionalListOfStrings;
 
     /**
-     * @var ?string $maybeString
-     */
-    public ?string $maybeString;
-
-    /**
-     * @var ?int $maybeInteger
-     */
-    public ?int $maybeInteger;
-
-    /**
-     * @param int $integer
-     * @param array<string> $listOfStrings
-     * @param array<?string> $optionalListOfStrings
-     * @param ?string $maybeString
-     * @param ?int $maybeInteger
+     * @param array{
+     *   maybeString?: ?string,
+     *   integer: int,
+     *   maybeInteger?: ?int,
+     *   listOfStrings: array<string>,
+     *   optionalListOfStrings: array<?string>,
+     * } $values
      */
     public function __construct(
-        int $integer,
-        array $listOfStrings,
-        array $optionalListOfStrings,
-        ?string $maybeString = null,
-        ?int $maybeInteger = null,
+        array $values,
     ) {
-        $this->integer = $integer;
-        $this->listOfStrings = $listOfStrings;
-        $this->optionalListOfStrings = $optionalListOfStrings;
-        $this->maybeString = $maybeString;
-        $this->maybeInteger = $maybeInteger;
+        $this->maybeString = $values['maybeString'] ?? null;
+        $this->integer = $values['integer'];
+        $this->maybeInteger = $values['maybeInteger'] ?? null;
+        $this->listOfStrings = $values['listOfStrings'];
+        $this->optionalListOfStrings = $values['optionalListOfStrings'];
     }
 }

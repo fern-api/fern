@@ -14,11 +14,13 @@ class InternalError extends SerializableType
     public ExceptionInfo $exceptionInfo;
 
     /**
-     * @param ExceptionInfo $exceptionInfo
+     * @param array{
+     *   exceptionInfo: ExceptionInfo,
+     * } $values
      */
     public function __construct(
-        ExceptionInfo $exceptionInfo,
+        array $values,
     ) {
-        $this->exceptionInfo = $exceptionInfo;
+        $this->exceptionInfo = $values['exceptionInfo'];
     }
 }

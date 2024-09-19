@@ -17,14 +17,15 @@ class ListResourcesRequest
     public DateTime $beforeDate;
 
     /**
-     * @param int $pageLimit
-     * @param DateTime $beforeDate
+     * @param array{
+     *   pageLimit: int,
+     *   beforeDate: DateTime,
+     * } $values
      */
     public function __construct(
-        int $pageLimit,
-        DateTime $beforeDate,
+        array $values,
     ) {
-        $this->pageLimit = $pageLimit;
-        $this->beforeDate = $beforeDate;
+        $this->pageLimit = $values['pageLimit'];
+        $this->beforeDate = $values['beforeDate'];
     }
 }

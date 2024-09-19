@@ -21,14 +21,15 @@ class NonVoidFunctionSignature extends SerializableType
     public mixed $returnType;
 
     /**
-     * @param array<Parameter> $parameters
-     * @param mixed $returnType
+     * @param array{
+     *   parameters: array<Parameter>,
+     *   returnType: mixed,
+     * } $values
      */
     public function __construct(
-        array $parameters,
-        mixed $returnType,
+        array $values,
     ) {
-        $this->parameters = $parameters;
-        $this->returnType = $returnType;
+        $this->parameters = $values['parameters'];
+        $this->returnType = $values['returnType'];
     }
 }

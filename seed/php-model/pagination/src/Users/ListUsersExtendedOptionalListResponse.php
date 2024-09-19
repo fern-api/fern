@@ -14,11 +14,13 @@ class ListUsersExtendedOptionalListResponse extends SerializableType
     public int $totalCount;
 
     /**
-     * @param int $totalCount The totall number of /users
+     * @param array{
+     *   totalCount: int,
+     * } $values
      */
     public function __construct(
-        int $totalCount,
+        array $values,
     ) {
-        $this->totalCount = $totalCount;
+        $this->totalCount = $values['totalCount'];
     }
 }

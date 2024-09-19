@@ -14,11 +14,13 @@ class Request extends SerializableType
     public mixed $request;
 
     /**
-     * @param mixed $request
+     * @param array{
+     *   request: mixed,
+     * } $values
      */
     public function __construct(
-        mixed $request,
+        array $values,
     ) {
-        $this->request = $request;
+        $this->request = $values['request'];
     }
 }

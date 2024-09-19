@@ -14,11 +14,13 @@ class Response extends SerializableType
     public string $foo;
 
     /**
-     * @param string $foo
+     * @param array{
+     *   foo: string,
+     * } $values
      */
     public function __construct(
-        string $foo,
+        array $values,
     ) {
-        $this->foo = $foo;
+        $this->foo = $values['foo'];
     }
 }

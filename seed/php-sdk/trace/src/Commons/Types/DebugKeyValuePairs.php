@@ -20,14 +20,15 @@ class DebugKeyValuePairs extends SerializableType
     public mixed $value;
 
     /**
-     * @param mixed $key
-     * @param mixed $value
+     * @param array{
+     *   key: mixed,
+     *   value: mixed,
+     * } $values
      */
     public function __construct(
-        mixed $key,
-        mixed $value,
+        array $values,
     ) {
-        $this->key = $key;
-        $this->value = $value;
+        $this->key = $values['key'];
+        $this->value = $values['value'];
     }
 }

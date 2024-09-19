@@ -20,14 +20,15 @@ class FileInfo extends SerializableType
     public string $contents;
 
     /**
-     * @param string $filename
-     * @param string $contents
+     * @param array{
+     *   filename: string,
+     *   contents: string,
+     * } $values
      */
     public function __construct(
-        string $filename,
-        string $contents,
+        array $values,
     ) {
-        $this->filename = $filename;
-        $this->contents = $contents;
+        $this->filename = $values['filename'];
+        $this->contents = $values['contents'];
     }
 }

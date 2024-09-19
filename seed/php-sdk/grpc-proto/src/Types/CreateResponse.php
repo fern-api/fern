@@ -14,11 +14,13 @@ class CreateResponse extends SerializableType
     public ?UserModel $user;
 
     /**
-     * @param ?UserModel $user
+     * @param array{
+     *   user?: ?UserModel,
+     * } $values
      */
     public function __construct(
-        ?UserModel $user = null,
+        array $values,
     ) {
-        $this->user = $user;
+        $this->user = $values['user'] ?? null;
     }
 }

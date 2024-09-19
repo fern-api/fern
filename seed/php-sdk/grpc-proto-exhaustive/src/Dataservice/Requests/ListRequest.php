@@ -25,20 +25,19 @@ class ListRequest
     public ?string $namespace;
 
     /**
-     * @param ?string $prefix
-     * @param ?int $limit
-     * @param ?string $paginationToken
-     * @param ?string $namespace
+     * @param array{
+     *   prefix?: ?string,
+     *   limit?: ?int,
+     *   paginationToken?: ?string,
+     *   namespace?: ?string,
+     * } $values
      */
     public function __construct(
-        ?string $prefix = null,
-        ?int $limit = null,
-        ?string $paginationToken = null,
-        ?string $namespace = null,
+        array $values,
     ) {
-        $this->prefix = $prefix;
-        $this->limit = $limit;
-        $this->paginationToken = $paginationToken;
-        $this->namespace = $namespace;
+        $this->prefix = $values['prefix'] ?? null;
+        $this->limit = $values['limit'] ?? null;
+        $this->paginationToken = $values['paginationToken'] ?? null;
+        $this->namespace = $values['namespace'] ?? null;
     }
 }

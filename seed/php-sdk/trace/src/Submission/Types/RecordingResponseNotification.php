@@ -14,6 +14,12 @@ class RecordingResponseNotification extends SerializableType
     public string $submissionId;
 
     /**
+     * @var ?string $testCaseId
+     */
+    #[JsonProperty("testCaseId")]
+    public ?string $testCaseId;
+
+    /**
      * @var int $lineNumber
      */
     #[JsonProperty("lineNumber")]
@@ -26,35 +32,27 @@ class RecordingResponseNotification extends SerializableType
     public LightweightStackframeInformation $lightweightStackInfo;
 
     /**
-     * @var ?string $testCaseId
-     */
-    #[JsonProperty("testCaseId")]
-    public ?string $testCaseId;
-
-    /**
      * @var ?TracedFile $tracedFile
      */
     #[JsonProperty("tracedFile")]
     public ?TracedFile $tracedFile;
 
     /**
-     * @param string $submissionId
-     * @param int $lineNumber
-     * @param LightweightStackframeInformation $lightweightStackInfo
-     * @param ?string $testCaseId
-     * @param ?TracedFile $tracedFile
+     * @param array{
+     *   submissionId: string,
+     *   testCaseId?: ?string,
+     *   lineNumber: int,
+     *   lightweightStackInfo: LightweightStackframeInformation,
+     *   tracedFile?: ?TracedFile,
+     * } $values
      */
     public function __construct(
-        string $submissionId,
-        int $lineNumber,
-        LightweightStackframeInformation $lightweightStackInfo,
-        ?string $testCaseId = null,
-        ?TracedFile $tracedFile = null,
+        array $values,
     ) {
-        $this->submissionId = $submissionId;
-        $this->lineNumber = $lineNumber;
-        $this->lightweightStackInfo = $lightweightStackInfo;
-        $this->testCaseId = $testCaseId;
-        $this->tracedFile = $tracedFile;
+        $this->submissionId = $values['submissionId'];
+        $this->testCaseId = $values['testCaseId'] ?? null;
+        $this->lineNumber = $values['lineNumber'];
+        $this->lightweightStackInfo = $values['lightweightStackInfo'];
+        $this->tracedFile = $values['tracedFile'] ?? null;
     }
 }

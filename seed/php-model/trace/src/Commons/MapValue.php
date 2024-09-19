@@ -15,11 +15,13 @@ class MapValue extends SerializableType
     public array $keyValuePairs;
 
     /**
-     * @param array<KeyValuePair> $keyValuePairs
+     * @param array{
+     *   keyValuePairs: array<KeyValuePair>,
+     * } $values
      */
     public function __construct(
-        array $keyValuePairs,
+        array $values,
     ) {
-        $this->keyValuePairs = $keyValuePairs;
+        $this->keyValuePairs = $values['keyValuePairs'];
     }
 }

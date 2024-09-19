@@ -21,14 +21,15 @@ class IndexedData extends SerializableType
     public array $values;
 
     /**
-     * @param array<int> $indices
-     * @param array<float> $values
+     * @param array{
+     *   indices: array<int>,
+     *   values: array<float>,
+     * } $values
      */
     public function __construct(
-        array $indices,
         array $values,
     ) {
-        $this->indices = $indices;
-        $this->values = $values;
+        $this->indices = $values['indices'];
+        $this->values = $values['values'];
     }
 }

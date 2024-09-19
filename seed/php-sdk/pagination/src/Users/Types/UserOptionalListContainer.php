@@ -15,11 +15,13 @@ class UserOptionalListContainer extends SerializableType
     public ?array $users;
 
     /**
-     * @param ?array<User> $users
+     * @param array{
+     *   users?: ?array<User>,
+     * } $values
      */
     public function __construct(
-        ?array $users = null,
+        array $values,
     ) {
-        $this->users = $users;
+        $this->users = $values['users'] ?? null;
     }
 }

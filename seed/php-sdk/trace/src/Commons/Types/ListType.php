@@ -20,14 +20,15 @@ class ListType extends SerializableType
     public ?bool $isFixedLength;
 
     /**
-     * @param mixed $valueType
-     * @param ?bool $isFixedLength Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.
+     * @param array{
+     *   valueType: mixed,
+     *   isFixedLength?: ?bool,
+     * } $values
      */
     public function __construct(
-        mixed $valueType,
-        ?bool $isFixedLength = null,
+        array $values,
     ) {
-        $this->valueType = $valueType;
-        $this->isFixedLength = $isFixedLength;
+        $this->valueType = $values['valueType'];
+        $this->isFixedLength = $values['isFixedLength'] ?? null;
     }
 }

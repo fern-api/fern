@@ -16,11 +16,13 @@ class GetDefaultStarterFilesResponse extends SerializableType
     public array $files;
 
     /**
-     * @param array<Language, ProblemFiles> $files
+     * @param array{
+     *   files: array<Language, ProblemFiles>,
+     * } $values
      */
     public function __construct(
-        array $files,
+        array $values,
     ) {
-        $this->files = $files;
+        $this->files = $values['files'];
     }
 }

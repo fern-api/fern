@@ -20,14 +20,15 @@ class InitializeProblemRequest extends SerializableType
     public ?int $problemVersion;
 
     /**
-     * @param string $problemId
-     * @param ?int $problemVersion
+     * @param array{
+     *   problemId: string,
+     *   problemVersion?: ?int,
+     * } $values
      */
     public function __construct(
-        string $problemId,
-        ?int $problemVersion = null,
+        array $values,
     ) {
-        $this->problemId = $problemId;
-        $this->problemVersion = $problemVersion;
+        $this->problemId = $values['problemId'];
+        $this->problemVersion = $values['problemVersion'] ?? null;
     }
 }

@@ -21,14 +21,15 @@ class DefaultProvidedFile extends SerializableType
     public array $relatedTypes;
 
     /**
-     * @param FileInfoV2 $file
-     * @param array<mixed> $relatedTypes
+     * @param array{
+     *   file: FileInfoV2,
+     *   relatedTypes: array<mixed>,
+     * } $values
      */
     public function __construct(
-        FileInfoV2 $file,
-        array $relatedTypes,
+        array $values,
     ) {
-        $this->file = $file;
-        $this->relatedTypes = $relatedTypes;
+        $this->file = $values['file'];
+        $this->relatedTypes = $values['relatedTypes'];
     }
 }

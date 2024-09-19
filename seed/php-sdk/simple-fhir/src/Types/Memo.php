@@ -20,14 +20,15 @@ class Memo extends SerializableType
     public ?Account $account;
 
     /**
-     * @param string $description
-     * @param ?Account $account
+     * @param array{
+     *   description: string,
+     *   account?: ?Account,
+     * } $values
      */
     public function __construct(
-        string $description,
-        ?Account $account = null,
+        array $values,
     ) {
-        $this->description = $description;
-        $this->account = $account;
+        $this->description = $values['description'];
+        $this->account = $values['account'] ?? null;
     }
 }

@@ -23,18 +23,15 @@ class CreateUserRequest
     public ?int $age;
 
     /**
-     * @param string $name The name of the user to create.
-    This name is unique to each user.
-
-     * @param ?int $age The age of the user.
-    This propery is not required.
-
+     * @param array{
+     *   name: string,
+     *   age?: ?int,
+     * } $values
      */
     public function __construct(
-        string $name,
-        ?int $age = null,
+        array $values,
     ) {
-        $this->name = $name;
-        $this->age = $age;
+        $this->name = $values['name'];
+        $this->age = $values['age'] ?? null;
     }
 }

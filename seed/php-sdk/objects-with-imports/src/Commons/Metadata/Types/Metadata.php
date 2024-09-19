@@ -21,14 +21,15 @@ class Metadata extends SerializableType
     public ?array $data;
 
     /**
-     * @param string $id
-     * @param ?array<string, string> $data
+     * @param array{
+     *   id: string,
+     *   data?: ?array<string, string>,
+     * } $values
      */
     public function __construct(
-        string $id,
-        ?array $data = null,
+        array $values,
     ) {
-        $this->id = $id;
-        $this->data = $data;
+        $this->id = $values['id'];
+        $this->data = $values['data'] ?? null;
     }
 }

@@ -20,14 +20,15 @@ class RegularResponse extends SerializableType
     public ?string $name;
 
     /**
-     * @param string $id
-     * @param ?string $name
+     * @param array{
+     *   id: string,
+     *   name?: ?string,
+     * } $values
      */
     public function __construct(
-        string $id,
-        ?string $name = null,
+        array $values,
     ) {
-        $this->id = $id;
-        $this->name = $name;
+        $this->id = $values['id'];
+        $this->name = $values['name'] ?? null;
     }
 }

@@ -14,11 +14,13 @@ class Pagination extends SerializableType
     public ?string $next;
 
     /**
-     * @param ?string $next
+     * @param array{
+     *   next?: ?string,
+     * } $values
      */
     public function __construct(
-        ?string $next = null,
+        array $values,
     ) {
-        $this->next = $next;
+        $this->next = $values['next'] ?? null;
     }
 }

@@ -14,11 +14,13 @@ class Child extends SerializableType
     public string $child;
 
     /**
-     * @param string $child
+     * @param array{
+     *   child: string,
+     * } $values
      */
     public function __construct(
-        string $child,
+        array $values,
     ) {
-        $this->child = $child;
+        $this->child = $values['child'];
     }
 }

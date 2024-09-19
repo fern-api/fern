@@ -33,20 +33,19 @@ class DescribeResponse extends SerializableType
     public ?int $totalCount;
 
     /**
-     * @param ?array<string, NamespaceSummary> $namespaces
-     * @param ?int $dimension
-     * @param ?float $fullness
-     * @param ?int $totalCount
+     * @param array{
+     *   namespaces?: ?array<string, NamespaceSummary>,
+     *   dimension?: ?int,
+     *   fullness?: ?float,
+     *   totalCount?: ?int,
+     * } $values
      */
     public function __construct(
-        ?array $namespaces = null,
-        ?int $dimension = null,
-        ?float $fullness = null,
-        ?int $totalCount = null,
+        array $values,
     ) {
-        $this->namespaces = $namespaces;
-        $this->dimension = $dimension;
-        $this->fullness = $fullness;
-        $this->totalCount = $totalCount;
+        $this->namespaces = $values['namespaces'] ?? null;
+        $this->dimension = $values['dimension'] ?? null;
+        $this->fullness = $values['fullness'] ?? null;
+        $this->totalCount = $values['totalCount'] ?? null;
     }
 }

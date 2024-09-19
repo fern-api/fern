@@ -20,14 +20,15 @@ class Playlist extends SerializableType
     public string $ownerId;
 
     /**
-     * @param string $playlistId
-     * @param string $ownerId
+     * @param array{
+     *   playlistId: string,
+     *   ownerId: string,
+     * } $values
      */
     public function __construct(
-        string $playlistId,
-        string $ownerId,
+        array $values,
     ) {
-        $this->playlistId = $playlistId;
-        $this->ownerId = $ownerId;
+        $this->playlistId = $values['playlistId'];
+        $this->ownerId = $values['ownerId'];
     }
 }

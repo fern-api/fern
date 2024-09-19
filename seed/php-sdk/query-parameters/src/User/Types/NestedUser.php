@@ -20,14 +20,15 @@ class NestedUser extends SerializableType
     public User $user;
 
     /**
-     * @param string $name
-     * @param User $user
+     * @param array{
+     *   name: string,
+     *   user: User,
+     * } $values
      */
     public function __construct(
-        string $name,
-        User $user,
+        array $values,
     ) {
-        $this->name = $name;
-        $this->user = $user;
+        $this->name = $values['name'];
+        $this->user = $values['user'];
     }
 }

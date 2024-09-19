@@ -20,14 +20,15 @@ class TracedTestCase extends SerializableType
     public int $traceResponsesSize;
 
     /**
-     * @param TestCaseResultWithStdout $result
-     * @param int $traceResponsesSize
+     * @param array{
+     *   result: TestCaseResultWithStdout,
+     *   traceResponsesSize: int,
+     * } $values
      */
     public function __construct(
-        TestCaseResultWithStdout $result,
-        int $traceResponsesSize,
+        array $values,
     ) {
-        $this->result = $result;
-        $this->traceResponsesSize = $traceResponsesSize;
+        $this->result = $values['result'];
+        $this->traceResponsesSize = $values['traceResponsesSize'];
     }
 }

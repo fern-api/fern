@@ -16,11 +16,13 @@ class GetFunctionSignatureResponse extends SerializableType
     public array $functionByLanguage;
 
     /**
-     * @param array<Language, string> $functionByLanguage
+     * @param array{
+     *   functionByLanguage: array<Language, string>,
+     * } $values
      */
     public function __construct(
-        array $functionByLanguage,
+        array $values,
     ) {
-        $this->functionByLanguage = $functionByLanguage;
+        $this->functionByLanguage = $values['functionByLanguage'];
     }
 }

@@ -14,11 +14,13 @@ class Failure extends SerializableType
     public string $status;
 
     /**
-     * @param string $status
+     * @param array{
+     *   status: string,
+     * } $values
      */
     public function __construct(
-        string $status,
+        array $values,
     ) {
-        $this->status = $status;
+        $this->status = $values['status'];
     }
 }

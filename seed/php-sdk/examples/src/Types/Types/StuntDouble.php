@@ -20,14 +20,15 @@ class StuntDouble extends SerializableType
     public string $actorOrActressId;
 
     /**
-     * @param string $name
-     * @param string $actorOrActressId
+     * @param array{
+     *   name: string,
+     *   actorOrActressId: string,
+     * } $values
      */
     public function __construct(
-        string $name,
-        string $actorOrActressId,
+        array $values,
     ) {
-        $this->name = $name;
-        $this->actorOrActressId = $actorOrActressId;
+        $this->name = $values['name'];
+        $this->actorOrActressId = $values['actorOrActressId'];
     }
 }

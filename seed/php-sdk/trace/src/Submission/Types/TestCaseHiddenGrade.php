@@ -14,11 +14,13 @@ class TestCaseHiddenGrade extends SerializableType
     public bool $passed;
 
     /**
-     * @param bool $passed
+     * @param array{
+     *   passed: bool,
+     * } $values
      */
     public function __construct(
-        bool $passed,
+        array $values,
     ) {
-        $this->passed = $passed;
+        $this->passed = $values['passed'];
     }
 }

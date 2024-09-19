@@ -10,6 +10,12 @@ use Seed\Types\IndexedData;
 class QueryRequest
 {
     /**
+     * @var ?string $namespace
+     */
+    #[JsonProperty("namespace")]
+    public ?string $namespace;
+
+    /**
      * @var int $topK
      */
     #[JsonProperty("topK")]
@@ -20,12 +26,6 @@ class QueryRequest
      */
     #[JsonProperty("filter")]
     public mixed $filter;
-
-    /**
-     * @var ?string $namespace
-     */
-    #[JsonProperty("namespace")]
-    public ?string $namespace;
 
     /**
      * @var ?bool $includeValues
@@ -64,35 +64,29 @@ class QueryRequest
     public ?IndexedData $indexedData;
 
     /**
-     * @param int $topK
-     * @param mixed $filter
-     * @param ?string $namespace
-     * @param ?bool $includeValues
-     * @param ?bool $includeMetadata
-     * @param ?array<QueryColumn> $queries
-     * @param ?array<float> $column
-     * @param ?string $id
-     * @param ?IndexedData $indexedData
+     * @param array{
+     *   namespace?: ?string,
+     *   topK: int,
+     *   filter: mixed,
+     *   includeValues?: ?bool,
+     *   includeMetadata?: ?bool,
+     *   queries?: ?array<QueryColumn>,
+     *   column?: ?array<float>,
+     *   id?: ?string,
+     *   indexedData?: ?IndexedData,
+     * } $values
      */
     public function __construct(
-        int $topK,
-        mixed $filter,
-        ?string $namespace = null,
-        ?bool $includeValues = null,
-        ?bool $includeMetadata = null,
-        ?array $queries = null,
-        ?array $column = null,
-        ?string $id = null,
-        ?IndexedData $indexedData = null,
+        array $values,
     ) {
-        $this->topK = $topK;
-        $this->filter = $filter;
-        $this->namespace = $namespace;
-        $this->includeValues = $includeValues;
-        $this->includeMetadata = $includeMetadata;
-        $this->queries = $queries;
-        $this->column = $column;
-        $this->id = $id;
-        $this->indexedData = $indexedData;
+        $this->namespace = $values['namespace'] ?? null;
+        $this->topK = $values['topK'];
+        $this->filter = $values['filter'];
+        $this->includeValues = $values['includeValues'] ?? null;
+        $this->includeMetadata = $values['includeMetadata'] ?? null;
+        $this->queries = $values['queries'] ?? null;
+        $this->column = $values['column'] ?? null;
+        $this->id = $values['id'] ?? null;
+        $this->indexedData = $values['indexedData'] ?? null;
     }
 }

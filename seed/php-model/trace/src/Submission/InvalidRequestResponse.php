@@ -20,14 +20,15 @@ class InvalidRequestResponse extends SerializableType
     public mixed $cause;
 
     /**
-     * @param mixed $request
-     * @param mixed $cause
+     * @param array{
+     *   request: mixed,
+     *   cause: mixed,
+     * } $values
      */
     public function __construct(
-        mixed $request,
-        mixed $cause,
+        array $values,
     ) {
-        $this->request = $request;
-        $this->cause = $cause;
+        $this->request = $values['request'];
+        $this->cause = $values['cause'];
     }
 }

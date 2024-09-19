@@ -24,17 +24,17 @@ class FindRequest
     public ?int $privateProperty;
 
     /**
-     * @param ?string $optionalString
-     * @param ?string $publicProperty
-     * @param ?int $privateProperty
+     * @param array{
+     *   optionalString?: ?string,
+     *   publicProperty?: ?string,
+     *   privateProperty?: ?int,
+     * } $values
      */
     public function __construct(
-        ?string $optionalString = null,
-        ?string $publicProperty = null,
-        ?int $privateProperty = null,
+        array $values,
     ) {
-        $this->optionalString = $optionalString;
-        $this->publicProperty = $publicProperty;
-        $this->privateProperty = $privateProperty;
+        $this->optionalString = $values['optionalString'] ?? null;
+        $this->publicProperty = $values['publicProperty'] ?? null;
+        $this->privateProperty = $values['privateProperty'] ?? null;
     }
 }

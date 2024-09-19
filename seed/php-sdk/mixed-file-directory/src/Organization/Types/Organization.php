@@ -28,17 +28,17 @@ class Organization extends SerializableType
     public array $users;
 
     /**
-     * @param string $id
-     * @param string $name
-     * @param array<User> $users
+     * @param array{
+     *   id: string,
+     *   name: string,
+     *   users: array<User>,
+     * } $values
      */
     public function __construct(
-        string $id,
-        string $name,
-        array $users,
+        array $values,
     ) {
-        $this->id = $id;
-        $this->name = $name;
-        $this->users = $users;
+        $this->id = $values['id'];
+        $this->name = $values['name'];
+        $this->users = $values['users'];
     }
 }

@@ -10,11 +10,13 @@ class GetAttemptedMigrationsRequest
     public string $adminKeyHeader;
 
     /**
-     * @param string $adminKeyHeader
+     * @param array{
+     *   adminKeyHeader: string,
+     * } $values
      */
     public function __construct(
-        string $adminKeyHeader,
+        array $values,
     ) {
-        $this->adminKeyHeader = $adminKeyHeader;
+        $this->adminKeyHeader = $values['adminKeyHeader'];
     }
 }

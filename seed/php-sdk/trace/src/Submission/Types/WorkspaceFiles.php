@@ -22,14 +22,15 @@ class WorkspaceFiles extends SerializableType
     public array $readOnlyFiles;
 
     /**
-     * @param FileInfo $mainFile
-     * @param array<FileInfo> $readOnlyFiles
+     * @param array{
+     *   mainFile: FileInfo,
+     *   readOnlyFiles: array<FileInfo>,
+     * } $values
      */
     public function __construct(
-        FileInfo $mainFile,
-        array $readOnlyFiles,
+        array $values,
     ) {
-        $this->mainFile = $mainFile;
-        $this->readOnlyFiles = $readOnlyFiles;
+        $this->mainFile = $values['mainFile'];
+        $this->readOnlyFiles = $values['readOnlyFiles'];
     }
 }

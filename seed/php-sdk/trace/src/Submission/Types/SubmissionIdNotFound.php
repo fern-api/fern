@@ -14,11 +14,13 @@ class SubmissionIdNotFound extends SerializableType
     public string $missingSubmissionId;
 
     /**
-     * @param string $missingSubmissionId
+     * @param array{
+     *   missingSubmissionId: string,
+     * } $values
      */
     public function __construct(
-        string $missingSubmissionId,
+        array $values,
     ) {
-        $this->missingSubmissionId = $missingSubmissionId;
+        $this->missingSubmissionId = $values['missingSubmissionId'];
     }
 }

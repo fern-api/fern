@@ -29,17 +29,17 @@ class TokenResponse extends SerializableType
     public ?string $refreshToken;
 
     /**
-     * @param string $accessToken
-     * @param int $expiresIn
-     * @param ?string $refreshToken
+     * @param array{
+     *   accessToken: string,
+     *   expiresIn: int,
+     *   refreshToken?: ?string,
+     * } $values
      */
     public function __construct(
-        string $accessToken,
-        int $expiresIn,
-        ?string $refreshToken = null,
+        array $values,
     ) {
-        $this->accessToken = $accessToken;
-        $this->expiresIn = $expiresIn;
-        $this->refreshToken = $refreshToken;
+        $this->accessToken = $values['accessToken'];
+        $this->expiresIn = $values['expiresIn'];
+        $this->refreshToken = $values['refreshToken'] ?? null;
     }
 }

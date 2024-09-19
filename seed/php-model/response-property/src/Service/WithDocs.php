@@ -14,11 +14,13 @@ class WithDocs extends SerializableType
     public string $docs;
 
     /**
-     * @param string $docs
+     * @param array{
+     *   docs: string,
+     * } $values
      */
     public function __construct(
-        string $docs,
+        array $values,
     ) {
-        $this->docs = $docs;
+        $this->docs = $values['docs'];
     }
 }

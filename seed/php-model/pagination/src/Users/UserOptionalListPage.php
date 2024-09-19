@@ -20,14 +20,15 @@ class UserOptionalListPage extends SerializableType
     public ?string $next;
 
     /**
-     * @param UserOptionalListContainer $data
-     * @param ?string $next
+     * @param array{
+     *   data: UserOptionalListContainer,
+     *   next?: ?string,
+     * } $values
      */
     public function __construct(
-        UserOptionalListContainer $data,
-        ?string $next = null,
+        array $values,
     ) {
-        $this->data = $data;
-        $this->next = $next;
+        $this->data = $values['data'];
+        $this->next = $values['next'] ?? null;
     }
 }

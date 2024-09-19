@@ -10,11 +10,13 @@ class GetFileRequest
     public string $xFileApiVersion;
 
     /**
-     * @param string $xFileApiVersion
+     * @param array{
+     *   xFileApiVersion: string,
+     * } $values
      */
     public function __construct(
-        string $xFileApiVersion,
+        array $values,
     ) {
-        $this->xFileApiVersion = $xFileApiVersion;
+        $this->xFileApiVersion = $values['xFileApiVersion'];
     }
 }
