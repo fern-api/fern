@@ -14,7 +14,8 @@ abstract class SerializableType implements \JsonSerializable
     /**
      * @throws Exception
      */
-    public function toJson(): string {
+    public function toJson(): string
+    {
         $serializedObject = $this->jsonSerialize();
         $encoded = JsonEncoder::encode($serializedObject);
         if (!$encoded) {
@@ -67,7 +68,8 @@ abstract class SerializableType implements \JsonSerializable
      * @throws \JsonException
      * @throws Exception
      */
-    public static function fromJson(string $json): static {
+    public static function fromJson(string $json): static
+    {
         $decodedJson = JsonDecoder::decode($json);
         if (!is_array($decodedJson)) {
             throw new \JsonException("Unexpected non-array decoded type: " . gettype($decodedJson));

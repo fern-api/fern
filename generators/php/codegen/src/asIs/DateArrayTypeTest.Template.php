@@ -18,8 +18,7 @@ class DateArrayType extends SerializableType
         #[ArrayType(['date'])]
         #[JsonProperty('dates')]
         public array $dates
-    )
-    {
+    ) {
     }
 }
 
