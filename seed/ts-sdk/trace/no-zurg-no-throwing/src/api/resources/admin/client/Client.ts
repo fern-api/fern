@@ -298,11 +298,7 @@ export class Admin {
      *                         methodName: "string",
      *                         lineNumber: 1,
      *                         scopes: [{
-     *                                 variables: {
-     *                                     "string": {
-     *                                         "key": "value"
-     *                                     }
-     *                                 }
+     *                                 variables: {}
      *                             }]
      *                     }
      *                 },
@@ -385,11 +381,7 @@ export class Admin {
      *                     methodName: "string",
      *                     lineNumber: 1,
      *                     scopes: [{
-     *                             variables: {
-     *                                 "string": {
-     *                                     "key": "value"
-     *                                 }
-     *                             }
+     *                             variables: {}
      *                         }]
      *                 }
      *             },
@@ -481,11 +473,7 @@ export class Admin {
      *                         methodName: "string",
      *                         lineNumber: 1,
      *                         scopes: [{
-     *                                 variables: {
-     *                                     "string": {
-     *                                         "key": "value"
-     *                                     }
-     *                                 }
+     *                                 variables: {}
      *                             }]
      *                     }
      *                 },
@@ -564,11 +552,7 @@ export class Admin {
      *                     methodName: "string",
      *                     lineNumber: 1,
      *                     scopes: [{
-     *                             variables: {
-     *                                 "string": {
-     *                                     "key": "value"
-     *                                 }
-     *                             }
+     *                             variables: {}
      *                         }]
      *                 }
      *             },

@@ -41,29 +41,17 @@ public class GetProblemVersionTest : BaseMockServerTest
               "generatedFiles": {
                 "generatedTestCaseFiles": {
                   "string": {
-                    "files": [
-                      {
-                        "key": "value"
-                      }
-                    ]
+                    "files": []
                   }
                 },
                 "generatedTemplateFiles": {
                   "string": {
-                    "files": [
-                      {
-                        "key": "value"
-                      }
-                    ]
+                    "files": []
                   }
                 },
                 "other": {
                   "string": {
-                    "files": [
-                      {
-                        "key": "value"
-                      }
-                    ]
+                    "files": []
                   }
                 }
               },
@@ -108,11 +96,7 @@ public class GetProblemVersionTest : BaseMockServerTest
                       "key": "value"
                     }
                   },
-                  "expects": {
-                    "expectedStdout": {
-                      "key": "value"
-                    }
-                  }
+                  "expects": {}
                 }
               ],
               "isPublic": true

@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedUnknownAsAny;\n\nvar client = new SeedUnknownAsAnyClient();\nawait client.Unknown.PostObjectAsync(new MyObject());\n"
+                "client": "using SeedUnknownAsAny;\n\nvar client = new SeedUnknownAsAnyClient();\nawait client.Unknown.PostObjectAsync(\n    new MyObject\n    {\n        Unknown = new Dictionary<object, object?>() { { \"boolVal\", true }, { \"strVal\", \"string\" } },\n    }\n);\n"
             }
         }
     ]

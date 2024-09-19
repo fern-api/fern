@@ -722,16 +722,72 @@ export class ExampleGenerator {
         };
     }
 
-    private generateExampleContainer(containerType: ContainerType, depth: number): ExampleTypeReference {
+    private stuntContainerGeneration(containerType: ContainerType): ExampleTypeReference {
         switch (containerType.type) {
             case "list":
-                return this.generateExampleTypeReferenceList(containerType.list, depth + 1);
+                return {
+                    jsonExample: [],
+                    shape: ExampleTypeReferenceShape.container(
+                        ExampleContainer.list({
+                            list: [],
+                            itemType: containerType.list
+                        })
+                    )
+                };
             case "map":
-                return this.generateExampleTypeReferenceMap(containerType, depth + 1);
+                return {
+                    jsonExample: {},
+                    shape: ExampleTypeReferenceShape.container(
+                        ExampleContainer.map({
+                            map: [],
+                            keyType: containerType.keyType,
+                            valueType: containerType.valueType
+                        })
+                    )
+                };
             case "optional":
-                return this.generateExampleTypeReferenceOptional(containerType.optional, depth + 1);
+                return {
+                    jsonExample: undefined,
+                    shape: ExampleTypeReferenceShape.container(
+                        ExampleContainer.optional({
+                            optional: undefined,
+                            valueType: containerType.optional
+                        })
+                    )
+                };
             case "set":
-                return this.generateExampleTypeReferenceSet(containerType.set, depth + 1);
+                return {
+                    jsonExample: {},
+                    shape: ExampleTypeReferenceShape.container(
+                        ExampleContainer.set({
+                            set: [],
+                            itemType: containerType.set
+                        })
+                    )
+                };
+            case "literal":
+                return this.generateExampleTypeReferenceLiteral(containerType.literal);
+            default:
+                assertNever(containerType);
+        }
+    }
+
+    private generateExampleContainer(containerType: ContainerType, depth: number): ExampleTypeReference {
+        const newDepth = depth + 1;
+
+        if (this.exceedsMaxDepth(newDepth)) {
+            return this.stuntContainerGeneration(containerType);
+        }
+
+        switch (containerType.type) {
+            case "list":
+                return this.generateExampleTypeReferenceList(containerType.list, newDepth);
+            case "map":
+                return this.generateExampleTypeReferenceMap(containerType, newDepth);
+            case "optional":
+                return this.generateExampleTypeReferenceOptional(containerType.optional, newDepth);
+            case "set":
+                return this.generateExampleTypeReferenceSet(containerType.set, newDepth);
             case "literal":
                 return this.generateExampleTypeReferenceLiteral(containerType.literal);
             default:

@@ -358,7 +358,7 @@ class AdminClient:
                             line_number=1,
                             scopes=[
                                 Scope(
-                                    variables={"string": {"key": "value"}},
+                                    variables={},
                                 )
                             ],
                         ),
@@ -460,7 +460,7 @@ class AdminClient:
                             line_number=1,
                             scopes=[
                                 Scope(
-                                    variables={"string": {"key": "value"}},
+                                    variables={},
                                 )
                             ],
                         ),
@@ -567,7 +567,7 @@ class AdminClient:
                             line_number=1,
                             scopes=[
                                 Scope(
-                                    variables={"string": {"key": "value"}},
+                                    variables={},
                                 )
                             ],
                         ),
@@ -665,7 +665,7 @@ class AdminClient:
                             line_number=1,
                             scopes=[
                                 Scope(
-                                    variables={"string": {"key": "value"}},
+                                    variables={},
                                 )
                             ],
                         ),
@@ -1061,7 +1061,7 @@ class AsyncAdminClient:
                                 line_number=1,
                                 scopes=[
                                     Scope(
-                                        variables={"string": {"key": "value"}},
+                                        variables={},
                                     )
                                 ],
                             ),
@@ -1170,7 +1170,7 @@ class AsyncAdminClient:
                                 line_number=1,
                                 scopes=[
                                     Scope(
-                                        variables={"string": {"key": "value"}},
+                                        variables={},
                                     )
                                 ],
                             ),
@@ -1284,7 +1284,7 @@ class AsyncAdminClient:
                                 line_number=1,
                                 scopes=[
                                     Scope(
-                                        variables={"string": {"key": "value"}},
+                                        variables={},
                                     )
                                 ],
                             ),
@@ -1389,7 +1389,7 @@ class AsyncAdminClient:
                                 line_number=1,
                                 scopes=[
                                     Scope(
-                                        variables={"string": {"key": "value"}},
+                                        variables={},
                                     )
                                 ],
                             ),

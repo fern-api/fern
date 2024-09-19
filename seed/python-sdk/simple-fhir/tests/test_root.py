@@ -13,21 +13,21 @@ async def test_get_account(client: SeedApi, async_client: AsyncSeedApi) -> None:
         "patient": {
             "resource_type": "Patient",
             "name": "string",
-            "scripts": [{"key": "value"}],
+            "scripts": [],
             "id": "string",
-            "related_resources": [{"key": "value"}],
-            "memo": {"description": "string", "account": {"key": "value"}},
+            "related_resources": [],
+            "memo": {"description": "string"},
         },
         "practitioner": {
             "resource_type": "Practitioner",
             "name": "string",
             "id": "string",
-            "related_resources": [{"key": "value"}],
-            "memo": {"description": "string", "account": {"key": "value"}},
+            "related_resources": [],
+            "memo": {"description": "string"},
         },
         "id": "string",
-        "related_resources": [{"key": "value"}],
-        "memo": {"description": "string", "account": {"key": "value"}},
+        "related_resources": [],
+        "memo": {"description": "string"},
     }
     expected_types: typing.Any = {
         "resource_type": None,
@@ -35,20 +35,20 @@ async def test_get_account(client: SeedApi, async_client: AsyncSeedApi) -> None:
         "patient": {
             "resource_type": None,
             "name": None,
-            "scripts": ("list", {0: None}),
+            "scripts": ("list", {}),
             "id": None,
-            "related_resources": ("list", {0: None}),
+            "related_resources": ("list", {}),
             "memo": {"description": None, "account": None},
         },
         "practitioner": {
             "resource_type": None,
             "name": None,
             "id": None,
-            "related_resources": ("list", {0: None}),
+            "related_resources": ("list", {}),
             "memo": {"description": None, "account": None},
         },
         "id": None,
-        "related_resources": ("list", {0: None}),
+        "related_resources": ("list", {}),
         "memo": {"description": None, "account": None},
     }
     response = client.get_account(account_id="string")

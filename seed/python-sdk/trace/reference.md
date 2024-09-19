@@ -426,7 +426,7 @@ client.admin.store_traced_test_case(
                     line_number=1,
                     scopes=[
                         Scope(
-                            variables={"string": {"key": "value"}},
+                            variables={},
                         )
                     ],
                 ),
@@ -551,7 +551,7 @@ client.admin.store_traced_test_case_v_2(
                     line_number=1,
                     scopes=[
                         Scope(
-                            variables={"string": {"key": "value"}},
+                            variables={},
                         )
                     ],
                 ),
@@ -678,7 +678,7 @@ client.admin.store_traced_workspace(
                     line_number=1,
                     scopes=[
                         Scope(
-                            variables={"string": {"key": "value"}},
+                            variables={},
                         )
                     ],
                 ),
@@ -794,7 +794,7 @@ client.admin.store_traced_workspace_v_2(
                     line_number=1,
                     scopes=[
                         Scope(
-                            variables={"string": {"key": "value"}},
+                            variables={},
                         )
                     ],
                 ),

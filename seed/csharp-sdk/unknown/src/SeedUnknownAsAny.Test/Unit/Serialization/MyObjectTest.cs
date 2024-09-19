@@ -17,7 +17,12 @@ public class MyObjectTest
     {
         var inputJson =
             @"
-        {}
+        {
+          ""unknown"": {
+            ""boolVal"": true,
+            ""strVal"": ""string""
+          }
+        }
         ";
 
         var serializerOptions = new JsonSerializerOptions

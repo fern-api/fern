@@ -38,11 +38,7 @@ import * as SeedTrace from "../../../../index";
  *                         methodName: "string",
  *                         lineNumber: 1,
  *                         scopes: [{
- *                                 variables: {
- *                                     "string": {
- *                                         "key": "value"
- *                                     }
- *                                 }
+ *                                 variables: {}
  *                             }]
  *                     }
  *                 },

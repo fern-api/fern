@@ -50,6 +50,8 @@
     <ItemGroup>
         <Protobuf Include="..\..\proto\google\api\annotations.proto" GrpcServices="Client" ProtoRoot="..\..\proto">
         </Protobuf>
+        <Protobuf Include="..\..\proto\google\api\field_behavior.proto" GrpcServices="Client" ProtoRoot="..\..\proto">
+        </Protobuf>
         <Protobuf Include="..\..\proto\google\api\http.proto" GrpcServices="Client" ProtoRoot="..\..\proto">
         </Protobuf>
         <Protobuf Include="..\..\proto\user\v1\user.proto" GrpcServices="Client" ProtoRoot="..\..\proto">

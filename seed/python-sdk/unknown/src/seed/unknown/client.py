@@ -84,7 +84,9 @@ class UnknownClient:
         client = SeedUnknownAsAny(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.unknown.post_object()
+        client.unknown.post_object(
+            unknown={"boolVal": True, "strVal": "string"},
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "with-object",
@@ -195,7 +197,9 @@ class AsyncUnknownClient:
 
 
         async def main() -> None:
-            await client.unknown.post_object()
+            await client.unknown.post_object(
+                unknown={"boolVal": True, "strVal": "string"},
+            )
 
 
         asyncio.run(main())

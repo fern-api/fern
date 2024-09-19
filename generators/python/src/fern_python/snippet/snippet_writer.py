@@ -1,4 +1,3 @@
-import json
 from typing import Any, Dict, List, Optional
 
 import fern.ir.resources as ir_types
@@ -262,7 +261,7 @@ class SnippetWriter:
         self,
         unknown: Any,
     ) -> AST.Expression:
-        return AST.Expression(json.dumps(unknown))
+        return AST.Expression(str(unknown))
 
     def _get_snippet_for_list_or_set(
         self,
