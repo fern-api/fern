@@ -1,10 +1,9 @@
 import { AbstractWriter } from "@fern-api/generator-commons";
 import { BasePhpCustomConfigSchema } from "../../custom-config/BasePhpCustomConfigSchema";
 import { ClassReference } from "../ClassReference";
+import { GLOBAL_NAMESPACE } from "./Constant";
 
 type Namespace = string;
-
-export const GLOBAL_NAMESPACE = "";
 
 export declare namespace Writer {
     interface Args {
@@ -65,7 +64,11 @@ ${this.buffer}`;
         }
         let result = referenceKeys
             // Filter out the current namespace.
-            .filter((referenceNamespace) => referenceNamespace !== this.namespace)
+            .filter((reference) => {
+                // Remove the type name to get just the namespace
+                const referenceNamespace = reference.substring(0, reference.lastIndexOf("\\"));
+                return referenceNamespace !== this.namespace;
+            })
             .map((ref) => `use ${ref};`)
             .join("\n");
 

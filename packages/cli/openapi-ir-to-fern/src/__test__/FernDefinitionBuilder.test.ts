@@ -17,7 +17,10 @@ describe("Fern Definition Builder", () => {
                 hasEndpointsMarkedInternal: false,
                 endpoints: [],
                 webhooks: [],
-                schemas: {},
+                groupedSchemas: {
+                    rootSchemas: {},
+                    namespacedSchemas: {}
+                },
                 variables: {},
                 nonRequestReferencedSchemas: new Set(),
                 securitySchemes: {},

@@ -2,6 +2,7 @@
 
 namespace <%= namespace%>;
 
+use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Utils;
@@ -13,13 +14,27 @@ use Psr\Http\Message\StreamInterface;
 class RawClient
 {
     /**
-     * @param ClientInterface $client The HTTP client used to make requests.
-     * @param array<string, string> $headers The HTTP headers sent with the request.
+     * @var ClientInterface $client
+     */
+    private ClientInterface $client;
+
+    /**
+     * @var array<string, string> $headers
+     */
+    private array $headers;
+
+    /**
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     * } $options
      */
     public function __construct(
-        private readonly ClientInterface $client,
-        private readonly array $headers = [],
+        public readonly ?array $options = null,
     ) {
+        $this->client = $this->options['client'] ?? new Client();
+        $this->headers = $this->options['headers'] ?? [];
     }
 
     /**

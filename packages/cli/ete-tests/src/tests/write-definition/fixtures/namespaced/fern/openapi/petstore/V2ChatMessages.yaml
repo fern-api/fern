@@ -1,0 +1,8 @@
+
+type: array
+description: |
+  A list of chat messages in chronological order, representing a conversation between the user and the model.
+
+  Messages can be from `User`, `Assistant`, `Tool` and `System` roles. Learn more about messages and roles in [the Chat API guide](https://docs.cohere.com/docs/chat-api).
+items:
+  $ref: './ChatMessage.yaml'

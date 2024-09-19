@@ -39,6 +39,7 @@ export { HeaderAuthSchemeSchema } from "./HeaderAuthSchemeSchema";
 export { HttpEndpointSchema, HttpMethodSchema } from "./HttpEndpointSchema";
 export { HttpHeaderSchema } from "./HttpHeaderSchema";
 export { HttpInlineRequestBodySchema } from "./HttpInlineRequestBodySchema";
+export { HttpInlineRequestBodyPropertySchema } from "./HttpInlineRequestBodyPropertySchema";
 export { HttpPathParameterSchema } from "./HttpPathParameterSchema";
 export { HttpQueryParameterSchema } from "./HttpQueryParameterSchema";
 export { HttpReferencedRequestBodySchema } from "./HttpReferencedRequestBodySchema";

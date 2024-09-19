@@ -115,6 +115,7 @@ export function convertHttpOperation({
                 ? operation.operationId + "_" + suffix
                 : operation.operationId,
         tags: context.resolveTagsToTagIds(operation.tags),
+        namespace: context.namespace,
         sdkName: sdkMethodName,
         pathParameters: convertedParameters.pathParameters,
         queryParameters: convertedParameters.queryParameters,

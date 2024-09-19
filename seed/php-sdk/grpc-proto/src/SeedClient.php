@@ -2,15 +2,19 @@
 
 namespace Seed;
 
+use Seed\Userservice\UserserviceClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\RawClient;
-use Seed\Userservice\UserserviceClient;
-use GuzzleHttp\Client;
 
 class SeedClient
 {
     /**
-     * @var ?array{baseUrl?: string, client?: ClientInterface} $options
+     * @var UserserviceClient $userservice
+     */
+    public UserserviceClient $userservice;
+
+    /**
+     * @var ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
      */
     private ?array $options;
 
@@ -20,12 +24,7 @@ class SeedClient
     private RawClient $client;
 
     /**
-     * @var UserserviceClient $userservice
-     */
-    public UserserviceClient $userservice;
-
-    /**
-     * @param ?array{baseUrl?: string, client?: ClientInterface} $options
+     * @param ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
      */
     public function __construct(
         ?array $options = null,
@@ -35,8 +34,17 @@ class SeedClient
             "X-Fern-SDK-Name" => "Seed",
             "X-Fern-SDK-Version" => "0.0.1",
         ];
+
         $this->options = $options ?? [];
-        $this->client = new RawClient(client: $this->options['client'] ?? new Client(), headers: $defaultHeaders);
+        $this->options['headers'] = array_merge(
+            $defaultHeaders,
+            $this->options['headers'] ?? [],
+        );
+
+        $this->client = new RawClient(
+            options: $this->options,
+        );
+
         $this->userservice = new UserserviceClient($this->client);
     }
 }

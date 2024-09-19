@@ -25,7 +25,7 @@ class RawClientTest extends TestCase
         $this->mockHandler = new MockHandler();
         $handlerStack = HandlerStack::create($this->mockHandler);
         $client = new Client(['handler' => $handlerStack]);
-        $this->rawClient = new RawClient($client);
+        $this->rawClient = new RawClient(['client' => $client]);
     }
 
     public function testHeaders(): void

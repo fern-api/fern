@@ -2,20 +2,20 @@
 
 namespace Seed\Commons;
 
-use Seed\Core\RawClient;
 use Seed\Commons\Metadata\MetadataClient;
+use Seed\Core\RawClient;
 
 class CommonsClient
 {
     /**
-     * @var RawClient $client
-     */
-    private RawClient $client;
-
-    /**
      * @var MetadataClient $metadata
      */
     public MetadataClient $metadata;
+
+    /**
+     * @var RawClient $client
+     */
+    private RawClient $client;
 
     /**
      * @param RawClient $client

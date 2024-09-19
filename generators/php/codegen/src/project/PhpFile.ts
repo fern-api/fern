@@ -4,13 +4,14 @@ import path from "path";
 import { BasePhpCustomConfigSchema } from "../custom-config/BasePhpCustomConfigSchema";
 import { File } from "@fern-api/generator-commons";
 import { Class } from "../ast/Class";
+import { Enum } from "../ast";
 
 export type Namespace = string;
 
 export declare namespace PhpFile {
     interface Args {
         /* The class to be written to the PHP File */
-        clazz: Class;
+        clazz: Class | Enum;
         /* Directory of the filepath */
         directory: RelativeFilePath;
         /* The root namespace of the project. Can be pulled directly from context. */
@@ -47,7 +48,7 @@ function phpFileContent({
     rootNamespace,
     customConfig
 }: {
-    clazz: Class;
+    clazz: Class | Enum;
     rootNamespace: string;
     customConfig: BasePhpCustomConfigSchema;
 }): string {

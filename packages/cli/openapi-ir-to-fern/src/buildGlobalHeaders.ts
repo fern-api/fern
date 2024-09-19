@@ -1,5 +1,5 @@
 import { ROOT_API_FILENAME } from "@fern-api/configuration";
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { GlobalHeader } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { buildHeader } from "./buildHeader";
@@ -7,6 +7,9 @@ import { buildTypeReference } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 import { wrapTypeReferenceAsOptional } from "./utils/wrapTypeReferenceAsOptional";
+import { getNamespaceFromGroup } from "./utils/getNamespaceFromGroup";
+import { camelCase } from "lodash-es";
+import { getGroupNameForSchema } from "./utils/getGroupNameForSchema";
 
 class HeaderWithCount {
     public readonly schema: RawSchemas.HttpHeaderSchema;
@@ -27,6 +30,16 @@ const GLOBAL_HEADER_PERCENTAGE_THRESHOLD = 0.75;
 const HEADERS_TO_IGNORE = new Set(...["authorization"]);
 
 export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
+    if (context.globalHeaderOverrides != null) {
+        for (const [name, declaration] of Object.entries(context.globalHeaderOverrides.headers ?? {})) {
+            context.builder.addGlobalHeader({
+                name,
+                schema: declaration
+            });
+        }
+        return;
+    }
+
     const predefinedGlobalHeaders: Record<string, GlobalHeader> = Object.fromEntries(
         (context.ir.globalHeaders ?? []).map((header) => [header.header, header])
     );
@@ -37,6 +50,9 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
         if (header.name == null && header.env == null && typeof header.schema === "string") {
             schema = header.schema;
         } else if (header != null) {
+            const groupName = header.schema ? getGroupNameForSchema(header.schema) : undefined;
+            const namespace = groupName != null ? getNamespaceFromGroup(groupName) : undefined;
+            const defaultFile = RelativeFilePath.of("api.yml");
             schema = {
                 name: header.name,
                 env: header.env,
@@ -46,7 +62,10 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
                               buildTypeReference({
                                   schema: header.schema,
                                   context,
-                                  fileContainingReference: RelativeFilePath.of("api.yml")
+                                  fileContainingReference: namespace
+                                      ? join(RelativeFilePath.of(camelCase(namespace)), defaultFile)
+                                      : defaultFile,
+                                  namespace
                               })
                           ) ?? "optional<string>"
                         : "optional<string>"
@@ -75,7 +94,9 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
                             name: predefinedHeader?.name ?? header.name
                         },
                         fileContainingReference: RelativeFilePath.of(ROOT_API_FILENAME),
-                        context
+                        context,
+                        // TODO: how are we namespacing global headers
+                        namespace: undefined
                     });
                     headerWithCount = new HeaderWithCount(convertedHeader);
                     globalHeaders[header.name] = headerWithCount;

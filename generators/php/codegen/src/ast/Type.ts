@@ -1,6 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { AstNode } from "./core/AstNode";
-import { GLOBAL_NAMESPACE, Writer } from "./core/Writer";
+import { GLOBAL_NAMESPACE } from "./core/Constant";
+import { Writer } from "./core/Writer";
 import { ClassReference } from "./ClassReference";
 
 type InternalType =
@@ -88,7 +89,7 @@ export class Type extends AstNode {
         super();
     }
 
-    public write(writer: Writer, { parentType, comment }: { parentType?: Type; comment?: boolean } = {}): void {
+    public write(writer: Writer, { comment }: { comment?: boolean } = {}): void {
         switch (this.internalType.type) {
             case "int":
                 writer.write("int");
@@ -122,7 +123,7 @@ export class Type extends AstNode {
                     break;
                 }
                 writer.write("array<");
-                this.internalType.value.write(writer, { parentType: this, comment });
+                this.internalType.value.write(writer, { comment });
                 writer.write(">");
                 break;
             case "map": {
@@ -131,9 +132,9 @@ export class Type extends AstNode {
                     break;
                 }
                 writer.write("array<");
-                this.internalType.keyType.write(writer, { parentType: this, comment });
+                this.internalType.keyType.write(writer, { comment });
                 writer.write(", ");
-                this.internalType.valueType.write(writer, { parentType: this, comment });
+                this.internalType.valueType.write(writer, { comment });
                 writer.write(">");
                 break;
             }
@@ -152,17 +153,14 @@ export class Type extends AstNode {
                         writer.write("?");
                     }
                     writer.write(": ");
-                    entry.valueType.write(writer, { parentType: this, comment });
+                    entry.valueType.write(writer, { comment });
                 });
                 writer.write("}");
                 break;
             }
             case "optional":
-                if (this.needsOptionalToken({ parentType, value: this.internalType.value })) {
-                    // Avoids double optional.
-                    writer.write("?");
-                }
-                this.internalType.value.write(writer, { parentType: this, comment });
+                writer.write("?");
+                this.internalType.value.write(writer, { comment });
                 break;
             case "reference":
                 writer.writeNode(this.internalType.value);
@@ -186,12 +184,12 @@ export class Type extends AstNode {
         return undefined;
     }
 
-    public isOptional(): boolean {
-        return this.internalType.type === "optional";
+    public underlyingType(): Type {
+        return this.underlyingTypeIfOptional() ?? this;
     }
 
-    private needsOptionalToken({ parentType, value }: { parentType: Type | undefined; value: Type }): boolean {
-        return value.internalType.type !== "mixed" && parentType?.internalType?.type !== "optional";
+    public isOptional(): boolean {
+        return this.internalType.type === "optional";
     }
 
     /* Static factory methods for creating a Type */
@@ -266,6 +264,10 @@ export class Type extends AstNode {
     }
 
     public static optional(value: Type): Type {
+        // Avoids double optional.
+        if (this.isAlreadyOptional(value)) {
+            return value;
+        }
         return new this({
             type: "optional",
             value
@@ -277,6 +279,10 @@ export class Type extends AstNode {
             type: "reference",
             value
         });
+    }
+
+    private static isAlreadyOptional(value: Type) {
+        return value.internalType.type === "optional" || value.internalType.type === "mixed";
     }
 }
 

@@ -527,7 +527,7 @@ paths:
                         $ref: '#/components/schemas/Links-Booking'
               examples:
                 Card:
-                  summary: Card Payment
+                  summary: Card Payment 2
                   value:
                     id: 2e3b4f5a-6b7c-8d9e-0f1a-2b3c4d5e6f7a
                     amount: 49.99
@@ -545,7 +545,7 @@ paths:
                     links:
                       booking: https://api.example.com/bookings/1725ff48-ab45-4bb5-9d02-88745177dedb/payment
                 Bank:
-                  summary: Bank Account Payment
+                  summary: Bank Account Payment 2
                   value:
                     id: 2e3b4f5a-6b7c-8d9e-0f1a-2b3c4d5e6f7a
                     amount: 100.5
@@ -616,6 +616,17 @@ components:
             read: Read access
             write: Write access
   schemas:
+    Pet:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
     Station:
       type: object
       xml:
@@ -658,6 +669,10 @@ components:
           examples:
             - Europe/Berlin
             - Europe/Paris
+        messages:
+          $ref: './V2ChatMessages.yaml'
+        pet:
+          $ref: '#/components/schemas/Pet'
     Links-Self:
       type: object
       properties:

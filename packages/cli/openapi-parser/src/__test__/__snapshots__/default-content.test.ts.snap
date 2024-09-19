@@ -19,6 +19,7 @@ exports[`open api parser > default-content > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "GenerateContent",
       "pagination": null,
       "path": "/generateContent",
@@ -91,13 +92,16 @@ exports[`open api parser > default-content > parse open api 1`] = `
     },
   ],
   "globalHeaders": [],
+  "groupedSchemas": {
+    "namespacedSchemas": {},
+    "rootSchemas": {},
+  },
   "groups": {},
   "hasEndpointsMarkedInternal": false,
   "idempotencyHeaders": [],
   "nonRequestReferencedSchemas": [
     "GenerateContentResponse",
   ],
-  "schemas": {},
   "securitySchemes": {},
   "servers": [
     {
