@@ -6,6 +6,7 @@ use Seed\V2\Problem\ProblemClient;
 use Seed\V2\V3\V3Client;
 use Seed\Core\RawClient;
 use Seed\Core\JsonApiRequest;
+use Seed\Environments;
 use Seed\Core\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
 use Exception;
@@ -47,7 +48,7 @@ class V2Client
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? Environments::Prod->value,
                     path: "",
                     method: HttpMethod::GET,
                 ),

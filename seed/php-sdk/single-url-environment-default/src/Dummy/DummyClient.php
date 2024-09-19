@@ -4,6 +4,7 @@ namespace Seed\Dummy;
 
 use Seed\Core\RawClient;
 use Seed\Core\JsonApiRequest;
+use Seed\Environments;
 use Seed\Core\HttpMethod;
 use JsonException;
 use Exception;
@@ -34,7 +35,7 @@ class DummyClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? Environments::Production->value,
                     path: "dummy",
                     method: HttpMethod::GET,
                 ),

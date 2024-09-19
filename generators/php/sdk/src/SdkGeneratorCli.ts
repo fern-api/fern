@@ -8,6 +8,7 @@ import { generateModels } from "@fern-api/php-model";
 import { RootClientGenerator } from "./root-client/RootClientGenerator";
 import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
 import { WrappedEndpointRequestGenerator } from "./endpoint/request/WrappedEndpointRequestGenerator";
+import { EnvironmentGenerator } from "./environment/EnvironmentGenerator";
 
 export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -48,6 +49,7 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
         generateModels(context);
         this.generateRootClient(context);
         this.generateSubpackages(context);
+        this.generateEnvironment(context);
         await context.project.persist();
     }
 
@@ -92,5 +94,10 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
                 context.project.addSourceFiles(wrappedEndpointRequest);
             }
         }
+    }
+
+    private generateEnvironment(context: SdkGeneratorContext) {
+        const environmentGenerator = new EnvironmentGenerator(context);
+        environmentGenerator.generate();
     }
 }
