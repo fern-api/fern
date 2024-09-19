@@ -10,16 +10,19 @@ import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 export function buildHeader({
     header,
     context,
-    fileContainingReference
+    fileContainingReference,
+    namespace
 }: {
     header: Header;
     context: OpenApiIrConverterContext;
     fileContainingReference: RelativeFilePath;
+    namespace: string | undefined;
 }): RawSchemas.HttpHeaderSchema {
     const typeReference = buildTypeReference({
         schema: header.schema,
         context,
-        fileContainingReference
+        fileContainingReference,
+        namespace
     });
     const headerType = getTypeFromTypeReference(typeReference);
     const headerWithoutXPrefix = header.name.replace(/^x-|^X-/, "");

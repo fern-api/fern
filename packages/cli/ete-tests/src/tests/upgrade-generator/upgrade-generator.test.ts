@@ -37,7 +37,7 @@ describe("fern generator upgrade", () => {
             }
         );
 
-        expect((await readFile(outputFile)).toString()).not.toEqual("3.0.0");
+        expect(JSON.parse((await readFile(outputFile)).toString()).version).not.toEqual("3.0.0");
     }, 60_000);
 
     it("fern generator upgrade with filters", async () => {
@@ -80,7 +80,7 @@ describe("fern generator upgrade", () => {
             }
         );
 
-        expect((await readFile(outputFile)).toString()).not.toEqual("3.0.0");
+        expect(JSON.parse((await readFile(outputFile)).toString()).version).not.toEqual("3.0.0");
     }, 60_000);
 
     it("fern generator help commands", async () => {
@@ -141,7 +141,7 @@ describe("fern generator upgrade", () => {
             }
         );
 
-        expect((await readFile(outputFile)).toString()).toEqual("2.16.0");
+        expect(JSON.parse((await readFile(outputFile)).toString()).version).toEqual("2.16.0");
 
         await runFernCli(
             [
@@ -176,7 +176,7 @@ describe("fern generator upgrade", () => {
             }
         );
 
-        expect((await readFile(outputFileNewMajor)).toString()).not.toEqual("2.16.0");
+        expect(JSON.parse((await readFile(outputFileNewMajor)).toString()).version).not.toEqual("2.16.0");
     }, 60_000);
 
     it("fern generator upgrade list", async () => {

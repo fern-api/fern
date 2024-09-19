@@ -1,4 +1,4 @@
-FROM mwalbeck/python-poetry:1.7-3.11
+FROM mwalbeck/python-poetry:1.7-3.8
 
 RUN apt update && apt upgrade -y
 RUN apt install nodejs npm -y

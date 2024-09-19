@@ -4,6 +4,7 @@ import { Type } from "./Type";
 import { Access } from "./Access";
 import { CodeBlock } from "./CodeBlock";
 import { Comment } from "./Comment";
+import { convertToPhpVariableName } from "./utils/convertToPhpVariableName";
 
 export declare namespace Parameter {
     interface Args {
@@ -32,7 +33,7 @@ export class Parameter extends AstNode {
 
     constructor({ name, type, docs, initializer, access, readonly_ }: Parameter.Args) {
         super();
-        this.name = name;
+        this.name = convertToPhpVariableName(name);
         this.type = type;
         this.docs = docs;
         this.initializer = initializer;
@@ -61,6 +62,8 @@ export class Parameter extends AstNode {
         if (this.initializer != null) {
             writer.write(" = ");
             this.initializer.write(writer);
+        } else if (this.type.isOptional()) {
+            writer.write(" = null");
         }
     }
 }

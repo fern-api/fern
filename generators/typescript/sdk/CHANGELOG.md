@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.40.5] - 2024-09-18
+
+- Fix: The snippet templates for file upload are now accurate and also respect the feature 
+  flag `inlineFileProperties`. 
+
+## [0.40.4] - 2024-09-12
+
+- Fix: Upgrades dependency `stream-json` which improves the performance when reading 
+  large API specs. This version will improve your `fern generate` performance. 
+
 ## [0.40.3] - 2024-09-12
 
 - Fix: If the serde layer is enabled, then all the serializers are exported under the 

@@ -34,6 +34,7 @@ exports[`file-upload > file-upload > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "POST",
+      "namespace": null,
       "operationId": "upload-file",
       "pagination": null,
       "path": "/upload",
@@ -44,6 +45,7 @@ exports[`file-upload > file-upload > parse open api 1`] = `
         "name": null,
         "properties": [
           {
+            "contentType": null,
             "description": "The file to upload",
             "key": "file",
             "schema": {
@@ -53,6 +55,7 @@ exports[`file-upload > file-upload > parse open api 1`] = `
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "maybe_file",
             "schema": {
@@ -62,6 +65,7 @@ exports[`file-upload > file-upload > parse open api 1`] = `
             },
           },
           {
+            "contentType": null,
             "description": "The list of files to upload",
             "key": "file_list",
             "schema": {
@@ -71,6 +75,7 @@ exports[`file-upload > file-upload > parse open api 1`] = `
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "maybe_file_list",
             "schema": {
@@ -80,6 +85,7 @@ exports[`file-upload > file-upload > parse open api 1`] = `
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "maybe_files_allof_list",
             "schema": {
@@ -108,11 +114,14 @@ exports[`file-upload > file-upload > parse open api 1`] = `
     },
   ],
   "globalHeaders": [],
+  "groupedSchemas": {
+    "namespacedSchemas": {},
+    "rootSchemas": {},
+  },
   "groups": {},
   "hasEndpointsMarkedInternal": false,
   "idempotencyHeaders": [],
   "nonRequestReferencedSchemas": [],
-  "schemas": {},
   "securitySchemes": {},
   "servers": [],
   "tags": {

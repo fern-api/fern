@@ -35,27 +35,31 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             namespace: this.context.getRootNamespace()
         });
 
-        const subpackages = this.getRootSubpackages();
-
         class_.addField(
             php.field({
-                name: "$client",
+                name: `$${this.context.getClientOptionsName()}`,
                 access: "private",
-                type: php.Type.reference(this.context.rawClient.getClassReference())
+                type: php.Type.optional(this.context.getClientOptionsType())
             })
         );
+        class_.addField(this.context.rawClient.getField());
 
+        const subpackages = this.getRootSubpackages();
         class_.addConstructor(this.getConstructorMethod({ subpackages }));
-
         for (const subpackage of subpackages) {
-            // TODO: Replace 'array' with the subpackage classes.
-            class_.addField(
-                php.field({
-                    name: `$${subpackage.name.camelCase.safeName}`,
-                    access: "public",
-                    type: php.Type.array(php.Type.mixed())
-                })
-            );
+            class_.addField(this.context.getSubpackageField(subpackage));
+        }
+
+        const rootServiceId = this.context.ir.rootPackage.service;
+        if (rootServiceId != null) {
+            const service = this.context.getHttpServiceOrThrow(rootServiceId);
+            for (const endpoint of service.endpoints) {
+                const method = this.context.endpointGenerator.generate({
+                    serviceId: rootServiceId,
+                    endpoint
+                });
+                class_.addMethod(method);
+            }
         }
 
         return new PhpFile({
@@ -81,7 +85,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
         parameters.push(
             php.parameter({
-                name: this.context.getClientOptionsParameterName(),
+                name: `$${this.context.getClientOptionsName()}`,
                 type: php.Type.optional(this.context.getClientOptionsType()),
                 initializer: php.codeblock("null")
             })
@@ -127,15 +131,21 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 value: php.codeblock(`"${platformHeaders.userAgent.value}"`)
             });
         }
-        const headers = php.map({
-            entries: headerEntries
-        });
+        const headers = php.map({ entries: headerEntries });
         return {
             access: "public",
             parameters,
             body: php.codeblock((writer) => {
                 writer.write("$defaultHeaders = ");
                 writer.writeNodeStatement(headers);
+
+                writer.write("$this->options = ");
+                writer.writeNodeStatement(
+                    php.codeblock((writer) => {
+                        writer.write("$options ?? ");
+                        writer.writeNode(php.codeblock("[]"));
+                    })
+                );
 
                 writer.write("$this->client = ");
                 writer.writeNodeStatement(
@@ -144,8 +154,8 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                             {
                                 name: "client",
                                 assignment: php.codeblock((writer) => {
-                                    const guzzleClientOption = `${this.context.getClientOptionsParameterName()}['client']`;
-                                    writer.write(`isset(${guzzleClientOption}) ? ${guzzleClientOption} : `);
+                                    const guzzleClientOption = `$this->${this.context.getClientOptionsName()}['client']`;
+                                    writer.write(`${guzzleClientOption} ?? `);
                                     writer.writeNode(this.context.guzzleClient.instantiate());
                                 })
                             },
@@ -157,9 +167,14 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     })
                 );
 
-                for (const subpackage of this.getRootSubpackages()) {
+                for (const subpackage of subpackages) {
                     writer.write(`$this->${subpackage.name.camelCase.safeName} = `);
-                    writer.writeNodeStatement(php.codeblock("[]"));
+                    writer.writeNodeStatement(
+                        php.instantiateClass({
+                            classReference: this.context.getSubpackageClassReference(subpackage),
+                            arguments_: [php.codeblock(`$this->${this.context.rawClient.getFieldName()}`)]
+                        })
+                    );
                 }
             })
         };

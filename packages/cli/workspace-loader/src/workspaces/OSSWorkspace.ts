@@ -39,6 +39,11 @@ export declare namespace OSSWorkspace {
          * as it allows the documentation to more closely mirror the OpenAPI spec.
          */
         detectGlobalHeaders?: boolean;
+        /*
+         * Whether or not to let additional property values in OpenAPI come through as
+         * optional.
+         */
+        optionalAdditionalProperties?: boolean;
     }
 }
 
@@ -96,6 +101,10 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
                 this.generatorsConfiguration?.api?.auth != null ? { ...this.generatorsConfiguration?.api } : undefined,
             environmentOverrides:
                 this.generatorsConfiguration?.api?.environments != null
+                    ? { ...this.generatorsConfiguration?.api }
+                    : undefined,
+            globalHeaderOverrides:
+                this.generatorsConfiguration?.api?.headers != null
                     ? { ...this.generatorsConfiguration?.api }
                     : undefined,
             taskContext: context,
@@ -210,6 +219,9 @@ function getOptionsOverridesFromSettings(settings?: OSSWorkspace.Settings): Part
     const result: Partial<ParseOpenAPIOptions> = {};
     if (settings.enableDiscriminatedUnionV2) {
         result.discriminatedUnionV2 = true;
+    }
+    if (settings.optionalAdditionalProperties) {
+        result.optionalAdditionalProperties = true;
     }
     return result;
 }

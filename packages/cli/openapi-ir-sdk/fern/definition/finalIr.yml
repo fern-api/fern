@@ -24,7 +24,7 @@ types:
       endpoints: list<Endpoint>
       webhooks: list<Webhook>
       channel: list<WebsocketChannel>
-      schemas: map<commons.SchemaId, Schema>
+      groupedSchemas: Schemas
       variables: map<string, PrimitiveSchema>
       nonRequestReferencedSchemas:
         type: set<commons.SchemaId>
@@ -32,6 +32,17 @@ types:
       securitySchemes: map<commons.SecuritySchemeId, commons.SecurityScheme>
       globalHeaders: optional<list<GlobalHeader>>
       idempotencyHeaders: optional<list<IdempotencyHeader>>
+
+  Schemas:
+    properties:
+      rootSchemas: map<commons.SchemaId, Schema>
+      namespacedSchemas:
+          type: map<commons.NamespaceId, map<commons.SchemaId, Schema>>
+          docs: |
+            The schemas are organized by namespace and schema name.
+            The schema name is the key in the inner map.
+            Note that this also includes un-namespaced schemas with a static sentinel key of `__no_namespace__`,
+            as even when namespacing we allow for root, unnamespaced APIs, and this allows for the most flexibility.
 
   SdkGroupInfo:
     properties:
@@ -71,6 +82,7 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithSource
+      - commons.WithNamespace
     properties:
       sdkName: optional<EndpointSdkName>
       method: WebhookHttpMethod
@@ -142,6 +154,7 @@ types:
       - commons.WithDescription
       - commons.WithAvailability
       - commons.WithSource
+      - commons.WithNamespace
     properties:
       authed: boolean
       internal: optional<boolean>
@@ -398,6 +411,7 @@ types:
     properties:
       key: string
       schema: MultipartSchema
+      contentType: optional<string>
 
   FileSchema:
     properties:

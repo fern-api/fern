@@ -2,91 +2,100 @@
 
 namespace Seed;
 
+use Seed\V2\V2Client;
+use Seed\Admin\AdminClient;
+use Seed\Commons\CommonsClient;
+use Seed\Homepage\HomepageClient;
+use Seed\LangServer\LangServerClient;
+use Seed\Migration\MigrationClient;
+use Seed\Playlist\PlaylistClient;
+use Seed\Problem\ProblemClient;
+use Seed\Submission\SubmissionClient;
+use Seed\Sysprop\SyspropClient;
+use GuzzleHttp\ClientInterface;
 use Seed\Core\RawClient;
 use GuzzleHttp\Client;
 
 class SeedClient
 {
     /**
+     * @var V2Client $v2
+     */
+    public V2Client $v2;
+
+    /**
+     * @var AdminClient $admin
+     */
+    public AdminClient $admin;
+
+    /**
+     * @var CommonsClient $commons
+     */
+    public CommonsClient $commons;
+
+    /**
+     * @var HomepageClient $homepage
+     */
+    public HomepageClient $homepage;
+
+    /**
+     * @var LangServerClient $langServer
+     */
+    public LangServerClient $langServer;
+
+    /**
+     * @var MigrationClient $migration
+     */
+    public MigrationClient $migration;
+
+    /**
+     * @var PlaylistClient $playlist
+     */
+    public PlaylistClient $playlist;
+
+    /**
+     * @var ProblemClient $problem
+     */
+    public ProblemClient $problem;
+
+    /**
+     * @var SubmissionClient $submission
+     */
+    public SubmissionClient $submission;
+
+    /**
+     * @var SyspropClient $sysprop
+     */
+    public SyspropClient $sysprop;
+
+    /**
+     * @var ?array{baseUrl?: string, client?: ClientInterface} $options
+     */
+    private ?array $options;
+
+    /**
      * @var RawClient $client
      */
     private RawClient $client;
 
     /**
-     * @var array<mixed> $v2
-     */
-    public array $v2;
-
-    /**
-     * @var array<mixed> $admin
-     */
-    public array $admin;
-
-    /**
-     * @var array<mixed> $commons
-     */
-    public array $commons;
-
-    /**
-     * @var array<mixed> $homepage
-     */
-    public array $homepage;
-
-    /**
-     * @var array<mixed> $langServer
-     */
-    public array $langServer;
-
-    /**
-     * @var array<mixed> $migration
-     */
-    public array $migration;
-
-    /**
-     * @var array<mixed> $playlist
-     */
-    public array $playlist;
-
-    /**
-     * @var array<mixed> $problem
-     */
-    public array $problem;
-
-    /**
-     * @var array<mixed> $submission
-     */
-    public array $submission;
-
-    /**
-     * @var array<mixed> $sysprop
-     */
-    public array $sysprop;
-
-    /**
-     * @param ?array<string, mixed> $clientOptions
+     * @param ?array{baseUrl?: string, client?: ClientInterface} $options
      */
     public function __construct(
-        ?array $clientOptions = null,
+        ?array $options = null,
     ) {
-        $defaultHeaders = [
-            "X-Random-Header" => $xRandomHeader,
-            "X-Fern-Language" => "PHP",
-            "X-Fern-SDK-Name" => "Seed",
-            "X-Fern-SDK-Version" => "0.0.1",
-        ];
-        $this->client = new RawClient(
-            client: isset($clientOptions['client']) ? $clientOptions['client'] : new Client(),
-            headers: $defaultHeaders,
-        );
-        $this->v2 = [];
-        $this->admin = [];
-        $this->commons = [];
-        $this->homepage = [];
-        $this->langServer = [];
-        $this->migration = [];
-        $this->playlist = [];
-        $this->problem = [];
-        $this->submission = [];
-        $this->sysprop = [];
+        $defaultHeaders = ["X-Random-Header" => $xRandomHeader,"X-Fern-Language" => "PHP","X-Fern-SDK-Name" => "Seed","X-Fern-SDK-Version" => "0.0.1"];
+        $this->options = $options ?? [];
+        $this->client = new RawClient(client: $this->options['client'] ?? new Client(), headers: $defaultHeaders);
+        $this->v2 = new V2Client($this->client);
+        $this->admin = new AdminClient($this->client);
+        $this->commons = new CommonsClient($this->client);
+        $this->homepage = new HomepageClient($this->client);
+        $this->langServer = new LangServerClient($this->client);
+        $this->migration = new MigrationClient($this->client);
+        $this->playlist = new PlaylistClient($this->client);
+        $this->problem = new ProblemClient($this->client);
+        $this->submission = new SubmissionClient($this->client);
+        $this->sysprop = new SyspropClient($this->client);
     }
 }

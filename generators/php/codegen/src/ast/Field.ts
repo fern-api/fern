@@ -4,9 +4,11 @@ import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { Type } from "./Type";
 import { Comment } from "./Comment";
+import { Attribute } from "./Attribute";
+import { convertToPhpVariableName } from "./utils/convertToPhpVariableName";
 
 export declare namespace Field {
-    interface Args {
+    export interface Args {
         /* The name of the field */
         name: string;
         /* The type of the field */
@@ -19,6 +21,10 @@ export declare namespace Field {
         initializer?: CodeBlock;
         /* The docs (used for describing the field) */
         docs?: string;
+        /* Docs included in-line */
+        inlineDocs?: string;
+        /* Field attributes */
+        attributes?: Attribute[];
     }
 }
 
@@ -29,19 +35,24 @@ export class Field extends AstNode {
     private readonly_: boolean;
     private initializer: CodeBlock | undefined;
     private docs: string | undefined;
+    private inlineDocs: string | undefined;
+    private attributes: Attribute[];
 
-    constructor({ name, type, access, readonly_, initializer, docs }: Field.Args) {
+    constructor({ name, type, access, readonly_, initializer, docs, inlineDocs, attributes }: Field.Args) {
         super();
-        this.name = name;
+        this.name = convertToPhpVariableName(name);
         this.type = type;
         this.access = access;
         this.readonly_ = readonly_ ?? false;
         this.initializer = initializer;
         this.docs = docs;
+        this.inlineDocs = inlineDocs;
+        this.attributes = attributes ?? [];
     }
 
     public write(writer: Writer): void {
         this.writeComment(writer);
+        this.writeAttributesIfPresent(writer);
 
         writer.write(`${this.access} `);
         if (this.readonly_) {
@@ -55,7 +66,12 @@ export class Field extends AstNode {
             writer.write(" = ");
             this.initializer.write(writer);
         }
-        writer.writeLine(";");
+        writer.write(";");
+
+        if (this.inlineDocs != null) {
+            writer.write(` // ${this.inlineDocs}`);
+        }
+        writer.newLine();
     }
 
     private writeComment(writer: Writer): void {
@@ -67,5 +83,18 @@ export class Field extends AstNode {
             docs: this.docs
         });
         comment.write(writer);
+    }
+
+    private writeAttributesIfPresent(writer: Writer): void {
+        if (this.attributes.length > 0) {
+            writer.write("#[");
+            this.attributes.forEach((attribute, index) => {
+                if (index > 0) {
+                    writer.write(", ");
+                }
+                attribute.write(writer);
+            });
+            writer.writeLine("]");
+        }
     }
 }

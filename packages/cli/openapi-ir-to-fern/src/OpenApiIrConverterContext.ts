@@ -23,6 +23,8 @@ export interface OpenApiIrConverterContextOpts {
     authOverrides?: RawSchemas.WithAuthSchema;
 
     environmentOverrides?: RawSchemas.WithEnvironmentsSchema;
+
+    globalHeaderOverrides?: RawSchemas.WithHeadersSchema;
 }
 
 export class OpenApiIrConverterContext {
@@ -32,6 +34,7 @@ export class OpenApiIrConverterContext {
     public builder: FernDefinitionBuilder;
     public environmentOverrides: RawSchemas.WithEnvironmentsSchema | undefined;
     public authOverrides: RawSchemas.WithAuthSchema | undefined;
+    public globalHeaderOverrides: RawSchemas.WithHeadersSchema | undefined;
     public detectGlobalHeaders: boolean;
     private defaultServerName: string | undefined = undefined;
 
@@ -41,6 +44,7 @@ export class OpenApiIrConverterContext {
         enableUniqueErrorsPerEndpoint,
         detectGlobalHeaders,
         environmentOverrides,
+        globalHeaderOverrides,
         authOverrides
     }: OpenApiIrConverterContextOpts) {
         this.logger = taskContext.logger;
@@ -50,11 +54,15 @@ export class OpenApiIrConverterContext {
         this.detectGlobalHeaders = detectGlobalHeaders;
         this.environmentOverrides = environmentOverrides;
         this.authOverrides = authOverrides;
+        this.globalHeaderOverrides = globalHeaderOverrides;
     }
 
-    public getSchema(id: SchemaId): Schema | undefined {
-        const schema = this.ir.schemas[id];
-        return schema;
+    public getSchema(id: SchemaId, namespace: string | undefined): Schema | undefined {
+        if (namespace == null) {
+            return this.ir.groupedSchemas.rootSchemas[id];
+        }
+
+        return this.ir.groupedSchemas.namespacedSchemas[namespace]?.[id];
     }
 
     /**

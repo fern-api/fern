@@ -21,6 +21,7 @@ import { Pagination } from "../../finalIr/types/Pagination";
 import { WithDescription } from "../../commons/types/WithDescription";
 import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithSource } from "../../commons/types/WithSource";
+import { WithNamespace } from "../../commons/types/WithNamespace";
 
 export const EndpointWithExample: core.serialization.ObjectSchema<
     serializers.EndpointWithExample.Raw,
@@ -51,10 +52,11 @@ export const EndpointWithExample: core.serialization.ObjectSchema<
     })
     .extend(WithDescription)
     .extend(WithAvailability)
-    .extend(WithSource);
+    .extend(WithSource)
+    .extend(WithNamespace);
 
 export declare namespace EndpointWithExample {
-    interface Raw extends WithDescription.Raw, WithAvailability.Raw, WithSource.Raw {
+    interface Raw extends WithDescription.Raw, WithAvailability.Raw, WithSource.Raw, WithNamespace.Raw {
         authed: boolean;
         internal?: boolean | null;
         idempotent?: boolean | null;
