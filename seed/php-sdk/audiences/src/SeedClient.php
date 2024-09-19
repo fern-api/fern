@@ -62,7 +62,11 @@ class SeedClient
     ) {
         $defaultHeaders = ["X-Fern-Language" => "PHP","X-Fern-SDK-Name" => "Seed","X-Fern-SDK-Version" => "0.0.1"];
         $this->options = $options ?? [];
-        $this->client = new RawClient(client: $this->options['client'] ?? new Client(), headers: $defaultHeaders);
+        $this->client = new RawClient(
+            client: $this->options['client'] ?? new Client(),
+            headers: $defaultHeaders,
+            options: $this->options,
+        );
         $this->commons = new CommonsClient($this->client);
         $this->folderA = new FolderAClient($this->client);
         $this->folderB = new FolderBClient($this->client);

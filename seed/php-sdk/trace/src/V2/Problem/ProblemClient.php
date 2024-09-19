@@ -36,7 +36,7 @@ class ProblemClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? Environments::Prod->value,
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/problems-v2/lightweight-problem-info",
                     method: HttpMethod::GET,
                 ),
@@ -63,7 +63,7 @@ class ProblemClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? Environments::Prod->value,
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/problems-v2/problem-info",
                     method: HttpMethod::GET,
                 ),
@@ -91,7 +91,7 @@ class ProblemClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? Environments::Prod->value,
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/problems-v2/problem-info/$problemId",
                     method: HttpMethod::GET,
                 ),
@@ -120,7 +120,7 @@ class ProblemClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? Environments::Prod->value,
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/problems-v2/problem-info/$problemId/version/$problemVersion",
                     method: HttpMethod::GET,
                 ),

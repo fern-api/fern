@@ -42,7 +42,11 @@ class SeedClient
     ) {
         $defaultHeaders = ["X-Fern-Language" => "PHP","X-Fern-SDK-Name" => "Seed","X-Fern-SDK-Version" => "0.0.1"];
         $this->options = $options ?? [];
-        $this->client = new RawClient(client: $this->options['client'] ?? new Client(), headers: $defaultHeaders);
+        $this->client = new RawClient(
+            client: $this->options['client'] ?? new Client(),
+            headers: $defaultHeaders,
+            options: $this->options,
+        );
         $this->a = new AClient($this->client);
         $this->folder = new FolderClient($this->client);
     }
@@ -56,7 +60,7 @@ class SeedClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "",
                     method: HttpMethod::POST,
                 ),

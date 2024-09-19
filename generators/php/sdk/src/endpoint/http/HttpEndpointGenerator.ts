@@ -92,11 +92,15 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
     private getBaseURLForEndpoint({ endpoint }: { endpoint: HttpEndpoint }): php.CodeBlock {
         return php.codeblock((writer) => {
-            const baseUrlOptionName = this.context.getBaseUrlOptionName();
+            const rawClientFieldName = this.context.rawClient.getFieldName();
+            const clientOptionsName = this.context.getClientOptionsName();
             const requestOptionName = this.context.getRequestOptionsName();
+            const baseUrlOptionName = this.context.getBaseUrlOptionName();
             const defaultBaseUrl = this.context.getDefaultBaseUrlForEndpoint(endpoint);
 
-            writer.write(`$this->${requestOptionName}['${baseUrlOptionName}'] ?? `);
+            writer.write(
+                `$this->${requestOptionName}['${baseUrlOptionName}'] ?? $this->${rawClientFieldName}->${clientOptionsName}['${baseUrlOptionName}'] ?? `
+            );
             writer.writeNode(defaultBaseUrl);
         });
     }

@@ -37,7 +37,7 @@ class HttpMethodsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/http-methods/$id",
                     method: HttpMethod::GET,
                 ),
@@ -64,7 +64,7 @@ class HttpMethodsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/http-methods",
                     method: HttpMethod::POST,
                     body: $request,
@@ -93,7 +93,7 @@ class HttpMethodsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/http-methods/$id",
                     method: HttpMethod::PUT,
                     body: $request,
@@ -122,7 +122,7 @@ class HttpMethodsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/http-methods/$id",
                     method: HttpMethod::PATCH,
                     body: $request,
@@ -150,7 +150,7 @@ class HttpMethodsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/http-methods/$id",
                     method: HttpMethod::DELETE,
                 ),

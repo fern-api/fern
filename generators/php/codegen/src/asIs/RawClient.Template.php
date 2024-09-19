@@ -15,10 +15,12 @@ class RawClient
     /**
      * @param ClientInterface $client The HTTP client used to make requests.
      * @param array<string, string> $headers The HTTP headers sent with the request.
+     * @param ?array{baseUrl?: string} $options The client options used to make requests.
      */
     public function __construct(
         private readonly ClientInterface $client,
         private readonly array $headers = [],
+        public readonly ?array $options = null,
     ) {
     }
 

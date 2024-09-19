@@ -39,7 +39,7 @@ class MigrationClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? Environments::Prod->value,
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/migration-info/all",
                     method: HttpMethod::GET,
                     headers: $headers,

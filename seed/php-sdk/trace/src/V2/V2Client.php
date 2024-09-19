@@ -48,7 +48,7 @@ class V2Client
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? Environments::Prod->value,
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "",
                     method: HttpMethod::GET,
                 ),

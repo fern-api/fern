@@ -68,7 +68,11 @@ class SeedClient
     ) {
         $defaultHeaders = ["X-Fern-Language" => "PHP","X-Fern-SDK-Name" => "Seed","X-Fern-SDK-Version" => "0.0.1"];
         $this->options = $options ?? [];
-        $this->client = new RawClient(client: $this->options['client'] ?? new Client(), headers: $defaultHeaders);
+        $this->client = new RawClient(
+            client: $this->options['client'] ?? new Client(),
+            headers: $defaultHeaders,
+            options: $this->options,
+        );
         $this->endpoints = new EndpointsClient($this->client);
         $this->generalErrors = new GeneralErrorsClient($this->client);
         $this->inlinedRequests = new InlinedRequestsClient($this->client);

@@ -154,7 +154,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                             {
                                 name: "client",
                                 assignment: php.codeblock((writer) => {
-                                    const guzzleClientOption = `$this->${this.context.getClientOptionsName()}['client']`;
+                                    const guzzleClientOption = `$this->${this.context.getClientOptionsName()}['${this.context.getGuzzleClientOptionName()}']`;
                                     writer.write(`${guzzleClientOption} ?? `);
                                     writer.writeNode(this.context.guzzleClient.instantiate());
                                 })
@@ -162,6 +162,13 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                             {
                                 name: "headers",
                                 assignment: php.codeblock("$defaultHeaders")
+                            },
+                            {
+                                name: "options",
+                                assignment: php.codeblock((writer) => {
+                                    const clientOptions = `$this->${this.context.getClientOptionsName()}`;
+                                    writer.write(clientOptions);
+                                })
                             }
                         ]
                     })
