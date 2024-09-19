@@ -68,7 +68,7 @@ class FastAPI:
 
     JSONResponse = JSONResponse
 
-    FileResponse = _export("FileResponse")
+    FileResponse = _export("responses", "FileResponse")
 
     DependsType = AST.TypeHint(
         type=AST.ClassReference(

@@ -21,7 +21,7 @@ class AbstractServiceService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def download_file(self) -> fastapi.FileResponse: ...
+    def download_file(self) -> fastapi.responses.FileResponse: ...
 
     """
     Below are internal methods used by Fern to register your implementation.
@@ -50,7 +50,9 @@ class AbstractServiceService(AbstractFernService):
         )
 
         @functools.wraps(cls.download_file)
-        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> fastapi.FileResponse:
+        def wrapper(
+            *args: typing.Any, **kwargs: typing.Any
+        ) -> fastapi.responses.FileResponse:
             try:
                 return cls.download_file(*args, **kwargs)
             except FernHTTPException as e:
@@ -67,7 +69,7 @@ class AbstractServiceService(AbstractFernService):
 
         router.post(
             path="/",
-            response_model=fastapi.FileResponse,
+            response_class=fastapi.responses.FileResponse,
             description=AbstractServiceService.download_file.__doc__,
             **get_route_args(cls.download_file, default_tag="service"),
         )(wrapper)

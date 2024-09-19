@@ -79,3 +79,7 @@ class FastApiGeneratorContext(ABC):
     @abstractmethod
     def get_reference_to_error(self, error_name: ir_types.DeclaredErrorName) -> AST.ClassReference:
         ...
+
+    @abstractmethod
+    def has_file_upload_endpoints(self) -> bool:
+        ...

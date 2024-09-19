@@ -96,6 +96,17 @@ class EndpointGenerator:
             is_async=self._is_async,
         )
 
+    def _get_is_return_type_pydantic_model(self) -> bool:
+        if self._endpoint.response is None or self._endpoint.response.body is None:
+            return True
+        return self._endpoint.response.body.visit(
+            file_download=lambda _: False,
+            text=lambda _: False,
+            json=lambda json_response: True,
+            streaming=lambda _: True,
+            stream_parameter=lambda _: True,
+        )
+
     def _get_return_type(self) -> AST.TypeHint:
         response = self._endpoint.response
         if response is None or response.body is None:
@@ -187,7 +198,12 @@ class EndpointGenerator:
             with writer.indent():
                 writer.write_line(f'path="{self._get_endpoint_path()}",')
 
-                writer.write("response_model=")
+                # Void responses make more sense as response_class, but keeping as response_model to not modify existing users
+                if self._get_is_return_type_pydantic_model() or self._endpoint.response is None:
+                    writer.write("response_model=")
+                else:
+                    writer.write("response_class=")
+
                 if self._endpoint.response is not None:
                     writer.write_node(self._get_return_type())
                 else:

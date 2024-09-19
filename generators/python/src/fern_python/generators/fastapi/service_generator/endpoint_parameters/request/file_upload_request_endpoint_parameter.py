@@ -19,6 +19,9 @@ class FileUploadRequestFileParameter(EndpointParameter):
         super().__init__(context=context)
         self._request_property = request_property
 
+    def get_name(self) -> str:
+        return self._parameter_name()
+
     def _parameter_name(self) -> str:
         return self._request_property.get_as_union().key.name.snake_case.safe_name
 
@@ -53,6 +56,9 @@ class FileUploadRequestBodyParameter(EndpointParameter):
     ):
         super().__init__(context=context)
         self._request_property = request_property
+
+    def get_name(self) -> str:
+        return self._parameter_name()
 
     def _parameter_name(self) -> str:
         return self._request_property.name.name.snake_case.safe_name

@@ -1,5 +1,5 @@
 # For unreleased changes, use unreleased.yml
-- version: 1.5.0
+- version: 1.5.0-rc0
   irVersion: 53
   changelogEntry:
     - type: feat

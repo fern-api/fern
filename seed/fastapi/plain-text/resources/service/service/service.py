@@ -67,7 +67,7 @@ class AbstractServiceService(AbstractFernService):
 
         router.post(
             path="/text",
-            response_model=str,
+            response_class=str,
             description=AbstractServiceService.get_text.__doc__,
             **get_route_args(cls.get_text, default_tag="service"),
         )(wrapper)

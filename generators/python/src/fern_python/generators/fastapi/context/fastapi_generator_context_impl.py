@@ -73,3 +73,10 @@ class FastApiGeneratorContextImpl(FastApiGeneratorContext):
 
     def get_reference_to_error(self, error_name: ir_types.DeclaredErrorName) -> AST.ClassReference:
         return self._error_declaration_referencer.get_class_reference(name=error_name, as_request=False)
+
+    def has_file_upload_endpoints(self) -> bool:
+        for _, service in self.ir.services.items():
+            for endpoint in service.endpoints:
+                if endpoint.request_body is not None and endpoint.request_body.get_as_union().type == "fileUpload":
+                    return True
+        return False
