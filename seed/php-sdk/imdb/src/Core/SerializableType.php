@@ -16,7 +16,7 @@ abstract class SerializableType implements \JsonSerializable
      */
     public function toJson(): string {
         $serializedObject = $this->jsonSerialize();
-        $encoded = json_encode($serializedObject, JSON_THROW_ON_ERROR);
+        $encoded = JsonEncoder::encode($serializedObject);
         if (!$encoded) {
             throw new Exception("Could not encode type");
         }

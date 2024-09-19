@@ -9,21 +9,35 @@ use JsonSerializable;
 
 class JsonSerializer
 {
-    public static function serializeDate(DateTime $date): string {
+    /**
+     * Serializes a DateTime object into a string using the date format.
+     *
+     * @param DateTime $date The DateTime object to serialize.
+     * @return string The serialized date string.
+     */
+    public static function serializeDate(DateTime $date): string
+    {
         return $date->format(Constant::DateFormat);
     }
 
-    public static function serializeDateTime(DateTime $date): string {
+    /**
+     * Serializes a DateTime object into a string using the date-time format.
+     *
+     * @param DateTime $date The DateTime object to serialize.
+     * @return string The serialized date-time string.
+     */
+    public static function serializeDateTime(DateTime $date): string
+    {
         return $date->format(Constant::DateTimeFormat);
     }
 
     /**
-     * Serializes the given array based on the type annotation.
+     * Serializes an array based on type annotations (either a list or map).
      *
      * @param mixed[]|array<string, mixed> $data The array to be serialized.
      * @param mixed[]|array<string, mixed> $type The type definition from the annotation.
      * @return mixed[]|array<string, mixed> The serialized array.
-     * @throws JsonException
+     * @throws JsonException If serialization fails.
      */
     public static function serializeArray(array $data, array $type): array
     {
@@ -33,12 +47,12 @@ class JsonSerializer
     }
 
     /**
-     * Serializes a value based on the type definition.
+     * Serializes a value based on its type definition.
      *
      * @param mixed $data The value to serialize.
      * @param mixed $type The type definition.
      * @return mixed The serialized value.
-     * @throws JsonException
+     * @throws JsonException If serialization fails.
      */
     private static function serializeValue(mixed $data, mixed $type): mixed
     {
@@ -52,12 +66,15 @@ class JsonSerializer
             }
             throw new \InvalidArgumentException("Cannot serialize value with any of the union types.");
         }
+
         if (is_array($type)) {
             return self::serializeArray((array)$data, $type);
         }
+
         if (gettype($type) != "string") {
             throw new JsonException("Unexpected non-string type.");
         }
+
         return self::serializeSingleValue($data, $type);
     }
 
@@ -67,7 +84,7 @@ class JsonSerializer
      * @param mixed $data The value to serialize.
      * @param string $type The expected type.
      * @return mixed The serialized value.
-     * @throws JsonException
+     * @throws JsonException If serialization fails.
      */
     private static function serializeSingleValue(mixed $data, string $type): mixed
     {
@@ -85,7 +102,7 @@ class JsonSerializer
 
         if (class_exists($type) && $data instanceof $type) {
             if (!is_subclass_of($data, JsonSerializable::class)) {
-                throw new \JsonException("Class $type must implement toArray method.");
+                throw new JsonException("Class $type must implement JsonSerializable.");
             }
             return $data->jsonSerialize();
         }
@@ -94,22 +111,22 @@ class JsonSerializer
             return $data;
         }
 
-        throw new \InvalidArgumentException("Unable to serialize value of type '" . gettype($data) . "' as '$type'.");
+        throw new JsonException("Unable to serialize value of type '" . gettype($data) . "' as '$type'.");
     }
 
     /**
-     * Serializes a map (associative array) where key and value types are defined.
+     * Serializes a map (associative array) with defined key and value types.
      *
      * @param array<string, mixed> $data The associative array to serialize.
      * @param array<string, mixed> $type The type definition for the map.
      * @return array<string, mixed> The serialized map.
-     * @throws JsonException
+     * @throws JsonException If serialization fails.
      */
     private static function serializeMap(array $data, array $type): array
     {
         $keyType = array_key_first($type);
-        if ($keyType == null) {
-            throw new JsonException("Unexpected no key ArrayType array");
+        if ($keyType === null) {
+            throw new JsonException("Unexpected no key in ArrayType.");
         }
         $valueType = $type[$keyType];
         $result = [];
@@ -125,14 +142,14 @@ class JsonSerializer
     /**
      * Serializes a list (indexed array) where only the value type is defined.
      *
-     * @param mixed[] $data The list to serialize.
-     * @param array<string, mixed>|mixed[] $type The type definition for the list.
-     * @return mixed[] The serialized list.
-     * @throws JsonException
+     * @param array<int, mixed> $data The list to serialize.
+     * @param array<int, mixed> $type The type definition for the list.
+     * @return array<int, mixed> The serialized list.
+     * @throws JsonException If serialization fails.
      */
     private static function serializeList(array $data, array $type): array
     {
         $valueType = $type[0];
-        return array_map(fn ($item) => self::serializeValue($item, $valueType), $data);
+        return array_map(fn($item) => self::serializeValue($item, $valueType), $data);
     }
 }

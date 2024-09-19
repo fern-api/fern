@@ -9,7 +9,11 @@ use JsonException;
 class JsonDeserializer
 {
     /**
-     * @throws JsonException
+     * Deserializes a string into a DateTime object.
+     *
+     * @param string $datetime The date/time string to deserialize.
+     * @return DateTime
+     * @throws JsonException If the DateTime creation fails.
      */
     public static function deserializeDateTime(string $datetime): DateTime
     {
@@ -21,7 +25,11 @@ class JsonDeserializer
     }
 
     /**
-     * @throws JsonException
+     * Deserializes a string into a DateTime object using a specific format.
+     *
+     * @param string $date The date string to deserialize.
+     * @return DateTime
+     * @throws JsonException If the date creation fails.
      */
     public static function deserializeDate(string $date): DateTime
     {
@@ -33,12 +41,12 @@ class JsonDeserializer
     }
 
     /**
-     * Deserializes the given array based on the type annotation.
+     * Deserializes an array based on type annotations (either a list or a map).
      *
      * @param mixed[]|array<string, mixed> $data The array to be deserialized.
      * @param mixed[]|array<string, mixed> $type The type definition from the annotation.
      * @return mixed[]|array<string, mixed> The deserialized array.
-     * @throws JsonException
+     * @throws JsonException If deserialization fails.
      */
     public static function deserializeArray(array $data, array $type): array
     {
@@ -48,12 +56,12 @@ class JsonDeserializer
     }
 
     /**
-     * Deserializes a value based on the type definition.
+     * Deserializes a value based on its type definition.
      *
      * @param mixed $data The data to deserialize.
      * @param mixed $type The type definition.
      * @return mixed The deserialized value.
-     * @throws JsonException
+     * @throws JsonException If deserialization fails.
      */
     private static function deserializeValue(mixed $data, mixed $type): mixed
     {
@@ -78,12 +86,12 @@ class JsonDeserializer
     }
 
     /**
-     * Deserializes a single value based on its type.
+     * Deserializes a single value based on its expected type.
      *
      * @param mixed $data The data to deserialize.
      * @param string $type The expected type.
      * @return mixed The deserialized value.
-     * @throws JsonException
+     * @throws JsonException If deserialization fails.
      */
     private static function deserializeSingleValue(mixed $data, string $type): mixed
     {
@@ -118,12 +126,12 @@ class JsonDeserializer
     }
 
     /**
-     * Deserializes a map (associative array) where key and value types are defined.
+     * Deserializes a map (associative array) with defined key and value types.
      *
      * @param array<string, mixed> $data The associative array to deserialize.
      * @param array<string, mixed> $type The type definition for the map.
      * @return array<string, mixed> The deserialized map.
-     * @throws JsonException
+     * @throws JsonException If deserialization fails.
      */
     private static function deserializeMap(array $data, array $type): array
     {
@@ -140,16 +148,16 @@ class JsonDeserializer
     }
 
     /**
-     * Deserializes a list (indexed array) where only the value type is defined.
+     * Deserializes a list (indexed array) with a defined value type.
      *
-     * @param mixed[] $data The list to deserialize.
-     * @param mixed[] $type The type definition for the list.
-     * @return mixed[] The deserialized list.
-     * @throws JsonException
+     * @param array<int, mixed> $data The list to deserialize.
+     * @param array<int, mixed> $type The type definition for the list.
+     * @return array<int, mixed> The deserialized list.
+     * @throws JsonException If deserialization fails.
      */
     private static function deserializeList(array $data, array $type): array
     {
         $valueType = $type[0];
-        return array_map(fn ($item) => self::deserializeValue($item, $valueType), $data);
+        return array_map(fn($item) => self::deserializeValue($item, $valueType), $data);
     }
 }
