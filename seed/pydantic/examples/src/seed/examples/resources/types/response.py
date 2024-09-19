@@ -14,7 +14,21 @@ class Response(UniversalBaseModel):
     from seed.examples import Identifier
     from seed.examples.resources import Response
 
-    Response(response=Initializing..., identifiers=[Identifier(type="primitive", value='example', label='Primitive', ), Identifier(type="unknown", value='{}', label='Unknown', )], )
+    Response(
+        response="Initializing...",
+        identifiers=[
+            Identifier(
+                type="primitive",
+                value="example",
+                label="Primitive",
+            ),
+            Identifier(
+                type="unknown",
+                value="{}",
+                label="Unknown",
+            ),
+        ],
+    )
     """
 
     response: typing.Optional[typing.Any] = None

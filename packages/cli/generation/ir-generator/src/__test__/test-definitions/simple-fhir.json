@@ -2633,19 +2633,7 @@
                                                                                                     "type": "container",
                                                                                                     "container": {
                                                                                                         "type": "list",
-                                                                                                        "list": [
-                                                                                                            {
-                                                                                                                "shape": {
-                                                                                                                    "type": "unknown",
-                                                                                                                    "unknown": {
-                                                                                                                        "key": "value"
-                                                                                                                    }
-                                                                                                                },
-                                                                                                                "jsonExample": {
-                                                                                                                    "key": "value"
-                                                                                                                }
-                                                                                                            }
-                                                                                                        ],
+                                                                                                        "list": [],
                                                                                                         "itemType": {
                                                                                                             "_type": "named",
                                                                                                             "name": {
@@ -2678,11 +2666,7 @@
                                                                                                         }
                                                                                                     }
                                                                                                 },
-                                                                                                "jsonExample": [
-                                                                                                    {
-                                                                                                        "key": "value"
-                                                                                                    }
-                                                                                                ]
+                                                                                                "jsonExample": []
                                                                                             },
                                                                                             "originalTypeDeclaration": {
                                                                                                 "name": {
@@ -2803,19 +2787,7 @@
                                                                                                     "type": "container",
                                                                                                     "container": {
                                                                                                         "type": "list",
-                                                                                                        "list": [
-                                                                                                            {
-                                                                                                                "shape": {
-                                                                                                                    "type": "unknown",
-                                                                                                                    "unknown": {
-                                                                                                                        "key": "value"
-                                                                                                                    }
-                                                                                                                },
-                                                                                                                "jsonExample": {
-                                                                                                                    "key": "value"
-                                                                                                                }
-                                                                                                            }
-                                                                                                        ],
+                                                                                                        "list": [],
                                                                                                         "itemType": {
                                                                                                             "_type": "named",
                                                                                                             "name": {
@@ -2848,11 +2820,7 @@
                                                                                                         }
                                                                                                     }
                                                                                                 },
-                                                                                                "jsonExample": [
-                                                                                                    {
-                                                                                                        "key": "value"
-                                                                                                    }
-                                                                                                ]
+                                                                                                "jsonExample": []
                                                                                             },
                                                                                             "originalTypeDeclaration": {
                                                                                                 "name": {
@@ -3029,17 +2997,7 @@
                                                                                                                         "type": "container",
                                                                                                                         "container": {
                                                                                                                             "type": "optional",
-                                                                                                                            "optional": {
-                                                                                                                                "shape": {
-                                                                                                                                    "type": "unknown",
-                                                                                                                                    "unknown": {
-                                                                                                                                        "key": "value"
-                                                                                                                                    }
-                                                                                                                                },
-                                                                                                                                "jsonExample": {
-                                                                                                                                    "key": "value"
-                                                                                                                                }
-                                                                                                                            },
+                                                                                                                            "optional": null,
                                                                                                                             "valueType": {
                                                                                                                                 "_type": "named",
                                                                                                                                 "name": {
@@ -3071,9 +3029,6 @@
                                                                                                                                 "inline": null
                                                                                                                             }
                                                                                                                         }
-                                                                                                                    },
-                                                                                                                    "jsonExample": {
-                                                                                                                        "key": "value"
                                                                                                                     }
                                                                                                                 },
                                                                                                                 "originalTypeDeclaration": {
@@ -3108,10 +3063,7 @@
                                                                                                     }
                                                                                                 },
                                                                                                 "jsonExample": {
-                                                                                                    "description": "string",
-                                                                                                    "account": {
-                                                                                                        "key": "value"
-                                                                                                    }
+                                                                                                    "description": "string"
                                                                                                 }
                                                                                             },
                                                                                             "originalTypeDeclaration": {
@@ -3148,22 +3100,11 @@
                                                                             "jsonExample": {
                                                                                 "resource_type": "Patient",
                                                                                 "name": "string",
-                                                                                "scripts": [
-                                                                                    {
-                                                                                        "key": "value"
-                                                                                    }
-                                                                                ],
+                                                                                "scripts": [],
                                                                                 "id": "string",
-                                                                                "related_resources": [
-                                                                                    {
-                                                                                        "key": "value"
-                                                                                    }
-                                                                                ],
+                                                                                "related_resources": [],
                                                                                 "memo": {
-                                                                                    "description": "string",
-                                                                                    "account": {
-                                                                                        "key": "value"
-                                                                                    }
+                                                                                    "description": "string"
                                                                                 }
                                                                             }
                                                                         },
@@ -3202,22 +3143,11 @@
                                                                 "jsonExample": {
                                                                     "resource_type": "Patient",
                                                                     "name": "string",
-                                                                    "scripts": [
-                                                                        {
-                                                                            "key": "value"
-                                                                        }
-                                                                    ],
+                                                                    "scripts": [],
                                                                     "id": "string",
-                                                                    "related_resources": [
-                                                                        {
-                                                                            "key": "value"
-                                                                        }
-                                                                    ],
+                                                                    "related_resources": [],
                                                                     "memo": {
-                                                                        "description": "string",
-                                                                        "account": {
-                                                                            "key": "value"
-                                                                        }
+                                                                        "description": "string"
                                                                     }
                                                                 }
                                                             },
@@ -3530,19 +3460,7 @@
                                                                                                     "type": "container",
                                                                                                     "container": {
                                                                                                         "type": "list",
-                                                                                                        "list": [
-                                                                                                            {
-                                                                                                                "shape": {
-                                                                                                                    "type": "unknown",
-                                                                                                                    "unknown": {
-                                                                                                                        "key": "value"
-                                                                                                                    }
-                                                                                                                },
-                                                                                                                "jsonExample": {
-                                                                                                                    "key": "value"
-                                                                                                                }
-                                                                                                            }
-                                                                                                        ],
+                                                                                                        "list": [],
                                                                                                         "itemType": {
                                                                                                             "_type": "named",
                                                                                                             "name": {
@@ -3575,11 +3493,7 @@
                                                                                                         }
                                                                                                     }
                                                                                                 },
-                                                                                                "jsonExample": [
-                                                                                                    {
-                                                                                                        "key": "value"
-                                                                                                    }
-                                                                                                ]
+                                                                                                "jsonExample": []
                                                                                             },
                                                                                             "originalTypeDeclaration": {
                                                                                                 "name": {
@@ -3756,17 +3670,7 @@
                                                                                                                         "type": "container",
                                                                                                                         "container": {
                                                                                                                             "type": "optional",
-                                                                                                                            "optional": {
-                                                                                                                                "shape": {
-                                                                                                                                    "type": "unknown",
-                                                                                                                                    "unknown": {
-                                                                                                                                        "key": "value"
-                                                                                                                                    }
-                                                                                                                                },
-                                                                                                                                "jsonExample": {
-                                                                                                                                    "key": "value"
-                                                                                                                                }
-                                                                                                                            },
+                                                                                                                            "optional": null,
                                                                                                                             "valueType": {
                                                                                                                                 "_type": "named",
                                                                                                                                 "name": {
@@ -3798,9 +3702,6 @@
                                                                                                                                 "inline": null
                                                                                                                             }
                                                                                                                         }
-                                                                                                                    },
-                                                                                                                    "jsonExample": {
-                                                                                                                        "key": "value"
                                                                                                                     }
                                                                                                                 },
                                                                                                                 "originalTypeDeclaration": {
@@ -3835,10 +3736,7 @@
                                                                                                     }
                                                                                                 },
                                                                                                 "jsonExample": {
-                                                                                                    "description": "string",
-                                                                                                    "account": {
-                                                                                                        "key": "value"
-                                                                                                    }
+                                                                                                    "description": "string"
                                                                                                 }
                                                                                             },
                                                                                             "originalTypeDeclaration": {
@@ -3876,16 +3774,9 @@
                                                                                 "resource_type": "Practitioner",
                                                                                 "name": "string",
                                                                                 "id": "string",
-                                                                                "related_resources": [
-                                                                                    {
-                                                                                        "key": "value"
-                                                                                    }
-                                                                                ],
+                                                                                "related_resources": [],
                                                                                 "memo": {
-                                                                                    "description": "string",
-                                                                                    "account": {
-                                                                                        "key": "value"
-                                                                                    }
+                                                                                    "description": "string"
                                                                                 }
                                                                             }
                                                                         },
@@ -3925,16 +3816,9 @@
                                                                     "resource_type": "Practitioner",
                                                                     "name": "string",
                                                                     "id": "string",
-                                                                    "related_resources": [
-                                                                        {
-                                                                            "key": "value"
-                                                                        }
-                                                                    ],
+                                                                    "related_resources": [],
                                                                     "memo": {
-                                                                        "description": "string",
-                                                                        "account": {
-                                                                            "key": "value"
-                                                                        }
+                                                                        "description": "string"
                                                                     }
                                                                 }
                                                             },
@@ -4057,19 +3941,7 @@
                                                                     "type": "container",
                                                                     "container": {
                                                                         "type": "list",
-                                                                        "list": [
-                                                                            {
-                                                                                "shape": {
-                                                                                    "type": "unknown",
-                                                                                    "unknown": {
-                                                                                        "key": "value"
-                                                                                    }
-                                                                                },
-                                                                                "jsonExample": {
-                                                                                    "key": "value"
-                                                                                }
-                                                                            }
-                                                                        ],
+                                                                        "list": [],
                                                                         "itemType": {
                                                                             "_type": "named",
                                                                             "name": {
@@ -4102,11 +3974,7 @@
                                                                         }
                                                                     }
                                                                 },
-                                                                "jsonExample": [
-                                                                    {
-                                                                        "key": "value"
-                                                                    }
-                                                                ]
+                                                                "jsonExample": []
                                                             },
                                                             "originalTypeDeclaration": {
                                                                 "name": {
@@ -4283,17 +4151,7 @@
                                                                                         "type": "container",
                                                                                         "container": {
                                                                                             "type": "optional",
-                                                                                            "optional": {
-                                                                                                "shape": {
-                                                                                                    "type": "unknown",
-                                                                                                    "unknown": {
-                                                                                                        "key": "value"
-                                                                                                    }
-                                                                                                },
-                                                                                                "jsonExample": {
-                                                                                                    "key": "value"
-                                                                                                }
-                                                                                            },
+                                                                                            "optional": null,
                                                                                             "valueType": {
                                                                                                 "_type": "named",
                                                                                                 "name": {
@@ -4325,9 +4183,6 @@
                                                                                                 "inline": null
                                                                                             }
                                                                                         }
-                                                                                    },
-                                                                                    "jsonExample": {
-                                                                                        "key": "value"
                                                                                     }
                                                                                 },
                                                                                 "originalTypeDeclaration": {
@@ -4362,10 +4217,7 @@
                                                                     }
                                                                 },
                                                                 "jsonExample": {
-                                                                    "description": "string",
-                                                                    "account": {
-                                                                        "key": "value"
-                                                                    }
+                                                                    "description": "string"
                                                                 }
                                                             },
                                                             "originalTypeDeclaration": {
@@ -4405,57 +4257,32 @@
                                                 "patient": {
                                                     "resource_type": "Patient",
                                                     "name": "string",
-                                                    "scripts": [
-                                                        {
-                                                            "key": "value"
-                                                        }
-                                                    ],
+                                                    "scripts": [],
                                                     "id": "string",
-                                                    "related_resources": [
-                                                        {
-                                                            "key": "value"
-                                                        }
-                                                    ],
+                                                    "related_resources": [],
                                                     "memo": {
-                                                        "description": "string",
-                                                        "account": {
-                                                            "key": "value"
-                                                        }
+                                                        "description": "string"
                                                     }
                                                 },
                                                 "practitioner": {
                                                     "resource_type": "Practitioner",
                                                     "name": "string",
                                                     "id": "string",
-                                                    "related_resources": [
-                                                        {
-                                                            "key": "value"
-                                                        }
-                                                    ],
+                                                    "related_resources": [],
                                                     "memo": {
-                                                        "description": "string",
-                                                        "account": {
-                                                            "key": "value"
-                                                        }
+                                                        "description": "string"
                                                     }
                                                 },
                                                 "id": "string",
-                                                "related_resources": [
-                                                    {
-                                                        "key": "value"
-                                                    }
-                                                ],
+                                                "related_resources": [],
                                                 "memo": {
-                                                    "description": "string",
-                                                    "account": {
-                                                        "key": "value"
-                                                    }
+                                                    "description": "string"
                                                 }
                                             }
                                         }
                                     }
                                 },
-                                "id": "252faec992177e4e9820522d4d6b15445b95dd3d",
+                                "id": "3c4b0f92a51c9a3bb5b77b41c45e02ab39eeac13",
                                 "docs": null
                             }
                         }

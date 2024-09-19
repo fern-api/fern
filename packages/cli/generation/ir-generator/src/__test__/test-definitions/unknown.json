@@ -248,9 +248,117 @@
                     },
                     "shape": {
                         "type": "object",
-                        "properties": []
+                        "properties": [
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "unknown",
+                                        "camelCase": {
+                                            "unsafeName": "unknown",
+                                            "safeName": "unknown"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "unknown",
+                                            "safeName": "unknown"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "UNKNOWN",
+                                            "safeName": "UNKNOWN"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Unknown",
+                                            "safeName": "Unknown"
+                                        }
+                                    },
+                                    "wireValue": "unknown"
+                                },
+                                "value": {
+                                    "shape": {
+                                        "type": "unknown",
+                                        "unknown": {
+                                            "boolVal": true,
+                                            "strVal": "string"
+                                        }
+                                    },
+                                    "jsonExample": {
+                                        "boolVal": true,
+                                        "strVal": "string"
+                                    }
+                                },
+                                "originalTypeDeclaration": {
+                                    "name": {
+                                        "originalName": "MyObject",
+                                        "camelCase": {
+                                            "unsafeName": "myObject",
+                                            "safeName": "myObject"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "my_object",
+                                            "safeName": "my_object"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "MY_OBJECT",
+                                            "safeName": "MY_OBJECT"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "MyObject",
+                                            "safeName": "MyObject"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [
+                                            {
+                                                "originalName": "unknown",
+                                                "camelCase": {
+                                                    "unsafeName": "unknown",
+                                                    "safeName": "unknown"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "unknown",
+                                                    "safeName": "unknown"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "UNKNOWN",
+                                                    "safeName": "UNKNOWN"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Unknown",
+                                                    "safeName": "Unknown"
+                                                }
+                                            }
+                                        ],
+                                        "packagePath": [],
+                                        "file": {
+                                            "originalName": "unknown",
+                                            "camelCase": {
+                                                "unsafeName": "unknown",
+                                                "safeName": "unknown"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "unknown",
+                                                "safeName": "unknown"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "UNKNOWN",
+                                                "safeName": "UNKNOWN"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Unknown",
+                                                "safeName": "Unknown"
+                                            }
+                                        }
+                                    },
+                                    "typeId": "type_unknown:MyObject"
+                                }
+                            }
+                        ]
                     },
-                    "jsonExample": {},
+                    "jsonExample": {
+                        "unknown": {
+                            "boolVal": true,
+                            "strVal": "string"
+                        }
+                    },
                     "docs": null
                 }
             ],
@@ -801,10 +909,118 @@
                                         },
                                         "shape": {
                                             "type": "object",
-                                            "properties": []
+                                            "properties": [
+                                                {
+                                                    "name": {
+                                                        "name": {
+                                                            "originalName": "unknown",
+                                                            "camelCase": {
+                                                                "unsafeName": "unknown",
+                                                                "safeName": "unknown"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "unknown",
+                                                                "safeName": "unknown"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "UNKNOWN",
+                                                                "safeName": "UNKNOWN"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Unknown",
+                                                                "safeName": "Unknown"
+                                                            }
+                                                        },
+                                                        "wireValue": "unknown"
+                                                    },
+                                                    "value": {
+                                                        "shape": {
+                                                            "type": "unknown",
+                                                            "unknown": {
+                                                                "boolVal": true,
+                                                                "strVal": "string"
+                                                            }
+                                                        },
+                                                        "jsonExample": {
+                                                            "boolVal": true,
+                                                            "strVal": "string"
+                                                        }
+                                                    },
+                                                    "originalTypeDeclaration": {
+                                                        "name": {
+                                                            "originalName": "MyObject",
+                                                            "camelCase": {
+                                                                "unsafeName": "myObject",
+                                                                "safeName": "myObject"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "my_object",
+                                                                "safeName": "my_object"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "MY_OBJECT",
+                                                                "safeName": "MY_OBJECT"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "MyObject",
+                                                                "safeName": "MyObject"
+                                                            }
+                                                        },
+                                                        "fernFilepath": {
+                                                            "allParts": [
+                                                                {
+                                                                    "originalName": "unknown",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "unknown",
+                                                                        "safeName": "unknown"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "unknown",
+                                                                        "safeName": "unknown"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "UNKNOWN",
+                                                                        "safeName": "UNKNOWN"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Unknown",
+                                                                        "safeName": "Unknown"
+                                                                    }
+                                                                }
+                                                            ],
+                                                            "packagePath": [],
+                                                            "file": {
+                                                                "originalName": "unknown",
+                                                                "camelCase": {
+                                                                    "unsafeName": "unknown",
+                                                                    "safeName": "unknown"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "unknown",
+                                                                    "safeName": "unknown"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "UNKNOWN",
+                                                                    "safeName": "UNKNOWN"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Unknown",
+                                                                    "safeName": "Unknown"
+                                                                }
+                                                            }
+                                                        },
+                                                        "typeId": "type_unknown:MyObject"
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
-                                    "jsonExample": {}
+                                    "jsonExample": {
+                                        "unknown": {
+                                            "boolVal": true,
+                                            "strVal": "string"
+                                        }
+                                    }
                                 },
                                 "name": null,
                                 "response": {
@@ -842,7 +1058,7 @@
                                         }
                                     }
                                 },
-                                "id": "bdbde6197678d139b39aaf5dabee6c575749926a",
+                                "id": "0496b71d6ab020b16c66b59ec00dbea5525ca830",
                                 "docs": null
                             }
                         }
