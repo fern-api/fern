@@ -7,16 +7,16 @@ use Seed\Core\JsonProperty;
 
 class Metadata extends SerializableType
 {
-    #[JsonProperty("id")]
     /**
      * @var string $id
      */
+    #[JsonProperty("id")]
     public string $id;
 
-    #[JsonProperty("value")]
     /**
      * @var mixed $value
      */
+    #[JsonProperty("value")]
     public mixed $value;
 
     /**

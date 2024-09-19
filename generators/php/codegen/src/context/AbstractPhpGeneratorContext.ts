@@ -15,6 +15,7 @@ import { BasePhpCustomConfigSchema } from "../custom-config/BasePhpCustomConfigS
 import { PhpProject } from "../project";
 import { camelCase, upperFirst } from "lodash-es";
 import { PhpTypeMapper } from "./PhpTypeMapper";
+import { PhpAttributeMapper } from "./PhpAttributeMapper";
 import { AsIsFiles } from "../AsIs";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { php } from "..";
@@ -30,6 +31,7 @@ export abstract class AbstractPhpGeneratorContext<
 > extends AbstractGeneratorContext {
     private rootNamespace: string;
     public readonly phpTypeMapper: PhpTypeMapper;
+    public readonly phpAttributeMapper: PhpAttributeMapper;
     public readonly project: PhpProject;
 
     public constructor(
@@ -41,6 +43,7 @@ export abstract class AbstractPhpGeneratorContext<
         super(config, generatorNotificationService);
         this.rootNamespace = this.customConfig.namespace ?? upperFirst(camelCase(`${this.config.organization}`));
         this.phpTypeMapper = new PhpTypeMapper(this);
+        this.phpAttributeMapper = new PhpAttributeMapper(this);
         this.project = new PhpProject({
             context: this,
             name: this.rootNamespace
@@ -94,11 +97,19 @@ export abstract class AbstractPhpGeneratorContext<
     }
 
     public getParameterName(name: Name): string {
-        return `$${name.camelCase.unsafeName}`;
+        return this.prependUnderscoreIfNeeded(name.camelCase.unsafeName);
     }
 
     public getPropertyName(name: Name): string {
-        return name.camelCase.unsafeName;
+        return this.prependUnderscoreIfNeeded(name.camelCase.unsafeName);
+    }
+
+    private prependUnderscoreIfNeeded(input: string): string {
+        // https://www.php.net/manual/en/language.variables.basics.php
+        if (!/^[a-zA-Z_]/.test(input)) {
+            return `_${input}`;
+        }
+        return input;
     }
 
     public getLiteralAsString(literal: Literal): string {
@@ -129,7 +140,7 @@ export abstract class AbstractPhpGeneratorContext<
         return this.getCoreClassReference("ArrayType");
     }
 
-    private getCoreClassReference(name: string): php.ClassReference {
+    public getCoreClassReference(name: string): php.ClassReference {
         return php.classReference({
             name,
             namespace: this.getCoreNamespace()

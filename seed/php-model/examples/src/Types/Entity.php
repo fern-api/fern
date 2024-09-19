@@ -7,16 +7,16 @@ use Seed\Core\JsonProperty;
 
 class Entity extends SerializableType
 {
-    #[JsonProperty("type")]
     /**
      * @var mixed $type
      */
+    #[JsonProperty("type")]
     public mixed $type;
 
-    #[JsonProperty("name")]
     /**
      * @var string $name
      */
+    #[JsonProperty("name")]
     public string $name;
 
     /**

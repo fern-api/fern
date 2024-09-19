@@ -30,6 +30,16 @@ const GLOBAL_HEADER_PERCENTAGE_THRESHOLD = 0.75;
 const HEADERS_TO_IGNORE = new Set(...["authorization"]);
 
 export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
+    if (context.globalHeaderOverrides != null) {
+        for (const [name, declaration] of Object.entries(context.globalHeaderOverrides.headers ?? {})) {
+            context.builder.addGlobalHeader({
+                name,
+                schema: declaration
+            });
+        }
+        return;
+    }
+
     const predefinedGlobalHeaders: Record<string, GlobalHeader> = Object.fromEntries(
         (context.ir.globalHeaders ?? []).map((header) => [header.header, header])
     );

@@ -5,6 +5,8 @@ namespace Seed\User\Events;
 use Seed\User\Events\Metadata\MetadataClient;
 use Seed\Core\RawClient;
 use Seed\User\Events\Requests\ListUserEventsRequest;
+use Seed\Core\JsonApiRequest;
+use Seed\Core\HttpMethod;
 use JsonException;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -44,7 +46,14 @@ class EventsClient
             $query['limit'] = $request->limit;
         }
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/users/events/",
+                    method: HttpMethod::GET,
+                    query: $query,
+                ),
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);

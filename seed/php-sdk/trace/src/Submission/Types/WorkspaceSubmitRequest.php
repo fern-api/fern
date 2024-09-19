@@ -6,32 +6,31 @@ use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 use Seed\Commons\Types\Language;
 use Seed\Core\ArrayType;
-use Seed\Submission\Types\SubmissionFileInfo;
 
 class WorkspaceSubmitRequest extends SerializableType
 {
-    #[JsonProperty("submissionId")]
     /**
      * @var string $submissionId
      */
+    #[JsonProperty("submissionId")]
     public string $submissionId;
 
-    #[JsonProperty("language")]
     /**
      * @var Language $language
      */
+    #[JsonProperty("language")]
     public Language $language;
 
-    #[JsonProperty("submissionFiles"), ArrayType([SubmissionFileInfo::class])]
     /**
      * @var array<SubmissionFileInfo> $submissionFiles
      */
+    #[JsonProperty("submissionFiles"), ArrayType([SubmissionFileInfo::class])]
     public array $submissionFiles;
 
-    #[JsonProperty("userId")]
     /**
      * @var ?string $userId
      */
+    #[JsonProperty("userId")]
     public ?string $userId;
 
     /**

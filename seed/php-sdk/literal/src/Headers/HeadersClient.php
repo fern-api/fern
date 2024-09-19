@@ -4,6 +4,8 @@ namespace Seed\Headers;
 
 use Seed\Core\RawClient;
 use Seed\Headers\Requests\SendLiteralsInHeadersRequest;
+use Seed\Core\JsonApiRequest;
+use Seed\Core\HttpMethod;
 use JsonException;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -35,7 +37,15 @@ class HeadersClient
         $headers['X-Endpoint-Version'] = $request->endpointVersion;
         $headers['X-Async'] = $request->async;
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "headers",
+                    method: HttpMethod::POST,
+                    headers: $headers,
+                    body: $request,
+                ),
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);

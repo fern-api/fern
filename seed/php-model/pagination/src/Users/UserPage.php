@@ -4,20 +4,19 @@ namespace Seed\Users;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\Users\UserListContainer;
 
 class UserPage extends SerializableType
 {
-    #[JsonProperty("data")]
     /**
      * @var UserListContainer $data
      */
+    #[JsonProperty("data")]
     public UserListContainer $data;
 
-    #[JsonProperty("next")]
     /**
      * @var ?string $next
      */
+    #[JsonProperty("next")]
     public ?string $next;
 
     /**

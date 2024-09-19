@@ -7,28 +7,28 @@ use Seed\Core\JsonProperty;
 
 class FileInfoV2 extends SerializableType
 {
-    #[JsonProperty("filename")]
     /**
      * @var string $filename
      */
+    #[JsonProperty("filename")]
     public string $filename;
 
-    #[JsonProperty("directory")]
     /**
      * @var string $directory
      */
+    #[JsonProperty("directory")]
     public string $directory;
 
-    #[JsonProperty("contents")]
     /**
      * @var string $contents
      */
+    #[JsonProperty("contents")]
     public string $contents;
 
-    #[JsonProperty("editable")]
     /**
      * @var bool $editable
      */
+    #[JsonProperty("editable")]
     public bool $editable;
 
     /**

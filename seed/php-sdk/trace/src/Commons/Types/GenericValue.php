@@ -7,16 +7,16 @@ use Seed\Core\JsonProperty;
 
 class GenericValue extends SerializableType
 {
-    #[JsonProperty("stringifiedValue")]
     /**
      * @var string $stringifiedValue
      */
+    #[JsonProperty("stringifiedValue")]
     public string $stringifiedValue;
 
-    #[JsonProperty("stringifiedType")]
     /**
      * @var ?string $stringifiedType
      */
+    #[JsonProperty("stringifiedType")]
     public ?string $stringifiedType;
 
     /**

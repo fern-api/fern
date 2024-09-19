@@ -8,10 +8,10 @@ use Seed\Core\ArrayType;
 
 class ProblemDescription extends SerializableType
 {
-    #[JsonProperty("boards"), ArrayType(["mixed"])]
     /**
      * @var array<mixed> $boards
      */
+    #[JsonProperty("boards"), ArrayType(["mixed"])]
     public array $boards;
 
     /**

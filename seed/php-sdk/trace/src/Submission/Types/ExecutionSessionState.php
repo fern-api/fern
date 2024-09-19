@@ -5,44 +5,43 @@ namespace Seed\Submission\Types;
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 use Seed\Commons\Types\Language;
-use Seed\Submission\Types\ExecutionSessionStatus;
 
 class ExecutionSessionState extends SerializableType
 {
-    #[JsonProperty("sessionId")]
     /**
      * @var string $sessionId The auto-generated session id. Formatted as a uuid.
      */
+    #[JsonProperty("sessionId")]
     public string $sessionId;
 
-    #[JsonProperty("isWarmInstance")]
     /**
      * @var bool $isWarmInstance
      */
+    #[JsonProperty("isWarmInstance")]
     public bool $isWarmInstance;
 
-    #[JsonProperty("language")]
     /**
      * @var Language $language
      */
+    #[JsonProperty("language")]
     public Language $language;
 
-    #[JsonProperty("status")]
     /**
      * @var ExecutionSessionStatus $status
      */
+    #[JsonProperty("status")]
     public ExecutionSessionStatus $status;
 
-    #[JsonProperty("lastTimeContacted")]
     /**
      * @var ?string $lastTimeContacted
      */
+    #[JsonProperty("lastTimeContacted")]
     public ?string $lastTimeContacted;
 
-    #[JsonProperty("awsTaskId")]
     /**
      * @var ?string $awsTaskId
      */
+    #[JsonProperty("awsTaskId")]
     public ?string $awsTaskId;
 
     /**

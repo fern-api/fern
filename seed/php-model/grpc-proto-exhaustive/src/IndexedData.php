@@ -8,16 +8,16 @@ use Seed\Core\ArrayType;
 
 class IndexedData extends SerializableType
 {
-    #[JsonProperty("indices"), ArrayType(["integer"])]
     /**
      * @var array<int> $indices
      */
+    #[JsonProperty("indices"), ArrayType(["integer"])]
     public array $indices;
 
-    #[JsonProperty("values"), ArrayType(["float"])]
     /**
      * @var array<float> $values
      */
+    #[JsonProperty("values"), ArrayType(["float"])]
     public array $values;
 
     /**

@@ -5,26 +5,25 @@ namespace Seed\Submission\Types;
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 use Seed\Core\ArrayType;
-use Seed\Submission\Types\ExecutionSessionState;
 
 class GetExecutionSessionStateResponse extends SerializableType
 {
-    #[JsonProperty("states"), ArrayType(["string" => ExecutionSessionState::class])]
     /**
      * @var array<string, ExecutionSessionState> $states
      */
+    #[JsonProperty("states"), ArrayType(["string" => ExecutionSessionState::class])]
     public array $states;
 
-    #[JsonProperty("warmingSessionIds"), ArrayType(["string"])]
     /**
      * @var array<string> $warmingSessionIds
      */
+    #[JsonProperty("warmingSessionIds"), ArrayType(["string"])]
     public array $warmingSessionIds;
 
-    #[JsonProperty("numWarmingInstances")]
     /**
      * @var ?int $numWarmingInstances
      */
+    #[JsonProperty("numWarmingInstances")]
     public ?int $numWarmingInstances;
 
     /**

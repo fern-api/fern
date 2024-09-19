@@ -5,14 +5,13 @@ namespace Seed\Commons\Types;
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 use Seed\Core\ArrayType;
-use Seed\Commons\Types\KeyValuePair;
 
 class MapValue extends SerializableType
 {
-    #[JsonProperty("keyValuePairs"), ArrayType([KeyValuePair::class])]
     /**
      * @var array<KeyValuePair> $keyValuePairs
      */
+    #[JsonProperty("keyValuePairs"), ArrayType([KeyValuePair::class])]
     public array $keyValuePairs;
 
     /**

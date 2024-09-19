@@ -5,27 +5,25 @@ namespace Seed\Types;
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 use Seed\Core\ArrayType;
-use Seed\Types\Node;
-use Seed\Types\Tree;
 
 class Node extends SerializableType
 {
-    #[JsonProperty("name")]
     /**
      * @var string $name
      */
+    #[JsonProperty("name")]
     public string $name;
 
-    #[JsonProperty("nodes"), ArrayType([Node::class])]
     /**
      * @var ?array<Node> $nodes
      */
+    #[JsonProperty("nodes"), ArrayType([Node::class])]
     public ?array $nodes;
 
-    #[JsonProperty("trees"), ArrayType([Tree::class])]
     /**
      * @var ?array<Tree> $trees
      */
+    #[JsonProperty("trees"), ArrayType([Tree::class])]
     public ?array $trees;
 
     /**

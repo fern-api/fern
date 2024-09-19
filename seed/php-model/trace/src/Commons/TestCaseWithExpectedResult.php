@@ -4,20 +4,19 @@ namespace Seed\Commons;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\Commons\TestCase;
 
 class TestCaseWithExpectedResult extends SerializableType
 {
-    #[JsonProperty("testCase")]
     /**
      * @var TestCase $testCase
      */
+    #[JsonProperty("testCase")]
     public TestCase $testCase;
 
-    #[JsonProperty("expectedResult")]
     /**
      * @var mixed $expectedResult
      */
+    #[JsonProperty("expectedResult")]
     public mixed $expectedResult;
 
     /**

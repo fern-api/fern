@@ -4,20 +4,19 @@ namespace Seed\Commons;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\Commons\BinaryTreeValue;
 
 class BinaryTreeNodeAndTreeValue extends SerializableType
 {
-    #[JsonProperty("nodeId")]
     /**
      * @var string $nodeId
      */
+    #[JsonProperty("nodeId")]
     public string $nodeId;
 
-    #[JsonProperty("fullTree")]
     /**
      * @var BinaryTreeValue $fullTree
      */
+    #[JsonProperty("fullTree")]
     public BinaryTreeValue $fullTree;
 
     /**

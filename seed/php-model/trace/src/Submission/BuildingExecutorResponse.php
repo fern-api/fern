@@ -4,20 +4,19 @@ namespace Seed\Submission;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\Submission\ExecutionSessionStatus;
 
 class BuildingExecutorResponse extends SerializableType
 {
-    #[JsonProperty("submissionId")]
     /**
      * @var string $submissionId
      */
+    #[JsonProperty("submissionId")]
     public string $submissionId;
 
-    #[JsonProperty("status")]
     /**
      * @var ExecutionSessionStatus $status
      */
+    #[JsonProperty("status")]
     public ExecutionSessionStatus $status;
 
     /**

@@ -4,9 +4,8 @@ import { EnumGenerator } from "./enum/EnumGenerator";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
 import { ObjectGenerator } from "./object/ObjectGenerator";
 
-export function generateModels({ context }: { context: ModelGeneratorContext }): PhpFile[] {
-    const files: PhpFile[] = [];
-    for (const [typeId, typeDeclaration] of Object.entries(context.ir.types)) {
+export function generateModels(context: ModelGeneratorContext): void {
+    for (const typeDeclaration of Object.values(context.ir.types)) {
         const file = typeDeclaration.shape._visit<PhpFile | undefined>({
             alias: () => undefined,
             enum: (enumDeclaration: EnumTypeDeclaration) => {
@@ -20,8 +19,7 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
             _other: () => undefined
         });
         if (file != null) {
-            files.push(file);
+            context.project.addSourceFiles(file);
         }
     }
-    return files;
 }

@@ -5,14 +5,13 @@ namespace Seed\Users\Types;
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 use Seed\Core\ArrayType;
-use Seed\Users\Types\User;
 
 class UserOptionalListContainer extends SerializableType
 {
-    #[JsonProperty("users"), ArrayType([User::class])]
     /**
      * @var ?array<User> $users
      */
+    #[JsonProperty("users"), ArrayType([User::class])]
     public ?array $users;
 
     /**

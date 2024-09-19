@@ -4,33 +4,31 @@ namespace Seed;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\Patient;
-use Seed\Practitioner;
 
 class Account extends SerializableType
 {
-    #[JsonProperty("resource_type")]
     /**
      * @var string $resourceType
      */
+    #[JsonProperty("resource_type")]
     public string $resourceType;
 
-    #[JsonProperty("name")]
     /**
      * @var string $name
      */
+    #[JsonProperty("name")]
     public string $name;
 
-    #[JsonProperty("patient")]
     /**
      * @var ?Patient $patient
      */
+    #[JsonProperty("patient")]
     public ?Patient $patient;
 
-    #[JsonProperty("practitioner")]
     /**
      * @var ?Practitioner $practitioner
      */
+    #[JsonProperty("practitioner")]
     public ?Practitioner $practitioner;
 
     /**

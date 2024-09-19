@@ -4,21 +4,21 @@ namespace Seed\Types;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
 use Seed\Identifier;
+use Seed\Core\ArrayType;
 
 class Response extends SerializableType
 {
-    #[JsonProperty("response")]
     /**
      * @var mixed $response
      */
+    #[JsonProperty("response")]
     public mixed $response;
 
-    #[JsonProperty("identifiers"), ArrayType([Identifier::class])]
     /**
      * @var array<Identifier> $identifiers
      */
+    #[JsonProperty("identifiers"), ArrayType([Identifier::class])]
     public array $identifiers;
 
     /**

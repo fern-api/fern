@@ -3,6 +3,8 @@
 namespace Seed\Service;
 
 use Seed\Core\RawClient;
+use Seed\Core\JsonApiRequest;
+use Seed\Core\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
 use Exception;
 
@@ -33,7 +35,13 @@ class ServiceClient
     public function post(string $pathParam, string $serviceParam, string $resourceParam, int $endpointParam, ?array $options = null): mixed
     {
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/test/$pathParam/$serviceParam/$endpointParam/$resourceParam",
+                    method: HttpMethod::POST,
+                ),
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;

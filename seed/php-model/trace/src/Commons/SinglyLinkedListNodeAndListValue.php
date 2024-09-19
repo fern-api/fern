@@ -4,20 +4,19 @@ namespace Seed\Commons;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\Commons\SinglyLinkedListValue;
 
 class SinglyLinkedListNodeAndListValue extends SerializableType
 {
-    #[JsonProperty("nodeId")]
     /**
      * @var string $nodeId
      */
+    #[JsonProperty("nodeId")]
     public string $nodeId;
 
-    #[JsonProperty("fullList")]
     /**
      * @var SinglyLinkedListValue $fullList
      */
+    #[JsonProperty("fullList")]
     public SinglyLinkedListValue $fullList;
 
     /**

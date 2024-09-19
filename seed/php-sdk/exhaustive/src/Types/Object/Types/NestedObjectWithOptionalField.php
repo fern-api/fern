@@ -4,20 +4,19 @@ namespace Seed\Types\Object\Types;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\Types\Object\Types\ObjectWithOptionalField;
 
 class NestedObjectWithOptionalField extends SerializableType
 {
-    #[JsonProperty("string")]
     /**
      * @var ?string $string
      */
+    #[JsonProperty("string")]
     public ?string $string;
 
-    #[JsonProperty("NestedObject")]
     /**
      * @var ?ObjectWithOptionalField $nestedObject
      */
+    #[JsonProperty("NestedObject")]
     public ?ObjectWithOptionalField $nestedObject;
 
     /**

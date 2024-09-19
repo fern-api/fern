@@ -4,20 +4,19 @@ namespace Seed\Submission\Types;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\Submission\Types\TestCaseResultWithStdout;
 
 class TracedTestCase extends SerializableType
 {
-    #[JsonProperty("result")]
     /**
      * @var TestCaseResultWithStdout $result
      */
+    #[JsonProperty("result")]
     public TestCaseResultWithStdout $result;
 
-    #[JsonProperty("traceResponsesSize")]
     /**
      * @var int $traceResponsesSize
      */
+    #[JsonProperty("traceResponsesSize")]
     public int $traceResponsesSize;
 
     /**

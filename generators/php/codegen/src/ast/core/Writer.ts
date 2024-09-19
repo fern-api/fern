@@ -64,7 +64,11 @@ ${this.buffer}`;
         }
         let result = referenceKeys
             // Filter out the current namespace.
-            .filter((referenceNamespace) => referenceNamespace !== this.namespace)
+            .filter((reference) => {
+                // Remove the type name to get just the namespace
+                const referenceNamespace = reference.substring(0, reference.lastIndexOf("\\"));
+                return referenceNamespace !== this.namespace;
+            })
             .map((ref) => `use ${ref};`)
             .join("\n");
 

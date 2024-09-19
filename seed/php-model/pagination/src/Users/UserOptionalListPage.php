@@ -4,20 +4,19 @@ namespace Seed\Users;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\Users\UserOptionalListContainer;
 
 class UserOptionalListPage extends SerializableType
 {
-    #[JsonProperty("data")]
     /**
      * @var UserOptionalListContainer $data
      */
+    #[JsonProperty("data")]
     public UserOptionalListContainer $data;
 
-    #[JsonProperty("next")]
     /**
      * @var ?string $next
      */
+    #[JsonProperty("next")]
     public ?string $next;
 
     /**

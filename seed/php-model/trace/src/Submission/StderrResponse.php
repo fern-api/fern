@@ -7,16 +7,16 @@ use Seed\Core\JsonProperty;
 
 class StderrResponse extends SerializableType
 {
-    #[JsonProperty("submissionId")]
     /**
      * @var string $submissionId
      */
+    #[JsonProperty("submissionId")]
     public string $submissionId;
 
-    #[JsonProperty("stderr")]
     /**
      * @var string $stderr
      */
+    #[JsonProperty("stderr")]
     public string $stderr;
 
     /**

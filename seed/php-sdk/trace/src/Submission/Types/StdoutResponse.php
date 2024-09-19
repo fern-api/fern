@@ -7,16 +7,16 @@ use Seed\Core\JsonProperty;
 
 class StdoutResponse extends SerializableType
 {
-    #[JsonProperty("submissionId")]
     /**
      * @var string $submissionId
      */
+    #[JsonProperty("submissionId")]
     public string $submissionId;
 
-    #[JsonProperty("stdout")]
     /**
      * @var string $stdout
      */
+    #[JsonProperty("stdout")]
     public string $stdout;
 
     /**

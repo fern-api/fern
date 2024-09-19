@@ -8,16 +8,16 @@ use Seed\Core\ArrayType;
 
 class UpdatePlaylistRequest extends SerializableType
 {
-    #[JsonProperty("name")]
     /**
      * @var string $name
      */
+    #[JsonProperty("name")]
     public string $name;
 
-    #[JsonProperty("problems"), ArrayType(["string"])]
     /**
      * @var array<string> $problems The problems that make up the playlist.
      */
+    #[JsonProperty("problems"), ArrayType(["string"])]
     public array $problems;
 
     /**

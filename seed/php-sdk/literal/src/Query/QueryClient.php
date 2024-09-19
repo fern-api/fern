@@ -4,6 +4,8 @@ namespace Seed\Query;
 
 use Seed\Core\RawClient;
 use Seed\Query\Requests\SendLiteralsInQueryRequest;
+use Seed\Core\JsonApiRequest;
+use Seed\Core\HttpMethod;
 use JsonException;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -36,7 +38,14 @@ class QueryClient
         $query['query'] = $request->query;
         $query['stream'] = $request->stream;
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "query",
+                    method: HttpMethod::POST,
+                    query: $query,
+                ),
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);

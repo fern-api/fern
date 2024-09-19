@@ -7,10 +7,10 @@ use Seed\Core\JsonProperty;
 
 class Failure extends SerializableType
 {
-    #[JsonProperty("status")]
     /**
      * @var string $status
      */
+    #[JsonProperty("status")]
     public string $status;
 
     /**

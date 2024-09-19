@@ -7,16 +7,16 @@ use Seed\Core\JsonProperty;
 
 class EchoRequest extends SerializableType
 {
-    #[JsonProperty("name")]
     /**
      * @var string $name
      */
+    #[JsonProperty("name")]
     public string $name;
 
-    #[JsonProperty("size")]
     /**
      * @var int $size
      */
+    #[JsonProperty("size")]
     public int $size;
 
     /**

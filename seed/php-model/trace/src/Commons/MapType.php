@@ -7,16 +7,16 @@ use Seed\Core\JsonProperty;
 
 class MapType extends SerializableType
 {
-    #[JsonProperty("keyType")]
     /**
      * @var mixed $keyType
      */
+    #[JsonProperty("keyType")]
     public mixed $keyType;
 
-    #[JsonProperty("valueType")]
     /**
      * @var mixed $valueType
      */
+    #[JsonProperty("valueType")]
     public mixed $valueType;
 
     /**

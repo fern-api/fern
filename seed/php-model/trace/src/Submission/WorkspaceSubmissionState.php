@@ -7,10 +7,10 @@ use Seed\Core\JsonProperty;
 
 class WorkspaceSubmissionState extends SerializableType
 {
-    #[JsonProperty("status")]
     /**
      * @var mixed $status
      */
+    #[JsonProperty("status")]
     public mixed $status;
 
     /**

@@ -4,6 +4,9 @@ namespace Seed\Sysprop;
 
 use Seed\Core\RawClient;
 use Seed\Commons\Types\Language;
+use Seed\Core\JsonApiRequest;
+use Seed\Environments;
+use Seed\Core\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
 use Exception;
 use JsonException;
@@ -33,7 +36,13 @@ class SyspropClient
     public function setNumWarmInstances(Language $language, int $numWarmInstances, ?array $options = null): mixed
     {
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
+                    path: "/sysprop/num-warm-instances/$language/$numWarmInstances",
+                    method: HttpMethod::PUT,
+                ),
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
@@ -51,7 +60,13 @@ class SyspropClient
     public function getNumWarmInstances(?array $options = null): mixed
     {
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
+                    path: "/sysprop/num-warm-instances",
+                    method: HttpMethod::GET,
+                ),
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);

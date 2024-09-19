@@ -7,10 +7,10 @@ use Seed\Core\JsonProperty;
 
 class Usage extends SerializableType
 {
-    #[JsonProperty("units")]
     /**
      * @var ?int $units
      */
+    #[JsonProperty("units")]
     public ?int $units;
 
     /**

@@ -7,10 +7,10 @@ use Seed\Core\JsonProperty;
 
 class UpdateProblemResponse extends SerializableType
 {
-    #[JsonProperty("problemVersion")]
     /**
      * @var int $problemVersion
      */
+    #[JsonProperty("problemVersion")]
     public int $problemVersion;
 
     /**

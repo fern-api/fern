@@ -97,6 +97,105 @@ service:
 ]
 `;
 
+exports[`validate header overrides > header-overrides 1`] = `
+[
+  {
+    "contents": "types:
+  Pet:
+    properties:
+      id: long
+      name: string
+      tag: optional<string>
+    source:
+      openapi: openapi/openapi.yml
+  Pets: list<Pet>
+  Error:
+    properties:
+      code: integer
+      message: string
+    source:
+      openapi: openapi/openapi.yml
+",
+    "name": "__package__.yml",
+    "type": "file",
+  },
+  {
+    "contents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Swagger Petstore
+environments:
+  Default: http://petstore.swagger.io/v1
+default-environment: Default
+headers:
+  X-Dummy-Header: optional<string>
+",
+    "name": "api.yml",
+    "type": "file",
+  },
+  {
+    "contents": "imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    listPets:
+      path: /pets
+      method: GET
+      auth: false
+      display-name: List all pets
+      request:
+        name: ListPetsRequest
+        query-parameters:
+          limit:
+            type: optional<integer>
+            docs: How many items to return at one time (max 100)
+      response:
+        docs: A paged array of pets
+        type: root.Pets
+      examples:
+        - response:
+            body:
+              - id: 1000000
+                name: name
+                tag: tag
+    createPets:
+      path: /pets
+      method: POST
+      auth: false
+      display-name: Create a pet
+      examples:
+        - {}
+    showPetById:
+      path: /pets/{petId}
+      method: GET
+      auth: false
+      path-parameters:
+        petId:
+          type: string
+          docs: The id of the pet to retrieve
+      display-name: Info for a specific pet
+      response:
+        docs: Expected response to a valid request
+        type: root.Pet
+      examples:
+        - path-parameters:
+            petId: petId
+          response:
+            body:
+              id: 1000000
+              name: name
+              tag: tag
+  source:
+    openapi: openapi/openapi.yml
+",
+    "name": "pets.yml",
+    "type": "file",
+  },
+]
+`;
+
 exports[`validate namespaced API > namespaced 1`] = `
 [
   {

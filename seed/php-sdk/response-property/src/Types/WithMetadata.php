@@ -8,10 +8,10 @@ use Seed\Core\ArrayType;
 
 class WithMetadata extends SerializableType
 {
-    #[JsonProperty("metadata"), ArrayType(["string" => "string"])]
     /**
      * @var array<string, string> $metadata
      */
+    #[JsonProperty("metadata"), ArrayType(["string" => "string"])]
     public array $metadata;
 
     /**

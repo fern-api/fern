@@ -4,27 +4,27 @@ namespace Seed\Organization\Types;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
 use Seed\User\Types\User;
+use Seed\Core\ArrayType;
 
 class Organization extends SerializableType
 {
-    #[JsonProperty("id")]
     /**
      * @var string $id
      */
+    #[JsonProperty("id")]
     public string $id;
 
-    #[JsonProperty("name")]
     /**
      * @var string $name
      */
+    #[JsonProperty("name")]
     public string $name;
 
-    #[JsonProperty("users"), ArrayType([User::class])]
     /**
      * @var array<User> $users
      */
+    #[JsonProperty("users"), ArrayType([User::class])]
     public array $users;
 
     /**

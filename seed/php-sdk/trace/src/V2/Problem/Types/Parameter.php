@@ -7,22 +7,22 @@ use Seed\Core\JsonProperty;
 
 class Parameter extends SerializableType
 {
-    #[JsonProperty("parameterId")]
     /**
      * @var string $parameterId
      */
+    #[JsonProperty("parameterId")]
     public string $parameterId;
 
-    #[JsonProperty("name")]
     /**
      * @var string $name
      */
+    #[JsonProperty("name")]
     public string $name;
 
-    #[JsonProperty("variableType")]
     /**
      * @var mixed $variableType
      */
+    #[JsonProperty("variableType")]
     public mixed $variableType;
 
     /**

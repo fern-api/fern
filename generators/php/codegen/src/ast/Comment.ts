@@ -1,6 +1,7 @@
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { Type } from "./Type";
+import { convertToPhpVariableName } from "./utils/convertToPhpVariableName";
 
 export type TagType = "param" | "returns" | "throws" | "var";
 
@@ -40,7 +41,10 @@ export class Comment extends AstNode {
     }
 
     public addTag(tag: Comment.Tag): void {
-        this.tags.push(tag);
+        this.tags.push({
+            ...tag,
+            name: tag.name != null ? convertToPhpVariableName(tag.name) : undefined
+        });
     }
 
     public write(writer: Writer): void {

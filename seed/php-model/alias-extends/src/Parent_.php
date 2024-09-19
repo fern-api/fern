@@ -5,12 +5,12 @@ namespace Seed;
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 
-class parent extends SerializableType
+class Parent_ extends SerializableType
 {
-    #[JsonProperty("parent")]
     /**
      * @var string $parent
      */
+    #[JsonProperty("parent")]
     public string $parent;
 
     /**

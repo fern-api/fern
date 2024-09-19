@@ -4,39 +4,37 @@ namespace Seed\Submission\Types;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\Submission\Types\LightweightStackframeInformation;
-use Seed\Submission\Types\TracedFile;
 
 class RecordingResponseNotification extends SerializableType
 {
-    #[JsonProperty("submissionId")]
     /**
      * @var string $submissionId
      */
+    #[JsonProperty("submissionId")]
     public string $submissionId;
 
-    #[JsonProperty("lineNumber")]
     /**
      * @var int $lineNumber
      */
+    #[JsonProperty("lineNumber")]
     public int $lineNumber;
 
-    #[JsonProperty("lightweightStackInfo")]
     /**
      * @var LightweightStackframeInformation $lightweightStackInfo
      */
+    #[JsonProperty("lightweightStackInfo")]
     public LightweightStackframeInformation $lightweightStackInfo;
 
-    #[JsonProperty("testCaseId")]
     /**
      * @var ?string $testCaseId
      */
+    #[JsonProperty("testCaseId")]
     public ?string $testCaseId;
 
-    #[JsonProperty("tracedFile")]
     /**
      * @var ?TracedFile $tracedFile
      */
+    #[JsonProperty("tracedFile")]
     public ?TracedFile $tracedFile;
 
     /**

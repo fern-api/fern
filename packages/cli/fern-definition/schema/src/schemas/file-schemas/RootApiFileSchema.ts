@@ -25,11 +25,16 @@ export const WithAuthSchema = z.strictObject({
 
 export type WithAuthSchema = z.infer<typeof WithAuthSchema>;
 
+export const WithHeadersSchema = z.strictObject({
+    headers: z.optional(z.record(z.string(), HttpHeaderSchema))
+});
+
+export type WithHeadersSchema = z.infer<typeof WithHeadersSchema>;
+
 export const RootApiFileSchema = z
     .strictObject({
         name: z.string(), // TODO: should this be migrated to id?
         imports: z.optional(z.record(z.string())),
-        headers: z.optional(z.record(z.string(), HttpHeaderSchema)),
         "error-discrimination": z.optional(ErrorDiscriminationSchema),
         audiences: z.optional(z.array(z.string())),
         docs: z.optional(z.string()),
@@ -43,6 +48,7 @@ export const RootApiFileSchema = z
     })
     .extend(WithEnvironmentsSchema.shape)
     .extend(WithAuthSchema.shape)
-    .extend(WithDisplayNameSchema.shape);
+    .extend(WithDisplayNameSchema.shape)
+    .extend(WithHeadersSchema.shape);
 
 export type RootApiFileSchema = z.infer<typeof RootApiFileSchema>;

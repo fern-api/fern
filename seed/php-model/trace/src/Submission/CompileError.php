@@ -7,10 +7,10 @@ use Seed\Core\JsonProperty;
 
 class CompileError extends SerializableType
 {
-    #[JsonProperty("message")]
     /**
      * @var string $message
      */
+    #[JsonProperty("message")]
     public string $message;
 
     /**

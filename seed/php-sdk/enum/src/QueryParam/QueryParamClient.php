@@ -4,6 +4,8 @@ namespace Seed\QueryParam;
 
 use Seed\Core\RawClient;
 use Seed\QueryParam\Requests\SendEnumAsQueryParamRequest;
+use Seed\Core\JsonApiRequest;
+use Seed\Core\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
 use Exception;
 use Seed\QueryParam\Requests\SendEnumListAsQueryParamRequest;
@@ -41,7 +43,14 @@ class QueryParamClient
             $query['maybeOperandOrColor'] = $request->maybeOperandOrColor;
         }
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "query",
+                    method: HttpMethod::POST,
+                    query: $query,
+                ),
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
@@ -69,7 +78,14 @@ class QueryParamClient
             $query['maybeOperandOrColor'] = $request->maybeOperandOrColor;
         }
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "query-list",
+                    method: HttpMethod::POST,
+                    query: $query,
+                ),
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;

@@ -7,16 +7,16 @@ use Seed\Core\JsonProperty;
 
 class InvalidRequestResponse extends SerializableType
 {
-    #[JsonProperty("request")]
     /**
      * @var mixed $request
      */
+    #[JsonProperty("request")]
     public mixed $request;
 
-    #[JsonProperty("cause")]
     /**
      * @var mixed $cause
      */
+    #[JsonProperty("cause")]
     public mixed $cause;
 
     /**

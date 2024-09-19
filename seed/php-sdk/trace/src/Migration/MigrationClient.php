@@ -4,6 +4,9 @@ namespace Seed\Migration;
 
 use Seed\Core\RawClient;
 use Seed\Migration\Requests\GetAttemptedMigrationsRequest;
+use Seed\Core\JsonApiRequest;
+use Seed\Environments;
+use Seed\Core\HttpMethod;
 use JsonException;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -34,7 +37,14 @@ class MigrationClient
         $headers = [];
         $headers['admin-key-header'] = $request->adminKeyHeader;
         try {
-            $response = $this->client->sendRequest();
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
+                    path: "/migration-info/all",
+                    method: HttpMethod::GET,
+                    headers: $headers,
+                ),
+            );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);

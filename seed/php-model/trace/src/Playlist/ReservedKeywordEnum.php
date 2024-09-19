@@ -5,5 +5,5 @@ namespace Seed\Playlist;
 enum ReservedKeywordEnum: string
 {
     case Is = "is";
-    case As = "as";
+    case As_ = "as";
 }

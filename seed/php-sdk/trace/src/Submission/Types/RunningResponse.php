@@ -4,20 +4,19 @@ namespace Seed\Submission\Types;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\Submission\Types\RunningSubmissionState;
 
 class RunningResponse extends SerializableType
 {
-    #[JsonProperty("submissionId")]
     /**
      * @var string $submissionId
      */
+    #[JsonProperty("submissionId")]
     public string $submissionId;
 
-    #[JsonProperty("state")]
     /**
      * @var RunningSubmissionState $state
      */
+    #[JsonProperty("state")]
     public RunningSubmissionState $state;
 
     /**

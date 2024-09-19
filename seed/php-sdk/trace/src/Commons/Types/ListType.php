@@ -7,16 +7,16 @@ use Seed\Core\JsonProperty;
 
 class ListType extends SerializableType
 {
-    #[JsonProperty("valueType")]
     /**
      * @var mixed $valueType
      */
+    #[JsonProperty("valueType")]
     public mixed $valueType;
 
-    #[JsonProperty("isFixedLength")]
     /**
      * @var ?bool $isFixedLength Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.
      */
+    #[JsonProperty("isFixedLength")]
     public ?bool $isFixedLength;
 
     /**

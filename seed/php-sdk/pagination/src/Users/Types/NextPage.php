@@ -7,16 +7,16 @@ use Seed\Core\JsonProperty;
 
 class NextPage extends SerializableType
 {
-    #[JsonProperty("page")]
     /**
      * @var int $page
      */
+    #[JsonProperty("page")]
     public int $page;
 
-    #[JsonProperty("starting_after")]
     /**
      * @var string $startingAfter
      */
+    #[JsonProperty("starting_after")]
     public string $startingAfter;
 
     /**

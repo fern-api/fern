@@ -1,3 +1,61 @@
+- changelogEntry: 
+    - summary: | 
+        Previously, the OpenAPI importer would ignore skip parsing arbitrary 
+        content types "*/*". Now it treats this content type as application/json. 
+
+        ```json openapi.json
+        "responses": {
+          "200": {
+            "description": "Success reply",
+            "content": {
+              "*/*": {
+        ```
+      type: fix
+  irVersion: 53
+  version: 0.42.9
+
+- changelogEntry: 
+    - summary: | 
+        The API V2 configuration (in beta) now supports global header overrides.
+        This fixes a bug where those header overrides were getting dropped in 
+        certain cases.
+
+        ```yml generators.yml
+        api: 
+          headers: 
+            X-API-VERSION: string
+          specs: 
+            - openapi: /path/to/openapi
+              overrides: /path/to/overrides
+        ```
+      type: fix
+  irVersion: 53
+  version: 0.42.8
+
+- changelogEntry: 
+    - summary: | 
+        The API V2 configuration (in beta) now supports global header 
+        overrides. To specify global headers that are not in your 
+        OpenAPI spec, simply add the following block in your `generators.yml`: 
+
+        ```yml generators.yml
+        api: 
+          headers: 
+            X-API-VERSION: string
+          specs: 
+            - openapi: /path/to/openapi
+              overrides: /path/to/overrides
+        ```
+      type: feat
+  irVersion: 53
+  version: 0.42.7
+
+- changelogEntry:
+    - summary: Removes extraneous conditional error within namespacing configuration
+      type: fix
+  irVersion: 53
+  version: 0.42.6
+
 - changelogEntry:
     - summary: |
         Example generation now intelligently truncates container examples, for example if the depth limit will be reached on a list of objects,

@@ -4,14 +4,13 @@ namespace Seed\Service;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\Service\Movie;
 
 class Response extends SerializableType
 {
-    #[JsonProperty("data")]
     /**
      * @var Movie $data
      */
+    #[JsonProperty("data")]
     public Movie $data;
 
     /**

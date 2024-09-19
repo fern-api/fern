@@ -7,10 +7,10 @@ use Seed\Core\JsonProperty;
 
 class GetTraceResponsesPageRequest extends SerializableType
 {
-    #[JsonProperty("offset")]
     /**
      * @var ?int $offset
      */
+    #[JsonProperty("offset")]
     public ?int $offset;
 
     /**

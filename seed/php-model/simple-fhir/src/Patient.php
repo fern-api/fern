@@ -5,26 +5,25 @@ namespace Seed;
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 use Seed\Core\ArrayType;
-use Seed\Script;
 
 class Patient extends SerializableType
 {
-    #[JsonProperty("resource_type")]
     /**
      * @var string $resourceType
      */
+    #[JsonProperty("resource_type")]
     public string $resourceType;
 
-    #[JsonProperty("name")]
     /**
      * @var string $name
      */
+    #[JsonProperty("name")]
     public string $name;
 
-    #[JsonProperty("scripts"), ArrayType([Script::class])]
     /**
      * @var array<Script> $scripts
      */
+    #[JsonProperty("scripts"), ArrayType([Script::class])]
     public array $scripts;
 
     /**

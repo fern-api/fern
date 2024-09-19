@@ -7,10 +7,10 @@ use Seed\Core\JsonProperty;
 
 class UploadResponse extends SerializableType
 {
-    #[JsonProperty("count")]
     /**
      * @var ?int $count
      */
+    #[JsonProperty("count")]
     public ?int $count;
 
     /**

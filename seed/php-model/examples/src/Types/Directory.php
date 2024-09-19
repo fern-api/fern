@@ -5,27 +5,25 @@ namespace Seed\Types;
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 use Seed\Core\ArrayType;
-use Seed\Types\File;
-use Seed\Types\Directory;
 
 class Directory extends SerializableType
 {
-    #[JsonProperty("name")]
     /**
      * @var string $name
      */
+    #[JsonProperty("name")]
     public string $name;
 
-    #[JsonProperty("files"), ArrayType([File::class])]
     /**
      * @var ?array<File> $files
      */
+    #[JsonProperty("files"), ArrayType([File::class])]
     public ?array $files;
 
-    #[JsonProperty("directories"), ArrayType([Directory::class])]
     /**
      * @var ?array<Directory> $directories
      */
+    #[JsonProperty("directories"), ArrayType([Directory::class])]
     public ?array $directories;
 
     /**

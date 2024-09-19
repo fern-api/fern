@@ -7,10 +7,10 @@ use Seed\Core\JsonProperty;
 
 class ANestedLiteral extends SerializableType
 {
-    #[JsonProperty("myLiteral")]
     /**
      * @var string $myLiteral
      */
+    #[JsonProperty("myLiteral")]
     public string $myLiteral;
 
     /**

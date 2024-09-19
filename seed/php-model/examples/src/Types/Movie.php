@@ -8,64 +8,64 @@ use Seed\Core\ArrayType;
 
 class Movie extends SerializableType
 {
-    #[JsonProperty("id")]
     /**
      * @var string $id
      */
+    #[JsonProperty("id")]
     public string $id;
 
-    #[JsonProperty("title")]
     /**
      * @var string $title
      */
+    #[JsonProperty("title")]
     public string $title;
 
-    #[JsonProperty("from")]
     /**
      * @var string $from
      */
+    #[JsonProperty("from")]
     public string $from;
 
-    #[JsonProperty("rating")]
     /**
      * @var float $rating The rating scale is one to five stars
      */
+    #[JsonProperty("rating")]
     public float $rating;
 
-    #[JsonProperty("type")]
     /**
      * @var string $type
      */
+    #[JsonProperty("type")]
     public string $type;
 
-    #[JsonProperty("tag")]
     /**
      * @var string $tag
      */
+    #[JsonProperty("tag")]
     public string $tag;
 
-    #[JsonProperty("metadata"), ArrayType(["string" => "mixed"])]
     /**
      * @var array<string, mixed> $metadata
      */
+    #[JsonProperty("metadata"), ArrayType(["string" => "mixed"])]
     public array $metadata;
 
-    #[JsonProperty("revenue")]
     /**
      * @var int $revenue
      */
+    #[JsonProperty("revenue")]
     public int $revenue;
 
-    #[JsonProperty("prequel")]
     /**
      * @var ?string $prequel
      */
+    #[JsonProperty("prequel")]
     public ?string $prequel;
 
-    #[JsonProperty("book")]
     /**
      * @var ?string $book
      */
+    #[JsonProperty("book")]
     public ?string $book;
 
     /**

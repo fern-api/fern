@@ -25,7 +25,7 @@ export abstract class EndpointRequest {
     ) {}
 
     public getRequestParameterName(): string {
-        return this.context.getParameterName(this.sdkRequest.requestParameterName);
+        return `$${this.context.getParameterName(this.sdkRequest.requestParameterName)}`;
     }
 
     public abstract getRequestParameterType(): php.Type;

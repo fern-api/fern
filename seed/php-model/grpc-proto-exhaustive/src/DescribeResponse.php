@@ -5,32 +5,31 @@ namespace Seed;
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 use Seed\Core\ArrayType;
-use Seed\NamespaceSummary;
 
 class DescribeResponse extends SerializableType
 {
-    #[JsonProperty("namespaces"), ArrayType(["string" => NamespaceSummary::class])]
     /**
      * @var ?array<string, NamespaceSummary> $namespaces
      */
+    #[JsonProperty("namespaces"), ArrayType(["string" => NamespaceSummary::class])]
     public ?array $namespaces;
 
-    #[JsonProperty("dimension")]
     /**
      * @var ?int $dimension
      */
+    #[JsonProperty("dimension")]
     public ?int $dimension;
 
-    #[JsonProperty("fullness")]
     /**
      * @var ?float $fullness
      */
+    #[JsonProperty("fullness")]
     public ?float $fullness;
 
-    #[JsonProperty("totalCount")]
     /**
      * @var ?int $totalCount
      */
+    #[JsonProperty("totalCount")]
     public ?int $totalCount;
 
     /**

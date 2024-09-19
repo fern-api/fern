@@ -5,33 +5,32 @@ namespace Seed\Submission\Types;
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 use Seed\Core\ArrayType;
-use Seed\Submission\Types\TestSubmissionUpdate;
 use Seed\V2\Problem\Types\ProblemInfoV2;
 
 class TestSubmissionStatusV2 extends SerializableType
 {
-    #[JsonProperty("updates"), ArrayType([TestSubmissionUpdate::class])]
     /**
      * @var array<TestSubmissionUpdate> $updates
      */
+    #[JsonProperty("updates"), ArrayType([TestSubmissionUpdate::class])]
     public array $updates;
 
-    #[JsonProperty("problemId")]
     /**
      * @var string $problemId
      */
+    #[JsonProperty("problemId")]
     public string $problemId;
 
-    #[JsonProperty("problemVersion")]
     /**
      * @var int $problemVersion
      */
+    #[JsonProperty("problemVersion")]
     public int $problemVersion;
 
-    #[JsonProperty("problemInfo")]
     /**
      * @var ProblemInfoV2 $problemInfo
      */
+    #[JsonProperty("problemInfo")]
     public ProblemInfoV2 $problemInfo;
 
     /**

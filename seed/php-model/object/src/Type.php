@@ -4,153 +4,152 @@ namespace Seed;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
-use Seed\Core\DateType;
 use DateTime;
+use Seed\Core\DateType;
 use Seed\Core\ArrayType;
 use Seed\Core\Union;
-use Seed\Name;
 
 /**
 * Exercises all of the built-in types.
  */
 class Type extends SerializableType
 {
-    #[JsonProperty("one")]
     /**
      * @var int $one
      */
+    #[JsonProperty("one")]
     public int $one;
 
-    #[JsonProperty("two")]
     /**
      * @var float $two
      */
+    #[JsonProperty("two")]
     public float $two;
 
-    #[JsonProperty("three")]
     /**
      * @var string $three
      */
+    #[JsonProperty("three")]
     public string $three;
 
-    #[JsonProperty("four")]
     /**
      * @var bool $four
      */
+    #[JsonProperty("four")]
     public bool $four;
 
-    #[JsonProperty("five")]
     /**
      * @var int $five
      */
+    #[JsonProperty("five")]
     public int $five;
 
-    #[JsonProperty("six"), DateType(DateType::TYPE_DATETIME)]
     /**
      * @var DateTime $six
      */
+    #[JsonProperty("six"), DateType(DateType::TYPE_DATETIME)]
     public DateTime $six;
 
-    #[JsonProperty("seven"), DateType(DateType::TYPE_DATE)]
     /**
      * @var DateTime $seven
      */
+    #[JsonProperty("seven"), DateType(DateType::TYPE_DATE)]
     public DateTime $seven;
 
-    #[JsonProperty("eight")]
     /**
      * @var string $eight
      */
+    #[JsonProperty("eight")]
     public string $eight;
 
-    #[JsonProperty("nine")]
     /**
      * @var string $nine
      */
+    #[JsonProperty("nine")]
     public string $nine;
 
-    #[JsonProperty("ten"), ArrayType(["integer"])]
     /**
      * @var array<int> $ten
      */
+    #[JsonProperty("ten"), ArrayType(["integer"])]
     public array $ten;
 
-    #[JsonProperty("eleven"), ArrayType(["float"])]
     /**
      * @var array<float> $eleven
      */
+    #[JsonProperty("eleven"), ArrayType(["float"])]
     public array $eleven;
 
-    #[JsonProperty("twelve"), ArrayType(["string" => "bool"])]
     /**
      * @var array<string, bool> $twelve
      */
+    #[JsonProperty("twelve"), ArrayType(["string" => "bool"])]
     public array $twelve;
 
-    #[JsonProperty("fourteen")]
     /**
      * @var mixed $fourteen
      */
+    #[JsonProperty("fourteen")]
     public mixed $fourteen;
 
-    #[JsonProperty("fifteen"), ArrayType([["integer"]])]
     /**
      * @var array<array<int>> $fifteen
      */
+    #[JsonProperty("fifteen"), ArrayType([["integer"]])]
     public array $fifteen;
 
-    #[JsonProperty("sixteen"), ArrayType([["string" => "integer"]])]
     /**
      * @var array<array<string, int>> $sixteen
      */
+    #[JsonProperty("sixteen"), ArrayType([["string" => "integer"]])]
     public array $sixteen;
 
-    #[JsonProperty("seventeen"), ArrayType([new Union("string", "null")])]
     /**
      * @var array<?string> $seventeen
      */
+    #[JsonProperty("seventeen"), ArrayType([new Union("string", "null")])]
     public array $seventeen;
 
-    #[JsonProperty("eighteen")]
     /**
      * @var string $eighteen
      */
+    #[JsonProperty("eighteen")]
     public string $eighteen;
 
-    #[JsonProperty("nineteen")]
     /**
      * @var Name $nineteen
      */
+    #[JsonProperty("nineteen")]
     public Name $nineteen;
 
-    #[JsonProperty("twenty")]
     /**
      * @var int $twenty
      */
+    #[JsonProperty("twenty")]
     public int $twenty;
 
-    #[JsonProperty("twentyone")]
     /**
      * @var int $twentyone
      */
+    #[JsonProperty("twentyone")]
     public int $twentyone;
 
-    #[JsonProperty("twentytwo")]
     /**
      * @var float $twentytwo
      */
+    #[JsonProperty("twentytwo")]
     public float $twentytwo;
 
-    #[JsonProperty("twentythree")]
     /**
      * @var string $twentythree
      */
+    #[JsonProperty("twentythree")]
     public string $twentythree;
 
-    #[JsonProperty("thirteen")]
     /**
      * @var ?int $thirteen
      */
+    #[JsonProperty("thirteen")]
     public ?int $thirteen;
 
     /**
