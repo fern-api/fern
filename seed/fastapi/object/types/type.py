@@ -27,7 +27,7 @@ class Type(UniversalBaseModel):
         four=True,
         five=5,
         six=datetime.datetime.fromisoformat(
-            "1994-01-01 01:01:01+00:00",
+            "datetime=datetime.datetime(1994, 1, 1, 1, 1, 1, tzinfo=TzInfo(UTC)) raw='1994-01-01T01:01:01Z'",
         ),
         seven=datetime.date.fromisoformat(
             "1994-01-01",

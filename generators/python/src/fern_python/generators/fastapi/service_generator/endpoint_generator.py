@@ -1,12 +1,14 @@
 from typing import List
 
 import fern.ir.resources as ir_types
-from fern_python.generators.fastapi.service_generator.endpoint_parameters.request.file_upload_request_endpoint_parameter import FileUploadRequestEndpointParameters
 from typing_extensions import Never
 
 from fern_python.codegen import AST
 from fern_python.external_dependencies import FastAPI
 from fern_python.external_dependencies.starlette import Starlette
+from fern_python.generators.fastapi.service_generator.endpoint_parameters.request.file_upload_request_endpoint_parameter import (
+    FileUploadRequestEndpointParameters,
+)
 
 from ..context import FastApiGeneratorContext
 from ..custom_config import FastAPICustomConfig
@@ -43,14 +45,16 @@ class EndpointGenerator:
         if endpoint.request_body is not None:
             self._parameters.extend(
                 endpoint.request_body.visit(
-                    inlined_request_body=lambda request: [InlinedRequestEndpointParameter(
-                        context=context,
-                        request=request,
-                        service_name=self._service.name,
-                    )],
-                    reference=lambda request: [ReferencedRequestEndpointParameter(
-                        context=context, request_type=request.request_body_type
-                    )],
+                    inlined_request_body=lambda request: [
+                        InlinedRequestEndpointParameter(
+                            context=context,
+                            request=request,
+                            service_name=self._service.name,
+                        )
+                    ],
+                    reference=lambda request: [
+                        ReferencedRequestEndpointParameter(context=context, request_type=request.request_body_type)
+                    ],
                     file_upload=lambda request: FileUploadRequestEndpointParameters(
                         context=context, request=request
                     ).get_parameters(),
@@ -343,7 +347,7 @@ class EndpointGenerator:
 
     def _get_response_body_type(self, response_body: ir_types.HttpResponseBody) -> AST.TypeHint:
         return response_body.visit(
-            file_download=raise_file_download_unsupported,
+            file_download=lambda _: AST.TypeHint(FastAPI.FileResponse),
             json=lambda json_response: self._get_json_response_body_type(json_response),
             text=lambda _: AST.TypeHint.str_(),
             streaming=lambda _: raise_streaming_unsupported(),
@@ -383,10 +387,6 @@ def raise_streaming_unsupported() -> Never:
 
 def raise_bytes_unsupported() -> Never:
     raise RuntimeError("bytes request is not supported")
-
-
-def raise_file_download_unsupported(file_download_response: ir_types.FileDownloadResponse) -> Never:
-    raise RuntimeError("File download is not supported")
 
 
 def raise_json_nested_property_as_response_unsupported() -> Never:

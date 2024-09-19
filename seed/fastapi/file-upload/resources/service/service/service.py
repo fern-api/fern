@@ -34,7 +34,7 @@ class AbstractServiceService(AbstractFernService):
         file_param: fastapi.UploadFile,
         file_list_param: typing.List[fastapi.UploadFile],
         maybe_file_param: typing.Union[fastapi.UploadFile, None],
-        maybe_file_list_param: typing.Union[typing.List[fastapi.UploadFile], None],
+        maybe_file_list_param: typing.Optional[typing.List[fastapi.UploadFile]] = None,
         maybe_integer_param: typing.Optional[int] = None,
         optional_list_of_strings_param: typing.Optional[typing.List[str]] = None,
         list_of_objects_param: typing.List[MyObject],
@@ -114,7 +114,7 @@ class AbstractServiceService(AbstractFernService):
                 new_parameters.append(
                     parameter.replace(
                         default=typing_extensions.Annotated[
-                            typing.Union[typing.List[fastapi.UploadFile], None],
+                            typing.Optional[typing.List[fastapi.UploadFile]],
                             fastapi.File(alias="maybeFileList"),
                         ]
                     )
