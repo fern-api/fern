@@ -160,6 +160,10 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return "client";
     }
 
+    public getHeadersOptionName(): string {
+        return "headers";
+    }
+
     public getClientOptionsName(): string {
         return this.getOptionsName();
     }
@@ -182,6 +186,11 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             {
                 key: this.getGuzzleClientOptionName(),
                 valueType: php.Type.reference(this.guzzleClient.getClientInterfaceClassReference()),
+                optional: true
+            },
+            {
+                key: this.getHeadersOptionName(),
+                valueType: php.Type.map(php.Type.string(), php.Type.string()),
                 optional: true
             }
         ]);

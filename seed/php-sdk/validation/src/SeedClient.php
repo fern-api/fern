@@ -4,7 +4,6 @@ namespace Seed;
 
 use GuzzleHttp\ClientInterface;
 use Seed\Core\RawClient;
-use GuzzleHttp\Client;
 use Seed\Requests\CreateRequest;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
@@ -16,7 +15,7 @@ use Seed\Requests\GetRequest;
 class SeedClient
 {
     /**
-     * @var ?array{baseUrl?: string, client?: ClientInterface} $options
+     * @var ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
      */
     private ?array $options;
 
@@ -26,16 +25,24 @@ class SeedClient
     private RawClient $client;
 
     /**
-     * @param ?array{baseUrl?: string, client?: ClientInterface} $options
+     * @param ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
      */
     public function __construct(
         ?array $options = null,
     ) {
-        $defaultHeaders = ["X-Fern-Language" => "PHP","X-Fern-SDK-Name" => "Seed","X-Fern-SDK-Version" => "0.0.1"];
+        $defaultHeaders = [
+            "X-Fern-Language" => "PHP",
+            "X-Fern-SDK-Name" => "Seed",
+            "X-Fern-SDK-Version" => "0.0.1",
+        ];
+
         $this->options = $options ?? [];
+        $this->options['headers'] = array_merge(
+            $defaultHeaders,
+            $this->options['headers'] ?? [],
+        );
+
         $this->client = new RawClient(
-            client: $this->options['client'] ?? new Client(),
-            headers: $defaultHeaders,
             options: $this->options,
         );
     }

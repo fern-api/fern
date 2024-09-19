@@ -14,7 +14,6 @@ use Seed\Submission\SubmissionClient;
 use Seed\Sysprop\SyspropClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\RawClient;
-use GuzzleHttp\Client;
 
 class SeedClient
 {
@@ -69,7 +68,7 @@ class SeedClient
     public SyspropClient $sysprop;
 
     /**
-     * @var ?array{baseUrl?: string, client?: ClientInterface} $options
+     * @var ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
      */
     private ?array $options;
 
@@ -79,18 +78,28 @@ class SeedClient
     private RawClient $client;
 
     /**
-     * @param ?array{baseUrl?: string, client?: ClientInterface} $options
+     * @param ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
      */
     public function __construct(
         ?array $options = null,
     ) {
-        $defaultHeaders = ["X-Random-Header" => $xRandomHeader,"X-Fern-Language" => "PHP","X-Fern-SDK-Name" => "Seed","X-Fern-SDK-Version" => "0.0.1"];
+        $defaultHeaders = [
+            "X-Random-Header" => $xRandomHeader,
+            "X-Fern-Language" => "PHP",
+            "X-Fern-SDK-Name" => "Seed",
+            "X-Fern-SDK-Version" => "0.0.1",
+        ];
+
         $this->options = $options ?? [];
+        $this->options['headers'] = array_merge(
+            $defaultHeaders,
+            $this->options['headers'] ?? [],
+        );
+
         $this->client = new RawClient(
-            client: $this->options['client'] ?? new Client(),
-            headers: $defaultHeaders,
             options: $this->options,
         );
+
         $this->v2 = new V2Client($this->client);
         $this->admin = new AdminClient($this->client);
         $this->commons = new CommonsClient($this->client);
