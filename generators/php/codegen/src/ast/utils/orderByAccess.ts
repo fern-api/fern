@@ -9,5 +9,5 @@ export function orderByAccess<T extends Accessible>(items: T[]): T[] {
 }
 
 function _orderByAccess<T extends Accessible>(items: T[], order: Access[]): T[] {
-    return order.reduce((result, access) => [...result, ...items.filter((item) => item.access === access)], [] as T[]);
+    return order.reduce<T[]>((result, access) => [...result, ...items.filter((item) => item.access === access)], []);
 }

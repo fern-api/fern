@@ -39,14 +39,14 @@ Options:
 `;
 
 exports[`fern generator upgrade > fern generator upgrade list 1`] = `
-"             ╭───────────────────────────────────────────────────╮
-             │                                                   │
-             │                Generator Upgrades                 │
-             │                                                   │
-             │   Python SDK (Group: python-sdk) 3.0.0 → 3.10.8   │
-             │                                                   │
-             │                                                   │
-             ╰───────────────────────────────────────────────────╯"
+"              ╭──────────────────────────────────────────────────╮
+              │                                                  │
+              │                Generator Upgrades                │
+              │                                                  │
+              │   Python SDK (Group: python-sdk) 3.0.0 → 4.2.5   │
+              │                                                  │
+              │                                                  │
+              ╰──────────────────────────────────────────────────╯"
 `;
 
 exports[`fern generator upgrade > fern generator upgrade message 1`] = `
