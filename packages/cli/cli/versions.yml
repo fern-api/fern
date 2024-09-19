@@ -1,5 +1,13 @@
 - changelogEntry: 
     - summary: | 
+        Previously, the OpenAPI converter would bring over `title` on every 
+        single property. This field is extraneous, so now we ignore it. 
+      type: fix
+  irVersion: 53
+  version: 0.42.10
+
+- changelogEntry: 
+    - summary: | 
         Previously, the OpenAPI importer would ignore skip parsing arbitrary 
         content types "*/*". Now it treats this content type as application/json. 
 
