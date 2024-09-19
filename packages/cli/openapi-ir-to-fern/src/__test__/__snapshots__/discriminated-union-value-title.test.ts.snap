@@ -28,7 +28,6 @@ exports[`openapi parser > discriminated-union-value-title > docs 1`] = `
             "body": {
               "properties": {
                 "id": {
-                  "display-name": "A simple request title",
                   "docs": "An optional string value.
 ",
                   "type": "optional<string>",
@@ -55,7 +54,6 @@ exports[`openapi parser > discriminated-union-value-title > docs 1`] = `
 ",
         "properties": {
           "value": {
-            "display-name": "A simple response title",
             "docs": "An optional numerical value.
 ",
             "type": "optional<double>",
@@ -125,7 +123,6 @@ exports[`openapi parser > discriminated-union-value-title > simple 1`] = `
             "body": {
               "properties": {
                 "id": {
-                  "display-name": "A simple request title",
                   "docs": "An optional string value.
 ",
                   "type": "optional<string>",
@@ -152,7 +149,6 @@ exports[`openapi parser > discriminated-union-value-title > simple 1`] = `
 ",
         "properties": {
           "value": {
-            "display-name": "A simple response title",
             "docs": "An optional numerical value.
 ",
             "type": "optional<double>",
