@@ -113,7 +113,7 @@ export abstract class AbstractPhpGeneratorContext<
     }
 
     public getLiteralAsString(literal: Literal): string {
-        return literal.type === "string" ? `"${literal.string}"` : literal.boolean ? '"true"' : '"false"';
+        return literal.type === "string" ? `'${literal.string}'` : literal.boolean ? "'true'" : "'false'";
     }
 
     public getDateTypeAttributeClassReference(): php.ClassReference {
