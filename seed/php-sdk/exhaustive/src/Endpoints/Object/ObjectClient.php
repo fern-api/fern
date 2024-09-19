@@ -40,7 +40,7 @@ class ObjectClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/object/get-and-return-with-optional-field",
                     method: HttpMethod::POST,
                     body: $request,
@@ -68,7 +68,7 @@ class ObjectClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/object/get-and-return-with-required-field",
                     method: HttpMethod::POST,
                     body: $request,
@@ -96,7 +96,7 @@ class ObjectClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/object/get-and-return-with-map-of-map",
                     method: HttpMethod::POST,
                     body: $request,
@@ -124,7 +124,7 @@ class ObjectClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/object/get-and-return-nested-with-optional-field",
                     method: HttpMethod::POST,
                     body: $request,
@@ -153,7 +153,7 @@ class ObjectClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/object/get-and-return-nested-with-required-field/$string",
                     method: HttpMethod::POST,
                     body: $request,
@@ -181,7 +181,7 @@ class ObjectClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/object/get-and-return-nested-with-required-field-list",
                     method: HttpMethod::POST,
                     body: $request,

@@ -35,7 +35,7 @@ class BasicAuthClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "basic-auth",
                     method: HttpMethod::GET,
                 ),
@@ -63,7 +63,7 @@ class BasicAuthClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "basic-auth",
                     method: HttpMethod::POST,
                     body: $request,

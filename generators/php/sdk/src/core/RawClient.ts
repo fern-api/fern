@@ -58,7 +58,8 @@ export class RawClient {
     public instantiate({ arguments_ }: { arguments_: Arguments }): php.ClassInstantiation {
         return php.instantiateClass({
             classReference: this.getClassReference(),
-            arguments_
+            arguments_,
+            multiline: true
         });
     }
 

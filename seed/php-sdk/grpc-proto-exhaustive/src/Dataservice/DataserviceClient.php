@@ -42,7 +42,7 @@ class DataserviceClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "data",
                     method: HttpMethod::POST,
                     body: $request,
@@ -70,7 +70,7 @@ class DataserviceClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "data/delete",
                     method: HttpMethod::POST,
                     body: $request,
@@ -98,7 +98,7 @@ class DataserviceClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "data/describe",
                     method: HttpMethod::POST,
                     body: $request,
@@ -133,7 +133,7 @@ class DataserviceClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "data/fetch",
                     method: HttpMethod::GET,
                     query: $query,
@@ -174,7 +174,7 @@ class DataserviceClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "data/list",
                     method: HttpMethod::GET,
                     query: $query,
@@ -202,7 +202,7 @@ class DataserviceClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "data/query",
                     method: HttpMethod::POST,
                     body: $request,
@@ -230,7 +230,7 @@ class DataserviceClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "data/update",
                     method: HttpMethod::POST,
                     body: $request,

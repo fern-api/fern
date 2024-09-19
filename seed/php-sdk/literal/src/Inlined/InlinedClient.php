@@ -36,7 +36,7 @@ class InlinedClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "inlined",
                     method: HttpMethod::POST,
                     body: $request,

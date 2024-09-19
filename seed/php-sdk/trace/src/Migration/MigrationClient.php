@@ -5,6 +5,7 @@ namespace Seed\Migration;
 use Seed\Core\RawClient;
 use Seed\Migration\Requests\GetAttemptedMigrationsRequest;
 use Seed\Core\JsonApiRequest;
+use Seed\Environments;
 use Seed\Core\HttpMethod;
 use JsonException;
 use Exception;
@@ -38,7 +39,7 @@ class MigrationClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/migration-info/all",
                     method: HttpMethod::GET,
                     headers: $headers,
