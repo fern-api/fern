@@ -270,7 +270,7 @@ async function parseApiConfigurationV2Schema({
                 overrides: spec.overrides,
                 audiences: [],
                 settings: {
-                    shouldUseTitleAsName: undefined,
+                    shouldUseTitleAsName: spec.settings?.["title-as-schema-name"],
                     shouldUseUndiscriminatedUnionsWithLiterals: undefined,
                     asyncApiMessageNaming: undefined,
                     shouldUseOptionalAdditionalProperties: spec.settings?.["optional-additional-properties"] ?? true
