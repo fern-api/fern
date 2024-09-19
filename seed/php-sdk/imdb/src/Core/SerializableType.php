@@ -11,7 +11,24 @@ use ReflectionProperty;
  */
 abstract class SerializableType implements \JsonSerializable
 {
-    public function jsonSerialize(): mixed {
+    /**
+     * @throws Exception
+     */
+    public function toJson(): string {
+        $serializedObject = $this->jsonSerialize();
+        $encoded = json_encode($serializedObject, JSON_THROW_ON_ERROR);
+        if (!$encoded) {
+            throw new Exception("Could not encode type");
+        }
+        return $encoded;
+    }
+
+    /**
+     * @return mixed[]
+     * @throws \JsonException
+     */
+    public function jsonSerialize(): array
+    {
         $result = [];
         $reflectionClass = new \ReflectionClass($this);
 
@@ -46,10 +63,14 @@ abstract class SerializableType implements \JsonSerializable
         return $result;
     }
 
+    /**
+     * @throws \JsonException
+     * @throws Exception
+     */
     public static function fromJson(string $json): static {
         $decodedJson = JsonDecoder::decode($json);
         if (!is_array($decodedJson)) {
-            throw new Exception("Unexpected non-array decoded type: " . gettype($decodedJson));
+            throw new \JsonException("Unexpected non-array decoded type: " . gettype($decodedJson));
         }
         return self::jsonDeserialize($decodedJson);
     }

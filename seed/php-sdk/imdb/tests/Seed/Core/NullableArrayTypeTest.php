@@ -29,12 +29,14 @@ class NullableArrayTypeTest extends TestCase
             'nullable_string_array' => ['one', null, 'three']
         ];
 
-        $object = NullableArrayType::jsonDeserialize($data);
+        $json = json_encode($data, JSON_THROW_ON_ERROR);
+
+        $object = NullableArrayType::fromJson($json);
 
         $this->assertEquals(['one', null, 'three'], $object->nullableStringArray, 'nullable_string_array should match the original data.');
 
-        $serializedArray = $object->jsonSerialize();
+        $serializedJson = $object->toJson();
 
-        $this->assertEquals($data, $serializedArray, 'Serialized JSON does not match original JSON for nullable_string_array.');
+         $this->assertJsonStringEqualsJsonString($json, $serializedJson, 'Serialized JSON does not match original JSON for nullable_string_array.');
     }
 }

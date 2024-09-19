@@ -4,29 +4,30 @@ namespace Seed\Core;
 
 use DateTime;
 use Exception;
+use JsonException;
 
 class JsonDeserializer
 {
     /**
-     * @throws Exception
+     * @throws JsonException
      */
     public static function deserializeDateTime(string $datetime): DateTime
     {
         try {
             return new DateTime($datetime);
         } catch (Exception $e) {
-            throw new Exception("Failed to create DateTime from string: $datetime", previous: $e);
+            throw new JsonException("Failed to create DateTime from string: $datetime", previous: $e);
         }
     }
 
     /**
-     * @throws Exception
+     * @throws JsonException
      */
     public static function deserializeDate(string $date): DateTime
     {
         $dateTime = DateTime::createFromFormat(Constant::DateDeserializationFormat, $date);
         if ($dateTime === false) {
-            throw new Exception("Failed to create date from string: $date");
+            throw new JsonException("Failed to create date from string: $date");
         }
         return $dateTime;
     }
@@ -51,7 +52,7 @@ class JsonDeserializer
      * @param mixed $data The data to deserialize.
      * @param mixed $type The type definition.
      * @return mixed The deserialized value.
-     * @throws Exception
+     * @throws JsonException
      */
     private static function deserializeValue(mixed $data, mixed $type): mixed
     {
@@ -63,14 +64,14 @@ class JsonDeserializer
                     continue;
                 }
             }
-            throw new \InvalidArgumentException("Cannot deserialize value with any of the union types.");
+            throw new JsonException("Cannot deserialize value with any of the union types.");
         }
         if (is_array($type)) {
             return self::deserializeArray((array)$data, $type);
         }
 
         if (gettype($type) != "string") {
-            throw new Exception("Unexpected non-string type.");
+            throw new JsonException("Unexpected non-string type.");
         }
         return self::deserializeSingleValue($data, $type);
     }
@@ -81,6 +82,7 @@ class JsonDeserializer
      * @param mixed $data The data to deserialize.
      * @param string $type The expected type.
      * @return mixed The deserialized value.
+     * @throws JsonException
      */
     private static function deserializeSingleValue(mixed $data, string $type): mixed
     {
@@ -108,7 +110,7 @@ class JsonDeserializer
             return $data;
         }
 
-        throw new \InvalidArgumentException("Unable to deserialize value of type '" . gettype($data) . "' as '$type'.");
+        throw new JsonException("Unable to deserialize value of type '" . gettype($data) . "' as '$type'.");
     }
 
     /**
@@ -117,6 +119,7 @@ class JsonDeserializer
      * @param array<string, mixed> $data The associative array to deserialize.
      * @param array<string, mixed> $type The type definition for the map.
      * @return array<string, mixed> The deserialized map.
+     * @throws JsonException
      */
     private static function deserializeMap(array $data, array $type): array
     {
@@ -138,6 +141,7 @@ class JsonDeserializer
      * @param mixed[] $data The list to deserialize.
      * @param mixed[] $type The type definition for the list.
      * @return mixed[] The deserialized list.
+     * @throws JsonException
      */
     private static function deserializeList(array $data, array $type): array
     {

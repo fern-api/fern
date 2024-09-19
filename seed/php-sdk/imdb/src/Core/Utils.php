@@ -4,6 +4,7 @@ namespace Seed\Core;
 
 use DateTime;
 use Exception;
+use JsonException;
 
 class Utils
 {
@@ -24,12 +25,12 @@ class Utils
      * @param mixed $key The key to be cast.
      * @param string $keyType The type to cast the key to ('string', 'integer', 'float').
      * @return mixed The casted key.
-     * @throws Exception
+     * @throws JsonException
      */
     public static function castKey(mixed $key, string $keyType): mixed
     {
         if (!is_scalar($key)) {
-            throw new Exception("Key must be a scalar type.");
+            throw new JsonException("Key must be a scalar type.");
         }
         return match ($keyType) {
             'integer' => (int)$key,

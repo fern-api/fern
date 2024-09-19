@@ -52,8 +52,9 @@ class NestedUnionArrayTypeTest extends TestCase
             ]
         ];
 
+        $json = json_encode($data, JSON_THROW_ON_ERROR);
 
-        $object = NestedUnionArrayType::jsonDeserialize($data);
+        $object = NestedUnionArrayType::fromJson($json);
 
         // Level 1
         $this->assertInstanceOf(TestNestedType::class, $object->nestedArray[1][1], 'nested_array[1][1] should be an instance of TestNestedType.');
@@ -72,8 +73,8 @@ class NestedUnionArrayTypeTest extends TestCase
         $this->assertInstanceOf(DateTime::class, $object->nestedArray[2][7], 'nested_array[1][4] should be a DateTime instance.');
         $this->assertEquals('2023-02-02', $object->nestedArray[2][7]->format('Y-m-d'), 'nested_array[1][4] should have the correct date.');
 
-        $serializedArray = $object->jsonSerialize();
+        $serializedJson = $object->toJson();
 
-        $this->assertEquals($data, $serializedArray, 'Serialized JSON does not match original JSON for nested_array.');
+         $this->assertJsonStringEqualsJsonString($json, $serializedJson, 'Serialized JSON does not match original JSON for nested_array.');
     }
 }
