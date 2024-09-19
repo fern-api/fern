@@ -98,18 +98,17 @@ class TestTypeTest extends TestCase
             'dates_array' => ['2023-01-01', null, '2023-03-01'] // Testing nullable dates in array
         ];
 
-        $json = json_encode($data, JSON_THROW_ON_ERROR);
 
-        $object = TestType::fromJson($json);
+        $object = TestType::jsonDeserialize($data);
 
-        $serializedJson = $object->toJson();
+        $serializedArray = $object->jsonSerialize();
 
-        $this->assertJsonStringEqualsJsonString($json, $serializedJson, 'The serialized JSON does not match the original JSON.');
+        $this->assertEquals($data, $serializedArray, 'The serialized JSON does not match the original JSON.');
 
         // Check that nullable property is null and not included in JSON
         $this->assertNull($object->nullableProperty, 'Nullable property should be null.');
         // @phpstan-ignore-next-line
-        $this->assertFalse(array_key_exists('nullable_property', json_decode($serializedJson, true)), 'Nullable property should be omitted from JSON.');
+        $this->assertFalse(array_key_exists('nullable_property', $serializedArray), 'Nullable property should be omitted from JSON.');
 
         // Check date properties
         $this->assertInstanceOf(DateTime::class, $object->dateProperty, 'date_property should be a DateTime instance.');

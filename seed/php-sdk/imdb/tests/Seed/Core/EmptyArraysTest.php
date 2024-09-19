@@ -39,13 +39,10 @@ class EmptyArraysTest extends TestCase
             'empty_dates_array' => []
         ];
 
-        $json = json_encode($data, JSON_THROW_ON_ERROR);
+        $object = EmptyArraysType::jsonDeserialize($data);
+        $serializedArray = $object->jsonSerialize();
 
-        $object = EmptyArraysType::fromJson($json);
-
-        $serializedJson = $object->toJson();
-
-        $this->assertJsonStringEqualsJsonString($json, $serializedJson, 'Serialized JSON does not match original JSON for EmptyArraysType.');
+        $this->assertEquals($data, $serializedArray, 'Serialized JSON does not match original JSON for EmptyArraysType.');
 
         // Check that arrays are empty
         $this->assertEmpty($object->emptyStringArray, 'empty_string_array should be empty.');

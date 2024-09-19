@@ -24,11 +24,9 @@ class InvalidTypesTest extends TestCase
             'integer_property' => 'not_an_integer'
         ];
 
-        $json = json_encode($data, JSON_THROW_ON_ERROR);
-
         $this->expectException(\TypeError::class);
 
         // Attempt to deserialize invalid data
-        InvalidType::fromJson($json);
+        InvalidType::jsonDeserialize($data);
     }
 }

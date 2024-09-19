@@ -23,6 +23,9 @@ class TestNestedType extends SerializableType
 
 class NestedUnionArrayType extends SerializableType
 {
+    /**
+     * @param array<integer, array<integer, TestNestedType|null|string>> $nestedArray
+     */
     public function __construct(
         #[ArrayType(['integer' => ['integer' => new Union(TestNestedType::class, 'null', 'date')]])]
         #[JsonProperty('nested_array')]
@@ -33,7 +36,7 @@ class NestedUnionArrayType extends SerializableType
 
 class NestedUnionArrayTypeTest extends TestCase
 {
-    public function testNestedUnionTypesInArrays()
+    public function testNestedUnionTypesInArrays(): void
     {
         $data = [
             'nested_array' => [
@@ -49,9 +52,8 @@ class NestedUnionArrayTypeTest extends TestCase
             ]
         ];
 
-        $json = json_encode($data, JSON_THROW_ON_ERROR);
 
-        $object = NestedUnionArrayType::fromJson($json);
+        $object = NestedUnionArrayType::jsonDeserialize($data);
 
         // Level 1
         $this->assertInstanceOf(TestNestedType::class, $object->nestedArray[1][1], 'nested_array[1][1] should be an instance of TestNestedType.');
@@ -70,8 +72,8 @@ class NestedUnionArrayTypeTest extends TestCase
         $this->assertInstanceOf(DateTime::class, $object->nestedArray[2][7], 'nested_array[1][4] should be a DateTime instance.');
         $this->assertEquals('2023-02-02', $object->nestedArray[2][7]->format('Y-m-d'), 'nested_array[1][4] should have the correct date.');
 
-        $serializedJson = $object->toJson();
+        $serializedArray = $object->jsonSerialize();
 
-        $this->assertJsonStringEqualsJsonString($json, $serializedJson, 'Serialized JSON does not match original JSON for nested_array.');
+        $this->assertEquals($data, $serializedArray, 'Serialized JSON does not match original JSON for nested_array.');
     }
 }

@@ -41,8 +41,8 @@ class DateArrayTypeTest extends TestCase
         $this->assertInstanceOf(DateTime::class, $object->dates[2], 'dates[2] should be a DateTime instance.');
         $this->assertEquals('2023-03-01', $object->dates[2]->format('Y-m-d'), 'dates[2] should have the correct date.');
 
-        $serializedJson = $object->toJson();
+        $serializedArray = $object->jsonSerialize();
 
-        $this->assertJsonStringEqualsJsonString($json, $serializedJson, 'Serialized JSON does not match original JSON for dates array.');
+        $this->assertEquals($data, $serializedArray, 'Serialized JSON does not match original JSON for dates array.');
     }
 }

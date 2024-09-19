@@ -23,13 +23,11 @@ class NullPropertyTypeTest extends TestCase
     {
         $object = new NullPropertyType('Test String', null);
 
-        $json = $object->toJson();
+        $serializedObject = (array)$object->jsonSerialize();
 
-        $data = json_decode($json, true, JSON_THROW_ON_ERROR);
+        $this->assertArrayHasKey('non_null_property', $serializedObject, 'non_null_property should be present in the serialized JSON.');
+        $this->assertArrayNotHasKey('null_property', $serializedObject, 'null_property should be omitted from the serialized JSON.');
 
-        $this->assertArrayHasKey('non_null_property', $data, 'non_null_property should be present in the serialized JSON.');
-        $this->assertArrayNotHasKey('null_property', $data, 'null_property should be omitted from the serialized JSON.');
-
-        $this->assertEquals('Test String', $data['non_null_property'], 'non_null_property should have the correct value.');
+        $this->assertEquals('Test String', $serializedObject['non_null_property'], 'non_null_property should have the correct value.');
     }
 }

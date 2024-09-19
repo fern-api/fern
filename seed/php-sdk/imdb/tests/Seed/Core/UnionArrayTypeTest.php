@@ -34,16 +34,15 @@ class UnionArrayTypeTest extends TestCase
             ]
         ];
 
-        $json = json_encode($data, JSON_THROW_ON_ERROR);
 
-        $object = UnionArrayType::fromJson($json);
+        $object = UnionArrayType::jsonDeserialize($data);
 
         $this->assertEquals('one', $object->mixedArray[1], 'mixed_array[1] should be "one".');
         $this->assertEquals(2, $object->mixedArray[2], 'mixed_array[2] should be 2.');
         $this->assertNull($object->mixedArray[3], 'mixed_array[3] should be null.');
 
-        $serializedJson = $object->toJson();
+        $serializedArray = $object->jsonSerialize();
 
-        $this->assertJsonStringEqualsJsonString($json, $serializedJson, 'Serialized JSON does not match original JSON for mixed_array.');
+        $this->assertEquals($data, $serializedArray, 'Serialized JSON does not match original JSON for mixed_array.');
     }
 }
