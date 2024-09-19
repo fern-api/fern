@@ -199,7 +199,7 @@ class EndpointGenerator:
                 writer.write_line(f'path="{self._get_endpoint_path()}",')
 
                 # Void responses make more sense as response_class, but keeping as response_model to not modify existing users
-                if  not self._get_is_return_type_pydantic_model():
+                if not self._get_is_return_type_pydantic_model():
                     writer.write("response_class=")
                 else:
                     writer.write("response_model=")
