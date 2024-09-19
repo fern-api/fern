@@ -9,7 +9,7 @@
           specs: 
             - openapi: /path/to/openapi
               settings: 
-                use-titles-as-schema-name: false
+                use-title-as-schema-name: false
         ```
       type: fix
   irVersion: 53
