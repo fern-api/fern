@@ -262,6 +262,7 @@ class SnippetWriter:
         unknown: Any,
     ) -> AST.Expression:
         if unknown is not None:
+
             def write_unknown(writer: AST.NodeWriter) -> None:
                 maybe_stringify_unknown = repr(unknown) if type(unknown) is str else unknown
                 writer.write_line(f"{maybe_stringify_unknown}")
