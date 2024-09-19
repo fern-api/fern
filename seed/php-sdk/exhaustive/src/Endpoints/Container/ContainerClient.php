@@ -36,7 +36,7 @@ class ContainerClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/container/list-of-primitives",
                     method: HttpMethod::POST,
                     body: $request,
@@ -64,7 +64,7 @@ class ContainerClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/container/list-of-objects",
                     method: HttpMethod::POST,
                     body: $request,
@@ -92,7 +92,7 @@ class ContainerClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/container/set-of-primitives",
                     method: HttpMethod::POST,
                     body: $request,
@@ -120,7 +120,7 @@ class ContainerClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/container/set-of-objects",
                     method: HttpMethod::POST,
                     body: $request,
@@ -148,7 +148,7 @@ class ContainerClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/container/map-prim-to-prim",
                     method: HttpMethod::POST,
                     body: $request,
@@ -176,7 +176,7 @@ class ContainerClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/container/map-prim-to-object",
                     method: HttpMethod::POST,
                     body: $request,
@@ -204,7 +204,7 @@ class ContainerClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/container/opt-objects",
                     method: HttpMethod::POST,
                     body: $request,

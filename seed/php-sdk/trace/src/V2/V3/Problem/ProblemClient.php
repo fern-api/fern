@@ -4,6 +4,7 @@ namespace Seed\V2\V3\Problem;
 
 use Seed\Core\RawClient;
 use Seed\Core\JsonApiRequest;
+use Seed\Environments;
 use Seed\Core\HttpMethod;
 use JsonException;
 use Exception;
@@ -35,7 +36,7 @@ class ProblemClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/problems-v2/lightweight-problem-info",
                     method: HttpMethod::GET,
                 ),
@@ -62,7 +63,7 @@ class ProblemClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/problems-v2/problem-info",
                     method: HttpMethod::GET,
                 ),
@@ -90,7 +91,7 @@ class ProblemClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/problems-v2/problem-info/$problemId",
                     method: HttpMethod::GET,
                 ),
@@ -119,7 +120,7 @@ class ProblemClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/problems-v2/problem-info/$problemId/version/$problemVersion",
                     method: HttpMethod::GET,
                 ),

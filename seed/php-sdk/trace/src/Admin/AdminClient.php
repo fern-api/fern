@@ -4,6 +4,7 @@ namespace Seed\Admin;
 
 use Seed\Core\RawClient;
 use Seed\Core\JsonApiRequest;
+use Seed\Environments;
 use Seed\Core\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
 use Exception;
@@ -40,7 +41,7 @@ class AdminClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/admin/store-test-submission-status/$submissionId",
                     method: HttpMethod::POST,
                     body: $request,
@@ -67,7 +68,7 @@ class AdminClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/admin/store-test-submission-status-v2/$submissionId",
                     method: HttpMethod::POST,
                     body: $request,
@@ -94,7 +95,7 @@ class AdminClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/admin/store-workspace-submission-status/$submissionId",
                     method: HttpMethod::POST,
                     body: $request,
@@ -121,7 +122,7 @@ class AdminClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/admin/store-workspace-submission-status-v2/$submissionId",
                     method: HttpMethod::POST,
                     body: $request,
@@ -149,7 +150,7 @@ class AdminClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/admin/store-test-trace/submission/$submissionId/testCase/$testCaseId",
                     method: HttpMethod::POST,
                     body: $request,
@@ -177,7 +178,7 @@ class AdminClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/admin/store-test-trace-v2/submission/$submissionId/testCase/$testCaseId",
                     method: HttpMethod::POST,
                     body: $request,
@@ -204,7 +205,7 @@ class AdminClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/admin/store-workspace-trace/submission/$submissionId",
                     method: HttpMethod::POST,
                     body: $request,
@@ -231,7 +232,7 @@ class AdminClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/admin/store-workspace-trace-v2/submission/$submissionId",
                     method: HttpMethod::POST,
                     body: $request,

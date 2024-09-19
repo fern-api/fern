@@ -131,41 +131,60 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 value: php.codeblock(`"${platformHeaders.userAgent.value}"`)
             });
         }
-        const headers = php.map({ entries: headerEntries });
+        const headers = php.map({
+            entries: headerEntries,
+            multiline: true
+        });
         return {
             access: "public",
             parameters,
             body: php.codeblock((writer) => {
                 writer.write("$defaultHeaders = ");
                 writer.writeNodeStatement(headers);
+                writer.writeLine();
 
-                writer.write("$this->options = ");
+                writer.write(`$this->${this.context.getClientOptionsName()} = `);
                 writer.writeNodeStatement(
                     php.codeblock((writer) => {
-                        writer.write("$options ?? ");
+                        writer.write(`$${this.context.getClientOptionsName()} ?? `);
                         writer.writeNode(php.codeblock("[]"));
                     })
                 );
+                writer.write(
+                    `$this->${this.context.getClientOptionsName()}['${this.context.getHeadersOptionName()}'] = `
+                );
+                writer.writeNodeStatement(
+                    php.invokeMethod({
+                        method: "array_merge",
+                        arguments_: [
+                            php.codeblock("$defaultHeaders"),
+                            php.codeblock(
+                                `$this->${this.context.getClientOptionsName()}['${this.context.getHeadersOptionName()}'] ?? []`
+                            )
+                        ],
+                        multiline: true
+                    })
+                );
+                writer.writeLine();
 
                 writer.write("$this->client = ");
                 writer.writeNodeStatement(
                     this.context.rawClient.instantiate({
                         arguments_: [
                             {
-                                name: "client",
+                                name: "options",
                                 assignment: php.codeblock((writer) => {
-                                    const guzzleClientOption = `$this->${this.context.getClientOptionsName()}['client']`;
-                                    writer.write(`${guzzleClientOption} ?? `);
-                                    writer.writeNode(this.context.guzzleClient.instantiate());
+                                    const clientOptions = `$this->${this.context.getClientOptionsName()}`;
+                                    writer.write(clientOptions);
                                 })
-                            },
-                            {
-                                name: "headers",
-                                assignment: php.codeblock("$defaultHeaders")
                             }
                         ]
                     })
                 );
+
+                if (subpackages.length > 0) {
+                    writer.writeLine();
+                }
 
                 for (const subpackage of subpackages) {
                     writer.write(`$this->${subpackage.name.camelCase.safeName} = `);

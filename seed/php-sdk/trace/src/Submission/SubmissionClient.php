@@ -5,6 +5,7 @@ namespace Seed\Submission;
 use Seed\Core\RawClient;
 use Seed\Commons\Types\Language;
 use Seed\Core\JsonApiRequest;
+use Seed\Environments;
 use Seed\Core\HttpMethod;
 use JsonException;
 use Exception;
@@ -37,7 +38,7 @@ class SubmissionClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/sessions/create-session/$language",
                     method: HttpMethod::POST,
                 ),
@@ -65,7 +66,7 @@ class SubmissionClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/sessions/$sessionId",
                     method: HttpMethod::GET,
                 ),
@@ -93,7 +94,7 @@ class SubmissionClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/sessions/stop/$sessionId",
                     method: HttpMethod::DELETE,
                 ),
@@ -117,7 +118,7 @@ class SubmissionClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? '',
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/sessions/execution-sessions-state",
                     method: HttpMethod::GET,
                 ),
