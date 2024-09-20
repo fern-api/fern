@@ -2,24 +2,17 @@
 
 namespace Seed;
 
-use GuzzleHttp\ClientInterface;
-use Seed\Core\RawClient;
 use Seed\A\AClient;
 use Seed\Folder\FolderClient;
-use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
+use Seed\Core\RawClient;
+use Seed\Core\JsonApiRequest;
+use Seed\Core\HttpMethod;
+use Psr\Http\Client\ClientExceptionInterface;
+use Exception;
 
 class SeedClient
 {
-    /**
-     * @var ?array{baseUrl?: string, client?: ClientInterface} $options
-     */
-    private ?array $options;
-
-    /**
-     * @var RawClient $client
-     */
-    private RawClient $client;
-
     /**
      * @var AClient $a
      */
@@ -31,19 +24,63 @@ class SeedClient
     public FolderClient $folder;
 
     /**
-     * @param ?array{baseUrl?: string, client?: ClientInterface} $options
+     * @var ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
+     */
+    private ?array $options;
+
+    /**
+     * @var RawClient $client
+     */
+    private RawClient $client;
+
+    /**
+     * @param ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
      */
     public function __construct(
         ?array $options = null,
     ) {
         $defaultHeaders = [
-            "X-Fern-Language" => "PHP",
-            "X-Fern-SDK-Name" => "Seed",
-            "X-Fern-SDK-Version" => "0.0.1",
+            'X-Fern-Language' => 'PHP',
+            'X-Fern-SDK-Name' => 'Seed',
+            'X-Fern-SDK-Version' => '0.0.1',
         ];
+
         $this->options = $options ?? [];
-        $this->client = new RawClient(client: $this->options['client'] ?? new Client(), headers: $defaultHeaders);
+        $this->options['headers'] = array_merge(
+            $defaultHeaders,
+            $this->options['headers'] ?? [],
+        );
+
+        $this->client = new RawClient(
+            options: $this->options,
+        );
+
         $this->a = new AClient($this->client);
         $this->folder = new FolderClient($this->client);
     }
+
+    /**
+     * @param ?array{baseUrl?: string} $options
+     * @returns mixed
+     */
+    public function foo(?array $options = null): mixed
+    {
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "",
+                    method: HttpMethod::POST,
+                ),
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return;
+            }
+        } catch (ClientExceptionInterface $e) {
+            throw new Exception($e->getMessage());
+        }
+        throw new Exception("Error with status code " . $statusCode);
+    }
+
 }

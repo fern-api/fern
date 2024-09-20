@@ -2,15 +2,19 @@
 
 namespace Seed;
 
+use Seed\Users\UsersClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\RawClient;
-use Seed\Users\UsersClient;
-use GuzzleHttp\Client;
 
 class SeedClient
 {
     /**
-     * @var ?array{baseUrl?: string, client?: ClientInterface} $options
+     * @var UsersClient $users
+     */
+    public UsersClient $users;
+
+    /**
+     * @var ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
      */
     private ?array $options;
 
@@ -20,23 +24,32 @@ class SeedClient
     private RawClient $client;
 
     /**
-     * @var UsersClient $users
-     */
-    public UsersClient $users;
-
-    /**
-     * @param ?array{baseUrl?: string, client?: ClientInterface} $options
+     * @param ?string $token The token to use for authentication.
+     * @param ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
      */
     public function __construct(
+        ?string $token = null,
         ?array $options = null,
     ) {
         $defaultHeaders = [
-            "X-Fern-Language" => "PHP",
-            "X-Fern-SDK-Name" => "Seed",
-            "X-Fern-SDK-Version" => "0.0.1",
+            'X-Fern-Language' => 'PHP',
+            'X-Fern-SDK-Name' => 'Seed',
+            'X-Fern-SDK-Version' => '0.0.1',
         ];
+        if ($token != null) {
+            $defaultHeaders['Authorization'] = "Bearer $token";
+        }
+
         $this->options = $options ?? [];
-        $this->client = new RawClient(client: $this->options['client'] ?? new Client(), headers: $defaultHeaders);
+        $this->options['headers'] = array_merge(
+            $defaultHeaders,
+            $this->options['headers'] ?? [],
+        );
+
+        $this->client = new RawClient(
+            options: $this->options,
+        );
+
         $this->users = new UsersClient($this->client);
     }
 }

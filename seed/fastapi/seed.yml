@@ -28,11 +28,11 @@ fixtures:
         skip_formatting: True
       outputFolder: skip-formatting
     - customConfig:
-        pydantic_config: 
+        pydantic_config:
           version: v1
       outputFolder: pydantic-v1
     - customConfig:
-        pydantic_config: 
+        pydantic_config:
           version: v2
       outputFolder: pydantic-v2
     - customConfig:
@@ -51,11 +51,9 @@ fixtures:
         async_handlers:
           - imdb.createMovie
       outputFolder: async-handlers
-allowedFailures: 
+allowedFailures:
   - auth-environment-variables
   - bytes
-  - file-download
-  - file-upload
   - literal-headers
   - query-parameters
   - response-property

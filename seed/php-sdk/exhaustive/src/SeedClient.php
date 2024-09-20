@@ -2,8 +2,6 @@
 
 namespace Seed;
 
-use GuzzleHttp\ClientInterface;
-use Seed\Core\RawClient;
 use Seed\Endpoints\EndpointsClient;
 use Seed\GeneralErrors\GeneralErrorsClient;
 use Seed\InlinedRequests\InlinedRequestsClient;
@@ -11,20 +9,11 @@ use Seed\NoAuth\NoAuthClient;
 use Seed\NoReqBody\NoReqBodyClient;
 use Seed\ReqWithHeaders\ReqWithHeadersClient;
 use Seed\Types\TypesClient;
-use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
+use Seed\Core\RawClient;
 
 class SeedClient
 {
-    /**
-     * @var ?array{baseUrl?: string, client?: ClientInterface} $options
-     */
-    private ?array $options;
-
-    /**
-     * @var RawClient $client
-     */
-    private RawClient $client;
-
     /**
      * @var EndpointsClient $endpoints
      */
@@ -61,18 +50,42 @@ class SeedClient
     public TypesClient $types;
 
     /**
-     * @param ?array{baseUrl?: string, client?: ClientInterface} $options
+     * @var ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
+     */
+    private ?array $options;
+
+    /**
+     * @var RawClient $client
+     */
+    private RawClient $client;
+
+    /**
+     * @param ?string $token The token to use for authentication.
+     * @param ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
      */
     public function __construct(
+        ?string $token = null,
         ?array $options = null,
     ) {
         $defaultHeaders = [
-            "X-Fern-Language" => "PHP",
-            "X-Fern-SDK-Name" => "Seed",
-            "X-Fern-SDK-Version" => "0.0.1",
+            'X-Fern-Language' => 'PHP',
+            'X-Fern-SDK-Name' => 'Seed',
+            'X-Fern-SDK-Version' => '0.0.1',
         ];
+        if ($token != null) {
+            $defaultHeaders['Authorization'] = "Bearer $token";
+        }
+
         $this->options = $options ?? [];
-        $this->client = new RawClient(client: $this->options['client'] ?? new Client(), headers: $defaultHeaders);
+        $this->options['headers'] = array_merge(
+            $defaultHeaders,
+            $this->options['headers'] ?? [],
+        );
+
+        $this->client = new RawClient(
+            options: $this->options,
+        );
+
         $this->endpoints = new EndpointsClient($this->client);
         $this->generalErrors = new GeneralErrorsClient($this->client);
         $this->inlinedRequests = new InlinedRequestsClient($this->client);

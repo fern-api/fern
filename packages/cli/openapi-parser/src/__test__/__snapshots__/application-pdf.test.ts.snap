@@ -19,6 +19,7 @@ exports[`open api parser > application-pdf-content-type > parse open api 1`] = `
       "idempotent": null,
       "internal": null,
       "method": "GET",
+      "namespace": null,
       "operationId": "pdf_get",
       "pagination": null,
       "path": "/pdf",
@@ -47,11 +48,14 @@ exports[`open api parser > application-pdf-content-type > parse open api 1`] = `
     },
   ],
   "globalHeaders": [],
+  "groupedSchemas": {
+    "namespacedSchemas": {},
+    "rootSchemas": {},
+  },
   "groups": {},
   "hasEndpointsMarkedInternal": false,
   "idempotencyHeaders": [],
   "nonRequestReferencedSchemas": [],
-  "schemas": {},
   "securitySchemes": {},
   "servers": [],
   "tags": {

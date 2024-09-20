@@ -2,8 +2,6 @@
 
 namespace Seed;
 
-use GuzzleHttp\ClientInterface;
-use Seed\Core\RawClient;
 use Seed\V2\V2Client;
 use Seed\Admin\AdminClient;
 use Seed\Commons\CommonsClient;
@@ -14,20 +12,11 @@ use Seed\Playlist\PlaylistClient;
 use Seed\Problem\ProblemClient;
 use Seed\Submission\SubmissionClient;
 use Seed\Sysprop\SyspropClient;
-use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
+use Seed\Core\RawClient;
 
 class SeedClient
 {
-    /**
-     * @var ?array{baseUrl?: string, client?: ClientInterface} $options
-     */
-    private ?array $options;
-
-    /**
-     * @var RawClient $client
-     */
-    private RawClient $client;
-
     /**
      * @var V2Client $v2
      */
@@ -79,19 +68,47 @@ class SeedClient
     public SyspropClient $sysprop;
 
     /**
-     * @param ?array{baseUrl?: string, client?: ClientInterface} $options
+     * @var ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
+     */
+    private ?array $options;
+
+    /**
+     * @var RawClient $client
+     */
+    private RawClient $client;
+
+    /**
+     * @param ?string $token The token to use for authentication.
+     * @param ?string $xRandomHeader
+     * @param ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
      */
     public function __construct(
+        ?string $token = null,
+        ?string $xRandomHeader = null,
         ?array $options = null,
     ) {
         $defaultHeaders = [
-            "X-Random-Header" => $xRandomHeader,
-            "X-Fern-Language" => "PHP",
-            "X-Fern-SDK-Name" => "Seed",
-            "X-Fern-SDK-Version" => "0.0.1",
+            'X-Fern-Language' => 'PHP',
+            'X-Fern-SDK-Name' => 'Seed',
+            'X-Fern-SDK-Version' => '0.0.1',
         ];
+        if ($token != null) {
+            $defaultHeaders['Authorization'] = "Bearer $token";
+        }
+        if ($$xRandomHeader != null) {
+            $defaultHeaders['X-Random-Header'] = $$xRandomHeader;
+        }
+
         $this->options = $options ?? [];
-        $this->client = new RawClient(client: $this->options['client'] ?? new Client(), headers: $defaultHeaders);
+        $this->options['headers'] = array_merge(
+            $defaultHeaders,
+            $this->options['headers'] ?? [],
+        );
+
+        $this->client = new RawClient(
+            options: $this->options,
+        );
+
         $this->v2 = new V2Client($this->client);
         $this->admin = new AdminClient($this->client);
         $this->commons = new CommonsClient($this->client);

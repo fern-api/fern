@@ -39,6 +39,7 @@ export { HeaderAuthSchemeSchema } from "./HeaderAuthSchemeSchema";
 export { HttpEndpointSchema, HttpMethodSchema } from "./HttpEndpointSchema";
 export { HttpHeaderSchema } from "./HttpHeaderSchema";
 export { HttpInlineRequestBodySchema } from "./HttpInlineRequestBodySchema";
+export { HttpInlineRequestBodyPropertySchema } from "./HttpInlineRequestBodyPropertySchema";
 export { HttpPathParameterSchema } from "./HttpPathParameterSchema";
 export { HttpQueryParameterSchema } from "./HttpQueryParameterSchema";
 export { HttpReferencedRequestBodySchema } from "./HttpReferencedRequestBodySchema";
@@ -73,11 +74,7 @@ export { StatusCodeErrorDiscriminationSchema } from "./StatusCodeErrorDiscrimina
 export { StringValidationSchema } from "./StringValidationSchema";
 export { TransportSchema } from "./TransportSchema";
 export { TypeDeclarationSchema } from "./TypeDeclarationSchema";
-export {
-    TypeReferenceSchema,
-    TypeReferenceWithDocsSchema,
-    TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema
-} from "./TypeReferenceSchema";
+export { TypeReferenceSchema } from "./TypeReferenceSchema";
 export { UndiscriminatedUnionSchema } from "./UndiscriminatedUnionSchema";
 export { ValidationSchema } from "./ValidationSchema";
 export { VariableDeclarationSchema } from "./VariableDeclarationSchema";

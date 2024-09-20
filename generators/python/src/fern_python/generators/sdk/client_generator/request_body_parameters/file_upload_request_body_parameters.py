@@ -6,6 +6,7 @@ from fern_python.codegen import AST
 from fern_python.external_dependencies.json import Json
 
 from ...context.sdk_generator_context import SdkGeneratorContext
+from ..constants import DEFAULT_BODY_PARAMETER_VALUE
 from .abstract_request_body_parameters import AbstractRequestBodyParameters
 
 FILETYPE_DOCS = "See core.File for more documentation"
@@ -25,13 +26,15 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
     def get_parameters(self, names_to_deconflict: Optional[List[str]] = None) -> List[AST.NamedFunctionParameter]:
         parameters: List[AST.NamedFunctionParameter] = []
         for property in self._request.properties:
+            type_hint = self._get_property_type(property)
             parameters.append(
                 AST.NamedFunctionParameter(
                     name=self._get_property_name(property),
-                    type_hint=self._get_property_type(property),
+                    type_hint=type_hint,
                     docs=self._get_docs(property),
                     raw_type=self._get_raw_property_type(property),
                     raw_name=self._get_raw_property_name(property),
+                    initializer=AST.Expression(DEFAULT_BODY_PARAMETER_VALUE) if type_hint.is_optional else None,
                 ),
             )
         return parameters

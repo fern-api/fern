@@ -2,20 +2,20 @@
 
 namespace Seed\File\Notification;
 
-use Seed\Core\RawClient;
 use Seed\File\Notification\Service\ServiceClient;
+use Seed\Core\RawClient;
 
 class NotificationClient
 {
     /**
-     * @var RawClient $client
-     */
-    private RawClient $client;
-
-    /**
      * @var ServiceClient $service
      */
     public ServiceClient $service;
+
+    /**
+     * @var RawClient $client
+     */
+    private RawClient $client;
 
     /**
      * @param RawClient $client

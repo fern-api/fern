@@ -14967,7 +14967,6 @@ A payment intent captures all payment information (such as the amount to be char
                     "type": "string",
                   },
                   "metadata": {
-                    "display-name": "Colombia 🇨🇴 PSE",
                     "docs": "Optional and customizable object where you can provide any additional key-value pairs for your internal purposes. For example, an internal reference number for the payment intent.
 
 ⚠️ **Note**: You can only provide up to 50 keys (keys can have up to 50 characters each and each value can be up to 500 characters). We do not support nested objects, only ASCII values.",
@@ -20360,7 +20359,6 @@ client.connect()
                 "properties": {
                   "attach_pdf": {
                     "default": false,
-                    "display-name": "Tax Declarations",
                     "docs": "When this is set to \`true\`, you will receive the PDF as a binary string in the response.",
                     "type": "optional<boolean>",
                   },
@@ -20376,7 +20374,6 @@ client.connect()
                   },
                   "save_data": {
                     "default": true,
-                    "display-name": "Tax Declarations",
                     "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
                     "type": "optional<boolean>",
@@ -31461,14 +31458,12 @@ client.connect()
         "docs": "This error occurs when you try to access Belvo's resource without the correct permissions.",
         "properties": {
           "code": {
-            "display-name": "Access to Belvo API denied",
             "docs": "A unique error code (\`access_to_resource_denied\`) that allows you to classify and handle the error programmatically.
 
 ℹ️ Check our DevPortal for more information on how to handle <a href="https://developers.belvo.com/docs/belvo-api-errors#403-access_to_resource_denied" target="_blank">403 access_to_resource_denied</a>.",
             "type": "optional<string>",
           },
           "message": {
-            "display-name": "Access to Belvo API denied",
             "docs": "A short description of the error. 
 
 For \`access_to_resource_denied\` errors, the description is:
@@ -31477,7 +31472,6 @@ For \`access_to_resource_denied\` errors, the description is:
             "type": "optional<string>",
           },
           "request_id": {
-            "display-name": "Access to Belvo API denied",
             "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
             "type": "optional<string>",
             "validation": {
@@ -32279,7 +32273,6 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
             },
           },
           "metadata": {
-            "display-name": "Business Bank Account",
             "docs": "Optional and customizable object where you can provide any additional key-value pairs for your internal purposes. For example, an internal reference number for the payment intent.
 
 ⚠️ **Note**: You can only provide up to 50 keys (keys can have up to 50 characters each and each value can be up to 500 characters). We do not support nested objects, only ASCII values.",
@@ -32397,7 +32390,6 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
         "docs": "Information about the payer's bank account. Belvo returns this object when the payer's bank account information is not saved in the Belvo database.",
         "properties": {
           "bank_account_information": {
-            "display-name": "Bank account information PSE",
             "type": "optional<BankAccountInformationContentPse>",
           },
         },
@@ -32546,7 +32538,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "details": {
-            "display-name": "Beneficiary Bank Account",
             "type": "optional<BeneficiaryBankAccountOfpiDetails>",
           },
           "holder": {
@@ -32591,11 +32582,9 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": undefined,
         "properties": {
           "holder": {
-            "display-name": "Beneficiary Bank Account PSE",
             "type": "optional<Business>",
           },
           "id": {
-            "display-name": "Beneficiary Bank Account PSE",
             "docs": "Belvo's unique ID for the beneficiary bank account.",
             "type": "optional<string>",
             "validation": {
@@ -32606,7 +32595,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "institution": {
-            "display-name": "Beneficiary Bank Account PSE",
             "docs": "Belvo's unique ID for the institution that the bank account is created in.",
             "type": "optional<string>",
             "validation": {
@@ -32617,7 +32605,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "number": {
-            "display-name": "Beneficiary Bank Account PSE",
             "docs": "The bank account number.",
             "type": "optional<string>",
           },
@@ -32630,7 +32617,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Details regarding the business bank account holder.",
         "properties": {
           "Information": {
-            "display-name": "Business",
             "type": "optional<PSE>",
           },
           "type": "EnumBankAccountHolderTypePse",
@@ -33038,7 +33024,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "PSE",
           },
           "metadata": {
-            "display-name": "Colombia 🇨🇴 PSE",
             "docs": "Optional and customizable object where you can provide any additional key-value pairs for your internal purposes. For example, an internal reference number for the payment intent.
 
 ⚠️ **Note**: You can only provide up to 50 keys (keys can have up to 50 characters each and each value can be up to 500 characters). We do not support nested objects, only ASCII values.",
@@ -33063,7 +33048,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": undefined,
         "properties": {
           "address": {
-            "display-name": "Brazil 🇧🇷 OFPI",
             "docs": "The customer's physical address.
 ",
             "type": "optional<string>",
@@ -33099,7 +33083,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "phone": {
-            "display-name": "Brazil 🇧🇷 OFPI",
             "docs": "The customer's phone number.
 ",
             "type": "optional<string>",
@@ -33113,7 +33096,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": undefined,
         "properties": {
           "address": {
-            "display-name": "Colombia 🇨🇴 PSE",
             "docs": "The customer's physical address.
 ",
             "type": "optional<string>",
@@ -33149,7 +33131,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "phone": {
-            "display-name": "Colombia 🇨🇴 PSE",
             "docs": "The customer's phone number.
 ",
             "type": "optional<string>",
@@ -33174,7 +33155,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "CreatePaymentLinkOfpiAmount",
           },
           "callback_urls": {
-            "display-name": "Brazil 🇧🇷 OFPI",
             "type": "optional<PaymentLinkCallbackUrls>",
           },
           "customer": {
@@ -33189,7 +33169,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "expires_in": {
             "default": "7d",
-            "display-name": "Brazil 🇧🇷 OFPI",
             "docs": "The payment link expiration time. It allows the following formats to be sent through:
 
   - whole number + \`m\` for x amount of minutes. For example: \`15m\` for 15 minutes.
@@ -33242,7 +33221,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": undefined,
         "properties": {
           "allowed_payment_method_types": {
-            "display-name": "Colombia 🇨🇴 PSE",
             "docs": "A list of payment method types allowed in this payment intent. For PSE, this value must be set to \`pse\`.",
             "type": "optional<list<EnumPaymentLinkAllowedPaymentMethod>>",
           },
@@ -33254,7 +33232,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "CreatePaymentLinkPseAmount",
           },
           "callback_urls": {
-            "display-name": "Colombia 🇨🇴 PSE",
             "type": "optional<PaymentLinkCallbackUrls>",
           },
           "customer": {
@@ -33269,7 +33246,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "expires_in": {
             "default": "7d",
-            "display-name": "Colombia 🇨🇴 PSE",
             "docs": "The payment link expiration time. It allows the following formats to be sent through:
 
   - whole number + \`m\` for x amount of minutes. For example: \`15m\` for 15 minutes.
@@ -33322,7 +33298,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": undefined,
         "properties": {
           "address": {
-            "display-name": "Brazil 🇧🇷 OFPI",
             "docs": "The customers physical address.
 ",
             "type": "optional<string>",
@@ -33382,7 +33357,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "phone": {
-            "display-name": "Brazil 🇧🇷 OFPI",
             "docs": "The customer's phone number.
 ",
             "type": "optional<string>",
@@ -33441,7 +33415,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": undefined,
         "properties": {
           "address": {
-            "display-name": "Colombia 🇨🇴 PSE",
             "docs": "The customers physical address.
 
 
@@ -33504,7 +33477,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "phone": {
-            "display-name": "Colombia 🇨🇴 PSE",
             "docs": "The customer's phone number.
 
 
@@ -33521,7 +33493,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
           "payer_institution": {
-            "display-name": "Display PSE Colombia confirmation required.",
             "type": "optional<PaymentInstitution>",
           },
         },
@@ -33533,20 +33504,16 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
           "beneficiary_bank_account": {
-            "display-name": "Display Open Finance Brazil confirmation required",
             "type": "optional<BeneficiaryBankAccountOfpi>",
           },
           "payer_identifier": {
-            "display-name": "Display Open Finance Brazil confirmation required",
             "docs": "The payer's ID.",
             "type": "optional<string>",
           },
           "payer_institution": {
-            "display-name": "Display Open Finance Brazil confirmation required",
             "type": "optional<PaymentInstitution>",
           },
           "payer_name": {
-            "display-name": "Display Open Finance Brazil confirmation required",
             "docs": "The name of the payer.",
             "type": "optional<string>",
           },
@@ -33559,7 +33526,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Object containing form fields for the required credentials (for example, \`username\` or \`password\`) in this step.",
         "properties": {
           "payer_institution": {
-            "display-name": "Display PSE confirmation required",
             "type": "optional<PaymentInstitution>",
           },
         },
@@ -33571,11 +33537,9 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Object detailing what payment method information you need to display.",
         "properties": {
           "beneficiary_bank_account": {
-            "display-name": "Display PSE payment method information",
             "type": "optional<BeneficiaryBankAccountPse>",
           },
           "customer_bank_accounts": {
-            "display-name": "Display PSE payment method information",
             "docs": "Array of customer bank account objects.",
             "type": "optional<list<PaymentMethodInfoCustomerBankAccountsPse>>",
           },
@@ -33597,7 +33561,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Object detailing what payment method information you need to display.",
         "properties": {
           "institutions": {
-            "display-name": "Display Open Finance Brazil payment method information",
             "docs": "An array of institution objects.",
             "type": "optional<list<PaymentInstitution>>",
           },
@@ -33610,14 +33573,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Object detailing what payment method information you need to display.",
         "properties": {
           "customer_bank_accounts": {
-            "display-name": "Display PSE payment method information",
             "docs": "Array of bank account objects.
 
 **Note**: If there are no customer accounts saved in the Belvo database, we return an empty array.",
             "type": "optional<list<PaymentMethodInfoCustomerBankAccountsPse>>",
           },
           "institutions": {
-            "display-name": "Display PSE payment method information",
             "docs": "An array of institution objects.",
             "type": "optional<list<PaymentInstitution>>",
           },
@@ -35685,14 +35646,12 @@ Please see our [Institutions](https://developers.belvo.com/docs/institution) Dev
         "docs": "This error occurs when the institution's website that you're trying to access is down due to maintenance or other issues, which means Belvo is unable to create new links or retrieve new data.",
         "properties": {
           "code": {
-            "display-name": "Institution Down",
             "docs": "A unique error code (\`institution_down\`) that allows you to classify and handle the error programmatically.
 
 ℹ️ Check our DevPortal for more information on how to handle <a href="https://developers.belvo.com/docs/belvo-api-errors#400-institution_down" target="_blank">400 institution_down errors</a>.",
             "type": "optional<string>",
           },
           "message": {
-            "display-name": "Institution Down",
             "docs": "A short description of the error. 
 
 For \`institution_down\` errors, the description is:
@@ -35701,7 +35660,6 @@ For \`institution_down\` errors, the description is:
             "type": "optional<string>",
           },
           "request_id": {
-            "display-name": "Institution Down",
             "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
             "type": "optional<string>",
             "validation": {
@@ -35768,14 +35726,12 @@ For \`institution_down\` errors, the description is:
         "docs": "This error occurs when we (Belvo) have deactivated the institution in our API.",
         "properties": {
           "code": {
-            "display-name": "Institution Inactive",
             "docs": "A unique error code (\`institution_inactive\`) that allows you to classify and handle the error programmatically.
 
 ℹ️ Check our DevPortal for more information on how to handle <a href="https://developers.belvo.com/docs/belvo-api-errors#400-institution_inactive" target="_blank">400 institution_inactive errors</a>.",
             "type": "optional<string>",
           },
           "message": {
-            "display-name": "Institution Inactive",
             "docs": "A short description of the error. 
 
 For \`institution_inactive\` errors, the description is:
@@ -35784,7 +35740,6 @@ For \`institution_inactive\` errors, the description is:
             "type": "optional<string>",
           },
           "request_id": {
-            "display-name": "Institution Inactive",
             "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
             "type": "optional<string>",
             "validation": {
@@ -35803,14 +35758,12 @@ For \`institution_inactive\` errors, the description is:
         "docs": "This error occurs when the institution's website that you're trying to access is down due to maintenance or other issues, which means Belvo is unable to create new links or retrieve new data.",
         "properties": {
           "code": {
-            "display-name": "Institution Unavailable",
             "docs": "A unique error code (\`institution_unavailable\`) that allows you to classify and handle the error programmatically.
 
 ℹ️ Check our DevPortal for more information on how handle <a href="https://developers.belvo.com/docs/belvo-api-errors#400-institution_unavailable" target="_blank">400 institution_unavailable errors</a>.",
             "type": "optional<string>",
           },
           "message": {
-            "display-name": "Institution Unavailable",
             "docs": "A short description of the error.
 
 For \`institution_unavailable\` errors, the description is:
@@ -35819,7 +35772,6 @@ For \`institution_unavailable\` errors, the description is:
             "type": "optional<string>",
           },
           "request_id": {
-            "display-name": "Institution Unavailable",
             "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
             "type": "optional<string>",
             "validation": {
@@ -35953,14 +35905,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "This error occurs when you try to update a link from single to recurrent, but there are no login credentials stored for the user.",
         "properties": {
           "code": {
-            "display-name": "Invalid Access Mode",
             "docs": "A unique error code (\`invalid_access_mode_switch\`) that allows you to classify and handle the error programmatically.
 
 ℹ️ Check our DevPortal for more information on how to handle <a href="https://developers.belvo.com/docs/belvo-api-errors#400-invalid_access_mode_switch" target="_blank">400 invalid_access_mode_switch errors</a>.",
             "type": "optional<string>",
           },
           "message": {
-            "display-name": "Invalid Access Mode",
             "docs": "A short description of the error. 
 
 For \`invalid_access_mode_switch\` errors, the description is:
@@ -35969,7 +35919,6 @@ For \`invalid_access_mode_switch\` errors, the description is:
             "type": "optional<string>",
           },
           "request_id": {
-            "display-name": "Invalid Access Mode",
             "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
             "type": "optional<string>",
             "validation": {
@@ -35988,14 +35937,12 @@ For \`invalid_access_mode_switch\` errors, the description is:
         "docs": "This error occurs when you try to access an account but the user credentials are no longer valid, prompting an error from the institution.",
         "properties": {
           "code": {
-            "display-name": "Invalid Link",
             "docs": "A unique error code (\`invalid_link\`) that allows you to classify and handle the error programmatically.
 
 ℹ️ Check our DevPortal for more information on how to handle <a href="https://developers.belvo.com/docs/belvo-api-errors#400-invalid_link" target="_blank">400 invalid_link errors</a>.",
             "type": "optional<string>",
           },
           "message": {
-            "display-name": "Invalid Link",
             "docs": "A short description of the error. 
 
 For \`invalid_link\` errors, the description is:
@@ -36004,7 +35951,6 @@ For \`invalid_link\` errors, the description is:
             "type": "optional<string>",
           },
           "request_id": {
-            "display-name": "Invalid Link",
             "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
             "type": "optional<string>",
             "validation": {
@@ -36023,14 +35969,12 @@ For \`invalid_link\` errors, the description is:
         "docs": "This error occurs when you request incomes for a link within a given date range, however, the period between \`date_from\` and \`date_to\` is less than 90 days.",
         "properties": {
           "code": {
-            "display-name": "Invalid Period",
             "docs": "A unique error code (\`invalid_period\`) that allows you to classify and handle the error programmatically.
 
 ℹ️ Check our DevPortal for more information on how to handle <a href="https://developers.belvo.com/docs/belvo-api-errors#400-invalid_period" target="_blank">400 invalid_period errors</a>.",
             "type": "optional<string>",
           },
           "message": {
-            "display-name": "Invalid Period",
             "docs": "A short description of the error. 
 
 For \`invalid_period\` errors, the description is:
@@ -36039,7 +35983,6 @@ For \`invalid_period\` errors, the description is:
             "type": "optional<string>",
           },
           "request_id": {
-            "display-name": "Invalid Period",
             "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
             "type": "optional<string>",
             "validation": {
@@ -36498,7 +36441,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<datetime>",
           },
           "created_at": {
-            "display-name": "🇨🇴 DIAN Colombia",
             "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
             "type": "optional<datetime>",
           },
@@ -36523,7 +36465,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<float>",
           },
           "expiration_date": {
-            "display-name": "🇨🇴 DIAN Colombia",
             "docs": "Indicates when the invoice is set to expire.
 
 For example: If the invoice is paid in installments, this field indicates the date when the installment is to be paid.
@@ -36537,13 +36478,11 @@ For example: If the invoice is paid in installments, this field indicates the da
             },
           },
           "folio": {
-            "display-name": "🇨🇴 DIAN Colombia",
             "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
 ",
             "type": "optional<string>",
           },
           "id": {
-            "display-name": "🇨🇴 DIAN Colombia",
             "docs": "Belvo's unique identifier for the current invoice.",
             "type": "optional<string>",
             "validation": {
@@ -36574,17 +36513,14 @@ For example: If the invoice is paid in installments, this field indicates the da
           },
           "invoice_type": "optional<EnumInvoiceDianInvoiceType>",
           "link": {
-            "display-name": "🇨🇴 DIAN Colombia",
             "docs": "The \`link.id\` the invoice belongs to.",
             "type": "optional<string>",
           },
           "payment_method": {
-            "display-name": "🇨🇴 DIAN Colombia",
             "type": "optional<EnumInvoiceDianPaymentMethod>",
           },
           "payment_method_description": {
             "availability": "deprecated",
-            "display-name": "🇨🇴 DIAN Colombia",
             "docs": "The description of the payment method used for this invoice.
 ",
             "type": "optional<string>",
@@ -36608,13 +36544,11 @@ For detailed information regarding DIAN's payment types, please see their [offic
           },
           "payroll": "optional<InvoicesPayrollDian>",
           "place_of_issue": {
-            "display-name": "🇨🇴 DIAN Colombia",
             "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
 ",
             "type": "optional<string>",
           },
           "receiver_details": {
-            "display-name": "🇨🇴 DIAN Colombia",
             "type": "optional<InvoicesReceiverDetailsDian>",
           },
           "receiver_id": {
@@ -36626,12 +36560,10 @@ For detailed information regarding DIAN's payment types, please see their [offic
             "type": "optional<string>",
           },
           "receiver_tax_fraud_status": {
-            "display-name": "🇨🇴 DIAN Colombia",
             "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.",
             "type": "optional<string>",
           },
           "sender_details": {
-            "display-name": "🇨🇴 DIAN Colombia",
             "type": "optional<InvoiceSenderDetailsDian>",
           },
           "sender_id": {
@@ -36643,7 +36575,6 @@ For detailed information regarding DIAN's payment types, please see their [offic
             "type": "optional<string>",
           },
           "sender_tax_fraud_status": {
-            "display-name": "🇨🇴 DIAN Colombia",
             "docs": "Indicates whether or not the sender is on a tax fraud list for having submitted incorrect data, having outstanding payments, or having conducted business that is in violation of the fiscal institution's regulations.
 **Note**: This field is not applicable for DIAN Colombia and will return \`null\`.",
             "type": "optional<string>",
@@ -36672,23 +36603,19 @@ For detailed information regarding DIAN's payment types, please see their [offic
           },
           "type": "optional<EnumInvoiceType>",
           "usage": {
-            "display-name": "🇨🇴 DIAN Colombia",
             "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
 ",
             "type": "optional<string>",
           },
           "version": {
-            "display-name": "🇨🇴 DIAN Colombia",
             "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
 ",
             "type": "optional<string>",
           },
           "warnings": {
-            "display-name": "🇨🇴 DIAN Colombia",
             "type": "optional<InvoiceWarningsDian>",
           },
           "xml": {
-            "display-name": "🇨🇴 DIAN Colombia",
             "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
 ",
             "type": "optional<string>",
@@ -36830,7 +36757,6 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
             "type": "optional<datetime>",
           },
           "created_at": {
-            "display-name": "🇲🇽 SAT Mexico",
             "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
             "type": "optional<datetime>",
           },
@@ -36855,13 +36781,11 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
             "type": "optional<float>",
           },
           "folio": {
-            "display-name": "🇲🇽 SAT Mexico",
             "docs": "The internal control number that the taxpayer assigns to the invoice.
 ",
             "type": "optional<string>",
           },
           "id": {
-            "display-name": "🇲🇽 SAT Mexico",
             "docs": "Belvo's unique identifier used to reference the current invoice.",
             "type": "optional<string>",
             "validation": {
@@ -36892,17 +36816,14 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
           },
           "invoice_type": "optional<EnumInvoiceSatInvoiceType>",
           "link": {
-            "display-name": "🇲🇽 SAT Mexico",
             "docs": "The \`link.id\` the invoice belongs to.",
             "type": "optional<string>",
           },
           "payment_method": {
-            "display-name": "🇲🇽 SAT Mexico",
             "type": "optional<EnumInvoiceSatPaymentMethod>",
           },
           "payment_method_description": {
             "availability": "deprecated",
-            "display-name": "🇲🇽 SAT Mexico",
             "docs": "*This field has been deprecated.*
 
 *The description of the payment method used for this invoice.*
@@ -36929,14 +36850,12 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
           },
           "payroll": "optional<InvoicesPayrollSat>",
           "place_of_issue": {
-            "display-name": "🇲🇽 SAT Mexico",
             "docs": "The postcode of where the invoice was issued.
 ",
             "type": "optional<string>",
           },
           "receiver_blacklist_status": {
             "availability": "deprecated",
-            "display-name": "🇲🇽 SAT Mexico",
             "docs": "This field has been deprecated. Please use \`receiver_tax_fraud_status\` instead.
 ",
             "type": "optional<string>",
@@ -36950,7 +36869,6 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
             "type": "optional<string>",
           },
           "receiver_tax_fraud_status": {
-            "display-name": "🇲🇽 SAT Mexico",
             "docs": "Indicates whether or not the receiver is on SAT's tax fraud list for having submitted incorrect data, having outstanding payments, or having conducted business that is in violation of the fiscal institution's regulations.<br><br>
 SAT updates the tax fraud list every three months. <br><br>
 For more information regarding the reason's a taxpayer can be put on the tax fraud list, please see [Article 69](http://omawww.sat.gob.mx/cifras_sat/Paginas/datos/vinculo.html?page=ListCompleta69.html) and [Article 69-B](http://omawww.sat.gob.mx/cifras_sat/Paginas/datos/vinculo.html?page=ListCompleta69B.html) of Mexico's Código Fiscal de la Federación. <br><br>
@@ -36960,7 +36878,6 @@ Possible statuses are:
           },
           "sender_blacklist_status": {
             "availability": "deprecated",
-            "display-name": "🇲🇽 SAT Mexico",
             "docs": "This field has been deprecated. Please use \`sender_tax_fraud_status\` instead.
 ",
             "type": "optional<string>",
@@ -36974,7 +36891,6 @@ Possible statuses are:
             "type": "optional<string>",
           },
           "sender_tax_fraud_status": {
-            "display-name": "🇲🇽 SAT Mexico",
             "docs": "Indicates whether or not the sender is on SAT's tax fraud list for having submitted incorrect data, having outstanding payments, or having conducted business that is in violation of the fiscal institution's regulations.<br><br>
 SAT updates the tax fraud list every three months. <br><br>
 For more information regarding the reason's a taxpayer can be put on the tax fraud list, please see [Article 69](http://omawww.sat.gob.mx/cifras_sat/Paginas/datos/vinculo.html?page=ListCompleta69.html) and [Article 69-B](http://omawww.sat.gob.mx/cifras_sat/Paginas/datos/vinculo.html?page=ListCompleta69B.html) of Mexico's Código Fiscal de la Federación. <br><br>
@@ -37002,7 +36918,6 @@ Possible statuses are:
           },
           "type": "optional<EnumInvoiceType>",
           "usage": {
-            "display-name": "🇲🇽 SAT Mexico",
             "docs": "The invoice's usage code, as defined by the legal entity of the country. 
 
 - 🇲🇽 Mexico [SAT catalog reference article](https://developers.belvo.com/docs/sat-catalogs#usage)
@@ -37010,17 +36925,14 @@ Possible statuses are:
             "type": "optional<string>",
           },
           "version": {
-            "display-name": "🇲🇽 SAT Mexico",
             "docs": "The CFDI version of the invoice.
 ",
             "type": "optional<string>",
           },
           "warnings": {
-            "display-name": "🇲🇽 SAT Mexico",
             "type": "optional<InvoiceWarningsSat>",
           },
           "xml": {
-            "display-name": "🇲🇽 SAT Mexico",
             "docs": "XML of the invoice document.
 ",
             "type": "optional<string>",
@@ -37673,14 +37585,12 @@ A unique 44-character string that can be used to identify a user at a given inst
   - the user's account is either locked or the user does not have permission to access their internet banking.",
         "properties": {
           "code": {
-            "display-name": "Login Error",
             "docs": "A unique error code (\`login_error\`) that allows you to classify and handle the error programmatically.
 
 ℹ️ Check our DevPortal for more information on how to handle <a href="https://developers.belvo.com/docs/belvo-api-errors#400-login_error" target="_blank">400 login_error errors</a>.",
             "type": "optional<string>",
           },
           "message": {
-            "display-name": "Login Error",
             "docs": "A short description of the error. 
 
 For \`login_error\` errors, the description can be one of the following:
@@ -37695,7 +37605,6 @@ For \`login_error\` errors, the description can be one of the following:
             "type": "optional<string>",
           },
           "request_id": {
-            "display-name": "Login Error",
             "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
             "type": "optional<string>",
             "validation": {
@@ -37756,12 +37665,10 @@ For \`login_error\` errors, the description can be one of the following:
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
           "open_finance_display_confirmation_required": {
-            "display-name": "OFPI - Display Confirmation Required",
             "type": "optional<DisplayConfirmationRequiredOfpi>",
           },
           "ready_to_confirm": {
             "default": true,
-            "display-name": "OFPI - Display Confirmation Required",
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When set to \`true\`, you need to confirm the payment by making a PATCH request sending through \`confirm: true\`.",
@@ -37776,12 +37683,10 @@ For \`login_error\` errors, the description can be one of the following:
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
           "pse_display_confirmation_required": {
-            "display-name": "Display PSE confirmation required",
             "type": "optional<DisplayConfirmationRequiredContentPse>",
           },
           "ready_to_confirm": {
             "default": true,
-            "display-name": "Display PSE confirmation required",
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When the value is \`true\`, you'll need to make a PATCH request sending through \`confirm: true\` to confirm the payment.",
@@ -37796,12 +37701,10 @@ For \`login_error\` errors, the description can be one of the following:
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
           "pse_display_credentials_required": {
-            "display-name": "Display PSE credentials required",
             "type": "optional<DisplayCredentialsRequiredContentPse>",
           },
           "ready_to_confirm": {
             "default": false,
-            "display-name": "Display PSE credentials required",
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When the value is \`true\`, you'll need to make a PATCH request sending through \`confirm: true\` to confirm the payment.",
@@ -37816,12 +37719,10 @@ For \`login_error\` errors, the description can be one of the following:
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
           "pse_display_customer_bank_accounts": {
-            "display-name": "Display PSE customer bank accounts",
             "type": "optional<DisplayCustomerBankAccountsContentPse>",
           },
           "ready_to_confirm": {
             "default": true,
-            "display-name": "Display PSE customer bank accounts",
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When the value is \`true\`, you'll need to make a PATCH request sending through \`confirm: true\` to confirm the payment.",
@@ -37836,12 +37737,10 @@ For \`login_error\` errors, the description can be one of the following:
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
           "pse_display_needs_redirect": {
-            "display-name": "Display PSE needs redirect",
             "type": "optional<NeedsRedirectContentPse>",
           },
           "ready_to_confirm": {
             "default": true,
-            "display-name": "Display PSE needs redirect",
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When the value is \`true\`, you'll need to make a PATCH request sending through \`confirm: true\` to confirm the payment.",
@@ -37856,12 +37755,10 @@ For \`login_error\` errors, the description can be one of the following:
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
           "open_finance_display_payment_failed": {
-            "display-name": "OFPI - Payment Failed",
             "type": "optional<DisplayPaymentFailed>",
           },
           "ready_to_confirm": {
             "default": false,
-            "display-name": "OFPI - Payment Failed",
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When set to \`true\`,you need to confirm the payment by making a PATCH request sending through \`confirm: true\`.",
@@ -37876,12 +37773,10 @@ For \`login_error\` errors, the description can be one of the following:
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
           "open_finance_display_payment_method_information": {
-            "display-name": "OFPI -  Display Payment Method Information",
             "type": "optional<DisplayPaymentMethodInformationContentOfpi>",
           },
           "ready_to_confirm": {
             "default": false,
-            "display-name": "OFPI -  Display Payment Method Information",
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When set to \`true\`, you need to confirm the payment by making a PATCH request sending through \`confirm: true\`.",
@@ -37896,12 +37791,10 @@ For \`login_error\` errors, the description can be one of the following:
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type. You'll need to send a PATCH request with the institution selected by the customer or their bank accounts (if there are accounts already saved in the Belvo database).",
         "properties": {
           "pse_display_payment_method_information": {
-            "display-name": "Display PSE payment method information",
             "type": "optional<DisplayPaymentMethodInformationContentPse>",
           },
           "ready_to_confirm": {
             "default": false,
-            "display-name": "Display PSE payment method information",
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When the value is \`true\`, you'll need to make a PATCH request sending through \`confirm: true\` to confirm the payment.",
@@ -37916,12 +37809,10 @@ For \`login_error\` errors, the description can be one of the following:
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
           "open_finance_display_payment_processing": {
-            "display-name": "OFPI - Payment Processing",
             "type": "optional<DisplayPaymentProcessing>",
           },
           "ready_to_confirm": {
             "default": false,
-            "display-name": "OFPI - Payment Processing",
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When set to \`true\`, you need to confirm the payment by making a PATCH request sending through \`confirm: true\`.",
@@ -37936,12 +37827,10 @@ For \`login_error\` errors, the description can be one of the following:
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
           "open_finance_display_payment_succeeded": {
-            "display-name": "OFPI - Payment Succeeded",
             "type": "optional<DisplayPaymentSucceeded>",
           },
           "ready_to_confirm": {
             "default": false,
-            "display-name": "OFPI - Payment Succeeded",
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When set to \`true\`, you need to confirm the payment by making a PATCH request sending through \`confirm: true\`.",
@@ -37956,11 +37845,9 @@ For \`login_error\` errors, the description can be one of the following:
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
           "pse_display_token_required": {
-            "display-name": "Display PSE token required",
             "type": "optional<DisplayTokenRequiredContentPse>",
           },
           "ready_to_confirm": {
-            "display-name": "Display PSE token required",
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. This value will return: 
 
   - \`false\` when a customer wants to pay for the very first time. This is so because you still need to input information about your customer in the following steps to process a payment successfully. 
@@ -37979,12 +37866,10 @@ For \`login_error\` errors, the description can be one of the following:
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
           "open_finance_display_needs_redirect": {
-            "display-name": "OFPI - Needs Redirect",
             "type": "optional<NeedsRedirectContent>",
           },
           "ready_to_confirm": {
             "default": false,
-            "display-name": "OFPI - Needs Redirect",
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When set to \`true\`, you need to confirm the payment by making a PATCH request sending through \`confirm: true\`.",
@@ -38023,14 +37908,12 @@ For \`login_error\` errors, the description can be one of the following:
         "docs": undefined,
         "properties": {
           "code": {
-            "display-name": "Not Found",
             "docs": "A unique error code (\`not_found\`) that allows you to classify and handle the error programmatically.
 
 ℹ️ Check our DevPortal for more information on how to handle <a href="https://developers.belvo.com/docs/belvo-api-errors#404-not_found" target="_blank">404 not_found errors</a>.",
             "type": "optional<string>",
           },
           "message": {
-            "display-name": "Not Found",
             "docs": "A short description of the error. 
 
 For \`not_found\` errors, the description is:
@@ -38039,7 +37922,6 @@ For \`not_found\` errors, the description is:
             "type": "optional<string>",
           },
           "request_id": {
-            "display-name": "Not Found",
             "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
             "type": "optional<string>",
             "validation": {
@@ -38068,7 +37950,6 @@ For \`not_found\` errors, the description is:
             },
           },
           "callback_url": {
-            "display-name": "OFPB",
             "docs": "The URL to your application that your customer will be directed to once they confirm the payment in their bank application.",
             "type": "optional<string>",
           },
@@ -38081,7 +37962,6 @@ For \`not_found\` errors, the description is:
         "docs": "Details about the payment method.",
         "properties": {
           "open_finance": {
-            "display-name": "OFPI",
             "type": "optional<ChargePaymentMethodDetailsOfpiContent>",
           },
         },
@@ -38348,7 +38228,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "docs": undefined,
         "properties": {
           "pse": {
-            "display-name": "PATCH payment method details",
             "type": "optional<PatchPaymentMethodDetailsPse>",
           },
         },
@@ -38476,7 +38355,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "charges": {
             "availability": "deprecated",
-            "display-name": "Brazil 🇧🇷 OFPI",
             "docs": "An array of charge objects related to this paymnet intent. If no charges are associated, we return an empty array.
 
 **Note**: The charges resource will be deprecated and removed from our API by end of Q1 2023. We recommend not using any data from this resource.",
@@ -38537,7 +38415,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             "type": "LastErrorPaymentError",
           },
           "metadata": {
-            "display-name": "Brazil 🇧🇷 OFPI",
             "docs": "Optional and customizable object where you can provide any additional key-value pairs for your internal purposes. For example, an internal reference number.
 
 ⚠️ **Note**: You can only provide up to 50 keys (keys can have up to 50 characters each and each value can be up to 500 characters). We do not support nested objects, only ASCII values.",
@@ -38788,7 +38665,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "charges": {
             "availability": "deprecated",
-            "display-name": "Colombia 🇨🇴 PSE",
             "docs": "An array of charge objects related to this paymnet intent. If no charges are associated, we return an empty array.
 
 **Note**: The charges resource will be deprecated and removed from our API by end of Q1 2023. We recommend not using any data from this resource.",
@@ -38846,7 +38722,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "last_error": "PaymentIntentPseLastError",
           "metadata": {
-            "display-name": "Colombia 🇨🇴 PSE",
             "docs": "Optional and customizable object where you can provide any additional key-value pairs for your internal purposes. For example, an internal reference number.
 
 ⚠️ **Note**: You can only provide up to 50 keys (keys can have up to 50 characters each and each value can be up to 500 characters). We do not support nested objects, only ASCII values.",
@@ -38948,14 +38823,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": undefined,
         "properties": {
           "cancel": {
-            "display-name": "Payment Link Callback URLs",
             "docs": "The URL that the user should be redirected to if they decide to cancel the payment process or if an error occurs.
 
 **Note:** Not required if your integration only generates payment links through the [Belvo Dashboard](https://dashboard.belvo.com/).",
             "type": "optional<string>",
           },
           "success": {
-            "display-name": "Payment Link Callback URLs",
             "docs": "The URL that the user should be redirected to when they complete the payment process successfully.
 
 **Note:** Not required if your integration only generates payment links through the [Belvo Dashboard](https://dashboard.belvo.com/).",
@@ -38972,12 +38845,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
 **Note:** This field will return an empty object if your integration only generates payment links through the [Belvo Dashboard](https://dashboard.belvo.com/).",
         "properties": {
           "cancel": {
-            "display-name": "Payment Link Callback URLs",
             "docs": "The URL that the user should be redirected to if they decide to cancel the payment process or if an error occurs.",
             "type": "optional<string>",
           },
           "success": {
-            "display-name": "Payment Link Callback URLs",
             "docs": "The URL that the user should be redirected to when they complete the payment process successfully.",
             "type": "optional<string>",
           },
@@ -38990,7 +38861,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": undefined,
         "properties": {
           "access_token": {
-            "display-name": "Brazil 🇧🇷 OFPI",
             "docs": "The Belvo-generated access token for the payment link.
 
 **Note:** You'll need the \`access_token\` to make [Get details for a payment link](https://developers.belvo.com/reference/detailcreatepaymentlink) requests.",
@@ -39040,7 +38910,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "payment_intent": {
-            "display-name": "Brazil 🇧🇷 OFPI",
             "docs": "Belvo's unique ID for the payment intent. You can retrieve the complete payment intent by using our [Get details of a payment link](https://developers.belvo.com/reference/detailcreatepaymentlink) request.",
             "type": "optional<string>",
             "validation": {
@@ -39056,7 +38925,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "status": "EnumPaymentLinksStatus",
           "updated_at": {
-            "display-name": "Brazil 🇧🇷 OFPI",
             "docs": "The ISO-8601 timestamp of when the payment link was last updated.
 ",
             "type": "optional<datetime>",
@@ -39070,7 +38938,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": undefined,
         "properties": {
           "access_token": {
-            "display-name": "Colombia 🇨🇴 PSE",
             "docs": "The Belvo-generated access token for the payment link.
 
 **Note:** You'll need the \`access_token\` to make [Get details for a payment link](https://developers.belvo.com/reference/detailcreatepaymentlink) requests.",
@@ -39120,7 +38987,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "payment_intent": {
-            "display-name": "Colombia 🇨🇴 PSE",
             "docs": "Belvo's unique ID for the payment intent. You can retrieve the complete payment intent by using our [Get details of a payment link](https://developers.belvo.com/reference/detailcreatepaymentlink) request.",
             "type": "optional<string>",
             "validation": {
@@ -39136,7 +39002,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "status": "EnumPaymentLinksStatus",
           "updated_at": {
-            "display-name": "Colombia 🇨🇴 PSE",
             "docs": "The ISO-8601 timestamp of when the payment link was last updated.
 ",
             "type": "optional<datetime>",
@@ -39150,7 +39015,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": undefined,
         "properties": {
           "access_token": {
-            "display-name": "Brazil 🇧🇷 OFPI",
             "docs": "The Belvo-generated access token for the payment link.
 
 **Note:** You'll need the \`access_token\` to make [Get details for a payment link](https://developers.belvo.com/reference/detailcreatepaymentlink) requests.",
@@ -39200,7 +39064,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "payment_intent": {
-            "display-name": "Brazil 🇧🇷 OFPI",
             "type": "optional<PaymentIntentOfpi>",
           },
           "payment_url": {
@@ -39209,7 +39072,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "status": "EnumPaymentLinksStatus",
           "updated_at": {
-            "display-name": "Brazil 🇧🇷 OFPI",
             "docs": "The ISO-8601 timestamp of when the payment link was last updated.
 ",
             "type": "optional<datetime>",
@@ -39268,7 +39130,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": undefined,
         "properties": {
           "access_token": {
-            "display-name": "Colombia 🇨🇴 PSE",
             "docs": "The Belvo-generated access token for the payment link.
 
 **Note:** You'll need the \`access_token\` to make [Get details for a payment link](https://developers.belvo.com/reference/detailcreatepaymentlink) requests.",
@@ -39318,7 +39179,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "payment_intent": {
-            "display-name": "Colombia 🇨🇴 PSE",
             "type": "optional<PaymentIntentPse>",
           },
           "payment_url": {
@@ -39327,7 +39187,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "status": "EnumPaymentLinksStatus",
           "updated_at": {
-            "display-name": "Colombia 🇨🇴 PSE",
             "docs": "The ISO-8601 timestamp of when the payment link was last updated.
 ",
             "type": "optional<datetime>",
@@ -39955,14 +39814,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Belvo has a limit regarding the time it takes to log in, retrieve account data, and log out. A timeout occurs when there is a very high amount of data and everything could not be obtained within the allotted time.",
         "properties": {
           "code": {
-            "display-name": "Request Timeout",
             "docs": "A unique error code (\`request_timeout\`) that allows you to classify and handle the error programmatically.
 
 ℹ️ Check our DevPortal for more information on how to handle <a href="https://developers.belvo.com/docs/belvo-api-errors#408-request_timeout" target="_blank">408 request_timeout errors</a>.",
             "type": "optional<string>",
           },
           "message": {
-            "display-name": "Request Timeout",
             "docs": "A short description of the error. 
 
 For \`request_timeout\` errors, the description is:
@@ -39971,7 +39828,6 @@ For \`request_timeout\` errors, the description is:
             "type": "optional<string>",
           },
           "request_id": {
-            "display-name": "Request Timeout",
             "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
             "type": "optional<string>",
             "validation": {
@@ -40517,14 +40373,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "This error occurs when you try to resume a request session that has already expired. This is usually because the user took too long to provide their authentication token.",
         "properties": {
           "code": {
-            "display-name": "Session Expired",
             "docs": "A unique error code (\`session_expired\`) that allows you to classify and handle the error programmatically.
 
 ℹ️ Check our DevPortal for more information on how to handle <a href="https://developers.belvo.com/docs/belvo-api-errors#400-session_expired" target="_blank">400 session_expired errors</a>.",
             "type": "optional<string>",
           },
           "message": {
-            "display-name": "Session Expired",
             "docs": "A short description of the error. 
 
 For \`session_expired\` errors, the description is:
@@ -40533,7 +40387,6 @@ For \`session_expired\` errors, the description is:
             "type": "optional<string>",
           },
           "request_id": {
-            "display-name": "Session Expired",
             "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
             "type": "optional<string>",
             "validation": {
@@ -40800,12 +40653,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": undefined,
         "properties": {
           "count": {
-            "display-name": "Tax Declaration Business",
             "docs": "The total number of results in your Belvo account.",
             "type": "optional<integer>",
           },
           "next": {
-            "display-name": "Tax Declaration Business",
             "docs": "The URL to next page of results. Each page consists of up to 100 items. If there are not enough results for an additional page, the value is \`null\`.
 
 In our documentation example, we use \`{endpoint}\` as a placeholder value. In production, this value will be replaced by the actual endpoint you are currently using (for example, \`accounts\` or \`owners\`).
@@ -40813,12 +40664,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<string>",
           },
           "previous": {
-            "display-name": "Tax Declaration Business",
             "docs": "The URL to the previous page of results. If there is no previous page, the value is \`null\`.",
             "type": "optional<string>",
           },
           "results": {
-            "display-name": "Tax Declaration Business",
             "docs": "Array of Business Tax Declaration objects.",
             "type": "optional<list<TaxDeclarationBusiness>>",
           },
@@ -40887,12 +40736,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": undefined,
         "properties": {
           "count": {
-            "display-name": "Tax Declaration Individual",
             "docs": "The total number of results in your Belvo account.",
             "type": "optional<integer>",
           },
           "next": {
-            "display-name": "Tax Declaration Individual",
             "docs": "The URL to next page of results. Each page consists of up to 100 items. If there are not enough results for an additional page, the value is \`null\`.
 
 In our documentation example, we use \`{endpoint}\` as a placeholder value. In production, this value will be replaced by the actual endpoint you are currently using (for example, \`accounts\` or \`owners\`).
@@ -40900,12 +40747,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<string>",
           },
           "previous": {
-            "display-name": "Tax Declaration Individual",
             "docs": "The URL to the previous page of results. If there is no previous page, the value is \`null\`.",
             "type": "optional<string>",
           },
           "results": {
-            "display-name": "Tax Declaration Individual",
             "docs": "Array of Individual Tax Declaration objects.",
             "type": "optional<list<TaxDeclarationIndividual>>",
           },
@@ -41146,17 +40991,14 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<map<string, unknown>>",
           },
           "created_at": {
-            "display-name": "Tax Return Business",
             "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
             "type": "optional<datetime>",
           },
           "datos_adicionales": {
-            "display-name": "Tax Return Business",
             "docs": "Additional data regarding the tax return.",
             "type": "optional<map<string, unknown>>",
           },
           "deducciones_autorizadas": {
-            "display-name": "Tax Return Business",
             "docs": "Details regarding the legal entity's deductions.",
             "type": "optional<map<string, unknown>>",
           },
@@ -41169,7 +41011,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<map<string, unknown>>",
           },
           "dividendos_o_utilidades_distribuidos": {
-            "display-name": "Tax Return Business",
             "docs": "Details regarding distributed dividends.",
             "type": "optional<map<string, unknown>>",
           },
@@ -41182,7 +41023,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<map<string, unknown>>",
           },
           "id": {
-            "display-name": "Tax Return Business",
             "docs": "Unique identifier created by Belvo used to reference the current Tax Return.",
             "type": "optional<string>",
             "validation": {
@@ -41230,7 +41070,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<datetime>",
           },
           "created_at": {
-            "display-name": "Tax Return Business Monthly",
             "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
             "type": "optional<datetime>",
           },
@@ -41251,7 +41090,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<map<string, unknown>>",
           },
           "id": {
-            "display-name": "Tax Return Business Monthly",
             "docs": "Unique identifier created by Belvo used to reference the current Tax Return.",
             "type": "optional<string>",
             "validation": {
@@ -41276,7 +41114,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "receipt_pdf": {
-            "display-name": "Tax Return Business Monthly",
             "docs": "The acknowledgement receipt from the fiscal institution confirming that they received the tax return.",
             "type": "optional<string>",
             "validation": {
@@ -41304,12 +41141,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<datetime>",
           },
           "created_at": {
-            "display-name": "Tax Return Personal",
             "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
             "type": "optional<datetime>",
           },
           "datos_informativos": {
-            "display-name": "Tax Return Personal",
             "docs": "Extra informative data on the tax return.",
             "type": "optional<map<string, unknown>>",
           },
@@ -41326,7 +41161,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<map<string, unknown>>",
           },
           "id": {
-            "display-name": "Tax Return Personal",
             "docs": "Unique identifier created by Belvo used to reference the current Tax Return.",
             "type": "optional<string>",
             "validation": {
@@ -41341,7 +41175,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<map<string, unknown>>",
           },
           "link": {
-            "display-name": "Tax Return Personal",
             "docs": "The \`link.id\` the statement belongs to",
             "type": "optional<string>",
             "validation": {
@@ -41397,12 +41230,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<datetime>",
           },
           "created_at": {
-            "display-name": "Tax Return Personal Monthly",
             "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
             "type": "optional<datetime>",
           },
           "id": {
-            "display-name": "Tax Return Personal Monthly",
             "docs": "Unique identifier created by Belvo used to reference the current Tax Return.",
             "type": "optional<string>",
             "validation": {
@@ -41435,7 +41266,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "receipt_pdf": {
-            "display-name": "Tax Return Personal Monthly",
             "docs": "The acknowledgement receipt from the fiscal institution confirming that they received the tax return.",
             "type": "optional<string>",
             "validation": {
@@ -41459,12 +41289,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "extra-properties": true,
         "properties": {
           "count": {
-            "display-name": "Tax Return Personal Business Monthly",
             "docs": "The total number of results in your Belvo account.",
             "type": "optional<integer>",
           },
           "next": {
-            "display-name": "Tax Return Personal Business Monthly",
             "docs": "The URL to next page of results. Each page consists of up to 100 items. If there are not enough results for an additional page, the value is \`null\`.
 
 In our documentation example, we use \`{endpoint}\` as a placeholder value. In production, this value will be replaced by the actual endpoint you are currently using (for example, \`accounts\` or \`owners\`).
@@ -41472,12 +41300,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<string>",
           },
           "previous": {
-            "display-name": "Tax Return Personal Business Monthly",
             "docs": "The URL to the previous page of results. If there is no previous page, the value is \`null\`.",
             "type": "optional<string>",
           },
           "results": {
-            "display-name": "Tax Return Personal Business Monthly",
             "docs": "Array of Monthly Business Tax Return objects.",
             "type": "optional<list<TaxReturnBusinessMonthly>>",
           },
@@ -41491,12 +41317,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "extra-properties": true,
         "properties": {
           "count": {
-            "display-name": "Tax Return Personal Business",
             "docs": "The total number of results in your Belvo account.",
             "type": "optional<integer>",
           },
           "next": {
-            "display-name": "Tax Return Personal Business",
             "docs": "The URL to next page of results. Each page consists of up to 100 items. If there are not enough results for an additional page, the value is \`null\`.
 
 In our documentation example, we use \`{endpoint}\` as a placeholder value. In production, this value will be replaced by the actual endpoint you are currently using (for example, \`accounts\` or \`owners\`).
@@ -41504,12 +41328,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<string>",
           },
           "previous": {
-            "display-name": "Tax Return Personal Business",
             "docs": "The URL to the previous page of results. If there is no previous page, the value is \`null\`.",
             "type": "optional<string>",
           },
           "results": {
-            "display-name": "Tax Return Personal Business",
             "docs": "Array of Business Tax Return objects.",
             "type": "optional<list<TaxReturnBusiness>>",
           },
@@ -41523,7 +41345,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "properties": {
           "attach_pdf": {
             "default": false,
-            "display-name": "Monthly Tax Returns",
             "docs": "When this is set to \`true\`, you will receive the PDF as a binary string in the response.",
             "type": "optional<boolean>",
           },
@@ -41551,7 +41372,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "save_data": {
             "default": true,
-            "display-name": "Monthly Tax Returns",
             "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
             "type": "optional<boolean>",
@@ -41572,12 +41392,10 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "extra-properties": true,
         "properties": {
           "count": {
-            "display-name": "Tax Return Personal Monthly",
             "docs": "The total number of results in your Belvo account.",
             "type": "optional<integer>",
           },
           "next": {
-            "display-name": "Tax Return Personal Monthly",
             "docs": "The URL to next page of results. Each page consists of up to 100 items. If there are not enough results for an additional page, the value is \`null\`.
 
 In our documentation example, we use \`{endpoint}\` as a placeholder value. In production, this value will be replaced by the actual endpoint you are currently using (for example, \`accounts\` or \`owners\`).
@@ -41585,12 +41403,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<string>",
           },
           "previous": {
-            "display-name": "Tax Return Personal Monthly",
             "docs": "The URL to the previous page of results. If there is no previous page, the value is \`null\`.",
             "type": "optional<string>",
           },
           "results": {
-            "display-name": "Tax Return Personal Monthly",
             "docs": "Array of Monthly Personal Tax Return objects.",
             "type": "optional<list<TaxReturnPersonalMonthly>>",
           },
@@ -41604,12 +41420,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "extra-properties": true,
         "properties": {
           "count": {
-            "display-name": "Tax Return Personal",
             "docs": "The total number of results in your Belvo account.",
             "type": "optional<integer>",
           },
           "next": {
-            "display-name": "Tax Return Personal",
             "docs": "The URL to next page of results. Each page consists of up to 100 items. If there are not enough results for an additional page, the value is \`null\`.
 
 In our documentation example, we use \`{endpoint}\` as a placeholder value. In production, this value will be replaced by the actual endpoint you are currently using (for example, \`accounts\` or \`owners\`).
@@ -41617,12 +41431,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<string>",
           },
           "previous": {
-            "display-name": "Tax Return Personal",
             "docs": "The URL to the previous page of results. If there is no previous page, the value is \`null\`.",
             "type": "optional<string>",
           },
           "results": {
-            "display-name": "Tax Return Personal",
             "docs": "Array of Personal Tax Return objects.",
             "type": "optional<list<TaxReturnPersonal>>",
           },
@@ -41636,7 +41448,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "properties": {
           "attach_pdf": {
             "default": false,
-            "display-name": "Yearly Tax Returns",
             "docs": "When this is set to \`true\`, you will receive the PDF as a binary string in the response.",
             "type": "optional<boolean>",
           },
@@ -41652,7 +41463,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "save_data": {
             "default": true,
-            "display-name": "Yearly Tax Returns",
             "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
             "type": "optional<boolean>",
@@ -42525,14 +42335,12 @@ You will still need to make a PATCH call to complete the request.",
   - you make a request for information while Belvo is scraping data from the institution for that user.",
         "properties": {
           "code": {
-            "display-name": "Too Many Sessions",
             "docs": "A unique error code (\`too_many_sessions\`) that allows you to classify and handle the error programmatically.
 
 ℹ️ Check our DevPortal for more information on how to handle <a href="https://developers.belvo.com/docs/belvo-api-errors#400-too_many_sessions" target="_blank">400 too_many_sessions errors</a>.",
             "type": "optional<string>",
           },
           "message": {
-            "display-name": "Too Many Sessions",
             "docs": "A short description of the error. 
 
 For \`too_many_sessions\` errors, the description is:
@@ -42541,7 +42349,6 @@ For \`too_many_sessions\` errors, the description is:
             "type": "optional<string>",
           },
           "request_id": {
-            "display-name": "Too Many Sessions",
             "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
             "type": "optional<string>",
             "validation": {
@@ -42657,7 +42464,6 @@ For \`too_many_sessions\` errors, the description is:
         "docs": "Information about the payer's bank account. Belvo returns the bank account ID when the account is already saved in the Belvo database.",
         "properties": {
           "bank_account": {
-            "display-name": "Bank account PSE",
             "docs": "Belvo's unique identifier for the payer’s bank account.",
             "type": "optional<string>",
             "validation": {
@@ -42673,7 +42479,6 @@ For \`too_many_sessions\` errors, the description is:
         },
       },
       "TransactionBankAccountOfpi": {
-        "display-name": "Brazil 🇧🇷 OFPI",
         "docs": "Object containing the payer's bank account information. For OFPI, this field will return an empty object.",
         "type": "map<string, unknown>",
       },
@@ -42842,14 +42647,12 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "docs": "This error occurs when you try to make an API call using incorrect Belvo API credentials (either your secret key or secret password, or both, are incorrect).",
         "properties": {
           "code": {
-            "display-name": "Unauthorized Error",
             "docs": "A unique error code (\`authentication_failed\`) that allows you to classify and handle the error programmatically.
 
 ℹ️ Check our DevPortal for more information on how to handle <a href="https://developers.belvo.com/docs/belvo-api-errors#401-authentication_failed" target="_blank">401 authentication_failed errors</a>.",
             "type": "optional<string>",
           },
           "message": {
-            "display-name": "Unauthorized Error",
             "docs": "A short description of the error. 
 
 For \`authentication_failed\` errors, the description is:
@@ -42858,7 +42661,6 @@ For \`authentication_failed\` errors, the description is:
             "type": "optional<string>",
           },
           "request_id": {
-            "display-name": "Unauthorized Error",
             "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
             "type": "optional<string>",
             "validation": {
@@ -42878,14 +42680,12 @@ For \`authentication_failed\` errors, the description is:
 A Link's status is set to \`unconfirmed_link\` when your user has not completed the Link creation process successfully (for example, they might not provide a valid MFA token).",
         "properties": {
           "code": {
-            "display-name": "Unconfirmed Link",
             "docs": "A unique error code (\`unconfirmed_link\`) that allows you to classify and handle the error programmatically.
 
 ℹ️ Check our DevPortal for more information on how to handle <a href="https://developers.belvo.com/docs/belvo-api-errors#400-unconfirmed_link" target="_blank">400 unconfirmed_link errors</a>.",
             "type": "optional<string>",
           },
           "message": {
-            "display-name": "Unconfirmed Link",
             "docs": "A short description of the error. 
 
 For \`unconfirmed_link\` errors, the description is:
@@ -42894,7 +42694,6 @@ For \`unconfirmed_link\` errors, the description is:
             "type": "optional<string>",
           },
           "request_id": {
-            "display-name": "Unconfirmed Link",
             "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
             "type": "optional<string>",
             "validation": {
@@ -42913,14 +42712,12 @@ For \`unconfirmed_link\` errors, the description is:
         "docs": "This error occurs when we (Belvo) have encountered an internal system error (sorry about that) or due to an unsupported response from the institution.",
         "properties": {
           "code": {
-            "display-name": "Unexpected Error",
             "docs": "A unique error code (\`unexpected_error\`) that allows you to classify and handle the error programmatically.
 
 ℹ️ Check our DevPortal for more information on how to handle <a href="https://developers.belvo.com/docs/belvo-api-errors#500-unexpected_error" target="_blank">500 unexpected_error errors</a>.",
             "type": "optional<string>",
           },
           "message": {
-            "display-name": "Unexpected Error",
             "docs": "A short description of the error. 
 
 For \`unexpected_error\` errors, the description is:
@@ -42929,7 +42726,6 @@ For \`unexpected_error\` errors, the description is:
             "type": "optional<string>",
           },
           "request_id": {
-            "display-name": "Unexpected Error",
             "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
             "type": "optional<string>",
             "validation": {
@@ -42948,14 +42744,12 @@ For \`unexpected_error\` errors, the description is:
         "docs": "This error occurs when you try to access some data operation that Belvo does not support for an institution. For example, trying to access the Balances resource for fiscal institutions.",
         "properties": {
           "code": {
-            "display-name": "Unsupported Operation",
             "docs": "A unique error code (\`unsupported_operation\`) that allows you to classify and handle the error programmatically.
 
 ℹ️ Check our DevPortal for more information on how to handle <a href="https://developers.belvo.com/docs/belvo-api-errors#400-unsupported_operation" target="_blank">400 unsupported_operation errors</a>.",
             "type": "optional<string>",
           },
           "message": {
-            "display-name": "Unsupported Operation",
             "docs": "A short description of the error. 
 
 For \`unsupported_operation\` errors, the description is:
@@ -42964,7 +42758,6 @@ For \`unsupported_operation\` errors, the description is:
             "type": "optional<string>",
           },
           "request_id": {
-            "display-name": "Unsupported Operation",
             "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
             "type": "optional<string>",
             "validation": {
@@ -42983,7 +42776,6 @@ For \`unsupported_operation\` errors, the description is:
         "docs": "This error occurs when you try to resume a request session that has already expired. This is usually because the user took too long to provide their authentication token.",
         "properties": {
           "code": {
-            "display-name": "Validation Error",
             "docs": "A unique error code (\`null\`, \`does_not_exist\`, \`required\`) that allows you to classify and handle the error programmatically.
 
 ℹ️ Check our DevPortal for more information on how to handle:
@@ -42994,12 +42786,10 @@ For \`unsupported_operation\` errors, the description is:
             "type": "optional<string>",
           },
           "field": {
-            "display-name": "Validation Error",
             "docs": "Name of the field where the error was encountered.",
             "type": "optional<string>",
           },
           "message": {
-            "display-name": "Validation Error",
             "docs": "A short description of the error. 
 
 For \`session_expired\` errors, the description can be (among others):
@@ -43011,7 +42801,6 @@ For \`session_expired\` errors, the description can be (among others):
             "type": "optional<string>",
           },
           "request_id": {
-            "display-name": "Validation Error",
             "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
             "type": "optional<string>",
             "validation": {
@@ -58017,7 +57806,6 @@ A payment intent captures all payment information (such as the amount to be char
                     "type": "string",
                   },
                   "metadata": {
-                    "display-name": "Colombia 🇨🇴 PSE",
                     "docs": "Optional and customizable object where you can provide any additional key-value pairs for your internal purposes. For example, an internal reference number for the payment intent.
 
 ⚠️ **Note**: You can only provide up to 50 keys (keys can have up to 50 characters each and each value can be up to 500 characters). We do not support nested objects, only ASCII values.",
@@ -63410,7 +63198,6 @@ client.connect()
                 "properties": {
                   "attach_pdf": {
                     "default": false,
-                    "display-name": "Tax Declarations",
                     "docs": "When this is set to \`true\`, you will receive the PDF as a binary string in the response.",
                     "type": "optional<boolean>",
                   },
@@ -63426,7 +63213,6 @@ client.connect()
                   },
                   "save_data": {
                     "default": true,
-                    "display-name": "Tax Declarations",
                     "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
                     "type": "optional<boolean>",
@@ -73136,14 +72922,12 @@ client.connect()
         "docs": "This error occurs when you try to access Belvo's resource without the correct permissions.",
         "properties": {
           "code": {
-            "display-name": "Access to Belvo API denied",
             "docs": "A unique error code (\`access_to_resource_denied\`) that allows you to classify and handle the error programmatically.
 
 ℹ️ Check our DevPortal for more information on how to handle <a href="https://developers.belvo.com/docs/belvo-api-errors#403-access_to_resource_denied" target="_blank">403 access_to_resource_denied</a>.",
             "type": "optional<string>",
           },
           "message": {
-            "display-name": "Access to Belvo API denied",
             "docs": "A short description of the error. 
 
 For \`access_to_resource_denied\` errors, the description is:
@@ -73152,7 +72936,6 @@ For \`access_to_resource_denied\` errors, the description is:
             "type": "optional<string>",
           },
           "request_id": {
-            "display-name": "Access to Belvo API denied",
             "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
             "type": "optional<string>",
             "validation": {
@@ -73954,7 +73737,6 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
             },
           },
           "metadata": {
-            "display-name": "Business Bank Account",
             "docs": "Optional and customizable object where you can provide any additional key-value pairs for your internal purposes. For example, an internal reference number for the payment intent.
 
 ⚠️ **Note**: You can only provide up to 50 keys (keys can have up to 50 characters each and each value can be up to 500 characters). We do not support nested objects, only ASCII values.",
@@ -74072,7 +73854,6 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
         "docs": "Information about the payer's bank account. Belvo returns this object when the payer's bank account information is not saved in the Belvo database.",
         "properties": {
           "bank_account_information": {
-            "display-name": "Bank account information PSE",
             "type": "optional<BankAccountInformationContentPse>",
           },
         },
@@ -74221,7 +74002,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "details": {
-            "display-name": "Beneficiary Bank Account",
             "type": "optional<BeneficiaryBankAccountOfpiDetails>",
           },
           "holder": {
@@ -74266,11 +74046,9 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": undefined,
         "properties": {
           "holder": {
-            "display-name": "Beneficiary Bank Account PSE",
             "type": "optional<Business>",
           },
           "id": {
-            "display-name": "Beneficiary Bank Account PSE",
             "docs": "Belvo's unique ID for the beneficiary bank account.",
             "type": "optional<string>",
             "validation": {
@@ -74281,7 +74059,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "institution": {
-            "display-name": "Beneficiary Bank Account PSE",
             "docs": "Belvo's unique ID for the institution that the bank account is created in.",
             "type": "optional<string>",
             "validation": {
@@ -74292,7 +74069,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "number": {
-            "display-name": "Beneficiary Bank Account PSE",
             "docs": "The bank account number.",
             "type": "optional<string>",
           },
@@ -74305,7 +74081,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Details regarding the business bank account holder.",
         "properties": {
           "Information": {
-            "display-name": "Business",
             "type": "optional<PSE>",
           },
           "type": "EnumBankAccountHolderTypePse",
@@ -74713,7 +74488,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "PSE",
           },
           "metadata": {
-            "display-name": "Colombia 🇨🇴 PSE",
             "docs": "Optional and customizable object where you can provide any additional key-value pairs for your internal purposes. For example, an internal reference number for the payment intent.
 
 ⚠️ **Note**: You can only provide up to 50 keys (keys can have up to 50 characters each and each value can be up to 500 characters). We do not support nested objects, only ASCII values.",
@@ -74738,7 +74512,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": undefined,
         "properties": {
           "address": {
-            "display-name": "Brazil 🇧🇷 OFPI",
             "docs": "The customer's physical address.
 ",
             "type": "optional<string>",
@@ -74774,7 +74547,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "phone": {
-            "display-name": "Brazil 🇧🇷 OFPI",
             "docs": "The customer's phone number.
 ",
             "type": "optional<string>",
@@ -74788,7 +74560,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": undefined,
         "properties": {
           "address": {
-            "display-name": "Colombia 🇨🇴 PSE",
             "docs": "The customer's physical address.
 ",
             "type": "optional<string>",
@@ -74824,7 +74595,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "phone": {
-            "display-name": "Colombia 🇨🇴 PSE",
             "docs": "The customer's phone number.
 ",
             "type": "optional<string>",
@@ -74849,7 +74619,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "CreatePaymentLinkOfpiAmount",
           },
           "callback_urls": {
-            "display-name": "Brazil 🇧🇷 OFPI",
             "type": "optional<PaymentLinkCallbackUrls>",
           },
           "customer": {
@@ -74864,7 +74633,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "expires_in": {
             "default": "7d",
-            "display-name": "Brazil 🇧🇷 OFPI",
             "docs": "The payment link expiration time. It allows the following formats to be sent through:
 
   - whole number + \`m\` for x amount of minutes. For example: \`15m\` for 15 minutes.
@@ -74917,7 +74685,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": undefined,
         "properties": {
           "allowed_payment_method_types": {
-            "display-name": "Colombia 🇨🇴 PSE",
             "docs": "A list of payment method types allowed in this payment intent. For PSE, this value must be set to \`pse\`.",
             "type": "optional<list<EnumPaymentLinkAllowedPaymentMethod>>",
           },
@@ -74929,7 +74696,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "CreatePaymentLinkPseAmount",
           },
           "callback_urls": {
-            "display-name": "Colombia 🇨🇴 PSE",
             "type": "optional<PaymentLinkCallbackUrls>",
           },
           "customer": {
@@ -74944,7 +74710,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "expires_in": {
             "default": "7d",
-            "display-name": "Colombia 🇨🇴 PSE",
             "docs": "The payment link expiration time. It allows the following formats to be sent through:
 
   - whole number + \`m\` for x amount of minutes. For example: \`15m\` for 15 minutes.
@@ -74997,7 +74762,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": undefined,
         "properties": {
           "address": {
-            "display-name": "Brazil 🇧🇷 OFPI",
             "docs": "The customers physical address.
 ",
             "type": "optional<string>",
@@ -75057,7 +74821,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "phone": {
-            "display-name": "Brazil 🇧🇷 OFPI",
             "docs": "The customer's phone number.
 ",
             "type": "optional<string>",
@@ -75116,7 +74879,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": undefined,
         "properties": {
           "address": {
-            "display-name": "Colombia 🇨🇴 PSE",
             "docs": "The customers physical address.
 
 
@@ -75179,7 +74941,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "phone": {
-            "display-name": "Colombia 🇨🇴 PSE",
             "docs": "The customer's phone number.
 
 
@@ -75196,7 +74957,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
           "payer_institution": {
-            "display-name": "Display PSE Colombia confirmation required.",
             "type": "optional<PaymentInstitution>",
           },
         },
@@ -75208,20 +74968,16 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
           "beneficiary_bank_account": {
-            "display-name": "Display Open Finance Brazil confirmation required",
             "type": "optional<BeneficiaryBankAccountOfpi>",
           },
           "payer_identifier": {
-            "display-name": "Display Open Finance Brazil confirmation required",
             "docs": "The payer's ID.",
             "type": "optional<string>",
           },
           "payer_institution": {
-            "display-name": "Display Open Finance Brazil confirmation required",
             "type": "optional<PaymentInstitution>",
           },
           "payer_name": {
-            "display-name": "Display Open Finance Brazil confirmation required",
             "docs": "The name of the payer.",
             "type": "optional<string>",
           },
@@ -75234,7 +74990,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Object containing form fields for the required credentials (for example, \`username\` or \`password\`) in this step.",
         "properties": {
           "payer_institution": {
-            "display-name": "Display PSE confirmation required",
             "type": "optional<PaymentInstitution>",
           },
         },
@@ -75246,11 +75001,9 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Object detailing what payment method information you need to display.",
         "properties": {
           "beneficiary_bank_account": {
-            "display-name": "Display PSE payment method information",
             "type": "optional<BeneficiaryBankAccountPse>",
           },
           "customer_bank_accounts": {
-            "display-name": "Display PSE payment method information",
             "docs": "Array of customer bank account objects.",
             "type": "optional<list<PaymentMethodInfoCustomerBankAccountsPse>>",
           },
@@ -75272,7 +75025,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Object detailing what payment method information you need to display.",
         "properties": {
           "institutions": {
-            "display-name": "Display Open Finance Brazil payment method information",
             "docs": "An array of institution objects.",
             "type": "optional<list<PaymentInstitution>>",
           },
@@ -75285,14 +75037,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Object detailing what payment method information you need to display.",
         "properties": {
           "customer_bank_accounts": {
-            "display-name": "Display PSE payment method information",
             "docs": "Array of bank account objects.
 
 **Note**: If there are no customer accounts saved in the Belvo database, we return an empty array.",
             "type": "optional<list<PaymentMethodInfoCustomerBankAccountsPse>>",
           },
           "institutions": {
-            "display-name": "Display PSE payment method information",
             "docs": "An array of institution objects.",
             "type": "optional<list<PaymentInstitution>>",
           },
@@ -77360,14 +77110,12 @@ Please see our [Institutions](https://developers.belvo.com/docs/institution) Dev
         "docs": "This error occurs when the institution's website that you're trying to access is down due to maintenance or other issues, which means Belvo is unable to create new links or retrieve new data.",
         "properties": {
           "code": {
-            "display-name": "Institution Down",
             "docs": "A unique error code (\`institution_down\`) that allows you to classify and handle the error programmatically.
 
 ℹ️ Check our DevPortal for more information on how to handle <a href="https://developers.belvo.com/docs/belvo-api-errors#400-institution_down" target="_blank">400 institution_down errors</a>.",
             "type": "optional<string>",
           },
           "message": {
-            "display-name": "Institution Down",
             "docs": "A short description of the error. 
 
 For \`institution_down\` errors, the description is:
@@ -77376,7 +77124,6 @@ For \`institution_down\` errors, the description is:
             "type": "optional<string>",
           },
           "request_id": {
-            "display-name": "Institution Down",
             "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
             "type": "optional<string>",
             "validation": {
@@ -77443,14 +77190,12 @@ For \`institution_down\` errors, the description is:
         "docs": "This error occurs when we (Belvo) have deactivated the institution in our API.",
         "properties": {
           "code": {
-            "display-name": "Institution Inactive",
             "docs": "A unique error code (\`institution_inactive\`) that allows you to classify and handle the error programmatically.
 
 ℹ️ Check our DevPortal for more information on how to handle <a href="https://developers.belvo.com/docs/belvo-api-errors#400-institution_inactive" target="_blank">400 institution_inactive errors</a>.",
             "type": "optional<string>",
           },
           "message": {
-            "display-name": "Institution Inactive",
             "docs": "A short description of the error. 
 
 For \`institution_inactive\` errors, the description is:
@@ -77459,7 +77204,6 @@ For \`institution_inactive\` errors, the description is:
             "type": "optional<string>",
           },
           "request_id": {
-            "display-name": "Institution Inactive",
             "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
             "type": "optional<string>",
             "validation": {
@@ -77478,14 +77222,12 @@ For \`institution_inactive\` errors, the description is:
         "docs": "This error occurs when the institution's website that you're trying to access is down due to maintenance or other issues, which means Belvo is unable to create new links or retrieve new data.",
         "properties": {
           "code": {
-            "display-name": "Institution Unavailable",
             "docs": "A unique error code (\`institution_unavailable\`) that allows you to classify and handle the error programmatically.
 
 ℹ️ Check our DevPortal for more information on how handle <a href="https://developers.belvo.com/docs/belvo-api-errors#400-institution_unavailable" target="_blank">400 institution_unavailable errors</a>.",
             "type": "optional<string>",
           },
           "message": {
-            "display-name": "Institution Unavailable",
             "docs": "A short description of the error.
 
 For \`institution_unavailable\` errors, the description is:
@@ -77494,7 +77236,6 @@ For \`institution_unavailable\` errors, the description is:
             "type": "optional<string>",
           },
           "request_id": {
-            "display-name": "Institution Unavailable",
             "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
             "type": "optional<string>",
             "validation": {
@@ -77628,14 +77369,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "This error occurs when you try to update a link from single to recurrent, but there are no login credentials stored for the user.",
         "properties": {
           "code": {
-            "display-name": "Invalid Access Mode",
             "docs": "A unique error code (\`invalid_access_mode_switch\`) that allows you to classify and handle the error programmatically.
 
 ℹ️ Check our DevPortal for more information on how to handle <a href="https://developers.belvo.com/docs/belvo-api-errors#400-invalid_access_mode_switch" target="_blank">400 invalid_access_mode_switch errors</a>.",
             "type": "optional<string>",
           },
           "message": {
-            "display-name": "Invalid Access Mode",
             "docs": "A short description of the error. 
 
 For \`invalid_access_mode_switch\` errors, the description is:
@@ -77644,7 +77383,6 @@ For \`invalid_access_mode_switch\` errors, the description is:
             "type": "optional<string>",
           },
           "request_id": {
-            "display-name": "Invalid Access Mode",
             "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
             "type": "optional<string>",
             "validation": {
@@ -77663,14 +77401,12 @@ For \`invalid_access_mode_switch\` errors, the description is:
         "docs": "This error occurs when you try to access an account but the user credentials are no longer valid, prompting an error from the institution.",
         "properties": {
           "code": {
-            "display-name": "Invalid Link",
             "docs": "A unique error code (\`invalid_link\`) that allows you to classify and handle the error programmatically.
 
 ℹ️ Check our DevPortal for more information on how to handle <a href="https://developers.belvo.com/docs/belvo-api-errors#400-invalid_link" target="_blank">400 invalid_link errors</a>.",
             "type": "optional<string>",
           },
           "message": {
-            "display-name": "Invalid Link",
             "docs": "A short description of the error. 
 
 For \`invalid_link\` errors, the description is:
@@ -77679,7 +77415,6 @@ For \`invalid_link\` errors, the description is:
             "type": "optional<string>",
           },
           "request_id": {
-            "display-name": "Invalid Link",
             "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
             "type": "optional<string>",
             "validation": {
@@ -77698,14 +77433,12 @@ For \`invalid_link\` errors, the description is:
         "docs": "This error occurs when you request incomes for a link within a given date range, however, the period between \`date_from\` and \`date_to\` is less than 90 days.",
         "properties": {
           "code": {
-            "display-name": "Invalid Period",
             "docs": "A unique error code (\`invalid_period\`) that allows you to classify and handle the error programmatically.
 
 ℹ️ Check our DevPortal for more information on how to handle <a href="https://developers.belvo.com/docs/belvo-api-errors#400-invalid_period" target="_blank">400 invalid_period errors</a>.",
             "type": "optional<string>",
           },
           "message": {
-            "display-name": "Invalid Period",
             "docs": "A short description of the error. 
 
 For \`invalid_period\` errors, the description is:
@@ -77714,7 +77447,6 @@ For \`invalid_period\` errors, the description is:
             "type": "optional<string>",
           },
           "request_id": {
-            "display-name": "Invalid Period",
             "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
             "type": "optional<string>",
             "validation": {
@@ -78173,7 +77905,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<datetime>",
           },
           "created_at": {
-            "display-name": "🇨🇴 DIAN Colombia",
             "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
             "type": "optional<datetime>",
           },
@@ -78198,7 +77929,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<float>",
           },
           "expiration_date": {
-            "display-name": "🇨🇴 DIAN Colombia",
             "docs": "Indicates when the invoice is set to expire.
 
 For example: If the invoice is paid in installments, this field indicates the date when the installment is to be paid.
@@ -78212,13 +77942,11 @@ For example: If the invoice is paid in installments, this field indicates the da
             },
           },
           "folio": {
-            "display-name": "🇨🇴 DIAN Colombia",
             "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
 ",
             "type": "optional<string>",
           },
           "id": {
-            "display-name": "🇨🇴 DIAN Colombia",
             "docs": "Belvo's unique identifier for the current invoice.",
             "type": "optional<string>",
             "validation": {
@@ -78249,17 +77977,14 @@ For example: If the invoice is paid in installments, this field indicates the da
           },
           "invoice_type": "optional<EnumInvoiceDianInvoiceType>",
           "link": {
-            "display-name": "🇨🇴 DIAN Colombia",
             "docs": "The \`link.id\` the invoice belongs to.",
             "type": "optional<string>",
           },
           "payment_method": {
-            "display-name": "🇨🇴 DIAN Colombia",
             "type": "optional<EnumInvoiceDianPaymentMethod>",
           },
           "payment_method_description": {
             "availability": "deprecated",
-            "display-name": "🇨🇴 DIAN Colombia",
             "docs": "The description of the payment method used for this invoice.
 ",
             "type": "optional<string>",
@@ -78283,13 +78008,11 @@ For detailed information regarding DIAN's payment types, please see their [offic
           },
           "payroll": "optional<InvoicesPayrollDian>",
           "place_of_issue": {
-            "display-name": "🇨🇴 DIAN Colombia",
             "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
 ",
             "type": "optional<string>",
           },
           "receiver_details": {
-            "display-name": "🇨🇴 DIAN Colombia",
             "type": "optional<InvoicesReceiverDetailsDian>",
           },
           "receiver_id": {
@@ -78301,12 +78024,10 @@ For detailed information regarding DIAN's payment types, please see their [offic
             "type": "optional<string>",
           },
           "receiver_tax_fraud_status": {
-            "display-name": "🇨🇴 DIAN Colombia",
             "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.",
             "type": "optional<string>",
           },
           "sender_details": {
-            "display-name": "🇨🇴 DIAN Colombia",
             "type": "optional<InvoiceSenderDetailsDian>",
           },
           "sender_id": {
@@ -78318,7 +78039,6 @@ For detailed information regarding DIAN's payment types, please see their [offic
             "type": "optional<string>",
           },
           "sender_tax_fraud_status": {
-            "display-name": "🇨🇴 DIAN Colombia",
             "docs": "Indicates whether or not the sender is on a tax fraud list for having submitted incorrect data, having outstanding payments, or having conducted business that is in violation of the fiscal institution's regulations.
 **Note**: This field is not applicable for DIAN Colombia and will return \`null\`.",
             "type": "optional<string>",
@@ -78347,23 +78067,19 @@ For detailed information regarding DIAN's payment types, please see their [offic
           },
           "type": "optional<EnumInvoiceType>",
           "usage": {
-            "display-name": "🇨🇴 DIAN Colombia",
             "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
 ",
             "type": "optional<string>",
           },
           "version": {
-            "display-name": "🇨🇴 DIAN Colombia",
             "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
 ",
             "type": "optional<string>",
           },
           "warnings": {
-            "display-name": "🇨🇴 DIAN Colombia",
             "type": "optional<InvoiceWarningsDian>",
           },
           "xml": {
-            "display-name": "🇨🇴 DIAN Colombia",
             "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
 ",
             "type": "optional<string>",
@@ -78505,7 +78221,6 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
             "type": "optional<datetime>",
           },
           "created_at": {
-            "display-name": "🇲🇽 SAT Mexico",
             "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
             "type": "optional<datetime>",
           },
@@ -78530,13 +78245,11 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
             "type": "optional<float>",
           },
           "folio": {
-            "display-name": "🇲🇽 SAT Mexico",
             "docs": "The internal control number that the taxpayer assigns to the invoice.
 ",
             "type": "optional<string>",
           },
           "id": {
-            "display-name": "🇲🇽 SAT Mexico",
             "docs": "Belvo's unique identifier used to reference the current invoice.",
             "type": "optional<string>",
             "validation": {
@@ -78567,17 +78280,14 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
           },
           "invoice_type": "optional<EnumInvoiceSatInvoiceType>",
           "link": {
-            "display-name": "🇲🇽 SAT Mexico",
             "docs": "The \`link.id\` the invoice belongs to.",
             "type": "optional<string>",
           },
           "payment_method": {
-            "display-name": "🇲🇽 SAT Mexico",
             "type": "optional<EnumInvoiceSatPaymentMethod>",
           },
           "payment_method_description": {
             "availability": "deprecated",
-            "display-name": "🇲🇽 SAT Mexico",
             "docs": "*This field has been deprecated.*
 
 *The description of the payment method used for this invoice.*
@@ -78604,14 +78314,12 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
           },
           "payroll": "optional<InvoicesPayrollSat>",
           "place_of_issue": {
-            "display-name": "🇲🇽 SAT Mexico",
             "docs": "The postcode of where the invoice was issued.
 ",
             "type": "optional<string>",
           },
           "receiver_blacklist_status": {
             "availability": "deprecated",
-            "display-name": "🇲🇽 SAT Mexico",
             "docs": "This field has been deprecated. Please use \`receiver_tax_fraud_status\` instead.
 ",
             "type": "optional<string>",
@@ -78625,7 +78333,6 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
             "type": "optional<string>",
           },
           "receiver_tax_fraud_status": {
-            "display-name": "🇲🇽 SAT Mexico",
             "docs": "Indicates whether or not the receiver is on SAT's tax fraud list for having submitted incorrect data, having outstanding payments, or having conducted business that is in violation of the fiscal institution's regulations.<br><br>
 SAT updates the tax fraud list every three months. <br><br>
 For more information regarding the reason's a taxpayer can be put on the tax fraud list, please see [Article 69](http://omawww.sat.gob.mx/cifras_sat/Paginas/datos/vinculo.html?page=ListCompleta69.html) and [Article 69-B](http://omawww.sat.gob.mx/cifras_sat/Paginas/datos/vinculo.html?page=ListCompleta69B.html) of Mexico's Código Fiscal de la Federación. <br><br>
@@ -78635,7 +78342,6 @@ Possible statuses are:
           },
           "sender_blacklist_status": {
             "availability": "deprecated",
-            "display-name": "🇲🇽 SAT Mexico",
             "docs": "This field has been deprecated. Please use \`sender_tax_fraud_status\` instead.
 ",
             "type": "optional<string>",
@@ -78649,7 +78355,6 @@ Possible statuses are:
             "type": "optional<string>",
           },
           "sender_tax_fraud_status": {
-            "display-name": "🇲🇽 SAT Mexico",
             "docs": "Indicates whether or not the sender is on SAT's tax fraud list for having submitted incorrect data, having outstanding payments, or having conducted business that is in violation of the fiscal institution's regulations.<br><br>
 SAT updates the tax fraud list every three months. <br><br>
 For more information regarding the reason's a taxpayer can be put on the tax fraud list, please see [Article 69](http://omawww.sat.gob.mx/cifras_sat/Paginas/datos/vinculo.html?page=ListCompleta69.html) and [Article 69-B](http://omawww.sat.gob.mx/cifras_sat/Paginas/datos/vinculo.html?page=ListCompleta69B.html) of Mexico's Código Fiscal de la Federación. <br><br>
@@ -78677,7 +78382,6 @@ Possible statuses are:
           },
           "type": "optional<EnumInvoiceType>",
           "usage": {
-            "display-name": "🇲🇽 SAT Mexico",
             "docs": "The invoice's usage code, as defined by the legal entity of the country. 
 
 - 🇲🇽 Mexico [SAT catalog reference article](https://developers.belvo.com/docs/sat-catalogs#usage)
@@ -78685,17 +78389,14 @@ Possible statuses are:
             "type": "optional<string>",
           },
           "version": {
-            "display-name": "🇲🇽 SAT Mexico",
             "docs": "The CFDI version of the invoice.
 ",
             "type": "optional<string>",
           },
           "warnings": {
-            "display-name": "🇲🇽 SAT Mexico",
             "type": "optional<InvoiceWarningsSat>",
           },
           "xml": {
-            "display-name": "🇲🇽 SAT Mexico",
             "docs": "XML of the invoice document.
 ",
             "type": "optional<string>",
@@ -79348,14 +79049,12 @@ A unique 44-character string that can be used to identify a user at a given inst
   - the user's account is either locked or the user does not have permission to access their internet banking.",
         "properties": {
           "code": {
-            "display-name": "Login Error",
             "docs": "A unique error code (\`login_error\`) that allows you to classify and handle the error programmatically.
 
 ℹ️ Check our DevPortal for more information on how to handle <a href="https://developers.belvo.com/docs/belvo-api-errors#400-login_error" target="_blank">400 login_error errors</a>.",
             "type": "optional<string>",
           },
           "message": {
-            "display-name": "Login Error",
             "docs": "A short description of the error. 
 
 For \`login_error\` errors, the description can be one of the following:
@@ -79370,7 +79069,6 @@ For \`login_error\` errors, the description can be one of the following:
             "type": "optional<string>",
           },
           "request_id": {
-            "display-name": "Login Error",
             "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
             "type": "optional<string>",
             "validation": {
@@ -79431,12 +79129,10 @@ For \`login_error\` errors, the description can be one of the following:
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
           "open_finance_display_confirmation_required": {
-            "display-name": "OFPI - Display Confirmation Required",
             "type": "optional<DisplayConfirmationRequiredOfpi>",
           },
           "ready_to_confirm": {
             "default": true,
-            "display-name": "OFPI - Display Confirmation Required",
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When set to \`true\`, you need to confirm the payment by making a PATCH request sending through \`confirm: true\`.",
@@ -79451,12 +79147,10 @@ For \`login_error\` errors, the description can be one of the following:
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
           "pse_display_confirmation_required": {
-            "display-name": "Display PSE confirmation required",
             "type": "optional<DisplayConfirmationRequiredContentPse>",
           },
           "ready_to_confirm": {
             "default": true,
-            "display-name": "Display PSE confirmation required",
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When the value is \`true\`, you'll need to make a PATCH request sending through \`confirm: true\` to confirm the payment.",
@@ -79471,12 +79165,10 @@ For \`login_error\` errors, the description can be one of the following:
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
           "pse_display_credentials_required": {
-            "display-name": "Display PSE credentials required",
             "type": "optional<DisplayCredentialsRequiredContentPse>",
           },
           "ready_to_confirm": {
             "default": false,
-            "display-name": "Display PSE credentials required",
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When the value is \`true\`, you'll need to make a PATCH request sending through \`confirm: true\` to confirm the payment.",
@@ -79491,12 +79183,10 @@ For \`login_error\` errors, the description can be one of the following:
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
           "pse_display_customer_bank_accounts": {
-            "display-name": "Display PSE customer bank accounts",
             "type": "optional<DisplayCustomerBankAccountsContentPse>",
           },
           "ready_to_confirm": {
             "default": true,
-            "display-name": "Display PSE customer bank accounts",
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When the value is \`true\`, you'll need to make a PATCH request sending through \`confirm: true\` to confirm the payment.",
@@ -79511,12 +79201,10 @@ For \`login_error\` errors, the description can be one of the following:
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
           "pse_display_needs_redirect": {
-            "display-name": "Display PSE needs redirect",
             "type": "optional<NeedsRedirectContentPse>",
           },
           "ready_to_confirm": {
             "default": true,
-            "display-name": "Display PSE needs redirect",
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When the value is \`true\`, you'll need to make a PATCH request sending through \`confirm: true\` to confirm the payment.",
@@ -79531,12 +79219,10 @@ For \`login_error\` errors, the description can be one of the following:
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
           "open_finance_display_payment_failed": {
-            "display-name": "OFPI - Payment Failed",
             "type": "optional<DisplayPaymentFailed>",
           },
           "ready_to_confirm": {
             "default": false,
-            "display-name": "OFPI - Payment Failed",
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When set to \`true\`,you need to confirm the payment by making a PATCH request sending through \`confirm: true\`.",
@@ -79551,12 +79237,10 @@ For \`login_error\` errors, the description can be one of the following:
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
           "open_finance_display_payment_method_information": {
-            "display-name": "OFPI -  Display Payment Method Information",
             "type": "optional<DisplayPaymentMethodInformationContentOfpi>",
           },
           "ready_to_confirm": {
             "default": false,
-            "display-name": "OFPI -  Display Payment Method Information",
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When set to \`true\`, you need to confirm the payment by making a PATCH request sending through \`confirm: true\`.",
@@ -79571,12 +79255,10 @@ For \`login_error\` errors, the description can be one of the following:
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type. You'll need to send a PATCH request with the institution selected by the customer or their bank accounts (if there are accounts already saved in the Belvo database).",
         "properties": {
           "pse_display_payment_method_information": {
-            "display-name": "Display PSE payment method information",
             "type": "optional<DisplayPaymentMethodInformationContentPse>",
           },
           "ready_to_confirm": {
             "default": false,
-            "display-name": "Display PSE payment method information",
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When the value is \`true\`, you'll need to make a PATCH request sending through \`confirm: true\` to confirm the payment.",
@@ -79591,12 +79273,10 @@ For \`login_error\` errors, the description can be one of the following:
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
           "open_finance_display_payment_processing": {
-            "display-name": "OFPI - Payment Processing",
             "type": "optional<DisplayPaymentProcessing>",
           },
           "ready_to_confirm": {
             "default": false,
-            "display-name": "OFPI - Payment Processing",
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When set to \`true\`, you need to confirm the payment by making a PATCH request sending through \`confirm: true\`.",
@@ -79611,12 +79291,10 @@ For \`login_error\` errors, the description can be one of the following:
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
           "open_finance_display_payment_succeeded": {
-            "display-name": "OFPI - Payment Succeeded",
             "type": "optional<DisplayPaymentSucceeded>",
           },
           "ready_to_confirm": {
             "default": false,
-            "display-name": "OFPI - Payment Succeeded",
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When set to \`true\`, you need to confirm the payment by making a PATCH request sending through \`confirm: true\`.",
@@ -79631,11 +79309,9 @@ For \`login_error\` errors, the description can be one of the following:
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
           "pse_display_token_required": {
-            "display-name": "Display PSE token required",
             "type": "optional<DisplayTokenRequiredContentPse>",
           },
           "ready_to_confirm": {
-            "display-name": "Display PSE token required",
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. This value will return: 
 
   - \`false\` when a customer wants to pay for the very first time. This is so because you still need to input information about your customer in the following steps to process a payment successfully. 
@@ -79654,12 +79330,10 @@ For \`login_error\` errors, the description can be one of the following:
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
           "open_finance_display_needs_redirect": {
-            "display-name": "OFPI - Needs Redirect",
             "type": "optional<NeedsRedirectContent>",
           },
           "ready_to_confirm": {
             "default": false,
-            "display-name": "OFPI - Needs Redirect",
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When set to \`true\`, you need to confirm the payment by making a PATCH request sending through \`confirm: true\`.",
@@ -79698,14 +79372,12 @@ For \`login_error\` errors, the description can be one of the following:
         "docs": undefined,
         "properties": {
           "code": {
-            "display-name": "Not Found",
             "docs": "A unique error code (\`not_found\`) that allows you to classify and handle the error programmatically.
 
 ℹ️ Check our DevPortal for more information on how to handle <a href="https://developers.belvo.com/docs/belvo-api-errors#404-not_found" target="_blank">404 not_found errors</a>.",
             "type": "optional<string>",
           },
           "message": {
-            "display-name": "Not Found",
             "docs": "A short description of the error. 
 
 For \`not_found\` errors, the description is:
@@ -79714,7 +79386,6 @@ For \`not_found\` errors, the description is:
             "type": "optional<string>",
           },
           "request_id": {
-            "display-name": "Not Found",
             "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
             "type": "optional<string>",
             "validation": {
@@ -79743,7 +79414,6 @@ For \`not_found\` errors, the description is:
             },
           },
           "callback_url": {
-            "display-name": "OFPB",
             "docs": "The URL to your application that your customer will be directed to once they confirm the payment in their bank application.",
             "type": "optional<string>",
           },
@@ -79756,7 +79426,6 @@ For \`not_found\` errors, the description is:
         "docs": "Details about the payment method.",
         "properties": {
           "open_finance": {
-            "display-name": "OFPI",
             "type": "optional<ChargePaymentMethodDetailsOfpiContent>",
           },
         },
@@ -80023,7 +79692,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "docs": undefined,
         "properties": {
           "pse": {
-            "display-name": "PATCH payment method details",
             "type": "optional<PatchPaymentMethodDetailsPse>",
           },
         },
@@ -80151,7 +79819,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "charges": {
             "availability": "deprecated",
-            "display-name": "Brazil 🇧🇷 OFPI",
             "docs": "An array of charge objects related to this paymnet intent. If no charges are associated, we return an empty array.
 
 **Note**: The charges resource will be deprecated and removed from our API by end of Q1 2023. We recommend not using any data from this resource.",
@@ -80212,7 +79879,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             "type": "LastErrorPaymentError",
           },
           "metadata": {
-            "display-name": "Brazil 🇧🇷 OFPI",
             "docs": "Optional and customizable object where you can provide any additional key-value pairs for your internal purposes. For example, an internal reference number.
 
 ⚠️ **Note**: You can only provide up to 50 keys (keys can have up to 50 characters each and each value can be up to 500 characters). We do not support nested objects, only ASCII values.",
@@ -80463,7 +80129,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "charges": {
             "availability": "deprecated",
-            "display-name": "Colombia 🇨🇴 PSE",
             "docs": "An array of charge objects related to this paymnet intent. If no charges are associated, we return an empty array.
 
 **Note**: The charges resource will be deprecated and removed from our API by end of Q1 2023. We recommend not using any data from this resource.",
@@ -80521,7 +80186,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "last_error": "PaymentIntentPseLastError",
           "metadata": {
-            "display-name": "Colombia 🇨🇴 PSE",
             "docs": "Optional and customizable object where you can provide any additional key-value pairs for your internal purposes. For example, an internal reference number.
 
 ⚠️ **Note**: You can only provide up to 50 keys (keys can have up to 50 characters each and each value can be up to 500 characters). We do not support nested objects, only ASCII values.",
@@ -80623,14 +80287,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": undefined,
         "properties": {
           "cancel": {
-            "display-name": "Payment Link Callback URLs",
             "docs": "The URL that the user should be redirected to if they decide to cancel the payment process or if an error occurs.
 
 **Note:** Not required if your integration only generates payment links through the [Belvo Dashboard](https://dashboard.belvo.com/).",
             "type": "optional<string>",
           },
           "success": {
-            "display-name": "Payment Link Callback URLs",
             "docs": "The URL that the user should be redirected to when they complete the payment process successfully.
 
 **Note:** Not required if your integration only generates payment links through the [Belvo Dashboard](https://dashboard.belvo.com/).",
@@ -80647,12 +80309,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
 **Note:** This field will return an empty object if your integration only generates payment links through the [Belvo Dashboard](https://dashboard.belvo.com/).",
         "properties": {
           "cancel": {
-            "display-name": "Payment Link Callback URLs",
             "docs": "The URL that the user should be redirected to if they decide to cancel the payment process or if an error occurs.",
             "type": "optional<string>",
           },
           "success": {
-            "display-name": "Payment Link Callback URLs",
             "docs": "The URL that the user should be redirected to when they complete the payment process successfully.",
             "type": "optional<string>",
           },
@@ -80665,7 +80325,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": undefined,
         "properties": {
           "access_token": {
-            "display-name": "Brazil 🇧🇷 OFPI",
             "docs": "The Belvo-generated access token for the payment link.
 
 **Note:** You'll need the \`access_token\` to make [Get details for a payment link](https://developers.belvo.com/reference/detailcreatepaymentlink) requests.",
@@ -80715,7 +80374,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "payment_intent": {
-            "display-name": "Brazil 🇧🇷 OFPI",
             "docs": "Belvo's unique ID for the payment intent. You can retrieve the complete payment intent by using our [Get details of a payment link](https://developers.belvo.com/reference/detailcreatepaymentlink) request.",
             "type": "optional<string>",
             "validation": {
@@ -80731,7 +80389,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "status": "EnumPaymentLinksStatus",
           "updated_at": {
-            "display-name": "Brazil 🇧🇷 OFPI",
             "docs": "The ISO-8601 timestamp of when the payment link was last updated.
 ",
             "type": "optional<datetime>",
@@ -80745,7 +80402,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": undefined,
         "properties": {
           "access_token": {
-            "display-name": "Colombia 🇨🇴 PSE",
             "docs": "The Belvo-generated access token for the payment link.
 
 **Note:** You'll need the \`access_token\` to make [Get details for a payment link](https://developers.belvo.com/reference/detailcreatepaymentlink) requests.",
@@ -80795,7 +80451,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "payment_intent": {
-            "display-name": "Colombia 🇨🇴 PSE",
             "docs": "Belvo's unique ID for the payment intent. You can retrieve the complete payment intent by using our [Get details of a payment link](https://developers.belvo.com/reference/detailcreatepaymentlink) request.",
             "type": "optional<string>",
             "validation": {
@@ -80811,7 +80466,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "status": "EnumPaymentLinksStatus",
           "updated_at": {
-            "display-name": "Colombia 🇨🇴 PSE",
             "docs": "The ISO-8601 timestamp of when the payment link was last updated.
 ",
             "type": "optional<datetime>",
@@ -80825,7 +80479,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": undefined,
         "properties": {
           "access_token": {
-            "display-name": "Brazil 🇧🇷 OFPI",
             "docs": "The Belvo-generated access token for the payment link.
 
 **Note:** You'll need the \`access_token\` to make [Get details for a payment link](https://developers.belvo.com/reference/detailcreatepaymentlink) requests.",
@@ -80875,7 +80528,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "payment_intent": {
-            "display-name": "Brazil 🇧🇷 OFPI",
             "type": "optional<PaymentIntentOfpi>",
           },
           "payment_url": {
@@ -80884,7 +80536,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "status": "EnumPaymentLinksStatus",
           "updated_at": {
-            "display-name": "Brazil 🇧🇷 OFPI",
             "docs": "The ISO-8601 timestamp of when the payment link was last updated.
 ",
             "type": "optional<datetime>",
@@ -80943,7 +80594,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": undefined,
         "properties": {
           "access_token": {
-            "display-name": "Colombia 🇨🇴 PSE",
             "docs": "The Belvo-generated access token for the payment link.
 
 **Note:** You'll need the \`access_token\` to make [Get details for a payment link](https://developers.belvo.com/reference/detailcreatepaymentlink) requests.",
@@ -80993,7 +80643,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "payment_intent": {
-            "display-name": "Colombia 🇨🇴 PSE",
             "type": "optional<PaymentIntentPse>",
           },
           "payment_url": {
@@ -81002,7 +80651,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "status": "EnumPaymentLinksStatus",
           "updated_at": {
-            "display-name": "Colombia 🇨🇴 PSE",
             "docs": "The ISO-8601 timestamp of when the payment link was last updated.
 ",
             "type": "optional<datetime>",
@@ -81630,14 +81278,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Belvo has a limit regarding the time it takes to log in, retrieve account data, and log out. A timeout occurs when there is a very high amount of data and everything could not be obtained within the allotted time.",
         "properties": {
           "code": {
-            "display-name": "Request Timeout",
             "docs": "A unique error code (\`request_timeout\`) that allows you to classify and handle the error programmatically.
 
 ℹ️ Check our DevPortal for more information on how to handle <a href="https://developers.belvo.com/docs/belvo-api-errors#408-request_timeout" target="_blank">408 request_timeout errors</a>.",
             "type": "optional<string>",
           },
           "message": {
-            "display-name": "Request Timeout",
             "docs": "A short description of the error. 
 
 For \`request_timeout\` errors, the description is:
@@ -81646,7 +81292,6 @@ For \`request_timeout\` errors, the description is:
             "type": "optional<string>",
           },
           "request_id": {
-            "display-name": "Request Timeout",
             "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
             "type": "optional<string>",
             "validation": {
@@ -82192,14 +81837,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "This error occurs when you try to resume a request session that has already expired. This is usually because the user took too long to provide their authentication token.",
         "properties": {
           "code": {
-            "display-name": "Session Expired",
             "docs": "A unique error code (\`session_expired\`) that allows you to classify and handle the error programmatically.
 
 ℹ️ Check our DevPortal for more information on how to handle <a href="https://developers.belvo.com/docs/belvo-api-errors#400-session_expired" target="_blank">400 session_expired errors</a>.",
             "type": "optional<string>",
           },
           "message": {
-            "display-name": "Session Expired",
             "docs": "A short description of the error. 
 
 For \`session_expired\` errors, the description is:
@@ -82208,7 +81851,6 @@ For \`session_expired\` errors, the description is:
             "type": "optional<string>",
           },
           "request_id": {
-            "display-name": "Session Expired",
             "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
             "type": "optional<string>",
             "validation": {
@@ -82475,12 +82117,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": undefined,
         "properties": {
           "count": {
-            "display-name": "Tax Declaration Business",
             "docs": "The total number of results in your Belvo account.",
             "type": "optional<integer>",
           },
           "next": {
-            "display-name": "Tax Declaration Business",
             "docs": "The URL to next page of results. Each page consists of up to 100 items. If there are not enough results for an additional page, the value is \`null\`.
 
 In our documentation example, we use \`{endpoint}\` as a placeholder value. In production, this value will be replaced by the actual endpoint you are currently using (for example, \`accounts\` or \`owners\`).
@@ -82488,12 +82128,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<string>",
           },
           "previous": {
-            "display-name": "Tax Declaration Business",
             "docs": "The URL to the previous page of results. If there is no previous page, the value is \`null\`.",
             "type": "optional<string>",
           },
           "results": {
-            "display-name": "Tax Declaration Business",
             "docs": "Array of Business Tax Declaration objects.",
             "type": "optional<list<TaxDeclarationBusiness>>",
           },
@@ -82562,12 +82200,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": undefined,
         "properties": {
           "count": {
-            "display-name": "Tax Declaration Individual",
             "docs": "The total number of results in your Belvo account.",
             "type": "optional<integer>",
           },
           "next": {
-            "display-name": "Tax Declaration Individual",
             "docs": "The URL to next page of results. Each page consists of up to 100 items. If there are not enough results for an additional page, the value is \`null\`.
 
 In our documentation example, we use \`{endpoint}\` as a placeholder value. In production, this value will be replaced by the actual endpoint you are currently using (for example, \`accounts\` or \`owners\`).
@@ -82575,12 +82211,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<string>",
           },
           "previous": {
-            "display-name": "Tax Declaration Individual",
             "docs": "The URL to the previous page of results. If there is no previous page, the value is \`null\`.",
             "type": "optional<string>",
           },
           "results": {
-            "display-name": "Tax Declaration Individual",
             "docs": "Array of Individual Tax Declaration objects.",
             "type": "optional<list<TaxDeclarationIndividual>>",
           },
@@ -82821,17 +82455,14 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<map<string, unknown>>",
           },
           "created_at": {
-            "display-name": "Tax Return Business",
             "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
             "type": "optional<datetime>",
           },
           "datos_adicionales": {
-            "display-name": "Tax Return Business",
             "docs": "Additional data regarding the tax return.",
             "type": "optional<map<string, unknown>>",
           },
           "deducciones_autorizadas": {
-            "display-name": "Tax Return Business",
             "docs": "Details regarding the legal entity's deductions.",
             "type": "optional<map<string, unknown>>",
           },
@@ -82844,7 +82475,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<map<string, unknown>>",
           },
           "dividendos_o_utilidades_distribuidos": {
-            "display-name": "Tax Return Business",
             "docs": "Details regarding distributed dividends.",
             "type": "optional<map<string, unknown>>",
           },
@@ -82857,7 +82487,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<map<string, unknown>>",
           },
           "id": {
-            "display-name": "Tax Return Business",
             "docs": "Unique identifier created by Belvo used to reference the current Tax Return.",
             "type": "optional<string>",
             "validation": {
@@ -82905,7 +82534,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<datetime>",
           },
           "created_at": {
-            "display-name": "Tax Return Business Monthly",
             "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
             "type": "optional<datetime>",
           },
@@ -82926,7 +82554,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<map<string, unknown>>",
           },
           "id": {
-            "display-name": "Tax Return Business Monthly",
             "docs": "Unique identifier created by Belvo used to reference the current Tax Return.",
             "type": "optional<string>",
             "validation": {
@@ -82951,7 +82578,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "receipt_pdf": {
-            "display-name": "Tax Return Business Monthly",
             "docs": "The acknowledgement receipt from the fiscal institution confirming that they received the tax return.",
             "type": "optional<string>",
             "validation": {
@@ -82979,12 +82605,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<datetime>",
           },
           "created_at": {
-            "display-name": "Tax Return Personal",
             "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
             "type": "optional<datetime>",
           },
           "datos_informativos": {
-            "display-name": "Tax Return Personal",
             "docs": "Extra informative data on the tax return.",
             "type": "optional<map<string, unknown>>",
           },
@@ -83001,7 +82625,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<map<string, unknown>>",
           },
           "id": {
-            "display-name": "Tax Return Personal",
             "docs": "Unique identifier created by Belvo used to reference the current Tax Return.",
             "type": "optional<string>",
             "validation": {
@@ -83016,7 +82639,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<map<string, unknown>>",
           },
           "link": {
-            "display-name": "Tax Return Personal",
             "docs": "The \`link.id\` the statement belongs to",
             "type": "optional<string>",
             "validation": {
@@ -83072,12 +82694,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<datetime>",
           },
           "created_at": {
-            "display-name": "Tax Return Personal Monthly",
             "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
             "type": "optional<datetime>",
           },
           "id": {
-            "display-name": "Tax Return Personal Monthly",
             "docs": "Unique identifier created by Belvo used to reference the current Tax Return.",
             "type": "optional<string>",
             "validation": {
@@ -83110,7 +82730,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "receipt_pdf": {
-            "display-name": "Tax Return Personal Monthly",
             "docs": "The acknowledgement receipt from the fiscal institution confirming that they received the tax return.",
             "type": "optional<string>",
             "validation": {
@@ -83134,12 +82753,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "extra-properties": true,
         "properties": {
           "count": {
-            "display-name": "Tax Return Personal Business Monthly",
             "docs": "The total number of results in your Belvo account.",
             "type": "optional<integer>",
           },
           "next": {
-            "display-name": "Tax Return Personal Business Monthly",
             "docs": "The URL to next page of results. Each page consists of up to 100 items. If there are not enough results for an additional page, the value is \`null\`.
 
 In our documentation example, we use \`{endpoint}\` as a placeholder value. In production, this value will be replaced by the actual endpoint you are currently using (for example, \`accounts\` or \`owners\`).
@@ -83147,12 +82764,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<string>",
           },
           "previous": {
-            "display-name": "Tax Return Personal Business Monthly",
             "docs": "The URL to the previous page of results. If there is no previous page, the value is \`null\`.",
             "type": "optional<string>",
           },
           "results": {
-            "display-name": "Tax Return Personal Business Monthly",
             "docs": "Array of Monthly Business Tax Return objects.",
             "type": "optional<list<TaxReturnBusinessMonthly>>",
           },
@@ -83166,12 +82781,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "extra-properties": true,
         "properties": {
           "count": {
-            "display-name": "Tax Return Personal Business",
             "docs": "The total number of results in your Belvo account.",
             "type": "optional<integer>",
           },
           "next": {
-            "display-name": "Tax Return Personal Business",
             "docs": "The URL to next page of results. Each page consists of up to 100 items. If there are not enough results for an additional page, the value is \`null\`.
 
 In our documentation example, we use \`{endpoint}\` as a placeholder value. In production, this value will be replaced by the actual endpoint you are currently using (for example, \`accounts\` or \`owners\`).
@@ -83179,12 +82792,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<string>",
           },
           "previous": {
-            "display-name": "Tax Return Personal Business",
             "docs": "The URL to the previous page of results. If there is no previous page, the value is \`null\`.",
             "type": "optional<string>",
           },
           "results": {
-            "display-name": "Tax Return Personal Business",
             "docs": "Array of Business Tax Return objects.",
             "type": "optional<list<TaxReturnBusiness>>",
           },
@@ -83198,7 +82809,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "properties": {
           "attach_pdf": {
             "default": false,
-            "display-name": "Monthly Tax Returns",
             "docs": "When this is set to \`true\`, you will receive the PDF as a binary string in the response.",
             "type": "optional<boolean>",
           },
@@ -83226,7 +82836,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "save_data": {
             "default": true,
-            "display-name": "Monthly Tax Returns",
             "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
             "type": "optional<boolean>",
@@ -83247,12 +82856,10 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "extra-properties": true,
         "properties": {
           "count": {
-            "display-name": "Tax Return Personal Monthly",
             "docs": "The total number of results in your Belvo account.",
             "type": "optional<integer>",
           },
           "next": {
-            "display-name": "Tax Return Personal Monthly",
             "docs": "The URL to next page of results. Each page consists of up to 100 items. If there are not enough results for an additional page, the value is \`null\`.
 
 In our documentation example, we use \`{endpoint}\` as a placeholder value. In production, this value will be replaced by the actual endpoint you are currently using (for example, \`accounts\` or \`owners\`).
@@ -83260,12 +82867,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<string>",
           },
           "previous": {
-            "display-name": "Tax Return Personal Monthly",
             "docs": "The URL to the previous page of results. If there is no previous page, the value is \`null\`.",
             "type": "optional<string>",
           },
           "results": {
-            "display-name": "Tax Return Personal Monthly",
             "docs": "Array of Monthly Personal Tax Return objects.",
             "type": "optional<list<TaxReturnPersonalMonthly>>",
           },
@@ -83279,12 +82884,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "extra-properties": true,
         "properties": {
           "count": {
-            "display-name": "Tax Return Personal",
             "docs": "The total number of results in your Belvo account.",
             "type": "optional<integer>",
           },
           "next": {
-            "display-name": "Tax Return Personal",
             "docs": "The URL to next page of results. Each page consists of up to 100 items. If there are not enough results for an additional page, the value is \`null\`.
 
 In our documentation example, we use \`{endpoint}\` as a placeholder value. In production, this value will be replaced by the actual endpoint you are currently using (for example, \`accounts\` or \`owners\`).
@@ -83292,12 +82895,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<string>",
           },
           "previous": {
-            "display-name": "Tax Return Personal",
             "docs": "The URL to the previous page of results. If there is no previous page, the value is \`null\`.",
             "type": "optional<string>",
           },
           "results": {
-            "display-name": "Tax Return Personal",
             "docs": "Array of Personal Tax Return objects.",
             "type": "optional<list<TaxReturnPersonal>>",
           },
@@ -83311,7 +82912,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "properties": {
           "attach_pdf": {
             "default": false,
-            "display-name": "Yearly Tax Returns",
             "docs": "When this is set to \`true\`, you will receive the PDF as a binary string in the response.",
             "type": "optional<boolean>",
           },
@@ -83327,7 +82927,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "save_data": {
             "default": true,
-            "display-name": "Yearly Tax Returns",
             "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
             "type": "optional<boolean>",
@@ -84200,14 +83799,12 @@ You will still need to make a PATCH call to complete the request.",
   - you make a request for information while Belvo is scraping data from the institution for that user.",
         "properties": {
           "code": {
-            "display-name": "Too Many Sessions",
             "docs": "A unique error code (\`too_many_sessions\`) that allows you to classify and handle the error programmatically.
 
 ℹ️ Check our DevPortal for more information on how to handle <a href="https://developers.belvo.com/docs/belvo-api-errors#400-too_many_sessions" target="_blank">400 too_many_sessions errors</a>.",
             "type": "optional<string>",
           },
           "message": {
-            "display-name": "Too Many Sessions",
             "docs": "A short description of the error. 
 
 For \`too_many_sessions\` errors, the description is:
@@ -84216,7 +83813,6 @@ For \`too_many_sessions\` errors, the description is:
             "type": "optional<string>",
           },
           "request_id": {
-            "display-name": "Too Many Sessions",
             "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
             "type": "optional<string>",
             "validation": {
@@ -84332,7 +83928,6 @@ For \`too_many_sessions\` errors, the description is:
         "docs": "Information about the payer's bank account. Belvo returns the bank account ID when the account is already saved in the Belvo database.",
         "properties": {
           "bank_account": {
-            "display-name": "Bank account PSE",
             "docs": "Belvo's unique identifier for the payer’s bank account.",
             "type": "optional<string>",
             "validation": {
@@ -84348,7 +83943,6 @@ For \`too_many_sessions\` errors, the description is:
         },
       },
       "TransactionBankAccountOfpi": {
-        "display-name": "Brazil 🇧🇷 OFPI",
         "docs": "Object containing the payer's bank account information. For OFPI, this field will return an empty object.",
         "type": "map<string, unknown>",
       },
@@ -84517,14 +84111,12 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "docs": "This error occurs when you try to make an API call using incorrect Belvo API credentials (either your secret key or secret password, or both, are incorrect).",
         "properties": {
           "code": {
-            "display-name": "Unauthorized Error",
             "docs": "A unique error code (\`authentication_failed\`) that allows you to classify and handle the error programmatically.
 
 ℹ️ Check our DevPortal for more information on how to handle <a href="https://developers.belvo.com/docs/belvo-api-errors#401-authentication_failed" target="_blank">401 authentication_failed errors</a>.",
             "type": "optional<string>",
           },
           "message": {
-            "display-name": "Unauthorized Error",
             "docs": "A short description of the error. 
 
 For \`authentication_failed\` errors, the description is:
@@ -84533,7 +84125,6 @@ For \`authentication_failed\` errors, the description is:
             "type": "optional<string>",
           },
           "request_id": {
-            "display-name": "Unauthorized Error",
             "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
             "type": "optional<string>",
             "validation": {
@@ -84553,14 +84144,12 @@ For \`authentication_failed\` errors, the description is:
 A Link's status is set to \`unconfirmed_link\` when your user has not completed the Link creation process successfully (for example, they might not provide a valid MFA token).",
         "properties": {
           "code": {
-            "display-name": "Unconfirmed Link",
             "docs": "A unique error code (\`unconfirmed_link\`) that allows you to classify and handle the error programmatically.
 
 ℹ️ Check our DevPortal for more information on how to handle <a href="https://developers.belvo.com/docs/belvo-api-errors#400-unconfirmed_link" target="_blank">400 unconfirmed_link errors</a>.",
             "type": "optional<string>",
           },
           "message": {
-            "display-name": "Unconfirmed Link",
             "docs": "A short description of the error. 
 
 For \`unconfirmed_link\` errors, the description is:
@@ -84569,7 +84158,6 @@ For \`unconfirmed_link\` errors, the description is:
             "type": "optional<string>",
           },
           "request_id": {
-            "display-name": "Unconfirmed Link",
             "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
             "type": "optional<string>",
             "validation": {
@@ -84588,14 +84176,12 @@ For \`unconfirmed_link\` errors, the description is:
         "docs": "This error occurs when we (Belvo) have encountered an internal system error (sorry about that) or due to an unsupported response from the institution.",
         "properties": {
           "code": {
-            "display-name": "Unexpected Error",
             "docs": "A unique error code (\`unexpected_error\`) that allows you to classify and handle the error programmatically.
 
 ℹ️ Check our DevPortal for more information on how to handle <a href="https://developers.belvo.com/docs/belvo-api-errors#500-unexpected_error" target="_blank">500 unexpected_error errors</a>.",
             "type": "optional<string>",
           },
           "message": {
-            "display-name": "Unexpected Error",
             "docs": "A short description of the error. 
 
 For \`unexpected_error\` errors, the description is:
@@ -84604,7 +84190,6 @@ For \`unexpected_error\` errors, the description is:
             "type": "optional<string>",
           },
           "request_id": {
-            "display-name": "Unexpected Error",
             "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
             "type": "optional<string>",
             "validation": {
@@ -84623,14 +84208,12 @@ For \`unexpected_error\` errors, the description is:
         "docs": "This error occurs when you try to access some data operation that Belvo does not support for an institution. For example, trying to access the Balances resource for fiscal institutions.",
         "properties": {
           "code": {
-            "display-name": "Unsupported Operation",
             "docs": "A unique error code (\`unsupported_operation\`) that allows you to classify and handle the error programmatically.
 
 ℹ️ Check our DevPortal for more information on how to handle <a href="https://developers.belvo.com/docs/belvo-api-errors#400-unsupported_operation" target="_blank">400 unsupported_operation errors</a>.",
             "type": "optional<string>",
           },
           "message": {
-            "display-name": "Unsupported Operation",
             "docs": "A short description of the error. 
 
 For \`unsupported_operation\` errors, the description is:
@@ -84639,7 +84222,6 @@ For \`unsupported_operation\` errors, the description is:
             "type": "optional<string>",
           },
           "request_id": {
-            "display-name": "Unsupported Operation",
             "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
             "type": "optional<string>",
             "validation": {
@@ -84658,7 +84240,6 @@ For \`unsupported_operation\` errors, the description is:
         "docs": "This error occurs when you try to resume a request session that has already expired. This is usually because the user took too long to provide their authentication token.",
         "properties": {
           "code": {
-            "display-name": "Validation Error",
             "docs": "A unique error code (\`null\`, \`does_not_exist\`, \`required\`) that allows you to classify and handle the error programmatically.
 
 ℹ️ Check our DevPortal for more information on how to handle:
@@ -84669,12 +84250,10 @@ For \`unsupported_operation\` errors, the description is:
             "type": "optional<string>",
           },
           "field": {
-            "display-name": "Validation Error",
             "docs": "Name of the field where the error was encountered.",
             "type": "optional<string>",
           },
           "message": {
-            "display-name": "Validation Error",
             "docs": "A short description of the error. 
 
 For \`session_expired\` errors, the description can be (among others):
@@ -84686,7 +84265,6 @@ For \`session_expired\` errors, the description can be (among others):
             "type": "optional<string>",
           },
           "request_id": {
-            "display-name": "Validation Error",
             "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
             "type": "optional<string>",
             "validation": {

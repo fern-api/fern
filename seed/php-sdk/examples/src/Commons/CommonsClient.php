@@ -2,20 +2,20 @@
 
 namespace Seed\Commons;
 
-use Seed\Core\RawClient;
 use Seed\Commons\Types\TypesClient;
+use Seed\Core\RawClient;
 
 class CommonsClient
 {
     /**
-     * @var RawClient $client
-     */
-    private RawClient $client;
-
-    /**
      * @var TypesClient $types
      */
     public TypesClient $types;
+
+    /**
+     * @var RawClient $client
+     */
+    private RawClient $client;
 
     /**
      * @param RawClient $client

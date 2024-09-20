@@ -6,6 +6,9 @@ from typing_extensions import Never
 from fern_python.codegen import AST
 from fern_python.external_dependencies import FastAPI
 from fern_python.external_dependencies.starlette import Starlette
+from fern_python.generators.fastapi.service_generator.endpoint_parameters.request.file_upload_request_endpoint_parameter import (
+    FileUploadRequestEndpointParameters,
+)
 
 from ..context import FastApiGeneratorContext
 from ..custom_config import FastAPICustomConfig
@@ -40,17 +43,21 @@ class EndpointGenerator:
 
         self._parameters: List[EndpointParameter] = []
         if endpoint.request_body is not None:
-            self._parameters.append(
+            self._parameters.extend(
                 endpoint.request_body.visit(
-                    inlined_request_body=lambda request: InlinedRequestEndpointParameter(
-                        context=context,
-                        request=request,
-                        service_name=self._service.name,
-                    ),
-                    reference=lambda request: ReferencedRequestEndpointParameter(
-                        context=context, request_type=request.request_body_type
-                    ),
-                    file_upload=lambda request: raise_file_upload_unsupported(),
+                    inlined_request_body=lambda request: [
+                        InlinedRequestEndpointParameter(
+                            context=context,
+                            request=request,
+                            service_name=self._service.name,
+                        )
+                    ],
+                    reference=lambda request: [
+                        ReferencedRequestEndpointParameter(context=context, request_type=request.request_body_type)
+                    ],
+                    file_upload=lambda request: FileUploadRequestEndpointParameters(
+                        context=context, request=request
+                    ).get_parameters(),
                     bytes=lambda request: raise_bytes_unsupported(),
                 )
             )
@@ -87,6 +94,17 @@ class EndpointGenerator:
             ),
             docstring=AST.Docstring(self._endpoint.docs) if self._endpoint.docs is not None else None,
             is_async=self._is_async,
+        )
+
+    def _get_is_return_type_pydantic_model(self) -> bool:
+        if self._endpoint.response is None or self._endpoint.response.body is None:
+            return True
+        return self._endpoint.response.body.visit(
+            file_download=lambda _: False,
+            text=lambda _: True,
+            json=lambda json_response: True,
+            streaming=lambda _: True,
+            stream_parameter=lambda _: True,
         )
 
     def _get_return_type(self) -> AST.TypeHint:
@@ -180,7 +198,12 @@ class EndpointGenerator:
             with writer.indent():
                 writer.write_line(f'path="{self._get_endpoint_path()}",')
 
-                writer.write("response_model=")
+                # Void responses make more sense as response_class, but keeping as response_model to not modify existing users
+                if not self._get_is_return_type_pydantic_model():
+                    writer.write("response_class=")
+                else:
+                    writer.write("response_model=")
+
                 if self._endpoint.response is not None:
                     writer.write_node(self._get_return_type())
                 else:
@@ -340,7 +363,7 @@ class EndpointGenerator:
 
     def _get_response_body_type(self, response_body: ir_types.HttpResponseBody) -> AST.TypeHint:
         return response_body.visit(
-            file_download=raise_file_download_unsupported,
+            file_download=lambda _: AST.TypeHint(FastAPI.FileResponse),
             json=lambda json_response: self._get_json_response_body_type(json_response),
             text=lambda _: AST.TypeHint.str_(),
             streaming=lambda _: raise_streaming_unsupported(),
@@ -380,14 +403,6 @@ def raise_streaming_unsupported() -> Never:
 
 def raise_bytes_unsupported() -> Never:
     raise RuntimeError("bytes request is not supported")
-
-
-def raise_file_upload_unsupported() -> Never:
-    raise RuntimeError("File upload is not supported")
-
-
-def raise_file_download_unsupported(file_download_response: ir_types.FileDownloadResponse) -> Never:
-    raise RuntimeError("File download is not supported")
 
 
 def raise_json_nested_property_as_response_unsupported() -> Never:

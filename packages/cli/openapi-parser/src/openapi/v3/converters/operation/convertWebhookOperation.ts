@@ -59,6 +59,7 @@ export function convertWebhookOperation({
     return {
         summary: operation.summary,
         sdkName: sdkMethodName,
+        namespace: context.namespace,
         method,
         operationId: operation.operationId,
         tags: context.resolveTagsToTagIds(operation.tags),

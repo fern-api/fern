@@ -4,12 +4,16 @@ namespace Seed;
 
 use GuzzleHttp\ClientInterface;
 use Seed\Core\RawClient;
-use GuzzleHttp\Client;
+use Seed\Requests\Inlined;
+use Seed\Core\JsonApiRequest;
+use Seed\Core\HttpMethod;
+use Psr\Http\Client\ClientExceptionInterface;
+use Exception;
 
 class SeedClient
 {
     /**
-     * @var ?array{baseUrl?: string, client?: ClientInterface} $options
+     * @var ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
      */
     private ?array $options;
 
@@ -19,17 +23,52 @@ class SeedClient
     private RawClient $client;
 
     /**
-     * @param ?array{baseUrl?: string, client?: ClientInterface} $options
+     * @param ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
      */
     public function __construct(
         ?array $options = null,
     ) {
         $defaultHeaders = [
-            "X-Fern-Language" => "PHP",
-            "X-Fern-SDK-Name" => "Seed",
-            "X-Fern-SDK-Version" => "0.0.1",
+            'X-Fern-Language' => 'PHP',
+            'X-Fern-SDK-Name' => 'Seed',
+            'X-Fern-SDK-Version' => '0.0.1',
         ];
+
         $this->options = $options ?? [];
-        $this->client = new RawClient(client: $this->options['client'] ?? new Client(), headers: $defaultHeaders);
+        $this->options['headers'] = array_merge(
+            $defaultHeaders,
+            $this->options['headers'] ?? [],
+        );
+
+        $this->client = new RawClient(
+            options: $this->options,
+        );
     }
+
+    /**
+     * @param Inlined $request
+     * @param ?array{baseUrl?: string} $options
+     * @returns mixed
+     */
+    public function extendedInlineRequestBody(Inlined $request, ?array $options = null): mixed
+    {
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/extends/extended-inline-request-body",
+                    method: HttpMethod::POST,
+                    body: $request,
+                ),
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return;
+            }
+        } catch (ClientExceptionInterface $e) {
+            throw new Exception($e->getMessage());
+        }
+        throw new Exception("Error with status code " . $statusCode);
+    }
+
 }

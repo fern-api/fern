@@ -49,45 +49,51 @@ export function buildTypeReference({
     fileContainingReference,
     /* The file any type declarations will be written to. Defaults to fileContainingReference if not present */
     declarationFile = fileContainingReference,
-    context
+    context,
+    namespace
 }: {
     schema: Schema;
     fileContainingReference: RelativeFilePath;
     declarationFile?: RelativeFilePath;
     context: OpenApiIrConverterContext;
-}): RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema {
+    namespace: string | undefined;
+}): RawSchemas.TypeReferenceSchema {
     switch (schema.type) {
         case "primitive": {
             return buildPrimitiveTypeReference(schema);
         }
         case "array":
-            return buildArrayTypeReference({ schema, fileContainingReference, context, declarationFile });
+            return buildArrayTypeReference({ schema, fileContainingReference, context, declarationFile, namespace });
         case "map":
-            return buildMapTypeReference({ schema, fileContainingReference, context, declarationFile });
+            return buildMapTypeReference({ schema, fileContainingReference, context, declarationFile, namespace });
         case "reference":
-            return buildReferenceTypeReference({ schema, fileContainingReference, context });
+            return buildReferenceTypeReference({ schema, fileContainingReference, context, namespace });
         case "unknown":
             return buildUnknownTypeReference();
         case "optional":
         case "nullable":
-            return buildOptionalTypeReference({ schema, fileContainingReference, context, declarationFile });
+            return buildOptionalTypeReference({ schema, fileContainingReference, context, declarationFile, namespace });
         case "enum":
             return buildEnumTypeReference({ schema, fileContainingReference, context, declarationFile });
         case "literal":
             schema.value;
             return buildLiteralTypeReference(schema);
         case "object":
-            return buildObjectTypeReference({ schema, fileContainingReference, context, declarationFile });
+            return buildObjectTypeReference({ schema, fileContainingReference, context, declarationFile, namespace });
         case "oneOf":
-            return buildOneOfTypeReference({ schema: schema.value, fileContainingReference, context, declarationFile });
+            return buildOneOfTypeReference({
+                schema: schema.value,
+                fileContainingReference,
+                context,
+                declarationFile,
+                namespace
+            });
         default:
             assertNever(schema);
     }
 }
 
-export function buildPrimitiveTypeReference(
-    primitiveSchema: PrimitiveSchema
-): RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema {
+export function buildPrimitiveTypeReference(primitiveSchema: PrimitiveSchema): RawSchemas.TypeReferenceSchema {
     switch (primitiveSchema.schema.type) {
         case "string":
             return buildStringTypeReference({
@@ -139,7 +145,6 @@ export function buildPrimitiveTypeReference(
     }
 
     return {
-        ...(primitiveSchema.title != null ? { "display-name": primitiveSchema.title } : {}),
         type: typeReference,
         ...(primitiveSchema.description != null ? { docs: primitiveSchema.description } : {}),
         ...(primitiveSchema.availability != null
@@ -154,12 +159,12 @@ function buildBooleanTypeReference({
 }: {
     description: string | undefined;
     schema: PrimitiveSchemaValue.Boolean;
-}): RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema {
+}): RawSchemas.TypeReferenceSchema {
     const type = "boolean";
     if (description == null && schema.default == null) {
         return type;
     }
-    const result: RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema = {
+    const result: RawSchemas.TypeReferenceSchema = {
         type
     };
     if (description != null) {
@@ -177,12 +182,12 @@ function buildLongTypeReference({
 }: {
     description: string | undefined;
     schema: PrimitiveSchemaValue.Int64;
-}): RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema {
+}): RawSchemas.TypeReferenceSchema {
     const type = "long";
     if (description == null && schema.default == null) {
         return type;
     }
-    const result: RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema = {
+    const result: RawSchemas.TypeReferenceSchema = {
         type
     };
     if (description != null) {
@@ -200,13 +205,13 @@ function buildStringTypeReference({
 }: {
     description: string | undefined;
     schema: PrimitiveSchemaValue.String;
-}): RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema {
+}): RawSchemas.TypeReferenceSchema {
     const type = "string";
     const validation = maybeStringValidation(schema);
     if (description == null && schema.default == null && validation == null) {
         return type;
     }
-    const result: RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema = {
+    const result: RawSchemas.TypeReferenceSchema = {
         type
     };
     if (description != null) {
@@ -227,13 +232,13 @@ function buildIntegerTypeReference({
 }: {
     description: string | undefined;
     schema: PrimitiveSchemaValue.Int;
-}): RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema {
+}): RawSchemas.TypeReferenceSchema {
     const type = "integer";
     const validation = maybeNumberValidation(schema, type);
     if (description == null && schema.default == null && validation == null) {
         return type;
     }
-    const result: RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema = {
+    const result: RawSchemas.TypeReferenceSchema = {
         type
     };
     if (description != null) {
@@ -254,12 +259,12 @@ function buildFloatTypeReference({
 }: {
     description: string | undefined;
     schema: PrimitiveSchemaValue.Float;
-}): RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema {
+}): RawSchemas.TypeReferenceSchema {
     const type = "float";
     if (description == null) {
         return type;
     }
-    const result: RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema = {
+    const result: RawSchemas.TypeReferenceSchema = {
         type
     };
     if (description != null) {
@@ -274,13 +279,13 @@ function buildDoubleTypeReference({
 }: {
     description: string | undefined;
     schema: PrimitiveSchemaValue.Double;
-}): RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema {
+}): RawSchemas.TypeReferenceSchema {
     const type = "double";
     const validation = maybeNumberValidation(schema, type);
     if (description == null && schema.default == null && validation == null) {
         return type;
     }
-    const result: RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema = {
+    const result: RawSchemas.TypeReferenceSchema = {
         type
     };
     if (description != null) {
@@ -388,13 +393,16 @@ function makeUndefinedIfOutsideRange(num: number | undefined, type: "integer" | 
 export function buildReferenceTypeReference({
     schema,
     fileContainingReference,
-    context
+    context,
+    namespace
 }: {
     schema: ReferencedSchema;
     fileContainingReference: RelativeFilePath;
     context: OpenApiIrConverterContext;
-}): RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema {
-    const resolvedSchema = context.getSchema(schema.schema);
+    namespace: string | undefined;
+}): RawSchemas.TypeReferenceSchema {
+    const resolvedSchema = context.getSchema(schema.schema, namespace);
+
     if (resolvedSchema == null) {
         return "unknown";
     }
@@ -424,14 +432,22 @@ export function buildArrayTypeReference({
     schema,
     fileContainingReference,
     declarationFile,
-    context
+    context,
+    namespace
 }: {
     schema: ArraySchema;
     fileContainingReference: RelativeFilePath;
     declarationFile: RelativeFilePath;
     context: OpenApiIrConverterContext;
-}): RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema {
-    const item = buildTypeReference({ schema: schema.value, fileContainingReference, declarationFile, context });
+    namespace: string | undefined;
+}): RawSchemas.TypeReferenceSchema {
+    const item = buildTypeReference({
+        schema: schema.value,
+        fileContainingReference,
+        declarationFile,
+        context,
+        namespace
+    });
     const type = `list<${getTypeFromTypeReference(item)}>`;
     if (schema.description == null && schema.title == null) {
         return type;
@@ -448,26 +464,29 @@ export function buildMapTypeReference({
     schema,
     fileContainingReference,
     declarationFile,
-    context
+    context,
+    namespace
 }: {
     schema: MapSchema;
     fileContainingReference: RelativeFilePath;
     declarationFile: RelativeFilePath;
     context: OpenApiIrConverterContext;
-}): RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema {
+    namespace: string | undefined;
+}): RawSchemas.TypeReferenceSchema {
     const keyTypeReference = buildPrimitiveTypeReference(schema.key);
     const valueTypeReference = buildTypeReference({
         schema: schema.value,
         fileContainingReference,
         declarationFile,
-        context
+        context,
+        namespace
     });
     const encoding = schema.encoding != null ? convertToEncodingSchema(schema.encoding) : undefined;
     const type = `map<${getTypeFromTypeReference(keyTypeReference)}, ${getTypeFromTypeReference(valueTypeReference)}>`;
     if (schema.description == null && encoding == null && schema.title == null) {
         return type;
     }
-    const result: RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema = {
+    const result: RawSchemas.TypeReferenceSchema = {
         type
     };
     if (schema.description != null) {
@@ -475,9 +494,6 @@ export function buildMapTypeReference({
     }
     if (schema.encoding != null) {
         result.encoding = encoding;
-    }
-    if (schema.title != null) {
-        result["display-name"] = schema.title;
     }
     if (schema.availability != null) {
         result.availability = convertAvailability(schema.availability);
@@ -489,18 +505,21 @@ export function buildOptionalTypeReference({
     schema,
     fileContainingReference,
     declarationFile,
-    context
+    context,
+    namespace
 }: {
     schema: OptionalSchema;
     fileContainingReference: RelativeFilePath;
     declarationFile: RelativeFilePath;
     context: OpenApiIrConverterContext;
-}): RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema {
+    namespace: string | undefined;
+}): RawSchemas.TypeReferenceSchema {
     const itemTypeReference = buildTypeReference({
         schema: schema.value,
         fileContainingReference,
         declarationFile,
-        context
+        context,
+        namespace
     });
     const itemType = getTypeFromTypeReference(itemTypeReference);
     const itemDocs = getDocsFromTypeReference(itemTypeReference);
@@ -517,7 +536,7 @@ export function buildOptionalTypeReference({
     ) {
         return type;
     }
-    const result: RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema = {
+    const result: RawSchemas.TypeReferenceSchema = {
         type
     };
     if (schema.description != null || itemDocs != null) {
@@ -529,22 +548,17 @@ export function buildOptionalTypeReference({
     if (itemValidation != null) {
         result.validation = itemValidation;
     }
-    if (schema.title != null) {
-        result["display-name"] = schema.title;
-    }
     if (schema.availability != null) {
         result.availability = convertAvailability(schema.availability);
     }
     return result;
 }
 
-export function buildUnknownTypeReference(): RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema {
+export function buildUnknownTypeReference(): RawSchemas.TypeReferenceSchema {
     return "unknown";
 }
 
-export function buildLiteralTypeReference(
-    schema: LiteralSchema
-): RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema {
+export function buildLiteralTypeReference(schema: LiteralSchema): RawSchemas.TypeReferenceSchema {
     let value: string;
     switch (schema.value.type) {
         case "boolean": {
@@ -579,7 +593,7 @@ export function buildEnumTypeReference({
     fileContainingReference: RelativeFilePath;
     declarationFile: RelativeFilePath;
     context: OpenApiIrConverterContext;
-}): RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema {
+}): RawSchemas.TypeReferenceSchema {
     const enumTypeDeclaration = buildEnumTypeDeclaration(schema);
     const name = schema.nameOverride ?? schema.generatedName;
     context.builder.addType(declarationFile, {
@@ -590,7 +604,7 @@ export function buildEnumTypeReference({
     if (schema.description == null && schema.default == null && schema.title == null) {
         return prefixedType;
     }
-    const result: RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema = {
+    const result: RawSchemas.TypeReferenceSchema = {
         type: prefixedType
     };
     if (schema.description != null) {
@@ -598,9 +612,6 @@ export function buildEnumTypeReference({
     }
     if (schema.default != null) {
         result.default = schema.default.value;
-    }
-    if (schema.title != null) {
-        result["display-name"] = schema.title;
     }
     if (schema.availability != null) {
         result.availability = convertAvailability(schema.availability);
@@ -613,17 +624,20 @@ export function buildObjectTypeReference({
     schema,
     fileContainingReference,
     declarationFile,
-    context
+    context,
+    namespace
 }: {
     schema: ObjectSchema;
     fileContainingReference: RelativeFilePath;
     declarationFile: RelativeFilePath;
     context: OpenApiIrConverterContext;
-}): RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema {
+    namespace: string | undefined;
+}): RawSchemas.TypeReferenceSchema {
     const objectTypeDeclaration = buildObjectTypeDeclaration({
         schema,
         declarationFile,
-        context
+        context,
+        namespace
     });
     const name = schema.nameOverride ?? schema.generatedName;
     context.builder.addType(declarationFile, {
@@ -646,17 +660,20 @@ export function buildOneOfTypeReference({
     schema,
     fileContainingReference,
     declarationFile,
-    context
+    context,
+    namespace
 }: {
     schema: OneOfSchema;
     fileContainingReference: RelativeFilePath;
     declarationFile: RelativeFilePath;
     context: OpenApiIrConverterContext;
-}): RawSchemas.TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema {
+    namespace: string | undefined;
+}): RawSchemas.TypeReferenceSchema {
     const unionTypeDeclaration = buildOneOfTypeDeclaration({
         schema,
         declarationFile,
-        context
+        context,
+        namespace
     });
     const name = schema.nameOverride ?? schema.generatedName;
     context.builder.addType(declarationFile, {

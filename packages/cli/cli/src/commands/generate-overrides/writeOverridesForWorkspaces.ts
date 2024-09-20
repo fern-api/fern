@@ -1,4 +1,5 @@
 import { dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { Schema } from "@fern-api/openapi-ir-sdk";
 import { getEndpointLocation } from "@fern-api/openapi-ir-to-fern";
 import { parse } from "@fern-api/openapi-parser";
 import { Project } from "@fern-api/project-loader";
@@ -100,15 +101,9 @@ async function writeDefinitionForOpenAPIWorkspace({
             ? (existingOverrides.path as Record<string, Record<string, unknown>>)
             : {};
         if (includeModels) {
-            for (const [schemaId, schema] of Object.entries(ir.schemas)) {
-                if (schemaId in schemas) {
-                    continue;
-                }
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                const typeNameOverride: Record<string, any> = {};
-                typeNameOverride["x-fern-type-name"] =
-                    "nameOverride" in schema ? schema.nameOverride ?? schemaId : schemaId;
-                schemas[schemaId] = typeNameOverride;
+            writeModels(schemas, ir.groupedSchemas.rootSchemas);
+            for (const [_, namespacedSchemas] of Object.entries(ir.groupedSchemas.namespacedSchemas)) {
+                writeModels(schemas, namespacedSchemas);
             }
         }
         const components: Record<string, Record<string, unknown>> = { schemas };
@@ -117,5 +112,17 @@ async function writeDefinitionForOpenAPIWorkspace({
             join(dirname(spec.absoluteFilepath), RelativeFilePath.of("openapi-overrides.yml")),
             yaml.dump({ paths, components })
         );
+    }
+}
+
+function writeModels(existingSchemas: Record<string, Record<string, unknown>>, schemas: Record<string, Schema>) {
+    for (const [schemaId, schema] of Object.entries(schemas)) {
+        if (schemaId in existingSchemas) {
+            continue;
+        }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const typeNameOverride: Record<string, any> = {};
+        typeNameOverride["x-fern-type-name"] = "nameOverride" in schema ? schema.nameOverride ?? schemaId : schemaId;
+        existingSchemas[schemaId] = typeNameOverride;
     }
 }

@@ -2,20 +2,20 @@
 
 namespace Seed\V2\V3;
 
-use Seed\Core\RawClient;
 use Seed\V2\V3\Problem\ProblemClient;
+use Seed\Core\RawClient;
 
 class V3Client
 {
     /**
-     * @var RawClient $client
-     */
-    private RawClient $client;
-
-    /**
      * @var ProblemClient $problem
      */
     public ProblemClient $problem;
+
+    /**
+     * @var RawClient $client
+     */
+    private RawClient $client;
 
     /**
      * @param RawClient $client

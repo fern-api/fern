@@ -1,0 +1,6 @@
+api: 
+  headers: 
+    X-Dummy-Header: optional<string>
+  specs: 
+    - openapi: openapi/openapi.yml
+groups: {}

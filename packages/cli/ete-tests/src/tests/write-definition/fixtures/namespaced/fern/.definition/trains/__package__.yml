@@ -1,4 +1,81 @@
+errors:
+  BadRequestError:
+    status-code: 400
+    type: Problem
+    docs: Bad Request
+    examples:
+      - value:
+          type: https://example.com/errors/bad-request
+          title: Bad Request
+          status: 400
+          detail: The request is invalid or missing required parameters.
+  UnauthorizedError:
+    status-code: 401
+    type: Problem
+    docs: Unauthorized
+    examples:
+      - value:
+          type: https://example.com/errors/unauthorized
+          title: Unauthorized
+          status: 401
+          detail: You do not have the necessary permissions.
+  ForbiddenError:
+    status-code: 403
+    type: Problem
+    docs: Forbidden
+    examples:
+      - value:
+          type: https://example.com/errors/forbidden
+          title: Forbidden
+          status: 403
+          detail: Access is forbidden with the provided credentials.
+  TooManyRequestsError:
+    status-code: 429
+    type: Problem
+    docs: Too Many Requests
+    examples:
+      - value:
+          type: https://example.com/errors/too-many-requests
+          title: Too Many Requests
+          status: 429
+          detail: You have exceeded the rate limit.
+  InternalServerError:
+    status-code: 500
+    type: Problem
+    docs: Internal Server Error
+    examples:
+      - value:
+          type: https://example.com/errors/internal-server-error
+          title: Internal Server Error
+          status: 500
+          detail: An unexpected error occurred.
+  NotFoundError:
+    status-code: 404
+    type: Problem
+    docs: Not Found
+    examples:
+      - value:
+          type: https://example.com/errors/not-found
+          title: Not Found
+          status: 404
+          detail: The requested resource was not found.
+  ConflictError:
+    status-code: 409
+    type: Problem
+    docs: Conflict
+    examples:
+      - value:
+          type: https://example.com/errors/conflict
+          title: Conflict
+          status: 409
+          detail: There is a conflict with an existing resource.
 types:
+  Pet:
+    properties:
+      id: long
+      name: string
+    source:
+      openapi: openapi/trains/openapi.yml
   Station:
     properties:
       id:
@@ -20,6 +97,8 @@ types:
         docs: >-
           The timezone of the station in the [IANA Time Zone Database
           format](https://www.iana.org/time-zones).
+      messages: optional<V2ChatMessages>
+      pet: optional<Pet>
     source:
       openapi: openapi/trains/openapi.yml
   LinksSelf:
@@ -171,17 +250,13 @@ types:
         docs: Four-digit number representing the card's expiration year.
       address_line1:
         type: optional<string>
-        display-name: Card
       address_line2:
         type: optional<string>
-        display-name: Card
       address_city:
         type: optional<string>
-        display-name: Card
       address_country: string
       address_post_code:
         type: optional<string>
-        display-name: Card
     source:
       openapi: openapi/trains/openapi.yml
   BookingPaymentSourceBankAccountAccountType:
@@ -209,7 +284,6 @@ types:
         docs: >-
           The sort code for the bank account, in string form. Must be a
           six-digit number.
-        display-name: Bank Account
       account_type:
         type: BookingPaymentSourceBankAccountAccountType
         docs: >-
@@ -290,3 +364,13 @@ types:
           format: uri
     source:
       openapi: openapi/trains/openapi.yml
+  V2ChatMessages:
+    docs: >
+      A list of chat messages in chronological order, representing a
+      conversation between the user and the model.
+
+
+      Messages can be from `User`, `Assistant`, `Tool` and `System` roles. Learn
+      more about messages and roles in [the Chat API
+      guide](https://docs.cohere.com/docs/chat-api).
+    type: list<unknown>

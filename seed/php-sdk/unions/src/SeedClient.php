@@ -2,24 +2,13 @@
 
 namespace Seed;
 
-use GuzzleHttp\ClientInterface;
-use Seed\Core\RawClient;
 use Seed\Types\TypesClient;
 use Seed\Union\UnionClient;
-use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
+use Seed\Core\RawClient;
 
 class SeedClient
 {
-    /**
-     * @var ?array{baseUrl?: string, client?: ClientInterface} $options
-     */
-    private ?array $options;
-
-    /**
-     * @var RawClient $client
-     */
-    private RawClient $client;
-
     /**
      * @var TypesClient $types
      */
@@ -31,18 +20,37 @@ class SeedClient
     public UnionClient $union;
 
     /**
-     * @param ?array{baseUrl?: string, client?: ClientInterface} $options
+     * @var ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
+     */
+    private ?array $options;
+
+    /**
+     * @var RawClient $client
+     */
+    private RawClient $client;
+
+    /**
+     * @param ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
      */
     public function __construct(
         ?array $options = null,
     ) {
         $defaultHeaders = [
-            "X-Fern-Language" => "PHP",
-            "X-Fern-SDK-Name" => "Seed",
-            "X-Fern-SDK-Version" => "0.0.1",
+            'X-Fern-Language' => 'PHP',
+            'X-Fern-SDK-Name' => 'Seed',
+            'X-Fern-SDK-Version' => '0.0.1',
         ];
+
         $this->options = $options ?? [];
-        $this->client = new RawClient(client: $this->options['client'] ?? new Client(), headers: $defaultHeaders);
+        $this->options['headers'] = array_merge(
+            $defaultHeaders,
+            $this->options['headers'] ?? [],
+        );
+
+        $this->client = new RawClient(
+            options: $this->options,
+        );
+
         $this->types = new TypesClient($this->client);
         $this->union = new UnionClient($this->client);
     }

@@ -2,20 +2,20 @@
 
 namespace Seed\File;
 
-use Seed\Core\RawClient;
 use Seed\File\Directory\DirectoryClient;
+use Seed\Core\RawClient;
 
 class FileClient
 {
     /**
-     * @var RawClient $client
-     */
-    private RawClient $client;
-
-    /**
      * @var DirectoryClient $directory
      */
     public DirectoryClient $directory;
+
+    /**
+     * @var RawClient $client
+     */
+    private RawClient $client;
 
     /**
      * @param RawClient $client

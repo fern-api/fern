@@ -4,6 +4,7 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 /*********** OpenAPI Spec ***********/
 
 export const OpenAPISettingsSchema = z.strictObject({
+    "title-as-schema-name": z.optional(z.boolean()),
     "optional-additional-properties": z.optional(z.boolean())
 });
 
@@ -21,6 +22,7 @@ export type OpenAPISpecSchema = z.infer<typeof OpenAPISpecSchema>;
 /*********** AsyncAPI Spec ***********/
 
 export const AsyncAPISettingsSchema = z.strictObject({
+    "title-as-schema-name": z.optional(z.boolean()),
     "optional-additional-properties": z.optional(z.boolean())
 });
 
@@ -39,7 +41,10 @@ export const SpecSchema = z.union([OpenAPISpecSchema, AsyncAPISchema]);
 
 export type SpecSchema = z.infer<typeof SpecSchema>;
 
-export const APIConfigurationV2Schema = RawSchemas.WithEnvironmentsSchema.extend({
-    auth: z.optional(RawSchemas.ApiAuthSchema),
-    specs: z.array(SpecSchema)
-});
+export const APIConfigurationV2Schema = z
+    .object({
+        auth: z.optional(RawSchemas.ApiAuthSchema),
+        specs: z.array(SpecSchema)
+    })
+    .extend(RawSchemas.WithHeadersSchema.shape)
+    .extend(RawSchemas.WithEnvironmentsSchema.shape);

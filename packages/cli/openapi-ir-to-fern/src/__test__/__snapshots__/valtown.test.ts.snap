@@ -408,12 +408,10 @@ API endpoints",
           "properties": {
             "key": "string",
             "lastModified": {
-              "display-name": "BlobListingItem",
               "docs": "Creation date of the object",
               "type": "optional<datetime>",
             },
             "size": {
-              "display-name": "BlobListingItem",
               "docs": "Size in bytes of the object",
               "type": "optional<integer>",
             },
@@ -515,16 +513,13 @@ API endpoints",
           "properties": {
             "content": "string",
             "contentId": {
-              "display-name": "AttachmentObject",
               "type": "optional<string>",
             },
             "disposition": {
-              "display-name": "AttachmentObject",
               "type": "optional<string>",
             },
             "filename": "string",
             "type": {
-              "display-name": "AttachmentObject",
               "type": "optional<string>",
             },
           },
@@ -571,7 +566,6 @@ API endpoints",
           "properties": {
             "email": "string",
             "name": {
-              "display-name": "EmailNameAndAddress",
               "type": "optional<string>",
             },
           },
@@ -3003,7 +2997,6 @@ SELECT author AS author, COUNT(*) AS count FROM books GROUP BY author
             "type": "list<string>",
           },
           "lastInsertRowid": {
-            "display-name": "ResultSet",
             "docs": "ROWID of the last inserted row.
 
 This value is not specified if the SQL statement was not an INSERT or if the table was not a ROWID table.",
@@ -3533,12 +3526,10 @@ API endpoints",
           "properties": {
             "key": "string",
             "lastModified": {
-              "display-name": "BlobListingItem",
               "docs": "Creation date of the object",
               "type": "optional<datetime>",
             },
             "size": {
-              "display-name": "BlobListingItem",
               "docs": "Size in bytes of the object",
               "type": "optional<integer>",
             },
@@ -3640,16 +3631,13 @@ API endpoints",
           "properties": {
             "content": "string",
             "contentId": {
-              "display-name": "AttachmentObject",
               "type": "optional<string>",
             },
             "disposition": {
-              "display-name": "AttachmentObject",
               "type": "optional<string>",
             },
             "filename": "string",
             "type": {
-              "display-name": "AttachmentObject",
               "type": "optional<string>",
             },
           },
@@ -3696,7 +3684,6 @@ API endpoints",
           "properties": {
             "email": "string",
             "name": {
-              "display-name": "EmailNameAndAddress",
               "type": "optional<string>",
             },
           },
@@ -6102,7 +6089,6 @@ SELECT author AS author, COUNT(*) AS count FROM books GROUP BY author
             "type": "list<string>",
           },
           "lastInsertRowid": {
-            "display-name": "ResultSet",
             "docs": "ROWID of the last inserted row.
 
 This value is not specified if the SQL statement was not an INSERT or if the table was not a ROWID table.",

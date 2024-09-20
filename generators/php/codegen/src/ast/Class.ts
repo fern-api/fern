@@ -4,7 +4,9 @@ import { CodeBlock } from "./CodeBlock";
 import { Parameter } from "./Parameter";
 import { Access } from "./Access";
 import { Field } from "./Field";
+import { Method } from "./Method";
 import { Comment } from "./Comment";
+import { orderByAccess } from "./utils/orderByAccess";
 
 export declare namespace Class {
     interface Args {
@@ -16,6 +18,8 @@ export declare namespace Class {
         abstract?: boolean;
         /* Docs associated with the class */
         docs?: string;
+        /* The class to inherit from if any */
+        parentClassReference?: AstNode;
     }
 
     interface Constructor {
@@ -33,24 +37,31 @@ export class Class extends AstNode {
     public readonly namespace: string;
     public readonly abstract: boolean;
     public readonly docs: string | undefined;
+    public readonly parentClassReference: AstNode | undefined;
 
-    private fields: Field[] = [];
+    public readonly fields: Field[] = [];
+    public readonly methods: Method[] = [];
     private constructor_: Class.Constructor | undefined;
 
-    constructor({ name, namespace, abstract, docs }: Class.Args) {
+    constructor({ name, namespace, abstract, docs, parentClassReference }: Class.Args) {
         super();
         this.name = name;
         this.namespace = namespace;
         this.abstract = abstract ?? false;
         this.docs = docs;
+        this.parentClassReference = parentClassReference;
+    }
+
+    public addConstructor(constructor: Class.Constructor): void {
+        this.constructor_ = constructor;
     }
 
     public addField(field: Field): void {
         this.fields.push(field);
     }
 
-    public addConstructor(constructor: Class.Constructor): void {
-        this.constructor_ = constructor;
+    public addMethod(method: Method): void {
+        this.methods.push(method);
     }
 
     public write(writer: Writer): void {
@@ -58,22 +69,31 @@ export class Class extends AstNode {
             writer.write("abstract ");
         }
         this.writeComment(writer);
-        writer.writeLine(`class ${this.name}`);
+        writer.writeLine(`class ${this.name} `);
+        if (this.parentClassReference != null) {
+            writer.write("extends ");
+            this.parentClassReference.write(writer);
+        }
         writer.writeLine("{");
         writer.indent();
-        for (const field of this.fields) {
-            field.write(writer);
-            writer.newLine();
-        }
+
+        this.writeFields({ writer, fields: orderByAccess(this.fields) });
+
         if (this.constructor_ != null) {
             this.writeConstructor({ writer, constructor: this.constructor_ });
+            if (this.methods.length > 0) {
+                writer.newLine();
+            }
         }
+
+        this.writeMethods({ writer, methods: orderByAccess(this.methods) });
+
         writer.dedent();
         writer.writeLine("}");
         return;
     }
 
-    public writeComment(writer: Writer): void {
+    private writeComment(writer: Writer): void {
         if (this.docs == null) {
             return undefined;
         }
@@ -114,5 +134,21 @@ export class Class extends AstNode {
             comment.addTag(parameter.getCommentTag());
         }
         comment.write(writer);
+    }
+
+    private writeFields({ writer, fields }: { writer: Writer; fields: Field[] }): void {
+        for (const field of fields) {
+            field.write(writer);
+            writer.writeNewLineIfLastLineNot();
+            writer.newLine();
+        }
+    }
+
+    private writeMethods({ writer, methods }: { writer: Writer; methods: Method[] }): void {
+        for (const method of methods) {
+            method.write(writer);
+            writer.writeNewLineIfLastLineNot();
+            writer.newLine();
+        }
     }
 }

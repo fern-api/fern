@@ -12,6 +12,7 @@ import { Header } from "./Header";
 import { WebhookExampleCall } from "./WebhookExampleCall";
 import { WithDescription } from "../../commons/types/WithDescription";
 import { WithSource } from "../../commons/types/WithSource";
+import { WithNamespace } from "../../commons/types/WithNamespace";
 
 export const Webhook: core.serialization.ObjectSchema<serializers.Webhook.Raw, FernOpenapiIr.Webhook> =
     core.serialization
@@ -27,10 +28,11 @@ export const Webhook: core.serialization.ObjectSchema<serializers.Webhook.Raw, F
             examples: core.serialization.list(WebhookExampleCall),
         })
         .extend(WithDescription)
-        .extend(WithSource);
+        .extend(WithSource)
+        .extend(WithNamespace);
 
 export declare namespace Webhook {
-    interface Raw extends WithDescription.Raw, WithSource.Raw {
+    interface Raw extends WithDescription.Raw, WithSource.Raw, WithNamespace.Raw {
         sdkName?: EndpointSdkName.Raw | null;
         method: WebhookHttpMethod.Raw;
         summary?: string | null;

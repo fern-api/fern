@@ -8,14 +8,18 @@ import {
     TypeDeclaration,
     Subpackage,
     SubpackageId,
-    FernFilepath
+    FernFilepath,
+    PrimitiveTypeV1
 } from "@fern-fern/ir-sdk/api";
 import { BasePhpCustomConfigSchema } from "../custom-config/BasePhpCustomConfigSchema";
 import { PhpProject } from "../project";
 import { camelCase, upperFirst } from "lodash-es";
 import { PhpTypeMapper } from "./PhpTypeMapper";
+import { PhpAttributeMapper } from "./PhpAttributeMapper";
 import { AsIsFiles } from "../AsIs";
 import { RelativeFilePath } from "@fern-api/fs-utils";
+import { php } from "..";
+import { GLOBAL_NAMESPACE } from "../ast/core/Constant";
 
 export interface FileLocation {
     namespace: string;
@@ -27,6 +31,7 @@ export abstract class AbstractPhpGeneratorContext<
 > extends AbstractGeneratorContext {
     private rootNamespace: string;
     public readonly phpTypeMapper: PhpTypeMapper;
+    public readonly phpAttributeMapper: PhpAttributeMapper;
     public readonly project: PhpProject;
 
     public constructor(
@@ -38,6 +43,7 @@ export abstract class AbstractPhpGeneratorContext<
         super(config, generatorNotificationService);
         this.rootNamespace = this.customConfig.namespace ?? upperFirst(camelCase(`${this.config.organization}`));
         this.phpTypeMapper = new PhpTypeMapper(this);
+        this.phpAttributeMapper = new PhpAttributeMapper(this);
         this.project = new PhpProject({
             context: this,
             name: this.rootNamespace
@@ -52,8 +58,26 @@ export abstract class AbstractPhpGeneratorContext<
         return subpackage;
     }
 
+    public getDateFormat(): php.AstNode {
+        return php.codeblock((writer) => {
+            writer.writeNode(this.getConstantClassReference());
+            writer.write("::DateFormat");
+        });
+    }
+
+    public getDateTimeFormat(): php.AstNode {
+        return php.codeblock((writer) => {
+            writer.writeNode(this.getConstantClassReference());
+            writer.write("::DateTimeFormat");
+        });
+    }
+
     public getClassName(name: Name): string {
         return name.pascalCase.safeName;
+    }
+
+    public getGlobalNamespace(): string {
+        return GLOBAL_NAMESPACE;
     }
 
     public getRootNamespace(): string {
@@ -72,8 +96,55 @@ export abstract class AbstractPhpGeneratorContext<
         return `${this.rootNamespace}\\Tests\\Core`;
     }
 
+    public getParameterName(name: Name): string {
+        return this.prependUnderscoreIfNeeded(name.camelCase.unsafeName);
+    }
+
+    public getPropertyName(name: Name): string {
+        return this.prependUnderscoreIfNeeded(name.camelCase.unsafeName);
+    }
+
+    private prependUnderscoreIfNeeded(input: string): string {
+        // https://www.php.net/manual/en/language.variables.basics.php
+        if (!/^[a-zA-Z_]/.test(input)) {
+            return `_${input}`;
+        }
+        return input;
+    }
+
     public getLiteralAsString(literal: Literal): string {
-        return literal.type === "string" ? `"${literal.string}"` : literal.boolean ? '"true"' : '"false"';
+        return literal.type === "string" ? `'${literal.string}'` : literal.boolean ? "'true'" : "'false'";
+    }
+
+    public getDateTypeAttributeClassReference(): php.ClassReference {
+        return this.getCoreClassReference("DateType");
+    }
+
+    public getConstantClassReference(): php.ClassReference {
+        return this.getCoreClassReference("Constant");
+    }
+
+    public getJsonPropertyAttributeClassReference(): php.ClassReference {
+        return this.getCoreClassReference("JsonProperty");
+    }
+
+    public getSerializableTypeClassReference(): php.ClassReference {
+        return this.getCoreClassReference("SerializableType");
+    }
+
+    public getUnionClassReference(): php.ClassReference {
+        return this.getCoreClassReference("Union");
+    }
+
+    public getArrayTypeClassReference(): php.ClassReference {
+        return this.getCoreClassReference("ArrayType");
+    }
+
+    public getCoreClassReference(name: string): php.ClassReference {
+        return php.classReference({
+            name,
+            namespace: this.getCoreNamespace()
+        });
     }
 
     public isOptional(typeReference: TypeReference): boolean {
@@ -91,6 +162,69 @@ export abstract class AbstractPhpGeneratorContext<
                 return false;
             case "primitive":
                 return false;
+        }
+    }
+
+    public isEnum(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "container":
+                if (typeReference.container.type === "optional") {
+                    return this.isEnum(typeReference.container.optional);
+                }
+                return false;
+            case "named": {
+                const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (declaration.shape.type === "alias") {
+                    return this.isEnum(declaration.shape.aliasOf);
+                }
+                return declaration.shape.type === "enum";
+            }
+            case "primitive": {
+                return false;
+            }
+            case "unknown": {
+                return false;
+            }
+        }
+    }
+
+    public isDate(typeReference: TypeReference): boolean {
+        return this.isPrimitive({ typeReference, primitive: PrimitiveTypeV1.Date });
+    }
+
+    public isDateTime(typeReference: TypeReference): boolean {
+        return this.isPrimitive({ typeReference, primitive: PrimitiveTypeV1.DateTime });
+    }
+
+    public isPrimitive({
+        typeReference,
+        primitive
+    }: {
+        typeReference: TypeReference;
+        primitive?: PrimitiveTypeV1;
+    }): boolean {
+        switch (typeReference.type) {
+            case "container":
+                if (typeReference.container.type === "optional") {
+                    return this.isDate(typeReference.container.optional);
+                }
+                return false;
+            case "named": {
+                const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (declaration.shape.type === "alias") {
+                    return this.isDate(declaration.shape.aliasOf);
+                }
+                return false;
+            }
+            case "primitive": {
+                if (primitive == null) {
+                    return true;
+                }
+                return typeReference.primitive.v1 === primitive;
+            }
+            case "unknown": {
+                return false;
+            }
         }
     }
 
@@ -114,9 +248,7 @@ export abstract class AbstractPhpGeneratorContext<
     }
 
     public abstract getRawAsIsFiles(): string[];
-
     public abstract getCoreAsIsFiles(): string[];
-
     public abstract getCoreTestAsIsFiles(): string[];
 
     public getCoreSerializationAsIsFiles(): string[] {
@@ -126,7 +258,12 @@ export abstract class AbstractPhpGeneratorContext<
             AsIsFiles.DateType,
             AsIsFiles.JsonProperty,
             AsIsFiles.SerializableType,
-            AsIsFiles.Union
+            AsIsFiles.Union,
+            AsIsFiles.JsonDecoder,
+            AsIsFiles.JsonEncoder,
+            AsIsFiles.JsonDeserializer,
+            AsIsFiles.JsonSerializer,
+            AsIsFiles.Utils
         ];
     }
 
@@ -148,11 +285,11 @@ export abstract class AbstractPhpGeneratorContext<
     public abstract getLocationForTypeId(typeId: TypeId): FileLocation;
 
     protected getFileLocation(filepath: FernFilepath, suffix?: string): FileLocation {
-        let parts = [this.getRootNamespace(), ...filepath.allParts.map((path) => path.pascalCase.safeName)];
+        let parts = filepath.allParts.map((path) => path.pascalCase.safeName);
         parts = suffix != null ? [...parts, suffix] : parts;
         return {
-            namespace: parts.join("\\"),
-            directory: RelativeFilePath.of(parts.slice(1).join("/"))
+            namespace: [this.getRootNamespace(), ...parts].join("\\"),
+            directory: RelativeFilePath.of(parts.join("/"))
         };
     }
 }
