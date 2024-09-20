@@ -283,16 +283,7 @@ await client.Admin.StoreTracedTestCaseAsync(
                         LineNumber = 1,
                         Scopes = new List<Scope>()
                         {
-                            new Scope
-                            {
-                                Variables = new Dictionary<string, object>()
-                                {
-                                    {
-                                        "string",
-                                        new Dictionary<object, object?>() { { "key", "value" } }
-                                    },
-                                },
-                            },
+                            new Scope { Variables = new Dictionary<string, object>() { } },
                         },
                     },
                 },
@@ -377,16 +368,7 @@ await client.Admin.StoreTracedTestCaseV2Async(
                     LineNumber = 1,
                     Scopes = new List<Scope>()
                     {
-                        new Scope
-                        {
-                            Variables = new Dictionary<string, object>()
-                            {
-                                {
-                                    "string",
-                                    new Dictionary<object, object?>() { { "key", "value" } }
-                                },
-                            },
-                        },
+                        new Scope { Variables = new Dictionary<string, object>() { } },
                     },
                 },
             },
@@ -486,16 +468,7 @@ await client.Admin.StoreTracedWorkspaceAsync(
                         LineNumber = 1,
                         Scopes = new List<Scope>()
                         {
-                            new Scope
-                            {
-                                Variables = new Dictionary<string, object>()
-                                {
-                                    {
-                                        "string",
-                                        new Dictionary<object, object?>() { { "key", "value" } }
-                                    },
-                                },
-                            },
+                            new Scope { Variables = new Dictionary<string, object>() { } },
                         },
                     },
                 },
@@ -571,16 +544,7 @@ await client.Admin.StoreTracedWorkspaceV2Async(
                     LineNumber = 1,
                     Scopes = new List<Scope>()
                     {
-                        new Scope
-                        {
-                            Variables = new Dictionary<string, object>()
-                            {
-                                {
-                                    "string",
-                                    new Dictionary<object, object?>() { { "key", "value" } }
-                                },
-                            },
-                        },
+                        new Scope { Variables = new Dictionary<string, object>() { } },
                     },
                 },
             },

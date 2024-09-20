@@ -1,4 +1,11 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.2.6
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Serialization utilities (necessary when pydantic aliases are removed) now respects dictionaries as well.
+
 - version: 4.2.5
   irVersion: 53
   changelogEntry:

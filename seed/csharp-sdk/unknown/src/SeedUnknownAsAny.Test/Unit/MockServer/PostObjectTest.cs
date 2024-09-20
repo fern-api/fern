@@ -16,7 +16,12 @@ public class PostObjectTest : BaseMockServerTest
     public async Task MockServerTest()
     {
         const string requestJson = """
-            {}
+            {
+              "unknown": {
+                "boolVal": true,
+                "strVal": "string"
+              }
+            }
             """;
 
         const string mockResponse = """
@@ -42,7 +47,17 @@ public class PostObjectTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Unknown.PostObjectAsync(new MyObject(), RequestOptions);
+        var response = await Client.Unknown.PostObjectAsync(
+            new MyObject
+            {
+                Unknown = new Dictionary<object, object?>()
+                {
+                    { "boolVal", true },
+                    { "strVal", "string" },
+                },
+            },
+            RequestOptions
+        );
         JToken
             .Parse(mockResponse)
             .Should()

@@ -45,9 +45,9 @@ async def test_get_problems(client: SeedTrace, async_client: AsyncSeedTrace) -> 
             "supportedLanguages": ["JAVA"],
             "customFiles": {"type": "basic"},
             "generatedFiles": {
-                "generatedTestCaseFiles": {"string": {"files": [{"key": "value"}]}},
-                "generatedTemplateFiles": {"string": {"files": [{"key": "value"}]}},
-                "other": {"string": {"files": [{"key": "value"}]}},
+                "generatedTestCaseFiles": {"string": {"files": []}},
+                "generatedTemplateFiles": {"string": {"files": []}},
+                "other": {"string": {"files": []}},
             },
             "customTestCaseTemplates": [
                 {
@@ -72,7 +72,7 @@ async def test_get_problems(client: SeedTrace, async_client: AsyncSeedTrace) -> 
                         "type": "templateId",
                     },
                     "arguments": {"string": {"type": "integerValue", "key": "value"}},
-                    "expects": {"expectedStdout": {"key": "value"}},
+                    "expects": {},
                 }
             ],
             "isPublic": True,
@@ -89,9 +89,9 @@ async def test_get_problems(client: SeedTrace, async_client: AsyncSeedTrace) -> 
                 "supportedLanguages": ("set", {0: None}),
                 "customFiles": "no_validate",
                 "generatedFiles": {
-                    "generatedTestCaseFiles": ("dict", {0: (None, {"files": ("list", {0: None})})}),
-                    "generatedTemplateFiles": ("dict", {0: (None, {"files": ("list", {0: None})})}),
-                    "other": ("dict", {0: (None, {"files": ("list", {0: None})})}),
+                    "generatedTestCaseFiles": ("dict", {0: (None, {"files": ("list", {})})}),
+                    "generatedTemplateFiles": ("dict", {0: (None, {"files": ("list", {})})}),
+                    "other": ("dict", {0: (None, {"files": ("list", {})})}),
                 },
                 "customTestCaseTemplates": (
                     "list",
@@ -139,9 +139,9 @@ async def test_get_latest_problem(client: SeedTrace, async_client: AsyncSeedTrac
         "supportedLanguages": ["JAVA"],
         "customFiles": {"type": "basic"},
         "generatedFiles": {
-            "generatedTestCaseFiles": {"string": {"files": [{"key": "value"}]}},
-            "generatedTemplateFiles": {"string": {"files": [{"key": "value"}]}},
-            "other": {"string": {"files": [{"key": "value"}]}},
+            "generatedTestCaseFiles": {"string": {"files": []}},
+            "generatedTemplateFiles": {"string": {"files": []}},
+            "other": {"string": {"files": []}},
         },
         "customTestCaseTemplates": [
             {
@@ -158,7 +158,7 @@ async def test_get_latest_problem(client: SeedTrace, async_client: AsyncSeedTrac
                 "metadata": {"id": "string", "name": "string", "hidden": True},
                 "implementation": {"0": "s", "1": "t", "2": "r", "3": "i", "4": "n", "5": "g", "type": "templateId"},
                 "arguments": {"string": {"type": "integerValue", "key": "value"}},
-                "expects": {"expectedStdout": {"key": "value"}},
+                "expects": {},
             }
         ],
         "isPublic": True,
@@ -171,9 +171,9 @@ async def test_get_latest_problem(client: SeedTrace, async_client: AsyncSeedTrac
         "supportedLanguages": ("set", {0: None}),
         "customFiles": "no_validate",
         "generatedFiles": {
-            "generatedTestCaseFiles": ("dict", {0: (None, {"files": ("list", {0: None})})}),
-            "generatedTemplateFiles": ("dict", {0: (None, {"files": ("list", {0: None})})}),
-            "other": ("dict", {0: (None, {"files": ("list", {0: None})})}),
+            "generatedTestCaseFiles": ("dict", {0: (None, {"files": ("list", {})})}),
+            "generatedTemplateFiles": ("dict", {0: (None, {"files": ("list", {})})}),
+            "other": ("dict", {0: (None, {"files": ("list", {})})}),
         },
         "customTestCaseTemplates": (
             "list",
@@ -219,9 +219,9 @@ async def test_get_problem_version(client: SeedTrace, async_client: AsyncSeedTra
         "supportedLanguages": ["JAVA"],
         "customFiles": {"type": "basic"},
         "generatedFiles": {
-            "generatedTestCaseFiles": {"string": {"files": [{"key": "value"}]}},
-            "generatedTemplateFiles": {"string": {"files": [{"key": "value"}]}},
-            "other": {"string": {"files": [{"key": "value"}]}},
+            "generatedTestCaseFiles": {"string": {"files": []}},
+            "generatedTemplateFiles": {"string": {"files": []}},
+            "other": {"string": {"files": []}},
         },
         "customTestCaseTemplates": [
             {
@@ -238,7 +238,7 @@ async def test_get_problem_version(client: SeedTrace, async_client: AsyncSeedTra
                 "metadata": {"id": "string", "name": "string", "hidden": True},
                 "implementation": {"0": "s", "1": "t", "2": "r", "3": "i", "4": "n", "5": "g", "type": "templateId"},
                 "arguments": {"string": {"type": "integerValue", "key": "value"}},
-                "expects": {"expectedStdout": {"key": "value"}},
+                "expects": {},
             }
         ],
         "isPublic": True,
@@ -251,9 +251,9 @@ async def test_get_problem_version(client: SeedTrace, async_client: AsyncSeedTra
         "supportedLanguages": ("set", {0: None}),
         "customFiles": "no_validate",
         "generatedFiles": {
-            "generatedTestCaseFiles": ("dict", {0: (None, {"files": ("list", {0: None})})}),
-            "generatedTemplateFiles": ("dict", {0: (None, {"files": ("list", {0: None})})}),
-            "other": ("dict", {0: (None, {"files": ("list", {0: None})})}),
+            "generatedTestCaseFiles": ("dict", {0: (None, {"files": ("list", {})})}),
+            "generatedTemplateFiles": ("dict", {0: (None, {"files": ("list", {})})}),
+            "other": ("dict", {0: (None, {"files": ("list", {})})}),
         },
         "customTestCaseTemplates": (
             "list",

@@ -21,51 +21,26 @@ public class GetAccountTest : BaseMockServerTest
               "patient": {
                 "resource_type": "Patient",
                 "name": "string",
-                "scripts": [
-                  {
-                    "key": "value"
-                  }
-                ],
+                "scripts": [],
                 "id": "string",
-                "related_resources": [
-                  {
-                    "key": "value"
-                  }
-                ],
+                "related_resources": [],
                 "memo": {
-                  "description": "string",
-                  "account": {
-                    "key": "value"
-                  }
+                  "description": "string"
                 }
               },
               "practitioner": {
                 "resource_type": "Practitioner",
                 "name": "string",
                 "id": "string",
-                "related_resources": [
-                  {
-                    "key": "value"
-                  }
-                ],
+                "related_resources": [],
                 "memo": {
-                  "description": "string",
-                  "account": {
-                    "key": "value"
-                  }
+                  "description": "string"
                 }
               },
               "id": "string",
-              "related_resources": [
-                {
-                  "key": "value"
-                }
-              ],
+              "related_resources": [],
               "memo": {
-                "description": "string",
-                "account": {
-                  "key": "value"
-                }
+                "description": "string"
               }
             }
             """;
