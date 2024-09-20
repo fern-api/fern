@@ -6,36 +6,22 @@ import { handleFailedWorkspaceParserResultRaw } from "../handleFailedWorkspacePa
 import { listFernFiles } from "../listFernFiles";
 import { parseYamlFiles } from "../parseYamlFiles";
 import { processPackageMarkers } from "../processPackageMarkers";
-import { APIChangelog } from "../types/Workspace";
 import { validateStructureOfYamlFiles } from "../validateStructureOfYamlFiles";
 import { OSSWorkspace } from "./OSSWorkspace";
 import { FernWorkspace, AbstractAPIWorkspace, FernDefinition } from "@fern-api/api-workspace-commons";
 
 export declare namespace LazyFernWorkspace {
-    export interface BaseArgs {
-        absoluteFilepath: AbsoluteFilePath;
-        changelog: APIChangelog | undefined;
-    }
-
-    export interface Args extends BaseArgs, AbstractAPIWorkspace.Args {
+    export interface Args extends AbstractAPIWorkspace.Args {
         context: TaskContext;
-        cliVersion: string;
     }
 }
 
 export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
-    public absoluteFilepath: AbsoluteFilePath;
-    public changelog: APIChangelog | undefined;
-
     private context: TaskContext;
-    private cliVersion: string;
     private fernWorkspaces: Record<string, FernWorkspace> = {};
 
-    constructor({ absoluteFilepath, changelog, cliVersion, context, ...superArgs }: LazyFernWorkspace.Args) {
+    constructor({ context, ...superArgs }: LazyFernWorkspace.Args) {
         super(superArgs);
-        this.absoluteFilepath = absoluteFilepath;
-        this.changelog = changelog;
-        this.cliVersion = cliVersion;
         this.context = context;
     }
 
@@ -55,9 +41,9 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
 
         if (workspace == null) {
             const defaultedContext = context || this.context;
-            const absolutePathToDefinition = join(this.absoluteFilepath, RelativeFilePath.of(DEFINITION_DIRECTORY));
+            const absolutePathToDefinition = join(this.absoluteFilePath, RelativeFilePath.of(DEFINITION_DIRECTORY));
             const dependenciesConfiguration = await dependenciesYml.loadDependenciesConfiguration({
-                absolutePathToWorkspace: this.absoluteFilepath,
+                absolutePathToWorkspace: this.absoluteFilePath,
                 context: defaultedContext
             });
 
@@ -91,17 +77,19 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
             }
 
             workspace = new FernWorkspace({
-                absoluteFilePath: this.absoluteFilepath,
+                absoluteFilePath: this.absoluteFilePath,
                 generatorsConfiguration: this.generatorsConfiguration,
                 dependenciesConfiguration,
                 workspaceName: this.workspaceName,
                 definition: {
-                    absoluteFilepath: absolutePathToDefinition,
+                    absoluteFilePath: absolutePathToDefinition,
                     rootApiFile: structuralValidationResult.rootApiFile,
                     namedDefinitionFiles: structuralValidationResult.namedDefinitionFiles,
                     packageMarkers: processPackageMarkersResult.packageMarkers,
                     importedDefinitions: processPackageMarkersResult.importedDefinitions
-                }
+                },
+                cliVersion: this.cliVersion,
+                sources: []
             });
 
             this.fernWorkspaces[key] = workspace;
@@ -110,7 +98,7 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
         return workspace;
     }
 
-    public getAbsoluteFilepaths(): AbsoluteFilePath[] {
-        return [this.absoluteFilepath];
+    public getAbsoluteFilePaths(): AbsoluteFilePath[] {
+        return [this.absoluteFilePath];
     }
 }

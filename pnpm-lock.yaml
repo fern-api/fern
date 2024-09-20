@@ -3031,6 +3031,9 @@ importers:
 
   packages/cli/cli:
     dependencies:
+      '@fern-api/api-workspace-commons':
+        specifier: workspace:*
+        version: link:../workspace-commons
       '@fern-api/auth':
         specifier: workspace:*
         version: link:../auth
@@ -3708,6 +3711,9 @@ importers:
 
   packages/cli/fern-definition/formatter:
     dependencies:
+      '@fern-api/api-workspace-commons':
+        specifier: workspace:*
+        version: link:../../workspace-commons
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../commons/core-utils
@@ -3720,9 +3726,6 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../task-context
-      '@fern-api/workspace-loader':
-        specifier: workspace:*
-        version: link:../../workspace-loader
       chalk:
         specifier: ^5.3.0
         version: 5.3.0
@@ -4215,6 +4218,9 @@ importers:
 
   packages/cli/generation/local-generation/local-workspace-runner:
     dependencies:
+      '@fern-api/api-workspace-commons':
+        specifier: workspace:*
+        version: link:../../../workspace-commons
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../../../configuration
@@ -4927,6 +4933,9 @@ importers:
 
   packages/cli/register:
     dependencies:
+      '@fern-api/api-workspace-commons':
+        specifier: workspace:*
+        version: link:../workspace-commons
       '@fern-api/auth':
         specifier: workspace:*
         version: link:../auth
@@ -5676,6 +5685,9 @@ importers:
 
   packages/seed:
     dependencies:
+      '@fern-api/api-workspace-commons':
+        specifier: workspace:*
+        version: link:../cli/workspace-commons
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../cli/configuration

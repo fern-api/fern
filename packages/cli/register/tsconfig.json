@@ -11,6 +11,7 @@
     { "path": "../generation/ir-generator" },
     { "path": "../task-context" },
     { "path": "../workspace-loader" },
+    { "path": "../workspace-commons" },
     { "path": "../project-loader" },
     { "path": "../../commons/fs-utils" },
   ]

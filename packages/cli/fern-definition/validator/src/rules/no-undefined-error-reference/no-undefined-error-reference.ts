@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { parseReferenceToTypeName } from "@fern-api/ir-generator";
-import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/workspace-loader";
+import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/api-workspace-commons";
 import { DefinitionFileSchema, RootApiFileSchema } from "@fern-api/fern-definition-schema";
 import { visitDefinitionFileYamlAst } from "../../ast";
 import { mapValues } from "lodash-es";

@@ -7,16 +7,14 @@ import { TaskContext } from "@fern-api/task-context";
 import yaml from "js-yaml";
 import { mapValues as mapValuesLodash } from "lodash-es";
 import { v4 as uuidv4 } from "uuid";
-import { APIChangelog, IdentifiableSource, Spec } from "../types/Workspace";
+import { IdentifiableSource, Spec } from "../types/Workspace";
 import { getAllOpenAPISpecs } from "../utils/getAllOpenAPISpecs";
 import { FernWorkspace, AbstractAPIWorkspace, FernDefinition } from "@fern-api/api-workspace-commons";
 
 export declare namespace OSSWorkspace {
     export interface Args extends AbstractAPIWorkspace.Args {
-        absoluteFilepath: AbsoluteFilePath;
         workspaceName: string | undefined;
         specs: Spec[];
-        changelog: APIChangelog | undefined;
         cliVersion: string;
     }
 
@@ -46,19 +44,13 @@ export declare namespace OSSWorkspace {
 }
 
 export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
-    public absoluteFilepath: AbsoluteFilePath;
     public specs: Spec[];
-    public changelog: APIChangelog | undefined;
     public sources: IdentifiableSource[];
-    public cliVersion: string;
 
-    constructor({ absoluteFilepath, specs, changelog, cliVersion, ...superArgs }: OSSWorkspace.Args) {
+    constructor({ specs, ...superArgs }: OSSWorkspace.Args) {
         super(superArgs);
-        this.absoluteFilepath = absoluteFilepath;
         this.specs = specs;
-        this.changelog = changelog;
         this.sources = this.convertSpecsToIdentifiableSources(specs);
-        this.cliVersion = cliVersion;
     }
 
     public async getDefinition(
@@ -73,7 +65,7 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
     ): Promise<FernDefinition> {
         const openApiSpecs = await getAllOpenAPISpecs({ context, specs: this.specs, relativePathToDependency });
         const openApiIr = await parse({
-            absoluteFilePathToWorkspace: this.absoluteFilepath,
+            absoluteFilePathToWorkspace: this.absoluteFilePath,
             specs: openApiSpecs,
             taskContext: context,
             optionOverrides: getOptionsOverridesFromSettings(settings)
@@ -101,7 +93,7 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
 
         return {
             // these files doesn't live on disk, so there's no absolute filepath
-            absoluteFilepath: AbsoluteFilePath.of("/DUMMY_PATH"),
+            absoluteFilePath: AbsoluteFilePath.of("/DUMMY_PATH"),
             rootApiFile: {
                 defaultUrl: definition.rootApiFile["default-url"],
                 contents: definition.rootApiFile,
@@ -132,19 +124,21 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
     ): Promise<FernWorkspace> {
         const definition = await this.getDefinition({ context }, settings);
         return new FernWorkspace({
-            absoluteFilePath: this.absoluteFilepath,
+            absoluteFilePath: this.absoluteFilePath,
             workspaceName: this.workspaceName,
             generatorsConfiguration: this.generatorsConfiguration,
             dependenciesConfiguration: {
                 dependencies: {}
             },
-            definition
+            definition,
+            cliVersion: this.cliVersion,
+            sources: this.sources
         });
     }
 
-    public getAbsoluteFilepaths(): AbsoluteFilePath[] {
+    public getAbsoluteFilePaths(): AbsoluteFilePath[] {
         return [
-            this.absoluteFilepath,
+            this.absoluteFilePath,
             ...this.specs
                 .flatMap((spec) => [
                     spec.type === "protobuf" ? spec.absoluteFilepathToProtobufTarget : spec.absoluteFilepath,

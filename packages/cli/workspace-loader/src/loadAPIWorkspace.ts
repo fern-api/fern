@@ -188,7 +188,7 @@ export async function loadAPIWorkspace({
             workspace: new OSSWorkspace({
                 specs,
                 workspaceName,
-                absoluteFilepath: absolutePathToWorkspace,
+                absoluteFilePath: absolutePathToWorkspace,
                 generatorsConfiguration,
                 changelog,
                 cliVersion
@@ -198,7 +198,7 @@ export async function loadAPIWorkspace({
 
     if (await doesPathExist(join(absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY)))) {
         const fernWorkspace = new LazyFernWorkspace({
-            absoluteFilepath: absolutePathToWorkspace,
+            absoluteFilePath: absolutePathToWorkspace,
             generatorsConfiguration,
             workspaceName,
             changelog,

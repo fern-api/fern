@@ -1,1 +1,2 @@
-export { getOSSWorkspaceSettingsFromGeneratorInvocation } from "./OSSWorkspace";
+export { getOSSWorkspaceSettingsFromGeneratorInvocation, OSSWorkspace } from "./OSSWorkspace";
+export { LazyFernWorkspace } from "./LazyFernWorkspace";

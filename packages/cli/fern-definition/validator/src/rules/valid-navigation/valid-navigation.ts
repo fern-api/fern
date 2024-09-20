@@ -29,9 +29,9 @@ export const ValidNavigationRule: Rule = {
 
                     if (typeof navigation === "string") {
                         const pathToNavigated = relative(
-                            workspace.definition.absoluteFilepath,
+                            workspace.definition.absoluteFilePath,
                             join(
-                                workspace.definition.absoluteFilepath,
+                                workspace.definition.absoluteFilePath,
                                 dirname(relativeFilepath),
                                 RelativeFilePath.of(navigation)
                             )

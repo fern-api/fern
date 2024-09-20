@@ -85,7 +85,7 @@ export function validateStructureOfYamlFiles({
                     defaultUrl: undefined,
                     contents: maybeValidFileContents.data,
                     rawContents: file.rawContents,
-                    absoluteFilepath: join(absolutePathToDefinition, relativeFilepath)
+                    absoluteFilePath: join(absolutePathToDefinition, relativeFilepath)
                 };
             } else {
                 addFailure(maybeValidFileContents.error);

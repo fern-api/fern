@@ -1,6 +1,6 @@
 import { TaskContext } from "@fern-api/task-context";
 import { validateFernWorkspace } from "@fern-api/fern-definition-validator";
-import { FernWorkspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import validatePackageName from "validate-npm-package-name";
 import { logViolations } from "./logViolations";
 

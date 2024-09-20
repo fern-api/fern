@@ -4,20 +4,26 @@ import { AbstractAPIWorkspace, FernDefinition } from "./AbstractAPIWorkspace";
 
 export declare namespace FernWorkspace {
     export interface Args extends AbstractAPIWorkspace.Args {
-        absoluteFilePath: AbsoluteFilePath;
         dependenciesConfiguration: dependenciesYml.DependenciesConfiguration;
         definition: FernDefinition;
+        sources?: IdentifiableSource[];
     }
+}
+
+export interface IdentifiableSource {
+    type: "asyncapi" | "openapi" | "protobuf";
+    id: string;
+    absoluteFilePath: AbsoluteFilePath;
 }
 
 export class FernWorkspace extends AbstractAPIWorkspace<void> {
     public definition: FernDefinition;
-    public absoluteFilePath: AbsoluteFilePath;
+    public sources: IdentifiableSource[];
 
-    constructor({ definition, absoluteFilePath, ...superArgs }: FernWorkspace.Args) {
+    constructor({ definition, sources, ...superArgs }: FernWorkspace.Args) {
         super(superArgs);
         this.definition = definition;
-        this.absoluteFilePath = absoluteFilePath;
+        this.sources = sources ?? [];
     }
 
     public async getDefinition(): Promise<FernDefinition> {
@@ -28,7 +34,11 @@ export class FernWorkspace extends AbstractAPIWorkspace<void> {
         return this;
     }
 
-    public getAbsoluteFilepaths(): AbsoluteFilePath[] {
+    public getSources(): IdentifiableSource[] {
+        return this.sources;
+    }
+
+    public getAbsoluteFilePaths(): AbsoluteFilePath[] {
         return [this.absoluteFilePath];
     }
 }

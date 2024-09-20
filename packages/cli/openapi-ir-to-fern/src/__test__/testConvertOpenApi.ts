@@ -145,7 +145,7 @@ function toFernWorkspace(fernDefinition: OpenApiConvertedFernDefinition): FernWo
             dependencies: {}
         },
         definition: {
-            absoluteFilepath: AbsoluteFilePath.of("/DUMMY_PATH"),
+            absoluteFilePath: AbsoluteFilePath.of("/DUMMY_PATH"),
             rootApiFile: {
                 defaultUrl: fernDefinition.rootApiFile["default-url"],
                 contents: fernDefinition.rootApiFile,
@@ -154,13 +154,13 @@ function toFernWorkspace(fernDefinition: OpenApiConvertedFernDefinition): FernWo
             namedDefinitionFiles: {
                 ...mapValues(fernDefinition.definitionFiles, (definitionFile) => ({
                     // these files doesn't live on disk, so there's no absolute filepath
-                    absoluteFilepath: AbsoluteFilePath.of("/DUMMY_PATH"),
+                    absoluteFilePath: AbsoluteFilePath.of("/DUMMY_PATH"),
                     rawContents: yaml.dump(definitionFile),
                     contents: definitionFile
                 })),
                 [RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME)]: {
                     // these files doesn't live on disk, so there's no absolute filepath
-                    absoluteFilepath: AbsoluteFilePath.of("/DUMMY_PATH"),
+                    absoluteFilePath: AbsoluteFilePath.of("/DUMMY_PATH"),
                     rawContents: yaml.dump(fernDefinition.packageMarkerFile),
                     contents: fernDefinition.packageMarkerFile
                 }
@@ -168,8 +168,9 @@ function toFernWorkspace(fernDefinition: OpenApiConvertedFernDefinition): FernWo
             packageMarkers: {},
             importedDefinitions: {}
         },
-        generatorsConfiguration: undefined,
+        generatorsConfiguration: undefined as any,
         absoluteFilePath: AbsoluteFilePath.of("/DUMMY_PATH"),
+        cliVersion: "0.0.0"
     });
 }
 

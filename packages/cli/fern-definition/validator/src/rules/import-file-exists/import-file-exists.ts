@@ -1,5 +1,5 @@
 import { dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { getAllDefinitionFiles } from "@fern-api/workspace-loader";
+import { getAllDefinitionFiles } from "@fern-api/api-workspace-commons";
 import chalk from "chalk";
 import { Rule, RuleViolation } from "../../Rule";
 
@@ -10,7 +10,7 @@ export const ImportFileExistsRule: Rule = {
 
         const absolutePaths = new Set<string>();
         relativePaths.forEach((relativeFilepath) => {
-            const absolutePath = join(workspace.definition.absoluteFilepath, RelativeFilePath.of(relativeFilepath));
+            const absolutePath = join(workspace.definition.absoluteFilePath, RelativeFilePath.of(relativeFilepath));
             absolutePaths.add(absolutePath);
         });
 
@@ -19,7 +19,7 @@ export const ImportFileExistsRule: Rule = {
                 import: async ({ importedAs, importPath }, { relativeFilepath }) => {
                     const violations: RuleViolation[] = [];
                     const importAbsoluteFilepath = join(
-                        workspace.definition.absoluteFilepath,
+                        workspace.definition.absoluteFilePath,
                         dirname(relativeFilepath),
                         RelativeFilePath.of(importPath)
                     );

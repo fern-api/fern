@@ -10,7 +10,7 @@ import {
     ExampleResponse,
     Name
 } from "@fern-api/ir-sdk";
-import { FernWorkspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import {
     isInlineRequestBody,
     parseBytesRequest,

@@ -7,7 +7,7 @@ export type Workspace = DocsWorkspace | AbstractAPIWorkspace<unknown>;
 export interface DocsWorkspace {
     type: "docs";
     workspaceName: string | undefined;
-    absoluteFilepath: AbsoluteFilePath; // path to the fern folder (dirname(absoluteFilepathToDocsConfig))
+    absoluteFilePath: AbsoluteFilePath; // path to the fern folder (dirname(absoluteFilepathToDocsConfig))
     absoluteFilepathToDocsConfig: AbsoluteFilePath;
     config: docsYml.RawSchemas.DocsConfiguration;
 }
@@ -65,15 +65,6 @@ export interface SpecImportSettings {
     shouldUseUndiscriminatedUnionsWithLiterals: boolean;
     optionalAdditionalProperties: boolean;
     asyncApiNaming?: "v1" | "v2";
-}
-
-export interface APIChangelog {
-    files: ChangelogFile[];
-}
-
-export interface ChangelogFile {
-    absoluteFilepath: AbsoluteFilePath;
-    contents: string;
 }
 
 export interface OpenAPIFile {

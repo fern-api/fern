@@ -6,7 +6,7 @@ import {
 } from "@fern-api/ir-migrations";
 import { IntermediateRepresentation, SourceConfig } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
-import { FernWorkspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 
 export declare namespace getIntermediateRepresentation {
     interface Return {

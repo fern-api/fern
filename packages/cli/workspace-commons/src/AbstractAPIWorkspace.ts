@@ -4,9 +4,10 @@ import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { ParsedFernFile } from "./FernFile";
 import { DefinitionFileSchema, PackageMarkerFileSchema, RootApiFileSchema } from "@fern-api/fern-definition-schema";
 import { FernWorkspace } from "./FernWorkspace";
+import { APIChangelog } from "./APIChangelog";
 
 export interface FernDefinition {
-    absoluteFilepath: AbsoluteFilePath;
+    absoluteFilePath: AbsoluteFilePath;
     rootApiFile: ParsedFernFile<RootApiFileSchema>;
     namedDefinitionFiles: Record<RelativeFilePath, OnDiskNamedDefinitionFile>;
     packageMarkers: Record<RelativeFilePath, ParsedFernFile<PackageMarkerFileSchema>>;
@@ -14,7 +15,7 @@ export interface FernDefinition {
 }
 
 export interface OnDiskNamedDefinitionFile extends ParsedFernFile<DefinitionFileSchema> {
-    absoluteFilepath: AbsoluteFilePath;
+    absoluteFilePath: AbsoluteFilePath;
 }
 
 export interface ImportedDefinition {
@@ -26,6 +27,9 @@ export declare namespace AbstractAPIWorkspace {
     interface Args {
         generatorsConfiguration: generatorsYml.GeneratorsConfiguration | undefined;
         workspaceName: string | undefined;
+        cliVersion: string;
+        absoluteFilePath: AbsoluteFilePath;
+        changelog?: APIChangelog;
     }
 }
 
@@ -39,12 +43,24 @@ export declare namespace AbstractAPIWorkspace {
 export abstract class AbstractAPIWorkspace<Settings> {
     public generatorsConfiguration: generatorsYml.GeneratorsConfiguration | undefined;
     public workspaceName: string | undefined;
+    public cliVersion: string;
+    public absoluteFilePath: AbsoluteFilePath;
+    public changelog: APIChangelog | undefined;
 
     public type = "api";
 
-    public constructor({ generatorsConfiguration, workspaceName }: AbstractAPIWorkspace.Args) {
+    public constructor({
+        generatorsConfiguration,
+        workspaceName,
+        cliVersion,
+        absoluteFilePath,
+        changelog
+    }: AbstractAPIWorkspace.Args) {
         this.generatorsConfiguration = generatorsConfiguration;
         this.workspaceName = workspaceName;
+        this.cliVersion = cliVersion;
+        this.absoluteFilePath = absoluteFilePath;
+        this.changelog = changelog;
     }
 
     public abstract toFernWorkspace({ context }: { context: TaskContext }, settings?: Settings): Promise<FernWorkspace>;
@@ -57,5 +73,5 @@ export abstract class AbstractAPIWorkspace<Settings> {
     /**
      * @returns all filepaths related to this workspace
      */
-    public abstract getAbsoluteFilepaths(): AbsoluteFilePath[];
+    public abstract getAbsoluteFilePaths(): AbsoluteFilePath[];
 }

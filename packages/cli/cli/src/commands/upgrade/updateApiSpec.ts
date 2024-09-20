@@ -46,7 +46,7 @@ export async function updateApiSpec({
         await cliContext.runTaskForWorkspace(workspace, async (context) => {
             const generatorConfig =
                 (await generatorsYml.loadRawGeneratorsConfiguration({
-                    absolutePathToWorkspace: workspace.absoluteFilepath,
+                    absolutePathToWorkspace: workspace.absoluteFilePath,
                     context
                 })) ?? {};
 
@@ -69,7 +69,7 @@ export async function updateApiSpec({
                         cliContext.logger.info(`Origin found, fetching spec from ${api.origin}`);
                         await fetchAndWriteFile(
                             api.origin,
-                            join(workspace.absoluteFilepath, RelativeFilePath.of(api.path)),
+                            join(workspace.absoluteFilePath, RelativeFilePath.of(api.path)),
                             cliContext.logger
                         );
                     } else if (isPlainObject(api)) {
@@ -84,7 +84,7 @@ export async function updateApiSpec({
                                 cliContext.logger.info(`Origin found, fetching spec from ${value.origin}`);
                                 await fetchAndWriteFile(
                                     value.origin,
-                                    join(workspace.absoluteFilepath, RelativeFilePath.of(value.path)),
+                                    join(workspace.absoluteFilePath, RelativeFilePath.of(value.path)),
                                     cliContext.logger
                                 );
                             }
@@ -101,7 +101,7 @@ export async function updateApiSpec({
                     if (origin != null && location != null) {
                         await fetchAndWriteFile(
                             origin,
-                            join(workspace.absoluteFilepath, RelativeFilePath.of(location)),
+                            join(workspace.absoluteFilePath, RelativeFilePath.of(location)),
                             cliContext.logger
                         );
                     }
@@ -120,7 +120,7 @@ export async function updateApiSpec({
                     cliContext.logger.info(`Origin found, fetching spec from ${apiOrigin}`);
                     await fetchAndWriteFile(
                         apiOrigin,
-                        join(workspace.absoluteFilepath, RelativeFilePath.of(apiOutput)),
+                        join(workspace.absoluteFilePath, RelativeFilePath.of(apiOutput)),
                         cliContext.logger
                     );
                 }

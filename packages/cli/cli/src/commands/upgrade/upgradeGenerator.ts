@@ -138,7 +138,7 @@ export async function upgradeGenerator({
                 // Not totally necessary, but keeping around to ensure the schema is valid
                 const generatorsConfiguration =
                     (await generatorsYml.loadRawGeneratorsConfiguration({
-                        absolutePathToWorkspace: workspace.absoluteFilepath,
+                        absolutePathToWorkspace: workspace.absoluteFilePath,
                         context
                     })) ?? {};
                 if (generatorsConfiguration == null || generatorsConfiguration.groups == null) {
@@ -151,7 +151,7 @@ export async function upgradeGenerator({
                 context.logger.info(`Upgrading generators in workspace: ${workspace.workspaceName}`);
 
                 const updatedConfiguration = await loadAndUpdateGenerators({
-                    absolutePathToWorkspace: workspace.absoluteFilepath,
+                    absolutePathToWorkspace: workspace.absoluteFilePath,
                     context,
                     generatorFilter: generator,
                     groupFilter: group,
@@ -164,7 +164,7 @@ export async function upgradeGenerator({
                     await writeFile(
                         workspace.generatorsConfiguration?.absolutePathToConfiguration ??
                             generatorsYml.getPathToGeneratorsConfiguration({
-                                absolutePathToWorkspace: workspace.absoluteFilepath
+                                absolutePathToWorkspace: workspace.absoluteFilePath
                             }),
                         updatedConfiguration
                     );

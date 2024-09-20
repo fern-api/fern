@@ -21,7 +21,7 @@ export async function addGeneratorToWorkspaces({
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 const generatorsConfiguration =
                     (await generatorsYml.loadRawGeneratorsConfiguration({
-                        absolutePathToWorkspace: workspace.absoluteFilepath,
+                        absolutePathToWorkspace: workspace.absoluteFilePath,
                         context
                     })) ?? {};
 
@@ -36,7 +36,7 @@ export async function addGeneratorToWorkspaces({
                 await writeFile(
                     workspace.generatorsConfiguration?.absolutePathToConfiguration ??
                         generatorsYml.getPathToGeneratorsConfiguration({
-                            absolutePathToWorkspace: workspace.absoluteFilepath
+                            absolutePathToWorkspace: workspace.absoluteFilePath
                         }),
                     yaml.dump(newConfiguration)
                 );
