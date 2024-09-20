@@ -11,7 +11,7 @@ class UserListContainer extends SerializableType
     /**
      * @var array<User> $users
      */
-    #[JsonProperty("users"), ArrayType([User::class])]
+    #[JsonProperty('users'), ArrayType([User::class])]
     public array $users;
 
     /**

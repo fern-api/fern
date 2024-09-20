@@ -10,7 +10,7 @@ class User extends SerializableType
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**

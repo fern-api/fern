@@ -10,7 +10,7 @@ class Pagination extends SerializableType
     /**
      * @var ?string $next
      */
-    #[JsonProperty("next")]
+    #[JsonProperty('next')]
     public ?string $next;
 
     /**

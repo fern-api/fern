@@ -10,19 +10,19 @@ class TestCaseTemplate extends SerializableType
     /**
      * @var string $templateId
      */
-    #[JsonProperty("templateId")]
+    #[JsonProperty('templateId')]
     public string $templateId;
 
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var TestCaseImplementation $implementation
      */
-    #[JsonProperty("implementation")]
+    #[JsonProperty('implementation')]
     public TestCaseImplementation $implementation;
 
     /**

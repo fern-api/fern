@@ -13,19 +13,19 @@ class TokenResponse extends SerializableType
     /**
      * @var string $accessToken
      */
-    #[JsonProperty("access_token")]
+    #[JsonProperty('access_token')]
     public string $accessToken;
 
     /**
      * @var int $expiresIn
      */
-    #[JsonProperty("expires_in")]
+    #[JsonProperty('expires_in')]
     public int $expiresIn;
 
     /**
      * @var ?string $refreshToken
      */
-    #[JsonProperty("refresh_token")]
+    #[JsonProperty('refresh_token')]
     public ?string $refreshToken;
 
     /**

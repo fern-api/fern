@@ -11,7 +11,7 @@ class WorkspaceSubmissionStatusV2 extends SerializableType
     /**
      * @var array<WorkspaceSubmissionUpdate> $updates
      */
-    #[JsonProperty("updates"), ArrayType([WorkspaceSubmissionUpdate::class])]
+    #[JsonProperty('updates'), ArrayType([WorkspaceSubmissionUpdate::class])]
     public array $updates;
 
     /**

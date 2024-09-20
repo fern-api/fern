@@ -10,7 +10,7 @@ class Response extends SerializableType
     /**
      * @var Movie $data
      */
-    #[JsonProperty("data")]
+    #[JsonProperty('data')]
     public Movie $data;
 
     /**

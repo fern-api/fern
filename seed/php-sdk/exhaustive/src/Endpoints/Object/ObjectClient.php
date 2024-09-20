@@ -33,9 +33,9 @@ class ObjectClient
     /**
      * @param ObjectWithOptionalField $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @return ObjectWithOptionalField
      */
-    public function getAndReturnWithOptionalField(ObjectWithOptionalField $request, ?array $options = null): mixed
+    public function getAndReturnWithOptionalField(ObjectWithOptionalField $request, ?array $options = null): ObjectWithOptionalField
     {
         try {
             $response = $this->client->sendRequest(
@@ -48,7 +48,8 @@ class ObjectClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return ObjectWithOptionalField::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -61,9 +62,9 @@ class ObjectClient
     /**
      * @param ObjectWithRequiredField $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @return ObjectWithRequiredField
      */
-    public function getAndReturnWithRequiredField(ObjectWithRequiredField $request, ?array $options = null): mixed
+    public function getAndReturnWithRequiredField(ObjectWithRequiredField $request, ?array $options = null): ObjectWithRequiredField
     {
         try {
             $response = $this->client->sendRequest(
@@ -76,7 +77,8 @@ class ObjectClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return ObjectWithRequiredField::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -89,9 +91,9 @@ class ObjectClient
     /**
      * @param ObjectWithMapOfMap $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @return ObjectWithMapOfMap
      */
-    public function getAndReturnWithMapOfMap(ObjectWithMapOfMap $request, ?array $options = null): mixed
+    public function getAndReturnWithMapOfMap(ObjectWithMapOfMap $request, ?array $options = null): ObjectWithMapOfMap
     {
         try {
             $response = $this->client->sendRequest(
@@ -104,7 +106,8 @@ class ObjectClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return ObjectWithMapOfMap::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -117,9 +120,9 @@ class ObjectClient
     /**
      * @param NestedObjectWithOptionalField $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @return NestedObjectWithOptionalField
      */
-    public function getAndReturnNestedWithOptionalField(NestedObjectWithOptionalField $request, ?array $options = null): mixed
+    public function getAndReturnNestedWithOptionalField(NestedObjectWithOptionalField $request, ?array $options = null): NestedObjectWithOptionalField
     {
         try {
             $response = $this->client->sendRequest(
@@ -132,7 +135,8 @@ class ObjectClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return NestedObjectWithOptionalField::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -146,9 +150,9 @@ class ObjectClient
      * @param string $string
      * @param NestedObjectWithRequiredField $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @return NestedObjectWithRequiredField
      */
-    public function getAndReturnNestedWithRequiredField(string $string, NestedObjectWithRequiredField $request, ?array $options = null): mixed
+    public function getAndReturnNestedWithRequiredField(string $string, NestedObjectWithRequiredField $request, ?array $options = null): NestedObjectWithRequiredField
     {
         try {
             $response = $this->client->sendRequest(
@@ -161,7 +165,8 @@ class ObjectClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return NestedObjectWithRequiredField::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -174,9 +179,9 @@ class ObjectClient
     /**
      * @param array<NestedObjectWithRequiredField> $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @return NestedObjectWithRequiredField
      */
-    public function getAndReturnNestedWithRequiredFieldAsList(array $request, ?array $options = null): mixed
+    public function getAndReturnNestedWithRequiredFieldAsList(array $request, ?array $options = null): NestedObjectWithRequiredField
     {
         try {
             $response = $this->client->sendRequest(
@@ -189,7 +194,8 @@ class ObjectClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return NestedObjectWithRequiredField::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

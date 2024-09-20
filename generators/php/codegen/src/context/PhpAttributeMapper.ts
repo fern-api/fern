@@ -25,7 +25,7 @@ export class PhpAttributeMapper {
         attributes.push(
             php.attribute({
                 reference: this.context.getJsonPropertyAttributeClassReference(),
-                arguments: [`"${property.name.wireValue}"`]
+                arguments: [`'${property.name.wireValue}'`]
             })
         );
         const underlyingInternalType = type.underlyingType().internalType;
@@ -48,25 +48,25 @@ export class PhpAttributeMapper {
         return attributes;
     }
 
-    private getArrayTypeAttributeArgument(type: php.Type): php.AstNode {
+    public getArrayTypeAttributeArgument(type: php.Type): php.AstNode {
         switch (type.internalType.type) {
             case "int":
-                return php.codeblock('"integer"');
+                return php.codeblock("'integer'");
             case "string":
-                return php.codeblock('"string"');
+                return php.codeblock("'string'");
             case "bool":
-                return php.codeblock('"bool"');
+                return php.codeblock("'bool'");
             case "float":
-                return php.codeblock('"float"');
+                return php.codeblock("'float'");
             case "date":
-                return php.codeblock('"date"');
+                return php.codeblock("'date'");
             case "dateTime":
-                return php.codeblock('"datetime"');
+                return php.codeblock("'datetime'");
             case "mixed":
-                return php.codeblock('"mixed"');
+                return php.codeblock("'mixed'");
             case "object":
                 // This is likely not handled by our serde, but we also never use it.
-                return php.codeblock('"object"');
+                return php.codeblock("'object'");
             case "array":
                 return php.array({
                     entries: [this.getArrayTypeAttributeArgument(type.internalType.value)]
@@ -85,8 +85,8 @@ export class PhpAttributeMapper {
                 return php.map({
                     entries: [
                         {
-                            key: php.codeblock('"string"'),
-                            value: php.codeblock('"mixed"')
+                            key: php.codeblock("'string'"),
+                            value: php.codeblock("'mixed'")
                         }
                     ]
                 });
@@ -94,7 +94,7 @@ export class PhpAttributeMapper {
             case "optional":
                 return php.instantiateClass({
                     classReference: this.context.getUnionClassReference(),
-                    arguments_: [this.getArrayTypeAttributeArgument(type.internalType.value), php.codeblock('"null"')]
+                    arguments_: [this.getArrayTypeAttributeArgument(type.internalType.value), php.codeblock("'null'")]
                 });
             case "reference": {
                 const reference = type.internalType.value;

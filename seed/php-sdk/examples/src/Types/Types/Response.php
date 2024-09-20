@@ -12,13 +12,13 @@ class Response extends SerializableType
     /**
      * @var mixed $response
      */
-    #[JsonProperty("response")]
+    #[JsonProperty('response')]
     public mixed $response;
 
     /**
      * @var array<Identifier> $identifiers
      */
-    #[JsonProperty("identifiers"), ArrayType([Identifier::class])]
+    #[JsonProperty('identifiers'), ArrayType([Identifier::class])]
     public array $identifiers;
 
     /**

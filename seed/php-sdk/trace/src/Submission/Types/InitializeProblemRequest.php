@@ -10,13 +10,13 @@ class InitializeProblemRequest extends SerializableType
     /**
      * @var string $problemId
      */
-    #[JsonProperty("problemId")]
+    #[JsonProperty('problemId')]
     public string $problemId;
 
     /**
      * @var ?int $problemVersion
      */
-    #[JsonProperty("problemVersion")]
+    #[JsonProperty('problemVersion')]
     public ?int $problemVersion;
 
     /**

@@ -11,13 +11,13 @@ class GradedResponseV2 extends SerializableType
     /**
      * @var string $submissionId
      */
-    #[JsonProperty("submissionId")]
+    #[JsonProperty('submissionId')]
     public string $submissionId;
 
     /**
      * @var array<string, mixed> $testCases
      */
-    #[JsonProperty("testCases"), ArrayType(["string" => "mixed"])]
+    #[JsonProperty('testCases'), ArrayType(['string' => 'mixed'])]
     public array $testCases;
 
     /**

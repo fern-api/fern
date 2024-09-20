@@ -11,7 +11,7 @@ class Foo extends SerializableType
     /**
      * @var ?FolderCFoo $foo
      */
-    #[JsonProperty("foo")]
+    #[JsonProperty('foo')]
     public ?FolderCFoo $foo;
 
     /**

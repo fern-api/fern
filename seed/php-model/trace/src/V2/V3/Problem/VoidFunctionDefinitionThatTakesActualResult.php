@@ -14,13 +14,13 @@ class VoidFunctionDefinitionThatTakesActualResult extends SerializableType
     /**
      * @var array<Parameter> $additionalParameters
      */
-    #[JsonProperty("additionalParameters"), ArrayType([Parameter::class])]
+    #[JsonProperty('additionalParameters'), ArrayType([Parameter::class])]
     public array $additionalParameters;
 
     /**
      * @var FunctionImplementationForMultipleLanguages $code
      */
-    #[JsonProperty("code")]
+    #[JsonProperty('code')]
     public FunctionImplementationForMultipleLanguages $code;
 
     /**

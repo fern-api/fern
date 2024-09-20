@@ -10,7 +10,7 @@ class Usage extends SerializableType
     /**
      * @var ?int $units
      */
-    #[JsonProperty("units")]
+    #[JsonProperty('units')]
     public ?int $units;
 
     /**

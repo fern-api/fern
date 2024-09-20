@@ -11,19 +11,19 @@ class GetExecutionSessionStateResponse extends SerializableType
     /**
      * @var array<string, ExecutionSessionState> $states
      */
-    #[JsonProperty("states"), ArrayType(["string" => ExecutionSessionState::class])]
+    #[JsonProperty('states'), ArrayType(['string' => ExecutionSessionState::class])]
     public array $states;
 
     /**
      * @var ?int $numWarmingInstances
      */
-    #[JsonProperty("numWarmingInstances")]
+    #[JsonProperty('numWarmingInstances')]
     public ?int $numWarmingInstances;
 
     /**
      * @var array<string> $warmingSessionIds
      */
-    #[JsonProperty("warmingSessionIds"), ArrayType(["string"])]
+    #[JsonProperty('warmingSessionIds'), ArrayType(['string'])]
     public array $warmingSessionIds;
 
     /**

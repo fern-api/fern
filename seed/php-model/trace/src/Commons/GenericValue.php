@@ -10,13 +10,13 @@ class GenericValue extends SerializableType
     /**
      * @var ?string $stringifiedType
      */
-    #[JsonProperty("stringifiedType")]
+    #[JsonProperty('stringifiedType')]
     public ?string $stringifiedType;
 
     /**
      * @var string $stringifiedValue
      */
-    #[JsonProperty("stringifiedValue")]
+    #[JsonProperty('stringifiedValue')]
     public string $stringifiedValue;
 
     /**

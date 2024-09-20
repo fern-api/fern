@@ -11,25 +11,25 @@ class Column extends SerializableType
     /**
      * @var string $id
      */
-    #[JsonProperty("id")]
+    #[JsonProperty('id')]
     public string $id;
 
     /**
      * @var array<float> $values
      */
-    #[JsonProperty("values"), ArrayType(["float"])]
+    #[JsonProperty('values'), ArrayType(['float'])]
     public array $values;
 
     /**
      * @var mixed $metadata
      */
-    #[JsonProperty("metadata")]
+    #[JsonProperty('metadata')]
     public mixed $metadata;
 
     /**
      * @var ?IndexedData $indexedData
      */
-    #[JsonProperty("indexedData")]
+    #[JsonProperty('indexedData')]
     public ?IndexedData $indexedData;
 
     /**

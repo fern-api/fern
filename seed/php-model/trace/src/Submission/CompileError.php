@@ -10,7 +10,7 @@ class CompileError extends SerializableType
     /**
      * @var string $message
      */
-    #[JsonProperty("message")]
+    #[JsonProperty('message')]
     public string $message;
 
     /**

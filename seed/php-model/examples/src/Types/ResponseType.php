@@ -10,7 +10,7 @@ class ResponseType extends SerializableType
     /**
      * @var mixed $type
      */
-    #[JsonProperty("type")]
+    #[JsonProperty('type')]
     public mixed $type;
 
     /**

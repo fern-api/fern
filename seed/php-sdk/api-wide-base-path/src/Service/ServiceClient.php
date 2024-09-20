@@ -30,9 +30,8 @@ class ServiceClient
      * @param string $resourceParam
      * @param int $endpointParam
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
      */
-    public function post(string $pathParam, string $serviceParam, string $resourceParam, int $endpointParam, ?array $options = null): mixed
+    public function post(string $pathParam, string $serviceParam, string $resourceParam, int $endpointParam, ?array $options = null): void
     {
         try {
             $response = $this->client->sendRequest(

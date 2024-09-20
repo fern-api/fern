@@ -10,7 +10,7 @@ class InternalError extends SerializableType
     /**
      * @var ExceptionInfo $exceptionInfo
      */
-    #[JsonProperty("exceptionInfo")]
+    #[JsonProperty('exceptionInfo')]
     public ExceptionInfo $exceptionInfo;
 
     /**

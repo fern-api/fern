@@ -10,13 +10,13 @@ class EchoRequest extends SerializableType
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var int $size
      */
-    #[JsonProperty("size")]
+    #[JsonProperty('size')]
     public int $size;
 
     /**

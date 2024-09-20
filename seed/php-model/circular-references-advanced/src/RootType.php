@@ -10,7 +10,7 @@ class RootType extends SerializableType
     /**
      * @var string $s
      */
-    #[JsonProperty("s")]
+    #[JsonProperty('s')]
     public string $s;
 
     /**

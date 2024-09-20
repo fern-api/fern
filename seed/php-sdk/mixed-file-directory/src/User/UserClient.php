@@ -5,8 +5,10 @@ namespace Seed\User;
 use Seed\User\Events\EventsClient;
 use Seed\Core\RawClient;
 use Seed\User\Requests\ListUsersRequest;
+use Seed\User\Types\User;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
+use Seed\Core\JsonDecoder;
 use JsonException;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -37,9 +39,9 @@ class UserClient
     * List all users.
      * @param ListUsersRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @return array<User>
      */
-    public function list(ListUsersRequest $request, ?array $options = null): mixed
+    public function list(ListUsersRequest $request, ?array $options = null): array
     {
         $query = [];
         if ($request->limit != null) {
@@ -56,7 +58,8 @@ class UserClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeArray($json, [User::class]); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

@@ -10,7 +10,7 @@ class ImportingType extends SerializableType
     /**
      * @var string $imported
      */
-    #[JsonProperty("imported")]
+    #[JsonProperty('imported')]
     public string $imported;
 
     /**

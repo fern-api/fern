@@ -10,7 +10,7 @@ class Square extends SerializableType
     /**
      * @var float $length
      */
-    #[JsonProperty("length")]
+    #[JsonProperty('length')]
     public float $length;
 
     /**

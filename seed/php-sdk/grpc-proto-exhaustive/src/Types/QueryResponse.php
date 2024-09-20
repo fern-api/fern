@@ -11,25 +11,25 @@ class QueryResponse extends SerializableType
     /**
      * @var ?array<QueryResult> $results
      */
-    #[JsonProperty("results"), ArrayType([QueryResult::class])]
+    #[JsonProperty('results'), ArrayType([QueryResult::class])]
     public ?array $results;
 
     /**
      * @var ?array<ScoredColumn> $matches
      */
-    #[JsonProperty("matches"), ArrayType([ScoredColumn::class])]
+    #[JsonProperty('matches'), ArrayType([ScoredColumn::class])]
     public ?array $matches;
 
     /**
      * @var ?string $namespace
      */
-    #[JsonProperty("namespace")]
+    #[JsonProperty('namespace')]
     public ?string $namespace;
 
     /**
      * @var ?Usage $usage
      */
-    #[JsonProperty("usage")]
+    #[JsonProperty('usage')]
     public ?Usage $usage;
 
     /**

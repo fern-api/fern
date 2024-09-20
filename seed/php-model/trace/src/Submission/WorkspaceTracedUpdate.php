@@ -10,7 +10,7 @@ class WorkspaceTracedUpdate extends SerializableType
     /**
      * @var int $traceResponsesSize
      */
-    #[JsonProperty("traceResponsesSize")]
+    #[JsonProperty('traceResponsesSize')]
     public int $traceResponsesSize;
 
     /**

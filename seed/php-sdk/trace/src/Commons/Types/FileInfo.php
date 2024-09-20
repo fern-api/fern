@@ -10,13 +10,13 @@ class FileInfo extends SerializableType
     /**
      * @var string $filename
      */
-    #[JsonProperty("filename")]
+    #[JsonProperty('filename')]
     public string $filename;
 
     /**
      * @var string $contents
      */
-    #[JsonProperty("contents")]
+    #[JsonProperty('contents')]
     public string $contents;
 
     /**

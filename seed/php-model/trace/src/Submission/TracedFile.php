@@ -10,13 +10,13 @@ class TracedFile extends SerializableType
     /**
      * @var string $filename
      */
-    #[JsonProperty("filename")]
+    #[JsonProperty('filename')]
     public string $filename;
 
     /**
      * @var string $directory
      */
-    #[JsonProperty("directory")]
+    #[JsonProperty('directory')]
     public string $directory;
 
     /**

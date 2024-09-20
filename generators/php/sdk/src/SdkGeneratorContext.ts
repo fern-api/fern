@@ -120,6 +120,14 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return this.getCoreClassReference("JsonApiRequest");
     }
 
+    public getJsonDecoderClassReference(): php.ClassReference {
+        return this.getCoreClassReference("JsonDecoder");
+    }
+
+    public getJsonSerializerClassReference(): php.ClassReference {
+        return this.getCoreClassReference("JsonSerializer");
+    }
+
     public getRequestWrapperReference(serviceId: ServiceId, requestName: Name): php.ClassReference {
         return php.classReference({
             name: requestName.pascalCase.safeName,

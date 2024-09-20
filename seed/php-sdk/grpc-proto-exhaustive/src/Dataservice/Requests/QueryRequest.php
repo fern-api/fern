@@ -12,55 +12,55 @@ class QueryRequest
     /**
      * @var ?string $namespace
      */
-    #[JsonProperty("namespace")]
+    #[JsonProperty('namespace')]
     public ?string $namespace;
 
     /**
      * @var int $topK
      */
-    #[JsonProperty("topK")]
+    #[JsonProperty('topK')]
     public int $topK;
 
     /**
      * @var mixed $filter
      */
-    #[JsonProperty("filter")]
+    #[JsonProperty('filter')]
     public mixed $filter;
 
     /**
      * @var ?bool $includeValues
      */
-    #[JsonProperty("includeValues")]
+    #[JsonProperty('includeValues')]
     public ?bool $includeValues;
 
     /**
      * @var ?bool $includeMetadata
      */
-    #[JsonProperty("includeMetadata")]
+    #[JsonProperty('includeMetadata')]
     public ?bool $includeMetadata;
 
     /**
      * @var ?array<QueryColumn> $queries
      */
-    #[JsonProperty("queries"), ArrayType([QueryColumn::class])]
+    #[JsonProperty('queries'), ArrayType([QueryColumn::class])]
     public ?array $queries;
 
     /**
      * @var ?array<float> $column
      */
-    #[JsonProperty("column"), ArrayType(["float"])]
+    #[JsonProperty('column'), ArrayType(['float'])]
     public ?array $column;
 
     /**
      * @var ?string $id
      */
-    #[JsonProperty("id")]
+    #[JsonProperty('id')]
     public ?string $id;
 
     /**
      * @var ?IndexedData $indexedData
      */
-    #[JsonProperty("indexedData")]
+    #[JsonProperty('indexedData')]
     public ?IndexedData $indexedData;
 
     /**

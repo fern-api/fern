@@ -11,19 +11,19 @@ class BaseResource extends SerializableType
     /**
      * @var string $id
      */
-    #[JsonProperty("id")]
+    #[JsonProperty('id')]
     public string $id;
 
     /**
      * @var array<mixed> $relatedResources
      */
-    #[JsonProperty("related_resources"), ArrayType(["mixed"])]
+    #[JsonProperty('related_resources'), ArrayType(['mixed'])]
     public array $relatedResources;
 
     /**
      * @var Memo $memo
      */
-    #[JsonProperty("memo")]
+    #[JsonProperty('memo')]
     public Memo $memo;
 
     /**

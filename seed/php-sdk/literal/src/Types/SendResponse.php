@@ -10,19 +10,19 @@ class SendResponse extends SerializableType
     /**
      * @var string $message
      */
-    #[JsonProperty("message")]
+    #[JsonProperty('message')]
     public string $message;
 
     /**
      * @var int $status
      */
-    #[JsonProperty("status")]
+    #[JsonProperty('status')]
     public int $status;
 
     /**
      * @var bool $success
      */
-    #[JsonProperty("success")]
+    #[JsonProperty('success')]
     public bool $success;
 
     /**

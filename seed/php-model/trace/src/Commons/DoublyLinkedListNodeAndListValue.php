@@ -10,13 +10,13 @@ class DoublyLinkedListNodeAndListValue extends SerializableType
     /**
      * @var string $nodeId
      */
-    #[JsonProperty("nodeId")]
+    #[JsonProperty('nodeId')]
     public string $nodeId;
 
     /**
      * @var DoublyLinkedListValue $fullList
      */
-    #[JsonProperty("fullList")]
+    #[JsonProperty('fullList')]
     public DoublyLinkedListValue $fullList;
 
     /**

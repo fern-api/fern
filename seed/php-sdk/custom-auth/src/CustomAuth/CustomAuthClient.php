@@ -5,6 +5,7 @@ namespace Seed\CustomAuth;
 use Seed\Core\RawClient;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
+use Seed\Core\JsonDecoder;
 use JsonException;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -28,9 +29,9 @@ class CustomAuthClient
     /**
     * GET request with custom auth scheme
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @return bool
      */
-    public function getWithCustomAuth(?array $options = null): mixed
+    public function getWithCustomAuth(?array $options = null): bool
     {
         try {
             $response = $this->client->sendRequest(
@@ -42,7 +43,8 @@ class CustomAuthClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeBool($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -56,9 +58,9 @@ class CustomAuthClient
     * POST request with custom auth scheme
      * @param mixed $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @return bool
      */
-    public function postWithCustomAuth(mixed $request, ?array $options = null): mixed
+    public function postWithCustomAuth(mixed $request, ?array $options = null): bool
     {
         try {
             $response = $this->client->sendRequest(
@@ -71,7 +73,8 @@ class CustomAuthClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeBool($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

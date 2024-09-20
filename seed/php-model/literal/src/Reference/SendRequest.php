@@ -10,31 +10,31 @@ class SendRequest extends SerializableType
     /**
      * @var string $prompt
      */
-    #[JsonProperty("prompt")]
+    #[JsonProperty('prompt')]
     public string $prompt;
 
     /**
      * @var string $query
      */
-    #[JsonProperty("query")]
+    #[JsonProperty('query')]
     public string $query;
 
     /**
      * @var bool $stream
      */
-    #[JsonProperty("stream")]
+    #[JsonProperty('stream')]
     public bool $stream;
 
     /**
      * @var string $context
      */
-    #[JsonProperty("context")]
+    #[JsonProperty('context')]
     public string $context;
 
     /**
      * @var ?string $maybeContext
      */
-    #[JsonProperty("maybeContext")]
+    #[JsonProperty('maybeContext')]
     public ?string $maybeContext;
 
     /**

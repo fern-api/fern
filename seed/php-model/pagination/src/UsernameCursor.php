@@ -10,7 +10,7 @@ class UsernameCursor extends SerializableType
     /**
      * @var UsernamePage $cursor
      */
-    #[JsonProperty("cursor")]
+    #[JsonProperty('cursor')]
     public UsernamePage $cursor;
 
     /**

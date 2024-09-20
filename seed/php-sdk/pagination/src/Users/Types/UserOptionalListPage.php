@@ -10,13 +10,13 @@ class UserOptionalListPage extends SerializableType
     /**
      * @var UserOptionalListContainer $data
      */
-    #[JsonProperty("data")]
+    #[JsonProperty('data')]
     public UserOptionalListContainer $data;
 
     /**
      * @var ?string $next
      */
-    #[JsonProperty("next")]
+    #[JsonProperty('next')]
     public ?string $next;
 
     /**

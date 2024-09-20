@@ -10,7 +10,7 @@ class Request extends SerializableType
     /**
      * @var mixed $request
      */
-    #[JsonProperty("request")]
+    #[JsonProperty('request')]
     public mixed $request;
 
     /**

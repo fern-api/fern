@@ -12,25 +12,25 @@ class BasicCustomFiles extends SerializableType
     /**
      * @var string $methodName
      */
-    #[JsonProperty("methodName")]
+    #[JsonProperty('methodName')]
     public string $methodName;
 
     /**
      * @var NonVoidFunctionSignature $signature
      */
-    #[JsonProperty("signature")]
+    #[JsonProperty('signature')]
     public NonVoidFunctionSignature $signature;
 
     /**
      * @var array<Language, Files> $additionalFiles
      */
-    #[JsonProperty("additionalFiles"), ArrayType([Language::class => Files::class])]
+    #[JsonProperty('additionalFiles'), ArrayType([Language::class => Files::class])]
     public array $additionalFiles;
 
     /**
      * @var BasicTestCaseTemplate $basicTestCaseTemplate
      */
-    #[JsonProperty("basicTestCaseTemplate")]
+    #[JsonProperty('basicTestCaseTemplate')]
     public BasicTestCaseTemplate $basicTestCaseTemplate;
 
     /**

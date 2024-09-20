@@ -11,19 +11,19 @@ class FetchResponse extends SerializableType
     /**
      * @var ?array<string, Column> $columns
      */
-    #[JsonProperty("columns"), ArrayType(["string" => Column::class])]
+    #[JsonProperty('columns'), ArrayType(['string' => Column::class])]
     public ?array $columns;
 
     /**
      * @var ?string $namespace
      */
-    #[JsonProperty("namespace")]
+    #[JsonProperty('namespace')]
     public ?string $namespace;
 
     /**
      * @var ?Usage $usage
      */
-    #[JsonProperty("usage")]
+    #[JsonProperty('usage')]
     public ?Usage $usage;
 
     /**

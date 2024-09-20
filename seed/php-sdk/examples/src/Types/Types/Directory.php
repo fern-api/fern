@@ -11,19 +11,19 @@ class Directory extends SerializableType
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var ?array<File> $files
      */
-    #[JsonProperty("files"), ArrayType([File::class])]
+    #[JsonProperty('files'), ArrayType([File::class])]
     public ?array $files;
 
     /**
      * @var ?array<Directory> $directories
      */
-    #[JsonProperty("directories"), ArrayType([Directory::class])]
+    #[JsonProperty('directories'), ArrayType([Directory::class])]
     public ?array $directories;
 
     /**

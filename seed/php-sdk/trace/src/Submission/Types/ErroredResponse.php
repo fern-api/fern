@@ -10,13 +10,13 @@ class ErroredResponse extends SerializableType
     /**
      * @var string $submissionId
      */
-    #[JsonProperty("submissionId")]
+    #[JsonProperty('submissionId')]
     public string $submissionId;
 
     /**
      * @var mixed $errorInfo
      */
-    #[JsonProperty("errorInfo")]
+    #[JsonProperty('errorInfo')]
     public mixed $errorInfo;
 
     /**

@@ -10,13 +10,13 @@ class NestedUser extends SerializableType
     /**
      * @var string $name
      */
-    #[JsonProperty("Name")]
+    #[JsonProperty('Name')]
     public string $name;
 
     /**
      * @var User $nestedUser
      */
-    #[JsonProperty("NestedUser")]
+    #[JsonProperty('NestedUser')]
     public User $nestedUser;
 
     /**

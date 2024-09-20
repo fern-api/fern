@@ -12,7 +12,7 @@ class GetBasicSolutionFileResponse extends SerializableType
     /**
      * @var array<Language, FileInfoV2> $solutionFileByLanguage
      */
-    #[JsonProperty("solutionFileByLanguage"), ArrayType([Language::class => FileInfoV2::class])]
+    #[JsonProperty('solutionFileByLanguage'), ArrayType([Language::class => FileInfoV2::class])]
     public array $solutionFileByLanguage;
 
     /**

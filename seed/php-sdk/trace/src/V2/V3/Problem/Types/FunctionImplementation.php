@@ -10,13 +10,13 @@ class FunctionImplementation extends SerializableType
     /**
      * @var string $impl
      */
-    #[JsonProperty("impl")]
+    #[JsonProperty('impl')]
     public string $impl;
 
     /**
      * @var ?string $imports
      */
-    #[JsonProperty("imports")]
+    #[JsonProperty('imports')]
     public ?string $imports;
 
     /**

@@ -11,25 +11,25 @@ class ListUsersPaginationResponse extends SerializableType
     /**
      * @var ?bool $hasNextPage
      */
-    #[JsonProperty("hasNextPage")]
+    #[JsonProperty('hasNextPage')]
     public ?bool $hasNextPage;
 
     /**
      * @var ?Page $page
      */
-    #[JsonProperty("page")]
+    #[JsonProperty('page')]
     public ?Page $page;
 
     /**
      * @var int $totalCount The totall number of /users
      */
-    #[JsonProperty("total_count")]
+    #[JsonProperty('total_count')]
     public int $totalCount;
 
     /**
      * @var array<User> $data
      */
-    #[JsonProperty("data"), ArrayType([User::class])]
+    #[JsonProperty('data'), ArrayType([User::class])]
     public array $data;
 
     /**

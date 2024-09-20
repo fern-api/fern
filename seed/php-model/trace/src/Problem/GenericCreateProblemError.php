@@ -10,19 +10,19 @@ class GenericCreateProblemError extends SerializableType
     /**
      * @var string $message
      */
-    #[JsonProperty("message")]
+    #[JsonProperty('message')]
     public string $message;
 
     /**
      * @var string $type
      */
-    #[JsonProperty("type")]
+    #[JsonProperty('type')]
     public string $type;
 
     /**
      * @var string $stacktrace
      */
-    #[JsonProperty("stacktrace")]
+    #[JsonProperty('stacktrace')]
     public string $stacktrace;
 
     /**

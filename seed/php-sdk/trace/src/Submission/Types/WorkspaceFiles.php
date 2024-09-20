@@ -12,13 +12,13 @@ class WorkspaceFiles extends SerializableType
     /**
      * @var FileInfo $mainFile
      */
-    #[JsonProperty("mainFile")]
+    #[JsonProperty('mainFile')]
     public FileInfo $mainFile;
 
     /**
      * @var array<FileInfo> $readOnlyFiles
      */
-    #[JsonProperty("readOnlyFiles"), ArrayType([FileInfo::class])]
+    #[JsonProperty('readOnlyFiles'), ArrayType([FileInfo::class])]
     public array $readOnlyFiles;
 
     /**

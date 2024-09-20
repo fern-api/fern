@@ -11,13 +11,13 @@ class Record extends SerializableType
     /**
      * @var array<string, string> $foo
      */
-    #[JsonProperty("foo"), ArrayType(["string" => "string"])]
+    #[JsonProperty('foo'), ArrayType(['string' => 'string'])]
     public array $foo;
 
     /**
      * @var int $_3D
      */
-    #[JsonProperty("3d")]
+    #[JsonProperty('3d')]
     public int $_3D;
 
     /**
