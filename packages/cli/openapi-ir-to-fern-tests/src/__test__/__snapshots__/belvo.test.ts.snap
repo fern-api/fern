@@ -5321,11 +5321,9 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "union": [
             {
-              "display-name": "Brazil 🇧🇷 OFPI",
               "type": "root.CreateBankAccountOfpi",
             },
             {
-              "display-name": "Colombia 🇨🇴 PSE",
               "type": "root.CreateBankAccountPse",
             },
           ],
@@ -5339,7 +5337,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "union": [
             {
-              "display-name": "Brazil 🇧🇷 OFPI",
               "type": "root.BankAccountOfpiResponse",
             },
             "root.BankAccountPseResponse",
@@ -5354,7 +5351,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "union": [
             {
-              "display-name": "Brazil 🇧🇷 OFPI",
               "type": "root.BankAccountOfpiResponse",
             },
             "root.BankAccountPseResponse",
@@ -6003,11 +5999,9 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "union": [
             {
-              "display-name": "Brazil 🇧🇷 OFPI",
               "type": "root.CreateCustomerOfpi",
             },
             {
-              "display-name": "Colombia 🇨🇴 PSE",
               "type": "root.CreateCustomerPse",
             },
           ],
@@ -6021,11 +6015,9 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "union": [
             {
-              "display-name": "Brazil 🇧🇷 OFPI",
               "type": "root.CustomerOfpi",
             },
             {
-              "display-name": "Colombia 🇨🇴 PSE",
               "type": "root.CustomerPse",
             },
           ],
@@ -6039,11 +6031,9 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "union": [
             {
-              "display-name": "Brazil 🇧🇷 OFPI",
               "type": "root.CustomerOfpi",
             },
             {
-              "display-name": "Colombia 🇨🇴 PSE",
               "type": "root.CustomerPse",
             },
           ],
@@ -12468,11 +12458,9 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "union": [
             {
-              "display-name": "🇲🇽 SAT Mexico",
               "type": "root.InvoiceWithIdSat",
             },
             {
-              "display-name": "🇨🇴 DIAN Colombia",
               "type": "root.InvoiceDian",
             },
           ],
@@ -12486,11 +12474,9 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "union": [
             {
-              "display-name": "🇲🇽 SAT Mexico",
               "type": "root.InvoiceWithIdSat",
             },
             {
-              "display-name": "🇨🇴 DIAN Colombia",
               "type": "root.InvoiceDian",
             },
           ],
@@ -12504,11 +12490,9 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "union": [
             {
-              "display-name": "🇲🇽 SAT Mexico",
               "type": "root.InvoiceWithIdSat",
             },
             {
-              "display-name": "🇨🇴 DIAN Colombia",
               "type": "root.InvoiceDian",
             },
           ],
@@ -14973,7 +14957,6 @@ A payment intent captures all payment information (such as the amount to be char
                     "type": "optional<map<string, unknown>>",
                   },
                   "payment_method_details": {
-                    "display-name": "PSE",
                     "type": "root.PSE",
                   },
                   "provider": "root.EnumPaymentLinkProvider",
@@ -15472,7 +15455,6 @@ During the payment intent flow, you need to fill in the payment intent with requ
                     "type": "optional<boolean>",
                   },
                   "payment_method_details": {
-                    "display-name": "PATCH payment method details",
                     "type": "root.PatchPaymentIntentsBodyPse",
                   },
                 },
@@ -15910,11 +15892,9 @@ During the payment intent flow, you need to fill in the payment intent with requ
           },
           "union": [
             {
-              "display-name": "Brazil 🇧🇷 OFPI",
               "type": "root.CreatePaymentLinkOfpi",
             },
             {
-              "display-name": "Colombia 🇨🇴 PSE",
               "type": "root.CreatePaymentLinkPse",
             },
           ],
@@ -15928,11 +15908,9 @@ During the payment intent flow, you need to fill in the payment intent with requ
           },
           "union": [
             {
-              "display-name": "Brazil 🇧🇷 OFPI",
               "type": "root.PaymentLinkOfpi",
             },
             {
-              "display-name": "Colombia 🇨🇴 PSE",
               "type": "root.PaymentLinkPse",
             },
           ],
@@ -15946,11 +15924,9 @@ During the payment intent flow, you need to fill in the payment intent with requ
           },
           "union": [
             {
-              "display-name": "Brazil 🇧🇷 OFPI",
               "type": "root.PaymentLinkOfpi",
             },
             {
-              "display-name": "Colombia 🇨🇴 PSE",
               "type": "root.PaymentLinkPse",
             },
           ],
@@ -20423,11 +20399,9 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "union": [
             {
-              "display-name": "Individual Tax Declaration",
               "type": "root.TaxDeclarationIndividual",
             },
             {
-              "display-name": "Business Tax Declaration",
               "type": "root.TaxDeclarationBusiness",
             },
           ],
@@ -20441,11 +20415,9 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "union": [
             {
-              "display-name": "Tax Declaration Individual",
               "type": "root.TaxDeclarationIndividualPaginated",
             },
             {
-              "display-name": "Tax Declaration Business",
               "type": "root.TaxDeclarationBusinessPaginated",
             },
           ],
@@ -20459,11 +20431,9 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "union": [
             {
-              "display-name": "Business Tax Declaration",
               "type": "root.TaxDeclarationBusiness",
             },
             {
-              "display-name": "Individual Tax Declaration",
               "type": "root.TaxDeclarationIndividual",
             },
           ],
@@ -25535,19 +25505,15 @@ client.connect()
           },
           "union": [
             {
-              "display-name": "Tax Return Personal",
               "type": "root.TaxReturnPersonal",
             },
             {
-              "display-name": "Tax Return Personal Monthly",
               "type": "root.TaxReturnPersonalMonthly",
             },
             {
-              "display-name": "Tax Return Business",
               "type": "root.TaxReturnBusiness",
             },
             {
-              "display-name": "Tax Return Business Monthly",
               "type": "root.TaxReturnBusinessMonthly",
             },
           ],
@@ -25561,19 +25527,15 @@ client.connect()
           },
           "union": [
             {
-              "display-name": "Tax Return Personal",
               "type": "root.TaxReturnsPersonalPaginated",
             },
             {
-              "display-name": "Tax Return Personal Monthly",
               "type": "root.TaxReturnsPersonalMonthlyPaginated",
             },
             {
-              "display-name": "Tax Return Personal Business",
               "type": "root.TaxReturnsBusinessPaginated",
             },
             {
-              "display-name": "Tax Return Personal Business Monthly",
               "type": "root.TaxReturnsBusinessMonthlyPaginated",
             },
           ],
@@ -25587,11 +25549,9 @@ client.connect()
           },
           "union": [
             {
-              "display-name": "Monthly Tax Returns",
               "type": "root.TaxReturnsMonthlyRequest",
             },
             {
-              "display-name": "Yearly Tax Returns",
               "type": "root.TaxReturnsYearlyRequest",
             },
           ],
@@ -25605,19 +25565,15 @@ client.connect()
           },
           "union": [
             {
-              "display-name": "Tax Return Personal",
               "type": "root.TaxReturnPersonal",
             },
             {
-              "display-name": "Tax Return Personal Monthly",
               "type": "root.TaxReturnPersonalMonthly",
             },
             {
-              "display-name": "Tax Return Business",
               "type": "root.TaxReturnBusiness",
             },
             {
-              "display-name": "Tax Return Business Monthly",
               "type": "root.TaxReturnBusinessMonthly",
             },
           ],
@@ -26946,11 +26902,9 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "union": [
             {
-              "display-name": "SAT 🇲🇽 Mexico",
               "type": "root.TaxStatusSat",
             },
             {
-              "display-name": "DIAN 🇨🇴 Colombia",
               "type": "root.TaxStatusDian",
             },
           ],
@@ -26964,11 +26918,9 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "union": [
             {
-              "display-name": "SAT 🇲🇽 Mexico",
               "type": "root.TaxStatusSat",
             },
             {
-              "display-name": "DIAN 🇨🇴 Colombia",
               "type": "root.TaxStatusDian",
             },
           ],
@@ -32088,47 +32040,36 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "union": [
           {
-            "display-name": "Invalid Access Mode",
             "type": "InvalidAccessMode",
           },
           {
-            "display-name": "Too Many Sessions",
             "type": "TooManySessionsError",
           },
           {
-            "display-name": "Login Error",
             "type": "LoginError",
           },
           {
-            "display-name": "Session Expired",
             "type": "SessionExpiredError",
           },
           {
-            "display-name": "Validation Error",
             "type": "ValidationError",
           },
           {
-            "display-name": "Institution Down",
             "type": "InstitutionDownError",
           },
           {
-            "display-name": "Institution Unavailable",
             "type": "InstitutionUnavailableError",
           },
           {
-            "display-name": "Institution Inactive",
             "type": "InstitutionInactiveError",
           },
           {
-            "display-name": "Unsupported Operation",
             "type": "UnsupportedOperationError",
           },
           {
-            "display-name": "Invalid Link",
             "type": "InvalidLinkError",
           },
           {
-            "display-name": "Unconfirmed Link",
             "type": "UnconfirmedLinkError",
           },
         ],
@@ -32248,7 +32189,6 @@ For \`BUSINESS\` bank accounts, this field is \`null\`.",
             "type": "map<string, unknown>",
           },
           "holder": {
-            "display-name": "Business",
             "type": "Business",
           },
           "id": {
@@ -32359,11 +32299,9 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
         },
         "union": [
           {
-            "display-name": "BUSINESS",
             "type": "BUSINESS",
           },
           {
-            "display-name": "INDIVIDUAL",
             "type": "INDIVIDUAL",
           },
         ],
@@ -32427,7 +32365,6 @@ For \`BUSINESS\` bank accounts, this field is \`null\`.",
           },
           "details": "BankAccountOfpiResponseDetails",
           "holder": {
-            "display-name": "OFPI",
             "type": "OFPI",
           },
           "id": {
@@ -32465,11 +32402,9 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
         },
         "union": [
           {
-            "display-name": "OFPI (PIX Account Information)",
             "type": "BankAccountDetailsOfpi",
           },
           {
-            "display-name": "OFPI (PIX Keys)",
             "type": "BankAccountDetailsOfpiPix",
           },
         ],
@@ -32510,14 +32445,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "union": [
           {
-            "display-name": "Brazil 🇧🇷 OFPI",
             "type": "BankAccountOfpiResponse",
           },
           "BankAccountPseResponse",
         ],
       },
       "BankAccountPseResponse": {
-        "display-name": "Business Bank Account",
         "type": "BankAccountBusinessPse",
       },
       "BeneficiaryBankAccountOfpi": {
@@ -32541,7 +32474,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<BeneficiaryBankAccountOfpiDetails>",
           },
           "holder": {
-            "display-name": "OFPI",
             "type": "OFPI",
           },
           "id": {
@@ -32569,11 +32501,9 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "union": [
           {
-            "display-name": "OFPI (PIX Account Information)",
             "type": "BankAccountDetailsOpenFinance",
           },
           {
-            "display-name": "OFPI (PIX Keys)",
             "type": "BankAccountDetailsOpenFinancePix",
           },
         ],
@@ -32860,7 +32790,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "payment_method_details": "ChargePaymentMethodDetails",
           "payment_method_information": {
-            "display-name": "PSE",
             "type": "PSE",
           },
           "payment_method_type": "optional<EnumPaymentLinkAllowedPaymentMethod>",
@@ -32893,11 +32822,9 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "union": [
           {
-            "display-name": "PSE",
             "type": "PSE",
           },
           {
-            "display-name": "OFPI",
             "type": "OFPI",
           },
         ],
@@ -32978,7 +32905,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "CreateBankAccountOfpiDetails",
           },
           "holder": {
-            "display-name": "OFPI",
             "docs": "Information regarding the individual bank account holder.",
             "type": "OFPI",
           },
@@ -33006,11 +32932,9 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "union": [
           {
-            "display-name": "OFPI (PIX Account Information)",
             "type": "BankAccountDetailsOfpi",
           },
           {
-            "display-name": "OFPI (PIX Keys)",
             "type": "BankAccountDetailsOfpiPix",
           },
         ],
@@ -33019,7 +32943,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": undefined,
         "properties": {
           "holder": {
-            "display-name": "PSE",
             "docs": "Information regarding the business bank account holder.",
             "type": "PSE",
           },
@@ -33035,7 +32958,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "string",
           },
           "providers": {
-            "display-name": "PSE",
             "docs": "Information about the payment service provider, required in order to establish a connection and process requests. For PSE, the value must be \`payments_way\`.",
             "type": "PSE",
           },
@@ -33185,7 +33107,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "payment_method_details": {
-            "display-name": "OFPI",
             "type": "OFPI",
           },
           "provider": "EnumPaymentLinkProvider",
@@ -33262,7 +33183,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "payment_method_details": {
-            "display-name": "PSE",
             "type": "PSE",
           },
           "provider": "EnumPaymentLinkProvider",
@@ -33402,11 +33322,9 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "union": [
           {
-            "display-name": "Brazil 🇧🇷 OFPI",
             "type": "CustomerOfpi",
           },
           {
-            "display-name": "Colombia 🇨🇴 PSE",
             "type": "CustomerPse",
           },
         ],
@@ -35274,11 +35192,9 @@ We return one of the following enum values:
         },
         "union": [
           {
-            "display-name": "BUSINESS",
             "type": "BUSINESS",
           },
           {
-            "display-name": "INDIVIDUAL",
             "type": "INDIVIDUAL",
           },
         ],
@@ -37403,11 +37319,9 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "union": [
           {
-            "display-name": "🇲🇽 SAT Mexico",
             "type": "InvoiceWithIdSat",
           },
           {
-            "display-name": "🇨🇴 DIAN Colombia",
             "type": "InvoiceDian",
           },
         ],
@@ -38122,7 +38036,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Object with payment method details to create a payment intent.",
         "properties": {
           "pse": {
-            "display-name": "PSE",
             "type": "PSE",
           },
         },
@@ -38411,7 +38324,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             },
           },
           "last_error": {
-            "display-name": "payment_error",
             "type": "LastErrorPaymentError",
           },
           "metadata": {
@@ -38423,7 +38335,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           "next_step": "PaymentIntentOfpiNextStep",
           "payment_method_details": "PaymentIntentOfpiPaymentMethodDetails",
           "payment_method_information": {
-            "display-name": "OFPI",
             "type": "OFPI",
           },
           "provider": "EnumPaymentLinkProvider",
@@ -38450,27 +38361,21 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "union": {
           "open_finance_display_confirmation_required": {
-            "display-name": "OFPI - Display Confirmation Required",
             "type": "NextStepDisplayConfirmationRequiredOfpi",
           },
           "open_finance_display_needs_redirect": {
-            "display-name": "OFPI - Needs Redirect",
             "type": "NextStepNeedsRedirect",
           },
           "open_finance_display_payment_failed": {
-            "display-name": "OFPI - Payment Failed",
             "type": "NextStepDisplayPaymentFailed",
           },
           "open_finance_display_payment_method_information": {
-            "display-name": "OFPI -  Display Payment Method Information",
             "type": "NextStepDisplayPaymentMethodInformation",
           },
           "open_finance_display_payment_processing": {
-            "display-name": "OFPI - Payment Processing",
             "type": "NextStepDisplayPaymentProcessing",
           },
           "open_finance_display_payment_succeeded": {
-            "display-name": "OFPI - Payment Succeeded",
             "type": "NextStepDisplayPaymentSucceeded",
           },
         },
@@ -38484,11 +38389,9 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "union": [
           {
-            "display-name": "INDIVIDUAL",
             "type": "INDIVIDUAL",
           },
           {
-            "display-name": "BUSINESS",
             "type": "BUSINESS",
           },
         ],
@@ -38729,11 +38632,9 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "next_step": "PaymentIntentPseNextStep",
           "payment_method_details": {
-            "display-name": "PSE",
             "type": "PSE",
           },
           "payment_method_information": {
-            "display-name": "PSE",
             "type": "PSE",
           },
           "provider": "EnumPaymentLinkProvider",
@@ -38758,27 +38659,21 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "union": [
           {
-            "display-name": "invalid_credentials",
             "type": "LastErrorInvalidCredentials",
           },
           {
-            "display-name": "invalid_token",
             "type": "LastErrorInvalidToken",
           },
           {
-            "display-name": "login_error",
             "type": "LastErrorLoginError",
           },
           {
-            "display-name": "login_two_factor_error",
             "type": "LastErrorTwoFactor",
           },
           {
-            "display-name": "payment_error",
             "type": "LastErrorPaymentError",
           },
           {
-            "display-name": "session_expired",
             "type": "LastErrorSessionExpired",
           },
         ],
@@ -38794,27 +38689,21 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "union": {
           "pse_display_confirmation_required": {
-            "display-name": "Display PSE confirmation required",
             "type": "NextStepDisplayConfirmationRequiredPse",
           },
           "pse_display_credentials_required": {
-            "display-name": "Display PSE credentials required",
             "type": "NextStepDisplayCredentialsRequiredPse",
           },
           "pse_display_customer_bank_accounts": {
-            "display-name": "Display PSE customer bank accounts",
             "type": "NextStepDisplayCustomerBankAccountsPse",
           },
           "pse_display_needs_redirect": {
-            "display-name": "Display PSE needs redirect",
             "type": "NextStepDisplayNeedsRedirectPse",
           },
           "pse_display_payment_method_information": {
-            "display-name": "Display PSE payment method information",
             "type": "NextStepDisplayPaymentMethodInformationPse",
           },
           "pse_display_token_required": {
-            "display-name": "Display PSE token required",
             "type": "NextStepDisplayTokenRequiredPse",
           },
         },
@@ -38867,7 +38756,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<string>",
           },
           "callback_urls": {
-            "display-name": "Payment Link Callback URLs",
             "type": "PaymentLinkCallbackUrlsResponse",
           },
           "created_at": {
@@ -38944,7 +38832,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<string>",
           },
           "callback_urls": {
-            "display-name": "Payment Link Callback URLs",
             "type": "PaymentLinkCallbackUrlsResponse",
           },
           "created_at": {
@@ -39021,7 +38908,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<string>",
           },
           "callback_urls": {
-            "display-name": "Payment Link Callback URLs",
             "type": "PaymentLinkCallbackUrlsResponse",
           },
           "created_at": {
@@ -39117,11 +39003,9 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "union": [
           {
-            "display-name": "Brazil 🇧🇷 OFPI",
             "type": "PaymentLinkListOfpi",
           },
           {
-            "display-name": "Colombia 🇨🇴 PSE",
             "type": "PaymentLinkListPse",
           },
         ],
@@ -39136,7 +39020,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<string>",
           },
           "callback_urls": {
-            "display-name": "Payment Link Callback URLs",
             "type": "PaymentLinkCallbackUrlsResponse",
           },
           "created_at": {
@@ -39375,11 +39258,9 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "union": [
           {
-            "display-name": "Brazil 🇧🇷 OFPI",
             "type": "TransactionBankAccountOfpi",
           },
           {
-            "display-name": "Colombia 🇨🇴 PSE",
             "type": "TransactionBankAccountPse",
           },
         ],
@@ -41927,11 +41808,9 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "union": [
           {
-            "display-name": "SAT 🇲🇽 Mexico",
             "type": "TaxStatusSat",
           },
           {
-            "display-name": "DIAN 🇨🇴 Colombia",
             "type": "TaxStatusDian",
           },
         ],
@@ -42491,11 +42370,9 @@ For \`too_many_sessions\` errors, the description is:
         },
         "union": [
           {
-            "display-name": "Bank account PSE",
             "type": "TransactionBankAccountBodyPse",
           },
           {
-            "display-name": "Bank account information PSE",
             "type": "BankAccountInformationPse",
           },
         ],
@@ -48160,11 +48037,9 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "union": [
             {
-              "display-name": "Brazil 🇧🇷 OFPI",
               "type": "root.CreateBankAccountOfpi",
             },
             {
-              "display-name": "Colombia 🇨🇴 PSE",
               "type": "root.CreateBankAccountPse",
             },
           ],
@@ -48178,7 +48053,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "union": [
             {
-              "display-name": "Brazil 🇧🇷 OFPI",
               "type": "root.BankAccountOfpiResponse",
             },
             "root.BankAccountPseResponse",
@@ -48193,7 +48067,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "union": [
             {
-              "display-name": "Brazil 🇧🇷 OFPI",
               "type": "root.BankAccountOfpiResponse",
             },
             "root.BankAccountPseResponse",
@@ -48842,11 +48715,9 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "union": [
             {
-              "display-name": "Brazil 🇧🇷 OFPI",
               "type": "root.CreateCustomerOfpi",
             },
             {
-              "display-name": "Colombia 🇨🇴 PSE",
               "type": "root.CreateCustomerPse",
             },
           ],
@@ -48860,11 +48731,9 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "union": [
             {
-              "display-name": "Brazil 🇧🇷 OFPI",
               "type": "root.CustomerOfpi",
             },
             {
-              "display-name": "Colombia 🇨🇴 PSE",
               "type": "root.CustomerPse",
             },
           ],
@@ -48878,11 +48747,9 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "union": [
             {
-              "display-name": "Brazil 🇧🇷 OFPI",
               "type": "root.CustomerOfpi",
             },
             {
-              "display-name": "Colombia 🇨🇴 PSE",
               "type": "root.CustomerPse",
             },
           ],
@@ -55307,11 +55174,9 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "union": [
             {
-              "display-name": "🇲🇽 SAT Mexico",
               "type": "root.InvoiceWithIdSat",
             },
             {
-              "display-name": "🇨🇴 DIAN Colombia",
               "type": "root.InvoiceDian",
             },
           ],
@@ -55325,11 +55190,9 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "union": [
             {
-              "display-name": "🇲🇽 SAT Mexico",
               "type": "root.InvoiceWithIdSat",
             },
             {
-              "display-name": "🇨🇴 DIAN Colombia",
               "type": "root.InvoiceDian",
             },
           ],
@@ -55343,11 +55206,9 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "union": [
             {
-              "display-name": "🇲🇽 SAT Mexico",
               "type": "root.InvoiceWithIdSat",
             },
             {
-              "display-name": "🇨🇴 DIAN Colombia",
               "type": "root.InvoiceDian",
             },
           ],
@@ -57812,7 +57673,6 @@ A payment intent captures all payment information (such as the amount to be char
                     "type": "optional<map<string, unknown>>",
                   },
                   "payment_method_details": {
-                    "display-name": "PSE",
                     "type": "root.PSE",
                   },
                   "provider": "root.EnumPaymentLinkProvider",
@@ -58311,7 +58171,6 @@ During the payment intent flow, you need to fill in the payment intent with requ
                     "type": "optional<boolean>",
                   },
                   "payment_method_details": {
-                    "display-name": "PATCH payment method details",
                     "type": "root.PatchPaymentIntentsBodyPse",
                   },
                 },
@@ -58749,11 +58608,9 @@ During the payment intent flow, you need to fill in the payment intent with requ
           },
           "union": [
             {
-              "display-name": "Brazil 🇧🇷 OFPI",
               "type": "root.CreatePaymentLinkOfpi",
             },
             {
-              "display-name": "Colombia 🇨🇴 PSE",
               "type": "root.CreatePaymentLinkPse",
             },
           ],
@@ -58767,11 +58624,9 @@ During the payment intent flow, you need to fill in the payment intent with requ
           },
           "union": [
             {
-              "display-name": "Brazil 🇧🇷 OFPI",
               "type": "root.PaymentLinkOfpi",
             },
             {
-              "display-name": "Colombia 🇨🇴 PSE",
               "type": "root.PaymentLinkPse",
             },
           ],
@@ -58785,11 +58640,9 @@ During the payment intent flow, you need to fill in the payment intent with requ
           },
           "union": [
             {
-              "display-name": "Brazil 🇧🇷 OFPI",
               "type": "root.PaymentLinkOfpi",
             },
             {
-              "display-name": "Colombia 🇨🇴 PSE",
               "type": "root.PaymentLinkPse",
             },
           ],
@@ -63262,11 +63115,9 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "union": [
             {
-              "display-name": "Individual Tax Declaration",
               "type": "root.TaxDeclarationIndividual",
             },
             {
-              "display-name": "Business Tax Declaration",
               "type": "root.TaxDeclarationBusiness",
             },
           ],
@@ -63280,11 +63131,9 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "union": [
             {
-              "display-name": "Tax Declaration Individual",
               "type": "root.TaxDeclarationIndividualPaginated",
             },
             {
-              "display-name": "Tax Declaration Business",
               "type": "root.TaxDeclarationBusinessPaginated",
             },
           ],
@@ -63298,11 +63147,9 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "union": [
             {
-              "display-name": "Business Tax Declaration",
               "type": "root.TaxDeclarationBusiness",
             },
             {
-              "display-name": "Individual Tax Declaration",
               "type": "root.TaxDeclarationIndividual",
             },
           ],
@@ -68374,19 +68221,15 @@ client.connect()
           },
           "union": [
             {
-              "display-name": "Tax Return Personal",
               "type": "root.TaxReturnPersonal",
             },
             {
-              "display-name": "Tax Return Personal Monthly",
               "type": "root.TaxReturnPersonalMonthly",
             },
             {
-              "display-name": "Tax Return Business",
               "type": "root.TaxReturnBusiness",
             },
             {
-              "display-name": "Tax Return Business Monthly",
               "type": "root.TaxReturnBusinessMonthly",
             },
           ],
@@ -68400,19 +68243,15 @@ client.connect()
           },
           "union": [
             {
-              "display-name": "Tax Return Personal",
               "type": "root.TaxReturnsPersonalPaginated",
             },
             {
-              "display-name": "Tax Return Personal Monthly",
               "type": "root.TaxReturnsPersonalMonthlyPaginated",
             },
             {
-              "display-name": "Tax Return Personal Business",
               "type": "root.TaxReturnsBusinessPaginated",
             },
             {
-              "display-name": "Tax Return Personal Business Monthly",
               "type": "root.TaxReturnsBusinessMonthlyPaginated",
             },
           ],
@@ -68426,11 +68265,9 @@ client.connect()
           },
           "union": [
             {
-              "display-name": "Monthly Tax Returns",
               "type": "root.TaxReturnsMonthlyRequest",
             },
             {
-              "display-name": "Yearly Tax Returns",
               "type": "root.TaxReturnsYearlyRequest",
             },
           ],
@@ -68444,19 +68281,15 @@ client.connect()
           },
           "union": [
             {
-              "display-name": "Tax Return Personal",
               "type": "root.TaxReturnPersonal",
             },
             {
-              "display-name": "Tax Return Personal Monthly",
               "type": "root.TaxReturnPersonalMonthly",
             },
             {
-              "display-name": "Tax Return Business",
               "type": "root.TaxReturnBusiness",
             },
             {
-              "display-name": "Tax Return Business Monthly",
               "type": "root.TaxReturnBusinessMonthly",
             },
           ],
@@ -69785,11 +69618,9 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "union": [
             {
-              "display-name": "SAT 🇲🇽 Mexico",
               "type": "root.TaxStatusSat",
             },
             {
-              "display-name": "DIAN 🇨🇴 Colombia",
               "type": "root.TaxStatusDian",
             },
           ],
@@ -69803,11 +69634,9 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "union": [
             {
-              "display-name": "SAT 🇲🇽 Mexico",
               "type": "root.TaxStatusSat",
             },
             {
-              "display-name": "DIAN 🇨🇴 Colombia",
               "type": "root.TaxStatusDian",
             },
           ],
@@ -73552,47 +73381,36 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "union": [
           {
-            "display-name": "Invalid Access Mode",
             "type": "InvalidAccessMode",
           },
           {
-            "display-name": "Too Many Sessions",
             "type": "TooManySessionsError",
           },
           {
-            "display-name": "Login Error",
             "type": "LoginError",
           },
           {
-            "display-name": "Session Expired",
             "type": "SessionExpiredError",
           },
           {
-            "display-name": "Validation Error",
             "type": "ValidationError",
           },
           {
-            "display-name": "Institution Down",
             "type": "InstitutionDownError",
           },
           {
-            "display-name": "Institution Unavailable",
             "type": "InstitutionUnavailableError",
           },
           {
-            "display-name": "Institution Inactive",
             "type": "InstitutionInactiveError",
           },
           {
-            "display-name": "Unsupported Operation",
             "type": "UnsupportedOperationError",
           },
           {
-            "display-name": "Invalid Link",
             "type": "InvalidLinkError",
           },
           {
-            "display-name": "Unconfirmed Link",
             "type": "UnconfirmedLinkError",
           },
         ],
@@ -73712,7 +73530,6 @@ For \`BUSINESS\` bank accounts, this field is \`null\`.",
             "type": "map<string, unknown>",
           },
           "holder": {
-            "display-name": "Business",
             "type": "Business",
           },
           "id": {
@@ -73823,11 +73640,9 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
         },
         "union": [
           {
-            "display-name": "BUSINESS",
             "type": "BUSINESS",
           },
           {
-            "display-name": "INDIVIDUAL",
             "type": "INDIVIDUAL",
           },
         ],
@@ -73891,7 +73706,6 @@ For \`BUSINESS\` bank accounts, this field is \`null\`.",
           },
           "details": "BankAccountOfpiResponseDetails",
           "holder": {
-            "display-name": "OFPI",
             "type": "OFPI",
           },
           "id": {
@@ -73929,11 +73743,9 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
         },
         "union": [
           {
-            "display-name": "OFPI (PIX Account Information)",
             "type": "BankAccountDetailsOfpi",
           },
           {
-            "display-name": "OFPI (PIX Keys)",
             "type": "BankAccountDetailsOfpiPix",
           },
         ],
@@ -73974,14 +73786,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "union": [
           {
-            "display-name": "Brazil 🇧🇷 OFPI",
             "type": "BankAccountOfpiResponse",
           },
           "BankAccountPseResponse",
         ],
       },
       "BankAccountPseResponse": {
-        "display-name": "Business Bank Account",
         "type": "BankAccountBusinessPse",
       },
       "BeneficiaryBankAccountOfpi": {
@@ -74005,7 +73815,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<BeneficiaryBankAccountOfpiDetails>",
           },
           "holder": {
-            "display-name": "OFPI",
             "type": "OFPI",
           },
           "id": {
@@ -74033,11 +73842,9 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "union": [
           {
-            "display-name": "OFPI (PIX Account Information)",
             "type": "BankAccountDetailsOpenFinance",
           },
           {
-            "display-name": "OFPI (PIX Keys)",
             "type": "BankAccountDetailsOpenFinancePix",
           },
         ],
@@ -74324,7 +74131,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "payment_method_details": "ChargePaymentMethodDetails",
           "payment_method_information": {
-            "display-name": "PSE",
             "type": "PSE",
           },
           "payment_method_type": "optional<EnumPaymentLinkAllowedPaymentMethod>",
@@ -74357,11 +74163,9 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "union": [
           {
-            "display-name": "PSE",
             "type": "PSE",
           },
           {
-            "display-name": "OFPI",
             "type": "OFPI",
           },
         ],
@@ -74442,7 +74246,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "CreateBankAccountOfpiDetails",
           },
           "holder": {
-            "display-name": "OFPI",
             "docs": "Information regarding the individual bank account holder.",
             "type": "OFPI",
           },
@@ -74470,11 +74273,9 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "union": [
           {
-            "display-name": "OFPI (PIX Account Information)",
             "type": "BankAccountDetailsOfpi",
           },
           {
-            "display-name": "OFPI (PIX Keys)",
             "type": "BankAccountDetailsOfpiPix",
           },
         ],
@@ -74483,7 +74284,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": undefined,
         "properties": {
           "holder": {
-            "display-name": "PSE",
             "docs": "Information regarding the business bank account holder.",
             "type": "PSE",
           },
@@ -74499,7 +74299,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "string",
           },
           "providers": {
-            "display-name": "PSE",
             "docs": "Information about the payment service provider, required in order to establish a connection and process requests. For PSE, the value must be \`payments_way\`.",
             "type": "PSE",
           },
@@ -74649,7 +74448,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "payment_method_details": {
-            "display-name": "OFPI",
             "type": "OFPI",
           },
           "provider": "EnumPaymentLinkProvider",
@@ -74726,7 +74524,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "payment_method_details": {
-            "display-name": "PSE",
             "type": "PSE",
           },
           "provider": "EnumPaymentLinkProvider",
@@ -74866,11 +74663,9 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "union": [
           {
-            "display-name": "Brazil 🇧🇷 OFPI",
             "type": "CustomerOfpi",
           },
           {
-            "display-name": "Colombia 🇨🇴 PSE",
             "type": "CustomerPse",
           },
         ],
@@ -76738,11 +76533,9 @@ We return one of the following enum values:
         },
         "union": [
           {
-            "display-name": "BUSINESS",
             "type": "BUSINESS",
           },
           {
-            "display-name": "INDIVIDUAL",
             "type": "INDIVIDUAL",
           },
         ],
@@ -78867,11 +78660,9 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "union": [
           {
-            "display-name": "🇲🇽 SAT Mexico",
             "type": "InvoiceWithIdSat",
           },
           {
-            "display-name": "🇨🇴 DIAN Colombia",
             "type": "InvoiceDian",
           },
         ],
@@ -79586,7 +79377,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Object with payment method details to create a payment intent.",
         "properties": {
           "pse": {
-            "display-name": "PSE",
             "type": "PSE",
           },
         },
@@ -79875,7 +79665,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             },
           },
           "last_error": {
-            "display-name": "payment_error",
             "type": "LastErrorPaymentError",
           },
           "metadata": {
@@ -79887,7 +79676,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           "next_step": "PaymentIntentOfpiNextStep",
           "payment_method_details": "PaymentIntentOfpiPaymentMethodDetails",
           "payment_method_information": {
-            "display-name": "OFPI",
             "type": "OFPI",
           },
           "provider": "EnumPaymentLinkProvider",
@@ -79914,27 +79702,21 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "union": {
           "open_finance_display_confirmation_required": {
-            "display-name": "OFPI - Display Confirmation Required",
             "type": "NextStepDisplayConfirmationRequiredOfpi",
           },
           "open_finance_display_needs_redirect": {
-            "display-name": "OFPI - Needs Redirect",
             "type": "NextStepNeedsRedirect",
           },
           "open_finance_display_payment_failed": {
-            "display-name": "OFPI - Payment Failed",
             "type": "NextStepDisplayPaymentFailed",
           },
           "open_finance_display_payment_method_information": {
-            "display-name": "OFPI -  Display Payment Method Information",
             "type": "NextStepDisplayPaymentMethodInformation",
           },
           "open_finance_display_payment_processing": {
-            "display-name": "OFPI - Payment Processing",
             "type": "NextStepDisplayPaymentProcessing",
           },
           "open_finance_display_payment_succeeded": {
-            "display-name": "OFPI - Payment Succeeded",
             "type": "NextStepDisplayPaymentSucceeded",
           },
         },
@@ -79948,11 +79730,9 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "union": [
           {
-            "display-name": "INDIVIDUAL",
             "type": "INDIVIDUAL",
           },
           {
-            "display-name": "BUSINESS",
             "type": "BUSINESS",
           },
         ],
@@ -80193,11 +79973,9 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "next_step": "PaymentIntentPseNextStep",
           "payment_method_details": {
-            "display-name": "PSE",
             "type": "PSE",
           },
           "payment_method_information": {
-            "display-name": "PSE",
             "type": "PSE",
           },
           "provider": "EnumPaymentLinkProvider",
@@ -80222,27 +80000,21 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "union": [
           {
-            "display-name": "invalid_credentials",
             "type": "LastErrorInvalidCredentials",
           },
           {
-            "display-name": "invalid_token",
             "type": "LastErrorInvalidToken",
           },
           {
-            "display-name": "login_error",
             "type": "LastErrorLoginError",
           },
           {
-            "display-name": "login_two_factor_error",
             "type": "LastErrorTwoFactor",
           },
           {
-            "display-name": "payment_error",
             "type": "LastErrorPaymentError",
           },
           {
-            "display-name": "session_expired",
             "type": "LastErrorSessionExpired",
           },
         ],
@@ -80258,27 +80030,21 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "union": {
           "pse_display_confirmation_required": {
-            "display-name": "Display PSE confirmation required",
             "type": "NextStepDisplayConfirmationRequiredPse",
           },
           "pse_display_credentials_required": {
-            "display-name": "Display PSE credentials required",
             "type": "NextStepDisplayCredentialsRequiredPse",
           },
           "pse_display_customer_bank_accounts": {
-            "display-name": "Display PSE customer bank accounts",
             "type": "NextStepDisplayCustomerBankAccountsPse",
           },
           "pse_display_needs_redirect": {
-            "display-name": "Display PSE needs redirect",
             "type": "NextStepDisplayNeedsRedirectPse",
           },
           "pse_display_payment_method_information": {
-            "display-name": "Display PSE payment method information",
             "type": "NextStepDisplayPaymentMethodInformationPse",
           },
           "pse_display_token_required": {
-            "display-name": "Display PSE token required",
             "type": "NextStepDisplayTokenRequiredPse",
           },
         },
@@ -80331,7 +80097,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<string>",
           },
           "callback_urls": {
-            "display-name": "Payment Link Callback URLs",
             "type": "PaymentLinkCallbackUrlsResponse",
           },
           "created_at": {
@@ -80408,7 +80173,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<string>",
           },
           "callback_urls": {
-            "display-name": "Payment Link Callback URLs",
             "type": "PaymentLinkCallbackUrlsResponse",
           },
           "created_at": {
@@ -80485,7 +80249,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<string>",
           },
           "callback_urls": {
-            "display-name": "Payment Link Callback URLs",
             "type": "PaymentLinkCallbackUrlsResponse",
           },
           "created_at": {
@@ -80581,11 +80344,9 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "union": [
           {
-            "display-name": "Brazil 🇧🇷 OFPI",
             "type": "PaymentLinkListOfpi",
           },
           {
-            "display-name": "Colombia 🇨🇴 PSE",
             "type": "PaymentLinkListPse",
           },
         ],
@@ -80600,7 +80361,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<string>",
           },
           "callback_urls": {
-            "display-name": "Payment Link Callback URLs",
             "type": "PaymentLinkCallbackUrlsResponse",
           },
           "created_at": {
@@ -80839,11 +80599,9 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "union": [
           {
-            "display-name": "Brazil 🇧🇷 OFPI",
             "type": "TransactionBankAccountOfpi",
           },
           {
-            "display-name": "Colombia 🇨🇴 PSE",
             "type": "TransactionBankAccountPse",
           },
         ],
@@ -83391,11 +83149,9 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "union": [
           {
-            "display-name": "SAT 🇲🇽 Mexico",
             "type": "TaxStatusSat",
           },
           {
-            "display-name": "DIAN 🇨🇴 Colombia",
             "type": "TaxStatusDian",
           },
         ],
@@ -83955,11 +83711,9 @@ For \`too_many_sessions\` errors, the description is:
         },
         "union": [
           {
-            "display-name": "Bank account PSE",
             "type": "TransactionBankAccountBodyPse",
           },
           {
-            "display-name": "Bank account information PSE",
             "type": "BankAccountInformationPse",
           },
         ],

@@ -165,7 +165,6 @@ enterprise connections can be created by an organization.
             "path": "/dev-orgs.auth-connections.create",
             "request": {
               "body": {
-                "display-name": "dev-org-auth-connections-create-request",
                 "type": "root.DevOrgAuthConnectionsCreateRequest",
               },
             },
@@ -386,7 +385,6 @@ disabled.
             "path": "/dev-orgs.auth-connections.update",
             "request": {
               "body": {
-                "display-name": "dev-org-auth-connections-update-request",
                 "type": "root.DevOrgAuthConnectionsUpdateRequest",
               },
             },
@@ -1120,7 +1118,6 @@ used.
             "path": "/parts.create",
             "request": {
               "body": {
-                "display-name": "parts-create-request",
                 "type": "root.PartsCreateRequest",
               },
             },
@@ -1459,7 +1456,6 @@ used.
             "path": "/parts.update",
             "request": {
               "body": {
-                "display-name": "parts-update-request",
                 "type": "root.PartsUpdateRequest",
               },
             },
@@ -2397,7 +2393,6 @@ tags.
             "path": "/timeline-entries.create",
             "request": {
               "body": {
-                "display-name": "timeline-entries-create-request",
                 "type": "root.TimelineEntriesCreateRequest",
               },
             },
@@ -2643,7 +2638,6 @@ used.
             "path": "/timeline-entries.update",
             "request": {
               "body": {
-                "display-name": "timeline-entries-update-request",
                 "type": "root.TimelineEntriesUpdateRequest",
               },
             },
@@ -3178,7 +3172,6 @@ won't receive any object events until successfully verified.
             "path": "/works.create",
             "request": {
               "body": {
-                "display-name": "works-create-request",
                 "type": "root.WorksCreateRequest",
               },
             },
@@ -3767,7 +3760,6 @@ organizations.
             "path": "/works.update",
             "request": {
               "body": {
-                "display-name": "works-update-request",
                 "type": "root.WorksUpdateRequest",
               },
             },
@@ -5308,7 +5300,6 @@ organizations.
     },
     "types": {
       "ArtifactSummary": {
-        "display-name": "atom-base-summary",
         "type": "AtomBaseSummary",
       },
       "ArtifactsLocateResponse": {
@@ -5442,23 +5433,18 @@ authentication connection that is set up for a Dev organization.
         },
         "union": {
           "google_apps": {
-            "display-name": "auth-connection-options-google-apps",
             "type": "AuthConnectionOptionsGoogleApps",
           },
           "oidc": {
-            "display-name": "auth-connection-options-oidc",
             "type": "AuthConnectionOptionsOidc",
           },
           "samlp": {
-            "display-name": "auth-connection-options-saml",
             "type": "AuthConnectionOptionsSaml",
           },
           "social": {
-            "display-name": "auth-connection-options-social",
             "type": "AuthConnectionOptionsSocial",
           },
           "waad": {
-            "display-name": "auth-connection-options-azure-ad",
             "type": "AuthConnectionOptionsAzureAd",
           },
         },
@@ -5772,7 +5758,6 @@ of values in which the order of values does not matter.
         "docs": "The response to get the token metadata.",
         "properties": {
           "token": {
-            "display-name": "auth-token",
             "type": "AuthToken",
           },
         },
@@ -5840,7 +5825,6 @@ issue a Rev session token.
         "docs": "Response for the request to update the token metadata.",
         "properties": {
           "token": {
-            "display-name": "auth-token",
             "type": "AuthToken",
           },
         },
@@ -5869,11 +5853,9 @@ issue a Rev session token.
         },
       },
       "Capability": {
-        "display-name": "part-base",
         "type": "PartBase",
       },
       "CapabilitySummary": {
-        "display-name": "part-base-summary",
         "type": "PartBaseSummary",
       },
       "DevOrgAuthConnectionsCreateRequest": {
@@ -5897,19 +5879,15 @@ it would appear on the login button as 'Log in to abclogin'.
         },
         "union": {
           "google_apps": {
-            "display-name": "auth-connection-options-google-apps",
             "type": "AuthConnectionOptionsGoogleApps",
           },
           "oidc": {
-            "display-name": "auth-connection-options-oidc",
             "type": "AuthConnectionOptionsOidc",
           },
           "samlp": {
-            "display-name": "auth-connection-options-saml",
             "type": "AuthConnectionOptionsSaml",
           },
           "waad": {
-            "display-name": "auth-connection-options-azure-ad",
             "type": "AuthConnectionOptionsAzureAd",
           },
         },
@@ -5934,7 +5912,6 @@ connection.
 ",
         "properties": {
           "auth_connection": {
-            "display-name": "auth-connection",
             "type": "AuthConnection",
           },
         },
@@ -5948,7 +5925,6 @@ authentication connection.
 ",
         "properties": {
           "auth_connection": {
-            "display-name": "auth-connection",
             "type": "AuthConnection",
           },
         },
@@ -5999,23 +5975,18 @@ organization.
         },
         "union": {
           "google_apps": {
-            "display-name": "auth-connection-options-google-apps",
             "type": "AuthConnectionOptionsGoogleApps",
           },
           "none": {
-            "display-name": "empty",
             "type": "empty",
           },
           "oidc": {
-            "display-name": "auth-connection-options-oidc",
             "type": "AuthConnectionOptionsOidc",
           },
           "samlp": {
-            "display-name": "auth-connection-options-saml",
             "type": "AuthConnectionOptionsSaml",
           },
           "waad": {
-            "display-name": "auth-connection-options-azure-ad",
             "type": "AuthConnectionOptionsAzureAd",
           },
         },
@@ -6042,7 +6013,6 @@ connection.
 ",
         "properties": {
           "auth_connection": {
-            "display-name": "auth-connection",
             "type": "AuthConnection",
           },
         },
@@ -6066,7 +6036,6 @@ connection.
         },
       },
       "DevUserSummary": {
-        "display-name": "user-base-summary",
         "type": "UserBaseSummary",
       },
       "DevUsersListResponse": {
@@ -6098,7 +6067,6 @@ sort order. If not set, then no prior elements exist.
 ",
         "properties": {
           "dev_user": {
-            "display-name": "dev-user",
             "type": "DevUser",
           },
         },
@@ -6107,7 +6075,6 @@ sort order. If not set, then no prior elements exist.
         },
       },
       "EnhancementSummary": {
-        "display-name": "part-base-summary",
         "type": "PartBaseSummary",
       },
       "ErrorBadRequest": {
@@ -6286,7 +6253,6 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "part": {
-            "display-name": "part",
             "type": "part",
           },
         },
@@ -6310,7 +6276,6 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "part": {
-            "display-name": "part",
             "type": "part",
           },
         },
@@ -6322,7 +6287,6 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "rev_org": {
-            "display-name": "rev-org",
             "type": "RevOrg",
           },
         },
@@ -6346,7 +6310,6 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "rev_org": {
-            "display-name": "rev-org",
             "type": "RevOrg",
           },
         },
@@ -6358,7 +6321,6 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "tag": {
-            "display-name": "tag",
             "type": "tag",
           },
         },
@@ -6382,7 +6344,6 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "tag": {
-            "display-name": "tag",
             "type": "tag",
           },
         },
@@ -6394,7 +6355,6 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "entry": {
-            "display-name": "timeline-entry",
             "type": "TimelineEntry",
           },
         },
@@ -6418,7 +6378,6 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "entry": {
-            "display-name": "timeline-entry",
             "type": "TimelineEntry",
           },
         },
@@ -6430,7 +6389,6 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "webhook": {
-            "display-name": "webhook",
             "type": "webhook",
           },
         },
@@ -6454,7 +6412,6 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "webhook": {
-            "display-name": "webhook",
             "type": "webhook",
           },
         },
@@ -6466,7 +6423,6 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "work": {
-            "display-name": "work",
             "type": "work",
           },
         },
@@ -6490,7 +6446,6 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "work": {
-            "display-name": "work",
             "type": "work",
           },
         },
@@ -6503,15 +6458,12 @@ sort order. If not set, then no prior elements exist.
         "type": "map<string, unknown>",
       },
       "Feature": {
-        "display-name": "part-base",
         "type": "PartBase",
       },
       "FeatureSummary": {
-        "display-name": "part-base-summary",
         "type": "PartBaseSummary",
       },
       "GroupSummary": {
-        "display-name": "atom-base-summary",
         "type": "AtomBaseSummary",
       },
       "IssuePriority": {
@@ -6694,19 +6646,15 @@ always be returned in the specified sort-by order.
         },
         "union": {
           "capability": {
-            "display-name": "parts-create-request-capability",
             "type": "PartsCreateRequestCapability",
           },
           "enhancement": {
-            "display-name": "parts-create-request-enhancement",
             "type": "PartsCreateRequestEnhancement",
           },
           "feature": {
-            "display-name": "parts-create-request-feature",
             "type": "PartsCreateRequestFeature",
           },
           "product": {
-            "display-name": "parts-create-request-product",
             "type": "PartsCreateRequestProduct",
           },
         },
@@ -6760,7 +6708,6 @@ always be returned in the specified sort-by order.
         "docs": undefined,
         "properties": {
           "part": {
-            "display-name": "part",
             "type": "part",
           },
         },
@@ -6775,7 +6722,6 @@ always be returned in the specified sort-by order.
         "docs": undefined,
         "properties": {
           "part": {
-            "display-name": "part",
             "type": "part",
           },
         },
@@ -6832,23 +6778,18 @@ sort order. If not set, then no prior elements exist.
         },
         "union": {
           "capability": {
-            "display-name": "parts-update-request-capability",
             "type": "PartsUpdateRequestCapability",
           },
           "enhancement": {
-            "display-name": "parts-update-request-enhancement",
             "type": "PartsUpdateRequestEnhancement",
           },
           "feature": {
-            "display-name": "parts-update-request-feature",
             "type": "PartsUpdateRequestFeature",
           },
           "none": {
-            "display-name": "empty",
             "type": "empty",
           },
           "product": {
-            "display-name": "parts-update-request-product",
             "type": "PartsUpdateRequestProduct",
           },
         },
@@ -6892,7 +6833,6 @@ empty.
         "docs": undefined,
         "properties": {
           "part": {
-            "display-name": "part",
             "type": "part",
           },
         },
@@ -6901,11 +6841,9 @@ empty.
         },
       },
       "Product": {
-        "display-name": "part-base",
         "type": "PartBase",
       },
       "ProductSummary": {
-        "display-name": "part-base-summary",
         "type": "PartBaseSummary",
       },
       "RevOrg": {
@@ -6936,7 +6874,6 @@ organization.
         },
       },
       "RevOrgSummary": {
-        "display-name": "org-base-summary",
         "type": "OrgBaseSummary",
       },
       "RevOrgsCreateResponse": {
@@ -6944,7 +6881,6 @@ organization.
 ",
         "properties": {
           "rev_org": {
-            "display-name": "rev-org",
             "type": "RevOrg",
           },
         },
@@ -6960,7 +6896,6 @@ organization.
         "docs": "The response to getting a Rev organization's information.",
         "properties": {
           "rev_org": {
-            "display-name": "rev-org",
             "type": "RevOrg",
           },
         },
@@ -6997,7 +6932,6 @@ sort order. If not set, then no prior elements exist.
         "docs": "Response object to updating Rev organization's information.",
         "properties": {
           "rev_org": {
-            "display-name": "rev-org",
             "type": "RevOrg",
           },
         },
@@ -7070,7 +7004,6 @@ the value must be one that's specified in the tag's allowed values.
         },
       },
       "SysUserSummary": {
-        "display-name": "user-base-summary",
         "type": "UserBaseSummary",
       },
       "TagSummary": {
@@ -7095,7 +7028,6 @@ unique.
         "docs": undefined,
         "properties": {
           "tag": {
-            "display-name": "tag-summary",
             "type": "TagSummary",
           },
           "value": {
@@ -7111,7 +7043,6 @@ unique.
         "docs": "The response to creating a new tag.",
         "properties": {
           "tag": {
-            "display-name": "tag",
             "type": "tag",
           },
         },
@@ -7127,7 +7058,6 @@ unique.
         "docs": "The response to getting a tag's information.",
         "properties": {
           "tag": {
-            "display-name": "tag",
             "type": "tag",
           },
         },
@@ -7175,7 +7105,6 @@ sort order. If not set, then no prior elements exist.
         "docs": "The response for updating a tag.",
         "properties": {
           "tag": {
-            "display-name": "tag",
             "type": "tag",
           },
         },
@@ -7248,7 +7177,6 @@ will appear in the response.
         },
         "union": {
           "timeline_comment": {
-            "display-name": "timeline-entries-create-request-timeline-comment",
             "type": "TimelineEntriesCreateRequestTimelineComment",
           },
         },
@@ -7281,7 +7209,6 @@ will appear in the response.
         "docs": "The response to creating a timeline entry for an object.",
         "properties": {
           "timeline_entry": {
-            "display-name": "timeline-entry",
             "type": "TimelineEntry",
           },
         },
@@ -7293,7 +7220,6 @@ will appear in the response.
         "docs": "The request to getting a timeline entry.",
         "properties": {
           "timeline_entry": {
-            "display-name": "timeline-entry",
             "type": "TimelineEntry",
           },
         },
@@ -7341,7 +7267,6 @@ sort order. If not set, then no prior elements exist.
         },
         "union": {
           "timeline_comment": {
-            "display-name": "timeline-entries-update-request-timeline-comment",
             "type": "TimelineEntriesUpdateRequestTimelineComment",
           },
         },
@@ -7398,7 +7323,6 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
         "docs": "The response to updating a timeline entry.",
         "properties": {
           "timeline_entry": {
-            "display-name": "timeline-entry",
             "type": "TimelineEntry",
           },
         },
@@ -7417,13 +7341,11 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
         },
         "union": {
           "timeline_comment": {
-            "display-name": "timeline-comment",
             "type": "TimelineComment",
           },
         },
       },
       "TimelineEntryBase": {
-        "display-name": "atom-base",
         "type": "AtomBase",
       },
       "TimelineEntryType": "literal<"timeline_comment">",
@@ -7515,7 +7437,6 @@ default visibility.
         "union": {
           "dev_user": "DevUserSummary",
           "rev_user": {
-            "display-name": "rev-user-summary",
             "type": "RevUserSummary",
           },
           "sys_user": "SysUserSummary",
@@ -7695,7 +7616,6 @@ be set for other request types.
         "docs": "The response to creating a new webhook.",
         "properties": {
           "webhook": {
-            "display-name": "webhook",
             "type": "webhook",
           },
         },
@@ -7711,7 +7631,6 @@ be set for other request types.
         "docs": "The response to getting the information for the webhook.",
         "properties": {
           "webhook": {
-            "display-name": "webhook",
             "type": "webhook",
           },
         },
@@ -7774,7 +7693,6 @@ event types. Note this is mutually exclusive with 'add' and
         "docs": "The response to updating the webhook.",
         "properties": {
           "webhook": {
-            "display-name": "webhook",
             "type": "webhook",
           },
         },
@@ -7881,11 +7799,9 @@ issues.
         },
         "union": {
           "issue": {
-            "display-name": "works-create-request-issue",
             "type": "WorksCreateRequestIssue",
           },
           "ticket": {
-            "display-name": "works-create-request-ticket",
             "type": "WorksCreateRequestTicket",
           },
         },
@@ -7928,7 +7844,6 @@ issues.
         "docs": undefined,
         "properties": {
           "work": {
-            "display-name": "work",
             "type": "work",
           },
         },
@@ -7955,7 +7870,6 @@ issues.
         "docs": undefined,
         "properties": {
           "work": {
-            "display-name": "work",
             "type": "work",
           },
         },
@@ -8027,15 +7941,12 @@ sort order. If not set, then no prior elements exist.
         },
         "union": {
           "issue": {
-            "display-name": "works-update-request-issue",
             "type": "WorksUpdateRequestIssue",
           },
           "none": {
-            "display-name": "empty",
             "type": "empty",
           },
           "ticket": {
-            "display-name": "works-update-request-ticket",
             "type": "WorksUpdateRequestTicket",
           },
         },
@@ -8130,7 +8041,6 @@ empty.
         "docs": undefined,
         "properties": {
           "work": {
-            "display-name": "work",
             "type": "work",
           },
         },
@@ -8180,7 +8090,6 @@ empty.
         "union": {
           "capability": "Capability",
           "enhancement": {
-            "display-name": "enhancement",
             "type": "enhancement",
           },
           "feature": "Feature",
@@ -8285,11 +8194,9 @@ unique.
         },
         "union": {
           "issue": {
-            "display-name": "issue",
             "type": "issue",
           },
           "ticket": {
-            "display-name": "ticket",
             "type": "ticket",
           },
         },
@@ -8483,7 +8390,6 @@ enterprise connections can be created by an organization.
             "path": "/dev-orgs.auth-connections.create",
             "request": {
               "body": {
-                "display-name": "dev-org-auth-connections-create-request",
                 "type": "root.DevOrgAuthConnectionsCreateRequest",
               },
             },
@@ -8704,7 +8610,6 @@ disabled.
             "path": "/dev-orgs.auth-connections.update",
             "request": {
               "body": {
-                "display-name": "dev-org-auth-connections-update-request",
                 "type": "root.DevOrgAuthConnectionsUpdateRequest",
               },
             },
@@ -9438,7 +9343,6 @@ used.
             "path": "/parts.create",
             "request": {
               "body": {
-                "display-name": "parts-create-request",
                 "type": "root.PartsCreateRequest",
               },
             },
@@ -9777,7 +9681,6 @@ used.
             "path": "/parts.update",
             "request": {
               "body": {
-                "display-name": "parts-update-request",
                 "type": "root.PartsUpdateRequest",
               },
             },
@@ -10715,7 +10618,6 @@ tags.
             "path": "/timeline-entries.create",
             "request": {
               "body": {
-                "display-name": "timeline-entries-create-request",
                 "type": "root.TimelineEntriesCreateRequest",
               },
             },
@@ -10961,7 +10863,6 @@ used.
             "path": "/timeline-entries.update",
             "request": {
               "body": {
-                "display-name": "timeline-entries-update-request",
                 "type": "root.TimelineEntriesUpdateRequest",
               },
             },
@@ -11496,7 +11397,6 @@ won't receive any object events until successfully verified.
             "path": "/works.create",
             "request": {
               "body": {
-                "display-name": "works-create-request",
                 "type": "root.WorksCreateRequest",
               },
             },
@@ -12085,7 +11985,6 @@ organizations.
             "path": "/works.update",
             "request": {
               "body": {
-                "display-name": "works-update-request",
                 "type": "root.WorksUpdateRequest",
               },
             },
@@ -12141,7 +12040,6 @@ organizations.
     },
     "types": {
       "ArtifactSummary": {
-        "display-name": "atom-base-summary",
         "type": "AtomBaseSummary",
       },
       "ArtifactsLocateResponse": {
@@ -12275,23 +12173,18 @@ authentication connection that is set up for a Dev organization.
         },
         "union": {
           "google_apps": {
-            "display-name": "auth-connection-options-google-apps",
             "type": "AuthConnectionOptionsGoogleApps",
           },
           "oidc": {
-            "display-name": "auth-connection-options-oidc",
             "type": "AuthConnectionOptionsOidc",
           },
           "samlp": {
-            "display-name": "auth-connection-options-saml",
             "type": "AuthConnectionOptionsSaml",
           },
           "social": {
-            "display-name": "auth-connection-options-social",
             "type": "AuthConnectionOptionsSocial",
           },
           "waad": {
-            "display-name": "auth-connection-options-azure-ad",
             "type": "AuthConnectionOptionsAzureAd",
           },
         },
@@ -12605,7 +12498,6 @@ of values in which the order of values does not matter.
         "docs": "The response to get the token metadata.",
         "properties": {
           "token": {
-            "display-name": "auth-token",
             "type": "AuthToken",
           },
         },
@@ -12673,7 +12565,6 @@ issue a Rev session token.
         "docs": "Response for the request to update the token metadata.",
         "properties": {
           "token": {
-            "display-name": "auth-token",
             "type": "AuthToken",
           },
         },
@@ -12702,11 +12593,9 @@ issue a Rev session token.
         },
       },
       "Capability": {
-        "display-name": "part-base",
         "type": "PartBase",
       },
       "CapabilitySummary": {
-        "display-name": "part-base-summary",
         "type": "PartBaseSummary",
       },
       "DevOrgAuthConnectionsCreateRequest": {
@@ -12730,19 +12619,15 @@ it would appear on the login button as 'Log in to abclogin'.
         },
         "union": {
           "google_apps": {
-            "display-name": "auth-connection-options-google-apps",
             "type": "AuthConnectionOptionsGoogleApps",
           },
           "oidc": {
-            "display-name": "auth-connection-options-oidc",
             "type": "AuthConnectionOptionsOidc",
           },
           "samlp": {
-            "display-name": "auth-connection-options-saml",
             "type": "AuthConnectionOptionsSaml",
           },
           "waad": {
-            "display-name": "auth-connection-options-azure-ad",
             "type": "AuthConnectionOptionsAzureAd",
           },
         },
@@ -12767,7 +12652,6 @@ connection.
 ",
         "properties": {
           "auth_connection": {
-            "display-name": "auth-connection",
             "type": "AuthConnection",
           },
         },
@@ -12781,7 +12665,6 @@ authentication connection.
 ",
         "properties": {
           "auth_connection": {
-            "display-name": "auth-connection",
             "type": "AuthConnection",
           },
         },
@@ -12832,23 +12715,18 @@ organization.
         },
         "union": {
           "google_apps": {
-            "display-name": "auth-connection-options-google-apps",
             "type": "AuthConnectionOptionsGoogleApps",
           },
           "none": {
-            "display-name": "empty",
             "type": "empty",
           },
           "oidc": {
-            "display-name": "auth-connection-options-oidc",
             "type": "AuthConnectionOptionsOidc",
           },
           "samlp": {
-            "display-name": "auth-connection-options-saml",
             "type": "AuthConnectionOptionsSaml",
           },
           "waad": {
-            "display-name": "auth-connection-options-azure-ad",
             "type": "AuthConnectionOptionsAzureAd",
           },
         },
@@ -12875,7 +12753,6 @@ connection.
 ",
         "properties": {
           "auth_connection": {
-            "display-name": "auth-connection",
             "type": "AuthConnection",
           },
         },
@@ -12899,7 +12776,6 @@ connection.
         },
       },
       "DevUserSummary": {
-        "display-name": "user-base-summary",
         "type": "UserBaseSummary",
       },
       "DevUsersListResponse": {
@@ -12931,7 +12807,6 @@ sort order. If not set, then no prior elements exist.
 ",
         "properties": {
           "dev_user": {
-            "display-name": "dev-user",
             "type": "DevUser",
           },
         },
@@ -12940,7 +12815,6 @@ sort order. If not set, then no prior elements exist.
         },
       },
       "EnhancementSummary": {
-        "display-name": "part-base-summary",
         "type": "PartBaseSummary",
       },
       "ErrorBadRequest": {
@@ -13119,7 +12993,6 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "part": {
-            "display-name": "part",
             "type": "part",
           },
         },
@@ -13143,7 +13016,6 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "part": {
-            "display-name": "part",
             "type": "part",
           },
         },
@@ -13155,7 +13027,6 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "rev_org": {
-            "display-name": "rev-org",
             "type": "RevOrg",
           },
         },
@@ -13179,7 +13050,6 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "rev_org": {
-            "display-name": "rev-org",
             "type": "RevOrg",
           },
         },
@@ -13191,7 +13061,6 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "tag": {
-            "display-name": "tag",
             "type": "tag",
           },
         },
@@ -13215,7 +13084,6 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "tag": {
-            "display-name": "tag",
             "type": "tag",
           },
         },
@@ -13227,7 +13095,6 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "entry": {
-            "display-name": "timeline-entry",
             "type": "TimelineEntry",
           },
         },
@@ -13251,7 +13118,6 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "entry": {
-            "display-name": "timeline-entry",
             "type": "TimelineEntry",
           },
         },
@@ -13263,7 +13129,6 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "webhook": {
-            "display-name": "webhook",
             "type": "webhook",
           },
         },
@@ -13287,7 +13152,6 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "webhook": {
-            "display-name": "webhook",
             "type": "webhook",
           },
         },
@@ -13299,7 +13163,6 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "work": {
-            "display-name": "work",
             "type": "work",
           },
         },
@@ -13323,7 +13186,6 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "work": {
-            "display-name": "work",
             "type": "work",
           },
         },
@@ -13336,15 +13198,12 @@ sort order. If not set, then no prior elements exist.
         "type": "map<string, unknown>",
       },
       "Feature": {
-        "display-name": "part-base",
         "type": "PartBase",
       },
       "FeatureSummary": {
-        "display-name": "part-base-summary",
         "type": "PartBaseSummary",
       },
       "GroupSummary": {
-        "display-name": "atom-base-summary",
         "type": "AtomBaseSummary",
       },
       "IssuePriority": {
@@ -13527,19 +13386,15 @@ always be returned in the specified sort-by order.
         },
         "union": {
           "capability": {
-            "display-name": "parts-create-request-capability",
             "type": "PartsCreateRequestCapability",
           },
           "enhancement": {
-            "display-name": "parts-create-request-enhancement",
             "type": "PartsCreateRequestEnhancement",
           },
           "feature": {
-            "display-name": "parts-create-request-feature",
             "type": "PartsCreateRequestFeature",
           },
           "product": {
-            "display-name": "parts-create-request-product",
             "type": "PartsCreateRequestProduct",
           },
         },
@@ -13593,7 +13448,6 @@ always be returned in the specified sort-by order.
         "docs": undefined,
         "properties": {
           "part": {
-            "display-name": "part",
             "type": "part",
           },
         },
@@ -13608,7 +13462,6 @@ always be returned in the specified sort-by order.
         "docs": undefined,
         "properties": {
           "part": {
-            "display-name": "part",
             "type": "part",
           },
         },
@@ -13665,23 +13518,18 @@ sort order. If not set, then no prior elements exist.
         },
         "union": {
           "capability": {
-            "display-name": "parts-update-request-capability",
             "type": "PartsUpdateRequestCapability",
           },
           "enhancement": {
-            "display-name": "parts-update-request-enhancement",
             "type": "PartsUpdateRequestEnhancement",
           },
           "feature": {
-            "display-name": "parts-update-request-feature",
             "type": "PartsUpdateRequestFeature",
           },
           "none": {
-            "display-name": "empty",
             "type": "empty",
           },
           "product": {
-            "display-name": "parts-update-request-product",
             "type": "PartsUpdateRequestProduct",
           },
         },
@@ -13725,7 +13573,6 @@ empty.
         "docs": undefined,
         "properties": {
           "part": {
-            "display-name": "part",
             "type": "part",
           },
         },
@@ -13734,11 +13581,9 @@ empty.
         },
       },
       "Product": {
-        "display-name": "part-base",
         "type": "PartBase",
       },
       "ProductSummary": {
-        "display-name": "part-base-summary",
         "type": "PartBaseSummary",
       },
       "RevOrg": {
@@ -13769,7 +13614,6 @@ organization.
         },
       },
       "RevOrgSummary": {
-        "display-name": "org-base-summary",
         "type": "OrgBaseSummary",
       },
       "RevOrgsCreateResponse": {
@@ -13777,7 +13621,6 @@ organization.
 ",
         "properties": {
           "rev_org": {
-            "display-name": "rev-org",
             "type": "RevOrg",
           },
         },
@@ -13793,7 +13636,6 @@ organization.
         "docs": "The response to getting a Rev organization's information.",
         "properties": {
           "rev_org": {
-            "display-name": "rev-org",
             "type": "RevOrg",
           },
         },
@@ -13830,7 +13672,6 @@ sort order. If not set, then no prior elements exist.
         "docs": "Response object to updating Rev organization's information.",
         "properties": {
           "rev_org": {
-            "display-name": "rev-org",
             "type": "RevOrg",
           },
         },
@@ -13903,7 +13744,6 @@ the value must be one that's specified in the tag's allowed values.
         },
       },
       "SysUserSummary": {
-        "display-name": "user-base-summary",
         "type": "UserBaseSummary",
       },
       "TagSummary": {
@@ -13928,7 +13768,6 @@ unique.
         "docs": undefined,
         "properties": {
           "tag": {
-            "display-name": "tag-summary",
             "type": "TagSummary",
           },
           "value": {
@@ -13944,7 +13783,6 @@ unique.
         "docs": "The response to creating a new tag.",
         "properties": {
           "tag": {
-            "display-name": "tag",
             "type": "tag",
           },
         },
@@ -13960,7 +13798,6 @@ unique.
         "docs": "The response to getting a tag's information.",
         "properties": {
           "tag": {
-            "display-name": "tag",
             "type": "tag",
           },
         },
@@ -14008,7 +13845,6 @@ sort order. If not set, then no prior elements exist.
         "docs": "The response for updating a tag.",
         "properties": {
           "tag": {
-            "display-name": "tag",
             "type": "tag",
           },
         },
@@ -14081,7 +13917,6 @@ will appear in the response.
         },
         "union": {
           "timeline_comment": {
-            "display-name": "timeline-entries-create-request-timeline-comment",
             "type": "TimelineEntriesCreateRequestTimelineComment",
           },
         },
@@ -14114,7 +13949,6 @@ will appear in the response.
         "docs": "The response to creating a timeline entry for an object.",
         "properties": {
           "timeline_entry": {
-            "display-name": "timeline-entry",
             "type": "TimelineEntry",
           },
         },
@@ -14126,7 +13960,6 @@ will appear in the response.
         "docs": "The request to getting a timeline entry.",
         "properties": {
           "timeline_entry": {
-            "display-name": "timeline-entry",
             "type": "TimelineEntry",
           },
         },
@@ -14174,7 +14007,6 @@ sort order. If not set, then no prior elements exist.
         },
         "union": {
           "timeline_comment": {
-            "display-name": "timeline-entries-update-request-timeline-comment",
             "type": "TimelineEntriesUpdateRequestTimelineComment",
           },
         },
@@ -14231,7 +14063,6 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
         "docs": "The response to updating a timeline entry.",
         "properties": {
           "timeline_entry": {
-            "display-name": "timeline-entry",
             "type": "TimelineEntry",
           },
         },
@@ -14250,13 +14081,11 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
         },
         "union": {
           "timeline_comment": {
-            "display-name": "timeline-comment",
             "type": "TimelineComment",
           },
         },
       },
       "TimelineEntryBase": {
-        "display-name": "atom-base",
         "type": "AtomBase",
       },
       "TimelineEntryType": "literal<"timeline_comment">",
@@ -14348,7 +14177,6 @@ default visibility.
         "union": {
           "dev_user": "DevUserSummary",
           "rev_user": {
-            "display-name": "rev-user-summary",
             "type": "RevUserSummary",
           },
           "sys_user": "SysUserSummary",
@@ -14528,7 +14356,6 @@ be set for other request types.
         "docs": "The response to creating a new webhook.",
         "properties": {
           "webhook": {
-            "display-name": "webhook",
             "type": "webhook",
           },
         },
@@ -14544,7 +14371,6 @@ be set for other request types.
         "docs": "The response to getting the information for the webhook.",
         "properties": {
           "webhook": {
-            "display-name": "webhook",
             "type": "webhook",
           },
         },
@@ -14607,7 +14433,6 @@ event types. Note this is mutually exclusive with 'add' and
         "docs": "The response to updating the webhook.",
         "properties": {
           "webhook": {
-            "display-name": "webhook",
             "type": "webhook",
           },
         },
@@ -14714,11 +14539,9 @@ issues.
         },
         "union": {
           "issue": {
-            "display-name": "works-create-request-issue",
             "type": "WorksCreateRequestIssue",
           },
           "ticket": {
-            "display-name": "works-create-request-ticket",
             "type": "WorksCreateRequestTicket",
           },
         },
@@ -14761,7 +14584,6 @@ issues.
         "docs": undefined,
         "properties": {
           "work": {
-            "display-name": "work",
             "type": "work",
           },
         },
@@ -14788,7 +14610,6 @@ issues.
         "docs": undefined,
         "properties": {
           "work": {
-            "display-name": "work",
             "type": "work",
           },
         },
@@ -14860,15 +14681,12 @@ sort order. If not set, then no prior elements exist.
         },
         "union": {
           "issue": {
-            "display-name": "works-update-request-issue",
             "type": "WorksUpdateRequestIssue",
           },
           "none": {
-            "display-name": "empty",
             "type": "empty",
           },
           "ticket": {
-            "display-name": "works-update-request-ticket",
             "type": "WorksUpdateRequestTicket",
           },
         },
@@ -14963,7 +14781,6 @@ empty.
         "docs": undefined,
         "properties": {
           "work": {
-            "display-name": "work",
             "type": "work",
           },
         },
@@ -15013,7 +14830,6 @@ empty.
         "union": {
           "capability": "Capability",
           "enhancement": {
-            "display-name": "enhancement",
             "type": "enhancement",
           },
           "feature": "Feature",
@@ -15118,11 +14934,9 @@ unique.
         },
         "union": {
           "issue": {
-            "display-name": "issue",
             "type": "issue",
           },
           "ticket": {
-            "display-name": "ticket",
             "type": "ticket",
           },
         },

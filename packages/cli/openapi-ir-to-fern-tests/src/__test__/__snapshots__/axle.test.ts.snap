@@ -123,7 +123,6 @@ exports[`open api parser > axle > docs 1`] = `
           "properties": {
             "account": "string",
             "address": {
-              "display-name": "Address",
               "type": "root.Address",
             },
             "carrier": "string",
@@ -405,7 +404,6 @@ exports[`open api parser > axle > docs 1`] = `
           "properties": {
             "data": "StartIgnitionResponseData",
             "success": {
-              "display-name": "Success",
               "type": "root.Success",
             },
           },
@@ -660,7 +658,6 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "properties": {
             "data": "ExchangeTokenResponseData",
             "success": {
-              "display-name": "Success",
               "type": "root.Success",
             },
           },
@@ -723,7 +720,6 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "docs": undefined,
         "properties": {
           "address": {
-            "display-name": "Address",
             "type": "Address",
           },
           "domain": "string",
@@ -826,7 +822,6 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "docs": undefined,
         "properties": {
           "data": {
-            "display-name": "Vehicle",
             "type": "Vehicle",
           },
           "id": "string",
@@ -1046,7 +1041,6 @@ exports[`open api parser > axle > simple 1`] = `
           "properties": {
             "account": "string",
             "address": {
-              "display-name": "Address",
               "type": "root.Address",
             },
             "carrier": "string",
@@ -1278,7 +1272,6 @@ exports[`open api parser > axle > simple 1`] = `
           "properties": {
             "data": "StartIgnitionResponseData",
             "success": {
-              "display-name": "Success",
               "type": "root.Success",
             },
           },
@@ -1504,7 +1497,6 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "properties": {
             "data": "ExchangeTokenResponseData",
             "success": {
-              "display-name": "Success",
               "type": "root.Success",
             },
           },
@@ -1567,7 +1559,6 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "docs": undefined,
         "properties": {
           "address": {
-            "display-name": "Address",
             "type": "Address",
           },
           "domain": "string",
@@ -1670,7 +1661,6 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "docs": undefined,
         "properties": {
           "data": {
-            "display-name": "Vehicle",
             "type": "Vehicle",
           },
           "id": "string",

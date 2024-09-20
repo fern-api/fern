@@ -3587,7 +3587,6 @@ This error response may have one of the following \`type\` values:
         ],
         "properties": {
           "allows": {
-            "display-name": "Full Account Permissions (v1.0.0)",
             "docs": "Flags which indicate the permissions the current authorized user has on this account resource.",
             "type": "FullAccountPermissions",
           },
@@ -3720,19 +3719,16 @@ This error response may have one of the following \`type\` values:
             },
           },
           "location": {
-            "display-name": "Account Location (v1.0.0)",
             "docs": "Indicates where an account is held.",
             "type": "AccountLocation",
           },
           "maskedNumber": {
-            "display-name": "Masked Account Number (v1.0.1)",
             "type": "MaskedAccountNumber",
           },
           "nickname": {
             "type": "optional<AccountNickname>",
           },
           "product": {
-            "display-name": "Product Reference (v1.0.0)",
             "type": "ProductReference",
           },
         },
@@ -3741,7 +3737,6 @@ This error response may have one of the following \`type\` values:
         },
       },
       "AccountIds": {
-        "display-name": "Account IDs (v1.1.0)",
         "docs": "An array of account IDs.",
         "type": "list<ResourceId>",
       },
@@ -3749,7 +3744,6 @@ This error response may have one of the following \`type\` values:
         "docs": "An account item in a list items in the \`accounts\` schema.",
         "properties": {
           "allows": {
-            "display-name": "Account Permissions (v0.3.0)",
             "type": "AccountPermissions",
           },
           "id": {
@@ -4211,7 +4205,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "type": "optional<ChallengeSecurityQuestions>",
           },
           "type": {
-            "display-name": "Challenge Factor Type (v1.0.0)",
             "type": "ChallengeFactorType",
           },
         },
@@ -4278,7 +4271,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "docs": "A single security question within the \`questions\` array of the [\`challengeSecurityQuestions\`](#schema-challengeSecurityQuestions)",
         "properties": {
           "id": {
-            "display-name": "Challenge Prompt ID (v1.0.0)",
             "docs": "The unique ID of security question prompt. This should be included in the [\`challengeVerification\`](#schema-challengeVerification) response as the \`promptId\`.",
             "type": "ChallengePromptId",
           },
@@ -4320,7 +4312,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
       },
       "CheckNumberRange": {
-        "display-name": "Positive Integer Range (v1.1.0)",
         "docs": "A numeric range for a checking account check number.",
         "type": "PositiveIntegerRange",
       },
@@ -4348,7 +4339,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
           },
           "type": {
-            "display-name": "Cutoff type Type (v1.0.0)",
             "type": "CutoffTimeType",
           },
         },
@@ -4417,7 +4407,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "type": "list<CutoffTime>",
           },
           "timeZoneId": {
-            "display-name": " (v1.0.0)",
             "docs": "The identifier of the time zone for which all of the \`items[].time\` are returned in.
 The client can use this value to localize the \`items[].time\` values to the local time zone of the customer, as well as for formatting to localized names, such as \`EST\` and \`EDT\`.",
             "type": "TimeZoneId",
@@ -4438,7 +4427,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       },
       "EligibleOverdraftAccountItem": {
-        "display-name": "Overdraft Account Fields (v1.0.0)",
         "docs": "An account that is eligible to be assigned as an overdraft protection account for another account.",
         "type": "OverdraftAccountFields",
       },
@@ -4568,7 +4556,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         ],
         "properties": {
           "incompleteAccounts": {
-            "display-name": "Account IDs (v1.1.0)",
             "docs": "Pass these values as the \`?accounts=\` query parameter on the next retry of the [\`listAccountBalances\`](#op-listAccountBalances) operation. This value is empty if the client has reached the retry limit.",
             "type": "AccountIds",
           },
@@ -4807,7 +4794,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       },
       "OverdraftAccountItem": {
-        "display-name": "Overdraft Account Fields (v1.0.0)",
         "docs": "An overdraft protection account linked to another protected account. The \`label\` and \`maskedNumber\` are informational only.",
         "type": "OverdraftAccountFields",
       },
@@ -4900,7 +4886,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "type": {
-            "display-name": "Product Type (v2.0.0)",
             "docs": "The type of account.",
             "type": "ProductType",
           },
@@ -4960,7 +4945,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       },
       "ReadOnlyResourceId": {
-        "display-name": "Resource Identifier (v1.0.0)",
         "docs": "The unique, opaque system-assigned identifier for a resource. This case-sensitive ID is also used in URLs as path parameters or in other properties or parameters that reference a resource by ID rather than URL. Resource IDs are immutable.",
         "type": "ResourceId",
       },
@@ -5002,7 +4986,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "docs": "A simple representation of a financial institution.",
         "properties": {
           "address": {
-            "display-name": "Address (v1.1.0)",
             "docs": "The financial institution's postal mailing address.",
             "type": "Address",
           },
@@ -5017,7 +5000,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "locatorType": {
-            "display-name": "institution Locator Type (v1.0.0)",
             "docs": "Indicates the type of this institution's \`locator\`.",
             "type": "InstitutionLocatorType",
           },
@@ -5088,7 +5070,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "label": {
-            "display-name": "Transaction Category Label (v1.1.0)",
             "type": "TransactionCategoryLabel",
           },
         },
@@ -5104,7 +5085,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         ],
         "properties": {
           "type": {
-            "display-name": "Transaction Category (v1.0.0)",
             "type": "TransactionCategoryType",
           },
         },
@@ -5195,7 +5175,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "docs": "Common fields of the transaction resource used to build other model schemas.",
         "properties": {
           "amount": {
-            "display-name": "Credit Or Debit Value (v1.0.0)",
             "docs": "The transaction amount in dollars. This value is negative if the transaction is a debit and positive if it is a credit.",
             "type": "CreditOrDebitValue",
           },
@@ -5280,12 +5259,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "subtype": {
-            "display-name": "Transaction Subtype (v1.0.0)",
             "docs": "The transaction's kind of debit or credit.",
             "type": "TransactionSubType",
           },
           "type": {
-            "display-name": "Transaction Type (v2.0.0)",
             "docs": "The transaction type. If the \`type\` is \`debit\` or \`credit\`, the \`subtype\` conveys further transaction type details.",
             "type": "TransactionType",
           },
@@ -5449,7 +5426,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "docs": "A reference to a banking account used within an account to account transfer. This object may be set from an account's \`account.reference\` object.",
         "properties": {
           "id": {
-            "display-name": "Resource Identifier (v1.0.0)",
             "docs": "The unique ID of a banking account.",
             "type": "ResourceId",
           },
@@ -5510,7 +5486,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "reason": {
-            "display-name": "Transfer Date Restriction Type (v1.0.0)",
             "docs": "Indicates why this date is restricted.",
             "type": "TransferDateRestrictionType",
           },
@@ -5726,12 +5701,10 @@ The response may include dates prior to requested the start date, as that is use
             "type": "optional<datetime>",
           },
           "schedule": {
-            "display-name": "Transfer Item Schedule (v1.0.0)",
             "docs": "When the transfer should occur and any recurrence.",
             "type": "TransferItemSchedule",
           },
           "state": {
-            "display-name": "Transfer State (v2.0.0)",
             "docs": "The state of this transfer resource.",
             "type": "TransferState",
           },
@@ -5843,7 +5816,6 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             },
           },
           "frequency": {
-            "display-name": "Transfer Frequency (v1.0.0)",
             "type": "TransferFrequency",
           },
           "recurrenceType": {
@@ -8020,7 +7992,6 @@ This error response may have one of the following \`type\` values:
         ],
         "properties": {
           "allows": {
-            "display-name": "Full Account Permissions (v1.0.0)",
             "docs": "Flags which indicate the permissions the current authorized user has on this account resource.",
             "type": "FullAccountPermissions",
           },
@@ -8153,19 +8124,16 @@ This error response may have one of the following \`type\` values:
             },
           },
           "location": {
-            "display-name": "Account Location (v1.0.0)",
             "docs": "Indicates where an account is held.",
             "type": "AccountLocation",
           },
           "maskedNumber": {
-            "display-name": "Masked Account Number (v1.0.1)",
             "type": "MaskedAccountNumber",
           },
           "nickname": {
             "type": "optional<AccountNickname>",
           },
           "product": {
-            "display-name": "Product Reference (v1.0.0)",
             "type": "ProductReference",
           },
         },
@@ -8174,7 +8142,6 @@ This error response may have one of the following \`type\` values:
         },
       },
       "AccountIds": {
-        "display-name": "Account IDs (v1.1.0)",
         "docs": "An array of account IDs.",
         "type": "list<ResourceId>",
       },
@@ -8182,7 +8149,6 @@ This error response may have one of the following \`type\` values:
         "docs": "An account item in a list items in the \`accounts\` schema.",
         "properties": {
           "allows": {
-            "display-name": "Account Permissions (v0.3.0)",
             "type": "AccountPermissions",
           },
           "id": {
@@ -8644,7 +8610,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "type": "optional<ChallengeSecurityQuestions>",
           },
           "type": {
-            "display-name": "Challenge Factor Type (v1.0.0)",
             "type": "ChallengeFactorType",
           },
         },
@@ -8711,7 +8676,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "docs": "A single security question within the \`questions\` array of the [\`challengeSecurityQuestions\`](#schema-challengeSecurityQuestions)",
         "properties": {
           "id": {
-            "display-name": "Challenge Prompt ID (v1.0.0)",
             "docs": "The unique ID of security question prompt. This should be included in the [\`challengeVerification\`](#schema-challengeVerification) response as the \`promptId\`.",
             "type": "ChallengePromptId",
           },
@@ -8753,7 +8717,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
       },
       "CheckNumberRange": {
-        "display-name": "Positive Integer Range (v1.1.0)",
         "docs": "A numeric range for a checking account check number.",
         "type": "PositiveIntegerRange",
       },
@@ -8781,7 +8744,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
           },
           "type": {
-            "display-name": "Cutoff type Type (v1.0.0)",
             "type": "CutoffTimeType",
           },
         },
@@ -8850,7 +8812,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "type": "list<CutoffTime>",
           },
           "timeZoneId": {
-            "display-name": " (v1.0.0)",
             "docs": "The identifier of the time zone for which all of the \`items[].time\` are returned in.
 The client can use this value to localize the \`items[].time\` values to the local time zone of the customer, as well as for formatting to localized names, such as \`EST\` and \`EDT\`.",
             "type": "TimeZoneId",
@@ -8871,7 +8832,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       },
       "EligibleOverdraftAccountItem": {
-        "display-name": "Overdraft Account Fields (v1.0.0)",
         "docs": "An account that is eligible to be assigned as an overdraft protection account for another account.",
         "type": "OverdraftAccountFields",
       },
@@ -9001,7 +8961,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         ],
         "properties": {
           "incompleteAccounts": {
-            "display-name": "Account IDs (v1.1.0)",
             "docs": "Pass these values as the \`?accounts=\` query parameter on the next retry of the [\`listAccountBalances\`](#op-listAccountBalances) operation. This value is empty if the client has reached the retry limit.",
             "type": "AccountIds",
           },
@@ -9240,7 +9199,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       },
       "OverdraftAccountItem": {
-        "display-name": "Overdraft Account Fields (v1.0.0)",
         "docs": "An overdraft protection account linked to another protected account. The \`label\` and \`maskedNumber\` are informational only.",
         "type": "OverdraftAccountFields",
       },
@@ -9333,7 +9291,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "type": {
-            "display-name": "Product Type (v2.0.0)",
             "docs": "The type of account.",
             "type": "ProductType",
           },
@@ -9393,7 +9350,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       },
       "ReadOnlyResourceId": {
-        "display-name": "Resource Identifier (v1.0.0)",
         "docs": "The unique, opaque system-assigned identifier for a resource. This case-sensitive ID is also used in URLs as path parameters or in other properties or parameters that reference a resource by ID rather than URL. Resource IDs are immutable.",
         "type": "ResourceId",
       },
@@ -9435,7 +9391,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "docs": "A simple representation of a financial institution.",
         "properties": {
           "address": {
-            "display-name": "Address (v1.1.0)",
             "docs": "The financial institution's postal mailing address.",
             "type": "Address",
           },
@@ -9450,7 +9405,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "locatorType": {
-            "display-name": "institution Locator Type (v1.0.0)",
             "docs": "Indicates the type of this institution's \`locator\`.",
             "type": "InstitutionLocatorType",
           },
@@ -9521,7 +9475,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "label": {
-            "display-name": "Transaction Category Label (v1.1.0)",
             "type": "TransactionCategoryLabel",
           },
         },
@@ -9537,7 +9490,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         ],
         "properties": {
           "type": {
-            "display-name": "Transaction Category (v1.0.0)",
             "type": "TransactionCategoryType",
           },
         },
@@ -9628,7 +9580,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "docs": "Common fields of the transaction resource used to build other model schemas.",
         "properties": {
           "amount": {
-            "display-name": "Credit Or Debit Value (v1.0.0)",
             "docs": "The transaction amount in dollars. This value is negative if the transaction is a debit and positive if it is a credit.",
             "type": "CreditOrDebitValue",
           },
@@ -9713,12 +9664,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "subtype": {
-            "display-name": "Transaction Subtype (v1.0.0)",
             "docs": "The transaction's kind of debit or credit.",
             "type": "TransactionSubType",
           },
           "type": {
-            "display-name": "Transaction Type (v2.0.0)",
             "docs": "The transaction type. If the \`type\` is \`debit\` or \`credit\`, the \`subtype\` conveys further transaction type details.",
             "type": "TransactionType",
           },
@@ -9882,7 +9831,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "docs": "A reference to a banking account used within an account to account transfer. This object may be set from an account's \`account.reference\` object.",
         "properties": {
           "id": {
-            "display-name": "Resource Identifier (v1.0.0)",
             "docs": "The unique ID of a banking account.",
             "type": "ResourceId",
           },
@@ -9943,7 +9891,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "reason": {
-            "display-name": "Transfer Date Restriction Type (v1.0.0)",
             "docs": "Indicates why this date is restricted.",
             "type": "TransferDateRestrictionType",
           },
@@ -10159,12 +10106,10 @@ The response may include dates prior to requested the start date, as that is use
             "type": "optional<datetime>",
           },
           "schedule": {
-            "display-name": "Transfer Item Schedule (v1.0.0)",
             "docs": "When the transfer should occur and any recurrence.",
             "type": "TransferItemSchedule",
           },
           "state": {
-            "display-name": "Transfer State (v2.0.0)",
             "docs": "The state of this transfer resource.",
             "type": "TransferState",
           },
@@ -10276,7 +10221,6 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             },
           },
           "frequency": {
-            "display-name": "Transfer Frequency (v1.0.0)",
             "type": "TransferFrequency",
           },
           "recurrenceType": {

@@ -11,7 +11,11 @@ import { mapValues as mapValuesLodash } from "lodash-es";
 import { convert, OpenApiConvertedFernDefinition } from "@fern-api/openapi-ir-to-fern";
 import { validateFernWorkspace } from "@fern-api/fern-definition-validator";
 
-const FIXTURES_PATH = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
+const FIXTURES_PATH = join(
+    AbsoluteFilePath.of(__dirname),
+    RelativeFilePath.of("__test__"),
+    RelativeFilePath.of("fixtures")
+);
 
 // eslint-disable-next-line jest/no-export
 export declare namespace TestConvertOpenAPI {

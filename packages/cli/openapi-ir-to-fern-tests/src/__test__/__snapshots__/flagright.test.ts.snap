@@ -1581,7 +1581,6 @@ Each consumer User entity needs three mandatory fields:
           "path": "/consumer/users",
           "request": {
             "body": {
-              "display-name": "User",
               "type": "User",
             },
           },
@@ -1800,7 +1799,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   },
                 },
                 "transactionState": {
-                  "display-name": "TransactionState",
                   "type": "TransactionState",
                 },
                 "updatedTransactionAttributes": "optional<TransactionUpdatable>",
@@ -2108,7 +2106,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
       },
       "ACHPaymentMethod": {
-        "display-name": "ACHPaymentMethod",
         "docs": "Classify the method of payment as "ACH" for ACHDetails",
         "type": "literal<"ACH">",
       },
@@ -2227,7 +2224,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": "Model for amount",
         "properties": {
           "amountCurrency": {
-            "display-name": "CurrencyCode",
             "type": "CurrencyCode",
           },
           "amountValue": {
@@ -2354,39 +2350,30 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "union": {
           "ACH": {
-            "display-name": "ACHDetails",
             "type": "ACHDetails",
           },
           "CARD": {
-            "display-name": "CardDetails",
             "type": "CardDetails",
           },
           "CHECK": {
-            "display-name": "CheckDetails",
             "type": "CheckDetails",
           },
           "GENERIC_BANK_ACCOUNT": {
-            "display-name": "GenericBankAccountDetails",
             "type": "GenericBankAccountDetails",
           },
           "IBAN": {
-            "display-name": "IBANDetails",
             "type": "IBANDetails",
           },
           "MPESA": {
-            "display-name": "MpesaDetails",
             "type": "MpesaDetails",
           },
           "SWIFT": {
-            "display-name": "SWIFTDetails",
             "type": "SWIFTDetails",
           },
           "UPI": {
-            "display-name": "UPIDetails",
             "type": "UPIDetails",
           },
           "WALLET": {
-            "display-name": "WalletDetails",
             "type": "WalletDetails",
           },
         },
@@ -2580,7 +2567,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
       },
       "CardPaymentMethod": {
-        "display-name": "CardPaymentMethod",
         "docs": "Classify the method of payment as "Card" for CardDetails
 ",
         "type": "literal<"CARD">",
@@ -2732,7 +2718,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
       },
       "CheckPaymentMethod": {
-        "display-name": "CheckPaymentMethod",
         "docs": "Classify the method of payment as "CHECK" for CheckDetails",
         "type": "literal<"CHECK">",
       },
@@ -2822,7 +2807,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional<string>",
           },
           "registrationCountry": {
-            "display-name": "CountryCode",
             "type": "CountryCode",
           },
           "registrationIdentifier": {
@@ -3596,7 +3580,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional<RuleNature>",
           },
           "ruleAction": {
-            "display-name": "RuleAction",
             "type": "RuleAction",
           },
           "ruleDescription": {
@@ -3643,7 +3626,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": "Model for list of rules failed execution. It means rules could not be run",
         "properties": {
           "failureException": {
-            "display-name": "RuleFailureException",
             "type": "RuleFailureException",
           },
           "ruleDescription": {
@@ -3692,7 +3674,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
       },
       "GeneralBankAccountPaymentMethod": {
-        "display-name": "GeneralBankAccountPaymentMethod",
         "docs": "Classify the method of payment as "GENERIC_BANK_ACCOUNT" for GenericBankAccountDetails",
         "type": "literal<"GENERIC_BANK_ACCOUNT">",
       },
@@ -3756,7 +3737,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional<RuleNature>",
           },
           "ruleAction": {
-            "display-name": "RuleAction",
             "type": "RuleAction",
           },
           "ruleDescription": {
@@ -3851,7 +3831,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
       },
       "IBANPaymentMethod": {
-        "display-name": "IBANPaymentMethod",
         "docs": "Classify the method of payment as "IBAN" for IBANDetails
 ",
         "type": "literal<"IBAN">",
@@ -3890,7 +3869,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional<double>",
           },
           "documentIssuedCountry": {
-            "display-name": "CountryCode",
             "type": "CountryCode",
           },
           "documentIssuedDate": {
@@ -3936,7 +3914,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional<CompanyFinancialDetails>",
           },
           "companyGeneralDetails": {
-            "display-name": "CompanyGeneralDetails",
             "type": "CompanyGeneralDetails",
           },
           "companyRegistrationDetails": {
@@ -3973,7 +3950,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": "List with ID and header",
         "properties": {
           "header": {
-            "display-name": "ListHeader",
             "type": "ListHeader",
           },
           "items": {
@@ -4124,7 +4100,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
       },
       "MpesaPaymentMethod": {
-        "display-name": "MpesaPaymentMethod",
         "docs": "Classify the method of payment as "Mpesa" for MpesaDetails",
         "type": "literal<"MPESA">",
       },
@@ -4169,7 +4144,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional<ContactDetails>",
           },
           "generalDetails": {
-            "display-name": "UserDetails",
             "type": "UserDetails",
           },
           "legalDocuments": {
@@ -4436,7 +4410,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
       },
       "SWIFTPaymentMethod": {
-        "display-name": "SWIFTPaymentMethod",
         "docs": "Classify the method of payment as "SWIFT" for SWIFTDetails",
         "type": "literal<"SWIFT">",
       },
@@ -4527,7 +4500,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "double",
           },
           "transactionCurrency": {
-            "display-name": "CurrencyCode",
             "type": "CurrencyCode",
           },
         },
@@ -4800,39 +4772,30 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "union": {
           "ACH": {
-            "display-name": "ACHDetails",
             "type": "ACHDetails",
           },
           "CARD": {
-            "display-name": "CardDetails",
             "type": "CardDetails",
           },
           "CHECK": {
-            "display-name": "CheckDetails",
             "type": "CheckDetails",
           },
           "GENERIC_BANK_ACCOUNT": {
-            "display-name": "GenericBankAccountDetails",
             "type": "GenericBankAccountDetails",
           },
           "IBAN": {
-            "display-name": "IBANDetails",
             "type": "IBANDetails",
           },
           "MPESA": {
-            "display-name": "MpesaDetails",
             "type": "MpesaDetails",
           },
           "SWIFT": {
-            "display-name": "SWIFTDetails",
             "type": "SWIFTDetails",
           },
           "UPI": {
-            "display-name": "UPIDetails",
             "type": "UPIDetails",
           },
           "WALLET": {
-            "display-name": "WalletDetails",
             "type": "WalletDetails",
           },
         },
@@ -4848,39 +4811,30 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "union": {
           "ACH": {
-            "display-name": "ACHDetails",
             "type": "ACHDetails",
           },
           "CARD": {
-            "display-name": "CardDetails",
             "type": "CardDetails",
           },
           "CHECK": {
-            "display-name": "CheckDetails",
             "type": "CheckDetails",
           },
           "GENERIC_BANK_ACCOUNT": {
-            "display-name": "GenericBankAccountDetails",
             "type": "GenericBankAccountDetails",
           },
           "IBAN": {
-            "display-name": "IBANDetails",
             "type": "IBANDetails",
           },
           "MPESA": {
-            "display-name": "MpesaDetails",
             "type": "MpesaDetails",
           },
           "SWIFT": {
-            "display-name": "SWIFTDetails",
             "type": "SWIFTDetails",
           },
           "UPI": {
-            "display-name": "UPIDetails",
             "type": "UPIDetails",
           },
           "WALLET": {
-            "display-name": "WalletDetails",
             "type": "WalletDetails",
           },
         },
@@ -4941,7 +4895,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
       },
       "UPIPaymentMethod": {
-        "display-name": "UPIPaymentMethod",
         "docs": "Classify the method of payment as "UPI" for UPIDetails",
         "type": "literal<"UPI">",
       },
@@ -5012,7 +4965,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional<UserDetailsGender>",
           },
           "name": {
-            "display-name": "ConsumerName",
             "type": "ConsumerName",
           },
         },
@@ -5131,7 +5083,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional<string>",
           },
           "state": {
-            "display-name": "UserState",
             "type": "UserState",
           },
           "userId": {
@@ -5193,7 +5144,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
       },
       "WalletPaymentMethod": {
-        "display-name": "WalletPaymentMethod",
         "docs": "Classify the method of payment as "Wallet" for WalletDetails",
         "type": "literal<"WALLET">",
       },
@@ -5211,12 +5161,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
           "data": {
-            "display-name": "UserStateDetails",
             "type": "UserStateDetails",
           },
           "id": "string",
           "type": {
-            "display-name": "WebhookEventType",
             "type": "WebhookEventType",
           },
         },
@@ -6734,7 +6682,6 @@ Each consumer User entity needs three mandatory fields:
           "path": "/consumer/users",
           "request": {
             "body": {
-              "display-name": "User",
               "type": "User",
             },
           },
@@ -6953,7 +6900,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   },
                 },
                 "transactionState": {
-                  "display-name": "TransactionState",
                   "type": "TransactionState",
                 },
                 "updatedTransactionAttributes": "optional<TransactionUpdatable>",
@@ -7261,7 +7207,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
       },
       "ACHPaymentMethod": {
-        "display-name": "ACHPaymentMethod",
         "docs": "Classify the method of payment as "ACH" for ACHDetails",
         "type": "literal<"ACH">",
       },
@@ -7380,7 +7325,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": "Model for amount",
         "properties": {
           "amountCurrency": {
-            "display-name": "CurrencyCode",
             "type": "CurrencyCode",
           },
           "amountValue": {
@@ -7507,39 +7451,30 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "union": {
           "ACH": {
-            "display-name": "ACHDetails",
             "type": "ACHDetails",
           },
           "CARD": {
-            "display-name": "CardDetails",
             "type": "CardDetails",
           },
           "CHECK": {
-            "display-name": "CheckDetails",
             "type": "CheckDetails",
           },
           "GENERIC_BANK_ACCOUNT": {
-            "display-name": "GenericBankAccountDetails",
             "type": "GenericBankAccountDetails",
           },
           "IBAN": {
-            "display-name": "IBANDetails",
             "type": "IBANDetails",
           },
           "MPESA": {
-            "display-name": "MpesaDetails",
             "type": "MpesaDetails",
           },
           "SWIFT": {
-            "display-name": "SWIFTDetails",
             "type": "SWIFTDetails",
           },
           "UPI": {
-            "display-name": "UPIDetails",
             "type": "UPIDetails",
           },
           "WALLET": {
-            "display-name": "WalletDetails",
             "type": "WalletDetails",
           },
         },
@@ -7733,7 +7668,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
       },
       "CardPaymentMethod": {
-        "display-name": "CardPaymentMethod",
         "docs": "Classify the method of payment as "Card" for CardDetails
 ",
         "type": "literal<"CARD">",
@@ -7885,7 +7819,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
       },
       "CheckPaymentMethod": {
-        "display-name": "CheckPaymentMethod",
         "docs": "Classify the method of payment as "CHECK" for CheckDetails",
         "type": "literal<"CHECK">",
       },
@@ -7975,7 +7908,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional<string>",
           },
           "registrationCountry": {
-            "display-name": "CountryCode",
             "type": "CountryCode",
           },
           "registrationIdentifier": {
@@ -8749,7 +8681,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional<RuleNature>",
           },
           "ruleAction": {
-            "display-name": "RuleAction",
             "type": "RuleAction",
           },
           "ruleDescription": {
@@ -8796,7 +8727,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": "Model for list of rules failed execution. It means rules could not be run",
         "properties": {
           "failureException": {
-            "display-name": "RuleFailureException",
             "type": "RuleFailureException",
           },
           "ruleDescription": {
@@ -8845,7 +8775,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
       },
       "GeneralBankAccountPaymentMethod": {
-        "display-name": "GeneralBankAccountPaymentMethod",
         "docs": "Classify the method of payment as "GENERIC_BANK_ACCOUNT" for GenericBankAccountDetails",
         "type": "literal<"GENERIC_BANK_ACCOUNT">",
       },
@@ -8909,7 +8838,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional<RuleNature>",
           },
           "ruleAction": {
-            "display-name": "RuleAction",
             "type": "RuleAction",
           },
           "ruleDescription": {
@@ -9004,7 +8932,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
       },
       "IBANPaymentMethod": {
-        "display-name": "IBANPaymentMethod",
         "docs": "Classify the method of payment as "IBAN" for IBANDetails
 ",
         "type": "literal<"IBAN">",
@@ -9043,7 +8970,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional<double>",
           },
           "documentIssuedCountry": {
-            "display-name": "CountryCode",
             "type": "CountryCode",
           },
           "documentIssuedDate": {
@@ -9089,7 +9015,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional<CompanyFinancialDetails>",
           },
           "companyGeneralDetails": {
-            "display-name": "CompanyGeneralDetails",
             "type": "CompanyGeneralDetails",
           },
           "companyRegistrationDetails": {
@@ -9126,7 +9051,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": "List with ID and header",
         "properties": {
           "header": {
-            "display-name": "ListHeader",
             "type": "ListHeader",
           },
           "items": {
@@ -9277,7 +9201,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
       },
       "MpesaPaymentMethod": {
-        "display-name": "MpesaPaymentMethod",
         "docs": "Classify the method of payment as "Mpesa" for MpesaDetails",
         "type": "literal<"MPESA">",
       },
@@ -9322,7 +9245,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional<ContactDetails>",
           },
           "generalDetails": {
-            "display-name": "UserDetails",
             "type": "UserDetails",
           },
           "legalDocuments": {
@@ -9589,7 +9511,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
       },
       "SWIFTPaymentMethod": {
-        "display-name": "SWIFTPaymentMethod",
         "docs": "Classify the method of payment as "SWIFT" for SWIFTDetails",
         "type": "literal<"SWIFT">",
       },
@@ -9680,7 +9601,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "double",
           },
           "transactionCurrency": {
-            "display-name": "CurrencyCode",
             "type": "CurrencyCode",
           },
         },
@@ -9953,39 +9873,30 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "union": {
           "ACH": {
-            "display-name": "ACHDetails",
             "type": "ACHDetails",
           },
           "CARD": {
-            "display-name": "CardDetails",
             "type": "CardDetails",
           },
           "CHECK": {
-            "display-name": "CheckDetails",
             "type": "CheckDetails",
           },
           "GENERIC_BANK_ACCOUNT": {
-            "display-name": "GenericBankAccountDetails",
             "type": "GenericBankAccountDetails",
           },
           "IBAN": {
-            "display-name": "IBANDetails",
             "type": "IBANDetails",
           },
           "MPESA": {
-            "display-name": "MpesaDetails",
             "type": "MpesaDetails",
           },
           "SWIFT": {
-            "display-name": "SWIFTDetails",
             "type": "SWIFTDetails",
           },
           "UPI": {
-            "display-name": "UPIDetails",
             "type": "UPIDetails",
           },
           "WALLET": {
-            "display-name": "WalletDetails",
             "type": "WalletDetails",
           },
         },
@@ -10001,39 +9912,30 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "union": {
           "ACH": {
-            "display-name": "ACHDetails",
             "type": "ACHDetails",
           },
           "CARD": {
-            "display-name": "CardDetails",
             "type": "CardDetails",
           },
           "CHECK": {
-            "display-name": "CheckDetails",
             "type": "CheckDetails",
           },
           "GENERIC_BANK_ACCOUNT": {
-            "display-name": "GenericBankAccountDetails",
             "type": "GenericBankAccountDetails",
           },
           "IBAN": {
-            "display-name": "IBANDetails",
             "type": "IBANDetails",
           },
           "MPESA": {
-            "display-name": "MpesaDetails",
             "type": "MpesaDetails",
           },
           "SWIFT": {
-            "display-name": "SWIFTDetails",
             "type": "SWIFTDetails",
           },
           "UPI": {
-            "display-name": "UPIDetails",
             "type": "UPIDetails",
           },
           "WALLET": {
-            "display-name": "WalletDetails",
             "type": "WalletDetails",
           },
         },
@@ -10094,7 +9996,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
       },
       "UPIPaymentMethod": {
-        "display-name": "UPIPaymentMethod",
         "docs": "Classify the method of payment as "UPI" for UPIDetails",
         "type": "literal<"UPI">",
       },
@@ -10165,7 +10066,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional<UserDetailsGender>",
           },
           "name": {
-            "display-name": "ConsumerName",
             "type": "ConsumerName",
           },
         },
@@ -10284,7 +10184,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "optional<string>",
           },
           "state": {
-            "display-name": "UserState",
             "type": "UserState",
           },
           "userId": {
@@ -10346,7 +10245,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
       },
       "WalletPaymentMethod": {
-        "display-name": "WalletPaymentMethod",
         "docs": "Classify the method of payment as "Wallet" for WalletDetails",
         "type": "literal<"WALLET">",
       },
@@ -10364,12 +10262,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
           "data": {
-            "display-name": "UserStateDetails",
             "type": "UserStateDetails",
           },
           "id": "string",
           "type": {
-            "display-name": "WebhookEventType",
             "type": "WebhookEventType",
           },
         },

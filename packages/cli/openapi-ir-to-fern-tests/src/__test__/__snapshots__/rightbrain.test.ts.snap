@@ -341,7 +341,6 @@ exports[`rightbrain > rightbrain > docs 1`] = `
                     "type": "optional<string>",
                   },
                   "permissions": {
-                    "display-name": "Permissions",
                     "docs": "A list of permissions to test on the chat.",
                     "type": "list<ChatIamPermissionTestPermissionsItem>",
                   },
@@ -784,7 +783,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
             "request": {
               "body": {
-                "display-name": "CollectionEmbeddingUpdate",
                 "type": "root.CollectionEmbeddingUpdate",
               },
             },
@@ -910,7 +908,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
             "request": {
               "body": {
-                "display-name": "CollectionEmbeddingUpdate",
                 "type": "root.CollectionEmbeddingUpdate",
               },
             },
@@ -1225,7 +1222,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                     "type": "optional<string>",
                   },
                   "permissions": {
-                    "display-name": "Permissions",
                     "docs": "A list of permissions to test on the collection.",
                     "type": "list<CollectionIamPermissionTestPermissionsItem>",
                   },
@@ -1636,11 +1632,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "compose": {
-                    "display-name": "ComposeGenerate",
                     "type": "root.ComposeGenerate",
                   },
                   "context": {
-                    "display-name": "ComposeInit",
                     "type": "root.ComposeInit",
                   },
                 },
@@ -1688,7 +1682,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
             "request": {
               "body": {
-                "display-name": "ComposeInit",
                 "type": "root.ComposeInit",
               },
             },
@@ -1741,15 +1734,12 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "context": {
-                    "display-name": "ComposeInit",
                     "type": "root.ComposeInit",
                   },
                   "existing_content": {
-                    "display-name": "ComposeContent",
                     "type": "root.ComposeContent",
                   },
                   "update_instruction": {
-                    "display-name": "ComposeSectionTalkingPoint",
                     "type": "root.ComposeSectionTalkingPoint",
                   },
                 },
@@ -1862,15 +1852,12 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "context": {
-                    "display-name": "ComposeInit",
                     "type": "root.ComposeInit",
                   },
                   "existing_content": {
-                    "display-name": "ComposeContent",
                     "type": "root.ComposeContent",
                   },
                   "update_instruction": {
-                    "display-name": "ComposeSectionUpdate",
                     "type": "root.ComposeSectionUpdate",
                   },
                 },
@@ -2301,7 +2288,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
             "request": {
               "body": {
-                "display-name": "DatasourceConfiguration",
                 "type": "root.DatasourceConfiguration",
               },
             },
@@ -2727,7 +2713,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
             "request": {
               "body": {
-                "display-name": "DatasourceConfiguration",
                 "type": "root.DatasourceConfiguration",
               },
             },
@@ -3153,7 +3138,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
             "request": {
               "body": {
-                "display-name": "DatasourceConfiguration",
                 "type": "root.DatasourceConfiguration",
               },
             },
@@ -3579,7 +3563,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
             "request": {
               "body": {
-                "display-name": "DatasourceConfiguration",
                 "type": "root.DatasourceConfiguration",
               },
             },
@@ -4005,7 +3988,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
             "request": {
               "body": {
-                "display-name": "DatasourceConfiguration",
                 "type": "root.DatasourceConfiguration",
               },
             },
@@ -4431,7 +4413,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
             "request": {
               "body": {
-                "display-name": "DatasourceConfiguration",
                 "type": "root.DatasourceConfiguration",
               },
             },
@@ -4857,7 +4838,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
             "request": {
               "body": {
-                "display-name": "DatasourceConfiguration",
                 "type": "root.DatasourceConfiguration",
               },
             },
@@ -5535,7 +5515,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                     "type": "optional<string>",
                   },
                   "permissions": {
-                    "display-name": "Permissions",
                     "docs": "A list of permissions to test on the document.",
                     "type": "list<DocumentIamPermissionTestPermissionsItem>",
                   },
@@ -5842,7 +5821,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "session": {
-                    "display-name": "HydraWebhookTokenHookSession",
                     "type": "root.HydraWebhookTokenHookSession",
                   },
                 },
@@ -5894,7 +5872,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "path": "/internal/webhook/kratos/signup_check",
             "request": {
               "body": {
-                "display-name": "KratosWebhook",
                 "type": "root.KratosWebhook",
               },
             },
@@ -5941,7 +5918,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "path": "/internal/webhook/kratos/signup_commit",
             "request": {
               "body": {
-                "display-name": "KratosWebhook",
                 "type": "root.KratosWebhook",
               },
             },
@@ -6792,7 +6768,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                     "type": "optional<string>",
                   },
                   "permissions": {
-                    "display-name": "Permissions",
                     "docs": "A list of permissions to test on the organization.",
                     "type": "list<OrganizationIamPermissionTestPermissionsItem>",
                   },
@@ -7234,7 +7209,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                     "type": "optional<string>",
                   },
                   "permissions": {
-                    "display-name": "Permissions",
                     "docs": "A list of permissions to test on the project.",
                     "type": "list<ProjectIamPermissionTestPermissionsItem>",
                   },
@@ -7857,7 +7831,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                     },
                   },
                   "urls": {
-                    "display-name": "Urls",
                     "type": "list<string>",
                   },
                 },
@@ -9135,7 +9108,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                     "type": "optional<string>",
                   },
                   "permissions": {
-                    "display-name": "Permissions",
                     "docs": "A list of permissions to test on the task.",
                     "type": "list<TaskIamPermissionTestPermissionsItem>",
                   },
@@ -11835,7 +11807,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "properties": {
           "status": "string",
           "task_id": {
-            "display-name": "Task Id",
             "type": "list<string>",
           },
         },
@@ -11854,11 +11825,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -11874,11 +11843,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -11894,11 +11861,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -11914,11 +11879,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -11934,11 +11897,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -11954,11 +11915,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -11974,11 +11933,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -11994,11 +11951,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -12014,11 +11969,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -12034,11 +11987,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -12054,11 +12005,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -12074,11 +12023,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -12094,11 +12041,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -12114,11 +12059,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -12127,7 +12070,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "id": {
-            "display-name": "Id",
             "type": "list<string>",
           },
         },
@@ -12139,7 +12081,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "id": {
-            "display-name": "Id",
             "type": "list<string>",
           },
         },
@@ -12151,7 +12092,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "id": {
-            "display-name": "Id",
             "type": "list<string>",
           },
         },
@@ -12163,7 +12103,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "id": {
-            "display-name": "Id",
             "type": "list<string>",
           },
         },
@@ -12175,7 +12114,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "id": {
-            "display-name": "Id",
             "type": "list<string>",
           },
         },
@@ -12187,7 +12125,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "id": {
-            "display-name": "Id",
             "type": "list<string>",
           },
         },
@@ -12199,7 +12136,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "id": {
-            "display-name": "Id",
             "type": "list<string>",
           },
         },
@@ -12443,11 +12379,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -12479,11 +12413,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -12499,19 +12431,15 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "INVALID_MEMBER": {
-            "display-name": "InvalidMemberErrorResponse",
             "type": "InvalidMemberErrorResponse",
           },
           "INVALID_ROLE": {
-            "display-name": "InvalidRoleErrorResponse",
             "type": "InvalidRoleErrorResponse",
           },
           "INVALID_SUBJECT_TYPE": {
-            "display-name": "InvalidSubjectTypeErrorResponse",
             "type": "InvalidSubjectTypeErrorResponse",
           },
           "MALFORMED_RESOURCE_IDENTIFIER": {
-            "display-name": "MalformedResourceIdentifierErrorResponse",
             "type": "MalformedResourceIdentifierErrorResponse",
           },
         },
@@ -12527,11 +12455,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -12547,23 +12473,18 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "INVALID_MEMBER": {
-            "display-name": "InvalidMemberErrorResponse",
             "type": "InvalidMemberErrorResponse",
           },
           "INVALID_ROLE": {
-            "display-name": "InvalidRoleErrorResponse",
             "type": "InvalidRoleErrorResponse",
           },
           "INVALID_SUBJECT_TYPE": {
-            "display-name": "InvalidSubjectTypeErrorResponse",
             "type": "InvalidSubjectTypeErrorResponse",
           },
           "MALFORMED_RESOURCE_IDENTIFIER": {
-            "display-name": "MalformedResourceIdentifierErrorResponse",
             "type": "MalformedResourceIdentifierErrorResponse",
           },
           "MULTIPLE_ROLES_NOT_ALLOWED": {
-            "display-name": "MultipleRolesNotAllowedErrorResponse",
             "type": "MultipleRolesNotAllowedErrorResponse",
           },
         },
@@ -12579,11 +12500,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -12628,11 +12547,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -12648,11 +12565,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -12668,11 +12583,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -12688,11 +12601,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -12708,11 +12619,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -12728,11 +12637,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -12748,11 +12655,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -12807,11 +12712,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -12836,11 +12739,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -12849,7 +12750,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "embedding_instance_ids": {
-            "display-name": "Embedding Instance Ids",
             "type": "list<string>",
           },
         },
@@ -12868,11 +12768,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -12888,11 +12786,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -12908,19 +12804,15 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "INVALID_MEMBER": {
-            "display-name": "InvalidMemberErrorResponse",
             "type": "InvalidMemberErrorResponse",
           },
           "INVALID_ROLE": {
-            "display-name": "InvalidRoleErrorResponse",
             "type": "InvalidRoleErrorResponse",
           },
           "INVALID_SUBJECT_TYPE": {
-            "display-name": "InvalidSubjectTypeErrorResponse",
             "type": "InvalidSubjectTypeErrorResponse",
           },
           "MALFORMED_RESOURCE_IDENTIFIER": {
-            "display-name": "MalformedResourceIdentifierErrorResponse",
             "type": "MalformedResourceIdentifierErrorResponse",
           },
         },
@@ -12936,11 +12828,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -12956,23 +12846,18 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "INVALID_MEMBER": {
-            "display-name": "InvalidMemberErrorResponse",
             "type": "InvalidMemberErrorResponse",
           },
           "INVALID_ROLE": {
-            "display-name": "InvalidRoleErrorResponse",
             "type": "InvalidRoleErrorResponse",
           },
           "INVALID_SUBJECT_TYPE": {
-            "display-name": "InvalidSubjectTypeErrorResponse",
             "type": "InvalidSubjectTypeErrorResponse",
           },
           "MALFORMED_RESOURCE_IDENTIFIER": {
-            "display-name": "MalformedResourceIdentifierErrorResponse",
             "type": "MalformedResourceIdentifierErrorResponse",
           },
           "MULTIPLE_ROLES_NOT_ALLOWED": {
-            "display-name": "MultipleRolesNotAllowedErrorResponse",
             "type": "MultipleRolesNotAllowedErrorResponse",
           },
         },
@@ -12988,11 +12873,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -13008,11 +12891,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -13028,11 +12909,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -13041,7 +12920,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "documents_by_source": {
-            "display-name": "Documents By Source",
             "type": "list<SourceRow>",
           },
           "number_of_chats": "integer",
@@ -13063,7 +12941,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "structure": {
-            "display-name": "Structure",
             "type": "list<InitialComposeSection>",
           },
         },
@@ -13136,7 +13013,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "instructions": {
-            "display-name": "Instructions",
             "type": "list<string>",
           },
           "position": "integer",
@@ -13176,11 +13052,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -13196,11 +13070,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -13216,11 +13088,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -13236,11 +13106,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -13256,11 +13124,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -13358,7 +13224,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "type": "datetime",
           },
           "datasource": {
-            "display-name": "Datasource",
             "type": "Datasource",
           },
           "datasource_id": {
@@ -13445,11 +13310,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -13465,11 +13328,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -13485,11 +13346,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -13505,11 +13364,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -13525,11 +13382,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -13545,11 +13400,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -13565,11 +13418,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -13585,11 +13436,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -13620,11 +13469,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -13640,11 +13487,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -13660,11 +13505,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -13680,11 +13523,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -13700,11 +13541,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -13720,19 +13559,15 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "INVALID_MEMBER": {
-            "display-name": "InvalidMemberErrorResponse",
             "type": "InvalidMemberErrorResponse",
           },
           "INVALID_ROLE": {
-            "display-name": "InvalidRoleErrorResponse",
             "type": "InvalidRoleErrorResponse",
           },
           "INVALID_SUBJECT_TYPE": {
-            "display-name": "InvalidSubjectTypeErrorResponse",
             "type": "InvalidSubjectTypeErrorResponse",
           },
           "MALFORMED_RESOURCE_IDENTIFIER": {
-            "display-name": "MalformedResourceIdentifierErrorResponse",
             "type": "MalformedResourceIdentifierErrorResponse",
           },
         },
@@ -13748,11 +13583,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -13768,23 +13601,18 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "INVALID_MEMBER": {
-            "display-name": "InvalidMemberErrorResponse",
             "type": "InvalidMemberErrorResponse",
           },
           "INVALID_ROLE": {
-            "display-name": "InvalidRoleErrorResponse",
             "type": "InvalidRoleErrorResponse",
           },
           "INVALID_SUBJECT_TYPE": {
-            "display-name": "InvalidSubjectTypeErrorResponse",
             "type": "InvalidSubjectTypeErrorResponse",
           },
           "MALFORMED_RESOURCE_IDENTIFIER": {
-            "display-name": "MalformedResourceIdentifierErrorResponse",
             "type": "MalformedResourceIdentifierErrorResponse",
           },
           "MULTIPLE_ROLES_NOT_ALLOWED": {
-            "display-name": "MultipleRolesNotAllowedErrorResponse",
             "type": "MultipleRolesNotAllowedErrorResponse",
           },
         },
@@ -13800,11 +13628,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -13820,11 +13646,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -13840,11 +13664,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -13855,7 +13677,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "group_id": "string",
           "task_count": "integer",
           "tasks": {
-            "display-name": "Tasks",
             "type": "list<DocumentCreateTask>",
           },
         },
@@ -13874,11 +13695,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -13894,11 +13713,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -13914,11 +13731,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -13941,11 +13756,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -13961,11 +13774,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -13981,11 +13792,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -14001,11 +13810,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -14021,11 +13828,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -14041,11 +13846,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -14061,11 +13864,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -14081,11 +13882,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -14101,11 +13900,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -14121,11 +13918,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -14141,11 +13936,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -14161,11 +13954,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -14181,11 +13972,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -14201,11 +13990,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -14221,11 +14008,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -14241,11 +14026,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -14261,11 +14044,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -14281,11 +14062,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -14301,11 +14080,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -14326,7 +14103,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "properties": {
           "client_id": "string",
           "id_token": {
-            "display-name": "HydraWebhookTokenHookSessionIDTokenClaims",
             "type": "HydraWebhookTokenHookSessionIDTokenClaims",
           },
         },
@@ -14395,7 +14171,6 @@ Some entities, such as Organizations, may contain members that exist without any
             "type": "optional<string>",
           },
           "permissions": {
-            "display-name": "Permissions",
             "type": "list<string>",
           },
         },
@@ -14423,7 +14198,6 @@ Some entities, such as Organizations, may contain members that exist without any
         "union": [
           "map<string, unknown>",
           {
-            "display-name": "KratosIdentity",
             "type": "KratosIdentity",
           },
         ],
@@ -14452,11 +14226,9 @@ Some entities, such as Organizations, may contain members that exist without any
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -14490,7 +14262,6 @@ Some entities, such as Organizations, may contain members that exist without any
         "docs": undefined,
         "properties": {
           "invalidMemberError": {
-            "display-name": "InvalidMemberErrorDetails",
             "docs": "Metadata detailing more information about the error.",
             "type": "InvalidMemberErrorDetails",
           },
@@ -14519,7 +14290,6 @@ Some entities, such as Organizations, may contain members that exist without any
         "docs": undefined,
         "properties": {
           "invalidRoleError": {
-            "display-name": "InvalidRoleErrorDetails",
             "docs": "Metadata detailing more information about the error.",
             "type": "InvalidRoleErrorDetails",
           },
@@ -14547,7 +14317,6 @@ Some entities, such as Organizations, may contain members that exist without any
         "docs": undefined,
         "properties": {
           "invalidSubjectTypeError": {
-            "display-name": "InvalidSubjectTypeErrorDetails",
             "docs": "Metadata detailing more information about the error.",
             "type": "InvalidSubjectTypeErrorDetails",
           },
@@ -14743,11 +14512,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -14763,11 +14530,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -14783,11 +14548,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -14803,11 +14566,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -14823,11 +14584,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -14843,11 +14602,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -14863,11 +14620,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -14883,11 +14638,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -14903,11 +14656,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -14923,11 +14674,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -15003,7 +14752,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "malformedResourceIdentifierError": {
-            "display-name": "MalformedResourceIdentifierErrorDetails",
             "docs": "Metadata detailing more information about the error.",
             "type": "MalformedResourceIdentifierErrorDetails",
           },
@@ -15024,7 +14772,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "string",
           },
           "missingAuthenticationError": {
-            "display-name": "EmptyErrorDetails",
             "docs": "Metadata detailing more information about the error.",
             "type": "EmptyErrorDetails",
           },
@@ -15040,7 +14787,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "optional<IAMObjectErrorDetails>",
           },
           "roles": {
-            "display-name": "Roles",
             "type": "list<string>",
           },
         },
@@ -15056,7 +14802,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "string",
           },
           "multipleRolesNotAllowedError": {
-            "display-name": "MultipleRolesNotAllowedErrorDetails",
             "docs": "Metadata detailing more information about the error.",
             "type": "MultipleRolesNotAllowedErrorDetails",
           },
@@ -15089,7 +14834,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "client_secret": "string",
           "name": "string",
           "redirect_uris": {
-            "display-name": "Redirect Uris",
             "type": "list<string>",
           },
           "scope": {
@@ -15143,7 +14887,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
       },
       "ObjectList": {
-        "display-name": "ObjectList",
         "type": "list<Object>",
       },
       "ObjectTags": {
@@ -15205,11 +14948,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -15225,11 +14966,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -15245,11 +14984,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -15265,11 +15002,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -15295,15 +15030,12 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MALFORMED_RESOURCE_IDENTIFIER": {
-            "display-name": "MalformedResourceIdentifierErrorResponse",
             "type": "MalformedResourceIdentifierErrorResponse",
           },
           "ORGANIZATION_INVITE_ALREADY_EXISTS": {
-            "display-name": "OrganizationInviteAlreadyExistsErrorResponse",
             "type": "OrganizationInviteAlreadyExistsErrorResponse",
           },
           "ORGANIZATION_MEMBER_ALREADY_EXISTS": {
-            "display-name": "OrganizationMemberAlreadyExistsErrorResponse",
             "type": "OrganizationMemberAlreadyExistsErrorResponse",
           },
         },
@@ -15319,11 +15051,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -15339,11 +15069,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -15359,11 +15087,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -15379,11 +15105,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -15410,11 +15134,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -15430,11 +15152,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -15471,11 +15191,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -15491,11 +15209,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -15511,19 +15227,15 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "INVALID_MEMBER": {
-            "display-name": "InvalidMemberErrorResponse",
             "type": "InvalidMemberErrorResponse",
           },
           "INVALID_ROLE": {
-            "display-name": "InvalidRoleErrorResponse",
             "type": "InvalidRoleErrorResponse",
           },
           "INVALID_SUBJECT_TYPE": {
-            "display-name": "InvalidSubjectTypeErrorResponse",
             "type": "InvalidSubjectTypeErrorResponse",
           },
           "MALFORMED_RESOURCE_IDENTIFIER": {
-            "display-name": "MalformedResourceIdentifierErrorResponse",
             "type": "MalformedResourceIdentifierErrorResponse",
           },
         },
@@ -15539,11 +15251,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -15559,23 +15269,18 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "INVALID_MEMBER": {
-            "display-name": "InvalidMemberErrorResponse",
             "type": "InvalidMemberErrorResponse",
           },
           "INVALID_ROLE": {
-            "display-name": "InvalidRoleErrorResponse",
             "type": "InvalidRoleErrorResponse",
           },
           "INVALID_SUBJECT_TYPE": {
-            "display-name": "InvalidSubjectTypeErrorResponse",
             "type": "InvalidSubjectTypeErrorResponse",
           },
           "MALFORMED_RESOURCE_IDENTIFIER": {
-            "display-name": "MalformedResourceIdentifierErrorResponse",
             "type": "MalformedResourceIdentifierErrorResponse",
           },
           "MULTIPLE_ROLES_NOT_ALLOWED": {
-            "display-name": "MultipleRolesNotAllowedErrorResponse",
             "type": "MultipleRolesNotAllowedErrorResponse",
           },
         },
@@ -15591,11 +15296,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -15647,7 +15350,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "string",
           },
           "organizationInviteAlreadyExistsError": {
-            "display-name": "OrganizationInviteAlreadyExistsErrorDetails",
             "docs": "Metadata detailing more information about the error.",
             "type": "OrganizationInviteAlreadyExistsErrorDetails",
           },
@@ -15674,7 +15376,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "string",
           },
           "organizationMemberAlreadyExistsError": {
-            "display-name": "OrganizationMemberAlreadyExistsErrorDetails",
             "docs": "Metadata detailing more information about the error.",
             "type": "OrganizationMemberAlreadyExistsErrorDetails",
           },
@@ -15687,7 +15388,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "name": {
-            "display-name": "Name",
             "type": "literal<"source_validation">",
           },
         },
@@ -15703,7 +15403,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "optional<PaginationDetails>",
           },
           "results": {
-            "display-name": "Results",
             "docs": "The list of items returned for the current page.",
             "type": "list<Chat>",
           },
@@ -15720,7 +15419,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "optional<PaginationDetails>",
           },
           "results": {
-            "display-name": "Results",
             "docs": "The list of items returned for the current page.",
             "type": "list<ChatDocument>",
           },
@@ -15737,7 +15435,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "optional<PaginationDetails>",
           },
           "results": {
-            "display-name": "Results",
             "docs": "The list of items returned for the current page.",
             "type": "list<ChatDocumentEmbeddingRecord>",
           },
@@ -15754,7 +15451,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "optional<PaginationDetails>",
           },
           "results": {
-            "display-name": "Results",
             "docs": "The list of items returned for the current page.",
             "type": "list<Collection>",
           },
@@ -15771,7 +15467,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "optional<PaginationDetails>",
           },
           "results": {
-            "display-name": "Results",
             "docs": "The list of items returned for the current page.",
             "type": "list<DatasourceSyncRun>",
           },
@@ -15788,7 +15483,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "optional<PaginationDetails>",
           },
           "results": {
-            "display-name": "Results",
             "docs": "The list of items returned for the current page.",
             "type": "list<IAMMember>",
           },
@@ -15805,7 +15499,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "optional<PaginationDetails>",
           },
           "results": {
-            "display-name": "Results",
             "docs": "The list of items returned for the current page.",
             "type": "list<OrganizationDomain>",
           },
@@ -15822,7 +15515,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "optional<PaginationDetails>",
           },
           "results": {
-            "display-name": "Results",
             "docs": "The list of items returned for the current page.",
             "type": "list<OrganizationInvite>",
           },
@@ -15839,7 +15531,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "optional<PaginationDetails>",
           },
           "results": {
-            "display-name": "Results",
             "docs": "The list of items returned for the current page.",
             "type": "list<Project>",
           },
@@ -15856,7 +15547,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "optional<PaginationDetails>",
           },
           "results": {
-            "display-name": "Results",
             "docs": "The list of items returned for the current page.",
             "type": "list<Task>",
           },
@@ -15873,7 +15563,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "optional<PaginationDetails>",
           },
           "results": {
-            "display-name": "Results",
             "docs": "The list of items returned for the current page.",
             "type": "list<TaskForwarder>",
           },
@@ -15890,7 +15579,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "optional<PaginationDetails>",
           },
           "results": {
-            "display-name": "Results",
             "docs": "The list of items returned for the current page.",
             "type": "list<TaskRun>",
           },
@@ -15942,7 +15630,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "string",
           },
           "permissionCheckFailedError": {
-            "display-name": "PermissionCheckFailedErrorDetails",
             "docs": "Metadata detailing more information about the error.",
             "type": "PermissionCheckFailedErrorDetails",
           },
@@ -16039,11 +15726,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -16059,11 +15744,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -16079,19 +15762,15 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "INVALID_MEMBER": {
-            "display-name": "InvalidMemberErrorResponse",
             "type": "InvalidMemberErrorResponse",
           },
           "INVALID_ROLE": {
-            "display-name": "InvalidRoleErrorResponse",
             "type": "InvalidRoleErrorResponse",
           },
           "INVALID_SUBJECT_TYPE": {
-            "display-name": "InvalidSubjectTypeErrorResponse",
             "type": "InvalidSubjectTypeErrorResponse",
           },
           "MALFORMED_RESOURCE_IDENTIFIER": {
-            "display-name": "MalformedResourceIdentifierErrorResponse",
             "type": "MalformedResourceIdentifierErrorResponse",
           },
         },
@@ -16107,11 +15786,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -16127,23 +15804,18 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "INVALID_MEMBER": {
-            "display-name": "InvalidMemberErrorResponse",
             "type": "InvalidMemberErrorResponse",
           },
           "INVALID_ROLE": {
-            "display-name": "InvalidRoleErrorResponse",
             "type": "InvalidRoleErrorResponse",
           },
           "INVALID_SUBJECT_TYPE": {
-            "display-name": "InvalidSubjectTypeErrorResponse",
             "type": "InvalidSubjectTypeErrorResponse",
           },
           "MALFORMED_RESOURCE_IDENTIFIER": {
-            "display-name": "MalformedResourceIdentifierErrorResponse",
             "type": "MalformedResourceIdentifierErrorResponse",
           },
           "MULTIPLE_ROLES_NOT_ALLOWED": {
-            "display-name": "MultipleRolesNotAllowedErrorResponse",
             "type": "MultipleRolesNotAllowedErrorResponse",
           },
         },
@@ -16159,11 +15831,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -16179,11 +15849,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -16241,11 +15909,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -16261,11 +15927,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -16281,11 +15945,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -16301,11 +15963,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -16321,11 +15981,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -16341,11 +15999,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -16361,11 +16017,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -16381,11 +16035,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -16401,11 +16053,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -16421,11 +16071,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -16441,11 +16089,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -16461,11 +16107,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -16481,11 +16125,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -16501,11 +16143,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -16604,7 +16244,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             },
           },
           "revisions": {
-            "display-name": "Revisions",
             "docs": "Each update to a Task results in a new Revision being created. Task Revisions are a powerful concept that can be used to assist with A/B testing, comparing responses from different LLM's, etc.",
             "type": "list<TaskRevision>",
           },
@@ -16700,11 +16339,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -16720,11 +16357,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -16740,19 +16375,15 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "INVALID_MEMBER": {
-            "display-name": "InvalidMemberErrorResponse",
             "type": "InvalidMemberErrorResponse",
           },
           "INVALID_ROLE": {
-            "display-name": "InvalidRoleErrorResponse",
             "type": "InvalidRoleErrorResponse",
           },
           "INVALID_SUBJECT_TYPE": {
-            "display-name": "InvalidSubjectTypeErrorResponse",
             "type": "InvalidSubjectTypeErrorResponse",
           },
           "MALFORMED_RESOURCE_IDENTIFIER": {
-            "display-name": "MalformedResourceIdentifierErrorResponse",
             "type": "MalformedResourceIdentifierErrorResponse",
           },
         },
@@ -16768,11 +16399,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -16788,23 +16417,18 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "INVALID_MEMBER": {
-            "display-name": "InvalidMemberErrorResponse",
             "type": "InvalidMemberErrorResponse",
           },
           "INVALID_ROLE": {
-            "display-name": "InvalidRoleErrorResponse",
             "type": "InvalidRoleErrorResponse",
           },
           "INVALID_SUBJECT_TYPE": {
-            "display-name": "InvalidSubjectTypeErrorResponse",
             "type": "InvalidSubjectTypeErrorResponse",
           },
           "MALFORMED_RESOURCE_IDENTIFIER": {
-            "display-name": "MalformedResourceIdentifierErrorResponse",
             "type": "MalformedResourceIdentifierErrorResponse",
           },
           "MULTIPLE_ROLES_NOT_ALLOWED": {
-            "display-name": "MultipleRolesNotAllowedErrorResponse",
             "type": "MultipleRolesNotAllowedErrorResponse",
           },
         },
@@ -16820,11 +16444,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -17056,11 +16678,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -17076,11 +16696,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -17107,11 +16725,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -17127,11 +16743,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -17147,11 +16761,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -17167,11 +16779,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -17187,11 +16797,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -17233,7 +16841,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "loc": {
-            "display-name": "Location",
             "type": "list<ValidationErrorLocItem>",
           },
           "msg": "string",
@@ -17614,7 +17221,6 @@ exports[`rightbrain > rightbrain > simple 1`] = `
                     "type": "optional<string>",
                   },
                   "permissions": {
-                    "display-name": "Permissions",
                     "docs": "A list of permissions to test on the chat.",
                     "type": "list<ChatIamPermissionTestPermissionsItem>",
                   },
@@ -18057,7 +17663,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
             "request": {
               "body": {
-                "display-name": "CollectionEmbeddingUpdate",
                 "type": "root.CollectionEmbeddingUpdate",
               },
             },
@@ -18183,7 +17788,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
             "request": {
               "body": {
-                "display-name": "CollectionEmbeddingUpdate",
                 "type": "root.CollectionEmbeddingUpdate",
               },
             },
@@ -18498,7 +18102,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                     "type": "optional<string>",
                   },
                   "permissions": {
-                    "display-name": "Permissions",
                     "docs": "A list of permissions to test on the collection.",
                     "type": "list<CollectionIamPermissionTestPermissionsItem>",
                   },
@@ -18909,11 +18512,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "compose": {
-                    "display-name": "ComposeGenerate",
                     "type": "root.ComposeGenerate",
                   },
                   "context": {
-                    "display-name": "ComposeInit",
                     "type": "root.ComposeInit",
                   },
                 },
@@ -18961,7 +18562,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
             "request": {
               "body": {
-                "display-name": "ComposeInit",
                 "type": "root.ComposeInit",
               },
             },
@@ -19014,15 +18614,12 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "context": {
-                    "display-name": "ComposeInit",
                     "type": "root.ComposeInit",
                   },
                   "existing_content": {
-                    "display-name": "ComposeContent",
                     "type": "root.ComposeContent",
                   },
                   "update_instruction": {
-                    "display-name": "ComposeSectionTalkingPoint",
                     "type": "root.ComposeSectionTalkingPoint",
                   },
                 },
@@ -19135,15 +18732,12 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "context": {
-                    "display-name": "ComposeInit",
                     "type": "root.ComposeInit",
                   },
                   "existing_content": {
-                    "display-name": "ComposeContent",
                     "type": "root.ComposeContent",
                   },
                   "update_instruction": {
-                    "display-name": "ComposeSectionUpdate",
                     "type": "root.ComposeSectionUpdate",
                   },
                 },
@@ -19574,7 +19168,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
             "request": {
               "body": {
-                "display-name": "DatasourceConfiguration",
                 "type": "root.DatasourceConfiguration",
               },
             },
@@ -20000,7 +19593,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
             "request": {
               "body": {
-                "display-name": "DatasourceConfiguration",
                 "type": "root.DatasourceConfiguration",
               },
             },
@@ -20426,7 +20018,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
             "request": {
               "body": {
-                "display-name": "DatasourceConfiguration",
                 "type": "root.DatasourceConfiguration",
               },
             },
@@ -20852,7 +20443,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
             "request": {
               "body": {
-                "display-name": "DatasourceConfiguration",
                 "type": "root.DatasourceConfiguration",
               },
             },
@@ -21278,7 +20868,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
             "request": {
               "body": {
-                "display-name": "DatasourceConfiguration",
                 "type": "root.DatasourceConfiguration",
               },
             },
@@ -21704,7 +21293,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
             "request": {
               "body": {
-                "display-name": "DatasourceConfiguration",
                 "type": "root.DatasourceConfiguration",
               },
             },
@@ -22130,7 +21718,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
             "request": {
               "body": {
-                "display-name": "DatasourceConfiguration",
                 "type": "root.DatasourceConfiguration",
               },
             },
@@ -22808,7 +22395,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                     "type": "optional<string>",
                   },
                   "permissions": {
-                    "display-name": "Permissions",
                     "docs": "A list of permissions to test on the document.",
                     "type": "list<DocumentIamPermissionTestPermissionsItem>",
                   },
@@ -23115,7 +22701,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "session": {
-                    "display-name": "HydraWebhookTokenHookSession",
                     "type": "root.HydraWebhookTokenHookSession",
                   },
                 },
@@ -23167,7 +22752,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "path": "/internal/webhook/kratos/signup_check",
             "request": {
               "body": {
-                "display-name": "KratosWebhook",
                 "type": "root.KratosWebhook",
               },
             },
@@ -23214,7 +22798,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "path": "/internal/webhook/kratos/signup_commit",
             "request": {
               "body": {
-                "display-name": "KratosWebhook",
                 "type": "root.KratosWebhook",
               },
             },
@@ -24065,7 +23648,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                     "type": "optional<string>",
                   },
                   "permissions": {
-                    "display-name": "Permissions",
                     "docs": "A list of permissions to test on the organization.",
                     "type": "list<OrganizationIamPermissionTestPermissionsItem>",
                   },
@@ -24507,7 +24089,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                     "type": "optional<string>",
                   },
                   "permissions": {
-                    "display-name": "Permissions",
                     "docs": "A list of permissions to test on the project.",
                     "type": "list<ProjectIamPermissionTestPermissionsItem>",
                   },
@@ -25130,7 +24711,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                     },
                   },
                   "urls": {
-                    "display-name": "Urls",
                     "type": "list<string>",
                   },
                 },
@@ -26408,7 +25988,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                     "type": "optional<string>",
                   },
                   "permissions": {
-                    "display-name": "Permissions",
                     "docs": "A list of permissions to test on the task.",
                     "type": "list<TaskIamPermissionTestPermissionsItem>",
                   },
@@ -26897,7 +26476,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "properties": {
           "status": "string",
           "task_id": {
-            "display-name": "Task Id",
             "type": "list<string>",
           },
         },
@@ -26916,19 +26494,15 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "INVALID_MEMBER": {
-            "display-name": "InvalidMemberErrorResponse",
             "type": "InvalidMemberErrorResponse",
           },
           "INVALID_ROLE": {
-            "display-name": "InvalidRoleErrorResponse",
             "type": "InvalidRoleErrorResponse",
           },
           "INVALID_SUBJECT_TYPE": {
-            "display-name": "InvalidSubjectTypeErrorResponse",
             "type": "InvalidSubjectTypeErrorResponse",
           },
           "MALFORMED_RESOURCE_IDENTIFIER": {
-            "display-name": "MalformedResourceIdentifierErrorResponse",
             "type": "MalformedResourceIdentifierErrorResponse",
           },
         },
@@ -26937,7 +26511,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "id": {
-            "display-name": "Id",
             "type": "list<string>",
           },
         },
@@ -26949,7 +26522,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "id": {
-            "display-name": "Id",
             "type": "list<string>",
           },
         },
@@ -26961,7 +26533,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "id": {
-            "display-name": "Id",
             "type": "list<string>",
           },
         },
@@ -26973,7 +26544,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "id": {
-            "display-name": "Id",
             "type": "list<string>",
           },
         },
@@ -26985,7 +26555,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "id": {
-            "display-name": "Id",
             "type": "list<string>",
           },
         },
@@ -26997,7 +26566,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "id": {
-            "display-name": "Id",
             "type": "list<string>",
           },
         },
@@ -27009,7 +26577,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "id": {
-            "display-name": "Id",
             "type": "list<string>",
           },
         },
@@ -27339,7 +26906,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "embedding_instance_ids": {
-            "display-name": "Embedding Instance Ids",
             "type": "list<string>",
           },
         },
@@ -27351,7 +26917,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "documents_by_source": {
-            "display-name": "Documents By Source",
             "type": "list<SourceRow>",
           },
           "number_of_chats": "integer",
@@ -27373,7 +26938,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "structure": {
-            "display-name": "Structure",
             "type": "list<InitialComposeSection>",
           },
         },
@@ -27446,7 +27010,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "instructions": {
-            "display-name": "Instructions",
             "type": "list<string>",
           },
           "position": "integer",
@@ -27568,7 +27131,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "type": "datetime",
           },
           "datasource": {
-            "display-name": "Datasource",
             "type": "Datasource",
           },
           "datasource_id": {
@@ -27665,7 +27227,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "group_id": "string",
           "task_count": "integer",
           "tasks": {
-            "display-name": "Tasks",
             "type": "list<DocumentCreateTask>",
           },
         },
@@ -27691,11 +27252,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         },
         "union": {
           "MISSING_AUTHENTICATION": {
-            "display-name": "MissingAuthenticationErrorResponse",
             "type": "MissingAuthenticationErrorResponse",
           },
           "PERMISSION_CHECK_FAILED": {
-            "display-name": "PermissionCheckFailedErrorResponse",
             "type": "PermissionCheckFailedErrorResponse",
           },
         },
@@ -27716,7 +27275,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "properties": {
           "client_id": "string",
           "id_token": {
-            "display-name": "HydraWebhookTokenHookSessionIDTokenClaims",
             "type": "HydraWebhookTokenHookSessionIDTokenClaims",
           },
         },
@@ -27785,7 +27343,6 @@ Some entities, such as Organizations, may contain members that exist without any
             "type": "optional<string>",
           },
           "permissions": {
-            "display-name": "Permissions",
             "type": "list<string>",
           },
         },
@@ -27813,7 +27370,6 @@ Some entities, such as Organizations, may contain members that exist without any
         "union": [
           "map<string, unknown>",
           {
-            "display-name": "KratosIdentity",
             "type": "KratosIdentity",
           },
         ],
@@ -27860,7 +27416,6 @@ Some entities, such as Organizations, may contain members that exist without any
         "docs": undefined,
         "properties": {
           "invalidMemberError": {
-            "display-name": "InvalidMemberErrorDetails",
             "docs": "Metadata detailing more information about the error.",
             "type": "InvalidMemberErrorDetails",
           },
@@ -27889,7 +27444,6 @@ Some entities, such as Organizations, may contain members that exist without any
         "docs": undefined,
         "properties": {
           "invalidRoleError": {
-            "display-name": "InvalidRoleErrorDetails",
             "docs": "Metadata detailing more information about the error.",
             "type": "InvalidRoleErrorDetails",
           },
@@ -27917,7 +27471,6 @@ Some entities, such as Organizations, may contain members that exist without any
         "docs": undefined,
         "properties": {
           "invalidSubjectTypeError": {
-            "display-name": "InvalidSubjectTypeErrorDetails",
             "docs": "Metadata detailing more information about the error.",
             "type": "InvalidSubjectTypeErrorDetails",
           },
@@ -28173,7 +27726,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "malformedResourceIdentifierError": {
-            "display-name": "MalformedResourceIdentifierErrorDetails",
             "docs": "Metadata detailing more information about the error.",
             "type": "MalformedResourceIdentifierErrorDetails",
           },
@@ -28194,7 +27746,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "string",
           },
           "missingAuthenticationError": {
-            "display-name": "EmptyErrorDetails",
             "docs": "Metadata detailing more information about the error.",
             "type": "EmptyErrorDetails",
           },
@@ -28210,7 +27761,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "optional<IAMObjectErrorDetails>",
           },
           "roles": {
-            "display-name": "Roles",
             "type": "list<string>",
           },
         },
@@ -28226,7 +27776,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "string",
           },
           "multipleRolesNotAllowedError": {
-            "display-name": "MultipleRolesNotAllowedErrorDetails",
             "docs": "Metadata detailing more information about the error.",
             "type": "MultipleRolesNotAllowedErrorDetails",
           },
@@ -28259,7 +27808,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "client_secret": "string",
           "name": "string",
           "redirect_uris": {
-            "display-name": "Redirect Uris",
             "type": "list<string>",
           },
           "scope": {
@@ -28313,7 +27861,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         },
       },
       "ObjectList": {
-        "display-name": "ObjectList",
         "type": "list<Object>",
       },
       "ObjectTags": {
@@ -28453,7 +28000,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "string",
           },
           "organizationInviteAlreadyExistsError": {
-            "display-name": "OrganizationInviteAlreadyExistsErrorDetails",
             "docs": "Metadata detailing more information about the error.",
             "type": "OrganizationInviteAlreadyExistsErrorDetails",
           },
@@ -28480,7 +28026,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "string",
           },
           "organizationMemberAlreadyExistsError": {
-            "display-name": "OrganizationMemberAlreadyExistsErrorDetails",
             "docs": "Metadata detailing more information about the error.",
             "type": "OrganizationMemberAlreadyExistsErrorDetails",
           },
@@ -28493,7 +28038,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "name": {
-            "display-name": "Name",
             "type": "literal<"source_validation">",
           },
         },
@@ -28509,7 +28053,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "optional<PaginationDetails>",
           },
           "results": {
-            "display-name": "Results",
             "docs": "The list of items returned for the current page.",
             "type": "list<Chat>",
           },
@@ -28526,7 +28069,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "optional<PaginationDetails>",
           },
           "results": {
-            "display-name": "Results",
             "docs": "The list of items returned for the current page.",
             "type": "list<ChatDocument>",
           },
@@ -28543,7 +28085,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "optional<PaginationDetails>",
           },
           "results": {
-            "display-name": "Results",
             "docs": "The list of items returned for the current page.",
             "type": "list<ChatDocumentEmbeddingRecord>",
           },
@@ -28560,7 +28101,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "optional<PaginationDetails>",
           },
           "results": {
-            "display-name": "Results",
             "docs": "The list of items returned for the current page.",
             "type": "list<Collection>",
           },
@@ -28577,7 +28117,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "optional<PaginationDetails>",
           },
           "results": {
-            "display-name": "Results",
             "docs": "The list of items returned for the current page.",
             "type": "list<DatasourceSyncRun>",
           },
@@ -28594,7 +28133,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "optional<PaginationDetails>",
           },
           "results": {
-            "display-name": "Results",
             "docs": "The list of items returned for the current page.",
             "type": "list<IAMMember>",
           },
@@ -28611,7 +28149,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "optional<PaginationDetails>",
           },
           "results": {
-            "display-name": "Results",
             "docs": "The list of items returned for the current page.",
             "type": "list<OrganizationDomain>",
           },
@@ -28628,7 +28165,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "optional<PaginationDetails>",
           },
           "results": {
-            "display-name": "Results",
             "docs": "The list of items returned for the current page.",
             "type": "list<OrganizationInvite>",
           },
@@ -28645,7 +28181,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "optional<PaginationDetails>",
           },
           "results": {
-            "display-name": "Results",
             "docs": "The list of items returned for the current page.",
             "type": "list<Project>",
           },
@@ -28662,7 +28197,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "optional<PaginationDetails>",
           },
           "results": {
-            "display-name": "Results",
             "docs": "The list of items returned for the current page.",
             "type": "list<Task>",
           },
@@ -28679,7 +28213,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "optional<PaginationDetails>",
           },
           "results": {
-            "display-name": "Results",
             "docs": "The list of items returned for the current page.",
             "type": "list<TaskForwarder>",
           },
@@ -28696,7 +28229,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "optional<PaginationDetails>",
           },
           "results": {
-            "display-name": "Results",
             "docs": "The list of items returned for the current page.",
             "type": "list<TaskRun>",
           },
@@ -28748,7 +28280,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "string",
           },
           "permissionCheckFailedError": {
-            "display-name": "PermissionCheckFailedErrorDetails",
             "docs": "Metadata detailing more information about the error.",
             "type": "PermissionCheckFailedErrorDetails",
           },
@@ -28970,7 +28501,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             },
           },
           "revisions": {
-            "display-name": "Revisions",
             "docs": "Each update to a Task results in a new Revision being created. Task Revisions are a powerful concept that can be used to assist with A/B testing, comparing responses from different LLM's, etc.",
             "type": "list<TaskRevision>",
           },
@@ -29319,7 +28849,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "loc": {
-            "display-name": "Location",
             "type": "list<ValidationErrorLocItem>",
           },
           "msg": "string",

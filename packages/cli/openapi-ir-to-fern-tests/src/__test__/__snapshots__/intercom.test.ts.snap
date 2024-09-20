@@ -1520,7 +1520,6 @@ You can view the currently authorised admin along with the embedded app object (
             "path": "/articles",
             "request": {
               "body": {
-                "display-name": "Create Article Request Payload",
                 "type": "optional<root.CreateArticleRequest>",
               },
               "headers": {
@@ -3150,7 +3149,6 @@ You can view the currently authorised admin along with the embedded app object (
             },
             "request": {
               "body": {
-                "display-name": "Update Article Request Payload",
                 "type": "optional<root.UpdateArticleRequest>",
               },
               "headers": {
@@ -4030,7 +4028,6 @@ Companies are looked up via \`company_id\` in a \`POST\` request, if not found v
             "path": "/companies",
             "request": {
               "body": {
-                "display-name": "Create Or Update Company Request Payload",
                 "type": "optional<root.CreateOrUpdateCompanyRequest>",
               },
               "headers": {
@@ -5361,7 +5358,6 @@ The table below shows the operators you can use to define how you want to search
             "path": "/contacts/search",
             "request": {
               "body": {
-                "display-name": "Search data",
                 "type": "root.SearchRequest",
               },
               "headers": {
@@ -12199,7 +12195,6 @@ The table below shows the operators you can use to define how you want to search
             "path": "/conversations/search",
             "request": {
               "body": {
-                "display-name": "Search data",
                 "type": "root.SearchRequest",
               },
               "headers": {
@@ -12738,15 +12733,12 @@ If you want to reply to a coveration or take an action such as assign, unassign,
           },
           "union": [
             {
-              "display-name": "Intercom User ID",
               "type": "AttachContactToConversationRequestCustomerIntercomUserId",
             },
             {
-              "display-name": "User ID",
               "type": "AttachContactToConversationRequestCustomerUserId",
             },
             {
-              "display-name": "Email",
               "type": "Email",
             },
           ],
@@ -12961,19 +12953,15 @@ If you want to reply to a coveration or take an action such as assign, unassign,
           },
           "union": {
             "assignment": {
-              "display-name": "Assign Conversation Request",
               "type": "root.AssignConversationRequest",
             },
             "close": {
-              "display-name": "Close Conversation Request",
               "type": "root.CloseConversationRequest",
             },
             "open": {
-              "display-name": "Open Conversation Request",
               "type": "root.OpenConversationRequest",
             },
             "snoozed": {
-              "display-name": "Snooze Conversation Request",
               "type": "root.SnoozeConversationRequest",
             },
           },
@@ -14282,15 +14270,12 @@ You can optionally define the result page size as well with the \`per_page\` par
           },
           "union": [
             {
-              "display-name": "user_id query parameter",
               "type": "LisDataEventsRequestFilterUserId",
             },
             {
-              "display-name": "intercom_user_id query parameter",
               "type": "LisDataEventsRequestFilterIntercomUserId",
             },
             {
-              "display-name": "email query parameter",
               "type": "LisDataEventsRequestFilterEmail",
             },
           ],
@@ -16515,7 +16500,6 @@ This will return the Message model that has been created.
             "path": "/news/news_items",
             "request": {
               "body": {
-                "display-name": "Create News Item Request",
                 "type": "root.NewsItemRequest",
               },
               "headers": {
@@ -16981,7 +16965,6 @@ This will return the Message model that has been created.
             },
             "request": {
               "body": {
-                "display-name": "Create News Item Request",
                 "type": "root.NewsItemRequest",
               },
               "headers": {
@@ -18194,7 +18177,6 @@ If custom attributes are specified, they will be added to the user or lead's cus
             "path": "/phone_call_redirects",
             "request": {
               "body": {
-                "display-name": "Create Phone Switch Request Payload",
                 "type": "optional<root.CreatePhoneSwitchRequest>",
               },
               "headers": {
@@ -19065,19 +19047,15 @@ This will return a tag object.
           },
           "union": [
             {
-              "display-name": "Create or Update Tag Request Payload",
               "type": "root.CreateOrUpdateTagRequest",
             },
             {
-              "display-name": "Tag Company Request Payload",
               "type": "root.TagCompanyRequest",
             },
             {
-              "display-name": "Untag Company Request Payload",
               "type": "root.UntagCompanyRequest",
             },
             {
-              "display-name": "Tag Users Request Payload",
               "type": "root.TagMultipleUsersRequest",
             },
           ],
@@ -19601,7 +19579,6 @@ This will return a tag object.
             "path": "/ticket_types",
             "request": {
               "body": {
-                "display-name": "Create Ticket Type Request Payload",
                 "type": "optional<root.CreateTicketTypeRequest>",
               },
               "headers": {
@@ -19814,7 +19791,6 @@ You can update a ticket type.
             },
             "request": {
               "body": {
-                "display-name": "Update Ticket Type Request Payload",
                 "type": "optional<root.UpdateTicketTypeRequest>",
               },
               "headers": {
@@ -20660,7 +20636,6 @@ The table below shows the operators you can use to define how you want to search
             "path": "/tickets/search",
             "request": {
               "body": {
-                "display-name": "Search data",
                 "type": "root.SearchRequest",
               },
               "headers": {
@@ -21484,15 +21459,12 @@ The table below shows the operators you can use to define how you want to search
           },
           "union": [
             {
-              "display-name": "ID",
               "type": "ID",
             },
             {
-              "display-name": "External ID",
               "type": "CreateTicketRequestContactsItemExternalId",
             },
             {
-              "display-name": "Email",
               "type": "Email",
             },
           ],
@@ -21542,11 +21514,9 @@ The table below shows the operators you can use to define how you want to search
           },
           "union": [
             {
-              "display-name": "Contact Reply on ticket",
               "type": "root.ContactReplyTicketRequest",
             },
             {
-              "display-name": "Admin Reply on ticket",
               "type": "root.AdminReplyTicketRequest",
             },
           ],
@@ -27432,15 +27402,12 @@ The table below shows the operators you can use to define how you want to search
         },
         "union": [
           {
-            "display-name": "Intercom User ID",
             "type": "ContactReplyIntercomUserIdRequest",
           },
           {
-            "display-name": "Email",
             "type": "Email",
           },
           {
-            "display-name": "User ID",
             "type": "ContactReplyUserIdRequest",
           },
         ],
@@ -27488,15 +27455,12 @@ The table below shows the operators you can use to define how you want to search
         },
         "union": [
           {
-            "display-name": "Intercom User ID",
             "type": "ContactReplyTicketIntercomUserIdRequest",
           },
           {
-            "display-name": "User ID",
             "type": "ContactReplyTicketUserIdRequest",
           },
           {
-            "display-name": "Email",
             "type": "Email",
           },
         ],
@@ -28139,11 +28103,9 @@ The table below shows the operators you can use to define how you want to search
         },
         "union": [
           {
-            "display-name": "Contact Reply on ticket",
             "type": "ContactReplyTicketRequest",
           },
           {
-            "display-name": "Admin Reply on ticket",
             "type": "AdminReplyTicketRequest",
           },
         ],
@@ -28237,7 +28199,6 @@ A "cursor" or pointer is used to keep track of the current position in the resul
         "union": [
           "string",
           {
-            "display-name": "Custom Object Instance",
             "type": "optional<customObjectInstances.CustomObjectInstance>",
           },
         ],
@@ -28251,15 +28212,12 @@ A "cursor" or pointer is used to keep track of the current position in the resul
         },
         "union": [
           {
-            "display-name": "Intercom User ID",
             "type": "CustomerRequestIntercomUserId",
           },
           {
-            "display-name": "User ID",
             "type": "CustomerRequestUserId",
           },
           {
-            "display-name": "Email",
             "type": "Email",
           },
         ],
@@ -29021,12 +28979,10 @@ A "cursor" or pointer is used to keep track of the current position in the resul
         },
         "union": [
           {
-            "display-name": "multiple filter search request",
             "docs": "Add mutiple filters.",
             "type": "list<MultipleFilterSearchRequest>",
           },
           {
-            "display-name": "single filter search request",
             "docs": "Add a single filter field.",
             "type": "list<SingleFilterSearchRequest>",
           },
@@ -29184,11 +29140,9 @@ Their responses are likely to contain a pages object that hosts pagination links
         },
         "union": {
           "news-item": {
-            "display-name": "News Item",
             "type": "news.NewsItem",
           },
           "newsfeed": {
-            "display-name": "Newsfeed",
             "type": "news.Newsfeed",
           },
         },
@@ -29269,12 +29223,10 @@ Their responses are likely to contain a pages object that hosts pagination links
         },
         "union": {
           "conversation_part": {
-            "display-name": "Redact Conversation Part Request",
             "docs": "Payload of the request to redact a conversation part",
             "type": "RedactConversationRequestConversationPart",
           },
           "source": {
-            "display-name": "Redact Conversation Source Request",
             "docs": "Payload of the request to redact a conversation source",
             "type": "RedactConversationRequestSource",
           },
@@ -29337,11 +29289,9 @@ Their responses are likely to contain a pages object that hosts pagination links
         },
         "union": [
           {
-            "display-name": "Contact Reply",
             "type": "ContactReplyConversationRequest",
           },
           {
-            "display-name": "Admin Reply",
             "type": "AdminReplyConversationRequest",
           },
         ],
@@ -29367,11 +29317,9 @@ Their responses are likely to contain a pages object that hosts pagination links
         },
         "union": [
           {
-            "display-name": "Single Filter Search Request",
             "type": "SingleFilterSearchRequest",
           },
           {
-            "display-name": "Multiple Filter Search Request",
             "type": "MultipleFilterSearchRequest",
           },
         ],
@@ -29698,7 +29646,6 @@ Important: if there are any canceled sla_events for the conversation - meaning a
           "boolean",
           "list<unknown>",
           {
-            "display-name": "File",
             "type": "File",
           },
         ],
@@ -31929,7 +31876,6 @@ You can view the currently authorised admin along with the embedded app object (
             "path": "/articles",
             "request": {
               "body": {
-                "display-name": "Create Article Request Payload",
                 "type": "optional<root.CreateArticleRequest>",
               },
             },
@@ -33519,7 +33465,6 @@ You can view the currently authorised admin along with the embedded app object (
             },
             "request": {
               "body": {
-                "display-name": "Update Article Request Payload",
                 "type": "optional<root.UpdateArticleRequest>",
               },
             },
@@ -34351,7 +34296,6 @@ Companies are looked up via \`company_id\` in a \`POST\` request, if not found v
             "path": "/companies",
             "request": {
               "body": {
-                "display-name": "Create Or Update Company Request Payload",
                 "type": "optional<root.CreateOrUpdateCompanyRequest>",
               },
             },
@@ -35600,7 +35544,6 @@ The table below shows the operators you can use to define how you want to search
             "path": "/contacts/search",
             "request": {
               "body": {
-                "display-name": "Search data",
                 "type": "root.SearchRequest",
               },
             },
@@ -42310,7 +42253,6 @@ The table below shows the operators you can use to define how you want to search
             "path": "/conversations/search",
             "request": {
               "body": {
-                "display-name": "Search data",
                 "type": "root.SearchRequest",
               },
             },
@@ -42837,15 +42779,12 @@ If you want to reply to a coveration or take an action such as assign, unassign,
           },
           "union": [
             {
-              "display-name": "Intercom User ID",
               "type": "AttachContactToConversationRequestCustomerIntercomUserId",
             },
             {
-              "display-name": "User ID",
               "type": "AttachContactToConversationRequestCustomerUserId",
             },
             {
-              "display-name": "Email",
               "type": "Email",
             },
           ],
@@ -43060,19 +42999,15 @@ If you want to reply to a coveration or take an action such as assign, unassign,
           },
           "union": {
             "assignment": {
-              "display-name": "Assign Conversation Request",
               "type": "root.AssignConversationRequest",
             },
             "close": {
-              "display-name": "Close Conversation Request",
               "type": "root.CloseConversationRequest",
             },
             "open": {
-              "display-name": "Open Conversation Request",
               "type": "root.OpenConversationRequest",
             },
             "snoozed": {
-              "display-name": "Snooze Conversation Request",
               "type": "root.SnoozeConversationRequest",
             },
           },
@@ -44347,15 +44282,12 @@ You can optionally define the result page size as well with the \`per_page\` par
           },
           "union": [
             {
-              "display-name": "user_id query parameter",
               "type": "LisDataEventsRequestFilterUserId",
             },
             {
-              "display-name": "intercom_user_id query parameter",
               "type": "LisDataEventsRequestFilterIntercomUserId",
             },
             {
-              "display-name": "email query parameter",
               "type": "LisDataEventsRequestFilterEmail",
             },
           ],
@@ -46483,7 +46415,6 @@ This will return the Message model that has been created.
             "path": "/news/news_items",
             "request": {
               "body": {
-                "display-name": "Create News Item Request",
                 "type": "root.NewsItemRequest",
               },
             },
@@ -46888,7 +46819,6 @@ This will return the Message model that has been created.
             },
             "request": {
               "body": {
-                "display-name": "Create News Item Request",
                 "type": "root.NewsItemRequest",
               },
             },
@@ -48033,7 +47963,6 @@ If custom attributes are specified, they will be added to the user or lead's cus
             "path": "/phone_call_redirects",
             "request": {
               "body": {
-                "display-name": "Create Phone Switch Request Payload",
                 "type": "optional<root.CreatePhoneSwitchRequest>",
               },
             },
@@ -48829,19 +48758,15 @@ This will return a tag object.
           },
           "union": [
             {
-              "display-name": "Create or Update Tag Request Payload",
               "type": "root.CreateOrUpdateTagRequest",
             },
             {
-              "display-name": "Tag Company Request Payload",
               "type": "root.TagCompanyRequest",
             },
             {
-              "display-name": "Untag Company Request Payload",
               "type": "root.UntagCompanyRequest",
             },
             {
-              "display-name": "Tag Users Request Payload",
               "type": "root.TagMultipleUsersRequest",
             },
           ],
@@ -49337,7 +49262,6 @@ This will return a tag object.
             "path": "/ticket_types",
             "request": {
               "body": {
-                "display-name": "Create Ticket Type Request Payload",
                 "type": "optional<root.CreateTicketTypeRequest>",
               },
             },
@@ -49525,7 +49449,6 @@ You can update a ticket type.
             },
             "request": {
               "body": {
-                "display-name": "Update Ticket Type Request Payload",
                 "type": "optional<root.UpdateTicketTypeRequest>",
               },
             },
@@ -50343,7 +50266,6 @@ The table below shows the operators you can use to define how you want to search
             "path": "/tickets/search",
             "request": {
               "body": {
-                "display-name": "Search data",
                 "type": "root.SearchRequest",
               },
             },
@@ -51155,15 +51077,12 @@ The table below shows the operators you can use to define how you want to search
           },
           "union": [
             {
-              "display-name": "ID",
               "type": "ID",
             },
             {
-              "display-name": "External ID",
               "type": "CreateTicketRequestContactsItemExternalId",
             },
             {
-              "display-name": "Email",
               "type": "Email",
             },
           ],
@@ -51213,11 +51132,9 @@ The table below shows the operators you can use to define how you want to search
           },
           "union": [
             {
-              "display-name": "Contact Reply on ticket",
               "type": "root.ContactReplyTicketRequest",
             },
             {
-              "display-name": "Admin Reply on ticket",
               "type": "root.AdminReplyTicketRequest",
             },
           ],
@@ -54722,15 +54639,12 @@ The table below shows the operators you can use to define how you want to search
         },
         "union": [
           {
-            "display-name": "Intercom User ID",
             "type": "ContactReplyIntercomUserIdRequest",
           },
           {
-            "display-name": "Email",
             "type": "Email",
           },
           {
-            "display-name": "User ID",
             "type": "ContactReplyUserIdRequest",
           },
         ],
@@ -54778,15 +54692,12 @@ The table below shows the operators you can use to define how you want to search
         },
         "union": [
           {
-            "display-name": "Intercom User ID",
             "type": "ContactReplyTicketIntercomUserIdRequest",
           },
           {
-            "display-name": "User ID",
             "type": "ContactReplyTicketUserIdRequest",
           },
           {
-            "display-name": "Email",
             "type": "Email",
           },
         ],
@@ -55429,11 +55340,9 @@ The table below shows the operators you can use to define how you want to search
         },
         "union": [
           {
-            "display-name": "Contact Reply on ticket",
             "type": "ContactReplyTicketRequest",
           },
           {
-            "display-name": "Admin Reply on ticket",
             "type": "AdminReplyTicketRequest",
           },
         ],
@@ -55527,7 +55436,6 @@ A "cursor" or pointer is used to keep track of the current position in the resul
         "union": [
           "string",
           {
-            "display-name": "Custom Object Instance",
             "type": "optional<customObjectInstances.CustomObjectInstance>",
           },
         ],
@@ -55541,15 +55449,12 @@ A "cursor" or pointer is used to keep track of the current position in the resul
         },
         "union": [
           {
-            "display-name": "Intercom User ID",
             "type": "CustomerRequestIntercomUserId",
           },
           {
-            "display-name": "User ID",
             "type": "CustomerRequestUserId",
           },
           {
-            "display-name": "Email",
             "type": "Email",
           },
         ],
@@ -56311,12 +56216,10 @@ A "cursor" or pointer is used to keep track of the current position in the resul
         },
         "union": [
           {
-            "display-name": "multiple filter search request",
             "docs": "Add mutiple filters.",
             "type": "list<MultipleFilterSearchRequest>",
           },
           {
-            "display-name": "single filter search request",
             "docs": "Add a single filter field.",
             "type": "list<SingleFilterSearchRequest>",
           },
@@ -56474,11 +56377,9 @@ Their responses are likely to contain a pages object that hosts pagination links
         },
         "union": {
           "news-item": {
-            "display-name": "News Item",
             "type": "news.NewsItem",
           },
           "newsfeed": {
-            "display-name": "Newsfeed",
             "type": "news.Newsfeed",
           },
         },
@@ -56559,12 +56460,10 @@ Their responses are likely to contain a pages object that hosts pagination links
         },
         "union": {
           "conversation_part": {
-            "display-name": "Redact Conversation Part Request",
             "docs": "Payload of the request to redact a conversation part",
             "type": "RedactConversationRequestConversationPart",
           },
           "source": {
-            "display-name": "Redact Conversation Source Request",
             "docs": "Payload of the request to redact a conversation source",
             "type": "RedactConversationRequestSource",
           },
@@ -56627,11 +56526,9 @@ Their responses are likely to contain a pages object that hosts pagination links
         },
         "union": [
           {
-            "display-name": "Contact Reply",
             "type": "ContactReplyConversationRequest",
           },
           {
-            "display-name": "Admin Reply",
             "type": "AdminReplyConversationRequest",
           },
         ],
@@ -56657,11 +56554,9 @@ Their responses are likely to contain a pages object that hosts pagination links
         },
         "union": [
           {
-            "display-name": "Single Filter Search Request",
             "type": "SingleFilterSearchRequest",
           },
           {
-            "display-name": "Multiple Filter Search Request",
             "type": "MultipleFilterSearchRequest",
           },
         ],
@@ -56988,7 +56883,6 @@ Important: if there are any canceled sla_events for the conversation - meaning a
           "boolean",
           "list<unknown>",
           {
-            "display-name": "File",
             "type": "File",
           },
         ],

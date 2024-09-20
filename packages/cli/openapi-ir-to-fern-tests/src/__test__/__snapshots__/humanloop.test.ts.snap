@@ -107,7 +107,6 @@ deployed to the default Environment will be used.
             },
             "request": {
               "body": {
-                "display-name": "CommitRequest",
                 "type": "root.CommitRequest",
               },
             },
@@ -213,7 +212,6 @@ If \`"add"\` or \`"remove"\`, one of the \`version_id\` or \`environment\` query
                     "type": "optional<string>",
                   },
                   "datapoints": {
-                    "display-name": "Datapoints",
                     "docs": "The Datapoints to create this Dataset version with. Modify the \`action\` field to determine how these Datapoints are used.",
                     "type": "list<root.CreateDatapointRequest>",
                   },
@@ -921,7 +919,6 @@ and check its status.",
             "path": "/evaluations",
             "request": {
               "body": {
-                "display-name": "CreateEvaluationRequest",
                 "type": "root.CreateEvaluationRequest",
               },
             },
@@ -1394,7 +1391,6 @@ Update the setup of an Evaluation by specifying the Dataset, Evaluatees, and Eva
             },
             "request": {
               "body": {
-                "display-name": "CreateEvaluationRequest",
                 "type": "root.CreateEvaluationRequest",
               },
             },
@@ -1527,7 +1523,6 @@ as completed.",
               "body": {
                 "properties": {
                   "status": {
-                    "display-name": "EvaluationStatus",
                     "type": "root.EvaluationStatus",
                   },
                 },
@@ -1626,7 +1621,6 @@ as completed.",
             },
             "request": {
               "body": {
-                "display-name": "CommitRequest",
                 "type": "root.CommitRequest",
               },
             },
@@ -2514,15 +2508,12 @@ By default the deployed version of the Evaluator is returned. Use the query para
           },
           "union": {
             "human": {
-              "display-name": "HumanEvaluatorRequest",
               "type": "root.HumanEvaluatorRequest",
             },
             "llm": {
-              "display-name": "LLMEvaluatorRequest",
               "type": "root.LLMEvaluatorRequest",
             },
             "python": {
-              "display-name": "CodeEvaluatorRequest",
               "type": "root.CodeEvaluatorRequest",
             },
           },
@@ -2538,15 +2529,12 @@ By default the deployed version of the Evaluator is returned. Use the query para
           },
           "union": {
             "human": {
-              "display-name": "HumanEvaluatorRequest",
               "type": "root.HumanEvaluatorRequest",
             },
             "llm": {
-              "display-name": "LLMEvaluatorRequest",
               "type": "root.LLMEvaluatorRequest",
             },
             "python": {
-              "display-name": "CodeEvaluatorRequest",
               "type": "root.CodeEvaluatorRequest",
             },
           },
@@ -3287,7 +3275,6 @@ in the case where you are storing or deriving your Prompt details in code.",
             },
             "request": {
               "body": {
-                "display-name": "CommitRequest",
                 "type": "root.CommitRequest",
               },
             },
@@ -4346,7 +4333,6 @@ within the Prompt for monitoring purposes.",
             },
             "request": {
               "body": {
-                "display-name": "EvaluatorActivationDeactivationRequest",
                 "type": "root.EvaluatorActivationDeactivationRequest",
               },
             },
@@ -4377,7 +4363,6 @@ within the Prompt for monitoring purposes.",
             "literal<"auto">",
             "literal<"required">",
             {
-              "display-name": "ToolChoice",
               "type": "root.ToolChoice",
             },
           ],
@@ -4398,7 +4383,6 @@ within the Prompt for monitoring purposes.",
             "literal<"auto">",
             "literal<"required">",
             {
-              "display-name": "ToolChoice",
               "type": "root.ToolChoice",
             },
           ],
@@ -4424,11 +4408,9 @@ within the Prompt for monitoring purposes.",
           },
           "union": [
             {
-              "display-name": "PromptCallResponse",
               "type": "root.PromptCallResponse",
             },
             {
-              "display-name": "PromptCallStreamResponse",
               "type": "root.PromptCallStreamResponse",
             },
           ],
@@ -4759,7 +4741,6 @@ Log is in, nested within the evaluated Log.
             },
             "request": {
               "body": {
-                "display-name": "CommitRequest",
                 "type": "root.CommitRequest",
               },
             },
@@ -5613,7 +5594,6 @@ within the Tool for monitoring purposes.",
             },
             "request": {
               "body": {
-                "display-name": "EvaluatorActivationDeactivationRequest",
                 "type": "root.EvaluatorActivationDeactivationRequest",
               },
             },
@@ -5923,7 +5903,6 @@ within the Tool for monitoring purposes.",
             "type": "string",
           },
           "model_config": {
-            "display-name": "ModelConfigRequest",
             "docs": "Model config associated with the agent.",
             "type": "ModelConfigRequest",
           },
@@ -5989,12 +5968,10 @@ in the Evaluation Report.",
         "docs": undefined,
         "properties": {
           "sentiment": {
-            "display-name": "LabelSentiment",
             "docs": "Whether the feedback sentiment is positive or negative.",
             "type": "LabelSentiment",
           },
           "status": {
-            "display-name": "FeedbackLabelStatus",
             "docs": "Whether the feedback label is active or inactive.",
             "type": "FeedbackLabelStatus",
           },
@@ -6016,7 +5993,6 @@ in the Evaluation Report.",
             "type": "optional<string>",
           },
           "role": {
-            "display-name": "ChatRole",
             "docs": "Role of the message author.",
             "type": "ChatRole",
           },
@@ -6044,11 +6020,9 @@ in the Evaluation Report.",
         },
         "union": {
           "image_url": {
-            "display-name": "ImageChatContent",
             "type": "ImageChatContent",
           },
           "text": {
-            "display-name": "TextChatContent",
             "type": "TextChatContent",
           },
         },
@@ -6065,7 +6039,6 @@ in the Evaluation Report.",
             "type": "optional<string>",
           },
           "role": {
-            "display-name": "ChatRole",
             "docs": "Role of the message author.",
             "type": "ChatRole",
           },
@@ -6098,11 +6071,9 @@ in the Evaluation Report.",
         },
         "union": {
           "image_url": {
-            "display-name": "ImageChatContent",
             "type": "ImageChatContent",
           },
           "text": {
-            "display-name": "TextChatContent",
             "type": "TextChatContent",
           },
         },
@@ -6123,7 +6094,6 @@ in the Evaluation Report.",
         "docs": undefined,
         "properties": {
           "arguments_type": {
-            "display-name": "EvaluatorArgumentsType",
             "docs": "Whether this evaluator is target-free or target-required.",
             "type": "EvaluatorArgumentsType",
           },
@@ -6132,7 +6102,6 @@ in the Evaluation Report.",
             "type": "optional<string>",
           },
           "return_type": {
-            "display-name": "EvaluatorReturnTypeEnum",
             "docs": "The type of the return value of the evaluator.",
             "type": "EvaluatorReturnTypeEnum",
           },
@@ -6164,23 +6133,18 @@ in the Evaluation Report.",
         },
         "union": {
           "agent": {
-            "display-name": "AgentConfigResponse",
             "type": "AgentConfigResponse",
           },
           "evaluator": {
-            "display-name": "EvaluatorConfigResponse",
             "type": "EvaluatorConfigResponse",
           },
           "generic": {
-            "display-name": "GenericConfigResponse",
             "type": "GenericConfigResponse",
           },
           "model": {
-            "display-name": "ModelConfigResponse",
             "type": "ModelConfigResponse",
           },
           "tool": {
-            "display-name": "ToolConfigResponse",
             "type": "ToolConfigResponse",
           },
         },
@@ -6241,17 +6205,14 @@ Logs corresponding to the Datapoint and each Evaluated Version are evaluated by 
 Aggregated statistics are then calculated and presented in the Evaluation.",
         "properties": {
           "dataset": {
-            "display-name": "DatasetRequest",
             "docs": "The Dataset Version to use in this Evaluation.",
             "type": "DatasetRequest",
           },
           "evaluatees": {
-            "display-name": "Evaluated Version IDs",
             "docs": "Unique identifiers for the Prompt/Tool Versions to include in the Evaluation Report.",
             "type": "list<EvaluateeRequest>",
           },
           "evaluators": {
-            "display-name": "Evaluators",
             "docs": "The Evaluators used to evaluate.",
             "type": "list<EvaluatorRequest>",
           },
@@ -6312,12 +6273,10 @@ Aggregated statistics are then calculated and presented in the Evaluation.",
         "docs": undefined,
         "properties": {
           "model_config_ids": {
-            "display-name": "Model Config Ids",
             "type": "list<string>",
           },
           "time_range_days": "integer",
           "time_unit": {
-            "display-name": "TimeUnit",
             "type": "TimeUnit",
           },
         },
@@ -6418,7 +6377,6 @@ in the inheriting classes with documentation and appropriate Field definitions."
             "type": "string",
           },
           "status": {
-            "display-name": "VersionStatus",
             "docs": "The status of the Dataset Version.",
             "type": "VersionStatus",
           },
@@ -6443,7 +6401,6 @@ in the inheriting classes with documentation and appropriate Field definitions."
           "id": "string",
           "name": "string",
           "tag": {
-            "display-name": "EnvironmentTag",
             "type": "EnvironmentTag",
           },
         },
@@ -6470,11 +6427,9 @@ in the inheriting classes with documentation and appropriate Field definitions."
         },
         "union": [
           {
-            "display-name": "PromptResponse",
             "type": "PromptResponse",
           },
           {
-            "display-name": "ToolResponse",
             "type": "ToolResponse",
           },
         ],
@@ -6512,7 +6467,6 @@ in the inheriting classes with documentation and appropriate Field definitions."
             "type": "boolean",
           },
           "version": {
-            "display-name": "EvaluatedVersionResponse",
             "type": "EvaluatedVersionResponse",
           },
         },
@@ -6535,7 +6489,6 @@ function.",
             "type": "optional<LogResponse>",
           },
           "log": {
-            "display-name": "LogResponse",
             "type": "LogResponse",
           },
           "log_id": "string",
@@ -6555,7 +6508,6 @@ function.",
             "type": "boolean",
           },
           "version": {
-            "display-name": "EvaluatorResponse",
             "type": "EvaluatorResponse",
           },
         },
@@ -6573,17 +6525,14 @@ function.",
             "type": "optional<UserResponse>",
           },
           "dataset": {
-            "display-name": "DatasetResponse",
             "docs": "The Dataset Version used in the Evaluation.",
             "type": "DatasetResponse",
           },
           "evaluatees": {
-            "display-name": "Evaluated Versions",
             "docs": "The Prompt/Tool Versions included in the Evaluation.",
             "type": "list<EvaluateeResponse>",
           },
           "evaluators": {
-            "display-name": "Evaluator",
             "docs": "The Evaluator Versions used to evaluate.",
             "type": "list<EvaluationEvaluatorResponse>",
           },
@@ -6592,7 +6541,6 @@ function.",
             "type": "string",
           },
           "status": {
-            "display-name": "EvaluationStatus",
             "docs": "The current status of the Evaluation.
 
 - \`"pending"\`: The Evaluation has been created but is not actively being worked on by Humanloop.
@@ -6653,12 +6601,10 @@ function.",
         "docs": undefined,
         "properties": {
           "overall_stats": {
-            "display-name": "OverallStats",
             "docs": "Stats for the Evaluation Report as a whole.",
             "type": "OverallStats",
           },
           "version_stats": {
-            "display-name": "Version Stats",
             "docs": "Stats for each Evaluated Version in the Evaluation Report.",
             "type": "list<VersionStats>",
           },
@@ -6705,11 +6651,9 @@ function.",
         },
         "union": [
           {
-            "display-name": "MonitoringEvaluatorVersionRequest",
             "type": "MonitoringEvaluatorVersionRequest",
           },
           {
-            "display-name": "MonitoringEvaluatorEnvironmentRequest",
             "type": "MonitoringEvaluatorEnvironmentRequest",
           },
         ],
@@ -6723,11 +6667,9 @@ function.",
         },
         "union": [
           {
-            "display-name": "MonitoringEvaluatorVersionRequest",
             "type": "MonitoringEvaluatorVersionRequest",
           },
           {
-            "display-name": "MonitoringEvaluatorEnvironmentRequest",
             "type": "MonitoringEvaluatorEnvironmentRequest",
           },
         ],
@@ -6838,7 +6780,6 @@ function.",
             "type": "string",
           },
           "inputs": {
-            "display-name": "Prompt inputs",
             "docs": "Inputs associated to the Prompt. Inputs correspond to any of the variables used within the Prompt template.",
             "type": "list<InputResponse>",
           },
@@ -6854,7 +6795,6 @@ function.",
             "type": "Spec",
           },
           "status": {
-            "display-name": "VersionStatus",
             "type": "VersionStatus",
           },
           "total_logs_count": {
@@ -6953,7 +6893,6 @@ function.",
         },
         "union": [
           {
-            "display-name": "FeedbackType",
             "type": "FeedbackType",
           },
           "string",
@@ -7010,14 +6949,12 @@ function.",
         },
         "union": [
           {
-            "display-name": "FeedbackType",
             "type": "FeedbackType",
           },
           "string",
         ],
       },
       "FeedbackTypes": {
-        "display-name": "FeedbackTypes",
         "type": "list<FeedbackTypeModel>",
       },
       "File": {
@@ -7029,19 +6966,15 @@ function.",
         },
         "union": [
           {
-            "display-name": "PromptResponse",
             "type": "PromptResponse",
           },
           {
-            "display-name": "ToolResponse",
             "type": "ToolResponse",
           },
           {
-            "display-name": "DatasetResponse",
             "type": "DatasetResponse",
           },
           {
-            "display-name": "EvaluatorResponse",
             "type": "EvaluatorResponse",
           },
         ],
@@ -7114,12 +7047,10 @@ function.",
         "docs": undefined,
         "properties": {
           "arguments_type": {
-            "display-name": "EvaluatorArgumentsType",
             "docs": "Whether this evaluator is target-free or target-required.",
             "type": "EvaluatorArgumentsType",
           },
           "return_type": {
-            "display-name": "EvaluatorReturnTypeEnum",
             "docs": "The type of the return value of the evaluator.",
             "type": "EvaluatorReturnTypeEnum",
           },
@@ -7132,7 +7063,6 @@ function.",
         "docs": undefined,
         "properties": {
           "image_url": {
-            "display-name": "ImageUrl",
             "docs": "The message's image content.",
             "type": "ImageUrl",
           },
@@ -7196,7 +7126,6 @@ function.",
         "docs": undefined,
         "properties": {
           "arguments_type": {
-            "display-name": "EvaluatorArgumentsType",
             "docs": "Whether this evaluator is target-free or target-required.",
             "type": "EvaluatorArgumentsType",
           },
@@ -7205,7 +7134,6 @@ function.",
             "type": "optional<PromptKernelRequest>",
           },
           "return_type": {
-            "display-name": "EvaluatorReturnTypeEnum",
             "docs": "The type of the return value of the evaluator.",
             "type": "EvaluatorReturnTypeEnum",
           },
@@ -7248,7 +7176,6 @@ Used by a File's PAPV (Positive Action Per View) metric.",
             "type": "optional<map<string, unknown>>",
           },
           "source": {
-            "display-name": "Tool source",
             "docs": "The source of the linked tool. For a linked tool it should be \`organization\`",
             "type": "literal<"organization">",
           },
@@ -7289,7 +7216,6 @@ Used by a File's PAPV (Positive Action Per View) metric.",
         "docs": undefined,
         "properties": {
           "records": {
-            "display-name": "Records",
             "docs": "The list of Datasets.",
             "type": "list<DatasetResponse>",
           },
@@ -7302,7 +7228,6 @@ Used by a File's PAPV (Positive Action Per View) metric.",
         "docs": undefined,
         "properties": {
           "records": {
-            "display-name": "Records",
             "docs": "The list of Evaluators.",
             "type": "list<EvaluatorResponse>",
           },
@@ -7315,7 +7240,6 @@ Used by a File's PAPV (Positive Action Per View) metric.",
         "docs": undefined,
         "properties": {
           "records": {
-            "display-name": "Records",
             "docs": "The list of Prompts.",
             "type": "list<PromptResponse>",
           },
@@ -7328,7 +7252,6 @@ Used by a File's PAPV (Positive Action Per View) metric.",
         "docs": undefined,
         "properties": {
           "records": {
-            "display-name": "Records",
             "docs": "The list of Tools.",
             "type": "list<ToolResponse>",
           },
@@ -7345,7 +7268,6 @@ Used by a File's PAPV (Positive Action Per View) metric.",
             "type": "optional<list<string>>",
           },
           "config": {
-            "display-name": "ConfigResponse",
             "type": "ConfigResponse",
           },
           "config_id": {
@@ -7369,7 +7291,6 @@ Used by a File's PAPV (Positive Action Per View) metric.",
             "type": "optional<string>",
           },
           "evaluation_results": {
-            "display-name": "Evaluation Results",
             "type": "list<EvaluationResultResponse>",
           },
           "feedback": {
@@ -7402,7 +7323,6 @@ Used by a File's PAPV (Positive Action Per View) metric.",
             "type": "optional<list<MetricValueResponse>>",
           },
           "observability_status": {
-            "display-name": "ObservabilityStatus",
             "type": "ObservabilityStatus",
           },
           "output": {
@@ -7525,7 +7445,6 @@ Used by a File's PAPV (Positive Action Per View) metric.",
           "literal<"auto">",
           "literal<"required">",
           {
-            "display-name": "ToolChoice",
             "type": "ToolChoice",
           },
         ],
@@ -7646,11 +7565,9 @@ Used by a File's PAPV (Positive Action Per View) metric.",
         },
         "union": [
           {
-            "display-name": "LinkedToolRequest",
             "type": "LinkedToolRequest",
           },
           {
-            "display-name": "ModelConfigToolRequest",
             "type": "ModelConfigToolRequest",
           },
         ],
@@ -7850,7 +7767,6 @@ Does not have things like the signature or setup schema.",
             "type": "datetime",
           },
           "state": {
-            "display-name": "MonitoringEvaluatorState",
             "docs": "The state of the Monitoring Evaluator. Either \`active\` or \`inactive\`",
             "type": "MonitoringEvaluatorState",
           },
@@ -7862,7 +7778,6 @@ Does not have things like the signature or setup schema.",
             "type": "optional<EvaluatorResponse>",
           },
           "version_reference": {
-            "display-name": "VersionReferenceResponse",
             "docs": "The Evaluator Version used for monitoring. This can be a specific Version by ID, or a Version deployed to an Environment.",
             "type": "VersionReferenceResponse",
           },
@@ -7970,7 +7885,6 @@ Observability is implemented by running monitoring Evaluators on Logs.",
         "properties": {
           "page": "integer",
           "records": {
-            "display-name": "Records",
             "type": "list<DatapointResponse>",
           },
           "size": "integer",
@@ -7985,7 +7899,6 @@ Observability is implemented by running monitoring Evaluators on Logs.",
         "properties": {
           "page": "integer",
           "records": {
-            "display-name": "Records",
             "type": "list<DatasetResponse>",
           },
           "size": "integer",
@@ -8000,7 +7913,6 @@ Observability is implemented by running monitoring Evaluators on Logs.",
         "properties": {
           "page": "integer",
           "records": {
-            "display-name": "Records",
             "type": "list<EvaluationResponse>",
           },
           "size": "integer",
@@ -8015,7 +7927,6 @@ Observability is implemented by running monitoring Evaluators on Logs.",
         "properties": {
           "page": "integer",
           "records": {
-            "display-name": "Records",
             "type": "list<PromptLogResponse>",
           },
           "size": "integer",
@@ -8030,7 +7941,6 @@ Observability is implemented by running monitoring Evaluators on Logs.",
         "properties": {
           "page": "integer",
           "records": {
-            "display-name": "Records",
             "type": "list<SessionResponse>",
           },
           "size": "integer",
@@ -8138,7 +8048,6 @@ Observability is implemented by running monitoring Evaluators on Logs.",
             "type": "optional<map<string, unknown>>",
           },
           "logs": {
-            "display-name": "Logs",
             "docs": "The logs generated by the Prompt call.",
             "type": "list<PromptCallLogResponse>",
           },
@@ -8155,7 +8064,6 @@ Observability is implemented by running monitoring Evaluators on Logs.",
             "type": "optional<string>",
           },
           "prompt": {
-            "display-name": "PromptResponse",
             "docs": "Prompt details used to generate the log.",
             "type": "PromptResponse",
           },
@@ -8209,7 +8117,6 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           "literal<"auto">",
           "literal<"required">",
           {
-            "display-name": "ToolChoice",
             "type": "ToolChoice",
           },
         ],
@@ -8427,7 +8334,6 @@ Observability is implemented by running monitoring Evaluators on Logs.",
             "type": "optional<string>",
           },
           "prompt": {
-            "display-name": "PromptResponse",
             "docs": "Prompt details used to generate the log.",
             "type": "PromptResponse",
           },
@@ -8505,7 +8411,6 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           "literal<"auto">",
           "literal<"required">",
           {
-            "display-name": "ToolChoice",
             "type": "ToolChoice",
           },
         ],
@@ -8546,7 +8451,6 @@ Observability is implemented by running monitoring Evaluators on Logs.",
             "type": "string",
           },
           "inputs": {
-            "display-name": "Prompt inputs",
             "docs": "Inputs associated to the Prompt. Inputs correspond to any of the variables used within the Prompt template.",
             "type": "list<InputResponse>",
           },
@@ -8592,7 +8496,6 @@ Observability is implemented by running monitoring Evaluators on Logs.",
             "type": "optional<integer>",
           },
           "status": {
-            "display-name": "VersionStatus",
             "docs": "The status of the Prompt Version.",
             "type": "VersionStatus",
           },
@@ -8683,7 +8586,6 @@ Observability is implemented by running monitoring Evaluators on Logs.",
         "docs": "Response format of the model.",
         "properties": {
           "type": {
-            "display-name": "Type",
             "type": "literal<"json_object">",
           },
         },
@@ -8702,7 +8604,6 @@ Observability is implemented by running monitoring Evaluators on Logs.",
             "type": "string",
           },
           "logs": {
-            "display-name": "Logs",
             "docs": "List of Logs associated with this Session.",
             "type": "list<PromptLogResponse>",
           },
@@ -8735,15 +8636,12 @@ Observability is implemented by running monitoring Evaluators on Logs.",
         },
         "union": {
           "human": {
-            "display-name": "HumanEvaluatorRequest",
             "type": "HumanEvaluatorRequest",
           },
           "llm": {
-            "display-name": "LLMEvaluatorRequest",
             "type": "LLMEvaluatorRequest",
           },
           "python": {
-            "display-name": "CodeEvaluatorRequest",
             "type": "CodeEvaluatorRequest",
           },
         },
@@ -8787,12 +8685,10 @@ Observability is implemented by running monitoring Evaluators on Logs.",
         "docs": "A tool call to be made.",
         "properties": {
           "function": {
-            "display-name": "FunctionTool",
             "type": "FunctionTool",
           },
           "id": "string",
           "type": {
-            "display-name": "ToolType",
             "type": "ToolType",
           },
         },
@@ -8804,11 +8700,9 @@ Observability is implemented by running monitoring Evaluators on Logs.",
         "docs": "Tool choice to force the model to use a tool.",
         "properties": {
           "function": {
-            "display-name": "FunctionToolChoice",
             "type": "FunctionToolChoice",
           },
           "type": {
-            "display-name": "ToolType",
             "type": "ToolType",
           },
         },
@@ -8851,7 +8745,6 @@ Does not have things like the signature or setup schema.",
             "type": "optional<string>",
           },
           "type": {
-            "display-name": "Type",
             "type": "literal<"tool">",
           },
         },
@@ -8990,7 +8883,6 @@ Does not have things like the signature or setup schema.",
             "type": "string",
           },
           "inputs": {
-            "display-name": "Prompt inputs",
             "docs": "Inputs associated to the Prompt. Inputs correspond to any of the variables used within the Prompt template.",
             "type": "list<InputResponse>",
           },
@@ -9014,7 +8906,6 @@ Does not have things like the signature or setup schema.",
             "type": "optional<string>",
           },
           "status": {
-            "display-name": "VersionStatus",
             "docs": "The status of the Prompt Version.",
             "type": "VersionStatus",
           },
@@ -9143,7 +9034,6 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
         "docs": undefined,
         "properties": {
           "loc": {
-            "display-name": "Location",
             "type": "list<ValidationErrorLocItem>",
           },
           "msg": "string",
@@ -9186,19 +9076,15 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
         },
         "union": [
           {
-            "display-name": "PromptResponse",
             "type": "PromptResponse",
           },
           {
-            "display-name": "ToolResponse",
             "type": "ToolResponse",
           },
           {
-            "display-name": "DatasetResponse",
             "type": "DatasetResponse",
           },
           {
-            "display-name": "EvaluatorResponse",
             "type": "EvaluatorResponse",
           },
         ],
@@ -9207,7 +9093,6 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
         "docs": "A variable reference to the Version deployed to an Environment",
         "properties": {
           "environment": {
-            "display-name": "EnvironmentResponse",
             "docs": "The Environment that the Version is deployed to.",
             "type": "EnvironmentResponse",
           },
@@ -9245,11 +9130,9 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
         },
         "union": {
           "environment": {
-            "display-name": "VersionDeploymentResponse",
             "type": "VersionDeploymentResponse",
           },
           "version": {
-            "display-name": "VersionIdResponse",
             "type": "VersionIdResponse",
           },
         },
@@ -9258,7 +9141,6 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
         "docs": "Stats for an Evaluated Version in the Evaluation Report.",
         "properties": {
           "evaluator_version_stats": {
-            "display-name": "Evaluator Version Stats",
             "docs": "Stats for each Evaluator Version used to evaluate this Evaluated Version.",
             "type": "list<VersionStatsEvaluatorVersionStatsItem>",
           },
@@ -9284,11 +9166,9 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
         },
         "union": [
           {
-            "display-name": "NumericEvaluatorVersionStats",
             "type": "NumericEvaluatorVersionStats",
           },
           {
-            "display-name": "BooleanEvaluatorVersionStats",
             "type": "BooleanEvaluatorVersionStats",
           },
         ],
@@ -9435,7 +9315,6 @@ deployed to the default Environment will be used.
             },
             "request": {
               "body": {
-                "display-name": "CommitRequest",
                 "type": "root.CommitRequest",
               },
             },
@@ -9541,7 +9420,6 @@ If \`"add"\` or \`"remove"\`, one of the \`version_id\` or \`environment\` query
                     "type": "optional<string>",
                   },
                   "datapoints": {
-                    "display-name": "Datapoints",
                     "docs": "The Datapoints to create this Dataset version with. Modify the \`action\` field to determine how these Datapoints are used.",
                     "type": "list<root.CreateDatapointRequest>",
                   },
@@ -10249,7 +10127,6 @@ and check its status.",
             "path": "/evaluations",
             "request": {
               "body": {
-                "display-name": "CreateEvaluationRequest",
                 "type": "root.CreateEvaluationRequest",
               },
             },
@@ -10722,7 +10599,6 @@ Update the setup of an Evaluation by specifying the Dataset, Evaluatees, and Eva
             },
             "request": {
               "body": {
-                "display-name": "CreateEvaluationRequest",
                 "type": "root.CreateEvaluationRequest",
               },
             },
@@ -10855,7 +10731,6 @@ as completed.",
               "body": {
                 "properties": {
                   "status": {
-                    "display-name": "EvaluationStatus",
                     "type": "root.EvaluationStatus",
                   },
                 },
@@ -10954,7 +10829,6 @@ as completed.",
             },
             "request": {
               "body": {
-                "display-name": "CommitRequest",
                 "type": "root.CommitRequest",
               },
             },
@@ -11842,15 +11716,12 @@ By default the deployed version of the Evaluator is returned. Use the query para
           },
           "union": {
             "human": {
-              "display-name": "HumanEvaluatorRequest",
               "type": "root.HumanEvaluatorRequest",
             },
             "llm": {
-              "display-name": "LLMEvaluatorRequest",
               "type": "root.LLMEvaluatorRequest",
             },
             "python": {
-              "display-name": "CodeEvaluatorRequest",
               "type": "root.CodeEvaluatorRequest",
             },
           },
@@ -11866,15 +11737,12 @@ By default the deployed version of the Evaluator is returned. Use the query para
           },
           "union": {
             "human": {
-              "display-name": "HumanEvaluatorRequest",
               "type": "root.HumanEvaluatorRequest",
             },
             "llm": {
-              "display-name": "LLMEvaluatorRequest",
               "type": "root.LLMEvaluatorRequest",
             },
             "python": {
-              "display-name": "CodeEvaluatorRequest",
               "type": "root.CodeEvaluatorRequest",
             },
           },
@@ -12615,7 +12483,6 @@ in the case where you are storing or deriving your Prompt details in code.",
             },
             "request": {
               "body": {
-                "display-name": "CommitRequest",
                 "type": "root.CommitRequest",
               },
             },
@@ -13674,7 +13541,6 @@ within the Prompt for monitoring purposes.",
             },
             "request": {
               "body": {
-                "display-name": "EvaluatorActivationDeactivationRequest",
                 "type": "root.EvaluatorActivationDeactivationRequest",
               },
             },
@@ -13705,7 +13571,6 @@ within the Prompt for monitoring purposes.",
             "literal<"auto">",
             "literal<"required">",
             {
-              "display-name": "ToolChoice",
               "type": "root.ToolChoice",
             },
           ],
@@ -13726,7 +13591,6 @@ within the Prompt for monitoring purposes.",
             "literal<"auto">",
             "literal<"required">",
             {
-              "display-name": "ToolChoice",
               "type": "root.ToolChoice",
             },
           ],
@@ -13752,11 +13616,9 @@ within the Prompt for monitoring purposes.",
           },
           "union": [
             {
-              "display-name": "PromptCallResponse",
               "type": "root.PromptCallResponse",
             },
             {
-              "display-name": "PromptCallStreamResponse",
               "type": "root.PromptCallStreamResponse",
             },
           ],
@@ -14087,7 +13949,6 @@ Log is in, nested within the evaluated Log.
             },
             "request": {
               "body": {
-                "display-name": "CommitRequest",
                 "type": "root.CommitRequest",
               },
             },
@@ -14941,7 +14802,6 @@ within the Tool for monitoring purposes.",
             },
             "request": {
               "body": {
-                "display-name": "EvaluatorActivationDeactivationRequest",
                 "type": "root.EvaluatorActivationDeactivationRequest",
               },
             },
@@ -14986,7 +14846,6 @@ within the Tool for monitoring purposes.",
             "type": "string",
           },
           "model_config": {
-            "display-name": "ModelConfigRequest",
             "docs": "Model config associated with the agent.",
             "type": "ModelConfigRequest",
           },
@@ -15052,12 +14911,10 @@ in the Evaluation Report.",
         "docs": undefined,
         "properties": {
           "sentiment": {
-            "display-name": "LabelSentiment",
             "docs": "Whether the feedback sentiment is positive or negative.",
             "type": "LabelSentiment",
           },
           "status": {
-            "display-name": "FeedbackLabelStatus",
             "docs": "Whether the feedback label is active or inactive.",
             "type": "FeedbackLabelStatus",
           },
@@ -15079,7 +14936,6 @@ in the Evaluation Report.",
             "type": "optional<string>",
           },
           "role": {
-            "display-name": "ChatRole",
             "docs": "Role of the message author.",
             "type": "ChatRole",
           },
@@ -15107,11 +14963,9 @@ in the Evaluation Report.",
         },
         "union": {
           "image_url": {
-            "display-name": "ImageChatContent",
             "type": "ImageChatContent",
           },
           "text": {
-            "display-name": "TextChatContent",
             "type": "TextChatContent",
           },
         },
@@ -15128,7 +14982,6 @@ in the Evaluation Report.",
             "type": "optional<string>",
           },
           "role": {
-            "display-name": "ChatRole",
             "docs": "Role of the message author.",
             "type": "ChatRole",
           },
@@ -15161,11 +15014,9 @@ in the Evaluation Report.",
         },
         "union": {
           "image_url": {
-            "display-name": "ImageChatContent",
             "type": "ImageChatContent",
           },
           "text": {
-            "display-name": "TextChatContent",
             "type": "TextChatContent",
           },
         },
@@ -15186,7 +15037,6 @@ in the Evaluation Report.",
         "docs": undefined,
         "properties": {
           "arguments_type": {
-            "display-name": "EvaluatorArgumentsType",
             "docs": "Whether this evaluator is target-free or target-required.",
             "type": "EvaluatorArgumentsType",
           },
@@ -15195,7 +15045,6 @@ in the Evaluation Report.",
             "type": "optional<string>",
           },
           "return_type": {
-            "display-name": "EvaluatorReturnTypeEnum",
             "docs": "The type of the return value of the evaluator.",
             "type": "EvaluatorReturnTypeEnum",
           },
@@ -15227,23 +15076,18 @@ in the Evaluation Report.",
         },
         "union": {
           "agent": {
-            "display-name": "AgentConfigResponse",
             "type": "AgentConfigResponse",
           },
           "evaluator": {
-            "display-name": "EvaluatorConfigResponse",
             "type": "EvaluatorConfigResponse",
           },
           "generic": {
-            "display-name": "GenericConfigResponse",
             "type": "GenericConfigResponse",
           },
           "model": {
-            "display-name": "ModelConfigResponse",
             "type": "ModelConfigResponse",
           },
           "tool": {
-            "display-name": "ToolConfigResponse",
             "type": "ToolConfigResponse",
           },
         },
@@ -15304,17 +15148,14 @@ Logs corresponding to the Datapoint and each Evaluated Version are evaluated by 
 Aggregated statistics are then calculated and presented in the Evaluation.",
         "properties": {
           "dataset": {
-            "display-name": "DatasetRequest",
             "docs": "The Dataset Version to use in this Evaluation.",
             "type": "DatasetRequest",
           },
           "evaluatees": {
-            "display-name": "Evaluated Version IDs",
             "docs": "Unique identifiers for the Prompt/Tool Versions to include in the Evaluation Report.",
             "type": "list<EvaluateeRequest>",
           },
           "evaluators": {
-            "display-name": "Evaluators",
             "docs": "The Evaluators used to evaluate.",
             "type": "list<EvaluatorRequest>",
           },
@@ -15375,12 +15216,10 @@ Aggregated statistics are then calculated and presented in the Evaluation.",
         "docs": undefined,
         "properties": {
           "model_config_ids": {
-            "display-name": "Model Config Ids",
             "type": "list<string>",
           },
           "time_range_days": "integer",
           "time_unit": {
-            "display-name": "TimeUnit",
             "type": "TimeUnit",
           },
         },
@@ -15481,7 +15320,6 @@ in the inheriting classes with documentation and appropriate Field definitions."
             "type": "string",
           },
           "status": {
-            "display-name": "VersionStatus",
             "docs": "The status of the Dataset Version.",
             "type": "VersionStatus",
           },
@@ -15506,7 +15344,6 @@ in the inheriting classes with documentation and appropriate Field definitions."
           "id": "string",
           "name": "string",
           "tag": {
-            "display-name": "EnvironmentTag",
             "type": "EnvironmentTag",
           },
         },
@@ -15533,11 +15370,9 @@ in the inheriting classes with documentation and appropriate Field definitions."
         },
         "union": [
           {
-            "display-name": "PromptResponse",
             "type": "PromptResponse",
           },
           {
-            "display-name": "ToolResponse",
             "type": "ToolResponse",
           },
         ],
@@ -15575,7 +15410,6 @@ in the inheriting classes with documentation and appropriate Field definitions."
             "type": "boolean",
           },
           "version": {
-            "display-name": "EvaluatedVersionResponse",
             "type": "EvaluatedVersionResponse",
           },
         },
@@ -15598,7 +15432,6 @@ function.",
             "type": "optional<LogResponse>",
           },
           "log": {
-            "display-name": "LogResponse",
             "type": "LogResponse",
           },
           "log_id": "string",
@@ -15618,7 +15451,6 @@ function.",
             "type": "boolean",
           },
           "version": {
-            "display-name": "EvaluatorResponse",
             "type": "EvaluatorResponse",
           },
         },
@@ -15636,17 +15468,14 @@ function.",
             "type": "optional<UserResponse>",
           },
           "dataset": {
-            "display-name": "DatasetResponse",
             "docs": "The Dataset Version used in the Evaluation.",
             "type": "DatasetResponse",
           },
           "evaluatees": {
-            "display-name": "Evaluated Versions",
             "docs": "The Prompt/Tool Versions included in the Evaluation.",
             "type": "list<EvaluateeResponse>",
           },
           "evaluators": {
-            "display-name": "Evaluator",
             "docs": "The Evaluator Versions used to evaluate.",
             "type": "list<EvaluationEvaluatorResponse>",
           },
@@ -15655,7 +15484,6 @@ function.",
             "type": "string",
           },
           "status": {
-            "display-name": "EvaluationStatus",
             "docs": "The current status of the Evaluation.
 
 - \`"pending"\`: The Evaluation has been created but is not actively being worked on by Humanloop.
@@ -15716,12 +15544,10 @@ function.",
         "docs": undefined,
         "properties": {
           "overall_stats": {
-            "display-name": "OverallStats",
             "docs": "Stats for the Evaluation Report as a whole.",
             "type": "OverallStats",
           },
           "version_stats": {
-            "display-name": "Version Stats",
             "docs": "Stats for each Evaluated Version in the Evaluation Report.",
             "type": "list<VersionStats>",
           },
@@ -15768,11 +15594,9 @@ function.",
         },
         "union": [
           {
-            "display-name": "MonitoringEvaluatorVersionRequest",
             "type": "MonitoringEvaluatorVersionRequest",
           },
           {
-            "display-name": "MonitoringEvaluatorEnvironmentRequest",
             "type": "MonitoringEvaluatorEnvironmentRequest",
           },
         ],
@@ -15786,11 +15610,9 @@ function.",
         },
         "union": [
           {
-            "display-name": "MonitoringEvaluatorVersionRequest",
             "type": "MonitoringEvaluatorVersionRequest",
           },
           {
-            "display-name": "MonitoringEvaluatorEnvironmentRequest",
             "type": "MonitoringEvaluatorEnvironmentRequest",
           },
         ],
@@ -15901,7 +15723,6 @@ function.",
             "type": "string",
           },
           "inputs": {
-            "display-name": "Prompt inputs",
             "docs": "Inputs associated to the Prompt. Inputs correspond to any of the variables used within the Prompt template.",
             "type": "list<InputResponse>",
           },
@@ -15917,7 +15738,6 @@ function.",
             "type": "Spec",
           },
           "status": {
-            "display-name": "VersionStatus",
             "type": "VersionStatus",
           },
           "total_logs_count": {
@@ -16016,7 +15836,6 @@ function.",
         },
         "union": [
           {
-            "display-name": "FeedbackType",
             "type": "FeedbackType",
           },
           "string",
@@ -16073,14 +15892,12 @@ function.",
         },
         "union": [
           {
-            "display-name": "FeedbackType",
             "type": "FeedbackType",
           },
           "string",
         ],
       },
       "FeedbackTypes": {
-        "display-name": "FeedbackTypes",
         "type": "list<FeedbackTypeModel>",
       },
       "File": {
@@ -16092,19 +15909,15 @@ function.",
         },
         "union": [
           {
-            "display-name": "PromptResponse",
             "type": "PromptResponse",
           },
           {
-            "display-name": "ToolResponse",
             "type": "ToolResponse",
           },
           {
-            "display-name": "DatasetResponse",
             "type": "DatasetResponse",
           },
           {
-            "display-name": "EvaluatorResponse",
             "type": "EvaluatorResponse",
           },
         ],
@@ -16177,12 +15990,10 @@ function.",
         "docs": undefined,
         "properties": {
           "arguments_type": {
-            "display-name": "EvaluatorArgumentsType",
             "docs": "Whether this evaluator is target-free or target-required.",
             "type": "EvaluatorArgumentsType",
           },
           "return_type": {
-            "display-name": "EvaluatorReturnTypeEnum",
             "docs": "The type of the return value of the evaluator.",
             "type": "EvaluatorReturnTypeEnum",
           },
@@ -16195,7 +16006,6 @@ function.",
         "docs": undefined,
         "properties": {
           "image_url": {
-            "display-name": "ImageUrl",
             "docs": "The message's image content.",
             "type": "ImageUrl",
           },
@@ -16259,7 +16069,6 @@ function.",
         "docs": undefined,
         "properties": {
           "arguments_type": {
-            "display-name": "EvaluatorArgumentsType",
             "docs": "Whether this evaluator is target-free or target-required.",
             "type": "EvaluatorArgumentsType",
           },
@@ -16268,7 +16077,6 @@ function.",
             "type": "optional<PromptKernelRequest>",
           },
           "return_type": {
-            "display-name": "EvaluatorReturnTypeEnum",
             "docs": "The type of the return value of the evaluator.",
             "type": "EvaluatorReturnTypeEnum",
           },
@@ -16311,7 +16119,6 @@ Used by a File's PAPV (Positive Action Per View) metric.",
             "type": "optional<map<string, unknown>>",
           },
           "source": {
-            "display-name": "Tool source",
             "docs": "The source of the linked tool. For a linked tool it should be \`organization\`",
             "type": "literal<"organization">",
           },
@@ -16352,7 +16159,6 @@ Used by a File's PAPV (Positive Action Per View) metric.",
         "docs": undefined,
         "properties": {
           "records": {
-            "display-name": "Records",
             "docs": "The list of Datasets.",
             "type": "list<DatasetResponse>",
           },
@@ -16365,7 +16171,6 @@ Used by a File's PAPV (Positive Action Per View) metric.",
         "docs": undefined,
         "properties": {
           "records": {
-            "display-name": "Records",
             "docs": "The list of Evaluators.",
             "type": "list<EvaluatorResponse>",
           },
@@ -16378,7 +16183,6 @@ Used by a File's PAPV (Positive Action Per View) metric.",
         "docs": undefined,
         "properties": {
           "records": {
-            "display-name": "Records",
             "docs": "The list of Prompts.",
             "type": "list<PromptResponse>",
           },
@@ -16391,7 +16195,6 @@ Used by a File's PAPV (Positive Action Per View) metric.",
         "docs": undefined,
         "properties": {
           "records": {
-            "display-name": "Records",
             "docs": "The list of Tools.",
             "type": "list<ToolResponse>",
           },
@@ -16408,7 +16211,6 @@ Used by a File's PAPV (Positive Action Per View) metric.",
             "type": "optional<list<string>>",
           },
           "config": {
-            "display-name": "ConfigResponse",
             "type": "ConfigResponse",
           },
           "config_id": {
@@ -16432,7 +16234,6 @@ Used by a File's PAPV (Positive Action Per View) metric.",
             "type": "optional<string>",
           },
           "evaluation_results": {
-            "display-name": "Evaluation Results",
             "type": "list<EvaluationResultResponse>",
           },
           "feedback": {
@@ -16465,7 +16266,6 @@ Used by a File's PAPV (Positive Action Per View) metric.",
             "type": "optional<list<MetricValueResponse>>",
           },
           "observability_status": {
-            "display-name": "ObservabilityStatus",
             "type": "ObservabilityStatus",
           },
           "output": {
@@ -16588,7 +16388,6 @@ Used by a File's PAPV (Positive Action Per View) metric.",
           "literal<"auto">",
           "literal<"required">",
           {
-            "display-name": "ToolChoice",
             "type": "ToolChoice",
           },
         ],
@@ -16709,11 +16508,9 @@ Used by a File's PAPV (Positive Action Per View) metric.",
         },
         "union": [
           {
-            "display-name": "LinkedToolRequest",
             "type": "LinkedToolRequest",
           },
           {
-            "display-name": "ModelConfigToolRequest",
             "type": "ModelConfigToolRequest",
           },
         ],
@@ -16913,7 +16710,6 @@ Does not have things like the signature or setup schema.",
             "type": "datetime",
           },
           "state": {
-            "display-name": "MonitoringEvaluatorState",
             "docs": "The state of the Monitoring Evaluator. Either \`active\` or \`inactive\`",
             "type": "MonitoringEvaluatorState",
           },
@@ -16925,7 +16721,6 @@ Does not have things like the signature or setup schema.",
             "type": "optional<EvaluatorResponse>",
           },
           "version_reference": {
-            "display-name": "VersionReferenceResponse",
             "docs": "The Evaluator Version used for monitoring. This can be a specific Version by ID, or a Version deployed to an Environment.",
             "type": "VersionReferenceResponse",
           },
@@ -17033,7 +16828,6 @@ Observability is implemented by running monitoring Evaluators on Logs.",
         "properties": {
           "page": "integer",
           "records": {
-            "display-name": "Records",
             "type": "list<DatapointResponse>",
           },
           "size": "integer",
@@ -17048,7 +16842,6 @@ Observability is implemented by running monitoring Evaluators on Logs.",
         "properties": {
           "page": "integer",
           "records": {
-            "display-name": "Records",
             "type": "list<DatasetResponse>",
           },
           "size": "integer",
@@ -17063,7 +16856,6 @@ Observability is implemented by running monitoring Evaluators on Logs.",
         "properties": {
           "page": "integer",
           "records": {
-            "display-name": "Records",
             "type": "list<EvaluationResponse>",
           },
           "size": "integer",
@@ -17078,7 +16870,6 @@ Observability is implemented by running monitoring Evaluators on Logs.",
         "properties": {
           "page": "integer",
           "records": {
-            "display-name": "Records",
             "type": "list<PromptLogResponse>",
           },
           "size": "integer",
@@ -17093,7 +16884,6 @@ Observability is implemented by running monitoring Evaluators on Logs.",
         "properties": {
           "page": "integer",
           "records": {
-            "display-name": "Records",
             "type": "list<SessionResponse>",
           },
           "size": "integer",
@@ -17201,7 +16991,6 @@ Observability is implemented by running monitoring Evaluators on Logs.",
             "type": "optional<map<string, unknown>>",
           },
           "logs": {
-            "display-name": "Logs",
             "docs": "The logs generated by the Prompt call.",
             "type": "list<PromptCallLogResponse>",
           },
@@ -17218,7 +17007,6 @@ Observability is implemented by running monitoring Evaluators on Logs.",
             "type": "optional<string>",
           },
           "prompt": {
-            "display-name": "PromptResponse",
             "docs": "Prompt details used to generate the log.",
             "type": "PromptResponse",
           },
@@ -17272,7 +17060,6 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           "literal<"auto">",
           "literal<"required">",
           {
-            "display-name": "ToolChoice",
             "type": "ToolChoice",
           },
         ],
@@ -17490,7 +17277,6 @@ Observability is implemented by running monitoring Evaluators on Logs.",
             "type": "optional<string>",
           },
           "prompt": {
-            "display-name": "PromptResponse",
             "docs": "Prompt details used to generate the log.",
             "type": "PromptResponse",
           },
@@ -17568,7 +17354,6 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           "literal<"auto">",
           "literal<"required">",
           {
-            "display-name": "ToolChoice",
             "type": "ToolChoice",
           },
         ],
@@ -17609,7 +17394,6 @@ Observability is implemented by running monitoring Evaluators on Logs.",
             "type": "string",
           },
           "inputs": {
-            "display-name": "Prompt inputs",
             "docs": "Inputs associated to the Prompt. Inputs correspond to any of the variables used within the Prompt template.",
             "type": "list<InputResponse>",
           },
@@ -17655,7 +17439,6 @@ Observability is implemented by running monitoring Evaluators on Logs.",
             "type": "optional<integer>",
           },
           "status": {
-            "display-name": "VersionStatus",
             "docs": "The status of the Prompt Version.",
             "type": "VersionStatus",
           },
@@ -17746,7 +17529,6 @@ Observability is implemented by running monitoring Evaluators on Logs.",
         "docs": "Response format of the model.",
         "properties": {
           "type": {
-            "display-name": "Type",
             "type": "literal<"json_object">",
           },
         },
@@ -17765,7 +17547,6 @@ Observability is implemented by running monitoring Evaluators on Logs.",
             "type": "string",
           },
           "logs": {
-            "display-name": "Logs",
             "docs": "List of Logs associated with this Session.",
             "type": "list<PromptLogResponse>",
           },
@@ -17798,15 +17579,12 @@ Observability is implemented by running monitoring Evaluators on Logs.",
         },
         "union": {
           "human": {
-            "display-name": "HumanEvaluatorRequest",
             "type": "HumanEvaluatorRequest",
           },
           "llm": {
-            "display-name": "LLMEvaluatorRequest",
             "type": "LLMEvaluatorRequest",
           },
           "python": {
-            "display-name": "CodeEvaluatorRequest",
             "type": "CodeEvaluatorRequest",
           },
         },
@@ -17850,12 +17628,10 @@ Observability is implemented by running monitoring Evaluators on Logs.",
         "docs": "A tool call to be made.",
         "properties": {
           "function": {
-            "display-name": "FunctionTool",
             "type": "FunctionTool",
           },
           "id": "string",
           "type": {
-            "display-name": "ToolType",
             "type": "ToolType",
           },
         },
@@ -17867,11 +17643,9 @@ Observability is implemented by running monitoring Evaluators on Logs.",
         "docs": "Tool choice to force the model to use a tool.",
         "properties": {
           "function": {
-            "display-name": "FunctionToolChoice",
             "type": "FunctionToolChoice",
           },
           "type": {
-            "display-name": "ToolType",
             "type": "ToolType",
           },
         },
@@ -17914,7 +17688,6 @@ Does not have things like the signature or setup schema.",
             "type": "optional<string>",
           },
           "type": {
-            "display-name": "Type",
             "type": "literal<"tool">",
           },
         },
@@ -18053,7 +17826,6 @@ Does not have things like the signature or setup schema.",
             "type": "string",
           },
           "inputs": {
-            "display-name": "Prompt inputs",
             "docs": "Inputs associated to the Prompt. Inputs correspond to any of the variables used within the Prompt template.",
             "type": "list<InputResponse>",
           },
@@ -18077,7 +17849,6 @@ Does not have things like the signature or setup schema.",
             "type": "optional<string>",
           },
           "status": {
-            "display-name": "VersionStatus",
             "docs": "The status of the Prompt Version.",
             "type": "VersionStatus",
           },
@@ -18206,7 +17977,6 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
         "docs": undefined,
         "properties": {
           "loc": {
-            "display-name": "Location",
             "type": "list<ValidationErrorLocItem>",
           },
           "msg": "string",
@@ -18249,19 +18019,15 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
         },
         "union": [
           {
-            "display-name": "PromptResponse",
             "type": "PromptResponse",
           },
           {
-            "display-name": "ToolResponse",
             "type": "ToolResponse",
           },
           {
-            "display-name": "DatasetResponse",
             "type": "DatasetResponse",
           },
           {
-            "display-name": "EvaluatorResponse",
             "type": "EvaluatorResponse",
           },
         ],
@@ -18270,7 +18036,6 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
         "docs": "A variable reference to the Version deployed to an Environment",
         "properties": {
           "environment": {
-            "display-name": "EnvironmentResponse",
             "docs": "The Environment that the Version is deployed to.",
             "type": "EnvironmentResponse",
           },
@@ -18308,11 +18073,9 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
         },
         "union": {
           "environment": {
-            "display-name": "VersionDeploymentResponse",
             "type": "VersionDeploymentResponse",
           },
           "version": {
-            "display-name": "VersionIdResponse",
             "type": "VersionIdResponse",
           },
         },
@@ -18321,7 +18084,6 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
         "docs": "Stats for an Evaluated Version in the Evaluation Report.",
         "properties": {
           "evaluator_version_stats": {
-            "display-name": "Evaluator Version Stats",
             "docs": "Stats for each Evaluator Version used to evaluate this Evaluated Version.",
             "type": "list<VersionStatsEvaluatorVersionStatsItem>",
           },
@@ -18347,11 +18109,9 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
         },
         "union": [
           {
-            "display-name": "NumericEvaluatorVersionStats",
             "type": "NumericEvaluatorVersionStats",
           },
           {
-            "display-name": "BooleanEvaluatorVersionStats",
             "type": "BooleanEvaluatorVersionStats",
           },
         ],
