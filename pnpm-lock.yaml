@@ -3879,6 +3879,9 @@ importers:
 
   packages/cli/generation/ir-generator:
     dependencies:
+      '@fern-api/api-workspace-commons':
+        specifier: workspace:*
+        version: link:../../workspace-commons
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../../configuration

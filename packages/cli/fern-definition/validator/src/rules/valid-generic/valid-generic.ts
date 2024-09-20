@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { Rule, RuleViolation } from "../../Rule";
 import { NodePath, visitRawTypeDeclaration, isGeneric, parseGeneric } from "@fern-api/fern-definition-schema";
-import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/workspace-loader";
+import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/api-workspace-commons";
 import { visitDefinitionFileYamlAst } from "../../ast";
 
 type GenericDeclaration = string;

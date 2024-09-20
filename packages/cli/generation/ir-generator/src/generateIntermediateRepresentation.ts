@@ -14,7 +14,7 @@ import {
     Webhook
 } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
-import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "@fern-api/workspace-loader";
+import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "@fern-api/api-workspace-commons";
 import { mapValues, pickBy } from "lodash-es";
 import { constructCasingsGenerator } from "./casings/CasingsGenerator";
 import { generateFernConstants } from "./converters/constants";
