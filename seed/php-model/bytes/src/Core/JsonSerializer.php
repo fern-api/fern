@@ -60,11 +60,11 @@ class JsonSerializer
             foreach ($type->types as $unionType) {
                 try {
                     return self::serializeSingleValue($data, $unionType);
-                } catch (Exception $e) {
+                } catch (Exception) {
                     continue;
                 }
             }
-            throw new \InvalidArgumentException("Cannot serialize value with any of the union types.");
+            throw new JsonException("Cannot serialize value with any of the union types.");
         }
 
         if (is_array($type)) {
@@ -101,10 +101,7 @@ class JsonSerializer
         }
 
         if (class_exists($type) && $data instanceof $type) {
-            if (!is_subclass_of($data, JsonSerializable::class)) {
-                throw new JsonException("Class $type must implement JsonSerializable.");
-            }
-            return $data->jsonSerialize();
+            return self::serializeObject($data);
         }
 
         if (gettype($data) === $type) {
@@ -112,6 +109,22 @@ class JsonSerializer
         }
 
         throw new JsonException("Unable to serialize value of type '" . gettype($data) . "' as '$type'.");
+    }
+
+    /**
+     * Serializes an object to a JSON-serializable format.
+     *
+     * @param object $data The object to serialize.
+     * @return mixed The serialized data.
+     * @throws JsonException If the object does not implement JsonSerializable.
+     */
+    public static function serializeObject(object $data): mixed
+    {
+        if (!is_subclass_of($data, JsonSerializable::class)) {
+            $type = get_class($data);
+            throw new JsonException("Class $type must implement JsonSerializable.");
+        }
+        return $data->jsonSerialize();
     }
 
     /**

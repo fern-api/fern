@@ -10,27 +10,62 @@ use <%= coreNamespace%>\Union;
 
 class ScalarTypesTest extends SerializableType
 {
+    /**
+     * @var int $integerProperty
+     */
+    #[JsonProperty('integer_property')]
+    public int $integerProperty;
+
+    /**
+     * @var float $floatProperty
+     */
+    #[JsonProperty('float_property')]
+    public float $floatProperty;
+
+    /**
+     * @var bool $booleanProperty
+     */
+    #[JsonProperty('boolean_property')]
+    public bool $booleanProperty;
+
+    /**
+     * @var string $stringProperty
+     */
+    #[JsonProperty('string_property')]
+    public string $stringProperty;
+
+    /**
+     * @var array<int|float> $intFloatArray
+     */
+    #[ArrayType([new Union('integer', 'float')])]
+    #[JsonProperty('int_float_array')]
+    public array $intFloatArray;
+
+    /**
+     * @var bool|null $nullableBooleanProperty
+     */
+    #[JsonProperty('nullable_boolean_property')]
+    public ?bool $nullableBooleanProperty;
+
+    /**
+     * @param array{
+     *   integerProperty: int,
+     *   floatProperty: float,
+     *   booleanProperty: bool,
+     *   stringProperty: string,
+     *   intFloatArray: array<int|float>,
+     *   nullableBooleanProperty?: bool|null,
+     * } $values
+     */
     public function __construct(
-        #[JsonProperty('integer_property')]
-        public int    $integerProperty,
-
-        #[JsonProperty('float_property')]
-        public float  $floatProperty,
-
-        #[JsonProperty('boolean_property')]
-        public bool   $booleanProperty,
-
-        #[JsonProperty('string_property')]
-        public string $stringProperty,
-
-        #[ArrayType([new Union('integer', 'float')])]
-        #[JsonProperty('int_float_array')]
-        public array  $intFloatArray,
-
-        #[JsonProperty('nullable_boolean_property')]
-        public ?bool  $nullableBooleanProperty = null
-    )
-    {
+        array $values,
+    ) {
+        $this->integerProperty = $values['integerProperty'];
+        $this->floatProperty = $values['floatProperty'];
+        $this->booleanProperty = $values['booleanProperty'];
+        $this->stringProperty = $values['stringProperty'];
+        $this->intFloatArray = $values['intFloatArray'];
+        $this->nullableBooleanProperty = $values['nullableBooleanProperty'] ?? null;
     }
 }
 
