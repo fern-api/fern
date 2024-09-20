@@ -8,6 +8,13 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+function New-TemporaryDirectory {
+    $parent = [System.IO.Path]::GetTempPath()
+    $name = [System.Guid]::NewGuid().ToString()
+    $path = Join-Path $parent $name
+    New-Item -ItemType Directory -Path $path
+}
+
 $test_dir = New-TemporaryDirectory
 Set-Location $test_dir
 
@@ -24,9 +31,3 @@ $DebugPreference = "SilentlyContinue"
 & node $cli_path register --log-level debug
 
 Remove-Item -Recurse -Force $test_dir
-
-function New-TemporaryDirectory {
-    $parent = [System.IO.Path]::GetTempPath()
-    [string] $name = [System.Guid]::NewGuid()
-    New-Item -ItemType Directory -Path (Join-Path $parent $name)
-}
