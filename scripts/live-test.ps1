@@ -1,29 +1,32 @@
-#!/usr/bin/env pwsh
+param(
+    [Parameter(Mandatory=$true)]
+    [string]$cli_path,
+    
+    [Parameter(Mandatory=$true)]
+    [string]$token
+)
 
-# Exit immediately if a command fails
 $ErrorActionPreference = "Stop"
 
-$cliPath = $args[0]
-$token = $args[1]
+$test_dir = New-TemporaryDirectory
+Set-Location $test_dir
 
-# Create a temporary directory and change to it
-$testDir = New-TemporaryFile | Select-Object -ExpandProperty DirectoryName
-Set-Location $testDir
-
-# Export the FERN_TOKEN environment variable
 $env:FERN_TOKEN = $token
 
 Write-Host "Running Fern Commands!"
+$DebugPreference = "Continue"
+& node $cli_path init --organization fern
+& node $cli_path add fern-java-sdk
+& node $cli_path add fern-python-sdk
+& node $cli_path add fern-postman
+& node $cli_path generate --log-level debug
+$DebugPreference = "SilentlyContinue"
+& node $cli_path register --log-level debug
 
-# Run the Fern commands
-node $cliPath init --organization fern
-node $cliPath add fern-java-sdk
-node $cliPath add fern-python-sdk
-node $cliPath add fern-postman
-node $cliPath generate --log-level debug
+Remove-Item -Recurse -Force $test_dir
 
-
-node $cliPath register --log-level debug
-
-Get-ChildItem -Path $testDir -Recurse
-
+function New-TemporaryDirectory {
+    $parent = [System.IO.Path]::GetTempPath()
+    [string] $name = [System.Guid]::NewGuid()
+    New-Item -ItemType Directory -Path (Join-Path $parent $name)
+}
