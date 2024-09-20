@@ -6,6 +6,7 @@ use Seed\Auth\AuthClient;
 use Seed\User\UserClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\RawClient;
+use Exception;
 
 class SeedClient
 {
@@ -30,15 +31,23 @@ class SeedClient
     private RawClient $client;
 
     /**
+     * @param ?string $token The token to use for authentication.
+     * @param ?string $apiKey The apiKey to use for authentication.
      * @param ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
      */
     public function __construct(
+        ?string $token = null,
+        ?string $apiKey = null,
         ?array $options = null,
     ) {
+        $token ??= $this->getFromEnvOrThrow('MY_TOKEN', 'Please pass in token or set the environment variable MY_TOKEN.');
+        $apiKey ??= $this->getFromEnvOrThrow('MY_API_KEY', 'Please pass in apiKey or set the environment variable MY_API_KEY.');
         $defaultHeaders = [
-            "X-Fern-Language" => "PHP",
-            "X-Fern-SDK-Name" => "Seed",
-            "X-Fern-SDK-Version" => "0.0.1",
+            'Authorization' => "Bearer $token",
+            'X-API-Key' => $apiKey,
+            'X-Fern-Language' => 'PHP',
+            'X-Fern-SDK-Name' => 'Seed',
+            'X-Fern-SDK-Version' => '0.0.1',
         ];
 
         $this->options = $options ?? [];
@@ -54,4 +63,16 @@ class SeedClient
         $this->auth = new AuthClient($this->client);
         $this->user = new UserClient($this->client);
     }
+
+    /**
+     * @param string $env
+     * @param string $message
+     * @returns string
+     */
+    private function getFromEnvOrThrow(string $env, string $message): string
+    {
+        $value = getenv($env);
+        return $value ? (string) $value : throw new Exception($message);
+    }
+
 }

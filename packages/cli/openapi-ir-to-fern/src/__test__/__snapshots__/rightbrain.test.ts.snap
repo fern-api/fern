@@ -56,15 +56,12 @@ exports[`rightbrain > rightbrain > docs 1`] = `
                     },
                   },
                   "description": {
-                    "display-name": "ChatCreate",
                     "type": "optional<string>",
                   },
                   "summary": {
-                    "display-name": "ChatCreate",
                     "type": "optional<string>",
                   },
                   "title": {
-                    "display-name": "ChatCreate",
                     "type": "optional<string>",
                   },
                 },
@@ -341,7 +338,6 @@ exports[`rightbrain > rightbrain > docs 1`] = `
               "body": {
                 "properties": {
                   "member": {
-                    "display-name": "ChatIAMPermissionTest",
                     "type": "optional<string>",
                   },
                   "permissions": {
@@ -401,7 +397,6 @@ exports[`rightbrain > rightbrain > docs 1`] = `
               "body": {
                 "properties": {
                   "add": {
-                    "display-name": "ChatIAMMemberRoleUpdate",
                     "docs": "A list of chat roles to grant to the member.
 
 Roles in this list are applied to the member AFTER any removals specified in \`remove\`.
@@ -410,12 +405,10 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                     "type": "optional<list<ChatIamMemberRoleUpdateAddItem>>",
                   },
                   "remove": {
-                    "display-name": "ChatIAMMemberRoleUpdate",
                     "docs": "A list of chat roles to revoke from the member.",
                     "type": "optional<list<ChatIamMemberRoleUpdateRemoveItem>>",
                   },
                   "remove_all": {
-                    "display-name": "ChatIAMMemberRoleUpdate",
                     "docs": "Removes all existing roles from the member. This may be combined with \`add\` to replace all existing roles that the member holds.",
                     "type": "optional<boolean>",
                   },
@@ -525,33 +518,27 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "chat_guardrails": {
-                    "display-name": "ChatConfig",
                     "docs": "Conversational Guardrails can be defined to run against Chat \`input\` (i.e. the users query) or on Chat \`output\` (i.e. the LLM output)",
                     "type": "optional<root.ConversationalGuardrails>",
                   },
                   "chat_system_commands": {
-                    "display-name": "ChatConfig",
                     "type": "optional<list<string>>",
                   },
                   "knn": {
                     "default": 5,
-                    "display-name": "ChatConfig",
                     "type": "optional<integer>",
                   },
                   "llm": {
                     "default": "gpt-3.5-turbo",
-                    "display-name": "ChatConfig",
                     "type": "optional<Llm>",
                   },
                   "query_expansion": {
                     "default": false,
-                    "display-name": "ChatConfig",
                     "docs": "Enable query expansion. Uses an LLM to generate multiple rephrasing of the original query for better broad spectrum vector retrieval",
                     "type": "optional<boolean>",
                   },
                   "temperature": {
                     "default": 0.5,
-                    "display-name": "ChatConfig",
                     "type": "optional<double>",
                     "validation": {
                       "exclusiveMax": undefined,
@@ -1025,7 +1012,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "document_embedding_instance_ids": {
-                    "display-name": "CollectionCreate",
                     "type": "optional<list<string>>",
                   },
                   "title": "string",
@@ -1236,7 +1222,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "member": {
-                    "display-name": "CollectionIAMPermissionTest",
                     "type": "optional<string>",
                   },
                   "permissions": {
@@ -1300,7 +1285,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "add": {
-                    "display-name": "CollectionIAMMemberRoleUpdate",
                     "docs": "A list of collection roles to grant to the member.
 
 Roles in this list are applied to the member AFTER any removals specified in \`remove\`.
@@ -1309,12 +1293,10 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                     "type": "optional<list<CollectionIamMemberRoleUpdateAddItem>>",
                   },
                   "remove": {
-                    "display-name": "CollectionIAMMemberRoleUpdate",
                     "docs": "A list of collection roles to revoke from the member.",
                     "type": "optional<list<CollectionIamMemberRoleUpdateRemoveItem>>",
                   },
                   "remove_all": {
-                    "display-name": "CollectionIAMMemberRoleUpdate",
                     "docs": "Removes all existing roles from the member. This may be combined with \`add\` to replace all existing roles that the member holds.",
                     "type": "optional<boolean>",
                   },
@@ -1818,7 +1800,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                 "properties": {
                   "category": {
                     "default": "blog",
-                    "display-name": "ComposeTopicPoint",
                     "type": "optional<string>",
                   },
                   "title": "string",
@@ -5322,7 +5303,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "description": {
-                    "display-name": "ChatDocumentUpdate",
                     "type": "optional<string>",
                   },
                   "title": "string",
@@ -5552,7 +5532,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "member": {
-                    "display-name": "DocumentIAMPermissionTest",
                     "type": "optional<string>",
                   },
                   "permissions": {
@@ -5616,7 +5595,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "add": {
-                    "display-name": "DocumentIAMMemberRoleUpdate",
                     "docs": "A list of document roles to grant to the member.
 
 Roles in this list are applied to the member AFTER any removals specified in \`remove\`.
@@ -5625,12 +5603,10 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                     "type": "optional<list<DocumentIamMemberRoleUpdateAddItem>>",
                   },
                   "remove": {
-                    "display-name": "DocumentIAMMemberRoleUpdate",
                     "docs": "A list of document roles to revoke from the member.",
                     "type": "optional<list<DocumentIamMemberRoleUpdateRemoveItem>>",
                   },
                   "remove_all": {
-                    "display-name": "DocumentIAMMemberRoleUpdate",
                     "docs": "Removes all existing roles from the member. This may be combined with \`add\` to replace all existing roles that the member holds.",
                     "type": "optional<boolean>",
                   },
@@ -5817,11 +5793,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                     },
                   },
                   "profile": {
-                    "display-name": "OAuthClientCreate",
                     "type": "optional<root.OAuthClientProfile>",
                   },
                   "redirect_uris": {
-                    "display-name": "OAuthClientCreate",
                     "type": "optional<list<string>>",
                   },
                 },
@@ -6420,7 +6394,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                     },
                   },
                   "roles": {
-                    "display-name": "OrgInviteBase",
                     "type": "optional<list<string>>",
                   },
                 },
@@ -6617,7 +6590,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "contact_email": {
-                    "display-name": "OrgUpdate",
                     "type": "optional<string>",
                     "validation": {
                       "format": "email",
@@ -6817,7 +6789,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "member": {
-                    "display-name": "OrganizationIAMPermissionTest",
                     "type": "optional<string>",
                   },
                   "permissions": {
@@ -6877,7 +6848,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "add": {
-                    "display-name": "OrganizationIAMMemberRoleUpdate",
                     "docs": "A list of organization roles to grant to the member.
 
 Roles in this list are applied to the member AFTER any removals specified in \`remove\`.
@@ -6886,12 +6856,10 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                     "type": "optional<list<OrganizationIamMemberRoleUpdateAddItem>>",
                   },
                   "remove": {
-                    "display-name": "OrganizationIAMMemberRoleUpdate",
                     "docs": "A list of organization roles to revoke from the member.",
                     "type": "optional<list<OrganizationIamMemberRoleUpdateRemoveItem>>",
                   },
                   "remove_all": {
-                    "display-name": "OrganizationIAMMemberRoleUpdate",
                     "docs": "Removes all existing roles from the member. This may be combined with \`add\` to replace all existing roles that the member holds.",
                     "type": "optional<boolean>",
                   },
@@ -7263,7 +7231,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "member": {
-                    "display-name": "ProjectIAMPermissionTest",
                     "type": "optional<string>",
                   },
                   "permissions": {
@@ -7325,7 +7292,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "add": {
-                    "display-name": "ProjectIAMMemberRoleUpdate",
                     "docs": "A list of project roles to grant to the member.
 
 Roles in this list are applied to the member AFTER any removals specified in \`remove\`.
@@ -7334,12 +7300,10 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                     "type": "optional<list<ProjectIamMemberRoleUpdateAddItem>>",
                   },
                   "remove": {
-                    "display-name": "ProjectIAMMemberRoleUpdate",
                     "docs": "A list of project roles to revoke from the member.",
                     "type": "optional<list<ProjectIamMemberRoleUpdateRemoveItem>>",
                   },
                   "remove_all": {
-                    "display-name": "ProjectIAMMemberRoleUpdate",
                     "docs": "Removes all existing roles from the member. This may be combined with \`add\` to replace all existing roles that the member holds.",
                     "type": "optional<boolean>",
                   },
@@ -7508,32 +7472,26 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "chat_guardrails": {
-                    "display-name": "ProjectConfig",
                     "type": "optional<root.ConversationalGuardrails>",
                   },
                   "chat_system_commands": {
-                    "display-name": "ProjectConfig",
                     "type": "optional<list<string>>",
                   },
                   "knn": {
                     "default": 4,
-                    "display-name": "ProjectConfig",
                     "type": "optional<integer>",
                   },
                   "llm": {
                     "default": "gpt-3.5-turbo",
-                    "display-name": "ProjectConfig",
                     "type": "optional<Llm>",
                   },
                   "query_expansion": {
                     "default": false,
-                    "display-name": "ProjectConfig",
                     "docs": "Enable query expansion. Uses an LLM to generate multiple rephrasing of the original query for better broad spectrum vector retrieval",
                     "type": "optional<boolean>",
                   },
                   "temperature": {
                     "default": 0.5,
-                    "display-name": "ProjectConfig",
                     "type": "optional<double>",
                     "validation": {
                       "exclusiveMax": undefined,
@@ -7592,7 +7550,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "name": {
-                    "display-name": "ProjectUpdate",
                     "type": "optional<string>",
                   },
                 },
@@ -7890,7 +7847,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                 "properties": {
                   "max_crawl_depth": {
                     "default": 3,
-                    "display-name": "SiteScrapeRequest",
                     "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
@@ -8052,17 +8008,14 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "config": {
-                    "display-name": "TaskForwarderCreate",
                     "docs": "Configuration parameters for the Task Forwarder such as a \`destination\` URL.",
                     "type": "optional<root.TaskForwarderConfig>",
                   },
                   "config_sensitive": {
-                    "display-name": "TaskForwarderCreate",
                     "docs": "Sensitive parameters for the Task Forwarder such as a \`signing_key\`.",
                     "type": "optional<root.TaskForwarderSensitiveConfig>",
                   },
                   "description": {
-                    "display-name": "TaskForwarderCreate",
                     "docs": "Additional details about the Task Forwarder's purpose or configuration.",
                     "type": "optional<string>",
                   },
@@ -8281,22 +8234,18 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "config": {
-                    "display-name": "TaskForwarderUpdate",
                     "docs": "Configuration parameters for the Task Forwarder such as a \`destination\` URL.",
                     "type": "optional<root.TaskForwarderConfig>",
                   },
                   "config_sensitive": {
-                    "display-name": "TaskForwarderUpdate",
                     "docs": "Sensitive parameters for the Task Forwarder such as a \`signing_key\`.",
                     "type": "optional<root.TaskForwarderSensitiveConfig>",
                   },
                   "description": {
-                    "display-name": "TaskForwarderUpdate",
                     "docs": "Additional details about the Task Forwarder's purpose or configuration.",
                     "type": "optional<string>",
                   },
                   "name": {
-                    "display-name": "TaskForwarderUpdate",
                     "docs": "A descriptive name for the Task Forwarder.",
                     "type": "optional<string>",
                   },
@@ -8413,7 +8362,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "description": {
-                    "display-name": "TaskCreate",
                     "docs": "A longer description of the Task for internal reference.",
                     "type": "optional<string>",
                   },
@@ -8423,17 +8371,14 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                   },
                   "image_required": {
                     "default": false,
-                    "display-name": "TaskCreate",
                     "docs": "When \`true\` it requires an image to be sent in the Task Run request.",
                     "type": "optional<boolean>",
                   },
                   "llm_config": {
-                    "display-name": "TaskCreate",
                     "docs": "Specific configuration parameters for the LLM model.",
                     "type": "optional<root.TaskLLMConfig>",
                   },
                   "llm_model": {
-                    "display-name": "Llm Model",
                     "docs": "The LLM model to use for the Task.",
                     "type": "TaskCreateLlmModel",
                   },
@@ -8442,7 +8387,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                     "type": "string",
                   },
                   "output_format": {
-                    "display-name": "Output Format",
                     "docs": "This gives control over the structure of how the Task responds. Supports shorthand notation or an object with \`type\` can be specified for each attribute. In most instances, the LLM will be able to generate the desired output into the relevant property, but an optional \`description\` can be passed to provide it with additional context.",
                     "type": "map<string, TaskCreateOutputFormatValue>",
                   },
@@ -8456,7 +8400,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                   },
                   "system_prompt": "unknown",
                   "task_forwarder_id": {
-                    "display-name": "TaskCreate",
                     "docs": "The unique identifier for a valid Task Forwarder. It is used to forward the Task output to another system or service.",
                     "type": "optional<string>",
                     "validation": {
@@ -8557,37 +8500,30 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "description": {
-                    "display-name": "TaskUpdate",
                     "docs": "A longer description of the Task for internal reference.",
                     "type": "optional<string>",
                   },
                   "enabled": {
-                    "display-name": "TaskUpdate",
                     "docs": "When \`true\` the Task is active and callable. \`false\` denotes the Task is not yet operational.",
                     "type": "optional<boolean>",
                   },
                   "image_required": {
-                    "display-name": "TaskUpdate",
                     "docs": "When \`true\` it requires an image to be sent in the Task Run request.",
                     "type": "optional<boolean>",
                   },
                   "llm_config": {
-                    "display-name": "TaskUpdate",
                     "docs": "Specific configuration parameters for the LLM model.",
                     "type": "optional<root.TaskLLMConfig>",
                   },
                   "llm_model": {
-                    "display-name": "TaskUpdate",
                     "docs": "The LLM model to use for the Task.",
                     "type": "optional<TaskUpdateLlmModel>",
                   },
                   "name": {
-                    "display-name": "TaskUpdate",
                     "docs": "A name or reference for the Task.",
                     "type": "optional<string>",
                   },
                   "output_format": {
-                    "display-name": "TaskUpdate",
                     "docs": "This gives control over the structure of how the Task responds. Supports shorthand notation or an object with \`type\` can be specified for each attribute. In most instances, the LLM will be able to generate the desired output into the relevant property, but an optional \`description\` can be passed to provide it with additional context.",
                     "type": "optional<map<string, optional<TaskUpdateOutputFormatValue>>>",
                   },
@@ -8600,11 +8536,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                     "type": "optional<root.TaskRAG>",
                   },
                   "system_prompt": {
-                    "display-name": "TaskUpdate",
                     "type": "optional<unknown>",
                   },
                   "task_forwarder_id": {
-                    "display-name": "TaskUpdate",
                     "docs": "The unique identifier for a valid Task Forwarder. It is used to forward the Task output to another system or service.",
                     "type": "optional<string>",
                     "validation": {
@@ -8615,7 +8549,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                     },
                   },
                   "user_prompt": {
-                    "display-name": "TaskUpdate",
                     "type": "optional<unknown>",
                   },
                 },
@@ -9039,7 +8972,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                 "properties": {
                   "task_file": "optional<file>",
                   "task_input": {
-                    "display-name": "Task Input",
                     "docs": "The data input to the Task. This should be relevant to the \`user_prompt\` and cover any dynamic \`{...}\` parameters that are referenced in the prompt. Not required if \`image_required\` is set to \`true\` and there are no dynamic parameters in the prompt.",
                     "type": "map<string, unknown>",
                   },
@@ -9200,7 +9132,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "member": {
-                    "display-name": "TaskIAMPermissionTest",
                     "type": "optional<string>",
                   },
                   "permissions": {
@@ -9264,7 +9195,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "add": {
-                    "display-name": "TaskIAMMemberRoleUpdate",
                     "docs": "A list of task roles to grant to the member.
 
 Roles in this list are applied to the member AFTER any removals specified in \`remove\`.
@@ -9273,12 +9203,10 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                     "type": "optional<list<TaskIamMemberRoleUpdateAddItem>>",
                   },
                   "remove": {
-                    "display-name": "TaskIAMMemberRoleUpdate",
                     "docs": "A list of task roles to revoke from the member.",
                     "type": "optional<list<TaskIamMemberRoleUpdateRemoveItem>>",
                   },
                   "remove_all": {
-                    "display-name": "TaskIAMMemberRoleUpdate",
                     "docs": "Removes all existing roles from the member. This may be combined with \`add\` to replace all existing roles that the member holds.",
                     "type": "optional<boolean>",
                   },
@@ -9551,11 +9479,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "bio": {
-                    "display-name": "UserProfileUpdate",
                     "type": "optional<string>",
                   },
                   "name": {
-                    "display-name": "UserProfileUpdate",
                     "type": "optional<string>",
                   },
                 },
@@ -12294,7 +12220,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
           "created": {
-            "display-name": "Created",
             "type": "datetime",
           },
           "created_by_user_id": {
@@ -12307,12 +12232,10 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
           "description": {
-            "display-name": "Chat",
             "type": "optional<string>",
           },
           "documents_have_been_modified": {
             "default": false,
-            "display-name": "Chat",
             "type": "optional<boolean>",
           },
           "id": {
@@ -12325,15 +12248,12 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
           "last_message": {
-            "display-name": "Chat",
             "type": "optional<datetime>",
           },
           "summary": {
-            "display-name": "Chat",
             "type": "optional<string>",
           },
           "title": {
-            "display-name": "Chat",
             "type": "optional<string>",
           },
         },
@@ -12345,33 +12265,27 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "chat_guardrails": {
-            "display-name": "ChatConfig",
             "docs": "Conversational Guardrails can be defined to run against Chat \`input\` (i.e. the users query) or on Chat \`output\` (i.e. the LLM output)",
             "type": "optional<ConversationalGuardrails>",
           },
           "chat_system_commands": {
-            "display-name": "ChatConfig",
             "type": "optional<list<string>>",
           },
           "knn": {
             "default": 5,
-            "display-name": "ChatConfig",
             "type": "optional<integer>",
           },
           "llm": {
             "default": "gpt-3.5-turbo",
-            "display-name": "ChatConfig",
             "type": "optional<Llm>",
           },
           "query_expansion": {
             "default": false,
-            "display-name": "ChatConfig",
             "docs": "Enable query expansion. Uses an LLM to generate multiple rephrasing of the original query for better broad spectrum vector retrieval",
             "type": "optional<boolean>",
           },
           "temperature": {
             "default": 0.5,
-            "display-name": "ChatConfig",
             "type": "optional<double>",
             "validation": {
               "exclusiveMax": undefined,
@@ -12391,7 +12305,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "properties": {
           "chunks": "integer",
           "connection_id": {
-            "display-name": "ChatDocument",
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -12401,7 +12314,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
           "description": {
-            "display-name": "ChatDocument",
             "type": "optional<string>",
           },
           "embedding_instances": "optional<list<ChatDocumentEmbeddingInstance>>",
@@ -12425,11 +12337,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
           "source": {
-            "display-name": "ChatDocument",
             "type": "optional<ChatDocumentSource>",
           },
           "source_meta": {
-            "display-name": "ChatDocument",
             "type": "optional<map<string, unknown>>",
           },
           "strategy": "string",
@@ -12452,7 +12362,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
           "config": {
-            "display-name": "ChatDocumentEmbeddingInstance",
             "type": "optional<map<string, unknown>>",
           },
           "id": {
@@ -12548,12 +12457,10 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "properties": {
           "description": "string",
           "id": {
-            "display-name": "Id",
             "type": "Id",
           },
           "name": "string",
           "type": {
-            "display-name": "Type",
             "type": "Type",
           },
         },
@@ -12693,7 +12600,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "type": "string",
           },
           "name": {
-            "display-name": "Name",
             "docs": "LLM reference name.",
             "type": "Name",
           },
@@ -12855,11 +12761,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "created": {
-            "display-name": "Created",
             "type": "datetime",
           },
           "embedding_instances": {
-            "display-name": "Collection",
             "type": "optional<list<ChatDocumentEmbeddingInstance>>",
           },
           "id": {
@@ -12872,7 +12776,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
           "modified": {
-            "display-name": "Modified",
             "type": "datetime",
           },
           "project_id": {
@@ -12885,7 +12788,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
           "summary": {
-            "display-name": "Collection",
             "type": "optional<string>",
           },
           "title": "string",
@@ -13173,61 +13075,47 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "audience": {
-            "display-name": "ComposeInit",
             "type": "optional<string>",
           },
           "content": {
-            "display-name": "ComposeInit",
             "type": "optional<string>",
           },
           "cta": {
-            "display-name": "ComposeInit",
             "type": "optional<string>",
           },
           "deny_words": {
-            "display-name": "ComposeInit",
             "type": "optional<string>",
           },
           "domain": {
-            "display-name": "ComposeInit",
             "type": "optional<string>",
           },
           "favourable_words": {
-            "display-name": "ComposeInit",
             "type": "optional<string>",
           },
           "keywords": {
-            "display-name": "ComposeInit",
             "type": "optional<string>",
           },
           "language": {
             "default": "english_british",
-            "display-name": "ComposeInit",
             "type": "optional<Language>",
           },
           "num_sections": {
-            "display-name": "ComposeInit",
             "type": "optional<integer>",
           },
           "purpose": {
-            "display-name": "ComposeInit",
             "type": "optional<string>",
           },
           "title": "string",
           "tone": {
-            "display-name": "ComposeInit",
             "type": "optional<string>",
           },
           "topic": {
-            "display-name": "ComposeInit",
             "type": "optional<string>",
           },
           "voice": {
-            "display-name": "ComposeInit",
             "type": "optional<string>",
           },
           "word_count": {
-            "display-name": "ComposeInit",
             "type": "optional<integer>",
           },
         },
@@ -13254,7 +13142,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "position": "integer",
           "section_title": "string",
           "text": {
-            "display-name": "ComposeSectionUpdate",
             "type": "optional<string>",
           },
         },
@@ -13266,12 +13153,10 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "input": {
-            "display-name": "ConversationalGuardrails",
             "docs": "List of valid Input Conversational Guardrails to enable",
             "type": "optional<list<InputConversationalGuardrailDefinition>>",
           },
           "output": {
-            "display-name": "ConversationalGuardrails",
             "docs": "List of valid Output Conversational Guardrails to enable",
             "type": "optional<list<OutputConversationalGuardrailDefinition>>",
           },
@@ -13413,11 +13298,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "config": {
-            "display-name": "DatasourceConnection",
             "type": "optional<map<string, unknown>>",
           },
           "created_by": {
-            "display-name": "DatasourceConnection",
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -13427,7 +13310,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
           "datasource_id": {
-            "display-name": "DatasourceConnection",
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -13446,11 +13328,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
           "private": {
-            "display-name": "DatasourceConnection",
             "type": "optional<boolean>",
           },
           "project_id": {
-            "display-name": "DatasourceConnection",
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -13461,7 +13341,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           },
           "token": {
             "default": "",
-            "display-name": "DatasourceConnection",
             "type": "optional<string>",
           },
         },
@@ -13473,11 +13352,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "config": {
-            "display-name": "DatasourceConnectionPublic",
             "type": "optional<map<string, unknown>>",
           },
           "created": {
-            "display-name": "Created",
             "type": "datetime",
           },
           "datasource": {
@@ -13503,7 +13380,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
           "modified": {
-            "display-name": "Modified",
             "type": "datetime",
           },
           "name": "string",
@@ -13526,11 +13402,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "created": {
-            "display-name": "Created",
             "type": "datetime",
           },
           "datasource_connection": {
-            "display-name": "DatasourceSyncRun",
             "type": "optional<DatasourceConnection>",
           },
           "id": {
@@ -13543,20 +13417,16 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
           "modified": {
-            "display-name": "Modified",
             "type": "datetime",
           },
           "run_output": {
-            "display-name": "DatasourceSyncRun",
             "type": "optional<map<string, unknown>>",
           },
           "status": {
             "default": "pending",
-            "display-name": "DatasourceSyncRun",
             "type": "optional<Status>",
           },
           "task_id": {
-            "display-name": "DatasourceSyncRun",
             "type": "optional<string>",
           },
         },
@@ -13728,11 +13598,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "info": {
-            "display-name": "DocumentCreateTask",
             "type": "optional<map<string, unknown>>",
           },
           "state": {
-            "display-name": "State",
             "type": "State",
           },
           "task_id": "string",
@@ -14446,7 +14314,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "detail": {
-            "display-name": "HTTPValidationError",
             "type": "optional<list<ValidationError>>",
           },
         },
@@ -14471,7 +14338,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "id_token_claims": {
-            "display-name": "Id Token Claims",
             "type": "map<string, unknown>",
           },
         },
@@ -14483,7 +14349,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "avatar_url": {
-            "display-name": "IAMMember",
             "docs": "If avatar of the member, if it is supported by their subject type.",
             "type": "optional<string>",
           },
@@ -14492,12 +14357,10 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "type": "string",
           },
           "name": {
-            "display-name": "IAMMember",
             "docs": "The name of the member.",
             "type": "optional<string>",
           },
           "roles": {
-            "display-name": "IAMMember",
             "docs": "A list of roles that the member holds on an entity.
 
 Some entities, such as Organizations, may contain members that exist without any roles.",
@@ -14505,7 +14368,6 @@ Some entities, such as Organizations, may contain members that exist without any
           },
           "total_subjects": {
             "default": 1,
-            "display-name": "IAMMember",
             "docs": "The total number of subjects that the member represents, which may be a value other than \`1\` if the member is not a User.",
             "type": "optional<integer>",
           },
@@ -14518,7 +14380,6 @@ Some entities, such as Organizations, may contain members that exist without any
         "docs": undefined,
         "properties": {
           "id": {
-            "display-name": "IAMObjectErrorDetails",
             "type": "optional<string>",
           },
           "type": "string",
@@ -14531,7 +14392,6 @@ Some entities, such as Organizations, may contain members that exist without any
         "docs": undefined,
         "properties": {
           "member": {
-            "display-name": "IAMPermissionTest",
             "type": "optional<string>",
           },
           "permissions": {
@@ -14572,7 +14432,6 @@ Some entities, such as Organizations, may contain members that exist without any
         "docs": undefined,
         "properties": {
           "ideas": {
-            "display-name": "InitialComposeSection",
             "type": "optional<list<string>>",
           },
           "position": "integer",
@@ -14606,7 +14465,6 @@ Some entities, such as Organizations, may contain members that exist without any
         "docs": undefined,
         "properties": {
           "name": {
-            "display-name": "Name",
             "type": "Name",
           },
         },
@@ -14618,11 +14476,9 @@ Some entities, such as Organizations, may contain members that exist without any
         "docs": undefined,
         "properties": {
           "resource": {
-            "display-name": "InvalidMemberErrorDetails",
             "type": "optional<IAMObjectErrorDetails>",
           },
           "subject": {
-            "display-name": "InvalidMemberErrorDetails",
             "type": "optional<IAMObjectErrorDetails>",
           },
         },
@@ -14651,7 +14507,6 @@ Some entities, such as Organizations, may contain members that exist without any
         "docs": undefined,
         "properties": {
           "resource": {
-            "display-name": "InvalidRoleErrorDetails",
             "type": "optional<IAMObjectErrorDetails>",
           },
           "role": "string",
@@ -14681,7 +14536,6 @@ Some entities, such as Organizations, may contain members that exist without any
         "docs": undefined,
         "properties": {
           "subject": {
-            "display-name": "InvalidSubjectTypeErrorDetails",
             "type": "optional<IAMObjectErrorDetails>",
           },
         },
@@ -14730,11 +14584,9 @@ Some entities, such as Organizations, may contain members that exist without any
         "extra-properties": true,
         "properties": {
           "avatar_url": {
-            "display-name": "KratosIdentityTraits",
             "type": "optional<string>",
           },
           "email": {
-            "display-name": "KratosIdentityTraits",
             "type": "optional<string>",
             "validation": {
               "format": "email",
@@ -14744,11 +14596,9 @@ Some entities, such as Organizations, may contain members that exist without any
             },
           },
           "name": {
-            "display-name": "KratosIdentityTraits",
             "type": "optional<string>",
           },
           "org_id": {
-            "display-name": "KratosIdentityTraits",
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -14758,7 +14608,6 @@ Some entities, such as Organizations, may contain members that exist without any
             },
           },
           "project_id": {
-            "display-name": "KratosIdentityTraits",
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -14768,7 +14617,6 @@ Some entities, such as Organizations, may contain members that exist without any
             },
           },
           "sso_email_verified": {
-            "display-name": "KratosIdentityTraits",
             "type": "optional<boolean>",
           },
         },
@@ -14780,15 +14628,12 @@ Some entities, such as Organizations, may contain members that exist without any
         "docs": undefined,
         "properties": {
           "bio": {
-            "display-name": "KratosWebhook",
             "type": "optional<string>",
           },
           "ctx": {
-            "display-name": "KratosWebhook",
             "type": "optional<map<string, unknown>>",
           },
           "email": {
-            "display-name": "KratosWebhook",
             "type": "optional<string>",
             "validation": {
               "format": "email",
@@ -14798,7 +14643,6 @@ Some entities, such as Organizations, may contain members that exist without any
             },
           },
           "flow_id": {
-            "display-name": "KratosWebhook",
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -14808,11 +14652,9 @@ Some entities, such as Organizations, may contain members that exist without any
             },
           },
           "flow_type": {
-            "display-name": "KratosWebhook",
             "type": "optional<string>",
           },
           "identity": {
-            "display-name": "KratosWebhook",
             "type": "optional<KratosIdentity>",
           },
           "identity_id": {
@@ -14834,13 +14676,11 @@ Some entities, such as Organizations, may contain members that exist without any
 https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "properties": {
           "context": {
-            "display-name": "KratosWebhookDetailedMessage",
             "type": "optional<unknown>",
           },
           "id": "integer",
           "text": "string",
           "type": {
-            "display-name": "Type",
             "type": "Type",
           },
         },
@@ -14854,7 +14694,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "properties": {
           "instance_ptr": "string",
           "messages": {
-            "display-name": "KratosWebhookErrorMessage",
             "type": "optional<list<KratosWebhookDetailedMessage>>",
           },
         },
@@ -14867,11 +14706,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
 https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "properties": {
           "identity": {
-            "display-name": "KratosWebhookResponse",
             "type": "optional<Identity>",
           },
           "messages": {
-            "display-name": "KratosWebhookResponse",
             "type": "optional<list<KratosWebhookErrorMessage>>",
           },
         },
@@ -15200,7 +15037,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "resource": {
-            "display-name": "MultipleRolesNotAllowedErrorDetails",
             "type": "optional<IAMObjectErrorDetails>",
           },
           "roles": {
@@ -15258,7 +15094,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "scope": {
             "default": "",
-            "display-name": "OAuthClientCreateResponse",
             "type": "optional<string>",
           },
         },
@@ -15281,30 +15116,24 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "createdTime": {
-            "display-name": "Object",
             "type": "optional<string>",
           },
           "id": "string",
           "mimeType": {
-            "display-name": "Object",
             "type": "optional<string>",
           },
           "modifiedTime": {
-            "display-name": "Object",
             "type": "optional<string>",
           },
           "name": "string",
           "size": {
-            "display-name": "Object",
             "type": "optional<string>",
           },
           "synced": {
             "default": false,
-            "display-name": "Object",
             "type": "optional<boolean>",
           },
           "tags": {
-            "display-name": "Object",
             "type": "optional<list<ObjectTags>>",
           },
           "type": "optional<ObjectType>",
@@ -15339,7 +15168,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "avatar_url": {
-            "display-name": "Org",
             "type": "optional<string>",
           },
           "contact_email": {
@@ -15625,7 +15453,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             },
           },
           "status": {
-            "display-name": "Status",
             "type": "Status",
           },
         },
@@ -15795,7 +15622,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             },
           },
           "roles": {
-            "display-name": "OrganizationInvite",
             "type": "optional<list<string>>",
           },
         },
@@ -15873,7 +15699,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "display-name": "PaginatedResultSet[Chat]",
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
           },
@@ -15891,7 +15716,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "display-name": "PaginatedResultSet[ChatDocument]",
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
           },
@@ -15909,7 +15733,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "display-name": "PaginatedResultSet[ChatDocumentEmbeddingRecord]",
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
           },
@@ -15927,7 +15750,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "display-name": "PaginatedResultSet[Collection]",
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
           },
@@ -15945,7 +15767,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "display-name": "PaginatedResultSet[DatasourceSyncRun]",
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
           },
@@ -15963,7 +15784,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "display-name": "PaginatedResultSet[IAMMember]",
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
           },
@@ -15981,7 +15801,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "display-name": "PaginatedResultSet[OrganizationDomain]",
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
           },
@@ -15999,7 +15818,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "display-name": "PaginatedResultSet[OrganizationInvite]",
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
           },
@@ -16017,7 +15835,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "display-name": "PaginatedResultSet[Project]",
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
           },
@@ -16035,7 +15852,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "display-name": "PaginatedResultSet[Task]",
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
           },
@@ -16053,7 +15869,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "display-name": "PaginatedResultSet[TaskForwarder]",
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
           },
@@ -16071,7 +15886,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "display-name": "PaginatedResultSet[TaskRun]",
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
           },
@@ -16089,17 +15903,14 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "has_next": {
-            "display-name": "PaginationDetails",
             "docs": "Indicates whether there are more results available in the next page.",
             "type": "optional<boolean>",
           },
           "next_cursor": {
-            "display-name": "PaginationDetails",
             "docs": "A token used to retrieve the next page of results. If \`null\`, there are no more results.",
             "type": "optional<string>",
           },
           "page_limit": {
-            "display-name": "PaginationDetails",
             "docs": "The maximum number of items returned per page.",
             "type": "optional<integer>",
           },
@@ -16113,11 +15924,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "properties": {
           "permission": "string",
           "resource": {
-            "display-name": "PermissionCheckFailedErrorDetails",
             "type": "optional<IAMObjectErrorDetails>",
           },
           "subject": {
-            "display-name": "PermissionCheckFailedErrorDetails",
             "type": "optional<IAMObjectErrorDetails>",
           },
         },
@@ -16146,7 +15955,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "avatar_url": {
-            "display-name": "Project",
             "type": "optional<string>",
           },
           "id": {
@@ -16169,7 +15977,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             },
           },
           "tasks_oauth_client_id": {
-            "display-name": "Project",
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -16187,32 +15994,26 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "chat_guardrails": {
-            "display-name": "ProjectConfig",
             "type": "optional<ConversationalGuardrails>",
           },
           "chat_system_commands": {
-            "display-name": "ProjectConfig",
             "type": "optional<list<string>>",
           },
           "knn": {
             "default": 4,
-            "display-name": "ProjectConfig",
             "type": "optional<integer>",
           },
           "llm": {
             "default": "gpt-3.5-turbo",
-            "display-name": "ProjectConfig",
             "type": "optional<Llm>",
           },
           "query_expansion": {
             "default": false,
-            "display-name": "ProjectConfig",
             "docs": "Enable query expansion. Uses an LLM to generate multiple rephrasing of the original query for better broad spectrum vector retrieval",
             "type": "optional<boolean>",
           },
           "temperature": {
             "default": 0.5,
-            "display-name": "ProjectConfig",
             "type": "optional<double>",
             "validation": {
               "exclusiveMax": undefined,
@@ -16391,11 +16192,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "avatar_url": {
-            "display-name": "ProjectWithDatasources",
             "type": "optional<string>",
           },
           "datasource_connections": {
-            "display-name": "ProjectWithDatasources",
             "type": "optional<list<DatasourceConnectionPublic>>",
           },
           "id": {
@@ -16418,7 +16217,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             },
           },
           "tasks_oauth_client_id": {
-            "display-name": "ProjectWithDatasources",
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -16733,7 +16531,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "properties": {
           "count": "integer",
           "source": {
-            "display-name": "Source",
             "type": "Source",
           },
         },
@@ -16767,12 +16564,10 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "created": {
-            "display-name": "Created",
             "docs": "When the Task was created.",
             "type": "datetime",
           },
           "description": {
-            "display-name": "Task",
             "docs": "A longer description of the Task for internal reference.",
             "type": "optional<string>",
           },
@@ -16791,7 +16586,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             },
           },
           "modified": {
-            "display-name": "Modified",
             "docs": "When the Task was last updated.",
             "type": "datetime",
           },
@@ -16823,22 +16617,18 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "config": {
-            "display-name": "TaskForwarder",
             "docs": "Configuration parameters for the Task Forwarder such as a \`destination\` URL.",
             "type": "optional<TaskForwarderConfig>",
           },
           "config_sensitive": {
-            "display-name": "TaskForwarder",
             "docs": "Sensitive parameters for the Task Forwarder such as a \`signing_key\`.",
             "type": "optional<TaskForwarderSensitiveConfig>",
           },
           "created": {
-            "display-name": "Created",
             "docs": "When the Task Forwarder was created.",
             "type": "datetime",
           },
           "description": {
-            "display-name": "TaskForwarder",
             "docs": "Additional details about the Task Forwarder's purpose or configuration.",
             "type": "optional<string>",
           },
@@ -16853,7 +16643,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             },
           },
           "modified": {
-            "display-name": "Modified",
             "docs": "When the Task Forwarder was last updated.",
             "type": "datetime",
           },
@@ -17045,7 +16834,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "properties": {
           "temperature": {
             "default": 0.2,
-            "display-name": "TaskLLMConfig",
             "docs": "Controls randomness in the output. Lower values make the output more focused and deterministic, while higher values make it more creative and diverse.",
             "type": "optional<double>",
             "validation": {
@@ -17084,12 +16872,10 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "properties": {
           "active": {
             "default": false,
-            "display-name": "TaskRevision",
             "docs": "When \`true\` the Revision is the currently active version and will be activated when the Task Run is executed.",
             "type": "optional<boolean>",
           },
           "created": {
-            "display-name": "Created",
             "docs": "When the Task was created.",
             "type": "datetime",
           },
@@ -17105,27 +16891,22 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "image_required": {
             "default": false,
-            "display-name": "TaskRevision",
             "docs": "When \`true\` it requires an image to be sent in the Task Run request.",
             "type": "optional<boolean>",
           },
           "llm_config": {
-            "display-name": "TaskRevision",
             "docs": "Specific configuration parameters for the LLM model.",
             "type": "optional<TaskLLMConfig>",
           },
           "llm_model": {
-            "display-name": "Llm Model",
             "docs": "The LLM model to use for the Task.",
             "type": "TaskRevisionLlmModel",
           },
           "modified": {
-            "display-name": "Modified",
             "docs": "When the Task was last updated.",
             "type": "datetime",
           },
           "output_format": {
-            "display-name": "Output Format",
             "docs": "This gives control over the structure of how the Task responds. Supports shorthand notation or an object with \`type\` can be specified for each attribute. In most instances, the LLM will be able to generate the desired output into the relevant property, but an optional \`description\` can be passed to provide it with additional context.",
             "type": "map<string, TaskRevisionOutputFormatValue>",
           },
@@ -17134,13 +16915,11 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
               "paid",
             ],
             "availability": "pre-release",
-            "display-name": "TaskRevision",
             "docs": "**Note: This is a Paid Tier feature.** Provide additional domain specific input to the LLM so that it is able to reference user specific information when executing the Task. Examples of this could be a product catalogue, terms and conditions or a user manual.",
             "type": "optional<TaskRAG>",
           },
           "system_prompt": "unknown",
           "task_forwarder_id": {
-            "display-name": "TaskRevision",
             "docs": "The unique identifier for a valid Task Forwarder. It is used to forward the Task output to another system or service.",
             "type": "optional<string>",
             "validation": {
@@ -17230,7 +17009,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "created": {
-            "display-name": "Created",
             "docs": "The timestamp when the Task Run was created.",
             "type": "datetime",
           },
@@ -17245,12 +17023,10 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             },
           },
           "response": {
-            "display-name": "Response",
             "docs": "The structured response from the Task execution.",
             "type": "map<string, unknown>",
           },
           "run_data": {
-            "display-name": "Run Data",
             "docs": "Additional data about the Task run, including audit information and submitted input.",
             "type": "map<string, unknown>",
           },
@@ -17424,11 +17200,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "avatar_url": {
-            "display-name": "User",
             "type": "optional<string>",
           },
           "bio": {
-            "display-name": "User",
             "type": "optional<string>",
           },
           "email": {
@@ -17555,15 +17329,12 @@ exports[`rightbrain > rightbrain > simple 1`] = `
                     },
                   },
                   "description": {
-                    "display-name": "ChatCreate",
                     "type": "optional<string>",
                   },
                   "summary": {
-                    "display-name": "ChatCreate",
                     "type": "optional<string>",
                   },
                   "title": {
-                    "display-name": "ChatCreate",
                     "type": "optional<string>",
                   },
                 },
@@ -17840,7 +17611,6 @@ exports[`rightbrain > rightbrain > simple 1`] = `
               "body": {
                 "properties": {
                   "member": {
-                    "display-name": "ChatIAMPermissionTest",
                     "type": "optional<string>",
                   },
                   "permissions": {
@@ -17900,7 +17670,6 @@ exports[`rightbrain > rightbrain > simple 1`] = `
               "body": {
                 "properties": {
                   "add": {
-                    "display-name": "ChatIAMMemberRoleUpdate",
                     "docs": "A list of chat roles to grant to the member.
 
 Roles in this list are applied to the member AFTER any removals specified in \`remove\`.
@@ -17909,12 +17678,10 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                     "type": "optional<list<ChatIamMemberRoleUpdateAddItem>>",
                   },
                   "remove": {
-                    "display-name": "ChatIAMMemberRoleUpdate",
                     "docs": "A list of chat roles to revoke from the member.",
                     "type": "optional<list<ChatIamMemberRoleUpdateRemoveItem>>",
                   },
                   "remove_all": {
-                    "display-name": "ChatIAMMemberRoleUpdate",
                     "docs": "Removes all existing roles from the member. This may be combined with \`add\` to replace all existing roles that the member holds.",
                     "type": "optional<boolean>",
                   },
@@ -18024,33 +17791,27 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "chat_guardrails": {
-                    "display-name": "ChatConfig",
                     "docs": "Conversational Guardrails can be defined to run against Chat \`input\` (i.e. the users query) or on Chat \`output\` (i.e. the LLM output)",
                     "type": "optional<root.ConversationalGuardrails>",
                   },
                   "chat_system_commands": {
-                    "display-name": "ChatConfig",
                     "type": "optional<list<string>>",
                   },
                   "knn": {
                     "default": 5,
-                    "display-name": "ChatConfig",
                     "type": "optional<integer>",
                   },
                   "llm": {
                     "default": "gpt-3.5-turbo",
-                    "display-name": "ChatConfig",
                     "type": "optional<Llm>",
                   },
                   "query_expansion": {
                     "default": false,
-                    "display-name": "ChatConfig",
                     "docs": "Enable query expansion. Uses an LLM to generate multiple rephrasing of the original query for better broad spectrum vector retrieval",
                     "type": "optional<boolean>",
                   },
                   "temperature": {
                     "default": 0.5,
-                    "display-name": "ChatConfig",
                     "type": "optional<double>",
                     "validation": {
                       "exclusiveMax": undefined,
@@ -18524,7 +18285,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "document_embedding_instance_ids": {
-                    "display-name": "CollectionCreate",
                     "type": "optional<list<string>>",
                   },
                   "title": "string",
@@ -18735,7 +18495,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "member": {
-                    "display-name": "CollectionIAMPermissionTest",
                     "type": "optional<string>",
                   },
                   "permissions": {
@@ -18799,7 +18558,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "add": {
-                    "display-name": "CollectionIAMMemberRoleUpdate",
                     "docs": "A list of collection roles to grant to the member.
 
 Roles in this list are applied to the member AFTER any removals specified in \`remove\`.
@@ -18808,12 +18566,10 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                     "type": "optional<list<CollectionIamMemberRoleUpdateAddItem>>",
                   },
                   "remove": {
-                    "display-name": "CollectionIAMMemberRoleUpdate",
                     "docs": "A list of collection roles to revoke from the member.",
                     "type": "optional<list<CollectionIamMemberRoleUpdateRemoveItem>>",
                   },
                   "remove_all": {
-                    "display-name": "CollectionIAMMemberRoleUpdate",
                     "docs": "Removes all existing roles from the member. This may be combined with \`add\` to replace all existing roles that the member holds.",
                     "type": "optional<boolean>",
                   },
@@ -19317,7 +19073,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                 "properties": {
                   "category": {
                     "default": "blog",
-                    "display-name": "ComposeTopicPoint",
                     "type": "optional<string>",
                   },
                   "title": "string",
@@ -22821,7 +22576,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "description": {
-                    "display-name": "ChatDocumentUpdate",
                     "type": "optional<string>",
                   },
                   "title": "string",
@@ -23051,7 +22805,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "member": {
-                    "display-name": "DocumentIAMPermissionTest",
                     "type": "optional<string>",
                   },
                   "permissions": {
@@ -23115,7 +22868,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "add": {
-                    "display-name": "DocumentIAMMemberRoleUpdate",
                     "docs": "A list of document roles to grant to the member.
 
 Roles in this list are applied to the member AFTER any removals specified in \`remove\`.
@@ -23124,12 +22876,10 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                     "type": "optional<list<DocumentIamMemberRoleUpdateAddItem>>",
                   },
                   "remove": {
-                    "display-name": "DocumentIAMMemberRoleUpdate",
                     "docs": "A list of document roles to revoke from the member.",
                     "type": "optional<list<DocumentIamMemberRoleUpdateRemoveItem>>",
                   },
                   "remove_all": {
-                    "display-name": "DocumentIAMMemberRoleUpdate",
                     "docs": "Removes all existing roles from the member. This may be combined with \`add\` to replace all existing roles that the member holds.",
                     "type": "optional<boolean>",
                   },
@@ -23316,11 +23066,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                     },
                   },
                   "profile": {
-                    "display-name": "OAuthClientCreate",
                     "type": "optional<root.OAuthClientProfile>",
                   },
                   "redirect_uris": {
-                    "display-name": "OAuthClientCreate",
                     "type": "optional<list<string>>",
                   },
                 },
@@ -23919,7 +23667,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                     },
                   },
                   "roles": {
-                    "display-name": "OrgInviteBase",
                     "type": "optional<list<string>>",
                   },
                 },
@@ -24116,7 +23863,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "contact_email": {
-                    "display-name": "OrgUpdate",
                     "type": "optional<string>",
                     "validation": {
                       "format": "email",
@@ -24316,7 +24062,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "member": {
-                    "display-name": "OrganizationIAMPermissionTest",
                     "type": "optional<string>",
                   },
                   "permissions": {
@@ -24376,7 +24121,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "add": {
-                    "display-name": "OrganizationIAMMemberRoleUpdate",
                     "docs": "A list of organization roles to grant to the member.
 
 Roles in this list are applied to the member AFTER any removals specified in \`remove\`.
@@ -24385,12 +24129,10 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                     "type": "optional<list<OrganizationIamMemberRoleUpdateAddItem>>",
                   },
                   "remove": {
-                    "display-name": "OrganizationIAMMemberRoleUpdate",
                     "docs": "A list of organization roles to revoke from the member.",
                     "type": "optional<list<OrganizationIamMemberRoleUpdateRemoveItem>>",
                   },
                   "remove_all": {
-                    "display-name": "OrganizationIAMMemberRoleUpdate",
                     "docs": "Removes all existing roles from the member. This may be combined with \`add\` to replace all existing roles that the member holds.",
                     "type": "optional<boolean>",
                   },
@@ -24762,7 +24504,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "member": {
-                    "display-name": "ProjectIAMPermissionTest",
                     "type": "optional<string>",
                   },
                   "permissions": {
@@ -24824,7 +24565,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "add": {
-                    "display-name": "ProjectIAMMemberRoleUpdate",
                     "docs": "A list of project roles to grant to the member.
 
 Roles in this list are applied to the member AFTER any removals specified in \`remove\`.
@@ -24833,12 +24573,10 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                     "type": "optional<list<ProjectIamMemberRoleUpdateAddItem>>",
                   },
                   "remove": {
-                    "display-name": "ProjectIAMMemberRoleUpdate",
                     "docs": "A list of project roles to revoke from the member.",
                     "type": "optional<list<ProjectIamMemberRoleUpdateRemoveItem>>",
                   },
                   "remove_all": {
-                    "display-name": "ProjectIAMMemberRoleUpdate",
                     "docs": "Removes all existing roles from the member. This may be combined with \`add\` to replace all existing roles that the member holds.",
                     "type": "optional<boolean>",
                   },
@@ -25007,32 +24745,26 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "chat_guardrails": {
-                    "display-name": "ProjectConfig",
                     "type": "optional<root.ConversationalGuardrails>",
                   },
                   "chat_system_commands": {
-                    "display-name": "ProjectConfig",
                     "type": "optional<list<string>>",
                   },
                   "knn": {
                     "default": 4,
-                    "display-name": "ProjectConfig",
                     "type": "optional<integer>",
                   },
                   "llm": {
                     "default": "gpt-3.5-turbo",
-                    "display-name": "ProjectConfig",
                     "type": "optional<Llm>",
                   },
                   "query_expansion": {
                     "default": false,
-                    "display-name": "ProjectConfig",
                     "docs": "Enable query expansion. Uses an LLM to generate multiple rephrasing of the original query for better broad spectrum vector retrieval",
                     "type": "optional<boolean>",
                   },
                   "temperature": {
                     "default": 0.5,
-                    "display-name": "ProjectConfig",
                     "type": "optional<double>",
                     "validation": {
                       "exclusiveMax": undefined,
@@ -25091,7 +24823,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "name": {
-                    "display-name": "ProjectUpdate",
                     "type": "optional<string>",
                   },
                 },
@@ -25389,7 +25120,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                 "properties": {
                   "max_crawl_depth": {
                     "default": 3,
-                    "display-name": "SiteScrapeRequest",
                     "type": "optional<integer>",
                     "validation": {
                       "exclusiveMax": undefined,
@@ -25551,17 +25281,14 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "config": {
-                    "display-name": "TaskForwarderCreate",
                     "docs": "Configuration parameters for the Task Forwarder such as a \`destination\` URL.",
                     "type": "optional<root.TaskForwarderConfig>",
                   },
                   "config_sensitive": {
-                    "display-name": "TaskForwarderCreate",
                     "docs": "Sensitive parameters for the Task Forwarder such as a \`signing_key\`.",
                     "type": "optional<root.TaskForwarderSensitiveConfig>",
                   },
                   "description": {
-                    "display-name": "TaskForwarderCreate",
                     "docs": "Additional details about the Task Forwarder's purpose or configuration.",
                     "type": "optional<string>",
                   },
@@ -25780,22 +25507,18 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "config": {
-                    "display-name": "TaskForwarderUpdate",
                     "docs": "Configuration parameters for the Task Forwarder such as a \`destination\` URL.",
                     "type": "optional<root.TaskForwarderConfig>",
                   },
                   "config_sensitive": {
-                    "display-name": "TaskForwarderUpdate",
                     "docs": "Sensitive parameters for the Task Forwarder such as a \`signing_key\`.",
                     "type": "optional<root.TaskForwarderSensitiveConfig>",
                   },
                   "description": {
-                    "display-name": "TaskForwarderUpdate",
                     "docs": "Additional details about the Task Forwarder's purpose or configuration.",
                     "type": "optional<string>",
                   },
                   "name": {
-                    "display-name": "TaskForwarderUpdate",
                     "docs": "A descriptive name for the Task Forwarder.",
                     "type": "optional<string>",
                   },
@@ -25912,7 +25635,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "description": {
-                    "display-name": "TaskCreate",
                     "docs": "A longer description of the Task for internal reference.",
                     "type": "optional<string>",
                   },
@@ -25922,17 +25644,14 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                   },
                   "image_required": {
                     "default": false,
-                    "display-name": "TaskCreate",
                     "docs": "When \`true\` it requires an image to be sent in the Task Run request.",
                     "type": "optional<boolean>",
                   },
                   "llm_config": {
-                    "display-name": "TaskCreate",
                     "docs": "Specific configuration parameters for the LLM model.",
                     "type": "optional<root.TaskLLMConfig>",
                   },
                   "llm_model": {
-                    "display-name": "Llm Model",
                     "docs": "The LLM model to use for the Task.",
                     "type": "TaskCreateLlmModel",
                   },
@@ -25941,7 +25660,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                     "type": "string",
                   },
                   "output_format": {
-                    "display-name": "Output Format",
                     "docs": "This gives control over the structure of how the Task responds. Supports shorthand notation or an object with \`type\` can be specified for each attribute. In most instances, the LLM will be able to generate the desired output into the relevant property, but an optional \`description\` can be passed to provide it with additional context.",
                     "type": "map<string, TaskCreateOutputFormatValue>",
                   },
@@ -25955,7 +25673,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                   },
                   "system_prompt": "unknown",
                   "task_forwarder_id": {
-                    "display-name": "TaskCreate",
                     "docs": "The unique identifier for a valid Task Forwarder. It is used to forward the Task output to another system or service.",
                     "type": "optional<string>",
                     "validation": {
@@ -26056,37 +25773,30 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "description": {
-                    "display-name": "TaskUpdate",
                     "docs": "A longer description of the Task for internal reference.",
                     "type": "optional<string>",
                   },
                   "enabled": {
-                    "display-name": "TaskUpdate",
                     "docs": "When \`true\` the Task is active and callable. \`false\` denotes the Task is not yet operational.",
                     "type": "optional<boolean>",
                   },
                   "image_required": {
-                    "display-name": "TaskUpdate",
                     "docs": "When \`true\` it requires an image to be sent in the Task Run request.",
                     "type": "optional<boolean>",
                   },
                   "llm_config": {
-                    "display-name": "TaskUpdate",
                     "docs": "Specific configuration parameters for the LLM model.",
                     "type": "optional<root.TaskLLMConfig>",
                   },
                   "llm_model": {
-                    "display-name": "TaskUpdate",
                     "docs": "The LLM model to use for the Task.",
                     "type": "optional<TaskUpdateLlmModel>",
                   },
                   "name": {
-                    "display-name": "TaskUpdate",
                     "docs": "A name or reference for the Task.",
                     "type": "optional<string>",
                   },
                   "output_format": {
-                    "display-name": "TaskUpdate",
                     "docs": "This gives control over the structure of how the Task responds. Supports shorthand notation or an object with \`type\` can be specified for each attribute. In most instances, the LLM will be able to generate the desired output into the relevant property, but an optional \`description\` can be passed to provide it with additional context.",
                     "type": "optional<map<string, optional<TaskUpdateOutputFormatValue>>>",
                   },
@@ -26099,11 +25809,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                     "type": "optional<root.TaskRAG>",
                   },
                   "system_prompt": {
-                    "display-name": "TaskUpdate",
                     "type": "optional<unknown>",
                   },
                   "task_forwarder_id": {
-                    "display-name": "TaskUpdate",
                     "docs": "The unique identifier for a valid Task Forwarder. It is used to forward the Task output to another system or service.",
                     "type": "optional<string>",
                     "validation": {
@@ -26114,7 +25822,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                     },
                   },
                   "user_prompt": {
-                    "display-name": "TaskUpdate",
                     "type": "optional<unknown>",
                   },
                 },
@@ -26538,7 +26245,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                 "properties": {
                   "task_file": "optional<file>",
                   "task_input": {
-                    "display-name": "Task Input",
                     "docs": "The data input to the Task. This should be relevant to the \`user_prompt\` and cover any dynamic \`{...}\` parameters that are referenced in the prompt. Not required if \`image_required\` is set to \`true\` and there are no dynamic parameters in the prompt.",
                     "type": "map<string, unknown>",
                   },
@@ -26699,7 +26405,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "member": {
-                    "display-name": "TaskIAMPermissionTest",
                     "type": "optional<string>",
                   },
                   "permissions": {
@@ -26763,7 +26468,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "add": {
-                    "display-name": "TaskIAMMemberRoleUpdate",
                     "docs": "A list of task roles to grant to the member.
 
 Roles in this list are applied to the member AFTER any removals specified in \`remove\`.
@@ -26772,12 +26476,10 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
                     "type": "optional<list<TaskIamMemberRoleUpdateAddItem>>",
                   },
                   "remove": {
-                    "display-name": "TaskIAMMemberRoleUpdate",
                     "docs": "A list of task roles to revoke from the member.",
                     "type": "optional<list<TaskIamMemberRoleUpdateRemoveItem>>",
                   },
                   "remove_all": {
-                    "display-name": "TaskIAMMemberRoleUpdate",
                     "docs": "Removes all existing roles from the member. This may be combined with \`add\` to replace all existing roles that the member holds.",
                     "type": "optional<boolean>",
                   },
@@ -27050,11 +26752,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "body": {
                 "properties": {
                   "bio": {
-                    "display-name": "UserProfileUpdate",
                     "type": "optional<string>",
                   },
                   "name": {
-                    "display-name": "UserProfileUpdate",
                     "type": "optional<string>",
                   },
                 },
@@ -27330,7 +27030,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
           "created": {
-            "display-name": "Created",
             "type": "datetime",
           },
           "created_by_user_id": {
@@ -27343,12 +27042,10 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
           "description": {
-            "display-name": "Chat",
             "type": "optional<string>",
           },
           "documents_have_been_modified": {
             "default": false,
-            "display-name": "Chat",
             "type": "optional<boolean>",
           },
           "id": {
@@ -27361,15 +27058,12 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
           "last_message": {
-            "display-name": "Chat",
             "type": "optional<datetime>",
           },
           "summary": {
-            "display-name": "Chat",
             "type": "optional<string>",
           },
           "title": {
-            "display-name": "Chat",
             "type": "optional<string>",
           },
         },
@@ -27381,33 +27075,27 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "chat_guardrails": {
-            "display-name": "ChatConfig",
             "docs": "Conversational Guardrails can be defined to run against Chat \`input\` (i.e. the users query) or on Chat \`output\` (i.e. the LLM output)",
             "type": "optional<ConversationalGuardrails>",
           },
           "chat_system_commands": {
-            "display-name": "ChatConfig",
             "type": "optional<list<string>>",
           },
           "knn": {
             "default": 5,
-            "display-name": "ChatConfig",
             "type": "optional<integer>",
           },
           "llm": {
             "default": "gpt-3.5-turbo",
-            "display-name": "ChatConfig",
             "type": "optional<Llm>",
           },
           "query_expansion": {
             "default": false,
-            "display-name": "ChatConfig",
             "docs": "Enable query expansion. Uses an LLM to generate multiple rephrasing of the original query for better broad spectrum vector retrieval",
             "type": "optional<boolean>",
           },
           "temperature": {
             "default": 0.5,
-            "display-name": "ChatConfig",
             "type": "optional<double>",
             "validation": {
               "exclusiveMax": undefined,
@@ -27427,7 +27115,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "properties": {
           "chunks": "integer",
           "connection_id": {
-            "display-name": "ChatDocument",
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -27437,7 +27124,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
           "description": {
-            "display-name": "ChatDocument",
             "type": "optional<string>",
           },
           "embedding_instances": "optional<list<ChatDocumentEmbeddingInstance>>",
@@ -27461,11 +27147,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
           "source": {
-            "display-name": "ChatDocument",
             "type": "optional<ChatDocumentSource>",
           },
           "source_meta": {
-            "display-name": "ChatDocument",
             "type": "optional<map<string, unknown>>",
           },
           "strategy": "string",
@@ -27488,7 +27172,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
           "config": {
-            "display-name": "ChatDocumentEmbeddingInstance",
             "type": "optional<map<string, unknown>>",
           },
           "id": {
@@ -27564,12 +27247,10 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "properties": {
           "description": "string",
           "id": {
-            "display-name": "Id",
             "type": "Id",
           },
           "name": "string",
           "type": {
-            "display-name": "Type",
             "type": "Type",
           },
         },
@@ -27589,7 +27270,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "type": "string",
           },
           "name": {
-            "display-name": "Name",
             "docs": "LLM reference name.",
             "type": "Name",
           },
@@ -27611,11 +27291,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "created": {
-            "display-name": "Created",
             "type": "datetime",
           },
           "embedding_instances": {
-            "display-name": "Collection",
             "type": "optional<list<ChatDocumentEmbeddingInstance>>",
           },
           "id": {
@@ -27628,7 +27306,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
           "modified": {
-            "display-name": "Modified",
             "type": "datetime",
           },
           "project_id": {
@@ -27641,7 +27318,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
           "summary": {
-            "display-name": "Collection",
             "type": "optional<string>",
           },
           "title": "string",
@@ -27709,61 +27385,47 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "audience": {
-            "display-name": "ComposeInit",
             "type": "optional<string>",
           },
           "content": {
-            "display-name": "ComposeInit",
             "type": "optional<string>",
           },
           "cta": {
-            "display-name": "ComposeInit",
             "type": "optional<string>",
           },
           "deny_words": {
-            "display-name": "ComposeInit",
             "type": "optional<string>",
           },
           "domain": {
-            "display-name": "ComposeInit",
             "type": "optional<string>",
           },
           "favourable_words": {
-            "display-name": "ComposeInit",
             "type": "optional<string>",
           },
           "keywords": {
-            "display-name": "ComposeInit",
             "type": "optional<string>",
           },
           "language": {
             "default": "english_british",
-            "display-name": "ComposeInit",
             "type": "optional<Language>",
           },
           "num_sections": {
-            "display-name": "ComposeInit",
             "type": "optional<integer>",
           },
           "purpose": {
-            "display-name": "ComposeInit",
             "type": "optional<string>",
           },
           "title": "string",
           "tone": {
-            "display-name": "ComposeInit",
             "type": "optional<string>",
           },
           "topic": {
-            "display-name": "ComposeInit",
             "type": "optional<string>",
           },
           "voice": {
-            "display-name": "ComposeInit",
             "type": "optional<string>",
           },
           "word_count": {
-            "display-name": "ComposeInit",
             "type": "optional<integer>",
           },
         },
@@ -27790,7 +27452,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "position": "integer",
           "section_title": "string",
           "text": {
-            "display-name": "ComposeSectionUpdate",
             "type": "optional<string>",
           },
         },
@@ -27802,12 +27463,10 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "input": {
-            "display-name": "ConversationalGuardrails",
             "docs": "List of valid Input Conversational Guardrails to enable",
             "type": "optional<list<InputConversationalGuardrailDefinition>>",
           },
           "output": {
-            "display-name": "ConversationalGuardrails",
             "docs": "List of valid Output Conversational Guardrails to enable",
             "type": "optional<list<OutputConversationalGuardrailDefinition>>",
           },
@@ -27849,11 +27508,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "config": {
-            "display-name": "DatasourceConnection",
             "type": "optional<map<string, unknown>>",
           },
           "created_by": {
-            "display-name": "DatasourceConnection",
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -27863,7 +27520,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
           "datasource_id": {
-            "display-name": "DatasourceConnection",
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -27882,11 +27538,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
           "private": {
-            "display-name": "DatasourceConnection",
             "type": "optional<boolean>",
           },
           "project_id": {
-            "display-name": "DatasourceConnection",
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -27897,7 +27551,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           },
           "token": {
             "default": "",
-            "display-name": "DatasourceConnection",
             "type": "optional<string>",
           },
         },
@@ -27909,11 +27562,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "config": {
-            "display-name": "DatasourceConnectionPublic",
             "type": "optional<map<string, unknown>>",
           },
           "created": {
-            "display-name": "Created",
             "type": "datetime",
           },
           "datasource": {
@@ -27939,7 +27590,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
           "modified": {
-            "display-name": "Modified",
             "type": "datetime",
           },
           "name": "string",
@@ -27962,11 +27612,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "created": {
-            "display-name": "Created",
             "type": "datetime",
           },
           "datasource_connection": {
-            "display-name": "DatasourceSyncRun",
             "type": "optional<DatasourceConnection>",
           },
           "id": {
@@ -27979,20 +27627,16 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
           "modified": {
-            "display-name": "Modified",
             "type": "datetime",
           },
           "run_output": {
-            "display-name": "DatasourceSyncRun",
             "type": "optional<map<string, unknown>>",
           },
           "status": {
             "default": "pending",
-            "display-name": "DatasourceSyncRun",
             "type": "optional<Status>",
           },
           "task_id": {
-            "display-name": "DatasourceSyncRun",
             "type": "optional<string>",
           },
         },
@@ -28004,11 +27648,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "info": {
-            "display-name": "DocumentCreateTask",
             "type": "optional<map<string, unknown>>",
           },
           "state": {
-            "display-name": "State",
             "type": "State",
           },
           "task_id": "string",
@@ -28062,7 +27704,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "detail": {
-            "display-name": "HTTPValidationError",
             "type": "optional<list<ValidationError>>",
           },
         },
@@ -28087,7 +27728,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "id_token_claims": {
-            "display-name": "Id Token Claims",
             "type": "map<string, unknown>",
           },
         },
@@ -28099,7 +27739,6 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "docs": undefined,
         "properties": {
           "avatar_url": {
-            "display-name": "IAMMember",
             "docs": "If avatar of the member, if it is supported by their subject type.",
             "type": "optional<string>",
           },
@@ -28108,12 +27747,10 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "type": "string",
           },
           "name": {
-            "display-name": "IAMMember",
             "docs": "The name of the member.",
             "type": "optional<string>",
           },
           "roles": {
-            "display-name": "IAMMember",
             "docs": "A list of roles that the member holds on an entity.
 
 Some entities, such as Organizations, may contain members that exist without any roles.",
@@ -28121,7 +27758,6 @@ Some entities, such as Organizations, may contain members that exist without any
           },
           "total_subjects": {
             "default": 1,
-            "display-name": "IAMMember",
             "docs": "The total number of subjects that the member represents, which may be a value other than \`1\` if the member is not a User.",
             "type": "optional<integer>",
           },
@@ -28134,7 +27770,6 @@ Some entities, such as Organizations, may contain members that exist without any
         "docs": undefined,
         "properties": {
           "id": {
-            "display-name": "IAMObjectErrorDetails",
             "type": "optional<string>",
           },
           "type": "string",
@@ -28147,7 +27782,6 @@ Some entities, such as Organizations, may contain members that exist without any
         "docs": undefined,
         "properties": {
           "member": {
-            "display-name": "IAMPermissionTest",
             "type": "optional<string>",
           },
           "permissions": {
@@ -28188,7 +27822,6 @@ Some entities, such as Organizations, may contain members that exist without any
         "docs": undefined,
         "properties": {
           "ideas": {
-            "display-name": "InitialComposeSection",
             "type": "optional<list<string>>",
           },
           "position": "integer",
@@ -28202,7 +27835,6 @@ Some entities, such as Organizations, may contain members that exist without any
         "docs": undefined,
         "properties": {
           "name": {
-            "display-name": "Name",
             "type": "Name",
           },
         },
@@ -28214,11 +27846,9 @@ Some entities, such as Organizations, may contain members that exist without any
         "docs": undefined,
         "properties": {
           "resource": {
-            "display-name": "InvalidMemberErrorDetails",
             "type": "optional<IAMObjectErrorDetails>",
           },
           "subject": {
-            "display-name": "InvalidMemberErrorDetails",
             "type": "optional<IAMObjectErrorDetails>",
           },
         },
@@ -28247,7 +27877,6 @@ Some entities, such as Organizations, may contain members that exist without any
         "docs": undefined,
         "properties": {
           "resource": {
-            "display-name": "InvalidRoleErrorDetails",
             "type": "optional<IAMObjectErrorDetails>",
           },
           "role": "string",
@@ -28277,7 +27906,6 @@ Some entities, such as Organizations, may contain members that exist without any
         "docs": undefined,
         "properties": {
           "subject": {
-            "display-name": "InvalidSubjectTypeErrorDetails",
             "type": "optional<IAMObjectErrorDetails>",
           },
         },
@@ -28326,11 +27954,9 @@ Some entities, such as Organizations, may contain members that exist without any
         "extra-properties": true,
         "properties": {
           "avatar_url": {
-            "display-name": "KratosIdentityTraits",
             "type": "optional<string>",
           },
           "email": {
-            "display-name": "KratosIdentityTraits",
             "type": "optional<string>",
             "validation": {
               "format": "email",
@@ -28340,11 +27966,9 @@ Some entities, such as Organizations, may contain members that exist without any
             },
           },
           "name": {
-            "display-name": "KratosIdentityTraits",
             "type": "optional<string>",
           },
           "org_id": {
-            "display-name": "KratosIdentityTraits",
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -28354,7 +27978,6 @@ Some entities, such as Organizations, may contain members that exist without any
             },
           },
           "project_id": {
-            "display-name": "KratosIdentityTraits",
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -28364,7 +27987,6 @@ Some entities, such as Organizations, may contain members that exist without any
             },
           },
           "sso_email_verified": {
-            "display-name": "KratosIdentityTraits",
             "type": "optional<boolean>",
           },
         },
@@ -28376,15 +27998,12 @@ Some entities, such as Organizations, may contain members that exist without any
         "docs": undefined,
         "properties": {
           "bio": {
-            "display-name": "KratosWebhook",
             "type": "optional<string>",
           },
           "ctx": {
-            "display-name": "KratosWebhook",
             "type": "optional<map<string, unknown>>",
           },
           "email": {
-            "display-name": "KratosWebhook",
             "type": "optional<string>",
             "validation": {
               "format": "email",
@@ -28394,7 +28013,6 @@ Some entities, such as Organizations, may contain members that exist without any
             },
           },
           "flow_id": {
-            "display-name": "KratosWebhook",
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -28404,11 +28022,9 @@ Some entities, such as Organizations, may contain members that exist without any
             },
           },
           "flow_type": {
-            "display-name": "KratosWebhook",
             "type": "optional<string>",
           },
           "identity": {
-            "display-name": "KratosWebhook",
             "type": "optional<KratosIdentity>",
           },
           "identity_id": {
@@ -28430,13 +28046,11 @@ Some entities, such as Organizations, may contain members that exist without any
 https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "properties": {
           "context": {
-            "display-name": "KratosWebhookDetailedMessage",
             "type": "optional<unknown>",
           },
           "id": "integer",
           "text": "string",
           "type": {
-            "display-name": "Type",
             "type": "Type",
           },
         },
@@ -28450,7 +28064,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "properties": {
           "instance_ptr": "string",
           "messages": {
-            "display-name": "KratosWebhookErrorMessage",
             "type": "optional<list<KratosWebhookDetailedMessage>>",
           },
         },
@@ -28463,11 +28076,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
 https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "properties": {
           "identity": {
-            "display-name": "KratosWebhookResponse",
             "type": "optional<Identity>",
           },
           "messages": {
-            "display-name": "KratosWebhookResponse",
             "type": "optional<list<KratosWebhookErrorMessage>>",
           },
         },
@@ -28596,7 +28207,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "resource": {
-            "display-name": "MultipleRolesNotAllowedErrorDetails",
             "type": "optional<IAMObjectErrorDetails>",
           },
           "roles": {
@@ -28654,7 +28264,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "scope": {
             "default": "",
-            "display-name": "OAuthClientCreateResponse",
             "type": "optional<string>",
           },
         },
@@ -28677,30 +28286,24 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "createdTime": {
-            "display-name": "Object",
             "type": "optional<string>",
           },
           "id": "string",
           "mimeType": {
-            "display-name": "Object",
             "type": "optional<string>",
           },
           "modifiedTime": {
-            "display-name": "Object",
             "type": "optional<string>",
           },
           "name": "string",
           "size": {
-            "display-name": "Object",
             "type": "optional<string>",
           },
           "synced": {
             "default": false,
-            "display-name": "Object",
             "type": "optional<boolean>",
           },
           "tags": {
-            "display-name": "Object",
             "type": "optional<list<ObjectTags>>",
           },
           "type": "optional<ObjectType>",
@@ -28735,7 +28338,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "avatar_url": {
-            "display-name": "Org",
             "type": "optional<string>",
           },
           "contact_email": {
@@ -28797,7 +28399,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             },
           },
           "status": {
-            "display-name": "Status",
             "type": "Status",
           },
         },
@@ -28827,7 +28428,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             },
           },
           "roles": {
-            "display-name": "OrganizationInvite",
             "type": "optional<list<string>>",
           },
         },
@@ -28905,7 +28505,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "display-name": "PaginatedResultSet[Chat]",
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
           },
@@ -28923,7 +28522,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "display-name": "PaginatedResultSet[ChatDocument]",
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
           },
@@ -28941,7 +28539,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "display-name": "PaginatedResultSet[ChatDocumentEmbeddingRecord]",
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
           },
@@ -28959,7 +28556,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "display-name": "PaginatedResultSet[Collection]",
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
           },
@@ -28977,7 +28573,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "display-name": "PaginatedResultSet[DatasourceSyncRun]",
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
           },
@@ -28995,7 +28590,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "display-name": "PaginatedResultSet[IAMMember]",
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
           },
@@ -29013,7 +28607,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "display-name": "PaginatedResultSet[OrganizationDomain]",
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
           },
@@ -29031,7 +28624,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "display-name": "PaginatedResultSet[OrganizationInvite]",
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
           },
@@ -29049,7 +28641,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "display-name": "PaginatedResultSet[Project]",
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
           },
@@ -29067,7 +28658,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "display-name": "PaginatedResultSet[Task]",
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
           },
@@ -29085,7 +28675,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "display-name": "PaginatedResultSet[TaskForwarder]",
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
           },
@@ -29103,7 +28692,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "pagination": {
-            "display-name": "PaginatedResultSet[TaskRun]",
             "docs": "Contains pagination information for the result set.",
             "type": "optional<PaginationDetails>",
           },
@@ -29121,17 +28709,14 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "has_next": {
-            "display-name": "PaginationDetails",
             "docs": "Indicates whether there are more results available in the next page.",
             "type": "optional<boolean>",
           },
           "next_cursor": {
-            "display-name": "PaginationDetails",
             "docs": "A token used to retrieve the next page of results. If \`null\`, there are no more results.",
             "type": "optional<string>",
           },
           "page_limit": {
-            "display-name": "PaginationDetails",
             "docs": "The maximum number of items returned per page.",
             "type": "optional<integer>",
           },
@@ -29145,11 +28730,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "properties": {
           "permission": "string",
           "resource": {
-            "display-name": "PermissionCheckFailedErrorDetails",
             "type": "optional<IAMObjectErrorDetails>",
           },
           "subject": {
-            "display-name": "PermissionCheckFailedErrorDetails",
             "type": "optional<IAMObjectErrorDetails>",
           },
         },
@@ -29178,7 +28761,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "avatar_url": {
-            "display-name": "Project",
             "type": "optional<string>",
           },
           "id": {
@@ -29201,7 +28783,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             },
           },
           "tasks_oauth_client_id": {
-            "display-name": "Project",
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -29219,32 +28800,26 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "chat_guardrails": {
-            "display-name": "ProjectConfig",
             "type": "optional<ConversationalGuardrails>",
           },
           "chat_system_commands": {
-            "display-name": "ProjectConfig",
             "type": "optional<list<string>>",
           },
           "knn": {
             "default": 4,
-            "display-name": "ProjectConfig",
             "type": "optional<integer>",
           },
           "llm": {
             "default": "gpt-3.5-turbo",
-            "display-name": "ProjectConfig",
             "type": "optional<Llm>",
           },
           "query_expansion": {
             "default": false,
-            "display-name": "ProjectConfig",
             "docs": "Enable query expansion. Uses an LLM to generate multiple rephrasing of the original query for better broad spectrum vector retrieval",
             "type": "optional<boolean>",
           },
           "temperature": {
             "default": 0.5,
-            "display-name": "ProjectConfig",
             "type": "optional<double>",
             "validation": {
               "exclusiveMax": undefined,
@@ -29263,11 +28838,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "avatar_url": {
-            "display-name": "ProjectWithDatasources",
             "type": "optional<string>",
           },
           "datasource_connections": {
-            "display-name": "ProjectWithDatasources",
             "type": "optional<list<DatasourceConnectionPublic>>",
           },
           "id": {
@@ -29290,7 +28863,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             },
           },
           "tasks_oauth_client_id": {
-            "display-name": "ProjectWithDatasources",
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -29325,7 +28897,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "properties": {
           "count": "integer",
           "source": {
-            "display-name": "Source",
             "type": "Source",
           },
         },
@@ -29359,12 +28930,10 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "created": {
-            "display-name": "Created",
             "docs": "When the Task was created.",
             "type": "datetime",
           },
           "description": {
-            "display-name": "Task",
             "docs": "A longer description of the Task for internal reference.",
             "type": "optional<string>",
           },
@@ -29383,7 +28952,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             },
           },
           "modified": {
-            "display-name": "Modified",
             "docs": "When the Task was last updated.",
             "type": "datetime",
           },
@@ -29415,22 +28983,18 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "config": {
-            "display-name": "TaskForwarder",
             "docs": "Configuration parameters for the Task Forwarder such as a \`destination\` URL.",
             "type": "optional<TaskForwarderConfig>",
           },
           "config_sensitive": {
-            "display-name": "TaskForwarder",
             "docs": "Sensitive parameters for the Task Forwarder such as a \`signing_key\`.",
             "type": "optional<TaskForwarderSensitiveConfig>",
           },
           "created": {
-            "display-name": "Created",
             "docs": "When the Task Forwarder was created.",
             "type": "datetime",
           },
           "description": {
-            "display-name": "TaskForwarder",
             "docs": "Additional details about the Task Forwarder's purpose or configuration.",
             "type": "optional<string>",
           },
@@ -29445,7 +29009,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             },
           },
           "modified": {
-            "display-name": "Modified",
             "docs": "When the Task Forwarder was last updated.",
             "type": "datetime",
           },
@@ -29497,7 +29060,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "properties": {
           "temperature": {
             "default": 0.2,
-            "display-name": "TaskLLMConfig",
             "docs": "Controls randomness in the output. Lower values make the output more focused and deterministic, while higher values make it more creative and diverse.",
             "type": "optional<double>",
             "validation": {
@@ -29536,12 +29098,10 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "properties": {
           "active": {
             "default": false,
-            "display-name": "TaskRevision",
             "docs": "When \`true\` the Revision is the currently active version and will be activated when the Task Run is executed.",
             "type": "optional<boolean>",
           },
           "created": {
-            "display-name": "Created",
             "docs": "When the Task was created.",
             "type": "datetime",
           },
@@ -29557,27 +29117,22 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "image_required": {
             "default": false,
-            "display-name": "TaskRevision",
             "docs": "When \`true\` it requires an image to be sent in the Task Run request.",
             "type": "optional<boolean>",
           },
           "llm_config": {
-            "display-name": "TaskRevision",
             "docs": "Specific configuration parameters for the LLM model.",
             "type": "optional<TaskLLMConfig>",
           },
           "llm_model": {
-            "display-name": "Llm Model",
             "docs": "The LLM model to use for the Task.",
             "type": "TaskRevisionLlmModel",
           },
           "modified": {
-            "display-name": "Modified",
             "docs": "When the Task was last updated.",
             "type": "datetime",
           },
           "output_format": {
-            "display-name": "Output Format",
             "docs": "This gives control over the structure of how the Task responds. Supports shorthand notation or an object with \`type\` can be specified for each attribute. In most instances, the LLM will be able to generate the desired output into the relevant property, but an optional \`description\` can be passed to provide it with additional context.",
             "type": "map<string, TaskRevisionOutputFormatValue>",
           },
@@ -29586,13 +29141,11 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
               "paid",
             ],
             "availability": "pre-release",
-            "display-name": "TaskRevision",
             "docs": "**Note: This is a Paid Tier feature.** Provide additional domain specific input to the LLM so that it is able to reference user specific information when executing the Task. Examples of this could be a product catalogue, terms and conditions or a user manual.",
             "type": "optional<TaskRAG>",
           },
           "system_prompt": "unknown",
           "task_forwarder_id": {
-            "display-name": "TaskRevision",
             "docs": "The unique identifier for a valid Task Forwarder. It is used to forward the Task output to another system or service.",
             "type": "optional<string>",
             "validation": {
@@ -29682,7 +29235,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "created": {
-            "display-name": "Created",
             "docs": "The timestamp when the Task Run was created.",
             "type": "datetime",
           },
@@ -29697,12 +29249,10 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             },
           },
           "response": {
-            "display-name": "Response",
             "docs": "The structured response from the Task execution.",
             "type": "map<string, unknown>",
           },
           "run_data": {
-            "display-name": "Run Data",
             "docs": "Additional data about the Task run, including audit information and submitted input.",
             "type": "map<string, unknown>",
           },
@@ -29736,11 +29286,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "docs": undefined,
         "properties": {
           "avatar_url": {
-            "display-name": "User",
             "type": "optional<string>",
           },
           "bio": {
-            "display-name": "User",
             "type": "optional<string>",
           },
           "email": {

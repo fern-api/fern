@@ -41,7 +41,7 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
                     in_endpoint=True,
                 )
                 maybe_default_value = self._context.pydantic_generator_context.get_initializer_for_type_reference(
-                    property.value_type
+                    property.value_type,
                 )
                 parameters.append(
                     AST.NamedFunctionParameter(

@@ -3,8 +3,7 @@ import { DeclarationSchema } from "./DeclarationSchema";
 import { DeclarationWithNameSchema } from "./DeclarationWithNameSchema";
 import { EncodingSchema } from "./EncodingSchema";
 import { ValidationSchema } from "./ValidationSchema";
-import { WithDisplayNameSchema } from "./WithDisplayNameSchema";
-import { WithDocsAndAvailabilitySchema } from "./WithDocsAndAvailability";
+import { WithAvailabilitySchema } from "./WithAvailabilitySchema";
 import { WithDocsSchema } from "./WithDocsSchema";
 
 // This return type is too crazy to write explicitly!
@@ -19,27 +18,14 @@ export function extendTypeReferenceSchema<T extends z.ZodRawShape>(extension: T)
                 encoding: z.optional(EncodingSchema),
                 validation: z.optional(ValidationSchema)
             })
+            .extend(WithAvailabilitySchema.shape)
+            .extend(WithDocsSchema.shape)
             .extend(extension)
     ]);
 }
 
-export const TypeReferenceSchema = extendTypeReferenceSchema({});
+export const TypeReferenceSchema = extendTypeReferenceSchema(z.object({}).shape);
 export type TypeReferenceSchema = z.infer<typeof TypeReferenceSchema>;
-
-export const TypeReferenceWithDocsSchema = extendTypeReferenceSchema(WithDocsSchema.shape);
-export type TypeReferenceWithDocsSchema = z.infer<typeof TypeReferenceWithDocsSchema>;
-
-export const TypeReferenceWithDocsAndAvailabilitySchema = extendTypeReferenceSchema(
-    WithDocsAndAvailabilitySchema.shape
-);
-export type TypeReferenceWithDocsAndAvailabilitySchema = z.infer<typeof TypeReferenceWithDocsAndAvailabilitySchema>;
-
-export const TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema = extendTypeReferenceSchema(
-    WithDocsAndAvailabilitySchema.extend(WithDisplayNameSchema.shape).shape
-);
-export type TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema = z.infer<
-    typeof TypeReferenceWithDocsAndDisplayNameAndAvailabilitySchema
->;
 
 export const TypeReferenceDeclarationSchema = extendTypeReferenceSchema(DeclarationSchema.shape);
 export type TypeReferenceDeclarationSchema = z.infer<typeof TypeReferenceDeclarationSchema>;
@@ -53,10 +39,3 @@ export const TypeReferenceDeclarationWithEnvOverride = extendTypeReferenceSchema
     }).shape
 );
 export type TypeReferenceDeclarationWithEnvOverride = z.infer<typeof TypeReferenceDeclarationWithEnvOverride>;
-
-export const TypeReferenceWithDefaultAndValidationSchema = z.strictObject({
-    type: z.string(),
-    default: z.unknown().optional(),
-    validation: z.optional(ValidationSchema)
-});
-export type TypeReferenceWithDefaultAndValidationSchema = z.infer<typeof TypeReferenceWithDefaultAndValidationSchema>;

@@ -24,15 +24,18 @@ class SeedClient
     private RawClient $client;
 
     /**
+     * @param string $token The token to use for authentication.
      * @param ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
      */
     public function __construct(
+        string $token,
         ?array $options = null,
     ) {
         $defaultHeaders = [
-            "X-Fern-Language" => "PHP",
-            "X-Fern-SDK-Name" => "Seed",
-            "X-Fern-SDK-Version" => "0.0.1",
+            'Authorization' => "Bearer $token",
+            'X-Fern-Language' => 'PHP',
+            'X-Fern-SDK-Name' => 'Seed',
+            'X-Fern-SDK-Version' => '0.0.1',
         ];
 
         $this->options = $options ?? [];

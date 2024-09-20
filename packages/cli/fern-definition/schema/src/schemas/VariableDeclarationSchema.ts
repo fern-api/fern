@@ -1,6 +1,13 @@
 import { z } from "zod";
-import { TypeReferenceWithDocsSchema } from "./TypeReferenceSchema";
+import { WithDocsSchema } from "./WithDocsSchema";
 
-export const VariableDeclarationSchema = TypeReferenceWithDocsSchema;
+export const VariableDeclarationSchema = z.union([
+    z.string(),
+    z
+        .strictObject({
+            type: z.string()
+        })
+        .extend(WithDocsSchema.shape)
+]);
 
 export type VariableDeclarationSchema = z.infer<typeof VariableDeclarationSchema>;

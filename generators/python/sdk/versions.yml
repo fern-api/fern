@@ -1,10 +1,18 @@
 # For unreleased changes, use unreleased.yml
-- version: 4.2.5
+- version: 4.2.6
   irVersion: 53
   changelogEntry:
     - type: fix
       summary: |
         Serialization utilities (necessary when pydantic aliases are removed) now respects dictionaries as well.
+
+- version: 4.2.5
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Parameters of file upload functions now default to OMIT, not None, so that the SDK appropriately
+        filters out unset parameters, while still allowing for user specified None values.
 
 - version: 4.2.4
   irVersion: 53

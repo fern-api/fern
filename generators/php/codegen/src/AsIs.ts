@@ -24,5 +24,10 @@ export enum AsIsFiles {
     DateType = "DateType.Template.php",
     JsonProperty = "JsonProperty.Template.php",
     SerializableType = "SerializableType.Template.php",
-    Union = "Union.Template.php"
+    Union = "Union.Template.php",
+    JsonDecoder = "JsonDecoder.Template.php",
+    JsonDeserializer = "JsonDeserializer.Template.php",
+    JsonEncoder = "JsonEncoder.Template.php",
+    JsonSerializer = "JsonSerializer.Template.php",
+    Utils = "Utils.Template.php"
 }

@@ -81,10 +81,7 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
                     AST.NamedFunctionParameter(
                         name=property_name,
                         docs=property.docs,
-                        type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                            property.value_type,
-                            in_endpoint=True,
-                        ),
+                        type_hint=type_hint,
                         initializer=AST.Expression(DEFAULT_BODY_PARAMETER_VALUE) if type_hint.is_optional else None,
                         raw_type=property.value_type,
                         raw_name=property.name.wire_value,
@@ -111,10 +108,7 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
                     AST.NamedFunctionParameter(
                         name=self._get_property_name(property),
                         docs=property.docs,
-                        type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                            property.value_type,
-                            in_endpoint=True,
-                        ),
+                        type_hint=type_hint,
                         initializer=maybe_default_value
                         if maybe_default_value is not None
                         else AST.Expression(DEFAULT_BODY_PARAMETER_VALUE)
