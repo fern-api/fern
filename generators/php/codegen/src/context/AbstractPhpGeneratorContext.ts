@@ -258,7 +258,12 @@ export abstract class AbstractPhpGeneratorContext<
             AsIsFiles.DateType,
             AsIsFiles.JsonProperty,
             AsIsFiles.SerializableType,
-            AsIsFiles.Union
+            AsIsFiles.Union,
+            AsIsFiles.JsonDecoder,
+            AsIsFiles.JsonEncoder,
+            AsIsFiles.JsonDeserializer,
+            AsIsFiles.JsonSerializer,
+            AsIsFiles.Utils
         ];
     }
 
