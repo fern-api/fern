@@ -11,15 +11,17 @@ class DebugMapValue extends SerializableType
     /**
      * @var array<DebugKeyValuePairs> $keyValuePairs
      */
-    #[JsonProperty("keyValuePairs"), ArrayType([DebugKeyValuePairs::class])]
+    #[JsonProperty('keyValuePairs'), ArrayType([DebugKeyValuePairs::class])]
     public array $keyValuePairs;
 
     /**
-     * @param array<DebugKeyValuePairs> $keyValuePairs
+     * @param array{
+     *   keyValuePairs: array<DebugKeyValuePairs>,
+     * } $values
      */
     public function __construct(
-        array $keyValuePairs,
+        array $values,
     ) {
-        $this->keyValuePairs = $keyValuePairs;
+        $this->keyValuePairs = $values['keyValuePairs'];
     }
 }

@@ -12,17 +12,17 @@ class ListUsersBodyCursorPaginationRequest
     in order to fetch the next page of results.
 
      */
-    #[JsonProperty("pagination")]
+    #[JsonProperty('pagination')]
     public ?WithCursor $pagination;
 
     /**
-     * @param ?WithCursor $pagination The object that contains the cursor used for pagination
-    in order to fetch the next page of results.
-
+     * @param array{
+     *   pagination?: ?WithCursor,
+     * } $values
      */
     public function __construct(
-        ?WithCursor $pagination = null,
+        array $values,
     ) {
-        $this->pagination = $pagination;
+        $this->pagination = $values['pagination'] ?? null;
     }
 }

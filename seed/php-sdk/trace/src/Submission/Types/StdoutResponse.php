@@ -10,24 +10,25 @@ class StdoutResponse extends SerializableType
     /**
      * @var string $submissionId
      */
-    #[JsonProperty("submissionId")]
+    #[JsonProperty('submissionId')]
     public string $submissionId;
 
     /**
      * @var string $stdout
      */
-    #[JsonProperty("stdout")]
+    #[JsonProperty('stdout')]
     public string $stdout;
 
     /**
-     * @param string $submissionId
-     * @param string $stdout
+     * @param array{
+     *   submissionId: string,
+     *   stdout: string,
+     * } $values
      */
     public function __construct(
-        string $submissionId,
-        string $stdout,
+        array $values,
     ) {
-        $this->submissionId = $submissionId;
-        $this->stdout = $stdout;
+        $this->submissionId = $values['submissionId'];
+        $this->stdout = $values['stdout'];
     }
 }

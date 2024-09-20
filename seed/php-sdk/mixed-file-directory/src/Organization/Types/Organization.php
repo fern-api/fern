@@ -12,33 +12,33 @@ class Organization extends SerializableType
     /**
      * @var string $id
      */
-    #[JsonProperty("id")]
+    #[JsonProperty('id')]
     public string $id;
 
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var array<User> $users
      */
-    #[JsonProperty("users"), ArrayType([User::class])]
+    #[JsonProperty('users'), ArrayType([User::class])]
     public array $users;
 
     /**
-     * @param string $id
-     * @param string $name
-     * @param array<User> $users
+     * @param array{
+     *   id: string,
+     *   name: string,
+     *   users: array<User>,
+     * } $values
      */
     public function __construct(
-        string $id,
-        string $name,
-        array $users,
+        array $values,
     ) {
-        $this->id = $id;
-        $this->name = $name;
-        $this->users = $users;
+        $this->id = $values['id'];
+        $this->name = $values['name'];
+        $this->users = $values['users'];
     }
 }

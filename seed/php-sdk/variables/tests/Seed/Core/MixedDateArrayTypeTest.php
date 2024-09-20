@@ -11,11 +11,22 @@ use DateTime;
 
 class MixedDateArrayType extends SerializableType
 {
+    /**
+     * @var array<int, datetime|string|null> $mixedDates
+     */
+    #[ArrayType(['integer' => new Union('datetime', 'string', 'null')])]
+    #[JsonProperty('mixed_dates')]
+    public array $mixedDates;
+
+    /**
+     * @param array{
+     *   mixedDates: array<int, datetime|string|null>,
+     * } $values
+     */
     public function __construct(
-        #[ArrayType(['integer' => new Union('datetime', 'string', 'null')])]
-        #[JsonProperty('mixed_dates')]
-        public array $mixedDates
+        array $values,
     ) {
+        $this->mixedDates = $values['mixedDates'];
     }
 }
 

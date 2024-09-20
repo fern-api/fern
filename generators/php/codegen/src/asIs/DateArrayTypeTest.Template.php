@@ -11,14 +11,21 @@ use DateTime;
 class DateArrayType extends SerializableType
 {
     /**
-     * @param string[] $dates
+     * @var string[] $dates
+     */
+    #[ArrayType(['date'])]
+    #[JsonProperty('dates')]
+    public array $dates;
+
+    /**
+     * @param array{
+     *   dates: string[],
+     * } $values
      */
     public function __construct(
-        // Array of dates
-        #[ArrayType(['date'])]
-        #[JsonProperty('dates')]
-        public array $dates
+        array $values,
     ) {
+        $this->dates = $values['dates'];
     }
 }
 

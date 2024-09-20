@@ -10,15 +10,17 @@ class UpdateProblemResponse extends SerializableType
     /**
      * @var int $problemVersion
      */
-    #[JsonProperty("problemVersion")]
+    #[JsonProperty('problemVersion')]
     public int $problemVersion;
 
     /**
-     * @param int $problemVersion
+     * @param array{
+     *   problemVersion: int,
+     * } $values
      */
     public function __construct(
-        int $problemVersion,
+        array $values,
     ) {
-        $this->problemVersion = $problemVersion;
+        $this->problemVersion = $values['problemVersion'];
     }
 }

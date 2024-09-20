@@ -12,15 +12,17 @@ class GetDefaultStarterFilesResponse extends SerializableType
     /**
      * @var array<Language, ProblemFiles> $files
      */
-    #[JsonProperty("files"), ArrayType([Language::class => ProblemFiles::class])]
+    #[JsonProperty('files'), ArrayType([Language::class => ProblemFiles::class])]
     public array $files;
 
     /**
-     * @param array<Language, ProblemFiles> $files
+     * @param array{
+     *   files: array<Language, ProblemFiles>,
+     * } $values
      */
     public function __construct(
-        array $files,
+        array $values,
     ) {
-        $this->files = $files;
+        $this->files = $values['files'];
     }
 }

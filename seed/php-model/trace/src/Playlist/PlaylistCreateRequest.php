@@ -11,24 +11,25 @@ class PlaylistCreateRequest extends SerializableType
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var array<string> $problems
      */
-    #[JsonProperty("problems"), ArrayType(["string"])]
+    #[JsonProperty('problems'), ArrayType(['string'])]
     public array $problems;
 
     /**
-     * @param string $name
-     * @param array<string> $problems
+     * @param array{
+     *   name: string,
+     *   problems: array<string>,
+     * } $values
      */
     public function __construct(
-        string $name,
-        array $problems,
+        array $values,
     ) {
-        $this->name = $name;
-        $this->problems = $problems;
+        $this->name = $values['name'];
+        $this->problems = $values['problems'];
     }
 }

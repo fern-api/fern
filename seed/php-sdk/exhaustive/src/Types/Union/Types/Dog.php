@@ -10,24 +10,25 @@ class Dog extends SerializableType
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var bool $likesToWoof
      */
-    #[JsonProperty("likesToWoof")]
+    #[JsonProperty('likesToWoof')]
     public bool $likesToWoof;
 
     /**
-     * @param string $name
-     * @param bool $likesToWoof
+     * @param array{
+     *   name: string,
+     *   likesToWoof: bool,
+     * } $values
      */
     public function __construct(
-        string $name,
-        bool $likesToWoof,
+        array $values,
     ) {
-        $this->name = $name;
-        $this->likesToWoof = $likesToWoof;
+        $this->name = $values['name'];
+        $this->likesToWoof = $values['likesToWoof'];
     }
 }

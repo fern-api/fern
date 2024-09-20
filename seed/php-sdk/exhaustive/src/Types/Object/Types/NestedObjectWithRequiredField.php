@@ -10,24 +10,25 @@ class NestedObjectWithRequiredField extends SerializableType
     /**
      * @var string $string
      */
-    #[JsonProperty("string")]
+    #[JsonProperty('string')]
     public string $string;
 
     /**
      * @var ObjectWithOptionalField $nestedObject
      */
-    #[JsonProperty("NestedObject")]
+    #[JsonProperty('NestedObject')]
     public ObjectWithOptionalField $nestedObject;
 
     /**
-     * @param string $string
-     * @param ObjectWithOptionalField $nestedObject
+     * @param array{
+     *   string: string,
+     *   nestedObject: ObjectWithOptionalField,
+     * } $values
      */
     public function __construct(
-        string $string,
-        ObjectWithOptionalField $nestedObject,
+        array $values,
     ) {
-        $this->string = $string;
-        $this->nestedObject = $nestedObject;
+        $this->string = $values['string'];
+        $this->nestedObject = $values['nestedObject'];
     }
 }

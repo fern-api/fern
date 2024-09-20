@@ -4,12 +4,14 @@ namespace Seed\Submission;
 
 use Seed\Core\RawClient;
 use Seed\Commons\Types\Language;
+use Seed\Submission\Types\ExecutionSessionResponse;
 use Seed\Core\JsonApiRequest;
 use Seed\Environments;
 use Seed\Core\HttpMethod;
 use JsonException;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
+use Seed\Submission\Types\GetExecutionSessionStateResponse;
 
 class SubmissionClient
 {
@@ -31,9 +33,9 @@ class SubmissionClient
     * Returns sessionId and execution server URL for session. Spins up server.
      * @param Language $language
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @return ExecutionSessionResponse
      */
-    public function createExecutionSession(Language $language, ?array $options = null): mixed
+    public function createExecutionSession(Language $language, ?array $options = null): ExecutionSessionResponse
     {
         try {
             $response = $this->client->sendRequest(
@@ -45,7 +47,8 @@ class SubmissionClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return ExecutionSessionResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -59,9 +62,9 @@ class SubmissionClient
     * Returns execution server URL for session. Returns empty if session isn't registered.
      * @param string $sessionId
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @return ?ExecutionSessionResponse
      */
-    public function getExecutionSession(string $sessionId, ?array $options = null): mixed
+    public function getExecutionSession(string $sessionId, ?array $options = null): ?ExecutionSessionResponse
     {
         try {
             $response = $this->client->sendRequest(
@@ -73,7 +76,11 @@ class SubmissionClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return ExecutionSessionResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -87,9 +94,8 @@ class SubmissionClient
     * Stops execution session.
      * @param string $sessionId
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
      */
-    public function stopExecutionSession(string $sessionId, ?array $options = null): mixed
+    public function stopExecutionSession(string $sessionId, ?array $options = null): void
     {
         try {
             $response = $this->client->sendRequest(
@@ -111,9 +117,9 @@ class SubmissionClient
 
     /**
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @return GetExecutionSessionStateResponse
      */
-    public function getExecutionSessionsState(?array $options = null): mixed
+    public function getExecutionSessionsState(?array $options = null): GetExecutionSessionStateResponse
     {
         try {
             $response = $this->client->sendRequest(
@@ -125,7 +131,8 @@ class SubmissionClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return GetExecutionSessionStateResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

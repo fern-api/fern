@@ -13,96 +13,89 @@ class ProblemInfo extends SerializableType
     /**
      * @var string $problemId
      */
-    #[JsonProperty("problemId")]
+    #[JsonProperty('problemId')]
     public string $problemId;
 
     /**
      * @var ProblemDescription $problemDescription
      */
-    #[JsonProperty("problemDescription")]
+    #[JsonProperty('problemDescription')]
     public ProblemDescription $problemDescription;
 
     /**
      * @var string $problemName
      */
-    #[JsonProperty("problemName")]
+    #[JsonProperty('problemName')]
     public string $problemName;
 
     /**
      * @var int $problemVersion
      */
-    #[JsonProperty("problemVersion")]
+    #[JsonProperty('problemVersion')]
     public int $problemVersion;
 
     /**
      * @var array<Language, ProblemFiles> $files
      */
-    #[JsonProperty("files"), ArrayType([Language::class => ProblemFiles::class])]
+    #[JsonProperty('files'), ArrayType([Language::class => ProblemFiles::class])]
     public array $files;
 
     /**
      * @var array<VariableTypeAndName> $inputParams
      */
-    #[JsonProperty("inputParams"), ArrayType([VariableTypeAndName::class])]
+    #[JsonProperty('inputParams'), ArrayType([VariableTypeAndName::class])]
     public array $inputParams;
 
     /**
      * @var mixed $outputType
      */
-    #[JsonProperty("outputType")]
+    #[JsonProperty('outputType')]
     public mixed $outputType;
 
     /**
      * @var array<TestCaseWithExpectedResult> $testcases
      */
-    #[JsonProperty("testcases"), ArrayType([TestCaseWithExpectedResult::class])]
+    #[JsonProperty('testcases'), ArrayType([TestCaseWithExpectedResult::class])]
     public array $testcases;
 
     /**
      * @var string $methodName
      */
-    #[JsonProperty("methodName")]
+    #[JsonProperty('methodName')]
     public string $methodName;
 
     /**
      * @var bool $supportsCustomTestCases
      */
-    #[JsonProperty("supportsCustomTestCases")]
+    #[JsonProperty('supportsCustomTestCases')]
     public bool $supportsCustomTestCases;
 
     /**
-     * @param string $problemId
-     * @param ProblemDescription $problemDescription
-     * @param string $problemName
-     * @param int $problemVersion
-     * @param array<Language, ProblemFiles> $files
-     * @param array<VariableTypeAndName> $inputParams
-     * @param mixed $outputType
-     * @param array<TestCaseWithExpectedResult> $testcases
-     * @param string $methodName
-     * @param bool $supportsCustomTestCases
+     * @param array{
+     *   problemId: string,
+     *   problemDescription: ProblemDescription,
+     *   problemName: string,
+     *   problemVersion: int,
+     *   files: array<Language, ProblemFiles>,
+     *   inputParams: array<VariableTypeAndName>,
+     *   outputType: mixed,
+     *   testcases: array<TestCaseWithExpectedResult>,
+     *   methodName: string,
+     *   supportsCustomTestCases: bool,
+     * } $values
      */
     public function __construct(
-        string $problemId,
-        ProblemDescription $problemDescription,
-        string $problemName,
-        int $problemVersion,
-        array $files,
-        array $inputParams,
-        mixed $outputType,
-        array $testcases,
-        string $methodName,
-        bool $supportsCustomTestCases,
+        array $values,
     ) {
-        $this->problemId = $problemId;
-        $this->problemDescription = $problemDescription;
-        $this->problemName = $problemName;
-        $this->problemVersion = $problemVersion;
-        $this->files = $files;
-        $this->inputParams = $inputParams;
-        $this->outputType = $outputType;
-        $this->testcases = $testcases;
-        $this->methodName = $methodName;
-        $this->supportsCustomTestCases = $supportsCustomTestCases;
+        $this->problemId = $values['problemId'];
+        $this->problemDescription = $values['problemDescription'];
+        $this->problemName = $values['problemName'];
+        $this->problemVersion = $values['problemVersion'];
+        $this->files = $values['files'];
+        $this->inputParams = $values['inputParams'];
+        $this->outputType = $values['outputType'];
+        $this->testcases = $values['testcases'];
+        $this->methodName = $values['methodName'];
+        $this->supportsCustomTestCases = $values['supportsCustomTestCases'];
     }
 }

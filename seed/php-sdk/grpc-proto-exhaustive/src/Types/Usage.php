@@ -10,15 +10,17 @@ class Usage extends SerializableType
     /**
      * @var ?int $units
      */
-    #[JsonProperty("units")]
+    #[JsonProperty('units')]
     public ?int $units;
 
     /**
-     * @param ?int $units
+     * @param array{
+     *   units?: ?int,
+     * } $values
      */
     public function __construct(
-        ?int $units = null,
+        array $values,
     ) {
-        $this->units = $units;
+        $this->units = $values['units'] ?? null;
     }
 }

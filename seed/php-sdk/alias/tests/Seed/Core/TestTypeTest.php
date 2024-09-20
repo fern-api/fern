@@ -13,62 +13,119 @@ use Seed\Core\Union;
 class TestNestedType1 extends SerializableType
 {
     /**
-     * @param string $simpleProperty
-     * @param DateTime $dateProperty
-     * @param DateTime $datetimeProperty
-     * @param string[] $stringArray
-     * @param array<string, integer> $mapProperty
-     * @param array<integer, TestNestedType1|null> $objectArray
-     * @param array<integer, array<integer, string|null>> $nestedArray
-     * @param array<string|null> $datesArray
-     * @param string|null $nullableProperty
+     * @var DateTime $nestedProperty
+     */
+    #[JsonProperty('nested_property')]
+    #[DateType(DateType::TYPE_DATE)]
+    public DateTime $nestedProperty;
+
+    /**
+     * @param array{
+     *   nestedProperty: DateTime,
+     * } $values
      */
     public function __construct(
-        #[JsonProperty('nested_property')]
-        public string $nestedProperty
+        array $values,
     ) {
+        $this->nestedProperty = $values['nestedProperty'];
     }
 }
 
 class TestType extends SerializableType
 {
+    /**
+     * @var TestNestedType1 nestedType
+     */
+    #[JsonProperty('nested_type')]
+    public TestNestedType1 $nestedType;    /**
+
+     * @var string $simpleProperty
+     */
+    #[JsonProperty('simple_property')]
+    public string $simpleProperty;
+
+    /**
+     * @var DateTime $dateProperty
+     */
+    #[DateType(DateType::TYPE_DATE)]
+    #[JsonProperty('date_property')]
+    public DateTime $dateProperty;
+
+    /**
+     * @var DateTime $datetimeProperty
+     */
+    #[DateType(DateType::TYPE_DATETIME)]
+    #[JsonProperty('datetime_property')]
+    public DateTime $datetimeProperty;
+
+    /**
+     * @var array<string> $stringArray
+     */
+    #[ArrayType(['string'])]
+    #[JsonProperty('string_array')]
+    public array $stringArray;
+
+    /**
+     * @var array<string, int> $mapProperty
+     */
+    #[ArrayType(['string' => 'integer'])]
+    #[JsonProperty('map_property')]
+    public array $mapProperty;
+
+    /**
+     * @var array<int, TestNestedType1|null> $objectArray
+     */
+    #[ArrayType(['integer' => new Union(TestNestedType1::class, 'null')])]
+    #[JsonProperty('object_array')]
+    public array $objectArray;
+
+    /**
+     * @var array<int, array<int, string|null>> $nestedArray
+     */
+    #[ArrayType(['integer' => ['integer' => new Union('string', 'null')]])]
+    #[JsonProperty('nested_array')]
+    public array $nestedArray;
+
+    /**
+     * @var array<string|null> $datesArray
+     */
+    #[ArrayType([new Union('date', 'null')])]
+    #[JsonProperty('dates_array')]
+    public array $datesArray;
+
+    /**
+     * @var string|null $nullableProperty
+     */
+    #[JsonProperty('nullable_property')]
+    public ?string $nullableProperty;
+
+    /**
+     * @param array{
+     *   nestedType: TestNestedType1,
+     *   simpleProperty: string,
+     *   dateProperty: DateTime,
+     *   datetimeProperty: DateTime,
+     *   stringArray: array<string>,
+     *   mapProperty: array<string, int>,
+     *   objectArray: array<int, TestNestedType1|null>,
+     *   nestedArray: array<int, array<int, string|null>>,
+     *   datesArray: array<string|null>,
+     *   nullableProperty?: string|null,
+     * } $values
+     */
     public function __construct(
-        #[JsonProperty('simple_property')]
-        public string   $simpleProperty,
-        #[DateType(DateType::TYPE_DATE)]
-        #[JsonProperty('date_property')]
-        public DateTime $dateProperty,
-        #[DateType(DateType::TYPE_DATETIME)]
-        #[JsonProperty('datetime_property')]
-        public DateTime $datetimeProperty,
-
-        // Array of strings
-        #[ArrayType(['string'])]
-        #[JsonProperty('string_array')]
-        public array    $stringArray,
-
-        // Map with string keys and int values
-        #[ArrayType(['string' => 'integer'])]
-        #[JsonProperty('map_property')]
-        public array    $mapProperty,
-
-        // Array of objects or null using Union
-        #[ArrayType(['integer' => new Union(TestNestedType1::class, 'null')])]
-        #[JsonProperty('object_array')]
-        public array    $objectArray,
-
-        // Nested array with union types (string|null)
-        #[ArrayType(['integer' => ['integer' => new Union('string', 'null')]])]
-        #[JsonProperty('nested_array')]
-        public array    $nestedArray,
-
-        // Array of dates or null using Union
-        #[ArrayType([new Union('date', 'null')])]
-        #[JsonProperty('dates_array')]
-        public array    $datesArray,
-        #[JsonProperty('nullable_property')]
-        public ?string  $nullableProperty = null // Optional parameter at the end
+        array $values,
     ) {
+        $this->nestedType = $values['nestedType'];
+        $this->simpleProperty = $values['simpleProperty'];
+        $this->dateProperty = $values['dateProperty'];
+        $this->datetimeProperty = $values['datetimeProperty'];
+        $this->stringArray = $values['stringArray'];
+        $this->mapProperty = $values['mapProperty'];
+        $this->objectArray = $values['objectArray'];
+        $this->nestedArray = $values['nestedArray'];
+        $this->datesArray = $values['datesArray'];
+        $this->nullableProperty = $values['nullableProperty'] ?? null;
     }
 }
 
@@ -81,6 +138,7 @@ class TestTypeTest extends TestCase
     {
         // Create test data
         $data = [
+            'nested_type' => ['nested_property' => '1995-07-20'],
             'simple_property' => 'Test String',
             // 'nullable_property' is omitted to test null serialization
             'date_property' => '2023-01-01',
@@ -88,7 +146,7 @@ class TestTypeTest extends TestCase
             'string_array' => ['one', 'two', 'three'],
             'map_property' => ['key1' => 1, 'key2' => 2],
             'object_array' => [
-                1 => ['nested_property' => 'Nested One'],
+                1 => ['nested_property' =>  '2021-07-20'],
                 2 => null, // Testing nullable objects in array
             ],
             'nested_array' => [
@@ -124,7 +182,7 @@ class TestTypeTest extends TestCase
 
         // Check object array with nullable elements
         $this->assertInstanceOf(TestNestedType1::class, $object->objectArray[1], 'object_array[1] should be an instance of TestNestedType1.');
-        $this->assertEquals('Nested One', $object->objectArray[1]->nestedProperty, 'object_array[1]->nestedProperty should match the original data.');
+        $this->assertEquals('2021-07-20', $object->objectArray[1]->nestedProperty->format('Y-m-d'), 'object_array[1]->nestedProperty should match the original data.');
         $this->assertNull($object->objectArray[2], 'object_array[2] should be null.');
 
         // Check nested array with nullable strings

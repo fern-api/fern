@@ -10,33 +10,33 @@ class Parameter extends SerializableType
     /**
      * @var string $parameterId
      */
-    #[JsonProperty("parameterId")]
+    #[JsonProperty('parameterId')]
     public string $parameterId;
 
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var mixed $variableType
      */
-    #[JsonProperty("variableType")]
+    #[JsonProperty('variableType')]
     public mixed $variableType;
 
     /**
-     * @param string $parameterId
-     * @param string $name
-     * @param mixed $variableType
+     * @param array{
+     *   parameterId: string,
+     *   name: string,
+     *   variableType: mixed,
+     * } $values
      */
     public function __construct(
-        string $parameterId,
-        string $name,
-        mixed $variableType,
+        array $values,
     ) {
-        $this->parameterId = $parameterId;
-        $this->name = $name;
-        $this->variableType = $variableType;
+        $this->parameterId = $values['parameterId'];
+        $this->name = $values['name'];
+        $this->variableType = $values['variableType'];
     }
 }

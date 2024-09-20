@@ -11,15 +11,17 @@ class UserOptionalListContainer extends SerializableType
     /**
      * @var ?array<User> $users
      */
-    #[JsonProperty("users"), ArrayType([User::class])]
+    #[JsonProperty('users'), ArrayType([User::class])]
     public ?array $users;
 
     /**
-     * @param ?array<User> $users
+     * @param array{
+     *   users?: ?array<User>,
+     * } $values
      */
     public function __construct(
-        ?array $users = null,
+        array $values,
     ) {
-        $this->users = $users;
+        $this->users = $values['users'] ?? null;
     }
 }

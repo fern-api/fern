@@ -1,6 +1,6 @@
 <?php
 
-namespace <%= namespace%>;
+namespace <%= coreNamespace%>;
 
 class Union
 {
@@ -13,4 +13,9 @@ class Union
     {
         $this->types = $strings;
     }
+
+    public function __toString(): string {
+        return implode(' | ', $this->types);
+    }
 }
+ 

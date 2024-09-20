@@ -34,73 +34,62 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
     }
 
     protected doGenerate(): PhpFile {
-        const clazz = php.class_(this.classReference);
-
-        const properties: php.Field.Args[] = [];
+        const clazz = php.dataClass(this.classReference);
 
         const service = this.context.getHttpServiceOrThrow(this.serviceId);
         for (const header of [...service.headers, ...this.endpoint.headers]) {
-            properties.push({
-                name: this.context.getPropertyName(header.name.name),
-                type: this.context.phpTypeMapper.convert({ reference: header.valueType }),
-                access: "public",
-                docs: header.docs
-            });
+            clazz.addField(
+                php.field({
+                    name: this.context.getPropertyName(header.name.name),
+                    type: this.context.phpTypeMapper.convert({ reference: header.valueType }),
+                    access: "public",
+                    docs: header.docs
+                })
+            );
         }
 
         for (const query of this.endpoint.queryParameters) {
             const type = query.allowMultiple
                 ? php.Type.array(this.context.phpTypeMapper.convert({ reference: query.valueType }))
                 : this.context.phpTypeMapper.convert({ reference: query.valueType });
-            properties.push({
-                name: this.context.getPropertyName(query.name.name),
-                type,
-                access: "public",
-                docs: query.docs
-            });
+            clazz.addField(
+                php.field({
+                    name: this.context.getPropertyName(query.name.name),
+                    type,
+                    access: "public",
+                    docs: query.docs
+                })
+            );
         }
 
         this.endpoint.requestBody?._visit({
             reference: (reference) => {
-                properties.push({
-                    name: this.context.getPropertyName(this.wrapper.bodyKey),
-                    type: this.context.phpTypeMapper.convert({ reference: reference.requestBodyType }),
-                    access: "public",
-                    docs: reference.docs
-                });
+                clazz.addField(
+                    php.field({
+                        name: this.context.getPropertyName(this.wrapper.bodyKey),
+                        type: this.context.phpTypeMapper.convert({ reference: reference.requestBodyType }),
+                        access: "public",
+                        docs: reference.docs
+                    })
+                );
             },
             inlinedRequestBody: (request) => {
                 for (const property of request.properties) {
                     const type = this.context.phpTypeMapper.convert({ reference: property.valueType });
-                    properties.push({
-                        name: this.context.getPropertyName(property.name.name),
-                        type,
-                        access: "public",
-                        docs: property.docs,
-                        attributes: this.context.phpAttributeMapper.convert({ type, property })
-                    });
+                    clazz.addField(
+                        php.field({
+                            name: this.context.getPropertyName(property.name.name),
+                            type,
+                            access: "public",
+                            docs: property.docs,
+                            attributes: this.context.phpAttributeMapper.convert({ type, property })
+                        })
+                    );
                 }
             },
             fileUpload: () => undefined,
             bytes: () => undefined,
             _other: () => undefined
-        });
-
-        const requiredProperties = properties.filter(({ type }) => type.internalType.type !== "optional");
-        const optionalProperties = properties.filter(({ type }) => type.internalType.type === "optional");
-        const orderedProperties = [...requiredProperties, ...optionalProperties];
-        orderedProperties.forEach((property) => {
-            clazz.addField(php.field(property));
-        });
-
-        const parameters = orderedProperties.map((property) => php.parameter({ ...property, access: undefined }));
-        clazz.addConstructor({
-            parameters,
-            body: php.codeblock((writer) => {
-                orderedProperties.forEach(({ name }) => {
-                    writer.writeTextStatement(`$this->${name} = $${name}`);
-                });
-            })
         });
 
         return new PhpFile({

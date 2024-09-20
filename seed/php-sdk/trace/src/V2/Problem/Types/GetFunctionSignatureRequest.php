@@ -10,15 +10,17 @@ class GetFunctionSignatureRequest extends SerializableType
     /**
      * @var mixed $functionSignature
      */
-    #[JsonProperty("functionSignature")]
+    #[JsonProperty('functionSignature')]
     public mixed $functionSignature;
 
     /**
-     * @param mixed $functionSignature
+     * @param array{
+     *   functionSignature: mixed,
+     * } $values
      */
     public function __construct(
-        mixed $functionSignature,
+        array $values,
     ) {
-        $this->functionSignature = $functionSignature;
+        $this->functionSignature = $values['functionSignature'];
     }
 }

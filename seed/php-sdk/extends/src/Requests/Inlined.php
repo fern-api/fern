@@ -9,15 +9,17 @@ class Inlined
     /**
      * @var string $unique
      */
-    #[JsonProperty("unique")]
+    #[JsonProperty('unique')]
     public string $unique;
 
     /**
-     * @param string $unique
+     * @param array{
+     *   unique: string,
+     * } $values
      */
     public function __construct(
-        string $unique,
+        array $values,
     ) {
-        $this->unique = $unique;
+        $this->unique = $values['unique'];
     }
 }

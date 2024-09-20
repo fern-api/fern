@@ -20,17 +20,17 @@ class SendLiteralsInQueryRequest
     public bool $stream;
 
     /**
-     * @param string $prompt
-     * @param string $query
-     * @param bool $stream
+     * @param array{
+     *   prompt: string,
+     *   query: string,
+     *   stream: bool,
+     * } $values
      */
     public function __construct(
-        string $prompt,
-        string $query,
-        bool $stream,
+        array $values,
     ) {
-        $this->prompt = $prompt;
-        $this->query = $query;
-        $this->stream = $stream;
+        $this->prompt = $values['prompt'];
+        $this->query = $values['query'];
+        $this->stream = $values['stream'];
     }
 }

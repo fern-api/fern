@@ -34,9 +34,8 @@ class AdminClient
      * @param string $submissionId
      * @param mixed $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
      */
-    public function updateTestSubmissionStatus(string $submissionId, mixed $request, ?array $options = null): mixed
+    public function updateTestSubmissionStatus(string $submissionId, mixed $request, ?array $options = null): void
     {
         try {
             $response = $this->client->sendRequest(
@@ -61,9 +60,8 @@ class AdminClient
      * @param string $submissionId
      * @param TestSubmissionUpdate $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
      */
-    public function sendTestSubmissionUpdate(string $submissionId, TestSubmissionUpdate $request, ?array $options = null): mixed
+    public function sendTestSubmissionUpdate(string $submissionId, TestSubmissionUpdate $request, ?array $options = null): void
     {
         try {
             $response = $this->client->sendRequest(
@@ -88,9 +86,8 @@ class AdminClient
      * @param string $submissionId
      * @param mixed $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
      */
-    public function updateWorkspaceSubmissionStatus(string $submissionId, mixed $request, ?array $options = null): mixed
+    public function updateWorkspaceSubmissionStatus(string $submissionId, mixed $request, ?array $options = null): void
     {
         try {
             $response = $this->client->sendRequest(
@@ -115,9 +112,8 @@ class AdminClient
      * @param string $submissionId
      * @param WorkspaceSubmissionUpdate $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
      */
-    public function sendWorkspaceSubmissionUpdate(string $submissionId, WorkspaceSubmissionUpdate $request, ?array $options = null): mixed
+    public function sendWorkspaceSubmissionUpdate(string $submissionId, WorkspaceSubmissionUpdate $request, ?array $options = null): void
     {
         try {
             $response = $this->client->sendRequest(
@@ -143,9 +139,8 @@ class AdminClient
      * @param string $testCaseId
      * @param StoreTracedTestCaseRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
      */
-    public function storeTracedTestCase(string $submissionId, string $testCaseId, StoreTracedTestCaseRequest $request, ?array $options = null): mixed
+    public function storeTracedTestCase(string $submissionId, string $testCaseId, StoreTracedTestCaseRequest $request, ?array $options = null): void
     {
         try {
             $response = $this->client->sendRequest(
@@ -171,9 +166,8 @@ class AdminClient
      * @param string $testCaseId
      * @param array<TraceResponseV2> $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
      */
-    public function storeTracedTestCaseV2(string $submissionId, string $testCaseId, array $request, ?array $options = null): mixed
+    public function storeTracedTestCaseV2(string $submissionId, string $testCaseId, array $request, ?array $options = null): void
     {
         try {
             $response = $this->client->sendRequest(
@@ -198,9 +192,8 @@ class AdminClient
      * @param string $submissionId
      * @param StoreTracedWorkspaceRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
      */
-    public function storeTracedWorkspace(string $submissionId, StoreTracedWorkspaceRequest $request, ?array $options = null): mixed
+    public function storeTracedWorkspace(string $submissionId, StoreTracedWorkspaceRequest $request, ?array $options = null): void
     {
         try {
             $response = $this->client->sendRequest(
@@ -225,9 +218,8 @@ class AdminClient
      * @param string $submissionId
      * @param array<TraceResponseV2> $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
      */
-    public function storeTracedWorkspaceV2(string $submissionId, array $request, ?array $options = null): mixed
+    public function storeTracedWorkspaceV2(string $submissionId, array $request, ?array $options = null): void
     {
         try {
             $response = $this->client->sendRequest(

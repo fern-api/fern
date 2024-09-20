@@ -10,15 +10,17 @@ class InternalError extends SerializableType
     /**
      * @var ExceptionInfo $exceptionInfo
      */
-    #[JsonProperty("exceptionInfo")]
+    #[JsonProperty('exceptionInfo')]
     public ExceptionInfo $exceptionInfo;
 
     /**
-     * @param ExceptionInfo $exceptionInfo
+     * @param array{
+     *   exceptionInfo: ExceptionInfo,
+     * } $values
      */
     public function __construct(
-        ExceptionInfo $exceptionInfo,
+        array $values,
     ) {
-        $this->exceptionInfo = $exceptionInfo;
+        $this->exceptionInfo = $values['exceptionInfo'];
     }
 }

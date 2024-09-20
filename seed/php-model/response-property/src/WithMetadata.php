@@ -11,15 +11,17 @@ class WithMetadata extends SerializableType
     /**
      * @var array<string, string> $metadata
      */
-    #[JsonProperty("metadata"), ArrayType(["string" => "string"])]
+    #[JsonProperty('metadata'), ArrayType(['string' => 'string'])]
     public array $metadata;
 
     /**
-     * @param array<string, string> $metadata
+     * @param array{
+     *   metadata: array<string, string>,
+     * } $values
      */
     public function __construct(
-        array $metadata,
+        array $values,
     ) {
-        $this->metadata = $metadata;
+        $this->metadata = $values['metadata'];
     }
 }

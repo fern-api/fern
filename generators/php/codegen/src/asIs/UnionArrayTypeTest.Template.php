@@ -11,15 +11,21 @@ use <%= coreNamespace%>\Union;
 class UnionArrayType extends SerializableType
 {
     /**
-     * @param array<integer, string|integer|null> $mixedArray
+     * @var array<int, string|int|null> $mixedArray
+     */
+    #[ArrayType(['integer' => new Union('string', 'integer', 'null')])]
+    #[JsonProperty('mixed_array')]
+    public array $mixedArray;
+
+    /**
+     * @param array{
+     *   mixedArray: array<int, string|int|null>,
+     * } $values
      */
     public function __construct(
-        // Map with int keys and values that can be string, int, or null using Union
-        #[ArrayType(['integer' => new Union('string', 'integer', 'null')])]
-        #[JsonProperty('mixed_array')]
-        public array $mixedArray
-    )
-    {
+        array $values,
+    ) {
+        $this->mixedArray = $values['mixedArray'];
     }
 }
 

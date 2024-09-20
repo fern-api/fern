@@ -10,24 +10,25 @@ class UserPage extends SerializableType
     /**
      * @var UserListContainer $data
      */
-    #[JsonProperty("data")]
+    #[JsonProperty('data')]
     public UserListContainer $data;
 
     /**
      * @var ?string $next
      */
-    #[JsonProperty("next")]
+    #[JsonProperty('next')]
     public ?string $next;
 
     /**
-     * @param UserListContainer $data
-     * @param ?string $next
+     * @param array{
+     *   data: UserListContainer,
+     *   next?: ?string,
+     * } $values
      */
     public function __construct(
-        UserListContainer $data,
-        ?string $next = null,
+        array $values,
     ) {
-        $this->data = $data;
-        $this->next = $next;
+        $this->data = $values['data'];
+        $this->next = $values['next'] ?? null;
     }
 }

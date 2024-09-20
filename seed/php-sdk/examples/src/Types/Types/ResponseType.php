@@ -10,15 +10,17 @@ class ResponseType extends SerializableType
     /**
      * @var mixed $type
      */
-    #[JsonProperty("type")]
+    #[JsonProperty('type')]
     public mixed $type;
 
     /**
-     * @param mixed $type
+     * @param array{
+     *   type: mixed,
+     * } $values
      */
     public function __construct(
-        mixed $type,
+        array $values,
     ) {
-        $this->type = $type;
+        $this->type = $values['type'];
     }
 }

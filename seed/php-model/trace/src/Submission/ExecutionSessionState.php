@@ -9,62 +9,59 @@ use Seed\Commons\Language;
 class ExecutionSessionState extends SerializableType
 {
     /**
+     * @var ?string $lastTimeContacted
+     */
+    #[JsonProperty('lastTimeContacted')]
+    public ?string $lastTimeContacted;
+
+    /**
      * @var string $sessionId The auto-generated session id. Formatted as a uuid.
      */
-    #[JsonProperty("sessionId")]
+    #[JsonProperty('sessionId')]
     public string $sessionId;
 
     /**
      * @var bool $isWarmInstance
      */
-    #[JsonProperty("isWarmInstance")]
+    #[JsonProperty('isWarmInstance')]
     public bool $isWarmInstance;
+
+    /**
+     * @var ?string $awsTaskId
+     */
+    #[JsonProperty('awsTaskId')]
+    public ?string $awsTaskId;
 
     /**
      * @var Language $language
      */
-    #[JsonProperty("language")]
+    #[JsonProperty('language')]
     public Language $language;
 
     /**
      * @var ExecutionSessionStatus $status
      */
-    #[JsonProperty("status")]
+    #[JsonProperty('status')]
     public ExecutionSessionStatus $status;
 
     /**
-     * @var ?string $lastTimeContacted
-     */
-    #[JsonProperty("lastTimeContacted")]
-    public ?string $lastTimeContacted;
-
-    /**
-     * @var ?string $awsTaskId
-     */
-    #[JsonProperty("awsTaskId")]
-    public ?string $awsTaskId;
-
-    /**
-     * @param string $sessionId The auto-generated session id. Formatted as a uuid.
-     * @param bool $isWarmInstance
-     * @param Language $language
-     * @param ExecutionSessionStatus $status
-     * @param ?string $lastTimeContacted
-     * @param ?string $awsTaskId
+     * @param array{
+     *   lastTimeContacted?: ?string,
+     *   sessionId: string,
+     *   isWarmInstance: bool,
+     *   awsTaskId?: ?string,
+     *   language: Language,
+     *   status: ExecutionSessionStatus,
+     * } $values
      */
     public function __construct(
-        string $sessionId,
-        bool $isWarmInstance,
-        Language $language,
-        ExecutionSessionStatus $status,
-        ?string $lastTimeContacted = null,
-        ?string $awsTaskId = null,
+        array $values,
     ) {
-        $this->sessionId = $sessionId;
-        $this->isWarmInstance = $isWarmInstance;
-        $this->language = $language;
-        $this->status = $status;
-        $this->lastTimeContacted = $lastTimeContacted;
-        $this->awsTaskId = $awsTaskId;
+        $this->lastTimeContacted = $values['lastTimeContacted'] ?? null;
+        $this->sessionId = $values['sessionId'];
+        $this->isWarmInstance = $values['isWarmInstance'];
+        $this->awsTaskId = $values['awsTaskId'] ?? null;
+        $this->language = $values['language'];
+        $this->status = $values['status'];
     }
 }

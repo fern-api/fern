@@ -11,51 +11,49 @@ class ScoredColumn extends SerializableType
     /**
      * @var string $id
      */
-    #[JsonProperty("id")]
+    #[JsonProperty('id')]
     public string $id;
-
-    /**
-     * @var mixed $metadata
-     */
-    #[JsonProperty("metadata")]
-    public mixed $metadata;
 
     /**
      * @var ?float $score
      */
-    #[JsonProperty("score")]
+    #[JsonProperty('score')]
     public ?float $score;
 
     /**
      * @var ?array<float> $values
      */
-    #[JsonProperty("values"), ArrayType(["float"])]
+    #[JsonProperty('values'), ArrayType(['float'])]
     public ?array $values;
+
+    /**
+     * @var mixed $metadata
+     */
+    #[JsonProperty('metadata')]
+    public mixed $metadata;
 
     /**
      * @var ?IndexedData $indexedData
      */
-    #[JsonProperty("indexedData")]
+    #[JsonProperty('indexedData')]
     public ?IndexedData $indexedData;
 
     /**
-     * @param string $id
-     * @param mixed $metadata
-     * @param ?float $score
-     * @param ?array<float> $values
-     * @param ?IndexedData $indexedData
+     * @param array{
+     *   id: string,
+     *   score?: ?float,
+     *   values?: ?array<float>,
+     *   metadata: mixed,
+     *   indexedData?: ?IndexedData,
+     * } $values
      */
     public function __construct(
-        string $id,
-        mixed $metadata,
-        ?float $score = null,
-        ?array $values = null,
-        ?IndexedData $indexedData = null,
+        array $values,
     ) {
-        $this->id = $id;
-        $this->metadata = $metadata;
-        $this->score = $score;
-        $this->values = $values;
-        $this->indexedData = $indexedData;
+        $this->id = $values['id'];
+        $this->score = $values['score'] ?? null;
+        $this->values = $values['values'] ?? null;
+        $this->metadata = $values['metadata'];
+        $this->indexedData = $values['indexedData'] ?? null;
     }
 }

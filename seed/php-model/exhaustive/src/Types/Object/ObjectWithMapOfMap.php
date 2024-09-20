@@ -11,15 +11,17 @@ class ObjectWithMapOfMap extends SerializableType
     /**
      * @var array<string, array<string, string>> $map
      */
-    #[JsonProperty("map"), ArrayType(["string" => ["string" => "string"]])]
+    #[JsonProperty('map'), ArrayType(['string' => ['string' => 'string']])]
     public array $map;
 
     /**
-     * @param array<string, array<string, string>> $map
+     * @param array{
+     *   map: array<string, array<string, string>>,
+     * } $values
      */
     public function __construct(
-        array $map,
+        array $values,
     ) {
-        $this->map = $map;
+        $this->map = $values['map'];
     }
 }

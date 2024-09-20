@@ -61,9 +61,8 @@ class SeedClient
 
     /**
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
      */
-    public function foo(?array $options = null): mixed
+    public function foo(?array $options = null): void
     {
         try {
             $response = $this->client->sendRequest(

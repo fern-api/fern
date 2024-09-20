@@ -10,24 +10,25 @@ class FileInfo extends SerializableType
     /**
      * @var string $filename
      */
-    #[JsonProperty("filename")]
+    #[JsonProperty('filename')]
     public string $filename;
 
     /**
      * @var string $contents
      */
-    #[JsonProperty("contents")]
+    #[JsonProperty('contents')]
     public string $contents;
 
     /**
-     * @param string $filename
-     * @param string $contents
+     * @param array{
+     *   filename: string,
+     *   contents: string,
+     * } $values
      */
     public function __construct(
-        string $filename,
-        string $contents,
+        array $values,
     ) {
-        $this->filename = $filename;
-        $this->contents = $contents;
+        $this->filename = $values['filename'];
+        $this->contents = $values['contents'];
     }
 }

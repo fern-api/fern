@@ -10,24 +10,25 @@ class WorkspaceRanResponse extends SerializableType
     /**
      * @var string $submissionId
      */
-    #[JsonProperty("submissionId")]
+    #[JsonProperty('submissionId')]
     public string $submissionId;
 
     /**
      * @var WorkspaceRunDetails $runDetails
      */
-    #[JsonProperty("runDetails")]
+    #[JsonProperty('runDetails')]
     public WorkspaceRunDetails $runDetails;
 
     /**
-     * @param string $submissionId
-     * @param WorkspaceRunDetails $runDetails
+     * @param array{
+     *   submissionId: string,
+     *   runDetails: WorkspaceRunDetails,
+     * } $values
      */
     public function __construct(
-        string $submissionId,
-        WorkspaceRunDetails $runDetails,
+        array $values,
     ) {
-        $this->submissionId = $submissionId;
-        $this->runDetails = $runDetails;
+        $this->submissionId = $values['submissionId'];
+        $this->runDetails = $values['runDetails'];
     }
 }

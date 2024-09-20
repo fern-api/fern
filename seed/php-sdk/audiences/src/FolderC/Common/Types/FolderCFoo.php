@@ -10,15 +10,17 @@ class FolderCFoo extends SerializableType
     /**
      * @var string $barProperty
      */
-    #[JsonProperty("bar_property")]
+    #[JsonProperty('bar_property')]
     public string $barProperty;
 
     /**
-     * @param string $barProperty
+     * @param array{
+     *   barProperty: string,
+     * } $values
      */
     public function __construct(
-        string $barProperty,
+        array $values,
     ) {
-        $this->barProperty = $barProperty;
+        $this->barProperty = $values['barProperty'];
     }
 }

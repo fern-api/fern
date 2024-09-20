@@ -10,15 +10,17 @@ class RootType extends SerializableType
     /**
      * @var string $s
      */
-    #[JsonProperty("s")]
+    #[JsonProperty('s')]
     public string $s;
 
     /**
-     * @param string $s
+     * @param array{
+     *   s: string,
+     * } $values
      */
     public function __construct(
-        string $s,
+        array $values,
     ) {
-        $this->s = $s;
+        $this->s = $values['s'];
     }
 }

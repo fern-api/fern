@@ -12,15 +12,17 @@ class GetBasicSolutionFileResponse extends SerializableType
     /**
      * @var array<Language, FileInfoV2> $solutionFileByLanguage
      */
-    #[JsonProperty("solutionFileByLanguage"), ArrayType([Language::class => FileInfoV2::class])]
+    #[JsonProperty('solutionFileByLanguage'), ArrayType([Language::class => FileInfoV2::class])]
     public array $solutionFileByLanguage;
 
     /**
-     * @param array<Language, FileInfoV2> $solutionFileByLanguage
+     * @param array{
+     *   solutionFileByLanguage: array<Language, FileInfoV2>,
+     * } $values
      */
     public function __construct(
-        array $solutionFileByLanguage,
+        array $values,
     ) {
-        $this->solutionFileByLanguage = $solutionFileByLanguage;
+        $this->solutionFileByLanguage = $values['solutionFileByLanguage'];
     }
 }

@@ -11,42 +11,41 @@ class ExecutionSessionResponse extends SerializableType
     /**
      * @var string $sessionId
      */
-    #[JsonProperty("sessionId")]
+    #[JsonProperty('sessionId')]
     public string $sessionId;
+
+    /**
+     * @var ?string $executionSessionUrl
+     */
+    #[JsonProperty('executionSessionUrl')]
+    public ?string $executionSessionUrl;
 
     /**
      * @var Language $language
      */
-    #[JsonProperty("language")]
+    #[JsonProperty('language')]
     public Language $language;
 
     /**
      * @var ExecutionSessionStatus $status
      */
-    #[JsonProperty("status")]
+    #[JsonProperty('status')]
     public ExecutionSessionStatus $status;
 
     /**
-     * @var ?string $executionSessionUrl
-     */
-    #[JsonProperty("executionSessionUrl")]
-    public ?string $executionSessionUrl;
-
-    /**
-     * @param string $sessionId
-     * @param Language $language
-     * @param ExecutionSessionStatus $status
-     * @param ?string $executionSessionUrl
+     * @param array{
+     *   sessionId: string,
+     *   executionSessionUrl?: ?string,
+     *   language: Language,
+     *   status: ExecutionSessionStatus,
+     * } $values
      */
     public function __construct(
-        string $sessionId,
-        Language $language,
-        ExecutionSessionStatus $status,
-        ?string $executionSessionUrl = null,
+        array $values,
     ) {
-        $this->sessionId = $sessionId;
-        $this->language = $language;
-        $this->status = $status;
-        $this->executionSessionUrl = $executionSessionUrl;
+        $this->sessionId = $values['sessionId'];
+        $this->executionSessionUrl = $values['executionSessionUrl'] ?? null;
+        $this->language = $values['language'];
+        $this->status = $values['status'];
     }
 }

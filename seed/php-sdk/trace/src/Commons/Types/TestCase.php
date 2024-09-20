@@ -11,24 +11,25 @@ class TestCase extends SerializableType
     /**
      * @var string $id
      */
-    #[JsonProperty("id")]
+    #[JsonProperty('id')]
     public string $id;
 
     /**
      * @var array<mixed> $params
      */
-    #[JsonProperty("params"), ArrayType(["mixed"])]
+    #[JsonProperty('params'), ArrayType(['mixed'])]
     public array $params;
 
     /**
-     * @param string $id
-     * @param array<mixed> $params
+     * @param array{
+     *   id: string,
+     *   params: array<mixed>,
+     * } $values
      */
     public function __construct(
-        string $id,
-        array $params,
+        array $values,
     ) {
-        $this->id = $id;
-        $this->params = $params;
+        $this->id = $values['id'];
+        $this->params = $values['params'];
     }
 }

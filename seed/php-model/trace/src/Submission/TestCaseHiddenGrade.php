@@ -10,15 +10,17 @@ class TestCaseHiddenGrade extends SerializableType
     /**
      * @var bool $passed
      */
-    #[JsonProperty("passed")]
+    #[JsonProperty('passed')]
     public bool $passed;
 
     /**
-     * @param bool $passed
+     * @param array{
+     *   passed: bool,
+     * } $values
      */
     public function __construct(
-        bool $passed,
+        array $values,
     ) {
-        $this->passed = $passed;
+        $this->passed = $values['passed'];
     }
 }

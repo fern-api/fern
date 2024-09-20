@@ -11,15 +11,17 @@ class Tree extends SerializableType
     /**
      * @var ?array<Node> $nodes
      */
-    #[JsonProperty("nodes"), ArrayType([Node::class])]
+    #[JsonProperty('nodes'), ArrayType([Node::class])]
     public ?array $nodes;
 
     /**
-     * @param ?array<Node> $nodes
+     * @param array{
+     *   nodes?: ?array<Node>,
+     * } $values
      */
     public function __construct(
-        ?array $nodes = null,
+        array $values,
     ) {
-        $this->nodes = $nodes;
+        $this->nodes = $values['nodes'] ?? null;
     }
 }

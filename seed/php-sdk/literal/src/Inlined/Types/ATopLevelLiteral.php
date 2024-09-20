@@ -10,15 +10,17 @@ class ATopLevelLiteral extends SerializableType
     /**
      * @var ANestedLiteral $nestedLiteral
      */
-    #[JsonProperty("nestedLiteral")]
+    #[JsonProperty('nestedLiteral')]
     public ANestedLiteral $nestedLiteral;
 
     /**
-     * @param ANestedLiteral $nestedLiteral
+     * @param array{
+     *   nestedLiteral: ANestedLiteral,
+     * } $values
      */
     public function __construct(
-        ANestedLiteral $nestedLiteral,
+        array $values,
     ) {
-        $this->nestedLiteral = $nestedLiteral;
+        $this->nestedLiteral = $values['nestedLiteral'];
     }
 }

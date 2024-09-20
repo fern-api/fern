@@ -10,15 +10,17 @@ class Json extends SerializableType
     /**
      * @var string $raw
      */
-    #[JsonProperty("raw")]
+    #[JsonProperty('raw')]
     public string $raw;
 
     /**
-     * @param string $raw
+     * @param array{
+     *   raw: string,
+     * } $values
      */
     public function __construct(
-        string $raw,
+        array $values,
     ) {
-        $this->raw = $raw;
+        $this->raw = $values['raw'];
     }
 }

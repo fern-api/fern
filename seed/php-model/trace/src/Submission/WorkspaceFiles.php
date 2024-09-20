@@ -12,24 +12,25 @@ class WorkspaceFiles extends SerializableType
     /**
      * @var FileInfo $mainFile
      */
-    #[JsonProperty("mainFile")]
+    #[JsonProperty('mainFile')]
     public FileInfo $mainFile;
 
     /**
      * @var array<FileInfo> $readOnlyFiles
      */
-    #[JsonProperty("readOnlyFiles"), ArrayType([FileInfo::class])]
+    #[JsonProperty('readOnlyFiles'), ArrayType([FileInfo::class])]
     public array $readOnlyFiles;
 
     /**
-     * @param FileInfo $mainFile
-     * @param array<FileInfo> $readOnlyFiles
+     * @param array{
+     *   mainFile: FileInfo,
+     *   readOnlyFiles: array<FileInfo>,
+     * } $values
      */
     public function __construct(
-        FileInfo $mainFile,
-        array $readOnlyFiles,
+        array $values,
     ) {
-        $this->mainFile = $mainFile;
-        $this->readOnlyFiles = $readOnlyFiles;
+        $this->mainFile = $values['mainFile'];
+        $this->readOnlyFiles = $values['readOnlyFiles'];
     }
 }

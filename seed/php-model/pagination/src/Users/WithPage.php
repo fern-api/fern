@@ -10,15 +10,17 @@ class WithPage extends SerializableType
     /**
      * @var ?int $page
      */
-    #[JsonProperty("page")]
+    #[JsonProperty('page')]
     public ?int $page;
 
     /**
-     * @param ?int $page
+     * @param array{
+     *   page?: ?int,
+     * } $values
      */
     public function __construct(
-        ?int $page = null,
+        array $values,
     ) {
-        $this->page = $page;
+        $this->page = $values['page'] ?? null;
     }
 }

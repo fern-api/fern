@@ -11,15 +11,17 @@ class VoidFunctionSignature extends SerializableType
     /**
      * @var array<Parameter> $parameters
      */
-    #[JsonProperty("parameters"), ArrayType([Parameter::class])]
+    #[JsonProperty('parameters'), ArrayType([Parameter::class])]
     public array $parameters;
 
     /**
-     * @param array<Parameter> $parameters
+     * @param array{
+     *   parameters: array<Parameter>,
+     * } $values
      */
     public function __construct(
-        array $parameters,
+        array $values,
     ) {
-        $this->parameters = $parameters;
+        $this->parameters = $values['parameters'];
     }
 }

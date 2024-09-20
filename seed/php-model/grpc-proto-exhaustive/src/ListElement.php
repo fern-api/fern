@@ -10,15 +10,17 @@ class ListElement extends SerializableType
     /**
      * @var ?string $id
      */
-    #[JsonProperty("id")]
+    #[JsonProperty('id')]
     public ?string $id;
 
     /**
-     * @param ?string $id
+     * @param array{
+     *   id?: ?string,
+     * } $values
      */
     public function __construct(
-        ?string $id = null,
+        array $values,
     ) {
-        $this->id = $id;
+        $this->id = $values['id'] ?? null;
     }
 }

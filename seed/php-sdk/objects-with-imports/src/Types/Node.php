@@ -11,33 +11,33 @@ class Node extends SerializableType
     /**
      * @var string $id
      */
-    #[JsonProperty("id")]
+    #[JsonProperty('id')]
     public string $id;
 
     /**
      * @var ?string $label
      */
-    #[JsonProperty("label")]
+    #[JsonProperty('label')]
     public ?string $label;
 
     /**
      * @var ?Metadata $metadata
      */
-    #[JsonProperty("metadata")]
+    #[JsonProperty('metadata')]
     public ?Metadata $metadata;
 
     /**
-     * @param string $id
-     * @param ?string $label
-     * @param ?Metadata $metadata
+     * @param array{
+     *   id: string,
+     *   label?: ?string,
+     *   metadata?: ?Metadata,
+     * } $values
      */
     public function __construct(
-        string $id,
-        ?string $label = null,
-        ?Metadata $metadata = null,
+        array $values,
     ) {
-        $this->id = $id;
-        $this->label = $label;
-        $this->metadata = $metadata;
+        $this->id = $values['id'];
+        $this->label = $values['label'] ?? null;
+        $this->metadata = $values['metadata'] ?? null;
     }
 }

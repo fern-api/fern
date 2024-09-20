@@ -11,12 +11,13 @@ class ListUsernamesRequest
     public ?string $startingAfter;
 
     /**
-     * @param ?string $startingAfter The cursor used for pagination in order to fetch
-    the next page of results.
+     * @param array{
+     *   startingAfter?: ?string,
+     * } $values
      */
     public function __construct(
-        ?string $startingAfter = null,
+        array $values,
     ) {
-        $this->startingAfter = $startingAfter;
+        $this->startingAfter = $values['startingAfter'] ?? null;
     }
 }

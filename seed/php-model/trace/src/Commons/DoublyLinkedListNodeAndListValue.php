@@ -10,24 +10,25 @@ class DoublyLinkedListNodeAndListValue extends SerializableType
     /**
      * @var string $nodeId
      */
-    #[JsonProperty("nodeId")]
+    #[JsonProperty('nodeId')]
     public string $nodeId;
 
     /**
      * @var DoublyLinkedListValue $fullList
      */
-    #[JsonProperty("fullList")]
+    #[JsonProperty('fullList')]
     public DoublyLinkedListValue $fullList;
 
     /**
-     * @param string $nodeId
-     * @param DoublyLinkedListValue $fullList
+     * @param array{
+     *   nodeId: string,
+     *   fullList: DoublyLinkedListValue,
+     * } $values
      */
     public function __construct(
-        string $nodeId,
-        DoublyLinkedListValue $fullList,
+        array $values,
     ) {
-        $this->nodeId = $nodeId;
-        $this->fullList = $fullList;
+        $this->nodeId = $values['nodeId'];
+        $this->fullList = $values['fullList'];
     }
 }

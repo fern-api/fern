@@ -65,6 +65,7 @@ interface Map {
 interface TypeDict {
     type: "typeDict";
     entries: TypeDictEntry[];
+    multiline?: boolean;
 }
 
 interface TypeDictEntry {
@@ -143,17 +144,22 @@ export class Type extends AstNode {
                     writer.write("array");
                     break;
                 }
+                if (this.internalType.multiline) {
+                    writer.writeLine("array{");
+                    for (const entry of this.internalType.entries) {
+                        writer.write(" *   ");
+                        this.writeTypeDictEntry({ writer, entry, comment });
+                        writer.writeLine(",");
+                    }
+                    writer.write(" * }");
+                    break;
+                }
                 writer.write("array{");
                 this.internalType.entries.forEach((entry, index) => {
                     if (index > 0) {
                         writer.write(", ");
                     }
-                    writer.write(entry.key);
-                    if (entry.optional) {
-                        writer.write("?");
-                    }
-                    writer.write(": ");
-                    entry.valueType.write(writer, { comment });
+                    this.writeTypeDictEntry({ writer, entry, comment });
                 });
                 writer.write("}");
                 break;
@@ -256,10 +262,11 @@ export class Type extends AstNode {
         });
     }
 
-    public static typeDict(entries: TypeDictEntry[]): Type {
+    public static typeDict(entries: TypeDictEntry[], { multiline }: { multiline?: boolean } = {}): Type {
         return new this({
             type: "typeDict",
-            entries
+            entries,
+            multiline
         });
     }
 
@@ -283,6 +290,23 @@ export class Type extends AstNode {
 
     private static isAlreadyOptional(value: Type) {
         return value.internalType.type === "optional" || value.internalType.type === "mixed";
+    }
+
+    private writeTypeDictEntry({
+        writer,
+        entry,
+        comment
+    }: {
+        writer: Writer;
+        entry: TypeDictEntry;
+        comment?: boolean;
+    }) {
+        writer.write(entry.key);
+        if (entry.optional) {
+            writer.write("?");
+        }
+        writer.write(": ");
+        entry.valueType.write(writer, { comment });
     }
 }
 

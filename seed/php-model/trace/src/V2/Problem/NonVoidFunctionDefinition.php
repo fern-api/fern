@@ -10,24 +10,25 @@ class NonVoidFunctionDefinition extends SerializableType
     /**
      * @var NonVoidFunctionSignature $signature
      */
-    #[JsonProperty("signature")]
+    #[JsonProperty('signature')]
     public NonVoidFunctionSignature $signature;
 
     /**
      * @var FunctionImplementationForMultipleLanguages $code
      */
-    #[JsonProperty("code")]
+    #[JsonProperty('code')]
     public FunctionImplementationForMultipleLanguages $code;
 
     /**
-     * @param NonVoidFunctionSignature $signature
-     * @param FunctionImplementationForMultipleLanguages $code
+     * @param array{
+     *   signature: NonVoidFunctionSignature,
+     *   code: FunctionImplementationForMultipleLanguages,
+     * } $values
      */
     public function __construct(
-        NonVoidFunctionSignature $signature,
-        FunctionImplementationForMultipleLanguages $code,
+        array $values,
     ) {
-        $this->signature = $signature;
-        $this->code = $code;
+        $this->signature = $values['signature'];
+        $this->code = $values['code'];
     }
 }

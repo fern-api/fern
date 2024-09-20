@@ -11,15 +11,17 @@ class Foo extends SerializableType
     /**
      * @var ?FolderCFoo $foo
      */
-    #[JsonProperty("foo")]
+    #[JsonProperty('foo')]
     public ?FolderCFoo $foo;
 
     /**
-     * @param ?FolderCFoo $foo
+     * @param array{
+     *   foo?: ?FolderCFoo,
+     * } $values
      */
     public function __construct(
-        ?FolderCFoo $foo = null,
+        array $values,
     ) {
-        $this->foo = $foo;
+        $this->foo = $values['foo'] ?? null;
     }
 }

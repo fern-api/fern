@@ -11,42 +11,41 @@ class LightweightProblemInfoV2 extends SerializableType
     /**
      * @var string $problemId
      */
-    #[JsonProperty("problemId")]
+    #[JsonProperty('problemId')]
     public string $problemId;
 
     /**
      * @var string $problemName
      */
-    #[JsonProperty("problemName")]
+    #[JsonProperty('problemName')]
     public string $problemName;
 
     /**
      * @var int $problemVersion
      */
-    #[JsonProperty("problemVersion")]
+    #[JsonProperty('problemVersion')]
     public int $problemVersion;
 
     /**
      * @var array<mixed> $variableTypes
      */
-    #[JsonProperty("variableTypes"), ArrayType(["mixed"])]
+    #[JsonProperty('variableTypes'), ArrayType(['mixed'])]
     public array $variableTypes;
 
     /**
-     * @param string $problemId
-     * @param string $problemName
-     * @param int $problemVersion
-     * @param array<mixed> $variableTypes
+     * @param array{
+     *   problemId: string,
+     *   problemName: string,
+     *   problemVersion: int,
+     *   variableTypes: array<mixed>,
+     * } $values
      */
     public function __construct(
-        string $problemId,
-        string $problemName,
-        int $problemVersion,
-        array $variableTypes,
+        array $values,
     ) {
-        $this->problemId = $problemId;
-        $this->problemName = $problemName;
-        $this->problemVersion = $problemVersion;
-        $this->variableTypes = $variableTypes;
+        $this->problemId = $values['problemId'];
+        $this->problemName = $values['problemName'];
+        $this->problemVersion = $values['problemVersion'];
+        $this->variableTypes = $values['variableTypes'];
     }
 }

@@ -24,19 +24,17 @@ class ListWithOffsetPaginationHasNextPageRequest
     public ?Order $order;
 
     /**
-     * @param ?int $page Defaults to first page
-     * @param ?int $limit The maxiumum number of elements to return.
-    This is also used as the step size in this
-    paginated endpoint.
-     * @param ?Order $order
+     * @param array{
+     *   page?: ?int,
+     *   limit?: ?int,
+     *   order?: ?Order,
+     * } $values
      */
     public function __construct(
-        ?int $page = null,
-        ?int $limit = null,
-        ?Order $order = null,
+        array $values,
     ) {
-        $this->page = $page;
-        $this->limit = $limit;
-        $this->order = $order;
+        $this->page = $values['page'] ?? null;
+        $this->limit = $values['limit'] ?? null;
+        $this->order = $values['order'] ?? null;
     }
 }

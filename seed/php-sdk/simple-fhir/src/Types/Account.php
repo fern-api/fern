@@ -10,42 +10,41 @@ class Account extends SerializableType
     /**
      * @var string $resourceType
      */
-    #[JsonProperty("resource_type")]
+    #[JsonProperty('resource_type')]
     public string $resourceType;
 
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var ?Patient $patient
      */
-    #[JsonProperty("patient")]
+    #[JsonProperty('patient')]
     public ?Patient $patient;
 
     /**
      * @var ?Practitioner $practitioner
      */
-    #[JsonProperty("practitioner")]
+    #[JsonProperty('practitioner')]
     public ?Practitioner $practitioner;
 
     /**
-     * @param string $resourceType
-     * @param string $name
-     * @param ?Patient $patient
-     * @param ?Practitioner $practitioner
+     * @param array{
+     *   resourceType: string,
+     *   name: string,
+     *   patient?: ?Patient,
+     *   practitioner?: ?Practitioner,
+     * } $values
      */
     public function __construct(
-        string $resourceType,
-        string $name,
-        ?Patient $patient = null,
-        ?Practitioner $practitioner = null,
+        array $values,
     ) {
-        $this->resourceType = $resourceType;
-        $this->name = $name;
-        $this->patient = $patient;
-        $this->practitioner = $practitioner;
+        $this->resourceType = $values['resourceType'];
+        $this->name = $values['name'];
+        $this->patient = $values['patient'] ?? null;
+        $this->practitioner = $values['practitioner'] ?? null;
     }
 }

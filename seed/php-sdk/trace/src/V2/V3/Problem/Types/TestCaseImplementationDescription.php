@@ -11,15 +11,17 @@ class TestCaseImplementationDescription extends SerializableType
     /**
      * @var array<mixed> $boards
      */
-    #[JsonProperty("boards"), ArrayType(["mixed"])]
+    #[JsonProperty('boards'), ArrayType(['mixed'])]
     public array $boards;
 
     /**
-     * @param array<mixed> $boards
+     * @param array{
+     *   boards: array<mixed>,
+     * } $values
      */
     public function __construct(
-        array $boards,
+        array $values,
     ) {
-        $this->boards = $boards;
+        $this->boards = $values['boards'];
     }
 }

@@ -10,24 +10,25 @@ class GetBasicSolutionFileRequest extends SerializableType
     /**
      * @var string $methodName
      */
-    #[JsonProperty("methodName")]
+    #[JsonProperty('methodName')]
     public string $methodName;
 
     /**
      * @var NonVoidFunctionSignature $signature
      */
-    #[JsonProperty("signature")]
+    #[JsonProperty('signature')]
     public NonVoidFunctionSignature $signature;
 
     /**
-     * @param string $methodName
-     * @param NonVoidFunctionSignature $signature
+     * @param array{
+     *   methodName: string,
+     *   signature: NonVoidFunctionSignature,
+     * } $values
      */
     public function __construct(
-        string $methodName,
-        NonVoidFunctionSignature $signature,
+        array $values,
     ) {
-        $this->methodName = $methodName;
-        $this->signature = $signature;
+        $this->methodName = $values['methodName'];
+        $this->signature = $values['signature'];
     }
 }

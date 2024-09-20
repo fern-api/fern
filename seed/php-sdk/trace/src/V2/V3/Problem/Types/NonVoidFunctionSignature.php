@@ -11,24 +11,25 @@ class NonVoidFunctionSignature extends SerializableType
     /**
      * @var array<Parameter> $parameters
      */
-    #[JsonProperty("parameters"), ArrayType([Parameter::class])]
+    #[JsonProperty('parameters'), ArrayType([Parameter::class])]
     public array $parameters;
 
     /**
      * @var mixed $returnType
      */
-    #[JsonProperty("returnType")]
+    #[JsonProperty('returnType')]
     public mixed $returnType;
 
     /**
-     * @param array<Parameter> $parameters
-     * @param mixed $returnType
+     * @param array{
+     *   parameters: array<Parameter>,
+     *   returnType: mixed,
+     * } $values
      */
     public function __construct(
-        array $parameters,
-        mixed $returnType,
+        array $values,
     ) {
-        $this->parameters = $parameters;
-        $this->returnType = $returnType;
+        $this->parameters = $values['parameters'];
+        $this->returnType = $values['returnType'];
     }
 }

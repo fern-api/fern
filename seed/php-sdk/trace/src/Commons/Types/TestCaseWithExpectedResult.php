@@ -10,24 +10,25 @@ class TestCaseWithExpectedResult extends SerializableType
     /**
      * @var TestCase $testCase
      */
-    #[JsonProperty("testCase")]
+    #[JsonProperty('testCase')]
     public TestCase $testCase;
 
     /**
      * @var mixed $expectedResult
      */
-    #[JsonProperty("expectedResult")]
+    #[JsonProperty('expectedResult')]
     public mixed $expectedResult;
 
     /**
-     * @param TestCase $testCase
-     * @param mixed $expectedResult
+     * @param array{
+     *   testCase: TestCase,
+     *   expectedResult: mixed,
+     * } $values
      */
     public function __construct(
-        TestCase $testCase,
-        mixed $expectedResult,
+        array $values,
     ) {
-        $this->testCase = $testCase;
-        $this->expectedResult = $expectedResult;
+        $this->testCase = $values['testCase'];
+        $this->expectedResult = $values['expectedResult'];
     }
 }

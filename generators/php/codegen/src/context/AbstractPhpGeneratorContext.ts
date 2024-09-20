@@ -248,9 +248,7 @@ export abstract class AbstractPhpGeneratorContext<
     }
 
     public abstract getRawAsIsFiles(): string[];
-
     public abstract getCoreAsIsFiles(): string[];
-
     public abstract getCoreTestAsIsFiles(): string[];
 
     public getCoreSerializationAsIsFiles(): string[] {

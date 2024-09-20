@@ -10,24 +10,25 @@ class UserOptionalListPage extends SerializableType
     /**
      * @var UserOptionalListContainer $data
      */
-    #[JsonProperty("data")]
+    #[JsonProperty('data')]
     public UserOptionalListContainer $data;
 
     /**
      * @var ?string $next
      */
-    #[JsonProperty("next")]
+    #[JsonProperty('next')]
     public ?string $next;
 
     /**
-     * @param UserOptionalListContainer $data
-     * @param ?string $next
+     * @param array{
+     *   data: UserOptionalListContainer,
+     *   next?: ?string,
+     * } $values
      */
     public function __construct(
-        UserOptionalListContainer $data,
-        ?string $next = null,
+        array $values,
     ) {
-        $this->data = $data;
-        $this->next = $next;
+        $this->data = $values['data'];
+        $this->next = $values['next'] ?? null;
     }
 }

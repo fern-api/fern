@@ -5,6 +5,7 @@ namespace Seed\Endpoints\HttpMethods;
 use Seed\Core\RawClient;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
+use Seed\Core\JsonDecoder;
 use JsonException;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -30,9 +31,9 @@ class HttpMethodsClient
     /**
      * @param string $id
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @return string
      */
-    public function testGet(string $id, ?array $options = null): mixed
+    public function testGet(string $id, ?array $options = null): string
     {
         try {
             $response = $this->client->sendRequest(
@@ -44,7 +45,8 @@ class HttpMethodsClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeString($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -57,9 +59,9 @@ class HttpMethodsClient
     /**
      * @param ObjectWithRequiredField $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @return ObjectWithOptionalField
      */
-    public function testPost(ObjectWithRequiredField $request, ?array $options = null): mixed
+    public function testPost(ObjectWithRequiredField $request, ?array $options = null): ObjectWithOptionalField
     {
         try {
             $response = $this->client->sendRequest(
@@ -72,7 +74,8 @@ class HttpMethodsClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return ObjectWithOptionalField::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -86,9 +89,9 @@ class HttpMethodsClient
      * @param string $id
      * @param ObjectWithRequiredField $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @return ObjectWithOptionalField
      */
-    public function testPut(string $id, ObjectWithRequiredField $request, ?array $options = null): mixed
+    public function testPut(string $id, ObjectWithRequiredField $request, ?array $options = null): ObjectWithOptionalField
     {
         try {
             $response = $this->client->sendRequest(
@@ -101,7 +104,8 @@ class HttpMethodsClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return ObjectWithOptionalField::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -115,9 +119,9 @@ class HttpMethodsClient
      * @param string $id
      * @param ObjectWithOptionalField $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @return ObjectWithOptionalField
      */
-    public function testPatch(string $id, ObjectWithOptionalField $request, ?array $options = null): mixed
+    public function testPatch(string $id, ObjectWithOptionalField $request, ?array $options = null): ObjectWithOptionalField
     {
         try {
             $response = $this->client->sendRequest(
@@ -130,7 +134,8 @@ class HttpMethodsClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return ObjectWithOptionalField::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -143,9 +148,9 @@ class HttpMethodsClient
     /**
      * @param string $id
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @return bool
      */
-    public function testDelete(string $id, ?array $options = null): mixed
+    public function testDelete(string $id, ?array $options = null): bool
     {
         try {
             $response = $this->client->sendRequest(
@@ -157,7 +162,8 @@ class HttpMethodsClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeBool($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

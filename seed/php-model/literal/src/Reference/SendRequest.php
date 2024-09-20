@@ -10,51 +10,49 @@ class SendRequest extends SerializableType
     /**
      * @var string $prompt
      */
-    #[JsonProperty("prompt")]
+    #[JsonProperty('prompt')]
     public string $prompt;
 
     /**
      * @var string $query
      */
-    #[JsonProperty("query")]
+    #[JsonProperty('query')]
     public string $query;
 
     /**
      * @var bool $stream
      */
-    #[JsonProperty("stream")]
+    #[JsonProperty('stream')]
     public bool $stream;
 
     /**
      * @var string $context
      */
-    #[JsonProperty("context")]
+    #[JsonProperty('context')]
     public string $context;
 
     /**
      * @var ?string $maybeContext
      */
-    #[JsonProperty("maybeContext")]
+    #[JsonProperty('maybeContext')]
     public ?string $maybeContext;
 
     /**
-     * @param string $prompt
-     * @param string $query
-     * @param bool $stream
-     * @param string $context
-     * @param ?string $maybeContext
+     * @param array{
+     *   prompt: string,
+     *   query: string,
+     *   stream: bool,
+     *   context: string,
+     *   maybeContext?: ?string,
+     * } $values
      */
     public function __construct(
-        string $prompt,
-        string $query,
-        bool $stream,
-        string $context,
-        ?string $maybeContext = null,
+        array $values,
     ) {
-        $this->prompt = $prompt;
-        $this->query = $query;
-        $this->stream = $stream;
-        $this->context = $context;
-        $this->maybeContext = $maybeContext;
+        $this->prompt = $values['prompt'];
+        $this->query = $values['query'];
+        $this->stream = $values['stream'];
+        $this->context = $values['context'];
+        $this->maybeContext = $values['maybeContext'] ?? null;
     }
 }

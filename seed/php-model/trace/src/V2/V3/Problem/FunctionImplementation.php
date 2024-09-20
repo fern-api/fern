@@ -10,24 +10,25 @@ class FunctionImplementation extends SerializableType
     /**
      * @var string $impl
      */
-    #[JsonProperty("impl")]
+    #[JsonProperty('impl')]
     public string $impl;
 
     /**
      * @var ?string $imports
      */
-    #[JsonProperty("imports")]
+    #[JsonProperty('imports')]
     public ?string $imports;
 
     /**
-     * @param string $impl
-     * @param ?string $imports
+     * @param array{
+     *   impl: string,
+     *   imports?: ?string,
+     * } $values
      */
     public function __construct(
-        string $impl,
-        ?string $imports = null,
+        array $values,
     ) {
-        $this->impl = $impl;
-        $this->imports = $imports;
+        $this->impl = $values['impl'];
+        $this->imports = $values['imports'] ?? null;
     }
 }

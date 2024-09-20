@@ -11,13 +11,13 @@ class GetDefaultStarterFilesRequest
     /**
      * @var array<VariableTypeAndName> $inputParams
      */
-    #[JsonProperty("inputParams"), ArrayType([VariableTypeAndName::class])]
+    #[JsonProperty('inputParams'), ArrayType([VariableTypeAndName::class])]
     public array $inputParams;
 
     /**
      * @var mixed $outputType
      */
-    #[JsonProperty("outputType")]
+    #[JsonProperty('outputType')]
     public mixed $outputType;
 
     /**
@@ -29,27 +29,21 @@ class GetDefaultStarterFilesRequest
       - Period `.`
 
      */
-    #[JsonProperty("methodName")]
+    #[JsonProperty('methodName')]
     public string $methodName;
 
     /**
-     * @param array<VariableTypeAndName> $inputParams
-     * @param mixed $outputType
-     * @param string $methodName The name of the `method` that the student has to complete.
-    The method name cannot include the following characters:
-      - Greater Than `>`
-      - Less Than `<``
-      - Equals `=`
-      - Period `.`
-
+     * @param array{
+     *   inputParams: array<VariableTypeAndName>,
+     *   outputType: mixed,
+     *   methodName: string,
+     * } $values
      */
     public function __construct(
-        array $inputParams,
-        mixed $outputType,
-        string $methodName,
+        array $values,
     ) {
-        $this->inputParams = $inputParams;
-        $this->outputType = $outputType;
-        $this->methodName = $methodName;
+        $this->inputParams = $values['inputParams'];
+        $this->outputType = $values['outputType'];
+        $this->methodName = $values['methodName'];
     }
 }

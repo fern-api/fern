@@ -10,15 +10,17 @@ class GetGeneratedTestCaseTemplateFileRequest extends SerializableType
     /**
      * @var TestCaseTemplate $template
      */
-    #[JsonProperty("template")]
+    #[JsonProperty('template')]
     public TestCaseTemplate $template;
 
     /**
-     * @param TestCaseTemplate $template
+     * @param array{
+     *   template: TestCaseTemplate,
+     * } $values
      */
     public function __construct(
-        TestCaseTemplate $template,
+        array $values,
     ) {
-        $this->template = $template;
+        $this->template = $values['template'];
     }
 }

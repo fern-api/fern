@@ -10,24 +10,25 @@ class EchoRequest extends SerializableType
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var int $size
      */
-    #[JsonProperty("size")]
+    #[JsonProperty('size')]
     public int $size;
 
     /**
-     * @param string $name
-     * @param int $size
+     * @param array{
+     *   name: string,
+     *   size: int,
+     * } $values
      */
     public function __construct(
-        string $name,
-        int $size,
+        array $values,
     ) {
-        $this->name = $name;
-        $this->size = $size;
+        $this->name = $values['name'];
+        $this->size = $values['size'];
     }
 }

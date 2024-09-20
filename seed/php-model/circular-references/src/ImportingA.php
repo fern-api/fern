@@ -11,15 +11,17 @@ class ImportingA extends SerializableType
     /**
      * @var ?A $a
      */
-    #[JsonProperty("a")]
+    #[JsonProperty('a')]
     public ?A $a;
 
     /**
-     * @param ?A $a
+     * @param array{
+     *   a?: ?A,
+     * } $values
      */
     public function __construct(
-        ?A $a = null,
+        array $values,
     ) {
-        $this->a = $a;
+        $this->a = $values['a'] ?? null;
     }
 }

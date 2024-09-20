@@ -8,12 +8,29 @@ use <%= coreNamespace%>\JsonProperty;
 
 class NullPropertyType extends SerializableType
 {
+    /**
+     * @var string $nonNullProperty
+     */
+    #[JsonProperty('non_null_property')]
+    public string $nonNullProperty;
+
+    /**
+     * @var string|null $nullProperty
+     */
+    #[JsonProperty('null_property')]
+    public ?string $nullProperty;
+
+    /**
+     * @param array{
+     *   nonNullProperty: string,
+     *   nullProperty?: string|null,
+     * } $values
+     */
     public function __construct(
-        #[JsonProperty('non_null_property')]
-        public string  $nonNullProperty,
-        #[JsonProperty('null_property')]
-        public ?string $nullProperty = null
+        array $values,
     ) {
+        $this->nonNullProperty = $values['nonNullProperty'];
+        $this->nullProperty = $values['nullProperty'] ?? null;
     }
 }
 
@@ -21,7 +38,7 @@ class NullPropertyTypeTest extends TestCase
 {
     public function testNullPropertiesAreOmitted(): void
     {
-        $object = new NullPropertyType('Test String', null);
+        $object = new NullPropertyType(["nonNullProperty" => "Test String", "nullProperty" => null]);
 
         $serializedObject = $object->jsonSerialize();
 

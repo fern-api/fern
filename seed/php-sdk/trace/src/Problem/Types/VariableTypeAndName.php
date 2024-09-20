@@ -10,24 +10,25 @@ class VariableTypeAndName extends SerializableType
     /**
      * @var mixed $variableType
      */
-    #[JsonProperty("variableType")]
+    #[JsonProperty('variableType')]
     public mixed $variableType;
 
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
-     * @param mixed $variableType
-     * @param string $name
+     * @param array{
+     *   variableType: mixed,
+     *   name: string,
+     * } $values
      */
     public function __construct(
-        mixed $variableType,
-        string $name,
+        array $values,
     ) {
-        $this->variableType = $variableType;
-        $this->name = $name;
+        $this->variableType = $values['variableType'];
+        $this->name = $values['name'];
     }
 }

@@ -10,11 +10,13 @@ class ListUserEventsRequest
     public ?int $limit;
 
     /**
-     * @param ?int $limit The maximum number of results to return.
+     * @param array{
+     *   limit?: ?int,
+     * } $values
      */
     public function __construct(
-        ?int $limit = null,
+        array $values,
     ) {
-        $this->limit = $limit;
+        $this->limit = $values['limit'] ?? null;
     }
 }

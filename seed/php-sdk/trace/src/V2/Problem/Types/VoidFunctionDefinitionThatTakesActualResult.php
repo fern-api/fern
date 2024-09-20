@@ -14,24 +14,25 @@ class VoidFunctionDefinitionThatTakesActualResult extends SerializableType
     /**
      * @var array<Parameter> $additionalParameters
      */
-    #[JsonProperty("additionalParameters"), ArrayType([Parameter::class])]
+    #[JsonProperty('additionalParameters'), ArrayType([Parameter::class])]
     public array $additionalParameters;
 
     /**
      * @var FunctionImplementationForMultipleLanguages $code
      */
-    #[JsonProperty("code")]
+    #[JsonProperty('code')]
     public FunctionImplementationForMultipleLanguages $code;
 
     /**
-     * @param array<Parameter> $additionalParameters
-     * @param FunctionImplementationForMultipleLanguages $code
+     * @param array{
+     *   additionalParameters: array<Parameter>,
+     *   code: FunctionImplementationForMultipleLanguages,
+     * } $values
      */
     public function __construct(
-        array $additionalParameters,
-        FunctionImplementationForMultipleLanguages $code,
+        array $values,
     ) {
-        $this->additionalParameters = $additionalParameters;
-        $this->code = $code;
+        $this->additionalParameters = $values['additionalParameters'];
+        $this->code = $values['code'];
     }
 }

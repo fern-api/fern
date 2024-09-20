@@ -11,24 +11,25 @@ class UnexpectedLanguageError extends SerializableType
     /**
      * @var Language $expectedLanguage
      */
-    #[JsonProperty("expectedLanguage")]
+    #[JsonProperty('expectedLanguage')]
     public Language $expectedLanguage;
 
     /**
      * @var Language $actualLanguage
      */
-    #[JsonProperty("actualLanguage")]
+    #[JsonProperty('actualLanguage')]
     public Language $actualLanguage;
 
     /**
-     * @param Language $expectedLanguage
-     * @param Language $actualLanguage
+     * @param array{
+     *   expectedLanguage: Language,
+     *   actualLanguage: Language,
+     * } $values
      */
     public function __construct(
-        Language $expectedLanguage,
-        Language $actualLanguage,
+        array $values,
     ) {
-        $this->expectedLanguage = $expectedLanguage;
-        $this->actualLanguage = $actualLanguage;
+        $this->expectedLanguage = $values['expectedLanguage'];
+        $this->actualLanguage = $values['actualLanguage'];
     }
 }

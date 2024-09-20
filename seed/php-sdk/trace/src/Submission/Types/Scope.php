@@ -11,15 +11,17 @@ class Scope extends SerializableType
     /**
      * @var array<string, mixed> $variables
      */
-    #[JsonProperty("variables"), ArrayType(["string" => "mixed"])]
+    #[JsonProperty('variables'), ArrayType(['string' => 'mixed'])]
     public array $variables;
 
     /**
-     * @param array<string, mixed> $variables
+     * @param array{
+     *   variables: array<string, mixed>,
+     * } $values
      */
     public function __construct(
-        array $variables,
+        array $values,
     ) {
-        $this->variables = $variables;
+        $this->variables = $values['variables'];
     }
 }

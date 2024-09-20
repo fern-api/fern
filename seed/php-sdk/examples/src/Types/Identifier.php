@@ -10,33 +10,33 @@ class Identifier extends SerializableType
     /**
      * @var mixed $type
      */
-    #[JsonProperty("type")]
+    #[JsonProperty('type')]
     public mixed $type;
 
     /**
      * @var string $value
      */
-    #[JsonProperty("value")]
+    #[JsonProperty('value')]
     public string $value;
 
     /**
      * @var string $label
      */
-    #[JsonProperty("label")]
+    #[JsonProperty('label')]
     public string $label;
 
     /**
-     * @param mixed $type
-     * @param string $value
-     * @param string $label
+     * @param array{
+     *   type: mixed,
+     *   value: string,
+     *   label: string,
+     * } $values
      */
     public function __construct(
-        mixed $type,
-        string $value,
-        string $label,
+        array $values,
     ) {
-        $this->type = $type;
-        $this->value = $value;
-        $this->label = $label;
+        $this->type = $values['type'];
+        $this->value = $values['value'];
+        $this->label = $values['label'];
     }
 }
