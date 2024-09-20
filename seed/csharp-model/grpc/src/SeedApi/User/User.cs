@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedApi.Core;
 
 #nullable enable
 
@@ -23,4 +24,9 @@ public record User
 
     [JsonPropertyName("metadata")]
     public Metadata? Metadata { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

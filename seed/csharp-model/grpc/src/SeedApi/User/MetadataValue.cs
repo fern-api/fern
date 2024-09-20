@@ -1,4 +1,3 @@
-using System.Text.Json.Serialization;
 using OneOf;
 using SeedApi.Core;
 using Proto = Google.Protobuf.WellKnownTypes;
@@ -7,11 +6,15 @@ using Proto = Google.Protobuf.WellKnownTypes;
 
 namespace SeedApi;
 
-[JsonConverter(typeof(OneOfSerializer<MetadataValue>))]
 public sealed class MetadataValue(
     OneOf<string, double, bool, IEnumerable<MetadataValue?>, Metadata> value
 ) : OneOfBase<string, double, bool, IEnumerable<MetadataValue?>, Metadata>(value)
 {
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+
     internal Proto.Value ToProto()
     {
         return Match<Proto.Value>(
