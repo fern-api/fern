@@ -30,7 +30,7 @@ class InlinedClient
     /**
      * @param SendLiteralsInlinedRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns SendResponse
+     * @return SendResponse
      */
     public function send(SendLiteralsInlinedRequest $request, ?array $options = null): SendResponse
     {

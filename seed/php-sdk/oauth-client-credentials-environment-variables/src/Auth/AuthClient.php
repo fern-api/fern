@@ -31,7 +31,7 @@ class AuthClient
     /**
      * @param GetTokenRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns TokenResponse
+     * @return TokenResponse
      */
     public function getTokenWithClientCredentials(GetTokenRequest $request, ?array $options = null): TokenResponse
     {
@@ -60,7 +60,7 @@ class AuthClient
     /**
      * @param RefreshTokenRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns TokenResponse
+     * @return TokenResponse
      */
     public function refreshToken(RefreshTokenRequest $request, ?array $options = null): TokenResponse
     {

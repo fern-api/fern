@@ -35,7 +35,7 @@ class ProblemClient
     * Creates a problem
      * @param CreateProblemRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @return mixed
      */
     public function createProblem(CreateProblemRequest $request, ?array $options = null): mixed
     {
@@ -66,7 +66,7 @@ class ProblemClient
      * @param string $problemId
      * @param CreateProblemRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns UpdateProblemResponse
+     * @return UpdateProblemResponse
      */
     public function updateProblem(string $problemId, CreateProblemRequest $request, ?array $options = null): UpdateProblemResponse
     {
@@ -121,7 +121,7 @@ class ProblemClient
     * Returns default starter files for problem
      * @param GetDefaultStarterFilesRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns GetDefaultStarterFilesResponse
+     * @return GetDefaultStarterFilesResponse
      */
     public function getDefaultStarterFiles(GetDefaultStarterFilesRequest $request, ?array $options = null): GetDefaultStarterFilesResponse
     {

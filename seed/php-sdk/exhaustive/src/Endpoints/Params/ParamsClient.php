@@ -33,7 +33,7 @@ class ParamsClient
     * GET with path param
      * @param string $param
      * @param ?array{baseUrl?: string} $options
-     * @returns string
+     * @return string
      */
     public function getWithPath(string $param, ?array $options = null): string
     {
@@ -150,7 +150,7 @@ class ParamsClient
      * @param string $param
      * @param string $request
      * @param ?array{baseUrl?: string} $options
-     * @returns string
+     * @return string
      */
     public function modifyWithPath(string $param, string $request, ?array $options = null): string
     {

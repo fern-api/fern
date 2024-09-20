@@ -29,7 +29,7 @@ class BasicAuthClient
     /**
     * GET request with basic auth scheme
      * @param ?array{baseUrl?: string} $options
-     * @returns bool
+     * @return bool
      */
     public function getWithBasicAuth(?array $options = null): bool
     {
@@ -58,7 +58,7 @@ class BasicAuthClient
     * POST request with basic auth scheme
      * @param mixed $request
      * @param ?array{baseUrl?: string} $options
-     * @returns bool
+     * @return bool
      */
     public function postWithBasicAuth(mixed $request, ?array $options = null): bool
     {

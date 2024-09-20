@@ -32,7 +32,7 @@ class ProblemClient
     /**
     * Returns lightweight versions of all problems
      * @param ?array{baseUrl?: string} $options
-     * @returns array<LightweightProblemInfoV2>
+     * @return array<LightweightProblemInfoV2>
      */
     public function getLightweightProblems(?array $options = null): array
     {
@@ -60,7 +60,7 @@ class ProblemClient
     /**
     * Returns latest versions of all problems
      * @param ?array{baseUrl?: string} $options
-     * @returns array<ProblemInfoV2>
+     * @return array<ProblemInfoV2>
      */
     public function getProblems(?array $options = null): array
     {
@@ -89,7 +89,7 @@ class ProblemClient
     * Returns latest version of a problem
      * @param string $problemId
      * @param ?array{baseUrl?: string} $options
-     * @returns ProblemInfoV2
+     * @return ProblemInfoV2
      */
     public function getLatestProblem(string $problemId, ?array $options = null): ProblemInfoV2
     {
@@ -119,7 +119,7 @@ class ProblemClient
      * @param string $problemId
      * @param int $problemVersion
      * @param ?array{baseUrl?: string} $options
-     * @returns ProblemInfoV2
+     * @return ProblemInfoV2
      */
     public function getProblemVersion(string $problemId, int $problemVersion, ?array $options = null): ProblemInfoV2
     {

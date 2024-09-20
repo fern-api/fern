@@ -30,7 +30,7 @@ class UserClient
     /**
      * @param CreateUserRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns User
+     * @return User
      */
     public function createUser(CreateUserRequest $request, ?array $options = null): User
     {

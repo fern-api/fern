@@ -29,7 +29,7 @@ class CustomAuthClient
     /**
     * GET request with custom auth scheme
      * @param ?array{baseUrl?: string} $options
-     * @returns bool
+     * @return bool
      */
     public function getWithCustomAuth(?array $options = null): bool
     {
@@ -58,7 +58,7 @@ class CustomAuthClient
     * POST request with custom auth scheme
      * @param mixed $request
      * @param ?array{baseUrl?: string} $options
-     * @returns bool
+     * @return bool
      */
     public function postWithCustomAuth(mixed $request, ?array $options = null): bool
     {

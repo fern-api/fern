@@ -37,7 +37,7 @@ class PlaylistClient
      * @param int $serviceParam
      * @param CreatePlaylistRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns Playlist
+     * @return Playlist
      */
     public function createPlaylist(int $serviceParam, CreatePlaylistRequest $request, ?array $options = null): Playlist
     {
@@ -74,7 +74,7 @@ class PlaylistClient
      * @param int $serviceParam
      * @param GetPlaylistsRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns array<Playlist>
+     * @return array<Playlist>
      */
     public function getPlaylists(int $serviceParam, GetPlaylistsRequest $request, ?array $options = null): array
     {
@@ -115,7 +115,7 @@ class PlaylistClient
      * @param int $serviceParam
      * @param string $playlistId
      * @param ?array{baseUrl?: string} $options
-     * @returns Playlist
+     * @return Playlist
      */
     public function getPlaylist(int $serviceParam, string $playlistId, ?array $options = null): Playlist
     {
@@ -146,7 +146,7 @@ class PlaylistClient
      * @param string $playlistId
      * @param ?UpdatePlaylistRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns ?Playlist
+     * @return ?Playlist
      */
     public function updatePlaylist(int $serviceParam, string $playlistId, ?UpdatePlaylistRequest $request = null, ?array $options = null): ?Playlist
     {

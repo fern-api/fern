@@ -29,7 +29,7 @@ class ServiceClient
     /**
     * GET request with custom api key
      * @param ?array{baseUrl?: string} $options
-     * @returns string
+     * @return string
      */
     public function getWithBearerToken(?array $options = null): string
     {

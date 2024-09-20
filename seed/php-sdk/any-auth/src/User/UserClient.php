@@ -29,7 +29,7 @@ class UserClient
 
     /**
      * @param ?array{baseUrl?: string} $options
-     * @returns array<User>
+     * @return array<User>
      */
     public function get(?array $options = null): array
     {

@@ -32,7 +32,7 @@ class MigrationClient
     /**
      * @param GetAttemptedMigrationsRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns array<Migration>
+     * @return array<Migration>
      */
     public function getAttemptedMigrations(GetAttemptedMigrationsRequest $request, ?array $options = null): array
     {

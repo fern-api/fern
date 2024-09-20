@@ -39,7 +39,7 @@ class UserClient
     * List all users.
      * @param ListUsersRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns array<User>
+     * @return array<User>
      */
     public function list(ListUsersRequest $request, ?array $options = null): array
     {

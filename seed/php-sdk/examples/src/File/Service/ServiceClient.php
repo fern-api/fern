@@ -32,7 +32,7 @@ class ServiceClient
      * @param string $filename This is a filename
      * @param GetFileRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns File
+     * @return File
      */
     public function getFile(string $filename, GetFileRequest $request, ?array $options = null): File
     {

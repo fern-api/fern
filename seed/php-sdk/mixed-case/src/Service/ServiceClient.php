@@ -31,7 +31,7 @@ class ServiceClient
     /**
      * @param string $resourceId
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @return mixed
      */
     public function getResource(string $resourceId, ?array $options = null): mixed
     {
@@ -59,7 +59,7 @@ class ServiceClient
     /**
      * @param ListResourcesRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns array<mixed>
+     * @return array<mixed>
      */
     public function listResources(ListResourcesRequest $request, ?array $options = null): array
     {

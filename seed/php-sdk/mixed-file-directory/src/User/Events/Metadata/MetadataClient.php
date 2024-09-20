@@ -31,7 +31,7 @@ class MetadataClient
     * Get event metadata.
      * @param GetEventMetadataRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns Metadata
+     * @return Metadata
      */
     public function getMetadata(GetEventMetadataRequest $request, ?array $options = null): Metadata
     {

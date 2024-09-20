@@ -54,7 +54,7 @@ class ServiceClient
     /**
     * This endpoint checks the health of the service.
      * @param ?array{baseUrl?: string} $options
-     * @returns bool
+     * @return bool
      */
     public function ping(?array $options = null): bool
     {

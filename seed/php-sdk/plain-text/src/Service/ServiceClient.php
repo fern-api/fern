@@ -26,7 +26,7 @@ class ServiceClient
 
     /**
      * @param ?array{baseUrl?: string} $options
-     * @returns string
+     * @return string
      */
     public function getText(?array $options = null): string
     {

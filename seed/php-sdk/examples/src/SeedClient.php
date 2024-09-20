@@ -90,7 +90,7 @@ class SeedClient
     /**
      * @param string $request
      * @param ?array{baseUrl?: string} $options
-     * @returns string
+     * @return string
      */
     public function echo_(string $request, ?array $options = null): string
     {

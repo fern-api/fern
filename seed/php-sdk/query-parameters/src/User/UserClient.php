@@ -31,7 +31,7 @@ class UserClient
     /**
      * @param GetUsersRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns User
+     * @return User
      */
     public function getUsername(GetUsersRequest $request, ?array $options = null): User
     {

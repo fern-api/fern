@@ -30,7 +30,7 @@ class UnknownClient
     /**
      * @param mixed $request
      * @param ?array{baseUrl?: string} $options
-     * @returns array<mixed>
+     * @return array<mixed>
      */
     public function post(mixed $request, ?array $options = null): array
     {
@@ -59,7 +59,7 @@ class UnknownClient
     /**
      * @param MyObject $request
      * @param ?array{baseUrl?: string} $options
-     * @returns array<mixed>
+     * @return array<mixed>
      */
     public function postObject(MyObject $request, ?array $options = null): array
     {

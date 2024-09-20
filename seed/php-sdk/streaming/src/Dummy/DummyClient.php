@@ -53,7 +53,7 @@ class DummyClient
     /**
      * @param Generateequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns StreamResponse
+     * @return StreamResponse
      */
     public function generate(Generateequest $request, ?array $options = null): StreamResponse
     {

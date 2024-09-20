@@ -30,7 +30,7 @@ class PaymentClient
     /**
      * @param CreatePaymentRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns string
+     * @return string
      */
     public function create(CreatePaymentRequest $request, ?array $options = null): string
     {

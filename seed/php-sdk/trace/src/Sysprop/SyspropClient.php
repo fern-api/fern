@@ -55,7 +55,7 @@ class SyspropClient
 
     /**
      * @param ?array{baseUrl?: string} $options
-     * @returns array<Language, int>
+     * @return array<Language, int>
      */
     public function getNumWarmInstances(?array $options = null): array
     {

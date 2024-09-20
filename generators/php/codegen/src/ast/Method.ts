@@ -82,7 +82,7 @@ export class Method extends AstNode {
         }
         if (this.return_ != null) {
             comment.addTag({
-                tagType: "returns",
+                tagType: "return",
                 type: this.return_
             });
         }

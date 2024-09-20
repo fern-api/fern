@@ -33,7 +33,7 @@ class ObjectClient
     /**
      * @param ObjectWithOptionalField $request
      * @param ?array{baseUrl?: string} $options
-     * @returns ObjectWithOptionalField
+     * @return ObjectWithOptionalField
      */
     public function getAndReturnWithOptionalField(ObjectWithOptionalField $request, ?array $options = null): ObjectWithOptionalField
     {
@@ -62,7 +62,7 @@ class ObjectClient
     /**
      * @param ObjectWithRequiredField $request
      * @param ?array{baseUrl?: string} $options
-     * @returns ObjectWithRequiredField
+     * @return ObjectWithRequiredField
      */
     public function getAndReturnWithRequiredField(ObjectWithRequiredField $request, ?array $options = null): ObjectWithRequiredField
     {
@@ -91,7 +91,7 @@ class ObjectClient
     /**
      * @param ObjectWithMapOfMap $request
      * @param ?array{baseUrl?: string} $options
-     * @returns ObjectWithMapOfMap
+     * @return ObjectWithMapOfMap
      */
     public function getAndReturnWithMapOfMap(ObjectWithMapOfMap $request, ?array $options = null): ObjectWithMapOfMap
     {
@@ -120,7 +120,7 @@ class ObjectClient
     /**
      * @param NestedObjectWithOptionalField $request
      * @param ?array{baseUrl?: string} $options
-     * @returns NestedObjectWithOptionalField
+     * @return NestedObjectWithOptionalField
      */
     public function getAndReturnNestedWithOptionalField(NestedObjectWithOptionalField $request, ?array $options = null): NestedObjectWithOptionalField
     {
@@ -150,7 +150,7 @@ class ObjectClient
      * @param string $string
      * @param NestedObjectWithRequiredField $request
      * @param ?array{baseUrl?: string} $options
-     * @returns NestedObjectWithRequiredField
+     * @return NestedObjectWithRequiredField
      */
     public function getAndReturnNestedWithRequiredField(string $string, NestedObjectWithRequiredField $request, ?array $options = null): NestedObjectWithRequiredField
     {
@@ -179,7 +179,7 @@ class ObjectClient
     /**
      * @param array<NestedObjectWithRequiredField> $request
      * @param ?array{baseUrl?: string} $options
-     * @returns NestedObjectWithRequiredField
+     * @return NestedObjectWithRequiredField
      */
     public function getAndReturnNestedWithRequiredFieldAsList(array $request, ?array $options = null): NestedObjectWithRequiredField
     {

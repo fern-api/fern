@@ -29,7 +29,7 @@ class HomepageClient
 
     /**
      * @param ?array{baseUrl?: string} $options
-     * @returns array<string>
+     * @return array<string>
      */
     public function getHomepageProblems(?array $options = null): array
     {

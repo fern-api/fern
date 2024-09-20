@@ -67,7 +67,7 @@ class SeedClient
     /**
      * @param string $env
      * @param string $message
-     * @returns string
+     * @return string
      */
     private function getFromEnvOrThrow(string $env, string $message): string
     {

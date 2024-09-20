@@ -30,7 +30,7 @@ class PrimitiveClient
     /**
      * @param string $request
      * @param ?array{baseUrl?: string} $options
-     * @returns string
+     * @return string
      */
     public function getAndReturnString(string $request, ?array $options = null): string
     {
@@ -59,7 +59,7 @@ class PrimitiveClient
     /**
      * @param int $request
      * @param ?array{baseUrl?: string} $options
-     * @returns int
+     * @return int
      */
     public function getAndReturnInt(int $request, ?array $options = null): int
     {
@@ -88,7 +88,7 @@ class PrimitiveClient
     /**
      * @param int $request
      * @param ?array{baseUrl?: string} $options
-     * @returns int
+     * @return int
      */
     public function getAndReturnLong(int $request, ?array $options = null): int
     {
@@ -117,7 +117,7 @@ class PrimitiveClient
     /**
      * @param float $request
      * @param ?array{baseUrl?: string} $options
-     * @returns float
+     * @return float
      */
     public function getAndReturnDouble(float $request, ?array $options = null): float
     {
@@ -146,7 +146,7 @@ class PrimitiveClient
     /**
      * @param bool $request
      * @param ?array{baseUrl?: string} $options
-     * @returns bool
+     * @return bool
      */
     public function getAndReturnBool(bool $request, ?array $options = null): bool
     {
@@ -175,7 +175,7 @@ class PrimitiveClient
     /**
      * @param DateTime $request
      * @param ?array{baseUrl?: string} $options
-     * @returns DateTime
+     * @return DateTime
      */
     public function getAndReturnDatetime(DateTime $request, ?array $options = null): DateTime
     {
@@ -204,7 +204,7 @@ class PrimitiveClient
     /**
      * @param DateTime $request
      * @param ?array{baseUrl?: string} $options
-     * @returns DateTime
+     * @return DateTime
      */
     public function getAndReturnDate(DateTime $request, ?array $options = null): DateTime
     {
@@ -233,7 +233,7 @@ class PrimitiveClient
     /**
      * @param string $request
      * @param ?array{baseUrl?: string} $options
-     * @returns string
+     * @return string
      */
     public function getAndReturnUuid(string $request, ?array $options = null): string
     {
@@ -262,7 +262,7 @@ class PrimitiveClient
     /**
      * @param string $request
      * @param ?array{baseUrl?: string} $options
-     * @returns string
+     * @return string
      */
     public function getAndReturnBase64(string $request, ?array $options = null): string
     {

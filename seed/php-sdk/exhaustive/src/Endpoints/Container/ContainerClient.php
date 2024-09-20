@@ -30,7 +30,7 @@ class ContainerClient
     /**
      * @param array<string> $request
      * @param ?array{baseUrl?: string} $options
-     * @returns array<string>
+     * @return array<string>
      */
     public function getAndReturnListOfPrimitives(array $request, ?array $options = null): array
     {
@@ -59,7 +59,7 @@ class ContainerClient
     /**
      * @param array<ObjectWithRequiredField> $request
      * @param ?array{baseUrl?: string} $options
-     * @returns array<ObjectWithRequiredField>
+     * @return array<ObjectWithRequiredField>
      */
     public function getAndReturnListOfObjects(array $request, ?array $options = null): array
     {
@@ -88,7 +88,7 @@ class ContainerClient
     /**
      * @param array<string> $request
      * @param ?array{baseUrl?: string} $options
-     * @returns array<string>
+     * @return array<string>
      */
     public function getAndReturnSetOfPrimitives(array $request, ?array $options = null): array
     {
@@ -117,7 +117,7 @@ class ContainerClient
     /**
      * @param array<ObjectWithRequiredField> $request
      * @param ?array{baseUrl?: string} $options
-     * @returns array<ObjectWithRequiredField>
+     * @return array<ObjectWithRequiredField>
      */
     public function getAndReturnSetOfObjects(array $request, ?array $options = null): array
     {
@@ -146,7 +146,7 @@ class ContainerClient
     /**
      * @param array<string, string> $request
      * @param ?array{baseUrl?: string} $options
-     * @returns array<string, string>
+     * @return array<string, string>
      */
     public function getAndReturnMapPrimToPrim(array $request, ?array $options = null): array
     {
@@ -175,7 +175,7 @@ class ContainerClient
     /**
      * @param array<string, ObjectWithRequiredField> $request
      * @param ?array{baseUrl?: string} $options
-     * @returns array<string, ObjectWithRequiredField>
+     * @return array<string, ObjectWithRequiredField>
      */
     public function getAndReturnMapOfPrimToObject(array $request, ?array $options = null): array
     {
@@ -204,7 +204,7 @@ class ContainerClient
     /**
      * @param ?ObjectWithRequiredField $request
      * @param ?array{baseUrl?: string} $options
-     * @returns ?ObjectWithRequiredField
+     * @return ?ObjectWithRequiredField
      */
     public function getAndReturnOptional(?ObjectWithRequiredField $request = null, ?array $options = null): ?ObjectWithRequiredField
     {

@@ -30,7 +30,7 @@ class ReferenceClient
     /**
      * @param SendRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns SendResponse
+     * @return SendResponse
      */
     public function send(SendRequest $request, ?array $options = null): SendResponse
     {

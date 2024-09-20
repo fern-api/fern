@@ -30,7 +30,7 @@ class HeadersClient
     /**
      * @param SendLiteralsInHeadersRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns SendResponse
+     * @return SendResponse
      */
     public function send(SendLiteralsInHeadersRequest $request, ?array $options = null): SendResponse
     {

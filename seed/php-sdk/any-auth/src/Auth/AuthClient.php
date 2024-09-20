@@ -30,7 +30,7 @@ class AuthClient
     /**
      * @param GetTokenRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns TokenResponse
+     * @return TokenResponse
      */
     public function getToken(GetTokenRequest $request, ?array $options = null): TokenResponse
     {

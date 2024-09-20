@@ -30,7 +30,7 @@ class FooClient
     /**
      * @param FindRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns ImportingType
+     * @return ImportingType
      */
     public function find(FindRequest $request, ?array $options = null): ImportingType
     {

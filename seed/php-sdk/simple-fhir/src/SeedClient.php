@@ -49,7 +49,7 @@ class SeedClient
     /**
      * @param string $accountId
      * @param ?array{baseUrl?: string} $options
-     * @returns Account
+     * @return Account
      */
     public function getAccount(string $accountId, ?array $options = null): Account
     {

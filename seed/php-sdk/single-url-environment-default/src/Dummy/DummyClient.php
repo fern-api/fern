@@ -29,7 +29,7 @@ class DummyClient
 
     /**
      * @param ?array{baseUrl?: string} $options
-     * @returns string
+     * @return string
      */
     public function getDummy(?array $options = null): string
     {

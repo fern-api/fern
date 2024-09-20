@@ -30,7 +30,7 @@ class QueryClient
     /**
      * @param SendLiteralsInQueryRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns SendResponse
+     * @return SendResponse
      */
     public function send(SendLiteralsInQueryRequest $request, ?array $options = null): SendResponse
     {

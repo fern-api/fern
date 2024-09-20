@@ -51,7 +51,7 @@ class SeedClient
     /**
      * @param CreateRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns Type
+     * @return Type
      */
     public function create(CreateRequest $request, ?array $options = null): Type
     {
@@ -80,7 +80,7 @@ class SeedClient
     /**
      * @param GetRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns Type
+     * @return Type
      */
     public function get(GetRequest $request, ?array $options = null): Type
     {
