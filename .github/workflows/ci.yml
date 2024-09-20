@@ -136,7 +136,7 @@ jobs:
 
   live-test-dev-windows:
     environment: Fern Dev
-    # if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main'
     runs-on: windows-latest
     steps:
       - name: Checkout repo
