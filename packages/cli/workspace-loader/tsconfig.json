@@ -13,6 +13,7 @@
     { "path": "../openapi-parser" },
     { "path": "../semver-utils" },
     { "path": "../task-context" },
+    { "path": "../workspace-commons" },
     { "path": "../fern-definition/schema" }
   ]
 }

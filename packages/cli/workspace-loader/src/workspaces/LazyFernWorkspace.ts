@@ -6,107 +6,35 @@ import { handleFailedWorkspaceParserResultRaw } from "../handleFailedWorkspacePa
 import { listFernFiles } from "../listFernFiles";
 import { parseYamlFiles } from "../parseYamlFiles";
 import { processPackageMarkers } from "../processPackageMarkers";
-import { APIChangelog, FernDefinition, IdentifiableSource } from "../types/Workspace";
+import { APIChangelog } from "../types/Workspace";
 import { validateStructureOfYamlFiles } from "../validateStructureOfYamlFiles";
-import { AbstractAPIWorkspace } from "./AbstractAPIWorkspace";
 import { OSSWorkspace } from "./OSSWorkspace";
-
-export declare namespace FernWorkspace {
-    export interface Args extends LazyFernWorkspace.BaseArgs {
-        dependenciesConfiguration: dependenciesYml.DependenciesConfiguration;
-        definition: FernDefinition;
-        sources: IdentifiableSource[] | undefined;
-        cliVersion: string;
-    }
-}
-
-export class FernWorkspace extends AbstractAPIWorkspace<void> {
-    public type: "fern" | "oss" = "fern";
-    public workspaceName: string | undefined;
-    public absoluteFilepath: AbsoluteFilePath;
-    public generatorsConfiguration: generatorsYml.GeneratorsConfiguration | undefined;
-    public dependenciesConfiguration: dependenciesYml.DependenciesConfiguration;
-    public definition: FernDefinition;
-    public changelog: APIChangelog | undefined;
-    public sources: IdentifiableSource[];
-    public cliVersion: string;
-
-    constructor({
-        absoluteFilepath,
-        workspaceName,
-        generatorsConfiguration,
-        dependenciesConfiguration,
-        definition,
-        changelog,
-        sources,
-        cliVersion
-    }: FernWorkspace.Args) {
-        super();
-        this.absoluteFilepath = absoluteFilepath;
-        this.workspaceName = workspaceName;
-        this.changelog = changelog;
-        this.generatorsConfiguration = generatorsConfiguration;
-        this.dependenciesConfiguration = dependenciesConfiguration;
-        this.definition = definition;
-        this.sources = sources ?? [];
-        this.cliVersion = cliVersion;
-    }
-
-    public async getDefinition(): Promise<FernDefinition> {
-        return this.definition;
-    }
-
-    public async toFernWorkspace(): Promise<FernWorkspace> {
-        return this;
-    }
-
-    public getAbsoluteFilepaths(): AbsoluteFilePath[] {
-        return [this.absoluteFilepath];
-    }
-
-    public getSources(): IdentifiableSource[] {
-        return this.sources;
-    }
-}
+import { FernWorkspace, AbstractAPIWorkspace, FernDefinition } from "@fern-api/api-workspace-commons";
 
 export declare namespace LazyFernWorkspace {
     export interface BaseArgs {
-        workspaceName: string | undefined;
         absoluteFilepath: AbsoluteFilePath;
-        generatorsConfiguration: generatorsYml.GeneratorsConfiguration | undefined;
         changelog: APIChangelog | undefined;
     }
 
-    export interface Args extends BaseArgs {
+    export interface Args extends BaseArgs, AbstractAPIWorkspace.Args {
         context: TaskContext;
         cliVersion: string;
     }
 }
 
 export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
-    public type: "fern" | "oss" = "fern";
-    public workspaceName: string | undefined;
     public absoluteFilepath: AbsoluteFilePath;
-    public generatorsConfiguration: generatorsYml.GeneratorsConfiguration | undefined;
     public changelog: APIChangelog | undefined;
 
     private context: TaskContext;
     private cliVersion: string;
     private fernWorkspaces: Record<string, FernWorkspace> = {};
 
-    constructor({
-        absoluteFilepath,
-        workspaceName,
-        generatorsConfiguration,
-        changelog,
-        cliVersion,
-        context
-    }: LazyFernWorkspace.Args) {
-        super();
+    constructor({ absoluteFilepath, changelog, cliVersion, context, ...superArgs }: LazyFernWorkspace.Args) {
+        super(superArgs);
         this.absoluteFilepath = absoluteFilepath;
-        this.workspaceName = workspaceName;
         this.changelog = changelog;
-        this.generatorsConfiguration = generatorsConfiguration;
         this.cliVersion = cliVersion;
         this.context = context;
     }
@@ -163,7 +91,7 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
             }
 
             workspace = new FernWorkspace({
-                absoluteFilepath: this.absoluteFilepath,
+                absoluteFilePath: this.absoluteFilepath,
                 generatorsConfiguration: this.generatorsConfiguration,
                 dependenciesConfiguration,
                 workspaceName: this.workspaceName,
@@ -173,10 +101,7 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
                     namedDefinitionFiles: structuralValidationResult.namedDefinitionFiles,
                     packageMarkers: processPackageMarkersResult.packageMarkers,
                     importedDefinitions: processPackageMarkersResult.importedDefinitions
-                },
-                changelog: this.changelog,
-                sources: undefined,
-                cliVersion: this.cliVersion
+                }
             });
 
             this.fernWorkspaces[key] = workspace;

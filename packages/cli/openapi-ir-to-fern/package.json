@@ -42,8 +42,7 @@
   "devDependencies": {
     "@types/lodash-es": "^4.17.12",
     "@types/js-yaml": "^4.0.8",
-    "@fern-api/fern-definition-validator": "workspace:*",
-    "@fern-api/workspace-loader": "workspace:*",
+    "@fern-api/api-workspace-commons": "workspace:*",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",

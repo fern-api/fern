@@ -1,6 +1,6 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { APIWorkspace, FernWorkspace, loadAPIWorkspace } from "@fern-api/workspace-loader";
+import { AbstractAPIWorkspace, loadAPIWorkspace } from "@fern-api/workspace-loader";
 
 export async function convertGeneratorWorkspaceToFernWorkspace({
     fixture,
@@ -10,7 +10,7 @@ export async function convertGeneratorWorkspaceToFernWorkspace({
     fixture: string;
     absolutePathToAPIDefinition: AbsoluteFilePath;
     taskContext: TaskContext;
-}): Promise<APIWorkspace | undefined> {
+}): Promise<AbstractAPIWorkspace<unknown> | undefined> {
     const workspace = await loadAPIWorkspace({
         absolutePathToWorkspace: absolutePathToAPIDefinition,
         context: taskContext,

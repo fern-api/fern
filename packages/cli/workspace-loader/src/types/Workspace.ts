@@ -1,12 +1,8 @@
 import { docsYml, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-import { DefinitionFileSchema, PackageMarkerFileSchema, RootApiFileSchema } from "@fern-api/fern-definition-schema";
-import { processPackageMarkers } from "../processPackageMarkers";
-import { FernWorkspace, LazyFernWorkspace } from "../workspaces/FernWorkspace";
-import { OSSWorkspace } from "../workspaces/OSSWorkspace";
-import { ParsedFernFile } from "./FernFile";
+import { AbstractAPIWorkspace, FernWorkspace } from "@fern-api/api-workspace-commons";
 
-export type Workspace = DocsWorkspace | LazyFernWorkspace | OSSWorkspace;
+export type Workspace = DocsWorkspace | AbstractAPIWorkspace<unknown>;
 
 export interface DocsWorkspace {
     type: "docs";
@@ -88,18 +84,6 @@ export interface OpenAPIFile {
 export interface AsyncAPIFile {
     absoluteFilepath: AbsoluteFilePath;
     contents: string;
-}
-
-export interface FernDefinition {
-    absoluteFilepath: AbsoluteFilePath;
-    rootApiFile: ParsedFernFile<RootApiFileSchema>;
-    namedDefinitionFiles: Record<RelativeFilePath, OnDiskNamedDefinitionFile>;
-    packageMarkers: Record<RelativeFilePath, ParsedFernFile<PackageMarkerFileSchema>>;
-    importedDefinitions: Record<RelativeFilePath, processPackageMarkers.ImportedDefinition>;
-}
-
-export interface OnDiskNamedDefinitionFile extends ParsedFernFile<DefinitionFileSchema> {
-    absoluteFilepath: AbsoluteFilePath;
 }
 
 export interface FernWorkspaceMetadata {

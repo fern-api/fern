@@ -7,18 +7,16 @@ import { TaskContext } from "@fern-api/task-context";
 import yaml from "js-yaml";
 import { mapValues as mapValuesLodash } from "lodash-es";
 import { v4 as uuidv4 } from "uuid";
-import { APIChangelog, FernDefinition, IdentifiableSource, Spec } from "../types/Workspace";
+import { APIChangelog, IdentifiableSource, Spec } from "../types/Workspace";
 import { getAllOpenAPISpecs } from "../utils/getAllOpenAPISpecs";
-import { AbstractAPIWorkspace } from "./AbstractAPIWorkspace";
-import { FernWorkspace } from "./FernWorkspace";
+import { FernWorkspace, AbstractAPIWorkspace, FernDefinition } from "@fern-api/api-workspace-commons";
 
 export declare namespace OSSWorkspace {
-    export interface Args {
+    export interface Args extends AbstractAPIWorkspace.Args {
         absoluteFilepath: AbsoluteFilePath;
         workspaceName: string | undefined;
         specs: Spec[];
         changelog: APIChangelog | undefined;
-        generatorsConfiguration: generatorsYml.GeneratorsConfiguration | undefined;
         cliVersion: string;
     }
 
@@ -48,29 +46,17 @@ export declare namespace OSSWorkspace {
 }
 
 export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
-    public type: "fern" | "oss" = "oss";
     public absoluteFilepath: AbsoluteFilePath;
-    public workspaceName: string | undefined;
     public specs: Spec[];
     public changelog: APIChangelog | undefined;
-    public generatorsConfiguration: generatorsYml.GeneratorsConfiguration | undefined;
     public sources: IdentifiableSource[];
     public cliVersion: string;
 
-    constructor({
-        absoluteFilepath,
-        workspaceName,
-        specs,
-        changelog,
-        generatorsConfiguration,
-        cliVersion
-    }: OSSWorkspace.Args) {
-        super();
+    constructor({ absoluteFilepath, specs, changelog, cliVersion, ...superArgs }: OSSWorkspace.Args) {
+        super(superArgs);
         this.absoluteFilepath = absoluteFilepath;
-        this.workspaceName = workspaceName;
         this.specs = specs;
         this.changelog = changelog;
-        this.generatorsConfiguration = generatorsConfiguration;
         this.sources = this.convertSpecsToIdentifiableSources(specs);
         this.cliVersion = cliVersion;
     }
@@ -146,16 +132,13 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
     ): Promise<FernWorkspace> {
         const definition = await this.getDefinition({ context }, settings);
         return new FernWorkspace({
-            absoluteFilepath: this.absoluteFilepath,
+            absoluteFilePath: this.absoluteFilepath,
             workspaceName: this.workspaceName,
             generatorsConfiguration: this.generatorsConfiguration,
             dependenciesConfiguration: {
                 dependencies: {}
             },
-            definition,
-            changelog: this.changelog,
-            sources: this.sources,
-            cliVersion: this.cliVersion
+            definition
         });
     }
 

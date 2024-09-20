@@ -17,8 +17,8 @@ import tar from "tar";
 import tmp from "tmp-promise";
 import { loadAPIWorkspace } from "./loadAPIWorkspace";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
-import { FernDefinition } from "./types/Workspace";
-import { FernWorkspace, OSSWorkspace } from "./workspaces";
+import { OSSWorkspace } from "./workspaces/OSSWorkspace";
+import { FernDefinition, FernWorkspace } from "@fern-api/api-workspace-commons";
 
 const FIDDLE = createFiddleService();
 

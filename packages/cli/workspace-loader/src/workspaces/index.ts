@@ -1,3 +1,1 @@
-export { type APIWorkspace } from "./APIWorkspace";
-export { FernWorkspace, LazyFernWorkspace } from "./FernWorkspace";
-export { getOSSWorkspaceSettingsFromGeneratorInvocation, OSSWorkspace } from "./OSSWorkspace";
+export { getOSSWorkspaceSettingsFromGeneratorInvocation } from "./OSSWorkspace";

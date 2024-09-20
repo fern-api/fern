@@ -66,7 +66,7 @@ export class SourceResolverImpl implements SourceResolver {
         source: RawSchemas.ProtobufSourceSchema;
         file: FernFileContext;
     }): Promise<ResolvedSource | undefined> {
-        const absoluteFilepath = join(this.workspace.absoluteFilepath, RelativeFilePath.of(source.proto));
+        const absoluteFilepath = join(this.workspace.absoluteFilePath, RelativeFilePath.of(source.proto));
         if (this.sourceCache.has(absoluteFilepath)) {
             return this.sourceCache.get(absoluteFilepath);
         }
@@ -94,7 +94,7 @@ export class SourceResolverImpl implements SourceResolver {
         source: RawSchemas.OpenAPISourceSchema;
         file: FernFileContext;
     }): Promise<ResolvedSource | undefined> {
-        const absoluteFilepath = join(this.workspace.absoluteFilepath, RelativeFilePath.of(source.openapi));
+        const absoluteFilepath = join(this.workspace.absoluteFilePath, RelativeFilePath.of(source.openapi));
         if (this.sourceCache.has(absoluteFilepath)) {
             return this.sourceCache.get(absoluteFilepath);
         }

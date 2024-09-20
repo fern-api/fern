@@ -8,10 +8,8 @@ export { WorkspaceLoaderFailureType, type WorkspaceLoader } from "./types/Result
 export {
     type AsyncAPISource,
     type DocsWorkspace,
-    type FernDefinition,
     type FernWorkspaceMetadata,
     type IdentifiableSource,
-    type OnDiskNamedDefinitionFile,
     type OpenAPISource,
     type ProtobufSource,
     type Source,
@@ -19,5 +17,4 @@ export {
 } from "./types/Workspace";
 export * from "./utils";
 export * from "./workspaces";
-export { AbstractAPIWorkspace } from "./workspaces/AbstractAPIWorkspace";
-export { type APIWorkspace } from "./workspaces/APIWorkspace";
+export { AbstractAPIWorkspace, FernWorkspace, type FernDefinition } from "@fern-api/api-workspace-commons";

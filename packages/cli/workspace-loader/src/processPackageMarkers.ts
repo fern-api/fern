@@ -7,9 +7,9 @@ import { size } from "lodash-es";
 import { loadDependency } from "./loadDependency";
 import { ParsedFernFile } from "./types/FernFile";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
-import { FernDefinition } from "./types/Workspace";
 import { validateStructureOfYamlFiles } from "./validateStructureOfYamlFiles";
-import { OSSWorkspace } from "./workspaces";
+import { OSSWorkspace } from "./workspaces/OSSWorkspace";
+import { FernDefinition } from "@fern-api/api-workspace-commons";
 
 export declare namespace processPackageMarkers {
     export type Return = SuccessfulResult | FailedResult;

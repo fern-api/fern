@@ -6,7 +6,7 @@ import path from "path";
 import { ZodError } from "zod";
 import { ParsedFernFile } from "./types/FernFile";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
-import { OnDiskNamedDefinitionFile } from "./types/Workspace";
+import { OnDiskNamedDefinitionFile } from "@fern-api/api-workspace-commons";
 
 export declare namespace validateStructureOfYamlFiles {
     export type Return = SuccessfulResult | FailedResult;

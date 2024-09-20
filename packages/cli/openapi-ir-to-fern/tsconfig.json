@@ -11,8 +11,7 @@
     { "path": "../openapi-ir-sdk" },
     { "path": "../openapi-parser" },
     { "path": "../task-context" },
-    { "path": "../workspace-loader" },
+    { "path": "../workspace-commons" },
     { "path": "../fern-definition/schema" },
-    { "path": "../fern-definition/validator" }
   ]
 }
