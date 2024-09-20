@@ -145,6 +145,11 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
       - name: Check API definition is valid
         env:
           FORCE_COLOR: "2"
@@ -155,7 +160,7 @@ jobs:
           pnpm --filter @fern-api/cli dist:cli:dev
           $cliPath = (Get-Location).Path + "\packages\cli\cli\dist\dev\bundle.cjs"
           Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
-          ./scripts/live-test.ps1 "$cli_path" "$FERN_ORG_TOKEN_DEV"
+          ./scripts/live-test.ps1 -cli_path "$cli_path" -token "$FERN_ORG_TOKEN_DEV"
 
   ts-generator-changes:
     runs-on: ubuntu-latest
