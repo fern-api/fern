@@ -82,12 +82,7 @@ def convert_and_respect_annotation_metadata(
         value_type = typing_extensions.get_args(clean_type)[1]
 
         return {
-            convert_and_respect_annotation_metadata(
-                object_=key,
-                annotation=annotation,
-                inner_type=key_type,
-                direction=direction,
-            ): convert_and_respect_annotation_metadata(
+            key: convert_and_respect_annotation_metadata(
                 object_=value,
                 annotation=annotation,
                 inner_type=value_type,
