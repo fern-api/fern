@@ -6,9 +6,11 @@ use Seed\Core\RawClient;
 use Seed\Imdb\Types\CreateMovieRequest;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
+use Seed\Core\JsonDecoder;
 use JsonException;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
+use Seed\Imdb\Types\Movie;
 
 class ImdbClient
 {
@@ -30,9 +32,9 @@ class ImdbClient
     * Add a movie to the database
      * @param CreateMovieRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns string
      */
-    public function createMovie(CreateMovieRequest $request, ?array $options = null): mixed
+    public function createMovie(CreateMovieRequest $request, ?array $options = null): string
     {
         try {
             $response = $this->client->sendRequest(
@@ -45,7 +47,8 @@ class ImdbClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeString($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -58,9 +61,9 @@ class ImdbClient
     /**
      * @param string $movieId
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns Movie
      */
-    public function getMovie(string $movieId, ?array $options = null): mixed
+    public function getMovie(string $movieId, ?array $options = null): Movie
     {
         try {
             $response = $this->client->sendRequest(
@@ -72,7 +75,8 @@ class ImdbClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return Movie::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

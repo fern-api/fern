@@ -4,6 +4,7 @@ namespace Seed\Playlist;
 
 use Seed\Core\RawClient;
 use Seed\Playlist\Requests\CreatePlaylistRequest;
+use Seed\Playlist\Types\Playlist;
 use Seed\Core\Constant;
 use Seed\Core\JsonApiRequest;
 use Seed\Environments;
@@ -12,6 +13,7 @@ use JsonException;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Playlist\Requests\GetPlaylistsRequest;
+use Seed\Core\JsonDecoder;
 use Seed\Playlist\Types\UpdatePlaylistRequest;
 
 class PlaylistClient
@@ -35,9 +37,9 @@ class PlaylistClient
      * @param int $serviceParam
      * @param CreatePlaylistRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns Playlist
      */
-    public function createPlaylist(int $serviceParam, CreatePlaylistRequest $request, ?array $options = null): mixed
+    public function createPlaylist(int $serviceParam, CreatePlaylistRequest $request, ?array $options = null): Playlist
     {
         $query = [];
         $query['datetime'] = $request->datetime->format(Constant::DateTimeFormat);
@@ -56,7 +58,8 @@ class PlaylistClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return Playlist::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -71,9 +74,9 @@ class PlaylistClient
      * @param int $serviceParam
      * @param GetPlaylistsRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns array<Playlist>
      */
-    public function getPlaylists(int $serviceParam, GetPlaylistsRequest $request, ?array $options = null): mixed
+    public function getPlaylists(int $serviceParam, GetPlaylistsRequest $request, ?array $options = null): array
     {
         $query = [];
         $query['otherField'] = $request->otherField;
@@ -96,7 +99,8 @@ class PlaylistClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeArray($json, [Playlist::class]);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -111,9 +115,9 @@ class PlaylistClient
      * @param int $serviceParam
      * @param string $playlistId
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns Playlist
      */
-    public function getPlaylist(int $serviceParam, string $playlistId, ?array $options = null): mixed
+    public function getPlaylist(int $serviceParam, string $playlistId, ?array $options = null): Playlist
     {
         try {
             $response = $this->client->sendRequest(
@@ -125,7 +129,8 @@ class PlaylistClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return Playlist::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -141,9 +146,9 @@ class PlaylistClient
      * @param string $playlistId
      * @param ?UpdatePlaylistRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns ?Playlist
      */
-    public function updatePlaylist(int $serviceParam, string $playlistId, ?UpdatePlaylistRequest $request = null, ?array $options = null): mixed
+    public function updatePlaylist(int $serviceParam, string $playlistId, ?UpdatePlaylistRequest $request = null, ?array $options = null): ?Playlist
     {
         try {
             $response = $this->client->sendRequest(
@@ -156,7 +161,11 @@ class PlaylistClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return Playlist::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -171,9 +180,8 @@ class PlaylistClient
      * @param int $serviceParam
      * @param string $playlistId
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
      */
-    public function deletePlaylist(int $serviceParam, string $playlistId, ?array $options = null): mixed
+    public function deletePlaylist(int $serviceParam, string $playlistId, ?array $options = null): void
     {
         try {
             $response = $this->client->sendRequest(

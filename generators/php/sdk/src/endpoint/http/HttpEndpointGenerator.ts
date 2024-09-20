@@ -3,6 +3,8 @@ import { HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { getEndpointReturnType } from "../utils/getEndpointReturnType";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
+import { Arguments, UnnamedArgument } from "@fern-api/generator-commons";
+import { upperFirst } from "lodash-es";
 
 export declare namespace EndpointGenerator {
     export interface Args {
@@ -15,6 +17,7 @@ export declare namespace EndpointGenerator {
     }
 }
 
+const JSON_VARIALBE_NAME = "$json";
 const RESPONSE_VARIABLE_NAME = "$response";
 const STATUS_CODE_VARIABLE_NAME = "$statusCode";
 
@@ -32,15 +35,13 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 type: php.Type.optional(this.context.getRequestOptionsType())
             })
         );
-        // TODO: Support deserializing the JSON response.
-        //
-        // const return_ = getEndpointReturnType({ context: this.context, endpoint });
+        const return_ = getEndpointReturnType({ context: this.context, endpoint });
         return php.method({
             name: this.context.getEndpointMethodName(endpoint),
             access: "public",
             parameters,
             docs: endpoint.docs,
-            return_: php.Type.mixed(),
+            return_,
             body: php.codeblock((writer) => {
                 const queryParameterCodeBlock = endpointSignatureInfo.request?.getQueryParameterCodeBlock();
                 if (queryParameterCodeBlock != null) {
@@ -70,7 +71,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     })
                 );
                 writer.writeTextStatement(`${STATUS_CODE_VARIABLE_NAME} = ${RESPONSE_VARIABLE_NAME}->getStatusCode()`);
-                const successResponseStatements = this.getEndpointSuccessResponseStatements({ endpoint });
+                const successResponseStatements = this.getEndpointSuccessResponseStatements({ endpoint, return_ });
                 if (successResponseStatements != null) {
                     writer.writeNode(successResponseStatements);
                 }
@@ -113,7 +114,13 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         });
     }
 
-    private getEndpointSuccessResponseStatements({ endpoint }: { endpoint: HttpEndpoint }): php.CodeBlock | undefined {
+    private getEndpointSuccessResponseStatements({
+        endpoint,
+        return_
+    }: {
+        endpoint: HttpEndpoint;
+        return_: php.Type | undefined;
+    }): php.CodeBlock | undefined {
         if (endpoint.response?.body == null) {
             return php.codeblock((writer) => {
                 writer.controlFlow(
@@ -130,16 +137,23 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 streamParameter: () => this.context.logger.error("Stream parameters not supported"),
                 fileDownload: () => this.context.logger.error("File download not supported"),
                 json: (_reference) => {
-                    // TODO: Deserialize the response body into the correct type.
-                    //
-                    // const astType = this.context.phpTypeMapper.convert({ reference: reference.responseBodyType });
                     writer.controlFlow(
                         "if",
                         php.codeblock(`${STATUS_CODE_VARIABLE_NAME} >= 200 && ${STATUS_CODE_VARIABLE_NAME} < 400`)
                     );
-                    writer.writeTextStatement(
-                        `return json_decode(${RESPONSE_VARIABLE_NAME}->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR)`
-                    );
+                    if (return_ == null) {
+                        writer.write("return;");
+                        writer.endControlFlow();
+                        return;
+                    }
+                    writer.writeNodeStatement(this.getResponseBodyContent());
+                    if (return_.isOptional()) {
+                        writer.controlFlow("if", php.codeblock(`empty(${JSON_VARIALBE_NAME})`));
+                        writer.writeTextStatement("return null");
+                        writer.endControlFlow();
+                    }
+                    writer.write("return ");
+                    writer.writeNodeStatement(this.decodeJsonResponse(return_));
                     writer.endControlFlow();
                     writer.write("} catch (");
                     writer.writeNode(this.context.getJsonExceptionClassReference());
@@ -161,6 +175,105 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 },
                 _other: () => undefined
             });
+        });
+    }
+
+    private decodeJsonResponse(return_: php.Type | undefined): php.CodeBlock {
+        if (return_ == null) {
+            return php.codeblock("");
+        }
+        const arguments_: UnnamedArgument[] = [php.codeblock(JSON_VARIALBE_NAME)];
+        const internalType = return_.underlyingType().internalType;
+        switch (internalType.type) {
+            case "reference":
+                return this.decodeJsonResponseForClassReference({
+                    arguments_,
+                    classReference: internalType.value
+                });
+            case "array":
+            case "map":
+                return this.decodeJsonResponseForArray({
+                    arguments_,
+                    type: return_.underlyingType()
+                });
+            case "int":
+            case "float":
+            case "string":
+            case "bool":
+            case "date":
+            case "dateTime":
+            case "mixed":
+                return this.decodeJsonResponseForPrimitive({
+                    arguments_,
+                    methodSuffix: upperFirst(internalType.type)
+                });
+            case "object":
+            case "optional":
+            case "typeDict":
+                throw new Error(`Internal error; '${internalType.type}' type is not a supported return type`);
+        }
+    }
+
+    private decodeJsonResponseForClassReference({
+        arguments_,
+        classReference
+    }: {
+        arguments_: Arguments;
+        classReference: php.ClassReference;
+    }): php.CodeBlock {
+        return php.codeblock((writer) => {
+            writer.writeNode(
+                php.invokeMethod({
+                    on: classReference,
+                    method: "fromJson",
+                    arguments_,
+                    static_: true
+                })
+            );
+        });
+    }
+
+    private decodeJsonResponseForArray({
+        arguments_,
+        type
+    }: {
+        arguments_: UnnamedArgument[];
+        type: php.Type;
+    }): php.CodeBlock {
+        return php.codeblock((writer) => {
+            writer.writeNode(
+                php.invokeMethod({
+                    on: this.context.getJsonDecoderClassReference(),
+                    method: "decodeArray",
+                    arguments_: [...arguments_, this.context.phpAttributeMapper.getArrayTypeAttributeArgument(type)],
+                    static_: true
+                })
+            );
+        });
+    }
+
+    private decodeJsonResponseForPrimitive({
+        arguments_,
+        methodSuffix
+    }: {
+        arguments_: Arguments;
+        methodSuffix: string;
+    }): php.CodeBlock {
+        return php.codeblock((writer) => {
+            writer.writeNode(
+                php.invokeMethod({
+                    on: this.context.getJsonDecoderClassReference(),
+                    method: `decode${methodSuffix}`,
+                    arguments_,
+                    static_: true
+                })
+            );
+        });
+    }
+
+    private getResponseBodyContent(): php.CodeBlock {
+        return php.codeblock((writer) => {
+            writer.write(`${JSON_VARIALBE_NAME} = ${RESPONSE_VARIABLE_NAME}->getBody()->getContents()`);
         });
     }
 }

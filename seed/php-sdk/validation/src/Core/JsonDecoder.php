@@ -31,7 +31,7 @@ class JsonDecoder
      * @return bool The decoded boolean.
      * @throws JsonException If the decoded value is not a boolean.
      */
-    public static function decodeBoolean(string $json): bool
+    public static function decodeBool(string $json): bool
     {
         $decoded = self::decode($json);
         if (!is_bool($decoded)) {
@@ -112,13 +112,25 @@ class JsonDecoder
      * @return mixed[]|array<string, mixed> The deserialized array.
      * @throws JsonException If the decoded value is not an array.
      */
-    public static function jsonToDeserializedArray(string $json, array $type): array
+    public static function decodeArray(string $json, array $type): array
     {
         $decoded = self::decode($json);
         if (!is_array($decoded)) {
             throw new JsonException("Unexpected non-array json value: " . $json);
         }
         return JsonDeserializer::deserializeArray($decoded, $type);
+    }
+
+    /**
+     * Decodes a JSON string and returns a mixed.
+     *
+     * @param string $json The JSON string to decode.
+     * @return mixed The decoded mixed.
+     * @throws JsonException If the decoded value is not an mixed.
+     */
+    public static function decodeMixed(string $json): mixed
+    {
+        return self::decode($json);
     }
 
     /**

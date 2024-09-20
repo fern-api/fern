@@ -4,6 +4,7 @@ namespace Seed\Query;
 
 use Seed\Core\RawClient;
 use Seed\Query\Requests\SendLiteralsInQueryRequest;
+use Seed\Types\SendResponse;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use JsonException;
@@ -29,9 +30,9 @@ class QueryClient
     /**
      * @param SendLiteralsInQueryRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns SendResponse
      */
-    public function send(SendLiteralsInQueryRequest $request, ?array $options = null): mixed
+    public function send(SendLiteralsInQueryRequest $request, ?array $options = null): SendResponse
     {
         $query = [];
         $query['prompt'] = $request->prompt;
@@ -48,7 +49,8 @@ class QueryClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return SendResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

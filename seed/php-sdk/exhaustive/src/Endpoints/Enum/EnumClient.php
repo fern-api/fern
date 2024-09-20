@@ -29,9 +29,9 @@ class EnumClient
     /**
      * @param WeatherReport $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns WeatherReport
      */
-    public function getAndReturnEnum(WeatherReport $request, ?array $options = null): mixed
+    public function getAndReturnEnum(WeatherReport $request, ?array $options = null): WeatherReport
     {
         try {
             $response = $this->client->sendRequest(
@@ -44,7 +44,8 @@ class EnumClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return WeatherReport::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

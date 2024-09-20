@@ -4,6 +4,7 @@ namespace Seed\Foo;
 
 use Seed\Core\RawClient;
 use Seed\Foo\Requests\FindRequest;
+use Seed\Foo\Types\ImportingType;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use JsonException;
@@ -29,9 +30,9 @@ class FooClient
     /**
      * @param FindRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns ImportingType
      */
-    public function find(FindRequest $request, ?array $options = null): mixed
+    public function find(FindRequest $request, ?array $options = null): ImportingType
     {
         $query = [];
         if ($request->optionalString != null) {
@@ -49,7 +50,8 @@ class FooClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return ImportingType::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

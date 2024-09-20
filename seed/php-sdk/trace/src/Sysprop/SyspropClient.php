@@ -9,6 +9,7 @@ use Seed\Environments;
 use Seed\Core\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
 use Exception;
+use Seed\Core\JsonDecoder;
 use JsonException;
 
 class SyspropClient
@@ -31,9 +32,8 @@ class SyspropClient
      * @param Language $language
      * @param int $numWarmInstances
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
      */
-    public function setNumWarmInstances(Language $language, int $numWarmInstances, ?array $options = null): mixed
+    public function setNumWarmInstances(Language $language, int $numWarmInstances, ?array $options = null): void
     {
         try {
             $response = $this->client->sendRequest(
@@ -55,9 +55,9 @@ class SyspropClient
 
     /**
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns array<Language, int>
      */
-    public function getNumWarmInstances(?array $options = null): mixed
+    public function getNumWarmInstances(?array $options = null): array
     {
         try {
             $response = $this->client->sendRequest(
@@ -69,7 +69,8 @@ class SyspropClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeArray($json, [Language::class => "integer"]);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

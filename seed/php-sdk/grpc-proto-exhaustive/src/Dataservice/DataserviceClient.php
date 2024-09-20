@@ -4,17 +4,24 @@ namespace Seed\Dataservice;
 
 use Seed\Core\RawClient;
 use Seed\Dataservice\Requests\UploadRequest;
+use Seed\Types\UploadResponse;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use JsonException;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Dataservice\Requests\DeleteRequest;
+use Seed\Types\DeleteResponse;
 use Seed\Dataservice\Requests\DescribeRequest;
+use Seed\Types\DescribeResponse;
 use Seed\Dataservice\Requests\FetchRequest;
+use Seed\Types\FetchResponse;
 use Seed\Dataservice\Requests\ListRequest;
+use Seed\Types\ListResponse;
 use Seed\Dataservice\Requests\QueryRequest;
+use Seed\Types\QueryResponse;
 use Seed\Dataservice\Requests\UpdateRequest;
+use Seed\Types\UpdateResponse;
 
 class DataserviceClient
 {
@@ -35,9 +42,9 @@ class DataserviceClient
     /**
      * @param UploadRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns UploadResponse
      */
-    public function upload(UploadRequest $request, ?array $options = null): mixed
+    public function upload(UploadRequest $request, ?array $options = null): UploadResponse
     {
         try {
             $response = $this->client->sendRequest(
@@ -50,7 +57,8 @@ class DataserviceClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return UploadResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -63,9 +71,9 @@ class DataserviceClient
     /**
      * @param DeleteRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns DeleteResponse
      */
-    public function delete(DeleteRequest $request, ?array $options = null): mixed
+    public function delete(DeleteRequest $request, ?array $options = null): DeleteResponse
     {
         try {
             $response = $this->client->sendRequest(
@@ -78,7 +86,8 @@ class DataserviceClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return DeleteResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -91,9 +100,9 @@ class DataserviceClient
     /**
      * @param DescribeRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns DescribeResponse
      */
-    public function describe(DescribeRequest $request, ?array $options = null): mixed
+    public function describe(DescribeRequest $request, ?array $options = null): DescribeResponse
     {
         try {
             $response = $this->client->sendRequest(
@@ -106,7 +115,8 @@ class DataserviceClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return DescribeResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -119,9 +129,9 @@ class DataserviceClient
     /**
      * @param FetchRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns FetchResponse
      */
-    public function fetch(FetchRequest $request, ?array $options = null): mixed
+    public function fetch(FetchRequest $request, ?array $options = null): FetchResponse
     {
         $query = [];
         if ($request->ids != null) {
@@ -141,7 +151,8 @@ class DataserviceClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return FetchResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -154,9 +165,9 @@ class DataserviceClient
     /**
      * @param ListRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns ListResponse
      */
-    public function list(ListRequest $request, ?array $options = null): mixed
+    public function list(ListRequest $request, ?array $options = null): ListResponse
     {
         $query = [];
         if ($request->prefix != null) {
@@ -182,7 +193,8 @@ class DataserviceClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return ListResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -195,9 +207,9 @@ class DataserviceClient
     /**
      * @param QueryRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns QueryResponse
      */
-    public function query(QueryRequest $request, ?array $options = null): mixed
+    public function query(QueryRequest $request, ?array $options = null): QueryResponse
     {
         try {
             $response = $this->client->sendRequest(
@@ -210,7 +222,8 @@ class DataserviceClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return QueryResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -223,9 +236,9 @@ class DataserviceClient
     /**
      * @param UpdateRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns UpdateResponse
      */
-    public function update(UpdateRequest $request, ?array $options = null): mixed
+    public function update(UpdateRequest $request, ?array $options = null): UpdateResponse
     {
         try {
             $response = $this->client->sendRequest(
@@ -238,7 +251,8 @@ class DataserviceClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return UpdateResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

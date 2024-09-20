@@ -7,6 +7,7 @@ use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
 use Exception;
+use Seed\Core\JsonDecoder;
 use JsonException;
 
 class ServiceClient
@@ -29,9 +30,8 @@ class ServiceClient
     * This endpoint checks the health of a resource.
      * @param string $id The id to check
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
      */
-    public function check(string $id, ?array $options = null): mixed
+    public function check(string $id, ?array $options = null): void
     {
         try {
             $response = $this->client->sendRequest(
@@ -54,9 +54,9 @@ class ServiceClient
     /**
     * This endpoint checks the health of the service.
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns bool
      */
-    public function ping(?array $options = null): mixed
+    public function ping(?array $options = null): bool
     {
         try {
             $response = $this->client->sendRequest(
@@ -68,7 +68,8 @@ class ServiceClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeBool($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

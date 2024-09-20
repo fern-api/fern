@@ -5,6 +5,7 @@ namespace Seed\Endpoints\Primitive;
 use Seed\Core\RawClient;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
+use Seed\Core\JsonDecoder;
 use JsonException;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -29,9 +30,9 @@ class PrimitiveClient
     /**
      * @param string $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns string
      */
-    public function getAndReturnString(string $request, ?array $options = null): mixed
+    public function getAndReturnString(string $request, ?array $options = null): string
     {
         try {
             $response = $this->client->sendRequest(
@@ -44,7 +45,8 @@ class PrimitiveClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeString($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -57,9 +59,9 @@ class PrimitiveClient
     /**
      * @param int $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns int
      */
-    public function getAndReturnInt(int $request, ?array $options = null): mixed
+    public function getAndReturnInt(int $request, ?array $options = null): int
     {
         try {
             $response = $this->client->sendRequest(
@@ -72,7 +74,8 @@ class PrimitiveClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeInt($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -85,9 +88,9 @@ class PrimitiveClient
     /**
      * @param int $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns int
      */
-    public function getAndReturnLong(int $request, ?array $options = null): mixed
+    public function getAndReturnLong(int $request, ?array $options = null): int
     {
         try {
             $response = $this->client->sendRequest(
@@ -100,7 +103,8 @@ class PrimitiveClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeInt($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -113,9 +117,9 @@ class PrimitiveClient
     /**
      * @param float $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns float
      */
-    public function getAndReturnDouble(float $request, ?array $options = null): mixed
+    public function getAndReturnDouble(float $request, ?array $options = null): float
     {
         try {
             $response = $this->client->sendRequest(
@@ -128,7 +132,8 @@ class PrimitiveClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeFloat($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -141,9 +146,9 @@ class PrimitiveClient
     /**
      * @param bool $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns bool
      */
-    public function getAndReturnBool(bool $request, ?array $options = null): mixed
+    public function getAndReturnBool(bool $request, ?array $options = null): bool
     {
         try {
             $response = $this->client->sendRequest(
@@ -156,7 +161,8 @@ class PrimitiveClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeBool($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -169,9 +175,9 @@ class PrimitiveClient
     /**
      * @param DateTime $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns DateTime
      */
-    public function getAndReturnDatetime(DateTime $request, ?array $options = null): mixed
+    public function getAndReturnDatetime(DateTime $request, ?array $options = null): DateTime
     {
         try {
             $response = $this->client->sendRequest(
@@ -184,7 +190,8 @@ class PrimitiveClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeDateTime($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -197,9 +204,9 @@ class PrimitiveClient
     /**
      * @param DateTime $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns DateTime
      */
-    public function getAndReturnDate(DateTime $request, ?array $options = null): mixed
+    public function getAndReturnDate(DateTime $request, ?array $options = null): DateTime
     {
         try {
             $response = $this->client->sendRequest(
@@ -212,7 +219,8 @@ class PrimitiveClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeDate($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -225,9 +233,9 @@ class PrimitiveClient
     /**
      * @param string $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns string
      */
-    public function getAndReturnUuid(string $request, ?array $options = null): mixed
+    public function getAndReturnUuid(string $request, ?array $options = null): string
     {
         try {
             $response = $this->client->sendRequest(
@@ -240,7 +248,8 @@ class PrimitiveClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeString($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -253,9 +262,9 @@ class PrimitiveClient
     /**
      * @param string $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns string
      */
-    public function getAndReturnBase64(string $request, ?array $options = null): mixed
+    public function getAndReturnBase64(string $request, ?array $options = null): string
     {
         try {
             $response = $this->client->sendRequest(
@@ -268,7 +277,8 @@ class PrimitiveClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeString($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

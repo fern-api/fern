@@ -5,6 +5,7 @@ namespace Seed\Endpoints\Params;
 use Seed\Core\RawClient;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
+use Seed\Core\JsonDecoder;
 use JsonException;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -32,9 +33,9 @@ class ParamsClient
     * GET with path param
      * @param string $param
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns string
      */
-    public function getWithPath(string $param, ?array $options = null): mixed
+    public function getWithPath(string $param, ?array $options = null): string
     {
         try {
             $response = $this->client->sendRequest(
@@ -46,7 +47,8 @@ class ParamsClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeString($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -60,9 +62,8 @@ class ParamsClient
     * GET with query param
      * @param GetWithQuery $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
      */
-    public function getWithQuery(GetWithQuery $request, ?array $options = null): mixed
+    public function getWithQuery(GetWithQuery $request, ?array $options = null): void
     {
         $query = [];
         $query['query'] = $request->query;
@@ -90,9 +91,8 @@ class ParamsClient
     * GET with multiple of same query param
      * @param GetWithMultipleQuery $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
      */
-    public function getWithAllowMultipleQuery(GetWithMultipleQuery $request, ?array $options = null): mixed
+    public function getWithAllowMultipleQuery(GetWithMultipleQuery $request, ?array $options = null): void
     {
         $query = [];
         $query['query'] = $request->query;
@@ -121,9 +121,8 @@ class ParamsClient
      * @param string $param
      * @param GetWithPathAndQuery $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
      */
-    public function getWithPathAndQuery(string $param, GetWithPathAndQuery $request, ?array $options = null): mixed
+    public function getWithPathAndQuery(string $param, GetWithPathAndQuery $request, ?array $options = null): void
     {
         $query = [];
         $query['query'] = $request->query;
@@ -151,9 +150,9 @@ class ParamsClient
      * @param string $param
      * @param string $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns string
      */
-    public function modifyWithPath(string $param, string $request, ?array $options = null): mixed
+    public function modifyWithPath(string $param, string $request, ?array $options = null): string
     {
         try {
             $response = $this->client->sendRequest(
@@ -166,7 +165,8 @@ class ParamsClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeString($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

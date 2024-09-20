@@ -4,6 +4,7 @@ namespace Seed\Inlined;
 
 use Seed\Core\RawClient;
 use Seed\Inlined\Requests\SendLiteralsInlinedRequest;
+use Seed\Types\SendResponse;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use JsonException;
@@ -29,9 +30,9 @@ class InlinedClient
     /**
      * @param SendLiteralsInlinedRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns SendResponse
      */
-    public function send(SendLiteralsInlinedRequest $request, ?array $options = null): mixed
+    public function send(SendLiteralsInlinedRequest $request, ?array $options = null): SendResponse
     {
         try {
             $response = $this->client->sendRequest(
@@ -44,7 +45,8 @@ class InlinedClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return SendResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

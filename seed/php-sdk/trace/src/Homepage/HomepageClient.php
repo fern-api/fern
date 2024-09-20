@@ -6,6 +6,7 @@ use Seed\Core\RawClient;
 use Seed\Core\JsonApiRequest;
 use Seed\Environments;
 use Seed\Core\HttpMethod;
+use Seed\Core\JsonDecoder;
 use JsonException;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -28,9 +29,9 @@ class HomepageClient
 
     /**
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns array<string>
      */
-    public function getHomepageProblems(?array $options = null): mixed
+    public function getHomepageProblems(?array $options = null): array
     {
         try {
             $response = $this->client->sendRequest(
@@ -42,7 +43,8 @@ class HomepageClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeArray($json, ["string"]);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -55,9 +57,8 @@ class HomepageClient
     /**
      * @param array<string> $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
      */
-    public function setHomepageProblems(array $request, ?array $options = null): mixed
+    public function setHomepageProblems(array $request, ?array $options = null): void
     {
         try {
             $response = $this->client->sendRequest(

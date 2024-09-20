@@ -9,6 +9,7 @@ use Seed\Core\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
 use Exception;
 use Seed\Dummy\Requests\Generateequest;
+use Seed\Dummy\Types\StreamResponse;
 use JsonException;
 
 class DummyClient
@@ -30,9 +31,8 @@ class DummyClient
     /**
      * @param GenerateStreamRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
      */
-    public function generateStream(GenerateStreamRequest $request, ?array $options = null): mixed
+    public function generateStream(GenerateStreamRequest $request, ?array $options = null): void
     {
         try {
             $response = $this->client->sendRequest(
@@ -53,9 +53,9 @@ class DummyClient
     /**
      * @param Generateequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns StreamResponse
      */
-    public function generate(Generateequest $request, ?array $options = null): mixed
+    public function generate(Generateequest $request, ?array $options = null): StreamResponse
     {
         try {
             $response = $this->client->sendRequest(
@@ -68,7 +68,8 @@ class DummyClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return StreamResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

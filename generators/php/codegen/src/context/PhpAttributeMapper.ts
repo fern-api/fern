@@ -48,7 +48,7 @@ export class PhpAttributeMapper {
         return attributes;
     }
 
-    private getArrayTypeAttributeArgument(type: php.Type): php.AstNode {
+    public getArrayTypeAttributeArgument(type: php.Type): php.AstNode {
         switch (type.internalType.type) {
             case "int":
                 return php.codeblock('"integer"');

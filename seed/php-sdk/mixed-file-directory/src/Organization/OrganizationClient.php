@@ -4,6 +4,7 @@ namespace Seed\Organization;
 
 use Seed\Core\RawClient;
 use Seed\Organization\Types\CreateOrganizationRequest;
+use Seed\Organization\Types\Organization;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use JsonException;
@@ -30,9 +31,9 @@ class OrganizationClient
     * Create a new organization.
      * @param CreateOrganizationRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns Organization
      */
-    public function create(CreateOrganizationRequest $request, ?array $options = null): mixed
+    public function create(CreateOrganizationRequest $request, ?array $options = null): Organization
     {
         try {
             $response = $this->client->sendRequest(
@@ -45,7 +46,8 @@ class OrganizationClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return Organization::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

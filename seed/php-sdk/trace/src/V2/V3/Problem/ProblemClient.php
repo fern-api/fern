@@ -3,12 +3,15 @@
 namespace Seed\V2\V3\Problem;
 
 use Seed\Core\RawClient;
+use Seed\V2\V3\Problem\Types\LightweightProblemInfoV2;
 use Seed\Core\JsonApiRequest;
 use Seed\Environments;
 use Seed\Core\HttpMethod;
+use Seed\Core\JsonDecoder;
 use JsonException;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
+use Seed\V2\V3\Problem\Types\ProblemInfoV2;
 
 class ProblemClient
 {
@@ -29,9 +32,9 @@ class ProblemClient
     /**
     * Returns lightweight versions of all problems
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns array<LightweightProblemInfoV2>
      */
-    public function getLightweightProblems(?array $options = null): mixed
+    public function getLightweightProblems(?array $options = null): array
     {
         try {
             $response = $this->client->sendRequest(
@@ -43,7 +46,8 @@ class ProblemClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeArray($json, [LightweightProblemInfoV2::class]);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -56,9 +60,9 @@ class ProblemClient
     /**
     * Returns latest versions of all problems
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns array<ProblemInfoV2>
      */
-    public function getProblems(?array $options = null): mixed
+    public function getProblems(?array $options = null): array
     {
         try {
             $response = $this->client->sendRequest(
@@ -70,7 +74,8 @@ class ProblemClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeArray($json, [ProblemInfoV2::class]);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -84,9 +89,9 @@ class ProblemClient
     * Returns latest version of a problem
      * @param string $problemId
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns ProblemInfoV2
      */
-    public function getLatestProblem(string $problemId, ?array $options = null): mixed
+    public function getLatestProblem(string $problemId, ?array $options = null): ProblemInfoV2
     {
         try {
             $response = $this->client->sendRequest(
@@ -98,7 +103,8 @@ class ProblemClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return ProblemInfoV2::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -113,9 +119,9 @@ class ProblemClient
      * @param string $problemId
      * @param int $problemVersion
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns ProblemInfoV2
      */
-    public function getProblemVersion(string $problemId, int $problemVersion, ?array $options = null): mixed
+    public function getProblemVersion(string $problemId, int $problemVersion, ?array $options = null): ProblemInfoV2
     {
         try {
             $response = $this->client->sendRequest(
@@ -127,7 +133,8 @@ class ProblemClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return ProblemInfoV2::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

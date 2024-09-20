@@ -5,6 +5,7 @@ namespace Seed\Endpoints\Container;
 use Seed\Core\RawClient;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
+use Seed\Core\JsonDecoder;
 use JsonException;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -29,9 +30,9 @@ class ContainerClient
     /**
      * @param array<string> $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns array<string>
      */
-    public function getAndReturnListOfPrimitives(array $request, ?array $options = null): mixed
+    public function getAndReturnListOfPrimitives(array $request, ?array $options = null): array
     {
         try {
             $response = $this->client->sendRequest(
@@ -44,7 +45,8 @@ class ContainerClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeArray($json, ["string"]);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -57,9 +59,9 @@ class ContainerClient
     /**
      * @param array<ObjectWithRequiredField> $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns array<ObjectWithRequiredField>
      */
-    public function getAndReturnListOfObjects(array $request, ?array $options = null): mixed
+    public function getAndReturnListOfObjects(array $request, ?array $options = null): array
     {
         try {
             $response = $this->client->sendRequest(
@@ -72,7 +74,8 @@ class ContainerClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeArray($json, [ObjectWithRequiredField::class]);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -85,9 +88,9 @@ class ContainerClient
     /**
      * @param array<string> $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns array<string>
      */
-    public function getAndReturnSetOfPrimitives(array $request, ?array $options = null): mixed
+    public function getAndReturnSetOfPrimitives(array $request, ?array $options = null): array
     {
         try {
             $response = $this->client->sendRequest(
@@ -100,7 +103,8 @@ class ContainerClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeArray($json, ["string"]);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -113,9 +117,9 @@ class ContainerClient
     /**
      * @param array<ObjectWithRequiredField> $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns array<ObjectWithRequiredField>
      */
-    public function getAndReturnSetOfObjects(array $request, ?array $options = null): mixed
+    public function getAndReturnSetOfObjects(array $request, ?array $options = null): array
     {
         try {
             $response = $this->client->sendRequest(
@@ -128,7 +132,8 @@ class ContainerClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeArray($json, [ObjectWithRequiredField::class]);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -141,9 +146,9 @@ class ContainerClient
     /**
      * @param array<string, string> $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns array<string, string>
      */
-    public function getAndReturnMapPrimToPrim(array $request, ?array $options = null): mixed
+    public function getAndReturnMapPrimToPrim(array $request, ?array $options = null): array
     {
         try {
             $response = $this->client->sendRequest(
@@ -156,7 +161,8 @@ class ContainerClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeArray($json, ["string" => "string"]);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -169,9 +175,9 @@ class ContainerClient
     /**
      * @param array<string, ObjectWithRequiredField> $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns array<string, ObjectWithRequiredField>
      */
-    public function getAndReturnMapOfPrimToObject(array $request, ?array $options = null): mixed
+    public function getAndReturnMapOfPrimToObject(array $request, ?array $options = null): array
     {
         try {
             $response = $this->client->sendRequest(
@@ -184,7 +190,8 @@ class ContainerClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeArray($json, ["string" => ObjectWithRequiredField::class]);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -197,9 +204,9 @@ class ContainerClient
     /**
      * @param ?ObjectWithRequiredField $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns ?ObjectWithRequiredField
      */
-    public function getAndReturnOptional(?ObjectWithRequiredField $request = null, ?array $options = null): mixed
+    public function getAndReturnOptional(?ObjectWithRequiredField $request = null, ?array $options = null): ?ObjectWithRequiredField
     {
         try {
             $response = $this->client->sendRequest(
@@ -212,7 +219,11 @@ class ContainerClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return ObjectWithRequiredField::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

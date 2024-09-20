@@ -4,6 +4,7 @@ namespace Seed\User\Events\Metadata;
 
 use Seed\Core\RawClient;
 use Seed\User\Events\Metadata\Requests\GetEventMetadataRequest;
+use Seed\User\Events\Metadata\Types\Metadata;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use JsonException;
@@ -30,9 +31,9 @@ class MetadataClient
     * Get event metadata.
      * @param GetEventMetadataRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns Metadata
      */
-    public function getMetadata(GetEventMetadataRequest $request, ?array $options = null): mixed
+    public function getMetadata(GetEventMetadataRequest $request, ?array $options = null): Metadata
     {
         $query = [];
         $query['id'] = $request->id;
@@ -47,7 +48,8 @@ class MetadataClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return Metadata::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

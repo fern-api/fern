@@ -3,11 +3,13 @@
 namespace Seed\NoReqBody;
 
 use Seed\Core\RawClient;
+use Seed\Types\Object\Types\ObjectWithOptionalField;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use JsonException;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
+use Seed\Core\JsonDecoder;
 
 class NoReqBodyClient
 {
@@ -27,9 +29,9 @@ class NoReqBodyClient
 
     /**
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns ObjectWithOptionalField
      */
-    public function getWithNoRequestBody(?array $options = null): mixed
+    public function getWithNoRequestBody(?array $options = null): ObjectWithOptionalField
     {
         try {
             $response = $this->client->sendRequest(
@@ -41,7 +43,8 @@ class NoReqBodyClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return ObjectWithOptionalField::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -53,9 +56,9 @@ class NoReqBodyClient
 
     /**
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns string
      */
-    public function postWithNoRequestBody(?array $options = null): mixed
+    public function postWithNoRequestBody(?array $options = null): string
     {
         try {
             $response = $this->client->sendRequest(
@@ -67,7 +70,8 @@ class NoReqBodyClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeString($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

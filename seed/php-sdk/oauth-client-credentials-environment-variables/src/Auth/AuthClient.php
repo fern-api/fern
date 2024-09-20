@@ -4,6 +4,7 @@ namespace Seed\Auth;
 
 use Seed\Core\RawClient;
 use Seed\Auth\Requests\GetTokenRequest;
+use Seed\Auth\Types\TokenResponse;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use JsonException;
@@ -30,9 +31,9 @@ class AuthClient
     /**
      * @param GetTokenRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns TokenResponse
      */
-    public function getTokenWithClientCredentials(GetTokenRequest $request, ?array $options = null): mixed
+    public function getTokenWithClientCredentials(GetTokenRequest $request, ?array $options = null): TokenResponse
     {
         try {
             $response = $this->client->sendRequest(
@@ -45,7 +46,8 @@ class AuthClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return TokenResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -58,9 +60,9 @@ class AuthClient
     /**
      * @param RefreshTokenRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns TokenResponse
      */
-    public function refreshToken(RefreshTokenRequest $request, ?array $options = null): mixed
+    public function refreshToken(RefreshTokenRequest $request, ?array $options = null): TokenResponse
     {
         try {
             $response = $this->client->sendRequest(
@@ -73,7 +75,8 @@ class AuthClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return TokenResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

@@ -7,10 +7,13 @@ use Seed\Problem\Types\CreateProblemRequest;
 use Seed\Core\JsonApiRequest;
 use Seed\Environments;
 use Seed\Core\HttpMethod;
+use Seed\Core\JsonDecoder;
 use JsonException;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
+use Seed\Problem\Types\UpdateProblemResponse;
 use Seed\Problem\Requests\GetDefaultStarterFilesRequest;
+use Seed\Problem\Types\GetDefaultStarterFilesResponse;
 
 class ProblemClient
 {
@@ -47,7 +50,8 @@ class ProblemClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeMixed($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -62,9 +66,9 @@ class ProblemClient
      * @param string $problemId
      * @param CreateProblemRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns UpdateProblemResponse
      */
-    public function updateProblem(string $problemId, CreateProblemRequest $request, ?array $options = null): mixed
+    public function updateProblem(string $problemId, CreateProblemRequest $request, ?array $options = null): UpdateProblemResponse
     {
         try {
             $response = $this->client->sendRequest(
@@ -77,7 +81,8 @@ class ProblemClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return UpdateProblemResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -91,9 +96,8 @@ class ProblemClient
     * Soft deletes a problem
      * @param string $problemId
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
      */
-    public function deleteProblem(string $problemId, ?array $options = null): mixed
+    public function deleteProblem(string $problemId, ?array $options = null): void
     {
         try {
             $response = $this->client->sendRequest(
@@ -117,9 +121,9 @@ class ProblemClient
     * Returns default starter files for problem
      * @param GetDefaultStarterFilesRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns GetDefaultStarterFilesResponse
      */
-    public function getDefaultStarterFiles(GetDefaultStarterFilesRequest $request, ?array $options = null): mixed
+    public function getDefaultStarterFiles(GetDefaultStarterFilesRequest $request, ?array $options = null): GetDefaultStarterFilesResponse
     {
         try {
             $response = $this->client->sendRequest(
@@ -132,7 +136,8 @@ class ProblemClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return GetDefaultStarterFilesResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

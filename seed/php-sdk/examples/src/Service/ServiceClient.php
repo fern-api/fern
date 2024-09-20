@@ -3,13 +3,15 @@
 namespace Seed\Service;
 
 use Seed\Core\RawClient;
+use Seed\Types\Types\Movie;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use JsonException;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\Types\Types\Movie;
+use Seed\Core\JsonDecoder;
 use Seed\Service\Requests\GetMetadataRequest;
+use Seed\Types\Types\Response;
 
 class ServiceClient
 {
@@ -30,9 +32,9 @@ class ServiceClient
     /**
      * @param string $movieId
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns Movie
      */
-    public function getMovie(string $movieId, ?array $options = null): mixed
+    public function getMovie(string $movieId, ?array $options = null): Movie
     {
         try {
             $response = $this->client->sendRequest(
@@ -44,7 +46,8 @@ class ServiceClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return Movie::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -57,9 +60,9 @@ class ServiceClient
     /**
      * @param Movie $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns string
      */
-    public function createMovie(Movie $request, ?array $options = null): mixed
+    public function createMovie(Movie $request, ?array $options = null): string
     {
         try {
             $response = $this->client->sendRequest(
@@ -72,7 +75,8 @@ class ServiceClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeString($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -110,7 +114,8 @@ class ServiceClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeMixed($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -122,9 +127,9 @@ class ServiceClient
 
     /**
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @returns Response
      */
-    public function getResponse(?array $options = null): mixed
+    public function getResponse(?array $options = null): Response
     {
         try {
             $response = $this->client->sendRequest(
@@ -136,7 +141,8 @@ class ServiceClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return Response::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
