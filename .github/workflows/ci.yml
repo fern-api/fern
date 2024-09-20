@@ -145,12 +145,6 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
-      - name: Set PowerShell execution policy and run script
-        run: |
-          Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
-          ./fern-commands.ps1 "C:\path\to\cli" "your-token-here"
-        shell: pwsh
-
       - name: Check API definition is valid
         env:
           FORCE_COLOR: "2"
@@ -160,6 +154,7 @@ jobs:
         run: |
           pnpm --filter @fern-api/cli dist:cli:dev
           cli_path="$(pwd)/packages/cli/cli/dist/dev/bundle.cjs" 
+          Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
           ./scripts/live-test.ps1 "$cli_path" "$FERN_ORG_TOKEN_DEV"
 
   ts-generator-changes:
