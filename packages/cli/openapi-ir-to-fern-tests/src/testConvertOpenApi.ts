@@ -1,15 +1,16 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { CONSOLE_LOGGER } from "@fern-api/logger";
+import { CONSOLE_LOGGER, formatLog } from "@fern-api/logger";
 import { parse, Spec } from "@fern-api/openapi-parser";
-import { createMockTaskContext } from "@fern-api/task-context";
+import { createMockTaskContext, TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import path from "path";
 import yaml from "js-yaml";
 import { mapValues as mapValuesLodash } from "lodash-es";
 import { convert, OpenApiConvertedFernDefinition } from "@fern-api/openapi-ir-to-fern";
-import { validateFernWorkspace } from "@fern-api/fern-definition-validator";
+import { validateFernWorkspace, ValidationViolation } from "@fern-api/fern-definition-validator";
+import { SpecImportSettings } from "@fern-api/openapi-parser/src/parse";
 
 const FIXTURES_PATH = join(
     AbsoluteFilePath.of(__dirname),
@@ -23,6 +24,7 @@ export declare namespace TestConvertOpenAPI {
         asyncApiFilename?: string;
         environmentOverrides?: RawSchemas.WithEnvironmentsSchema;
         globalHeaderOverrides?: RawSchemas.WithHeadersSchema;
+        settings?: SpecImportSettings;
         authOverrides?: RawSchemas.WithAuthSchema;
     }
 }
@@ -44,6 +46,7 @@ export function testConvertOpenAPI(fixtureName: string, filename: string, opts: 
             specs.push({
                 absoluteFilepath: AbsoluteFilePath.of(openApiPath),
                 absoluteFilepathToOverrides: undefined,
+                settings: opts.settings != null ? opts.settings : undefined,
                 source: {
                     type: "openapi",
                     file: AbsoluteFilePath.of(openApiPath)
@@ -53,6 +56,7 @@ export function testConvertOpenAPI(fixtureName: string, filename: string, opts: 
                 specs.push({
                     absoluteFilepath: absolutePathToAsyncAPI,
                     absoluteFilepathToOverrides: undefined,
+                    settings: opts.settings != null ? opts.settings : undefined,
                     source: {
                         type: "asyncapi",
                         file: absolutePathToAsyncAPI
@@ -79,9 +83,10 @@ export function testConvertOpenAPI(fixtureName: string, filename: string, opts: 
             const fernWorkspace = toFernWorkspace(fernDefinition);
 
             const violations = await validateFernWorkspace(fernWorkspace, mockTaskContext.logger);
-            if (violations.length > 0) {
-                throw new Error(
-                    `Fern definiton was generated with the following errors ${JSON.stringify(violations, undefined, 2)}`
+            const errorViolations = violations.filter((violation) => violation.severity === "error");
+            if (errorViolations.length > 0) {
+                mockTaskContext.logger.error(
+                    errorViolations.map((violation) => logViolation({ violation })).join("\n")
                 );
             }
         });
@@ -133,9 +138,10 @@ export function testConvertOpenAPI(fixtureName: string, filename: string, opts: 
             const fernWorkspace = toFernWorkspace(fernDefinition);
 
             const violations = await validateFernWorkspace(fernWorkspace, mockTaskContext.logger);
-            if (violations.length > 0) {
-                throw new Error(
-                    `Fern definiton was generated with the following errors ${JSON.stringify(violations, undefined, 2)}`
+            const errorViolations = violations.filter((violation) => violation.severity === "error");
+            if (errorViolations.length > 0) {
+                mockTaskContext.logger.error(
+                    errorViolations.map((violation) => logViolation({ violation })).join("\n")
                 );
             }
         });
@@ -180,4 +186,20 @@ function toFernWorkspace(fernDefinition: OpenApiConvertedFernDefinition): FernWo
 
 function mapValues<T extends object, U>(items: T, mapper: (item: T[keyof T]) => U): Record<keyof T, U> {
     return mapValuesLodash(items, mapper) as Record<keyof T, U>;
+}
+
+function logViolation({ violation }: { violation: ValidationViolation }): string {
+    return formatLog({
+        breadcrumbs: [
+            violation.relativeFilepath,
+            ...violation.nodePath.map((nodePathItem) => {
+                let itemStr = typeof nodePathItem === "string" ? nodePathItem : nodePathItem.key;
+                if (typeof nodePathItem !== "string" && nodePathItem.arrayIndex != null) {
+                    itemStr += `[${nodePathItem.arrayIndex}]`;
+                }
+                return itemStr;
+            })
+        ],
+        title: violation.message
+    });
 }

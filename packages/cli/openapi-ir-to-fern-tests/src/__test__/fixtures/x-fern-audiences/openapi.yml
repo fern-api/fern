@@ -11,7 +11,7 @@ servers:
     x-fern-audiences: [ "private" ]
 paths: 
   /v1/users: 
-    get: 
+    post: 
      requestBody: 
         content:
           application/json:

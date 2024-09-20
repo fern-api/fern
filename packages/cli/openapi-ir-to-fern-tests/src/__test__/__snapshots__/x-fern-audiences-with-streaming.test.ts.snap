@@ -30,7 +30,7 @@ exports[`x-fern-sdk-group-name-with-streaming > x-fern-sdk-group-name-with-strea
                 },
               },
             ],
-            "method": "GET",
+            "method": "POST",
             "pagination": undefined,
             "path": "/user/{userId}",
             "path-parameters": {
@@ -54,7 +54,7 @@ exports[`x-fern-sdk-group-name-with-streaming > x-fern-sdk-group-name-with-strea
           "get_stream": {
             "auth": false,
             "docs": undefined,
-            "method": "GET",
+            "method": "POST",
             "pagination": undefined,
             "path": "/user/{userId}",
             "path-parameters": {
@@ -163,7 +163,7 @@ exports[`x-fern-sdk-group-name-with-streaming > x-fern-sdk-group-name-with-strea
                 },
               },
             ],
-            "method": "GET",
+            "method": "POST",
             "pagination": undefined,
             "path": "/user/{userId}",
             "path-parameters": {
@@ -187,7 +187,7 @@ exports[`x-fern-sdk-group-name-with-streaming > x-fern-sdk-group-name-with-strea
           "get_stream": {
             "auth": false,
             "docs": undefined,
-            "method": "GET",
+            "method": "POST",
             "pagination": undefined,
             "path": "/user/{userId}",
             "path-parameters": {

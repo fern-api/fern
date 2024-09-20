@@ -33,7 +33,7 @@ exports[`x-fern-global-headers > x-fern-global-headers > docs 1`] = `
                 },
               },
             ],
-            "method": "GET",
+            "method": "POST",
             "pagination": undefined,
             "path": "/user/{userId}",
             "path-parameters": {
@@ -68,7 +68,7 @@ exports[`x-fern-global-headers > x-fern-global-headers > docs 1`] = `
           "get_stream": {
             "auth": false,
             "docs": undefined,
-            "method": "GET",
+            "method": "POST",
             "pagination": undefined,
             "path": "/user/{userId}",
             "path-parameters": {
@@ -216,7 +216,7 @@ exports[`x-fern-global-headers > x-fern-global-headers > docs 2`] = `
                 },
               },
             ],
-            "method": "GET",
+            "method": "POST",
             "pagination": undefined,
             "path": "/user/{userId}",
             "path-parameters": {
@@ -251,7 +251,7 @@ exports[`x-fern-global-headers > x-fern-global-headers > docs 2`] = `
           "get_stream": {
             "auth": false,
             "docs": undefined,
-            "method": "GET",
+            "method": "POST",
             "pagination": undefined,
             "path": "/user/{userId}",
             "path-parameters": {
@@ -397,7 +397,7 @@ exports[`x-fern-global-headers > x-fern-global-headers > simple 1`] = `
                 },
               },
             ],
-            "method": "GET",
+            "method": "POST",
             "pagination": undefined,
             "path": "/user/{userId}",
             "path-parameters": {
@@ -427,7 +427,7 @@ exports[`x-fern-global-headers > x-fern-global-headers > simple 1`] = `
           "get_stream": {
             "auth": false,
             "docs": undefined,
-            "method": "GET",
+            "method": "POST",
             "pagination": undefined,
             "path": "/user/{userId}",
             "path-parameters": {
@@ -576,7 +576,7 @@ exports[`x-fern-global-headers > x-fern-global-headers > simple 2`] = `
                 },
               },
             ],
-            "method": "GET",
+            "method": "POST",
             "pagination": undefined,
             "path": "/user/{userId}",
             "path-parameters": {
@@ -619,7 +619,7 @@ exports[`x-fern-global-headers > x-fern-global-headers > simple 2`] = `
           "get_stream": {
             "auth": false,
             "docs": undefined,
-            "method": "GET",
+            "method": "POST",
             "pagination": undefined,
             "path": "/user/{userId}",
             "path-parameters": {

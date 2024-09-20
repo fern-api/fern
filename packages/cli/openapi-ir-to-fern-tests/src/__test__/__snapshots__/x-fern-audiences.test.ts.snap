@@ -8,7 +8,7 @@ exports[`x-fern-audiences > x-fern-audiences > docs 1`] = `
       "auth": false,
       "base-path": "",
       "endpoints": {
-        "getV1Users": {
+        "postV1Users": {
           "auth": false,
           "docs": undefined,
           "examples": [
@@ -16,7 +16,7 @@ exports[`x-fern-audiences > x-fern-audiences > docs 1`] = `
               "request": {},
             },
           ],
-          "method": "GET",
+          "method": "POST",
           "pagination": undefined,
           "path": "/v1/users",
           "request": {
@@ -33,7 +33,7 @@ exports[`x-fern-audiences > x-fern-audiences > docs 1`] = `
               },
             },
             "headers": undefined,
-            "name": "GetV1UsersRequest",
+            "name": "PostV1UsersRequest",
             "query-parameters": undefined,
           },
         },
@@ -98,7 +98,7 @@ exports[`x-fern-audiences > x-fern-audiences > simple 1`] = `
       "auth": false,
       "base-path": "",
       "endpoints": {
-        "getV1Users": {
+        "postV1Users": {
           "auth": false,
           "docs": undefined,
           "examples": [
@@ -106,7 +106,7 @@ exports[`x-fern-audiences > x-fern-audiences > simple 1`] = `
               "request": {},
             },
           ],
-          "method": "GET",
+          "method": "POST",
           "pagination": undefined,
           "path": "/v1/users",
           "request": {
@@ -123,7 +123,7 @@ exports[`x-fern-audiences > x-fern-audiences > simple 1`] = `
               },
             },
             "headers": undefined,
-            "name": "GetV1UsersRequest",
+            "name": "PostV1UsersRequest",
             "query-parameters": undefined,
           },
         },
