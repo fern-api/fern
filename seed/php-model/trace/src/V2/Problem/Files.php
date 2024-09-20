@@ -11,7 +11,7 @@ class Files extends SerializableType
     /**
      * @var array<FileInfoV2> $files
      */
-    #[JsonProperty("files"), ArrayType([FileInfoV2::class])]
+    #[JsonProperty('files'), ArrayType([FileInfoV2::class])]
     public array $files;
 
     /**

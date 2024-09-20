@@ -10,13 +10,13 @@ class KeyValuePair extends SerializableType
     /**
      * @var mixed $key
      */
-    #[JsonProperty("key")]
+    #[JsonProperty('key')]
     public mixed $key;
 
     /**
      * @var mixed $value
      */
-    #[JsonProperty("value")]
+    #[JsonProperty('value')]
     public mixed $value;
 
     /**

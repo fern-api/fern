@@ -10,25 +10,25 @@ class Account extends SerializableType
     /**
      * @var string $resourceType
      */
-    #[JsonProperty("resource_type")]
+    #[JsonProperty('resource_type')]
     public string $resourceType;
 
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var ?Patient $patient
      */
-    #[JsonProperty("patient")]
+    #[JsonProperty('patient')]
     public ?Patient $patient;
 
     /**
      * @var ?Practitioner $practitioner
      */
-    #[JsonProperty("practitioner")]
+    #[JsonProperty('practitioner')]
     public ?Practitioner $practitioner;
 
     /**

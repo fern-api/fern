@@ -4,9 +4,11 @@ namespace Seed\Migration;
 
 use Seed\Core\RawClient;
 use Seed\Migration\Requests\GetAttemptedMigrationsRequest;
+use Seed\Migration\Types\Migration;
 use Seed\Core\JsonApiRequest;
 use Seed\Environments;
 use Seed\Core\HttpMethod;
+use Seed\Core\JsonDecoder;
 use JsonException;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -30,9 +32,9 @@ class MigrationClient
     /**
      * @param GetAttemptedMigrationsRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @return array<Migration>
      */
-    public function getAttemptedMigrations(GetAttemptedMigrationsRequest $request, ?array $options = null): mixed
+    public function getAttemptedMigrations(GetAttemptedMigrationsRequest $request, ?array $options = null): array
     {
         $headers = [];
         $headers['admin-key-header'] = $request->adminKeyHeader;
@@ -47,7 +49,8 @@ class MigrationClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeArray($json, [Migration::class]); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

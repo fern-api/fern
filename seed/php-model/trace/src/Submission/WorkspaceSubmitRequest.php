@@ -12,25 +12,25 @@ class WorkspaceSubmitRequest extends SerializableType
     /**
      * @var string $submissionId
      */
-    #[JsonProperty("submissionId")]
+    #[JsonProperty('submissionId')]
     public string $submissionId;
 
     /**
      * @var Language $language
      */
-    #[JsonProperty("language")]
+    #[JsonProperty('language')]
     public Language $language;
 
     /**
      * @var array<SubmissionFileInfo> $submissionFiles
      */
-    #[JsonProperty("submissionFiles"), ArrayType([SubmissionFileInfo::class])]
+    #[JsonProperty('submissionFiles'), ArrayType([SubmissionFileInfo::class])]
     public array $submissionFiles;
 
     /**
      * @var ?string $userId
      */
-    #[JsonProperty("userId")]
+    #[JsonProperty('userId')]
     public ?string $userId;
 
     /**

@@ -10,13 +10,13 @@ class Practitioner extends SerializableType
     /**
      * @var string $resourceType
      */
-    #[JsonProperty("resource_type")]
+    #[JsonProperty('resource_type')]
     public string $resourceType;
 
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**

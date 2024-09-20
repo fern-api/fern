@@ -12,19 +12,19 @@ class Moment extends SerializableType
     /**
      * @var string $id
      */
-    #[JsonProperty("id")]
+    #[JsonProperty('id')]
     public string $id;
 
     /**
      * @var DateTime $date
      */
-    #[JsonProperty("date"), DateType(DateType::TYPE_DATE)]
+    #[JsonProperty('date'), DateType(DateType::TYPE_DATE)]
     public DateTime $date;
 
     /**
      * @var DateTime $datetime
      */
-    #[JsonProperty("datetime"), DateType(DateType::TYPE_DATETIME)]
+    #[JsonProperty('datetime'), DateType(DateType::TYPE_DATETIME)]
     public DateTime $datetime;
 
     /**

@@ -10,7 +10,7 @@ class GetFunctionSignatureRequest extends SerializableType
     /**
      * @var mixed $functionSignature
      */
-    #[JsonProperty("functionSignature")]
+    #[JsonProperty('functionSignature')]
     public mixed $functionSignature;
 
     /**

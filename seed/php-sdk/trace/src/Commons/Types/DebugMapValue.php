@@ -11,7 +11,7 @@ class DebugMapValue extends SerializableType
     /**
      * @var array<DebugKeyValuePairs> $keyValuePairs
      */
-    #[JsonProperty("keyValuePairs"), ArrayType([DebugKeyValuePairs::class])]
+    #[JsonProperty('keyValuePairs'), ArrayType([DebugKeyValuePairs::class])]
     public array $keyValuePairs;
 
     /**

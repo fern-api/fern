@@ -10,19 +10,19 @@ class RecordedResponseNotification extends SerializableType
     /**
      * @var string $submissionId
      */
-    #[JsonProperty("submissionId")]
+    #[JsonProperty('submissionId')]
     public string $submissionId;
 
     /**
      * @var int $traceResponsesSize
      */
-    #[JsonProperty("traceResponsesSize")]
+    #[JsonProperty('traceResponsesSize')]
     public int $traceResponsesSize;
 
     /**
      * @var ?string $testCaseId
      */
-    #[JsonProperty("testCaseId")]
+    #[JsonProperty('testCaseId')]
     public ?string $testCaseId;
 
     /**

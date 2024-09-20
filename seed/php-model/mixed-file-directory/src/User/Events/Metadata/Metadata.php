@@ -10,13 +10,13 @@ class Metadata extends SerializableType
     /**
      * @var string $id
      */
-    #[JsonProperty("id")]
+    #[JsonProperty('id')]
     public string $id;
 
     /**
      * @var mixed $value
      */
-    #[JsonProperty("value")]
+    #[JsonProperty('value')]
     public mixed $value;
 
     /**

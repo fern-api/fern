@@ -11,25 +11,25 @@ class TestCaseV2 extends SerializableType
     /**
      * @var TestCaseMetadata $metadata
      */
-    #[JsonProperty("metadata")]
+    #[JsonProperty('metadata')]
     public TestCaseMetadata $metadata;
 
     /**
      * @var mixed $implementation
      */
-    #[JsonProperty("implementation")]
+    #[JsonProperty('implementation')]
     public mixed $implementation;
 
     /**
      * @var array<string, mixed> $arguments
      */
-    #[JsonProperty("arguments"), ArrayType(["string" => "mixed"])]
+    #[JsonProperty('arguments'), ArrayType(['string' => 'mixed'])]
     public array $arguments;
 
     /**
      * @var ?TestCaseExpects $expects
      */
-    #[JsonProperty("expects")]
+    #[JsonProperty('expects')]
     public ?TestCaseExpects $expects;
 
     /**

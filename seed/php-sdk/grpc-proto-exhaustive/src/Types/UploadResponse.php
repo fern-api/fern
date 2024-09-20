@@ -10,7 +10,7 @@ class UploadResponse extends SerializableType
     /**
      * @var ?int $count
      */
-    #[JsonProperty("count")]
+    #[JsonProperty('count')]
     public ?int $count;
 
     /**

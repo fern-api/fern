@@ -10,13 +10,13 @@ class MapType extends SerializableType
     /**
      * @var mixed $keyType
      */
-    #[JsonProperty("keyType")]
+    #[JsonProperty('keyType')]
     public mixed $keyType;
 
     /**
      * @var mixed $valueType
      */
-    #[JsonProperty("valueType")]
+    #[JsonProperty('valueType')]
     public mixed $valueType;
 
     /**

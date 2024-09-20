@@ -9,13 +9,13 @@ class GenerateStreamRequest
     /**
      * @var bool $stream
      */
-    #[JsonProperty("stream")]
+    #[JsonProperty('stream')]
     public bool $stream;
 
     /**
      * @var int $numEvents
      */
-    #[JsonProperty("num_events")]
+    #[JsonProperty('num_events')]
     public int $numEvents;
 
     /**

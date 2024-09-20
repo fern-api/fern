@@ -10,7 +10,7 @@ class Circle extends SerializableType
     /**
      * @var float $radius
      */
-    #[JsonProperty("radius")]
+    #[JsonProperty('radius')]
     public float $radius;
 
     /**

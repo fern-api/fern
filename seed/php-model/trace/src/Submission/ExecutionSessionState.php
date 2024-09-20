@@ -11,37 +11,37 @@ class ExecutionSessionState extends SerializableType
     /**
      * @var ?string $lastTimeContacted
      */
-    #[JsonProperty("lastTimeContacted")]
+    #[JsonProperty('lastTimeContacted')]
     public ?string $lastTimeContacted;
 
     /**
      * @var string $sessionId The auto-generated session id. Formatted as a uuid.
      */
-    #[JsonProperty("sessionId")]
+    #[JsonProperty('sessionId')]
     public string $sessionId;
 
     /**
      * @var bool $isWarmInstance
      */
-    #[JsonProperty("isWarmInstance")]
+    #[JsonProperty('isWarmInstance')]
     public bool $isWarmInstance;
 
     /**
      * @var ?string $awsTaskId
      */
-    #[JsonProperty("awsTaskId")]
+    #[JsonProperty('awsTaskId')]
     public ?string $awsTaskId;
 
     /**
      * @var Language $language
      */
-    #[JsonProperty("language")]
+    #[JsonProperty('language')]
     public Language $language;
 
     /**
      * @var ExecutionSessionStatus $status
      */
-    #[JsonProperty("status")]
+    #[JsonProperty('status')]
     public ExecutionSessionStatus $status;
 
     /**

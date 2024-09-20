@@ -10,13 +10,13 @@ class ExpressionLocation extends SerializableType
     /**
      * @var int $start
      */
-    #[JsonProperty("start")]
+    #[JsonProperty('start')]
     public int $start;
 
     /**
      * @var int $offset
      */
-    #[JsonProperty("offset")]
+    #[JsonProperty('offset')]
     public int $offset;
 
     /**

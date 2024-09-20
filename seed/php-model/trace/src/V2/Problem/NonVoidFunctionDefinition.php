@@ -10,13 +10,13 @@ class NonVoidFunctionDefinition extends SerializableType
     /**
      * @var NonVoidFunctionSignature $signature
      */
-    #[JsonProperty("signature")]
+    #[JsonProperty('signature')]
     public NonVoidFunctionSignature $signature;
 
     /**
      * @var FunctionImplementationForMultipleLanguages $code
      */
-    #[JsonProperty("code")]
+    #[JsonProperty('code')]
     public FunctionImplementationForMultipleLanguages $code;
 
     /**

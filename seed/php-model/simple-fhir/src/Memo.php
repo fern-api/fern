@@ -10,13 +10,13 @@ class Memo extends SerializableType
     /**
      * @var string $description
      */
-    #[JsonProperty("description")]
+    #[JsonProperty('description')]
     public string $description;
 
     /**
      * @var ?Account $account
      */
-    #[JsonProperty("account")]
+    #[JsonProperty('account')]
     public ?Account $account;
 
     /**

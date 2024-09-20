@@ -10,13 +10,13 @@ class RunningResponse extends SerializableType
     /**
      * @var string $submissionId
      */
-    #[JsonProperty("submissionId")]
+    #[JsonProperty('submissionId')]
     public string $submissionId;
 
     /**
      * @var RunningSubmissionState $state
      */
-    #[JsonProperty("state")]
+    #[JsonProperty('state')]
     public RunningSubmissionState $state;
 
     /**

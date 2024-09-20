@@ -10,7 +10,7 @@ class LangServerResponse extends SerializableType
     /**
      * @var mixed $response
      */
-    #[JsonProperty("response")]
+    #[JsonProperty('response')]
     public mixed $response;
 
     /**

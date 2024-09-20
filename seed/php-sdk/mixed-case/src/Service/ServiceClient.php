@@ -5,6 +5,7 @@ namespace Seed\Service;
 use Seed\Core\RawClient;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
+use Seed\Core\JsonDecoder;
 use JsonException;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -30,7 +31,7 @@ class ServiceClient
     /**
      * @param string $resourceId
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @return mixed
      */
     public function getResource(string $resourceId, ?array $options = null): mixed
     {
@@ -44,7 +45,8 @@ class ServiceClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeMixed($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -57,9 +59,9 @@ class ServiceClient
     /**
      * @param ListResourcesRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @return array<mixed>
      */
-    public function listResources(ListResourcesRequest $request, ?array $options = null): mixed
+    public function listResources(ListResourcesRequest $request, ?array $options = null): array
     {
         $query = [];
         $query['page_limit'] = $request->pageLimit;
@@ -75,7 +77,8 @@ class ServiceClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeArray($json, ['mixed']); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

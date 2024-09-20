@@ -10,13 +10,13 @@ class NextPage extends SerializableType
     /**
      * @var int $page
      */
-    #[JsonProperty("page")]
+    #[JsonProperty('page')]
     public int $page;
 
     /**
      * @var string $startingAfter
      */
-    #[JsonProperty("starting_after")]
+    #[JsonProperty('starting_after')]
     public string $startingAfter;
 
     /**

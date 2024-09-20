@@ -12,25 +12,25 @@ class TestSubmissionStatusV2 extends SerializableType
     /**
      * @var array<TestSubmissionUpdate> $updates
      */
-    #[JsonProperty("updates"), ArrayType([TestSubmissionUpdate::class])]
+    #[JsonProperty('updates'), ArrayType([TestSubmissionUpdate::class])]
     public array $updates;
 
     /**
      * @var string $problemId
      */
-    #[JsonProperty("problemId")]
+    #[JsonProperty('problemId')]
     public string $problemId;
 
     /**
      * @var int $problemVersion
      */
-    #[JsonProperty("problemVersion")]
+    #[JsonProperty('problemVersion')]
     public int $problemVersion;
 
     /**
      * @var ProblemInfoV2 $problemInfo
      */
-    #[JsonProperty("problemInfo")]
+    #[JsonProperty('problemInfo')]
     public ProblemInfoV2 $problemInfo;
 
     /**

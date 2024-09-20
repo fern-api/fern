@@ -10,13 +10,13 @@ class NestedObjectWithRequiredField extends SerializableType
     /**
      * @var string $string
      */
-    #[JsonProperty("string")]
+    #[JsonProperty('string')]
     public string $string;
 
     /**
      * @var ObjectWithOptionalField $nestedObject
      */
-    #[JsonProperty("NestedObject")]
+    #[JsonProperty('NestedObject')]
     public ObjectWithOptionalField $nestedObject;
 
     /**

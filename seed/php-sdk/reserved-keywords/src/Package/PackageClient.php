@@ -28,9 +28,8 @@ class PackageClient
     /**
      * @param TestRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
      */
-    public function test(TestRequest $request, ?array $options = null): mixed
+    public function test(TestRequest $request, ?array $options = null): void
     {
         $query = [];
         $query['for'] = $request->for;

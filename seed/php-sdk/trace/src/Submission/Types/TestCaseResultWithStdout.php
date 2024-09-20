@@ -10,13 +10,13 @@ class TestCaseResultWithStdout extends SerializableType
     /**
      * @var TestCaseResult $result
      */
-    #[JsonProperty("result")]
+    #[JsonProperty('result')]
     public TestCaseResult $result;
 
     /**
      * @var string $stdout
      */
-    #[JsonProperty("stdout")]
+    #[JsonProperty('stdout')]
     public string $stdout;
 
     /**

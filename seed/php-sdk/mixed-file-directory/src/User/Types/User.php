@@ -10,19 +10,19 @@ class User extends SerializableType
     /**
      * @var string $id
      */
-    #[JsonProperty("id")]
+    #[JsonProperty('id')]
     public string $id;
 
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var int $age
      */
-    #[JsonProperty("age")]
+    #[JsonProperty('age')]
     public int $age;
 
     /**

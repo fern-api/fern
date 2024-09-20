@@ -10,13 +10,13 @@ class LightweightStackframeInformation extends SerializableType
     /**
      * @var int $numStackFrames
      */
-    #[JsonProperty("numStackFrames")]
+    #[JsonProperty('numStackFrames')]
     public int $numStackFrames;
 
     /**
      * @var string $topStackFrameMethodName
      */
-    #[JsonProperty("topStackFrameMethodName")]
+    #[JsonProperty('topStackFrameMethodName')]
     public string $topStackFrameMethodName;
 
     /**

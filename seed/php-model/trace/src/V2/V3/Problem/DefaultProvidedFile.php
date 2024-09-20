@@ -11,13 +11,13 @@ class DefaultProvidedFile extends SerializableType
     /**
      * @var FileInfoV2 $file
      */
-    #[JsonProperty("file")]
+    #[JsonProperty('file')]
     public FileInfoV2 $file;
 
     /**
      * @var array<mixed> $relatedTypes
      */
-    #[JsonProperty("relatedTypes"), ArrayType(["mixed"])]
+    #[JsonProperty('relatedTypes'), ArrayType(['mixed'])]
     public array $relatedTypes;
 
     /**

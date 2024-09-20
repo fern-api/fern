@@ -10,19 +10,19 @@ class Identifier extends SerializableType
     /**
      * @var mixed $type
      */
-    #[JsonProperty("type")]
+    #[JsonProperty('type')]
     public mixed $type;
 
     /**
      * @var string $value
      */
-    #[JsonProperty("value")]
+    #[JsonProperty('value')]
     public string $value;
 
     /**
      * @var string $label
      */
-    #[JsonProperty("label")]
+    #[JsonProperty('label')]
     public string $label;
 
     /**

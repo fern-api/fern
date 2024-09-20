@@ -10,13 +10,13 @@ class VariableTypeAndName extends SerializableType
     /**
      * @var mixed $variableType
      */
-    #[JsonProperty("variableType")]
+    #[JsonProperty('variableType')]
     public mixed $variableType;
 
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**

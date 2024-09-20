@@ -10,13 +10,13 @@ class TestCaseWithExpectedResult extends SerializableType
     /**
      * @var TestCase $testCase
      */
-    #[JsonProperty("testCase")]
+    #[JsonProperty('testCase')]
     public TestCase $testCase;
 
     /**
      * @var mixed $expectedResult
      */
-    #[JsonProperty("expectedResult")]
+    #[JsonProperty('expectedResult')]
     public mixed $expectedResult;
 
     /**

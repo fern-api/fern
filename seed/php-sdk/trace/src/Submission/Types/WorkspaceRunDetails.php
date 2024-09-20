@@ -10,19 +10,19 @@ class WorkspaceRunDetails extends SerializableType
     /**
      * @var mixed $exceptionV2
      */
-    #[JsonProperty("exceptionV2")]
+    #[JsonProperty('exceptionV2')]
     public mixed $exceptionV2;
 
     /**
      * @var ?ExceptionInfo $exception
      */
-    #[JsonProperty("exception")]
+    #[JsonProperty('exception')]
     public ?ExceptionInfo $exception;
 
     /**
      * @var string $stdout
      */
-    #[JsonProperty("stdout")]
+    #[JsonProperty('stdout')]
     public string $stdout;
 
     /**

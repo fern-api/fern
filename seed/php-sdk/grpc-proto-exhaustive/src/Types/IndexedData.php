@@ -11,13 +11,13 @@ class IndexedData extends SerializableType
     /**
      * @var array<int> $indices
      */
-    #[JsonProperty("indices"), ArrayType(["integer"])]
+    #[JsonProperty('indices'), ArrayType(['integer'])]
     public array $indices;
 
     /**
      * @var array<float> $values
      */
-    #[JsonProperty("values"), ArrayType(["float"])]
+    #[JsonProperty('values'), ArrayType(['float'])]
     public array $values;
 
     /**

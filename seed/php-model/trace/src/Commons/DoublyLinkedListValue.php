@@ -11,13 +11,13 @@ class DoublyLinkedListValue extends SerializableType
     /**
      * @var ?string $head
      */
-    #[JsonProperty("head")]
+    #[JsonProperty('head')]
     public ?string $head;
 
     /**
      * @var array<string, DoublyLinkedListNodeValue> $nodes
      */
-    #[JsonProperty("nodes"), ArrayType(["string" => DoublyLinkedListNodeValue::class])]
+    #[JsonProperty('nodes'), ArrayType(['string' => DoublyLinkedListNodeValue::class])]
     public array $nodes;
 
     /**

@@ -4,6 +4,7 @@ namespace Seed\File\Service;
 
 use Seed\Core\RawClient;
 use Seed\File\Service\Requests\GetFileRequest;
+use Seed\Types\Types\File;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use JsonException;
@@ -31,9 +32,9 @@ class ServiceClient
      * @param string $filename This is a filename
      * @param GetFileRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @return File
      */
-    public function getFile(string $filename, GetFileRequest $request, ?array $options = null): mixed
+    public function getFile(string $filename, GetFileRequest $request, ?array $options = null): File
     {
         $headers = [];
         $headers['X-File-API-Version'] = $request->xFileApiVersion;
@@ -48,7 +49,8 @@ class ServiceClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return File::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

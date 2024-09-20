@@ -5,8 +5,10 @@ namespace Seed\User\Events;
 use Seed\User\Events\Metadata\MetadataClient;
 use Seed\Core\RawClient;
 use Seed\User\Events\Requests\ListUserEventsRequest;
+use Seed\User\Events\Types\Event;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
+use Seed\Core\JsonDecoder;
 use JsonException;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -37,9 +39,9 @@ class EventsClient
     * List all user events.
      * @param ListUserEventsRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @return array<Event>
      */
-    public function listEvents(ListUserEventsRequest $request, ?array $options = null): mixed
+    public function listEvents(ListUserEventsRequest $request, ?array $options = null): array
     {
         $query = [];
         if ($request->limit != null) {
@@ -56,7 +58,8 @@ class EventsClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeArray($json, [Event::class]); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

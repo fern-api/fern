@@ -12,7 +12,7 @@ class GetDefaultStarterFilesResponse extends SerializableType
     /**
      * @var array<Language, ProblemFiles> $files
      */
-    #[JsonProperty("files"), ArrayType([Language::class => ProblemFiles::class])]
+    #[JsonProperty('files'), ArrayType([Language::class => ProblemFiles::class])]
     public array $files;
 
     /**

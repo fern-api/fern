@@ -10,13 +10,13 @@ class Playlist extends SerializableType
     /**
      * @var string $playlistId
      */
-    #[JsonProperty("playlist_id")]
+    #[JsonProperty('playlist_id')]
     public string $playlistId;
 
     /**
      * @var string $ownerId
      */
-    #[JsonProperty("owner-id")]
+    #[JsonProperty('owner-id')]
     public string $ownerId;
 
     /**

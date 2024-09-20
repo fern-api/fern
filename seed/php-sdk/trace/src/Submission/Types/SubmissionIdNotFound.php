@@ -10,7 +10,7 @@ class SubmissionIdNotFound extends SerializableType
     /**
      * @var string $missingSubmissionId
      */
-    #[JsonProperty("missingSubmissionId")]
+    #[JsonProperty('missingSubmissionId')]
     public string $missingSubmissionId;
 
     /**

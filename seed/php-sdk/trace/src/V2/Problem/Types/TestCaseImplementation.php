@@ -10,13 +10,13 @@ class TestCaseImplementation extends SerializableType
     /**
      * @var TestCaseImplementationDescription $description
      */
-    #[JsonProperty("description")]
+    #[JsonProperty('description')]
     public TestCaseImplementationDescription $description;
 
     /**
      * @var mixed $function
      */
-    #[JsonProperty("function")]
+    #[JsonProperty('function')]
     public mixed $function;
 
     /**

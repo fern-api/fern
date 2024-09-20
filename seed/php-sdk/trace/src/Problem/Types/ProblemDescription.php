@@ -11,7 +11,7 @@ class ProblemDescription extends SerializableType
     /**
      * @var array<mixed> $boards
      */
-    #[JsonProperty("boards"), ArrayType(["mixed"])]
+    #[JsonProperty('boards'), ArrayType(['mixed'])]
     public array $boards;
 
     /**

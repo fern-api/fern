@@ -10,7 +10,7 @@ class DeepEqualityCorrectnessCheck extends SerializableType
     /**
      * @var string $expectedValueParameterId
      */
-    #[JsonProperty("expectedValueParameterId")]
+    #[JsonProperty('expectedValueParameterId')]
     public string $expectedValueParameterId;
 
     /**

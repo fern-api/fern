@@ -11,7 +11,7 @@ class UsernameContainer extends SerializableType
     /**
      * @var array<string> $results
      */
-    #[JsonProperty("results"), ArrayType(["string"])]
+    #[JsonProperty('results'), ArrayType(['string'])]
     public array $results;
 
     /**

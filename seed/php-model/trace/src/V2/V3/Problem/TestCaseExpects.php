@@ -10,7 +10,7 @@ class TestCaseExpects extends SerializableType
     /**
      * @var ?string $expectedStdout
      */
-    #[JsonProperty("expectedStdout")]
+    #[JsonProperty('expectedStdout')]
     public ?string $expectedStdout;
 
     /**

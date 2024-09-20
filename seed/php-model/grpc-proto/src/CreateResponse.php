@@ -10,7 +10,7 @@ class CreateResponse extends SerializableType
     /**
      * @var ?UserModel $user
      */
-    #[JsonProperty("user")]
+    #[JsonProperty('user')]
     public ?UserModel $user;
 
     /**

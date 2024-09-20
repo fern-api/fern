@@ -10,19 +10,19 @@ class PostWithObjectBody
     /**
      * @var string $string
      */
-    #[JsonProperty("string")]
+    #[JsonProperty('string')]
     public string $string;
 
     /**
      * @var int $integer
      */
-    #[JsonProperty("integer")]
+    #[JsonProperty('integer')]
     public int $integer;
 
     /**
      * @var ObjectWithOptionalField $nestedObject
      */
-    #[JsonProperty("NestedObject")]
+    #[JsonProperty('NestedObject')]
     public ObjectWithOptionalField $nestedObject;
 
     /**

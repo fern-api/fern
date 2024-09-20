@@ -10,7 +10,7 @@ class MyObject extends SerializableType
     /**
      * @var mixed $unknown
      */
-    #[JsonProperty("unknown")]
+    #[JsonProperty('unknown')]
     public mixed $unknown;
 
     /**

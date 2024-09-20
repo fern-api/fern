@@ -11,7 +11,7 @@ class MapValue extends SerializableType
     /**
      * @var array<KeyValuePair> $keyValuePairs
      */
-    #[JsonProperty("keyValuePairs"), ArrayType([KeyValuePair::class])]
+    #[JsonProperty('keyValuePairs'), ArrayType([KeyValuePair::class])]
     public array $keyValuePairs;
 
     /**

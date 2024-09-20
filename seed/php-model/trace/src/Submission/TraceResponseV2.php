@@ -10,43 +10,43 @@ class TraceResponseV2 extends SerializableType
     /**
      * @var string $submissionId
      */
-    #[JsonProperty("submissionId")]
+    #[JsonProperty('submissionId')]
     public string $submissionId;
 
     /**
      * @var int $lineNumber
      */
-    #[JsonProperty("lineNumber")]
+    #[JsonProperty('lineNumber')]
     public int $lineNumber;
 
     /**
      * @var TracedFile $file
      */
-    #[JsonProperty("file")]
+    #[JsonProperty('file')]
     public TracedFile $file;
 
     /**
      * @var mixed $returnValue
      */
-    #[JsonProperty("returnValue")]
+    #[JsonProperty('returnValue')]
     public mixed $returnValue;
 
     /**
      * @var ?ExpressionLocation $expressionLocation
      */
-    #[JsonProperty("expressionLocation")]
+    #[JsonProperty('expressionLocation')]
     public ?ExpressionLocation $expressionLocation;
 
     /**
      * @var StackInformation $stack
      */
-    #[JsonProperty("stack")]
+    #[JsonProperty('stack')]
     public StackInformation $stack;
 
     /**
      * @var ?string $stdout
      */
-    #[JsonProperty("stdout")]
+    #[JsonProperty('stdout')]
     public ?string $stdout;
 
     /**
