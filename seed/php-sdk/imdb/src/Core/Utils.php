@@ -39,4 +39,23 @@ class Utils
             default => $key,
         };
     }
+
+    /**
+     * Returns a human-readable representation of the input's type.
+     *
+     * @param mixed $input The input value to determine the type of.
+     * @return string A readable description of the input type.
+     */
+    public static function getReadableType(mixed $input): string
+    {
+        if (is_object($input)) {
+            return 'object(' . get_class($input) . ')';
+        } elseif (is_array($input)) {
+            return 'array(' . count($input) . ' items)';
+        } elseif (is_null($input)) {
+            return 'null';
+        } else {
+            return gettype($input);
+        }
+    }
 }

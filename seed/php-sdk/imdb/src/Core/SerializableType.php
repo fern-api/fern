@@ -4,6 +4,8 @@ namespace Seed\Core;
 
 use DateTime;
 use Exception;
+use JsonException;
+use ReflectionNamedType;
 use ReflectionProperty;
 
 /**
@@ -12,7 +14,10 @@ use ReflectionProperty;
 abstract class SerializableType implements \JsonSerializable
 {
     /**
-     * @throws Exception
+     * Serializes the object to a JSON string.
+     *
+     * @return string JSON-encoded string representation of the object.
+     * @throws Exception If encoding fails.
      */
     public function toJson(): string
     {
@@ -25,8 +30,10 @@ abstract class SerializableType implements \JsonSerializable
     }
 
     /**
-     * @return mixed[]
-     * @throws \JsonException
+     * Serializes the object to an array.
+     *
+     * @return mixed[] Array representation of the object.
+     * @throws JsonException If serialization fails.
      */
     public function jsonSerialize(): array
     {
@@ -56,6 +63,11 @@ abstract class SerializableType implements \JsonSerializable
                 $value = JsonSerializer::serializeArray($value, $arrayType);
             }
 
+            // Handle object
+            if (is_object($value)) {
+                $value = JsonSerializer::serializeObject($value);
+            }
+
             if ($value !== null) {
                 $result[$jsonKey] = $value;
             }
@@ -65,45 +77,42 @@ abstract class SerializableType implements \JsonSerializable
     }
 
     /**
-     * @throws \JsonException
-     * @throws Exception
+     * Deserializes a JSON string into an instance of the calling class.
+     *
+     * @param string $json JSON string to deserialize.
+     * @return static Deserialized object.
+     * @throws JsonException If decoding fails or the result is not an array.
+     * @throws Exception If deserialization fails.
      */
     public static function fromJson(string $json): static
     {
         $decodedJson = JsonDecoder::decode($json);
         if (!is_array($decodedJson)) {
-            throw new \JsonException("Unexpected non-array decoded type: " . gettype($decodedJson));
+            throw new JsonException("Unexpected non-array decoded type: " . gettype($decodedJson));
         }
         return self::jsonDeserialize($decodedJson);
     }
 
     /**
-     * Deserializes an array into an object of the calling class.
+     * Deserializes an array into an instance of the calling class.
      *
-     * @param array<string, mixed> $data The array to deserialize.
-     * @return static
-     * @throws \JsonException
+     * @param array<string, mixed> $data Array data to deserialize.
+     * @return static Deserialized object.
+     * @throws JsonException If deserialization fails.
      */
     public static function jsonDeserialize(array $data): static
     {
         $reflectionClass = new \ReflectionClass(static::class);
         $constructor = $reflectionClass->getConstructor();
-        if ($constructor == null) {
-            throw new \JsonException("No constructor found.");
+
+        if ($constructor === null) {
+            throw new JsonException("No constructor found.");
         }
-        $parameters = $constructor->getParameters();
+
         $args = [];
-
-        foreach ($parameters as $parameter) {
-            $propertyName = $parameter->getName();
-
-            if ($reflectionClass->hasProperty($propertyName)) {
-                $property = $reflectionClass->getProperty($propertyName);
-            } else {
-                continue;
-            }
-
+        foreach ($reflectionClass->getProperties() as $property) {
             $jsonKey = self::getJsonKey($property) ?? $property->getName();
+
             if (array_key_exists($jsonKey, $data)) {
                 $value = $data[$jsonKey];
 
@@ -112,11 +121,11 @@ abstract class SerializableType implements \JsonSerializable
                 if ($dateTypeAttr) {
                     $dateType = $dateTypeAttr->newInstance()->type;
                     if (!is_string($value)) {
-                        throw new Exception("Unexpected non-string type for date.");
+                        throw new JsonException("Unexpected non-string type for date.");
                     }
                     $value = ($dateType === DateType::TYPE_DATE)
-                        ? DateTime::createFromFormat(Constant::DateDeserializationFormat, $value)
-                        : new DateTime($value);
+                        ? JsonDeserializer::deserializeDate($value)
+                        : JsonDeserializer::deserializeDateTime($value);
                 }
 
                 // Handle ArrayType annotation
@@ -126,20 +135,27 @@ abstract class SerializableType implements \JsonSerializable
                     $value = JsonDeserializer::deserializeArray($value, $arrayType);
                 }
 
-                $args[$parameter->getPosition()] = $value;
+                // Handle object
+                $type = $property->getType();
+                if (is_array($value) && $type instanceof ReflectionNamedType && !$type->isBuiltin()) {
+                    $value = JsonDeserializer::deserializeObject($value, $type->getName());
+                }
+
+                $args[$property->getName()] = $value;
             } else {
-                $args[$parameter->getPosition()] = $parameter->isDefaultValueAvailable() ? $parameter->getDefaultValue() : null;
+                $defaultValue = $property->getDefaultValue() ?? null;
+                $args[$property->getName()] = $defaultValue;
             }
         }
         // @phpstan-ignore-next-line
-        return new static(...$args);
+        return new static($args);
     }
 
     /**
-     * Helper function to retrieve the JSON key for a property.
+     * Retrieves the JSON key associated with a property.
      *
-     * @param ReflectionProperty $property
-     * @return ?string
+     * @param ReflectionProperty $property The reflection property.
+     * @return ?string The JSON key, or null if not available.
      */
     private static function getJsonKey(ReflectionProperty $property): ?string
     {

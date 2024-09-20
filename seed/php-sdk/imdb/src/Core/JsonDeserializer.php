@@ -69,11 +69,13 @@ class JsonDeserializer
             foreach ($type->types as $unionType) {
                 try {
                     return self::deserializeSingleValue($data, $unionType);
-                } catch (Exception $e) {
+                } catch (Exception) {
                     continue;
                 }
             }
-            throw new JsonException("Cannot deserialize value with any of the union types.");
+            $readableType = Utils::getReadableType($data);
+            throw new JsonException(
+                "Cannot deserialize value of type $readableType with any of the union types: " . $type);
         }
         if (is_array($type)) {
             return self::deserializeArray((array)$data, $type);
@@ -112,10 +114,7 @@ class JsonDeserializer
         }
 
         if (class_exists($type) && is_array($data)) {
-            if (!is_subclass_of($type, SerializableType::class)) {
-                throw new JsonException("$type is not a subclass of SerializableType.");
-            }
-            return $type::jsonDeserialize($data);
+            return self::deserializeObject($data, $type);
         }
 
         if (gettype($data) === $type) {
@@ -123,6 +122,23 @@ class JsonDeserializer
         }
 
         throw new JsonException("Unable to deserialize value of type '" . gettype($data) . "' as '$type'.");
+    }
+
+    /**
+     * Deserializes an array into an object of the given type.
+     *
+     * @param array<string, mixed> $data The data to deserialize.
+     * @param string $type The class name of the object to deserialize into.
+     *
+     * @return object The deserialized object.
+     *
+     * @throws JsonException If the type does not implement SerializableType.
+     */
+    public static function deserializeObject(array $data, string $type): object {
+        if (!is_subclass_of($type, SerializableType::class)) {
+            throw new JsonException("$type is not a subclass of SerializableType.");
+        }
+        return $type::jsonDeserialize($data);
     }
 
     /**
