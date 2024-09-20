@@ -10,19 +10,19 @@ class ExceptionInfo extends SerializableType
     /**
      * @var string $exceptionType
      */
-    #[JsonProperty("exceptionType")]
+    #[JsonProperty('exceptionType')]
     public string $exceptionType;
 
     /**
      * @var string $exceptionMessage
      */
-    #[JsonProperty("exceptionMessage")]
+    #[JsonProperty('exceptionMessage')]
     public string $exceptionMessage;
 
     /**
      * @var string $exceptionStacktrace
      */
-    #[JsonProperty("exceptionStacktrace")]
+    #[JsonProperty('exceptionStacktrace')]
     public string $exceptionStacktrace;
 
     /**

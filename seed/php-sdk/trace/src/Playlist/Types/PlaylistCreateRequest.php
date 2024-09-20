@@ -11,13 +11,13 @@ class PlaylistCreateRequest extends SerializableType
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var array<string> $problems
      */
-    #[JsonProperty("problems"), ArrayType(["string"])]
+    #[JsonProperty('problems'), ArrayType(['string'])]
     public array $problems;
 
     /**

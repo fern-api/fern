@@ -12,37 +12,37 @@ class SubmitRequestV2 extends SerializableType
     /**
      * @var string $submissionId
      */
-    #[JsonProperty("submissionId")]
+    #[JsonProperty('submissionId')]
     public string $submissionId;
 
     /**
      * @var Language $language
      */
-    #[JsonProperty("language")]
+    #[JsonProperty('language')]
     public Language $language;
 
     /**
      * @var array<SubmissionFileInfo> $submissionFiles
      */
-    #[JsonProperty("submissionFiles"), ArrayType([SubmissionFileInfo::class])]
+    #[JsonProperty('submissionFiles'), ArrayType([SubmissionFileInfo::class])]
     public array $submissionFiles;
 
     /**
      * @var string $problemId
      */
-    #[JsonProperty("problemId")]
+    #[JsonProperty('problemId')]
     public string $problemId;
 
     /**
      * @var ?int $problemVersion
      */
-    #[JsonProperty("problemVersion")]
+    #[JsonProperty('problemVersion')]
     public ?int $problemVersion;
 
     /**
      * @var ?string $userId
      */
-    #[JsonProperty("userId")]
+    #[JsonProperty('userId')]
     public ?string $userId;
 
     /**

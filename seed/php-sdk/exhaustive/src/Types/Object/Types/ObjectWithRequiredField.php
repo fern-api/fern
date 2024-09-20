@@ -10,7 +10,7 @@ class ObjectWithRequiredField extends SerializableType
     /**
      * @var string $string
      */
-    #[JsonProperty("string")]
+    #[JsonProperty('string')]
     public string $string;
 
     /**

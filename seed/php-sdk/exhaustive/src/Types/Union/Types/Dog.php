@@ -10,13 +10,13 @@ class Dog extends SerializableType
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var bool $likesToWoof
      */
-    #[JsonProperty("likesToWoof")]
+    #[JsonProperty('likesToWoof')]
     public bool $likesToWoof;
 
     /**

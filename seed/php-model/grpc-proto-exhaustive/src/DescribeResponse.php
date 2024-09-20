@@ -11,25 +11,25 @@ class DescribeResponse extends SerializableType
     /**
      * @var ?array<string, NamespaceSummary> $namespaces
      */
-    #[JsonProperty("namespaces"), ArrayType(["string" => NamespaceSummary::class])]
+    #[JsonProperty('namespaces'), ArrayType(['string' => NamespaceSummary::class])]
     public ?array $namespaces;
 
     /**
      * @var ?int $dimension
      */
-    #[JsonProperty("dimension")]
+    #[JsonProperty('dimension')]
     public ?int $dimension;
 
     /**
      * @var ?float $fullness
      */
-    #[JsonProperty("fullness")]
+    #[JsonProperty('fullness')]
     public ?float $fullness;
 
     /**
      * @var ?int $totalCount
      */
-    #[JsonProperty("totalCount")]
+    #[JsonProperty('totalCount')]
     public ?int $totalCount;
 
     /**

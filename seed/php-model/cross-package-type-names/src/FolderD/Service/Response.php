@@ -11,7 +11,7 @@ class Response extends SerializableType
     /**
      * @var ?Foo $foo
      */
-    #[JsonProperty("foo")]
+    #[JsonProperty('foo')]
     public ?Foo $foo;
 
     /**

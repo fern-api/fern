@@ -10,7 +10,7 @@ class WithCursor extends SerializableType
     /**
      * @var ?string $cursor
      */
-    #[JsonProperty("cursor")]
+    #[JsonProperty('cursor')]
     public ?string $cursor;
 
     /**

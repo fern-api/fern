@@ -11,19 +11,19 @@ class Node extends SerializableType
     /**
      * @var string $id
      */
-    #[JsonProperty("id")]
+    #[JsonProperty('id')]
     public string $id;
 
     /**
      * @var ?string $label
      */
-    #[JsonProperty("label")]
+    #[JsonProperty('label')]
     public ?string $label;
 
     /**
      * @var ?Metadata $metadata
      */
-    #[JsonProperty("metadata")]
+    #[JsonProperty('metadata')]
     public ?Metadata $metadata;
 
     /**

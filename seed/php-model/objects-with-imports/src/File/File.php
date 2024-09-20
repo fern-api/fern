@@ -10,19 +10,19 @@ class File extends SerializableType
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var string $contents
      */
-    #[JsonProperty("contents")]
+    #[JsonProperty('contents')]
     public string $contents;
 
     /**
      * @var FileInfo $info
      */
-    #[JsonProperty("info")]
+    #[JsonProperty('info')]
     public FileInfo $info;
 
     /**

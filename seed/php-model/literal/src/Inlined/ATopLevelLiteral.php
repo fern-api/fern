@@ -10,7 +10,7 @@ class ATopLevelLiteral extends SerializableType
     /**
      * @var ANestedLiteral $nestedLiteral
      */
-    #[JsonProperty("nestedLiteral")]
+    #[JsonProperty('nestedLiteral')]
     public ANestedLiteral $nestedLiteral;
 
     /**

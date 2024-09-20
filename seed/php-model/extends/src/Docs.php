@@ -10,7 +10,7 @@ class Docs extends SerializableType
     /**
      * @var string $docs
      */
-    #[JsonProperty("docs")]
+    #[JsonProperty('docs')]
     public string $docs;
 
     /**

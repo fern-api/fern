@@ -10,13 +10,13 @@ class Migration extends SerializableType
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var MigrationStatus $status
      */
-    #[JsonProperty("status")]
+    #[JsonProperty('status')]
     public MigrationStatus $status;
 
     /**

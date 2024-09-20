@@ -41,9 +41,8 @@ class V2Client
 
     /**
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
      */
-    public function test(?array $options = null): mixed
+    public function test(?array $options = null): void
     {
         try {
             $response = $this->client->sendRequest(

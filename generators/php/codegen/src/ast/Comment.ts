@@ -3,11 +3,11 @@ import { Writer } from "./core/Writer";
 import { Type } from "./Type";
 import { convertToPhpVariableName } from "./utils/convertToPhpVariableName";
 
-export type TagType = "param" | "returns" | "throws" | "var";
+export type TagType = "param" | "return" | "throws" | "var";
 
 export const TagType = {
     Param: "param",
-    Returns: "returns",
+    Returns: "return",
     Throws: "throws",
     Var: "var"
 } as const;

@@ -11,13 +11,13 @@ class UploadRequest
     /**
      * @var array<Column> $columns
      */
-    #[JsonProperty("columns"), ArrayType([Column::class])]
+    #[JsonProperty('columns'), ArrayType([Column::class])]
     public array $columns;
 
     /**
      * @var ?string $namespace
      */
-    #[JsonProperty("namespace")]
+    #[JsonProperty('namespace')]
     public ?string $namespace;
 
     /**

@@ -10,7 +10,7 @@ class StringResponse extends SerializableType
     /**
      * @var string $data
      */
-    #[JsonProperty("data")]
+    #[JsonProperty('data')]
     public string $data;
 
     /**

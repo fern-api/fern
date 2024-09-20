@@ -10,25 +10,25 @@ class SendEnumInlinedRequest
     /**
      * @var Operand $operand
      */
-    #[JsonProperty("operand")]
+    #[JsonProperty('operand')]
     public Operand $operand;
 
     /**
      * @var ?Operand $maybeOperand
      */
-    #[JsonProperty("maybeOperand")]
+    #[JsonProperty('maybeOperand')]
     public ?Operand $maybeOperand;
 
     /**
      * @var mixed $operandOrColor
      */
-    #[JsonProperty("operandOrColor")]
+    #[JsonProperty('operandOrColor')]
     public mixed $operandOrColor;
 
     /**
      * @var mixed $maybeOperandOrColor
      */
-    #[JsonProperty("maybeOperandOrColor")]
+    #[JsonProperty('maybeOperandOrColor')]
     public mixed $maybeOperandOrColor;
 
     /**

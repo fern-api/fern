@@ -11,13 +11,13 @@ class SinglyLinkedListValue extends SerializableType
     /**
      * @var ?string $head
      */
-    #[JsonProperty("head")]
+    #[JsonProperty('head')]
     public ?string $head;
 
     /**
      * @var array<string, SinglyLinkedListNodeValue> $nodes
      */
-    #[JsonProperty("nodes"), ArrayType(["string" => SinglyLinkedListNodeValue::class])]
+    #[JsonProperty('nodes'), ArrayType(['string' => SinglyLinkedListNodeValue::class])]
     public array $nodes;
 
     /**

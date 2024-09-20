@@ -10,7 +10,7 @@ class ListUsersExtendedOptionalListResponse extends SerializableType
     /**
      * @var int $totalCount The totall number of /users
      */
-    #[JsonProperty("total_count")]
+    #[JsonProperty('total_count')]
     public int $totalCount;
 
     /**

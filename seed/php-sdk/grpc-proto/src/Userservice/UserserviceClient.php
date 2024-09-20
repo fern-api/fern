@@ -4,6 +4,7 @@ namespace Seed\Userservice;
 
 use Seed\Core\RawClient;
 use Seed\Userservice\Requests\CreateRequest;
+use Seed\Types\CreateResponse;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use JsonException;
@@ -29,9 +30,9 @@ class UserserviceClient
     /**
      * @param CreateRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @return CreateResponse
      */
-    public function create(CreateRequest $request, ?array $options = null): mixed
+    public function create(CreateRequest $request, ?array $options = null): CreateResponse
     {
         try {
             $response = $this->client->sendRequest(
@@ -44,7 +45,8 @@ class UserserviceClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return CreateResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

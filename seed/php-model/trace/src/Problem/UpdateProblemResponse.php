@@ -10,7 +10,7 @@ class UpdateProblemResponse extends SerializableType
     /**
      * @var int $problemVersion
      */
-    #[JsonProperty("problemVersion")]
+    #[JsonProperty('problemVersion')]
     public int $problemVersion;
 
     /**

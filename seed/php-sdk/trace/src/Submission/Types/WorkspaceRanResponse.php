@@ -10,13 +10,13 @@ class WorkspaceRanResponse extends SerializableType
     /**
      * @var string $submissionId
      */
-    #[JsonProperty("submissionId")]
+    #[JsonProperty('submissionId')]
     public string $submissionId;
 
     /**
      * @var WorkspaceRunDetails $runDetails
      */
-    #[JsonProperty("runDetails")]
+    #[JsonProperty('runDetails')]
     public WorkspaceRunDetails $runDetails;
 
     /**

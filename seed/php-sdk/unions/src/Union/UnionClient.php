@@ -5,6 +5,7 @@ namespace Seed\Union;
 use Seed\Core\RawClient;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
+use Seed\Core\JsonDecoder;
 use JsonException;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -28,7 +29,7 @@ class UnionClient
     /**
      * @param string $id
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @return mixed
      */
     public function get(string $id, ?array $options = null): mixed
     {
@@ -42,7 +43,8 @@ class UnionClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeMixed($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -55,9 +57,9 @@ class UnionClient
     /**
      * @param mixed $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @return bool
      */
-    public function update(mixed $request, ?array $options = null): mixed
+    public function update(mixed $request, ?array $options = null): bool
     {
         try {
             $response = $this->client->sendRequest(
@@ -70,7 +72,8 @@ class UnionClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeBool($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

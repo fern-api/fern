@@ -10,13 +10,13 @@ class CreateMovieRequest extends SerializableType
     /**
      * @var string $title
      */
-    #[JsonProperty("title")]
+    #[JsonProperty('title')]
     public string $title;
 
     /**
      * @var float $rating
      */
-    #[JsonProperty("rating")]
+    #[JsonProperty('rating')]
     public float $rating;
 
     /**

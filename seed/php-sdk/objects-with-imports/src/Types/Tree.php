@@ -11,7 +11,7 @@ class Tree extends SerializableType
     /**
      * @var ?array<Node> $nodes
      */
-    #[JsonProperty("nodes"), ArrayType([Node::class])]
+    #[JsonProperty('nodes'), ArrayType([Node::class])]
     public ?array $nodes;
 
     /**

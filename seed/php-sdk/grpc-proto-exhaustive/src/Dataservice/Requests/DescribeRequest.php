@@ -9,7 +9,7 @@ class DescribeRequest
     /**
      * @var mixed $filter
      */
-    #[JsonProperty("filter")]
+    #[JsonProperty('filter')]
     public mixed $filter;
 
     /**

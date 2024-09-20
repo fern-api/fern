@@ -19,7 +19,7 @@ class SendLiteralsInHeadersRequest
     /**
      * @var string $query
      */
-    #[JsonProperty("query")]
+    #[JsonProperty('query')]
     public string $query;
 
     /**

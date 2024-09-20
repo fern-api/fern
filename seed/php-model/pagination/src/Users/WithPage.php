@@ -10,7 +10,7 @@ class WithPage extends SerializableType
     /**
      * @var ?int $page
      */
-    #[JsonProperty("page")]
+    #[JsonProperty('page')]
     public ?int $page;
 
     /**

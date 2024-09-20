@@ -11,61 +11,61 @@ class Movie extends SerializableType
     /**
      * @var string $id
      */
-    #[JsonProperty("id")]
+    #[JsonProperty('id')]
     public string $id;
 
     /**
      * @var ?string $prequel
      */
-    #[JsonProperty("prequel")]
+    #[JsonProperty('prequel')]
     public ?string $prequel;
 
     /**
      * @var string $title
      */
-    #[JsonProperty("title")]
+    #[JsonProperty('title')]
     public string $title;
 
     /**
      * @var string $from
      */
-    #[JsonProperty("from")]
+    #[JsonProperty('from')]
     public string $from;
 
     /**
      * @var float $rating The rating scale is one to five stars
      */
-    #[JsonProperty("rating")]
+    #[JsonProperty('rating')]
     public float $rating;
 
     /**
      * @var string $type
      */
-    #[JsonProperty("type")]
+    #[JsonProperty('type')]
     public string $type;
 
     /**
      * @var string $tag
      */
-    #[JsonProperty("tag")]
+    #[JsonProperty('tag')]
     public string $tag;
 
     /**
      * @var ?string $book
      */
-    #[JsonProperty("book")]
+    #[JsonProperty('book')]
     public ?string $book;
 
     /**
      * @var array<string, mixed> $metadata
      */
-    #[JsonProperty("metadata"), ArrayType(["string" => "mixed"])]
+    #[JsonProperty('metadata'), ArrayType(['string' => 'mixed'])]
     public array $metadata;
 
     /**
      * @var int $revenue
      */
-    #[JsonProperty("revenue")]
+    #[JsonProperty('revenue')]
     public int $revenue;
 
     /**

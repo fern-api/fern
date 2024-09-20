@@ -10,7 +10,7 @@ class WorkspaceSubmissionState extends SerializableType
     /**
      * @var mixed $status
      */
-    #[JsonProperty("status")]
+    #[JsonProperty('status')]
     public mixed $status;
 
     /**

@@ -10,7 +10,7 @@ class GetTraceResponsesPageRequest extends SerializableType
     /**
      * @var ?int $offset
      */
-    #[JsonProperty("offset")]
+    #[JsonProperty('offset')]
     public ?int $offset;
 
     /**

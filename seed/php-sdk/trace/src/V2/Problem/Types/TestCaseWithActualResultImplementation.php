@@ -10,13 +10,13 @@ class TestCaseWithActualResultImplementation extends SerializableType
     /**
      * @var NonVoidFunctionDefinition $getActualResult
      */
-    #[JsonProperty("getActualResult")]
+    #[JsonProperty('getActualResult')]
     public NonVoidFunctionDefinition $getActualResult;
 
     /**
      * @var mixed $assertCorrectnessCheck
      */
-    #[JsonProperty("assertCorrectnessCheck")]
+    #[JsonProperty('assertCorrectnessCheck')]
     public mixed $assertCorrectnessCheck;
 
     /**

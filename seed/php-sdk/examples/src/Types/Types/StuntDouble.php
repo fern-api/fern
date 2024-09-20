@@ -10,13 +10,13 @@ class StuntDouble extends SerializableType
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var string $actorOrActressId
      */
-    #[JsonProperty("actorOrActressId")]
+    #[JsonProperty('actorOrActressId')]
     public string $actorOrActressId;
 
     /**

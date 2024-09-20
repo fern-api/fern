@@ -10,19 +10,19 @@ class TestCaseMetadata extends SerializableType
     /**
      * @var string $id
      */
-    #[JsonProperty("id")]
+    #[JsonProperty('id')]
     public string $id;
 
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var bool $hidden
      */
-    #[JsonProperty("hidden")]
+    #[JsonProperty('hidden')]
     public bool $hidden;
 
     /**

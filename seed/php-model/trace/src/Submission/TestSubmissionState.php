@@ -12,25 +12,25 @@ class TestSubmissionState extends SerializableType
     /**
      * @var string $problemId
      */
-    #[JsonProperty("problemId")]
+    #[JsonProperty('problemId')]
     public string $problemId;
 
     /**
      * @var array<TestCase> $defaultTestCases
      */
-    #[JsonProperty("defaultTestCases"), ArrayType([TestCase::class])]
+    #[JsonProperty('defaultTestCases'), ArrayType([TestCase::class])]
     public array $defaultTestCases;
 
     /**
      * @var array<TestCase> $customTestCases
      */
-    #[JsonProperty("customTestCases"), ArrayType([TestCase::class])]
+    #[JsonProperty('customTestCases'), ArrayType([TestCase::class])]
     public array $customTestCases;
 
     /**
      * @var mixed $status
      */
-    #[JsonProperty("status")]
+    #[JsonProperty('status')]
     public mixed $status;
 
     /**

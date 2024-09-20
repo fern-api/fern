@@ -9,7 +9,7 @@ class Inlined
     /**
      * @var string $unique
      */
-    #[JsonProperty("unique")]
+    #[JsonProperty('unique')]
     public string $unique;
 
     /**
