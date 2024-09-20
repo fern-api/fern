@@ -5,7 +5,7 @@ import { formatLog, Logger } from "@fern-api/logger";
 import chalk from "chalk";
 import { YAMLException } from "js-yaml";
 import { ZodIssue, ZodIssueCode } from "zod";
-import { WorkspaceLoader, WorkspaceLoaderFailureType } from "@fern-api/lazy-fern-workspace";
+import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./Result";
 
 export function handleFailedWorkspaceParserResult(result: WorkspaceLoader.FailedResult, logger: Logger): void {
     for (const [relativeFilepath, failure] of entries(result.failures)) {

@@ -2,27 +2,31 @@ import { DEFINITION_DIRECTORY, dependenciesYml, generatorsYml } from "@fern-api/
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import hash from "object-hash";
-import { handleFailedWorkspaceParserResultRaw } from "../handleFailedWorkspaceParserResult";
-import { listFernFiles } from "../listFernFiles";
-import { parseYamlFiles } from "../parseYamlFiles";
-import { processPackageMarkers } from "../processPackageMarkers";
-import { validateStructureOfYamlFiles } from "../validateStructureOfYamlFiles";
+import { handleFailedWorkspaceParserResultRaw } from "./utils/handleFailedWorkspaceParserResult";
+import { listFernFiles } from "./utils/listFernFiles";
+import { parseYamlFiles } from "./utils/parseYamlFiles";
+import { processPackageMarkers } from "./utils/processPackageMarkers";
+import { validateStructureOfYamlFiles } from "./utils/validateStructureOfYamlFiles";
 import { OSSWorkspace } from "./OSSWorkspace";
 import { FernWorkspace, AbstractAPIWorkspace, FernDefinition } from "@fern-api/api-workspace-commons";
+import { LoadAPIWorkspace } from "./utils/loadAPIWorkspace";
 
 export declare namespace LazyFernWorkspace {
     export interface Args extends AbstractAPIWorkspace.Args {
         context: TaskContext;
+        loadAPIWorkspace?: LoadAPIWorkspace;
     }
 }
 
 export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
     private context: TaskContext;
     private fernWorkspaces: Record<string, FernWorkspace> = {};
+    private loadAPIWorkspace?: LoadAPIWorkspace;
 
-    constructor({ context, ...superArgs }: LazyFernWorkspace.Args) {
+    constructor({ context, loadAPIWorkspace, ...superArgs }: LazyFernWorkspace.Args) {
         super(superArgs);
         this.context = context;
+        this.loadAPIWorkspace = loadAPIWorkspace;
     }
 
     public async getDefinition(
@@ -69,7 +73,8 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
                 structuralValidationResult,
                 context: defaultedContext,
                 cliVersion: this.cliVersion,
-                settings
+                settings,
+                loadAPIWorkspace: this.loadAPIWorkspace
             });
             if (!processPackageMarkersResult.didSucceed) {
                 handleFailedWorkspaceParserResultRaw(processPackageMarkersResult.failures, defaultedContext.logger);

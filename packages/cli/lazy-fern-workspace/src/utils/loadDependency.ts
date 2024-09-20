@@ -15,10 +15,10 @@ import path from "path";
 import { pipeline } from "stream/promises";
 import tar from "tar";
 import tmp from "tmp-promise";
-import { loadAPIWorkspace } from "./loadAPIWorkspace";
-import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
-import { OSSWorkspace } from "./workspaces/OSSWorkspace";
+import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./Result";
+import { OSSWorkspace } from "../OSSWorkspace";
 import { FernDefinition, FernWorkspace } from "@fern-api/api-workspace-commons";
+import { LoadAPIWorkspace } from "./loadAPIWorkspace";
 
 const FIDDLE = createFiddleService();
 
@@ -42,7 +42,8 @@ export async function loadDependency({
     context,
     rootApiFile,
     cliVersion,
-    settings
+    settings,
+    loadAPIWorkspace
 }: {
     dependencyName: string;
     dependenciesConfiguration: dependenciesYml.DependenciesConfiguration;
@@ -50,6 +51,7 @@ export async function loadDependency({
     rootApiFile: RootApiFileSchema;
     cliVersion: string;
     settings?: OSSWorkspace.Settings;
+    loadAPIWorkspace?: LoadAPIWorkspace;
 }): Promise<loadDependency.Return> {
     let definition: FernDefinition | undefined;
     let failure: WorkspaceLoader.DependencyFailure = {
@@ -119,13 +121,20 @@ async function validateLocalDependencyAndGetDefinition({
     dependency,
     context,
     cliVersion,
-    settings
+    settings,
+    loadAPIWorkspace
 }: {
+    loadAPIWorkspace?: LoadAPIWorkspace;
     dependency: dependenciesYml.LocalApiDependency;
     context: TaskContext;
     cliVersion: string;
     settings?: OSSWorkspace.Settings;
 }): Promise<FernDefinition | undefined> {
+    if (loadAPIWorkspace == null) {
+        context.failWithoutThrowing("Failed to load api definition");
+        return undefined;
+    }
+
     // parse workspace
     context.logger.info("Parsing...");
     const loadDependencyWorkspaceResult = await loadAPIWorkspace({
@@ -156,12 +165,14 @@ async function validateVersionedDependencyAndGetDefinition({
     dependency,
     context,
     cliVersion,
-    settings
+    settings,
+    loadAPIWorkspace
 }: {
     dependency: dependenciesYml.VersionedDependency;
     context: TaskContext;
     cliVersion: string;
     settings?: OSSWorkspace.Settings;
+    loadAPIWorkspace?: LoadAPIWorkspace;
 }): Promise<FernDefinition | undefined> {
     const pathToDependency: AbsoluteFilePath = getPathToLocalStorageDependency(dependency);
     const pathToDefinition = join(pathToDependency, RelativeFilePath.of(DEPENDENCIES_FOLDER_NAME));
@@ -247,6 +258,10 @@ async function validateVersionedDependencyAndGetDefinition({
     }
     // parse workspace
     context.logger.info("Parsing...");
+    if (loadAPIWorkspace == null) {
+        context.failWithoutThrowing("Failed to load API");
+        return undefined;
+    }
     const loadDependencyWorkspaceResult = await loadAPIWorkspace({
         absolutePathToWorkspace: pathToDefinition,
         context,

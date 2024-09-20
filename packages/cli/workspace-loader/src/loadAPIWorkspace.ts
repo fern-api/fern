@@ -2,10 +2,13 @@ import { DEFINITION_DIRECTORY, generatorsYml, OPENAPI_DIRECTORY } from "@fern-ap
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { loadAPIChangelog } from "./loadAPIChangelog";
-import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
 import { Spec } from "./types/Workspace";
-import { OSSWorkspace } from "./workspaces/OSSWorkspace";
-import { LazyFernWorkspace } from "./workspaces/LazyFernWorkspace";
+import {
+    OSSWorkspace,
+    LazyFernWorkspace,
+    WorkspaceLoader,
+    WorkspaceLoaderFailureType
+} from "@fern-api/lazy-fern-workspace";
 
 export async function loadSingleNamespaceAPIWorkspace({
     absolutePathToWorkspace,
@@ -203,7 +206,8 @@ export async function loadAPIWorkspace({
             workspaceName,
             changelog,
             context,
-            cliVersion
+            cliVersion,
+            loadAPIWorkspace: loadAPIWorkspace
         });
 
         return {

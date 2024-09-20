@@ -1,1 +1,0 @@
-export { getAllOpenAPISpecs } from "./getAllOpenAPISpecs";

@@ -5,11 +5,11 @@ import { TaskContext } from "@fern-api/task-context";
 import { PackageMarkerFileSchema } from "@fern-api/fern-definition-schema";
 import { size } from "lodash-es";
 import { loadDependency } from "./loadDependency";
-import { ParsedFernFile } from "./types/FernFile";
-import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
+import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./Result";
 import { validateStructureOfYamlFiles } from "./validateStructureOfYamlFiles";
-import { OSSWorkspace } from "./workspaces/OSSWorkspace";
-import { FernDefinition } from "@fern-api/api-workspace-commons";
+import { OSSWorkspace } from "../OSSWorkspace";
+import { FernDefinition, ParsedFernFile } from "@fern-api/api-workspace-commons";
+import { LoadAPIWorkspace } from "./loadAPIWorkspace";
 
 export declare namespace processPackageMarkers {
     export type Return = SuccessfulResult | FailedResult;
@@ -36,13 +36,15 @@ export async function processPackageMarkers({
     structuralValidationResult,
     context,
     cliVersion,
-    settings
+    settings,
+    loadAPIWorkspace
 }: {
     dependenciesConfiguration: dependenciesYml.DependenciesConfiguration;
     structuralValidationResult: validateStructureOfYamlFiles.SuccessfulResult;
     context: TaskContext;
     cliVersion: string;
     settings?: OSSWorkspace.Settings;
+    loadAPIWorkspace?: LoadAPIWorkspace;
 }): Promise<processPackageMarkers.Return> {
     const packageMarkers: Record<RelativeFilePath, ParsedFernFile<PackageMarkerFileSchema>> = {};
     const importedDefinitions: Record<RelativeFilePath, processPackageMarkers.ImportedDefinition> = {};
@@ -79,7 +81,8 @@ export async function processPackageMarkers({
                             context,
                             rootApiFile: structuralValidationResult.rootApiFile.contents,
                             cliVersion,
-                            settings
+                            settings,
+                            loadAPIWorkspace
                         });
                         if (loadDependencyResult.didSucceed) {
                             importedDefinitions[dirname(pathOfPackageMarker)] = {

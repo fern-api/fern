@@ -4,7 +4,7 @@ import { getEndpointLocation } from "@fern-api/openapi-ir-to-fern";
 import { parse } from "@fern-api/openapi-parser";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
-import { getAllOpenAPISpecs, OSSWorkspace } from "@fern-api/workspace-loader";
+import { getAllOpenAPISpecs, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import { CliContext } from "../../cli-context/CliContext";

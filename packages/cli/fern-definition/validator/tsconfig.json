@@ -11,6 +11,7 @@
     { "path": "../../logger" },
     { "path": "../../task-context" },
     { "path": "../../workspace-commons" },
+    { "path": "../../lazy-fern-workspace" },
     { "path": "../schema" }
   ]
 }

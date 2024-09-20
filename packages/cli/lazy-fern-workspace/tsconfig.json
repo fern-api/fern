@@ -14,7 +14,6 @@
     { "path": "../semver-utils" },
     { "path": "../task-context" },
     { "path": "../workspace-commons" },
-    { "path": "../fern-definition/schema" }, 
-    { "path": "../lazy-fern-workspace"}
+    { "path": "../fern-definition/schema" }
   ]
 }

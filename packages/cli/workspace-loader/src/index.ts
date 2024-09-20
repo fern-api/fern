@@ -1,10 +1,8 @@
 export * from "./handleFailedWorkspaceParserResult";
 export { loadAPIWorkspace } from "./loadAPIWorkspace";
-export { loadDependency } from "./loadDependency";
 export { loadDocsWorkspace } from "./loadDocsWorkspace";
 export { getValidAbsolutePathToOpenAPI as loadOpenAPIFile } from "./loadOpenAPIFile";
 export { type FernFile, type ParsedFernFile } from "./types/FernFile";
-export { WorkspaceLoaderFailureType, type WorkspaceLoader } from "./types/Result";
 export {
     type AsyncAPISource,
     type DocsWorkspace,
@@ -15,6 +13,5 @@ export {
     type Source,
     type Workspace
 } from "./types/Workspace";
-export * from "./utils";
-export * from "./workspaces";
 export { AbstractAPIWorkspace, FernWorkspace, type FernDefinition } from "@fern-api/api-workspace-commons";
+export { getOSSWorkspaceSettingsFromGeneratorInvocation } from "@fern-api/lazy-fern-workspace";
