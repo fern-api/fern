@@ -4,8 +4,9 @@ import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST
 from fern_python.external_dependencies.json import Json
-from ..constants import DEFAULT_BODY_PARAMETER_VALUE
+
 from ...context.sdk_generator_context import SdkGeneratorContext
+from ..constants import DEFAULT_BODY_PARAMETER_VALUE
 from .abstract_request_body_parameters import AbstractRequestBodyParameters
 
 FILETYPE_DOCS = "See core.File for more documentation"
@@ -33,9 +34,7 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
                     docs=self._get_docs(property),
                     raw_type=self._get_raw_property_type(property),
                     raw_name=self._get_raw_property_name(property),
-                    initializer=AST.Expression(DEFAULT_BODY_PARAMETER_VALUE)
-                        if type_hint.is_optional
-                        else None,
+                    initializer=AST.Expression(DEFAULT_BODY_PARAMETER_VALUE) if type_hint.is_optional else None,
                 ),
             )
         return parameters
