@@ -4,6 +4,7 @@ import { createFdrService } from "@fern-api/core";
 import { MediaType } from "@fern-api/core-utils";
 import { DocsDefinitionResolver, UploadedFile, wrapWithHttps } from "@fern-api/docs-resolver";
 import { AbsoluteFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { convertToFernHostRelativeFilePath } from "@fern-api/fs-utils";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
@@ -87,7 +88,7 @@ export async function publishDocs({
                     return;
                 }
                 const imageFilePath = {
-                    filePath: filePath.relativeFilePath,
+                    filePath: convertToFernHostRelativeFilePath(filePath.relativeFilePath),
                     width: image.width,
                     height: image.height,
                     blurDataUrl: image.blurDataUrl
@@ -97,7 +98,7 @@ export async function publishDocs({
 
             const filepaths = files
                 .filter(({ absoluteFilePath }) => !measuredImages.has(absoluteFilePath))
-                .map(({ relativeFilePath }) => relativeFilePath);
+                .map(({ relativeFilePath }) => convertToFernHostRelativeFilePath(relativeFilePath));
 
             if (preview) {
                 const startDocsRegisterResponse = await fdr.docs.v2.write.startDocsPreviewRegister({

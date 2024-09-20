@@ -134,6 +134,38 @@ jobs:
           cli_path="$(pwd)/packages/cli/cli/dist/dev/bundle.cjs" 
           ./scripts/live-test.sh "$cli_path" "$FERN_ORG_TOKEN_DEV"
 
+  live-test-dev-windows:
+    environment: Fern Dev
+    if: github.ref == 'refs/heads/main'
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
+      - name: Check API definition is valid
+        env:
+          FORCE_COLOR: "2"
+          FERN_ORG_TOKEN_DEV: ${{ secrets.FERN_ORG_TOKEN_DEV }}
+          AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+          AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
+        run: |
+          pnpm --filter @fern-api/cli dist:cli:dev
+          $cliPath = Join-Path $env:GITHUB_WORKSPACE "packages\cli\cli\dist\dev\bundle.cjs"
+          if (-not (Test-Path $cliPath)) {
+            Write-Error "CLI path does not exist: $cliPath"
+            exit 1
+          }
+          $scriptPath = Join-Path $env:GITHUB_WORKSPACE "scripts\live-test.ps1"
+          & $scriptPath -cli_path $cliPath -token $env:FERN_ORG_TOKEN_DEV
+
   ts-generator-changes:
     runs-on: ubuntu-latest
     outputs:

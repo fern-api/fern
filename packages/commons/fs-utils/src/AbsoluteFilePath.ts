@@ -1,4 +1,5 @@
 import path from "path";
+import { convertToOsPath } from "./osPathConverter";
 
 export type AbsoluteFilePath = string & {
     __AbsoluteFilePath: void;
@@ -9,6 +10,6 @@ export const AbsoluteFilePath = {
         if (!path.isAbsolute(value)) {
             throw new Error("Filepath is not absolute: " + value);
         }
-        return value as AbsoluteFilePath;
+        return convertToOsPath(value) as AbsoluteFilePath;
     }
 };
