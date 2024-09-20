@@ -17,7 +17,7 @@ export declare namespace EndpointGenerator {
     }
 }
 
-const JSON_VARIALBE_NAME = "$json";
+const JSON_VARIABLE_NAME = "$json";
 const RESPONSE_VARIABLE_NAME = "$response";
 const STATUS_CODE_VARIABLE_NAME = "$statusCode";
 
@@ -148,7 +148,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     }
                     writer.writeNodeStatement(this.getResponseBodyContent());
                     if (return_.isOptional()) {
-                        writer.controlFlow("if", php.codeblock(`empty(${JSON_VARIALBE_NAME})`));
+                        writer.controlFlow("if", php.codeblock(`empty(${JSON_VARIABLE_NAME})`));
                         writer.writeTextStatement("return null");
                         writer.endControlFlow();
                     }
@@ -182,7 +182,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         if (return_ == null) {
             return php.codeblock("");
         }
-        const arguments_: UnnamedArgument[] = [php.codeblock(JSON_VARIALBE_NAME)];
+        const arguments_: UnnamedArgument[] = [php.codeblock(JSON_VARIABLE_NAME)];
         const internalType = return_.underlyingType().internalType;
         switch (internalType.type) {
             case "reference":
@@ -274,7 +274,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
     private getResponseBodyContent(): php.CodeBlock {
         return php.codeblock((writer) => {
-            writer.write(`${JSON_VARIALBE_NAME} = ${RESPONSE_VARIABLE_NAME}->getBody()->getContents()`);
+            writer.write(`${JSON_VARIABLE_NAME} = ${RESPONSE_VARIABLE_NAME}->getBody()->getContents()`);
         });
     }
 }
