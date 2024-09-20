@@ -13,79 +13,79 @@ class ObjectWithOptionalField extends SerializableType
     /**
      * @var ?string $string This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
      */
-    #[JsonProperty("string")]
+    #[JsonProperty('string')]
     public ?string $string;
 
     /**
      * @var ?int $integer
      */
-    #[JsonProperty("integer")]
+    #[JsonProperty('integer')]
     public ?int $integer;
 
     /**
      * @var ?int $long
      */
-    #[JsonProperty("long")]
+    #[JsonProperty('long')]
     public ?int $long;
 
     /**
      * @var ?float $double
      */
-    #[JsonProperty("double")]
+    #[JsonProperty('double')]
     public ?float $double;
 
     /**
      * @var ?bool $bool
      */
-    #[JsonProperty("bool")]
+    #[JsonProperty('bool')]
     public ?bool $bool;
 
     /**
      * @var ?DateTime $datetime
      */
-    #[JsonProperty("datetime"), DateType(DateType::TYPE_DATETIME)]
+    #[JsonProperty('datetime'), DateType(DateType::TYPE_DATETIME)]
     public ?DateTime $datetime;
 
     /**
      * @var ?DateTime $date
      */
-    #[JsonProperty("date"), DateType(DateType::TYPE_DATE)]
+    #[JsonProperty('date'), DateType(DateType::TYPE_DATE)]
     public ?DateTime $date;
 
     /**
      * @var ?string $uuid
      */
-    #[JsonProperty("uuid")]
+    #[JsonProperty('uuid')]
     public ?string $uuid;
 
     /**
      * @var ?string $base64
      */
-    #[JsonProperty("base64")]
+    #[JsonProperty('base64')]
     public ?string $base64;
 
     /**
      * @var ?array<string> $list
      */
-    #[JsonProperty("list"), ArrayType(["string"])]
+    #[JsonProperty('list'), ArrayType(['string'])]
     public ?array $list;
 
     /**
      * @var ?array<string> $set
      */
-    #[JsonProperty("set"), ArrayType(["string"])]
+    #[JsonProperty('set'), ArrayType(['string'])]
     public ?array $set;
 
     /**
      * @var ?array<int, string> $map
      */
-    #[JsonProperty("map"), ArrayType(["integer" => "string"])]
+    #[JsonProperty('map'), ArrayType(['integer' => 'string'])]
     public ?array $map;
 
     /**
      * @var ?string $bigint
      */
-    #[JsonProperty("bigint")]
+    #[JsonProperty('bigint')]
     public ?string $bigint;
 
     /**

@@ -10,7 +10,7 @@ class Foo extends SerializableType
     /**
      * @var string $barProperty
      */
-    #[JsonProperty("bar_property")]
+    #[JsonProperty('bar_property')]
     public string $barProperty;
 
     /**

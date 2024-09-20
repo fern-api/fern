@@ -11,13 +11,13 @@ class GetDefaultStarterFilesRequest
     /**
      * @var array<VariableTypeAndName> $inputParams
      */
-    #[JsonProperty("inputParams"), ArrayType([VariableTypeAndName::class])]
+    #[JsonProperty('inputParams'), ArrayType([VariableTypeAndName::class])]
     public array $inputParams;
 
     /**
      * @var mixed $outputType
      */
-    #[JsonProperty("outputType")]
+    #[JsonProperty('outputType')]
     public mixed $outputType;
 
     /**
@@ -29,7 +29,7 @@ class GetDefaultStarterFilesRequest
       - Period `.`
 
      */
-    #[JsonProperty("methodName")]
+    #[JsonProperty('methodName')]
     public string $methodName;
 
     /**

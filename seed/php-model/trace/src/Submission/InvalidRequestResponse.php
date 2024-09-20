@@ -10,13 +10,13 @@ class InvalidRequestResponse extends SerializableType
     /**
      * @var mixed $request
      */
-    #[JsonProperty("request")]
+    #[JsonProperty('request')]
     public mixed $request;
 
     /**
      * @var mixed $cause
      */
-    #[JsonProperty("cause")]
+    #[JsonProperty('cause')]
     public mixed $cause;
 
     /**

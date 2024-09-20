@@ -11,19 +11,19 @@ class Patient extends SerializableType
     /**
      * @var string $resourceType
      */
-    #[JsonProperty("resource_type")]
+    #[JsonProperty('resource_type')]
     public string $resourceType;
 
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var array<Script> $scripts
      */
-    #[JsonProperty("scripts"), ArrayType([Script::class])]
+    #[JsonProperty('scripts'), ArrayType([Script::class])]
     public array $scripts;
 
     /**

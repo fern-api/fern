@@ -10,13 +10,13 @@ class GetGeneratedTestCaseFileRequest extends SerializableType
     /**
      * @var ?TestCaseTemplate $template
      */
-    #[JsonProperty("template")]
+    #[JsonProperty('template')]
     public ?TestCaseTemplate $template;
 
     /**
      * @var TestCaseV2 $testCase
      */
-    #[JsonProperty("testCase")]
+    #[JsonProperty('testCase')]
     public TestCaseV2 $testCase;
 
     /**

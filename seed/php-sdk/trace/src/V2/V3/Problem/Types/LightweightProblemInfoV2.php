@@ -11,25 +11,25 @@ class LightweightProblemInfoV2 extends SerializableType
     /**
      * @var string $problemId
      */
-    #[JsonProperty("problemId")]
+    #[JsonProperty('problemId')]
     public string $problemId;
 
     /**
      * @var string $problemName
      */
-    #[JsonProperty("problemName")]
+    #[JsonProperty('problemName')]
     public string $problemName;
 
     /**
      * @var int $problemVersion
      */
-    #[JsonProperty("problemVersion")]
+    #[JsonProperty('problemVersion')]
     public int $problemVersion;
 
     /**
      * @var array<mixed> $variableTypes
      */
-    #[JsonProperty("variableTypes"), ArrayType(["mixed"])]
+    #[JsonProperty('variableTypes'), ArrayType(['mixed'])]
     public array $variableTypes;
 
     /**

@@ -12,13 +12,13 @@ class StoreTracedWorkspaceRequest
     /**
      * @var WorkspaceRunDetails $workspaceRunDetails
      */
-    #[JsonProperty("workspaceRunDetails")]
+    #[JsonProperty('workspaceRunDetails')]
     public WorkspaceRunDetails $workspaceRunDetails;
 
     /**
      * @var array<TraceResponse> $traceResponses
      */
-    #[JsonProperty("traceResponses"), ArrayType([TraceResponse::class])]
+    #[JsonProperty('traceResponses'), ArrayType([TraceResponse::class])]
     public array $traceResponses;
 
     /**

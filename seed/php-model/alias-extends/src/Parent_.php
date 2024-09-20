@@ -10,7 +10,7 @@ class Parent_ extends SerializableType
     /**
      * @var string $parent
      */
-    #[JsonProperty("parent")]
+    #[JsonProperty('parent')]
     public string $parent;
 
     /**

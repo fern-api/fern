@@ -11,7 +11,7 @@ class ImportingA extends SerializableType
     /**
      * @var ?A $a
      */
-    #[JsonProperty("a")]
+    #[JsonProperty('a')]
     public ?A $a;
 
     /**

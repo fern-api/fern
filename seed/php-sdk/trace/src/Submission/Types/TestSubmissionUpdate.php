@@ -12,13 +12,13 @@ class TestSubmissionUpdate extends SerializableType
     /**
      * @var DateTime $updateTime
      */
-    #[JsonProperty("updateTime"), DateType(DateType::TYPE_DATETIME)]
+    #[JsonProperty('updateTime'), DateType(DateType::TYPE_DATETIME)]
     public DateTime $updateTime;
 
     /**
      * @var mixed $updateInfo
      */
-    #[JsonProperty("updateInfo")]
+    #[JsonProperty('updateInfo')]
     public mixed $updateInfo;
 
     /**

@@ -10,13 +10,13 @@ class UserPage extends SerializableType
     /**
      * @var UserListContainer $data
      */
-    #[JsonProperty("data")]
+    #[JsonProperty('data')]
     public UserListContainer $data;
 
     /**
      * @var ?string $next
      */
-    #[JsonProperty("next")]
+    #[JsonProperty('next')]
     public ?string $next;
 
     /**

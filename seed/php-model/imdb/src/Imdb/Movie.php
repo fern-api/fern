@@ -10,19 +10,19 @@ class Movie extends SerializableType
     /**
      * @var string $id
      */
-    #[JsonProperty("id")]
+    #[JsonProperty('id')]
     public string $id;
 
     /**
      * @var string $title
      */
-    #[JsonProperty("title")]
+    #[JsonProperty('title')]
     public string $title;
 
     /**
      * @var float $rating The rating scale is one to five stars
      */
-    #[JsonProperty("rating")]
+    #[JsonProperty('rating')]
     public float $rating;
 
     /**

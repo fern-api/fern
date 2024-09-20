@@ -14,13 +14,13 @@ class FindRequest
     /**
      * @var ?string $publicProperty
      */
-    #[JsonProperty("publicProperty")]
+    #[JsonProperty('publicProperty')]
     public ?string $publicProperty;
 
     /**
      * @var ?int $privateProperty
      */
-    #[JsonProperty("privateProperty")]
+    #[JsonProperty('privateProperty')]
     public ?int $privateProperty;
 
     /**

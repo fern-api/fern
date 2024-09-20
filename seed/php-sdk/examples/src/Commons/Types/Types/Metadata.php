@@ -11,19 +11,19 @@ class Metadata extends SerializableType
     /**
      * @var string $id
      */
-    #[JsonProperty("id")]
+    #[JsonProperty('id')]
     public string $id;
 
     /**
      * @var ?array<string, string> $data
      */
-    #[JsonProperty("data"), ArrayType(["string" => "string"])]
+    #[JsonProperty('data'), ArrayType(['string' => 'string'])]
     public ?array $data;
 
     /**
      * @var ?string $jsonString
      */
-    #[JsonProperty("jsonString")]
+    #[JsonProperty('jsonString')]
     public ?string $jsonString;
 
     /**

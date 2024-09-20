@@ -10,13 +10,13 @@ class StderrResponse extends SerializableType
     /**
      * @var string $submissionId
      */
-    #[JsonProperty("submissionId")]
+    #[JsonProperty('submissionId')]
     public string $submissionId;
 
     /**
      * @var string $stderr
      */
-    #[JsonProperty("stderr")]
+    #[JsonProperty('stderr')]
     public string $stderr;
 
     /**

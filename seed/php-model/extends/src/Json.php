@@ -10,7 +10,7 @@ class Json extends SerializableType
     /**
      * @var string $raw
      */
-    #[JsonProperty("raw")]
+    #[JsonProperty('raw')]
     public string $raw;
 
     /**

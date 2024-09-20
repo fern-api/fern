@@ -13,25 +13,25 @@ class GetSubmissionStateResponse extends SerializableType
     /**
      * @var ?DateTime $timeSubmitted
      */
-    #[JsonProperty("timeSubmitted"), DateType(DateType::TYPE_DATETIME)]
+    #[JsonProperty('timeSubmitted'), DateType(DateType::TYPE_DATETIME)]
     public ?DateTime $timeSubmitted;
 
     /**
      * @var string $submission
      */
-    #[JsonProperty("submission")]
+    #[JsonProperty('submission')]
     public string $submission;
 
     /**
      * @var Language $language
      */
-    #[JsonProperty("language")]
+    #[JsonProperty('language')]
     public Language $language;
 
     /**
      * @var mixed $submissionTypeState
      */
-    #[JsonProperty("submissionTypeState")]
+    #[JsonProperty('submissionTypeState')]
     public mixed $submissionTypeState;
 
     /**

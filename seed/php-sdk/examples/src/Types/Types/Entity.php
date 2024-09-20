@@ -10,13 +10,13 @@ class Entity extends SerializableType
     /**
      * @var mixed $type
      */
-    #[JsonProperty("type")]
+    #[JsonProperty('type')]
     public mixed $type;
 
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**

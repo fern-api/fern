@@ -13,43 +13,43 @@ class CreateProblemRequestV2 extends SerializableType
     /**
      * @var string $problemName
      */
-    #[JsonProperty("problemName")]
+    #[JsonProperty('problemName')]
     public string $problemName;
 
     /**
      * @var ProblemDescription $problemDescription
      */
-    #[JsonProperty("problemDescription")]
+    #[JsonProperty('problemDescription')]
     public ProblemDescription $problemDescription;
 
     /**
      * @var mixed $customFiles
      */
-    #[JsonProperty("customFiles")]
+    #[JsonProperty('customFiles')]
     public mixed $customFiles;
 
     /**
      * @var array<TestCaseTemplate> $customTestCaseTemplates
      */
-    #[JsonProperty("customTestCaseTemplates"), ArrayType([TestCaseTemplate::class])]
+    #[JsonProperty('customTestCaseTemplates'), ArrayType([TestCaseTemplate::class])]
     public array $customTestCaseTemplates;
 
     /**
      * @var array<TestCaseV2> $testcases
      */
-    #[JsonProperty("testcases"), ArrayType([TestCaseV2::class])]
+    #[JsonProperty('testcases'), ArrayType([TestCaseV2::class])]
     public array $testcases;
 
     /**
      * @var array<Language> $supportedLanguages
      */
-    #[JsonProperty("supportedLanguages"), ArrayType([Language::class])]
+    #[JsonProperty('supportedLanguages'), ArrayType([Language::class])]
     public array $supportedLanguages;
 
     /**
      * @var bool $isPublic
      */
-    #[JsonProperty("isPublic")]
+    #[JsonProperty('isPublic')]
     public bool $isPublic;
 
     /**

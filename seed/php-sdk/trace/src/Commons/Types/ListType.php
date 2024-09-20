@@ -10,13 +10,13 @@ class ListType extends SerializableType
     /**
      * @var mixed $valueType
      */
-    #[JsonProperty("valueType")]
+    #[JsonProperty('valueType')]
     public mixed $valueType;
 
     /**
      * @var ?bool $isFixedLength Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.
      */
-    #[JsonProperty("isFixedLength")]
+    #[JsonProperty('isFixedLength')]
     public ?bool $isFixedLength;
 
     /**

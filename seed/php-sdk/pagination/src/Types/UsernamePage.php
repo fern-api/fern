@@ -11,13 +11,13 @@ class UsernamePage extends SerializableType
     /**
      * @var ?string $after
      */
-    #[JsonProperty("after")]
+    #[JsonProperty('after')]
     public ?string $after;
 
     /**
      * @var array<string> $data
      */
-    #[JsonProperty("data"), ArrayType(["string"])]
+    #[JsonProperty('data'), ArrayType(['string'])]
     public array $data;
 
     /**

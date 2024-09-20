@@ -10,25 +10,25 @@ class BasicTestCaseTemplate extends SerializableType
     /**
      * @var string $templateId
      */
-    #[JsonProperty("templateId")]
+    #[JsonProperty('templateId')]
     public string $templateId;
 
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var TestCaseImplementationDescription $description
      */
-    #[JsonProperty("description")]
+    #[JsonProperty('description')]
     public TestCaseImplementationDescription $description;
 
     /**
      * @var string $expectedValueParameterId
      */
-    #[JsonProperty("expectedValueParameterId")]
+    #[JsonProperty('expectedValueParameterId')]
     public string $expectedValueParameterId;
 
     /**

@@ -25,7 +25,7 @@ export class PhpAttributeMapper {
         attributes.push(
             php.attribute({
                 reference: this.context.getJsonPropertyAttributeClassReference(),
-                arguments: [`"${property.name.wireValue}"`]
+                arguments: [`'${property.name.wireValue}'`]
             })
         );
         const underlyingInternalType = type.underlyingType().internalType;

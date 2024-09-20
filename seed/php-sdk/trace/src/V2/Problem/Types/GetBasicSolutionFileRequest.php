@@ -10,13 +10,13 @@ class GetBasicSolutionFileRequest extends SerializableType
     /**
      * @var string $methodName
      */
-    #[JsonProperty("methodName")]
+    #[JsonProperty('methodName')]
     public string $methodName;
 
     /**
      * @var NonVoidFunctionSignature $signature
      */
-    #[JsonProperty("signature")]
+    #[JsonProperty('signature')]
     public NonVoidFunctionSignature $signature;
 
     /**

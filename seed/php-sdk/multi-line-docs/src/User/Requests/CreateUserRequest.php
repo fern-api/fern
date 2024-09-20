@@ -11,7 +11,7 @@ class CreateUserRequest
     This name is unique to each user.
 
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
@@ -19,7 +19,7 @@ class CreateUserRequest
     This propery is not required.
 
      */
-    #[JsonProperty("age")]
+    #[JsonProperty('age')]
     public ?int $age;
 
     /**

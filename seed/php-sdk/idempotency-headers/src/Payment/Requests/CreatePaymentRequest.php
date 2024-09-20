@@ -10,13 +10,13 @@ class CreatePaymentRequest
     /**
      * @var int $amount
      */
-    #[JsonProperty("amount")]
+    #[JsonProperty('amount')]
     public int $amount;
 
     /**
      * @var Currency $currency
      */
-    #[JsonProperty("currency")]
+    #[JsonProperty('currency')]
     public Currency $currency;
 
     /**

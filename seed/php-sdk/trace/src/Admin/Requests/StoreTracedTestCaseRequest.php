@@ -12,13 +12,13 @@ class StoreTracedTestCaseRequest
     /**
      * @var TestCaseResultWithStdout $result
      */
-    #[JsonProperty("result")]
+    #[JsonProperty('result')]
     public TestCaseResultWithStdout $result;
 
     /**
      * @var array<TraceResponse> $traceResponses
      */
-    #[JsonProperty("traceResponses"), ArrayType([TraceResponse::class])]
+    #[JsonProperty('traceResponses'), ArrayType([TraceResponse::class])]
     public array $traceResponses;
 
     /**

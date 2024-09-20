@@ -10,13 +10,13 @@ class Cat extends SerializableType
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var bool $likesToMeow
      */
-    #[JsonProperty("likesToMeow")]
+    #[JsonProperty('likesToMeow')]
     public bool $likesToMeow;
 
     /**

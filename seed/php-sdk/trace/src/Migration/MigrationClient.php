@@ -50,7 +50,7 @@ class MigrationClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
-                return JsonDecoder::decodeArray($json, [Migration::class]);
+                return JsonDecoder::decodeArray($json, [Migration::class]); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

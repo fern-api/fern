@@ -9,7 +9,7 @@ class InlinedChildRequest
     /**
      * @var string $child
      */
-    #[JsonProperty("child")]
+    #[JsonProperty('child')]
     public string $child;
 
     /**

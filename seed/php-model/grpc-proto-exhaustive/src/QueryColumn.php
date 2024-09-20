@@ -11,31 +11,31 @@ class QueryColumn extends SerializableType
     /**
      * @var array<float> $values
      */
-    #[JsonProperty("values"), ArrayType(["float"])]
+    #[JsonProperty('values'), ArrayType(['float'])]
     public array $values;
 
     /**
      * @var ?int $topK
      */
-    #[JsonProperty("topK")]
+    #[JsonProperty('topK')]
     public ?int $topK;
 
     /**
      * @var ?string $namespace
      */
-    #[JsonProperty("namespace")]
+    #[JsonProperty('namespace')]
     public ?string $namespace;
 
     /**
      * @var mixed $filter
      */
-    #[JsonProperty("filter")]
+    #[JsonProperty('filter')]
     public mixed $filter;
 
     /**
      * @var ?IndexedData $indexedData
      */
-    #[JsonProperty("indexedData")]
+    #[JsonProperty('indexedData')]
     public ?IndexedData $indexedData;
 
     /**

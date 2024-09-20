@@ -11,13 +11,13 @@ class TestCase extends SerializableType
     /**
      * @var string $id
      */
-    #[JsonProperty("id")]
+    #[JsonProperty('id')]
     public string $id;
 
     /**
      * @var array<mixed> $params
      */
-    #[JsonProperty("params"), ArrayType(["mixed"])]
+    #[JsonProperty('params'), ArrayType(['mixed'])]
     public array $params;
 
     /**

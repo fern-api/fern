@@ -153,7 +153,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         writer.endControlFlow();
                     }
                     writer.write("return ");
-                    writer.writeNodeStatement(this.decodeJsonResponse(return_));
+                    writer.writeNode(this.decodeJsonResponse(return_));
                     writer.endControlFlow();
                     writer.write("} catch (");
                     writer.writeNode(this.context.getJsonExceptionClassReference());
@@ -222,7 +222,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         classReference: php.ClassReference;
     }): php.CodeBlock {
         return php.codeblock((writer) => {
-            writer.writeNode(
+            writer.writeNodeStatement(
                 php.invokeMethod({
                     on: classReference,
                     method: "fromJson",
@@ -249,6 +249,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     static_: true
                 })
             );
+            writer.writeLine("; // @phpstan-ignore-line");
         });
     }
 
@@ -260,7 +261,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         methodSuffix: string;
     }): php.CodeBlock {
         return php.codeblock((writer) => {
-            writer.writeNode(
+            writer.writeNodeStatement(
                 php.invokeMethod({
                     on: this.context.getJsonDecoderClassReference(),
                     method: `decode${methodSuffix}`,

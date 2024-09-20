@@ -10,7 +10,7 @@ class TestCaseHiddenGrade extends SerializableType
     /**
      * @var bool $passed
      */
-    #[JsonProperty("passed")]
+    #[JsonProperty('passed')]
     public bool $passed;
 
     /**

@@ -11,13 +11,13 @@ class VoidFunctionSignatureThatTakesActualResult extends SerializableType
     /**
      * @var array<Parameter> $parameters
      */
-    #[JsonProperty("parameters"), ArrayType([Parameter::class])]
+    #[JsonProperty('parameters'), ArrayType([Parameter::class])]
     public array $parameters;
 
     /**
      * @var mixed $actualResultType
      */
-    #[JsonProperty("actualResultType")]
+    #[JsonProperty('actualResultType')]
     public mixed $actualResultType;
 
     /**

@@ -10,13 +10,13 @@ class FilteredType extends SerializableType
     /**
      * @var ?string $publicProperty
      */
-    #[JsonProperty("public_property")]
+    #[JsonProperty('public_property')]
     public ?string $publicProperty;
 
     /**
      * @var int $privateProperty
      */
-    #[JsonProperty("private_property")]
+    #[JsonProperty('private_property')]
     public int $privateProperty;
 
     /**

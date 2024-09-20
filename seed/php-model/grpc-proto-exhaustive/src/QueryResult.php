@@ -11,13 +11,13 @@ class QueryResult extends SerializableType
     /**
      * @var ?array<ScoredColumn> $matches
      */
-    #[JsonProperty("matches"), ArrayType([ScoredColumn::class])]
+    #[JsonProperty('matches'), ArrayType([ScoredColumn::class])]
     public ?array $matches;
 
     /**
      * @var ?string $namespace
      */
-    #[JsonProperty("namespace")]
+    #[JsonProperty('namespace')]
     public ?string $namespace;
 
     /**

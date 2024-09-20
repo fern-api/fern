@@ -12,7 +12,7 @@ class ListUsersBodyOffsetPaginationRequest
     in order to fetch the next page of results.
 
      */
-    #[JsonProperty("pagination")]
+    #[JsonProperty('pagination')]
     public ?WithPage $pagination;
 
     /**

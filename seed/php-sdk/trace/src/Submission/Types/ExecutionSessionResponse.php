@@ -11,25 +11,25 @@ class ExecutionSessionResponse extends SerializableType
     /**
      * @var string $sessionId
      */
-    #[JsonProperty("sessionId")]
+    #[JsonProperty('sessionId')]
     public string $sessionId;
 
     /**
      * @var ?string $executionSessionUrl
      */
-    #[JsonProperty("executionSessionUrl")]
+    #[JsonProperty('executionSessionUrl')]
     public ?string $executionSessionUrl;
 
     /**
      * @var Language $language
      */
-    #[JsonProperty("language")]
+    #[JsonProperty('language')]
     public Language $language;
 
     /**
      * @var ExecutionSessionStatus $status
      */
-    #[JsonProperty("status")]
+    #[JsonProperty('status')]
     public ExecutionSessionStatus $status;
 
     /**

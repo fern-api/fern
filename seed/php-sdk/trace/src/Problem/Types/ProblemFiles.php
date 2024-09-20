@@ -12,13 +12,13 @@ class ProblemFiles extends SerializableType
     /**
      * @var FileInfo $solutionFile
      */
-    #[JsonProperty("solutionFile")]
+    #[JsonProperty('solutionFile')]
     public FileInfo $solutionFile;
 
     /**
      * @var array<FileInfo> $readOnlyFiles
      */
-    #[JsonProperty("readOnlyFiles"), ArrayType([FileInfo::class])]
+    #[JsonProperty('readOnlyFiles'), ArrayType([FileInfo::class])]
     public array $readOnlyFiles;
 
     /**

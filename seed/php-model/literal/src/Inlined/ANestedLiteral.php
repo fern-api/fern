@@ -10,7 +10,7 @@ class ANestedLiteral extends SerializableType
     /**
      * @var string $myLiteral
      */
-    #[JsonProperty("myLiteral")]
+    #[JsonProperty('myLiteral')]
     public string $myLiteral;
 
     /**

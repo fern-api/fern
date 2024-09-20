@@ -10,7 +10,7 @@ class DoubleOptional extends SerializableType
     /**
      * @var ?string $optionalAlias
      */
-    #[JsonProperty("optionalAlias")]
+    #[JsonProperty('optionalAlias')]
     public ?string $optionalAlias;
 
     /**

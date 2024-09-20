@@ -10,13 +10,13 @@ class BinaryTreeNodeAndTreeValue extends SerializableType
     /**
      * @var string $nodeId
      */
-    #[JsonProperty("nodeId")]
+    #[JsonProperty('nodeId')]
     public string $nodeId;
 
     /**
      * @var BinaryTreeValue $fullTree
      */
-    #[JsonProperty("fullTree")]
+    #[JsonProperty('fullTree')]
     public BinaryTreeValue $fullTree;
 
     /**

@@ -10,13 +10,13 @@ class StackInformation extends SerializableType
     /**
      * @var int $numStackFrames
      */
-    #[JsonProperty("numStackFrames")]
+    #[JsonProperty('numStackFrames')]
     public int $numStackFrames;
 
     /**
      * @var ?StackFrame $topStackFrame
      */
-    #[JsonProperty("topStackFrame")]
+    #[JsonProperty('topStackFrame')]
     public ?StackFrame $topStackFrame;
 
     /**

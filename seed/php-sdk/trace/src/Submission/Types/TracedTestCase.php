@@ -10,13 +10,13 @@ class TracedTestCase extends SerializableType
     /**
      * @var TestCaseResultWithStdout $result
      */
-    #[JsonProperty("result")]
+    #[JsonProperty('result')]
     public TestCaseResultWithStdout $result;
 
     /**
      * @var int $traceResponsesSize
      */
-    #[JsonProperty("traceResponsesSize")]
+    #[JsonProperty('traceResponsesSize')]
     public int $traceResponsesSize;
 
     /**

@@ -10,13 +10,13 @@ class BuildingExecutorResponse extends SerializableType
     /**
      * @var string $submissionId
      */
-    #[JsonProperty("submissionId")]
+    #[JsonProperty('submissionId')]
     public string $submissionId;
 
     /**
      * @var ExecutionSessionStatus $status
      */
-    #[JsonProperty("status")]
+    #[JsonProperty('status')]
     public ExecutionSessionStatus $status;
 
     /**

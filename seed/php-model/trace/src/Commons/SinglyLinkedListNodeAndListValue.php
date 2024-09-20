@@ -10,13 +10,13 @@ class SinglyLinkedListNodeAndListValue extends SerializableType
     /**
      * @var string $nodeId
      */
-    #[JsonProperty("nodeId")]
+    #[JsonProperty('nodeId')]
     public string $nodeId;
 
     /**
      * @var SinglyLinkedListValue $fullList
      */
-    #[JsonProperty("fullList")]
+    #[JsonProperty('fullList')]
     public SinglyLinkedListValue $fullList;
 
     /**

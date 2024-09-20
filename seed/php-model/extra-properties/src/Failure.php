@@ -10,7 +10,7 @@ class Failure extends SerializableType
     /**
      * @var string $status
      */
-    #[JsonProperty("status")]
+    #[JsonProperty('status')]
     public string $status;
 
     /**

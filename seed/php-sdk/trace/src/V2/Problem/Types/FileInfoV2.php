@@ -10,25 +10,25 @@ class FileInfoV2 extends SerializableType
     /**
      * @var string $filename
      */
-    #[JsonProperty("filename")]
+    #[JsonProperty('filename')]
     public string $filename;
 
     /**
      * @var string $directory
      */
-    #[JsonProperty("directory")]
+    #[JsonProperty('directory')]
     public string $directory;
 
     /**
      * @var string $contents
      */
-    #[JsonProperty("contents")]
+    #[JsonProperty('contents')]
     public string $contents;
 
     /**
      * @var bool $editable
      */
-    #[JsonProperty("editable")]
+    #[JsonProperty('editable')]
     public bool $editable;
 
     /**

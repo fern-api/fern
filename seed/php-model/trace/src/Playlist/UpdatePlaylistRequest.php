@@ -11,13 +11,13 @@ class UpdatePlaylistRequest extends SerializableType
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var array<string> $problems The problems that make up the playlist.
      */
-    #[JsonProperty("problems"), ArrayType(["string"])]
+    #[JsonProperty('problems'), ArrayType(['string'])]
     public array $problems;
 
     /**

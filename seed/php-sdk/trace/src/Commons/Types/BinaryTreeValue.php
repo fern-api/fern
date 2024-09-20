@@ -11,13 +11,13 @@ class BinaryTreeValue extends SerializableType
     /**
      * @var ?string $root
      */
-    #[JsonProperty("root")]
+    #[JsonProperty('root')]
     public ?string $root;
 
     /**
      * @var array<string, BinaryTreeNodeValue> $nodes
      */
-    #[JsonProperty("nodes"), ArrayType(["string" => BinaryTreeNodeValue::class])]
+    #[JsonProperty('nodes'), ArrayType(['string' => BinaryTreeNodeValue::class])]
     public array $nodes;
 
     /**

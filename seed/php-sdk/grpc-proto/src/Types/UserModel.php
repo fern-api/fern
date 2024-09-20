@@ -10,31 +10,31 @@ class UserModel extends SerializableType
     /**
      * @var ?string $username
      */
-    #[JsonProperty("username")]
+    #[JsonProperty('username')]
     public ?string $username;
 
     /**
      * @var ?string $email
      */
-    #[JsonProperty("email")]
+    #[JsonProperty('email')]
     public ?string $email;
 
     /**
      * @var ?int $age
      */
-    #[JsonProperty("age")]
+    #[JsonProperty('age')]
     public ?int $age;
 
     /**
      * @var ?float $weight
      */
-    #[JsonProperty("weight")]
+    #[JsonProperty('weight')]
     public ?float $weight;
 
     /**
      * @var mixed $metadata
      */
-    #[JsonProperty("metadata")]
+    #[JsonProperty('metadata')]
     public mixed $metadata;
 
     /**

@@ -10,31 +10,31 @@ class RecordingResponseNotification extends SerializableType
     /**
      * @var string $submissionId
      */
-    #[JsonProperty("submissionId")]
+    #[JsonProperty('submissionId')]
     public string $submissionId;
 
     /**
      * @var ?string $testCaseId
      */
-    #[JsonProperty("testCaseId")]
+    #[JsonProperty('testCaseId')]
     public ?string $testCaseId;
 
     /**
      * @var int $lineNumber
      */
-    #[JsonProperty("lineNumber")]
+    #[JsonProperty('lineNumber')]
     public int $lineNumber;
 
     /**
      * @var LightweightStackframeInformation $lightweightStackInfo
      */
-    #[JsonProperty("lightweightStackInfo")]
+    #[JsonProperty('lightweightStackInfo')]
     public LightweightStackframeInformation $lightweightStackInfo;
 
     /**
      * @var ?TracedFile $tracedFile
      */
-    #[JsonProperty("tracedFile")]
+    #[JsonProperty('tracedFile')]
     public ?TracedFile $tracedFile;
 
     /**

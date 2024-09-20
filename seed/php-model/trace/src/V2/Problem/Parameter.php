@@ -10,19 +10,19 @@ class Parameter extends SerializableType
     /**
      * @var string $parameterId
      */
-    #[JsonProperty("parameterId")]
+    #[JsonProperty('parameterId')]
     public string $parameterId;
 
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var mixed $variableType
      */
-    #[JsonProperty("variableType")]
+    #[JsonProperty('variableType')]
     public mixed $variableType;
 
     /**

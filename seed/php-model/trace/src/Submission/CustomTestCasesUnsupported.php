@@ -10,13 +10,13 @@ class CustomTestCasesUnsupported extends SerializableType
     /**
      * @var string $problemId
      */
-    #[JsonProperty("problemId")]
+    #[JsonProperty('problemId')]
     public string $problemId;
 
     /**
      * @var string $submissionId
      */
-    #[JsonProperty("submissionId")]
+    #[JsonProperty('submissionId')]
     public string $submissionId;
 
     /**
