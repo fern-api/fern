@@ -1,0 +1,27 @@
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { ValidationViolation } from "@fern-api/fern-definition-validator";
+import { NoExtensionsWithFileUploadRule } from "@fern-api/fern-definition-validator";
+describe("no-extensions-with-file-upload", () => {
+    it("simple", async () => {
+        const violations = await getViolationsForRule({
+            rule: NoExtensionsWithFileUploadRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("simple")
+            )
+        });
+
+        const expectedViolations: ValidationViolation[] = [
+            {
+                message: "Request body extensions are not supported for file-upload requests.",
+                nodePath: ["service", "endpoints", "extendsAndFile"],
+                relativeFilepath: RelativeFilePath.of("file-upload.yml"),
+                severity: "error"
+            }
+        ];
+
+        expect(violations).toEqual(expectedViolations);
+    });
+});

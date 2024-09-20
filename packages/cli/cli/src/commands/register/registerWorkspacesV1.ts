@@ -40,7 +40,7 @@ export async function registerWorkspacesV1({
                     context.failWithoutThrowing("Registering from OpenAPI not currently supported.");
                     return;
                 }
-                const resolvedWorkspace = await workspace.toFernWorkspace({});
+                const resolvedWorkspace = await workspace.toFernWorkspace({ context });
                 const registerApiResponse = await fiddle.definitionRegistry.registerUsingOrgToken({
                     apiId: FernFiddle.ApiId(resolvedWorkspace.definition.rootApiFile.contents.name),
                     version,
@@ -63,7 +63,7 @@ export async function registerWorkspacesV1({
                 const tarPath = path.join(tmpDir.path, "definition.tgz");
 
                 context.logger.debug(`Compressing definition at ${tmpDir.path}`);
-                await tar.create({ file: tarPath, cwd: resolvedWorkspace.absoluteFilepath }, ["."]);
+                await tar.create({ file: tarPath, cwd: resolvedWorkspace.absoluteFilePath }, ["."]);
 
                 context.logger.info("Uploading definition...");
                 await axios.put(registerApiResponse.body.definitionS3UploadUrl, await readFile(tarPath));
