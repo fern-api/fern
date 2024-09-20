@@ -158,9 +158,13 @@ jobs:
           AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
         run: |
           pnpm --filter @fern-api/cli dist:cli:dev
-          $cliPath = (Get-Location).Path + "\packages\cli\cli\dist\dev\bundle.cjs"
-          Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
-          ./scripts/live-test.ps1 -cli_path "$cli_path" -token "$FERN_ORG_TOKEN_DEV"
+          $cliPath = Join-Path $env:GITHUB_WORKSPACE "packages\cli\cli\dist\dev\bundle.cjs"
+          if (-not (Test-Path $cliPath)) {
+            Write-Error "CLI path does not exist: $cliPath"
+            exit 1
+          }
+          $scriptPath = Join-Path $env:GITHUB_WORKSPACE "scripts\live-test.ps1"
+          & $scriptPath -cli_path $cliPath -token $env:FERN_ORG_TOKEN_DEV
 
   ts-generator-changes:
     runs-on: ubuntu-latest
