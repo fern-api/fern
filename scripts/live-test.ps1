@@ -31,4 +31,4 @@ node $cliPath generate --log-level debug
 node $cliPath register --log-level debug
 
 # Remove the temporary directory
-Remove-Item -Recurse -Force $testDir
+# Remove-Item -Recurse -Force $testDir
