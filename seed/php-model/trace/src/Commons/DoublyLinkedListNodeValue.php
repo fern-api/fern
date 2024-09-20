@@ -32,20 +32,19 @@ class DoublyLinkedListNodeValue extends SerializableType
     public ?string $prev;
 
     /**
-     * @param string $nodeId
-     * @param float $val
-     * @param ?string $next
-     * @param ?string $prev
+     * @param array{
+     *   nodeId: string,
+     *   val: float,
+     *   next?: ?string,
+     *   prev?: ?string,
+     * } $values
      */
     public function __construct(
-        string $nodeId,
-        float $val,
-        ?string $next = null,
-        ?string $prev = null,
+        array $values,
     ) {
-        $this->nodeId = $nodeId;
-        $this->val = $val;
-        $this->next = $next;
-        $this->prev = $prev;
+        $this->nodeId = $values['nodeId'];
+        $this->val = $values['val'];
+        $this->next = $values['next'] ?? null;
+        $this->prev = $values['prev'] ?? null;
     }
 }

@@ -20,14 +20,15 @@ class NextPage extends SerializableType
     public string $startingAfter;
 
     /**
-     * @param int $page
-     * @param string $startingAfter
+     * @param array{
+     *   page: int,
+     *   startingAfter: string,
+     * } $values
      */
     public function __construct(
-        int $page,
-        string $startingAfter,
+        array $values,
     ) {
-        $this->page = $page;
-        $this->startingAfter = $startingAfter;
+        $this->page = $values['page'];
+        $this->startingAfter = $values['startingAfter'];
     }
 }

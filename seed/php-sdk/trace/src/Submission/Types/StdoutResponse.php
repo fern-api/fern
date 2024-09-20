@@ -20,14 +20,15 @@ class StdoutResponse extends SerializableType
     public string $stdout;
 
     /**
-     * @param string $submissionId
-     * @param string $stdout
+     * @param array{
+     *   submissionId: string,
+     *   stdout: string,
+     * } $values
      */
     public function __construct(
-        string $submissionId,
-        string $stdout,
+        array $values,
     ) {
-        $this->submissionId = $submissionId;
-        $this->stdout = $stdout;
+        $this->submissionId = $values['submissionId'];
+        $this->stdout = $values['stdout'];
     }
 }

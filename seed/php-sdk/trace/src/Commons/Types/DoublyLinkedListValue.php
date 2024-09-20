@@ -9,26 +9,27 @@ use Seed\Core\ArrayType;
 class DoublyLinkedListValue extends SerializableType
 {
     /**
-     * @var array<string, DoublyLinkedListNodeValue> $nodes
-     */
-    #[JsonProperty("nodes"), ArrayType(["string" => DoublyLinkedListNodeValue::class])]
-    public array $nodes;
-
-    /**
      * @var ?string $head
      */
     #[JsonProperty("head")]
     public ?string $head;
 
     /**
-     * @param array<string, DoublyLinkedListNodeValue> $nodes
-     * @param ?string $head
+     * @var array<string, DoublyLinkedListNodeValue> $nodes
+     */
+    #[JsonProperty("nodes"), ArrayType(["string" => DoublyLinkedListNodeValue::class])]
+    public array $nodes;
+
+    /**
+     * @param array{
+     *   head?: ?string,
+     *   nodes: array<string, DoublyLinkedListNodeValue>,
+     * } $values
      */
     public function __construct(
-        array $nodes,
-        ?string $head = null,
+        array $values,
     ) {
-        $this->nodes = $nodes;
-        $this->head = $head;
+        $this->head = $values['head'] ?? null;
+        $this->nodes = $values['nodes'];
     }
 }

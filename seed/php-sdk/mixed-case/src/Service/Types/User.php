@@ -27,17 +27,17 @@ class User extends SerializableType
     public array $extraProperties;
 
     /**
-     * @param string $userName
-     * @param array<string> $metadataTags
-     * @param array<string, string> $extraProperties
+     * @param array{
+     *   userName: string,
+     *   metadataTags: array<string>,
+     *   extraProperties: array<string, string>,
+     * } $values
      */
     public function __construct(
-        string $userName,
-        array $metadataTags,
-        array $extraProperties,
+        array $values,
     ) {
-        $this->userName = $userName;
-        $this->metadataTags = $metadataTags;
-        $this->extraProperties = $extraProperties;
+        $this->userName = $values['userName'];
+        $this->metadataTags = $values['metadataTags'];
+        $this->extraProperties = $values['extraProperties'];
     }
 }

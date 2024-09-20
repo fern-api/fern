@@ -35,20 +35,19 @@ class Type extends SerializableType
     public Shape $shape;
 
     /**
-     * @param float $decimal
-     * @param int $even
-     * @param string $name
-     * @param Shape $shape
+     * @param array{
+     *   decimal: float,
+     *   even: int,
+     *   name: string,
+     *   shape: Shape,
+     * } $values
      */
     public function __construct(
-        float $decimal,
-        int $even,
-        string $name,
-        Shape $shape,
+        array $values,
     ) {
-        $this->decimal = $decimal;
-        $this->even = $even;
-        $this->name = $name;
-        $this->shape = $shape;
+        $this->decimal = $values['decimal'];
+        $this->even = $values['even'];
+        $this->name = $values['name'];
+        $this->shape = $values['shape'];
     }
 }

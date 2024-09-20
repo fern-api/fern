@@ -14,11 +14,13 @@ class UnauthorizedRequestErrorBody extends SerializableType
     public string $message;
 
     /**
-     * @param string $message
+     * @param array{
+     *   message: string,
+     * } $values
      */
     public function __construct(
-        string $message,
+        array $values,
     ) {
-        $this->message = $message;
+        $this->message = $values['message'];
     }
 }

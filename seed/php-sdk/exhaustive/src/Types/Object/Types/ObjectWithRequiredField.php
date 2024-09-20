@@ -14,11 +14,13 @@ class ObjectWithRequiredField extends SerializableType
     public string $string;
 
     /**
-     * @param string $string
+     * @param array{
+     *   string: string,
+     * } $values
      */
     public function __construct(
-        string $string,
+        array $values,
     ) {
-        $this->string = $string;
+        $this->string = $values['string'];
     }
 }

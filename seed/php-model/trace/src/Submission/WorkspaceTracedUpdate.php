@@ -14,11 +14,13 @@ class WorkspaceTracedUpdate extends SerializableType
     public int $traceResponsesSize;
 
     /**
-     * @param int $traceResponsesSize
+     * @param array{
+     *   traceResponsesSize: int,
+     * } $values
      */
     public function __construct(
-        int $traceResponsesSize,
+        array $values,
     ) {
-        $this->traceResponsesSize = $traceResponsesSize;
+        $this->traceResponsesSize = $values['traceResponsesSize'];
     }
 }

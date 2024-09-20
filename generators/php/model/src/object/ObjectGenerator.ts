@@ -20,43 +20,28 @@ export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSch
     }
 
     public doGenerate(): PhpFile {
-        const clazz = php.class_({
+        const clazz = php.dataClass({
             ...this.classReference,
             docs: this.typeDeclaration.docs,
             parentClassReference: this.context.getSerializableTypeClassReference()
         });
 
         // TODO: handle extended properties
-        const properties: php.Field.Args[] = this.objectDeclaration.properties.map((property) => {
+        for (const property of this.objectDeclaration.properties) {
             const convertedType = this.context.phpTypeMapper.convert({ reference: property.valueType });
-            return {
-                type: convertedType,
-                name: this.context.getPropertyName(property.name.name),
-                access: "public",
-                docs: property.docs,
-                attributes: this.context.phpAttributeMapper.convert({
+            clazz.addField(
+                php.field({
                     type: convertedType,
-                    property
+                    name: this.context.getPropertyName(property.name.name),
+                    access: "public",
+                    docs: property.docs,
+                    attributes: this.context.phpAttributeMapper.convert({
+                        type: convertedType,
+                        property
+                    })
                 })
-            };
-        });
-
-        const requiredProperties = properties.filter(({ type }) => type.internalType.type !== "optional");
-        const optionalProperties = properties.filter(({ type }) => type.internalType.type === "optional");
-        const orderedProperties = [...requiredProperties, ...optionalProperties];
-        orderedProperties.forEach((property) => {
-            clazz.addField(php.field(property));
-        });
-
-        const parameters = orderedProperties.map((property) => php.parameter({ ...property, access: undefined }));
-        clazz.addConstructor({
-            parameters,
-            body: php.codeblock((writer) => {
-                orderedProperties.forEach(({ name }) => {
-                    writer.writeTextStatement(`$this->${name} = $${name}`);
-                });
-            })
-        });
+            );
+        }
 
         return new PhpFile({
             clazz,

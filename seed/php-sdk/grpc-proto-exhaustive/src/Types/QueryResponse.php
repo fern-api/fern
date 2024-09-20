@@ -33,20 +33,19 @@ class QueryResponse extends SerializableType
     public ?Usage $usage;
 
     /**
-     * @param ?array<QueryResult> $results
-     * @param ?array<ScoredColumn> $matches
-     * @param ?string $namespace
-     * @param ?Usage $usage
+     * @param array{
+     *   results?: ?array<QueryResult>,
+     *   matches?: ?array<ScoredColumn>,
+     *   namespace?: ?string,
+     *   usage?: ?Usage,
+     * } $values
      */
     public function __construct(
-        ?array $results = null,
-        ?array $matches = null,
-        ?string $namespace = null,
-        ?Usage $usage = null,
+        array $values,
     ) {
-        $this->results = $results;
-        $this->matches = $matches;
-        $this->namespace = $namespace;
-        $this->usage = $usage;
+        $this->results = $values['results'] ?? null;
+        $this->matches = $values['matches'] ?? null;
+        $this->namespace = $values['namespace'] ?? null;
+        $this->usage = $values['usage'] ?? null;
     }
 }

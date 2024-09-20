@@ -25,17 +25,17 @@ class CreateUserRequest
     public string $name;
 
     /**
-     * @param string $type
-     * @param string $version
-     * @param string $name
+     * @param array{
+     *   type: string,
+     *   version: string,
+     *   name: string,
+     * } $values
      */
     public function __construct(
-        string $type,
-        string $version,
-        string $name,
+        array $values,
     ) {
-        $this->type = $type;
-        $this->version = $version;
-        $this->name = $name;
+        $this->type = $values['type'];
+        $this->version = $values['version'];
+        $this->name = $values['name'];
     }
 }

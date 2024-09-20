@@ -20,14 +20,15 @@ class LightweightStackframeInformation extends SerializableType
     public string $topStackFrameMethodName;
 
     /**
-     * @param int $numStackFrames
-     * @param string $topStackFrameMethodName
+     * @param array{
+     *   numStackFrames: int,
+     *   topStackFrameMethodName: string,
+     * } $values
      */
     public function __construct(
-        int $numStackFrames,
-        string $topStackFrameMethodName,
+        array $values,
     ) {
-        $this->numStackFrames = $numStackFrames;
-        $this->topStackFrameMethodName = $topStackFrameMethodName;
+        $this->numStackFrames = $values['numStackFrames'];
+        $this->topStackFrameMethodName = $values['topStackFrameMethodName'];
     }
 }

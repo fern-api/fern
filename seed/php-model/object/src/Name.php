@@ -20,14 +20,15 @@ class Name extends SerializableType
     public string $value;
 
     /**
-     * @param string $id
-     * @param string $value
+     * @param array{
+     *   id: string,
+     *   value: string,
+     * } $values
      */
     public function __construct(
-        string $id,
-        string $value,
+        array $values,
     ) {
-        $this->id = $id;
-        $this->value = $value;
+        $this->id = $values['id'];
+        $this->value = $values['value'];
     }
 }

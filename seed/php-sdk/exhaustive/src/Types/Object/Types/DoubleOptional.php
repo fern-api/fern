@@ -14,11 +14,13 @@ class DoubleOptional extends SerializableType
     public ?string $optionalAlias;
 
     /**
-     * @param ?string $optionalAlias
+     * @param array{
+     *   optionalAlias?: ?string,
+     * } $values
      */
     public function __construct(
-        ?string $optionalAlias = null,
+        array $values,
     ) {
-        $this->optionalAlias = $optionalAlias;
+        $this->optionalAlias = $values['optionalAlias'] ?? null;
     }
 }

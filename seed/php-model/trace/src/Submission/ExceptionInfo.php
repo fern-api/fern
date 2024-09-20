@@ -26,17 +26,17 @@ class ExceptionInfo extends SerializableType
     public string $exceptionStacktrace;
 
     /**
-     * @param string $exceptionType
-     * @param string $exceptionMessage
-     * @param string $exceptionStacktrace
+     * @param array{
+     *   exceptionType: string,
+     *   exceptionMessage: string,
+     *   exceptionStacktrace: string,
+     * } $values
      */
     public function __construct(
-        string $exceptionType,
-        string $exceptionMessage,
-        string $exceptionStacktrace,
+        array $values,
     ) {
-        $this->exceptionType = $exceptionType;
-        $this->exceptionMessage = $exceptionMessage;
-        $this->exceptionStacktrace = $exceptionStacktrace;
+        $this->exceptionType = $values['exceptionType'];
+        $this->exceptionMessage = $values['exceptionMessage'];
+        $this->exceptionStacktrace = $values['exceptionStacktrace'];
     }
 }

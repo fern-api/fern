@@ -26,17 +26,17 @@ class Movie extends SerializableType
     public float $rating;
 
     /**
-     * @param string $id
-     * @param string $title
-     * @param float $rating The rating scale is one to five stars
+     * @param array{
+     *   id: string,
+     *   title: string,
+     *   rating: float,
+     * } $values
      */
     public function __construct(
-        string $id,
-        string $title,
-        float $rating,
+        array $values,
     ) {
-        $this->id = $id;
-        $this->title = $title;
-        $this->rating = $rating;
+        $this->id = $values['id'];
+        $this->title = $values['title'];
+        $this->rating = $values['rating'];
     }
 }

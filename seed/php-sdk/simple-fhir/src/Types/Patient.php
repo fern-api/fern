@@ -27,17 +27,17 @@ class Patient extends SerializableType
     public array $scripts;
 
     /**
-     * @param string $resourceType
-     * @param string $name
-     * @param array<Script> $scripts
+     * @param array{
+     *   resourceType: string,
+     *   name: string,
+     *   scripts: array<Script>,
+     * } $values
      */
     public function __construct(
-        string $resourceType,
-        string $name,
-        array $scripts,
+        array $values,
     ) {
-        $this->resourceType = $resourceType;
-        $this->name = $name;
-        $this->scripts = $scripts;
+        $this->resourceType = $values['resourceType'];
+        $this->name = $values['name'];
+        $this->scripts = $values['scripts'];
     }
 }

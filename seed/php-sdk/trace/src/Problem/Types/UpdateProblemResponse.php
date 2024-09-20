@@ -14,11 +14,13 @@ class UpdateProblemResponse extends SerializableType
     public int $problemVersion;
 
     /**
-     * @param int $problemVersion
+     * @param array{
+     *   problemVersion: int,
+     * } $values
      */
     public function __construct(
-        int $problemVersion,
+        array $values,
     ) {
-        $this->problemVersion = $problemVersion;
+        $this->problemVersion = $values['problemVersion'];
     }
 }

@@ -14,11 +14,13 @@ class UsernameCursor extends SerializableType
     public UsernamePage $cursor;
 
     /**
-     * @param UsernamePage $cursor
+     * @param array{
+     *   cursor: UsernamePage,
+     * } $values
      */
     public function __construct(
-        UsernamePage $cursor,
+        array $values,
     ) {
-        $this->cursor = $cursor;
+        $this->cursor = $values['cursor'];
     }
 }

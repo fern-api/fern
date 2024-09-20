@@ -21,14 +21,15 @@ class QueryResult extends SerializableType
     public ?string $namespace;
 
     /**
-     * @param ?array<ScoredColumn> $matches
-     * @param ?string $namespace
+     * @param array{
+     *   matches?: ?array<ScoredColumn>,
+     *   namespace?: ?string,
+     * } $values
      */
     public function __construct(
-        ?array $matches = null,
-        ?string $namespace = null,
+        array $values,
     ) {
-        $this->matches = $matches;
-        $this->namespace = $namespace;
+        $this->matches = $values['matches'] ?? null;
+        $this->namespace = $values['namespace'] ?? null;
     }
 }

@@ -20,14 +20,15 @@ class TracedFile extends SerializableType
     public string $directory;
 
     /**
-     * @param string $filename
-     * @param string $directory
+     * @param array{
+     *   filename: string,
+     *   directory: string,
+     * } $values
      */
     public function __construct(
-        string $filename,
-        string $directory,
+        array $values,
     ) {
-        $this->filename = $filename;
-        $this->directory = $directory;
+        $this->filename = $values['filename'];
+        $this->directory = $values['directory'];
     }
 }

@@ -15,29 +15,29 @@ class GetExecutionSessionStateResponse extends SerializableType
     public array $states;
 
     /**
-     * @var array<string> $warmingSessionIds
-     */
-    #[JsonProperty("warmingSessionIds"), ArrayType(["string"])]
-    public array $warmingSessionIds;
-
-    /**
      * @var ?int $numWarmingInstances
      */
     #[JsonProperty("numWarmingInstances")]
     public ?int $numWarmingInstances;
 
     /**
-     * @param array<string, ExecutionSessionState> $states
-     * @param array<string> $warmingSessionIds
-     * @param ?int $numWarmingInstances
+     * @var array<string> $warmingSessionIds
+     */
+    #[JsonProperty("warmingSessionIds"), ArrayType(["string"])]
+    public array $warmingSessionIds;
+
+    /**
+     * @param array{
+     *   states: array<string, ExecutionSessionState>,
+     *   numWarmingInstances?: ?int,
+     *   warmingSessionIds: array<string>,
+     * } $values
      */
     public function __construct(
-        array $states,
-        array $warmingSessionIds,
-        ?int $numWarmingInstances = null,
+        array $values,
     ) {
-        $this->states = $states;
-        $this->warmingSessionIds = $warmingSessionIds;
-        $this->numWarmingInstances = $numWarmingInstances;
+        $this->states = $values['states'];
+        $this->numWarmingInstances = $values['numWarmingInstances'] ?? null;
+        $this->warmingSessionIds = $values['warmingSessionIds'];
     }
 }

@@ -23,17 +23,17 @@ class SendLiteralsInHeadersRequest
     public string $query;
 
     /**
-     * @param string $endpointVersion
-     * @param bool $async
-     * @param string $query
+     * @param array{
+     *   endpointVersion: string,
+     *   async: bool,
+     *   query: string,
+     * } $values
      */
     public function __construct(
-        string $endpointVersion,
-        bool $async,
-        string $query,
+        array $values,
     ) {
-        $this->endpointVersion = $endpointVersion;
-        $this->async = $async;
-        $this->query = $query;
+        $this->endpointVersion = $values['endpointVersion'];
+        $this->async = $values['async'];
+        $this->query = $values['query'];
     }
 }

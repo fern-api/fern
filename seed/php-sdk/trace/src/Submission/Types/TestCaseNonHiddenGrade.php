@@ -32,20 +32,19 @@ class TestCaseNonHiddenGrade extends SerializableType
     public string $stdout;
 
     /**
-     * @param bool $passed
-     * @param mixed $actualResult
-     * @param mixed $exception
-     * @param string $stdout
+     * @param array{
+     *   passed: bool,
+     *   actualResult: mixed,
+     *   exception: mixed,
+     *   stdout: string,
+     * } $values
      */
     public function __construct(
-        bool $passed,
-        mixed $actualResult,
-        mixed $exception,
-        string $stdout,
+        array $values,
     ) {
-        $this->passed = $passed;
-        $this->actualResult = $actualResult;
-        $this->exception = $exception;
-        $this->stdout = $stdout;
+        $this->passed = $values['passed'];
+        $this->actualResult = $values['actualResult'];
+        $this->exception = $values['exception'];
+        $this->stdout = $values['stdout'];
     }
 }

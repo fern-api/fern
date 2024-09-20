@@ -33,20 +33,19 @@ class TestCaseV2 extends SerializableType
     public ?TestCaseExpects $expects;
 
     /**
-     * @param TestCaseMetadata $metadata
-     * @param mixed $implementation
-     * @param array<string, mixed> $arguments
-     * @param ?TestCaseExpects $expects
+     * @param array{
+     *   metadata: TestCaseMetadata,
+     *   implementation: mixed,
+     *   arguments: array<string, mixed>,
+     *   expects?: ?TestCaseExpects,
+     * } $values
      */
     public function __construct(
-        TestCaseMetadata $metadata,
-        mixed $implementation,
-        array $arguments,
-        ?TestCaseExpects $expects = null,
+        array $values,
     ) {
-        $this->metadata = $metadata;
-        $this->implementation = $implementation;
-        $this->arguments = $arguments;
-        $this->expects = $expects;
+        $this->metadata = $values['metadata'];
+        $this->implementation = $values['implementation'];
+        $this->arguments = $values['arguments'];
+        $this->expects = $values['expects'] ?? null;
     }
 }

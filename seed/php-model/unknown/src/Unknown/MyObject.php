@@ -14,11 +14,13 @@ class MyObject extends SerializableType
     public mixed $unknown;
 
     /**
-     * @param mixed $unknown
+     * @param array{
+     *   unknown: mixed,
+     * } $values
      */
     public function __construct(
-        mixed $unknown,
+        array $values,
     ) {
-        $this->unknown = $unknown;
+        $this->unknown = $values['unknown'];
     }
 }

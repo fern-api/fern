@@ -20,14 +20,15 @@ class Migration extends SerializableType
     public MigrationStatus $status;
 
     /**
-     * @param string $name
-     * @param MigrationStatus $status
+     * @param array{
+     *   name: string,
+     *   status: MigrationStatus,
+     * } $values
      */
     public function __construct(
-        string $name,
-        MigrationStatus $status,
+        array $values,
     ) {
-        $this->name = $name;
-        $this->status = $status;
+        $this->name = $values['name'];
+        $this->status = $values['status'];
     }
 }

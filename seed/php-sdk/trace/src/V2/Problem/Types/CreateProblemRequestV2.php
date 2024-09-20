@@ -53,29 +53,25 @@ class CreateProblemRequestV2 extends SerializableType
     public bool $isPublic;
 
     /**
-     * @param string $problemName
-     * @param ProblemDescription $problemDescription
-     * @param mixed $customFiles
-     * @param array<TestCaseTemplate> $customTestCaseTemplates
-     * @param array<TestCaseV2> $testcases
-     * @param array<Language> $supportedLanguages
-     * @param bool $isPublic
+     * @param array{
+     *   problemName: string,
+     *   problemDescription: ProblemDescription,
+     *   customFiles: mixed,
+     *   customTestCaseTemplates: array<TestCaseTemplate>,
+     *   testcases: array<TestCaseV2>,
+     *   supportedLanguages: array<Language>,
+     *   isPublic: bool,
+     * } $values
      */
     public function __construct(
-        string $problemName,
-        ProblemDescription $problemDescription,
-        mixed $customFiles,
-        array $customTestCaseTemplates,
-        array $testcases,
-        array $supportedLanguages,
-        bool $isPublic,
+        array $values,
     ) {
-        $this->problemName = $problemName;
-        $this->problemDescription = $problemDescription;
-        $this->customFiles = $customFiles;
-        $this->customTestCaseTemplates = $customTestCaseTemplates;
-        $this->testcases = $testcases;
-        $this->supportedLanguages = $supportedLanguages;
-        $this->isPublic = $isPublic;
+        $this->problemName = $values['problemName'];
+        $this->problemDescription = $values['problemDescription'];
+        $this->customFiles = $values['customFiles'];
+        $this->customTestCaseTemplates = $values['customTestCaseTemplates'];
+        $this->testcases = $values['testcases'];
+        $this->supportedLanguages = $values['supportedLanguages'];
+        $this->isPublic = $values['isPublic'];
     }
 }

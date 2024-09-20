@@ -20,14 +20,15 @@ class RunningResponse extends SerializableType
     public RunningSubmissionState $state;
 
     /**
-     * @param string $submissionId
-     * @param RunningSubmissionState $state
+     * @param array{
+     *   submissionId: string,
+     *   state: RunningSubmissionState,
+     * } $values
      */
     public function __construct(
-        string $submissionId,
-        RunningSubmissionState $state,
+        array $values,
     ) {
-        $this->submissionId = $submissionId;
-        $this->state = $state;
+        $this->submissionId = $values['submissionId'];
+        $this->state = $values['state'];
     }
 }

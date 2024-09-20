@@ -20,14 +20,15 @@ class ExpressionLocation extends SerializableType
     public int $offset;
 
     /**
-     * @param int $start
-     * @param int $offset
+     * @param array{
+     *   start: int,
+     *   offset: int,
+     * } $values
      */
     public function __construct(
-        int $start,
-        int $offset,
+        array $values,
     ) {
-        $this->start = $start;
-        $this->offset = $offset;
+        $this->start = $values['start'];
+        $this->offset = $values['offset'];
     }
 }

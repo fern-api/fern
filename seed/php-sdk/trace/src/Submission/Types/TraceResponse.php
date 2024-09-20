@@ -26,16 +26,16 @@ class TraceResponse extends SerializableType
     public mixed $returnValue;
 
     /**
-     * @var StackInformation $stack
-     */
-    #[JsonProperty("stack")]
-    public StackInformation $stack;
-
-    /**
      * @var ?ExpressionLocation $expressionLocation
      */
     #[JsonProperty("expressionLocation")]
     public ?ExpressionLocation $expressionLocation;
+
+    /**
+     * @var StackInformation $stack
+     */
+    #[JsonProperty("stack")]
+    public StackInformation $stack;
 
     /**
      * @var ?string $stdout
@@ -44,26 +44,23 @@ class TraceResponse extends SerializableType
     public ?string $stdout;
 
     /**
-     * @param string $submissionId
-     * @param int $lineNumber
-     * @param mixed $returnValue
-     * @param StackInformation $stack
-     * @param ?ExpressionLocation $expressionLocation
-     * @param ?string $stdout
+     * @param array{
+     *   submissionId: string,
+     *   lineNumber: int,
+     *   returnValue: mixed,
+     *   expressionLocation?: ?ExpressionLocation,
+     *   stack: StackInformation,
+     *   stdout?: ?string,
+     * } $values
      */
     public function __construct(
-        string $submissionId,
-        int $lineNumber,
-        mixed $returnValue,
-        StackInformation $stack,
-        ?ExpressionLocation $expressionLocation = null,
-        ?string $stdout = null,
+        array $values,
     ) {
-        $this->submissionId = $submissionId;
-        $this->lineNumber = $lineNumber;
-        $this->returnValue = $returnValue;
-        $this->stack = $stack;
-        $this->expressionLocation = $expressionLocation;
-        $this->stdout = $stdout;
+        $this->submissionId = $values['submissionId'];
+        $this->lineNumber = $values['lineNumber'];
+        $this->returnValue = $values['returnValue'];
+        $this->expressionLocation = $values['expressionLocation'] ?? null;
+        $this->stack = $values['stack'];
+        $this->stdout = $values['stdout'] ?? null;
     }
 }

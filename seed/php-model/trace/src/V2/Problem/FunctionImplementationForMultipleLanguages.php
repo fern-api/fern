@@ -16,11 +16,13 @@ class FunctionImplementationForMultipleLanguages extends SerializableType
     public array $codeByLanguage;
 
     /**
-     * @param array<Language, FunctionImplementation> $codeByLanguage
+     * @param array{
+     *   codeByLanguage: array<Language, FunctionImplementation>,
+     * } $values
      */
     public function __construct(
-        array $codeByLanguage,
+        array $values,
     ) {
-        $this->codeByLanguage = $codeByLanguage;
+        $this->codeByLanguage = $values['codeByLanguage'];
     }
 }

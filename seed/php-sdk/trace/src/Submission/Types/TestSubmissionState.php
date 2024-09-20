@@ -34,20 +34,19 @@ class TestSubmissionState extends SerializableType
     public mixed $status;
 
     /**
-     * @param string $problemId
-     * @param array<TestCase> $defaultTestCases
-     * @param array<TestCase> $customTestCases
-     * @param mixed $status
+     * @param array{
+     *   problemId: string,
+     *   defaultTestCases: array<TestCase>,
+     *   customTestCases: array<TestCase>,
+     *   status: mixed,
+     * } $values
      */
     public function __construct(
-        string $problemId,
-        array $defaultTestCases,
-        array $customTestCases,
-        mixed $status,
+        array $values,
     ) {
-        $this->problemId = $problemId;
-        $this->defaultTestCases = $defaultTestCases;
-        $this->customTestCases = $customTestCases;
-        $this->status = $status;
+        $this->problemId = $values['problemId'];
+        $this->defaultTestCases = $values['defaultTestCases'];
+        $this->customTestCases = $values['customTestCases'];
+        $this->status = $values['status'];
     }
 }

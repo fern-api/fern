@@ -27,17 +27,17 @@ class BaseResource extends SerializableType
     public Memo $memo;
 
     /**
-     * @param string $id
-     * @param array<mixed> $relatedResources
-     * @param Memo $memo
+     * @param array{
+     *   id: string,
+     *   relatedResources: array<mixed>,
+     *   memo: Memo,
+     * } $values
      */
     public function __construct(
-        string $id,
-        array $relatedResources,
-        Memo $memo,
+        array $values,
     ) {
-        $this->id = $id;
-        $this->relatedResources = $relatedResources;
-        $this->memo = $memo;
+        $this->id = $values['id'];
+        $this->relatedResources = $values['relatedResources'];
+        $this->memo = $values['memo'];
     }
 }

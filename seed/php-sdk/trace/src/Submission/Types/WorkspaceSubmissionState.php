@@ -14,11 +14,13 @@ class WorkspaceSubmissionState extends SerializableType
     public mixed $status;
 
     /**
-     * @param mixed $status
+     * @param array{
+     *   status: mixed,
+     * } $values
      */
     public function __construct(
-        mixed $status,
+        array $values,
     ) {
-        $this->status = $status;
+        $this->status = $values['status'];
     }
 }

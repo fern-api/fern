@@ -19,14 +19,15 @@ class GenerateStreamRequest
     public int $numEvents;
 
     /**
-     * @param bool $stream
-     * @param int $numEvents
+     * @param array{
+     *   stream: bool,
+     *   numEvents: int,
+     * } $values
      */
     public function __construct(
-        bool $stream,
-        int $numEvents,
+        array $values,
     ) {
-        $this->stream = $stream;
-        $this->numEvents = $numEvents;
+        $this->stream = $values['stream'];
+        $this->numEvents = $values['numEvents'];
     }
 }

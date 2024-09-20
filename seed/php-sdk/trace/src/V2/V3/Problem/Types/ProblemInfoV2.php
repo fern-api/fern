@@ -71,38 +71,31 @@ class ProblemInfoV2 extends SerializableType
     public bool $isPublic;
 
     /**
-     * @param string $problemId
-     * @param ProblemDescription $problemDescription
-     * @param string $problemName
-     * @param int $problemVersion
-     * @param array<Language> $supportedLanguages
-     * @param mixed $customFiles
-     * @param GeneratedFiles $generatedFiles
-     * @param array<TestCaseTemplate> $customTestCaseTemplates
-     * @param array<TestCaseV2> $testcases
-     * @param bool $isPublic
+     * @param array{
+     *   problemId: string,
+     *   problemDescription: ProblemDescription,
+     *   problemName: string,
+     *   problemVersion: int,
+     *   supportedLanguages: array<Language>,
+     *   customFiles: mixed,
+     *   generatedFiles: GeneratedFiles,
+     *   customTestCaseTemplates: array<TestCaseTemplate>,
+     *   testcases: array<TestCaseV2>,
+     *   isPublic: bool,
+     * } $values
      */
     public function __construct(
-        string $problemId,
-        ProblemDescription $problemDescription,
-        string $problemName,
-        int $problemVersion,
-        array $supportedLanguages,
-        mixed $customFiles,
-        GeneratedFiles $generatedFiles,
-        array $customTestCaseTemplates,
-        array $testcases,
-        bool $isPublic,
+        array $values,
     ) {
-        $this->problemId = $problemId;
-        $this->problemDescription = $problemDescription;
-        $this->problemName = $problemName;
-        $this->problemVersion = $problemVersion;
-        $this->supportedLanguages = $supportedLanguages;
-        $this->customFiles = $customFiles;
-        $this->generatedFiles = $generatedFiles;
-        $this->customTestCaseTemplates = $customTestCaseTemplates;
-        $this->testcases = $testcases;
-        $this->isPublic = $isPublic;
+        $this->problemId = $values['problemId'];
+        $this->problemDescription = $values['problemDescription'];
+        $this->problemName = $values['problemName'];
+        $this->problemVersion = $values['problemVersion'];
+        $this->supportedLanguages = $values['supportedLanguages'];
+        $this->customFiles = $values['customFiles'];
+        $this->generatedFiles = $values['generatedFiles'];
+        $this->customTestCaseTemplates = $values['customTestCaseTemplates'];
+        $this->testcases = $values['testcases'];
+        $this->isPublic = $values['isPublic'];
     }
 }

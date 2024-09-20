@@ -33,20 +33,19 @@ class Column extends SerializableType
     public ?IndexedData $indexedData;
 
     /**
-     * @param string $id
-     * @param array<float> $values
-     * @param mixed $metadata
-     * @param ?IndexedData $indexedData
+     * @param array{
+     *   id: string,
+     *   values: array<float>,
+     *   metadata: mixed,
+     *   indexedData?: ?IndexedData,
+     * } $values
      */
     public function __construct(
-        string $id,
         array $values,
-        mixed $metadata,
-        ?IndexedData $indexedData = null,
     ) {
-        $this->id = $id;
-        $this->values = $values;
-        $this->metadata = $metadata;
-        $this->indexedData = $indexedData;
+        $this->id = $values['id'];
+        $this->values = $values['values'];
+        $this->metadata = $values['metadata'];
+        $this->indexedData = $values['indexedData'] ?? null;
     }
 }

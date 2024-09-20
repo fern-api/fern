@@ -15,14 +15,15 @@ class GetWithMultipleQuery
     public array $numer;
 
     /**
-     * @param array<string> $query
-     * @param array<int> $numer
+     * @param array{
+     *   query: array<string>,
+     *   numer: array<int>,
+     * } $values
      */
     public function __construct(
-        array $query,
-        array $numer,
+        array $values,
     ) {
-        $this->query = $query;
-        $this->numer = $numer;
+        $this->query = $values['query'];
+        $this->numer = $values['numer'];
     }
 }

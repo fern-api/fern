@@ -15,11 +15,13 @@ class UsernameContainer extends SerializableType
     public array $results;
 
     /**
-     * @param array<string> $results
+     * @param array{
+     *   results: array<string>,
+     * } $values
      */
     public function __construct(
-        array $results,
+        array $values,
     ) {
-        $this->results = $results;
+        $this->results = $values['results'];
     }
 }

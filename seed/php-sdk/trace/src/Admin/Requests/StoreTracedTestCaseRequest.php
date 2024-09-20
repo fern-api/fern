@@ -22,14 +22,15 @@ class StoreTracedTestCaseRequest
     public array $traceResponses;
 
     /**
-     * @param TestCaseResultWithStdout $result
-     * @param array<TraceResponse> $traceResponses
+     * @param array{
+     *   result: TestCaseResultWithStdout,
+     *   traceResponses: array<TraceResponse>,
+     * } $values
      */
     public function __construct(
-        TestCaseResultWithStdout $result,
-        array $traceResponses,
+        array $values,
     ) {
-        $this->result = $result;
-        $this->traceResponses = $traceResponses;
+        $this->result = $values['result'];
+        $this->traceResponses = $values['traceResponses'];
     }
 }

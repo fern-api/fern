@@ -14,11 +14,13 @@ class LangServerResponse extends SerializableType
     public mixed $response;
 
     /**
-     * @param mixed $response
+     * @param array{
+     *   response: mixed,
+     * } $values
      */
     public function __construct(
-        mixed $response,
+        array $values,
     ) {
-        $this->response = $response;
+        $this->response = $values['response'];
     }
 }

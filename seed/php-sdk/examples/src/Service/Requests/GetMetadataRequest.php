@@ -10,27 +10,27 @@ class GetMetadataRequest
     public string $xApiVersion;
 
     /**
-     * @var array<?string> $tag
-     */
-    public array $tag;
-
-    /**
      * @var ?bool $shallow
      */
     public ?bool $shallow;
 
     /**
-     * @param string $xApiVersion
-     * @param array<?string> $tag
-     * @param ?bool $shallow
+     * @var array<?string> $tag
+     */
+    public array $tag;
+
+    /**
+     * @param array{
+     *   xApiVersion: string,
+     *   shallow?: ?bool,
+     *   tag: array<?string>,
+     * } $values
      */
     public function __construct(
-        string $xApiVersion,
-        array $tag,
-        ?bool $shallow = null,
+        array $values,
     ) {
-        $this->xApiVersion = $xApiVersion;
-        $this->tag = $tag;
-        $this->shallow = $shallow;
+        $this->xApiVersion = $values['xApiVersion'];
+        $this->shallow = $values['shallow'] ?? null;
+        $this->tag = $values['tag'];
     }
 }

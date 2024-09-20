@@ -20,14 +20,15 @@ class CustomTestCasesUnsupported extends SerializableType
     public string $submissionId;
 
     /**
-     * @param string $problemId
-     * @param string $submissionId
+     * @param array{
+     *   problemId: string,
+     *   submissionId: string,
+     * } $values
      */
     public function __construct(
-        string $problemId,
-        string $submissionId,
+        array $values,
     ) {
-        $this->problemId = $problemId;
-        $this->submissionId = $submissionId;
+        $this->problemId = $values['problemId'];
+        $this->submissionId = $values['submissionId'];
     }
 }

@@ -26,17 +26,17 @@ class SinglyLinkedListNodeValue extends SerializableType
     public ?string $next;
 
     /**
-     * @param string $nodeId
-     * @param float $val
-     * @param ?string $next
+     * @param array{
+     *   nodeId: string,
+     *   val: float,
+     *   next?: ?string,
+     * } $values
      */
     public function __construct(
-        string $nodeId,
-        float $val,
-        ?string $next = null,
+        array $values,
     ) {
-        $this->nodeId = $nodeId;
-        $this->val = $val;
-        $this->next = $next;
+        $this->nodeId = $values['nodeId'];
+        $this->val = $values['val'];
+        $this->next = $values['next'] ?? null;
     }
 }

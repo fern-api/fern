@@ -14,11 +14,13 @@ class Square extends SerializableType
     public float $length;
 
     /**
-     * @param float $length
+     * @param array{
+     *   length: float,
+     * } $values
      */
     public function __construct(
-        float $length,
+        array $values,
     ) {
-        $this->length = $length;
+        $this->length = $values['length'];
     }
 }

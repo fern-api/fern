@@ -15,12 +15,6 @@ class QueryColumn extends SerializableType
     public array $values;
 
     /**
-     * @var mixed $filter
-     */
-    #[JsonProperty("filter")]
-    public mixed $filter;
-
-    /**
      * @var ?int $topK
      */
     #[JsonProperty("topK")]
@@ -33,29 +27,33 @@ class QueryColumn extends SerializableType
     public ?string $namespace;
 
     /**
+     * @var mixed $filter
+     */
+    #[JsonProperty("filter")]
+    public mixed $filter;
+
+    /**
      * @var ?IndexedData $indexedData
      */
     #[JsonProperty("indexedData")]
     public ?IndexedData $indexedData;
 
     /**
-     * @param array<float> $values
-     * @param mixed $filter
-     * @param ?int $topK
-     * @param ?string $namespace
-     * @param ?IndexedData $indexedData
+     * @param array{
+     *   values: array<float>,
+     *   topK?: ?int,
+     *   namespace?: ?string,
+     *   filter: mixed,
+     *   indexedData?: ?IndexedData,
+     * } $values
      */
     public function __construct(
         array $values,
-        mixed $filter,
-        ?int $topK = null,
-        ?string $namespace = null,
-        ?IndexedData $indexedData = null,
     ) {
-        $this->values = $values;
-        $this->filter = $filter;
-        $this->topK = $topK;
-        $this->namespace = $namespace;
-        $this->indexedData = $indexedData;
+        $this->values = $values['values'];
+        $this->topK = $values['topK'] ?? null;
+        $this->namespace = $values['namespace'] ?? null;
+        $this->filter = $values['filter'];
+        $this->indexedData = $values['indexedData'] ?? null;
     }
 }

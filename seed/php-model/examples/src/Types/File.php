@@ -20,14 +20,15 @@ class File extends SerializableType
     public string $contents;
 
     /**
-     * @param string $name
-     * @param string $contents
+     * @param array{
+     *   name: string,
+     *   contents: string,
+     * } $values
      */
     public function __construct(
-        string $name,
-        string $contents,
+        array $values,
     ) {
-        $this->name = $name;
-        $this->contents = $contents;
+        $this->name = $values['name'];
+        $this->contents = $values['contents'];
     }
 }

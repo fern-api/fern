@@ -26,17 +26,17 @@ class RecordedResponseNotification extends SerializableType
     public ?string $testCaseId;
 
     /**
-     * @param string $submissionId
-     * @param int $traceResponsesSize
-     * @param ?string $testCaseId
+     * @param array{
+     *   submissionId: string,
+     *   traceResponsesSize: int,
+     *   testCaseId?: ?string,
+     * } $values
      */
     public function __construct(
-        string $submissionId,
-        int $traceResponsesSize,
-        ?string $testCaseId = null,
+        array $values,
     ) {
-        $this->submissionId = $submissionId;
-        $this->traceResponsesSize = $traceResponsesSize;
-        $this->testCaseId = $testCaseId;
+        $this->submissionId = $values['submissionId'];
+        $this->traceResponsesSize = $values['traceResponsesSize'];
+        $this->testCaseId = $values['testCaseId'] ?? null;
     }
 }

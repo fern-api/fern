@@ -14,11 +14,13 @@ class Response extends SerializableType
     public Movie $data;
 
     /**
-     * @param Movie $data
+     * @param array{
+     *   data: Movie,
+     * } $values
      */
     public function __construct(
-        Movie $data,
+        array $values,
     ) {
-        $this->data = $data;
+        $this->data = $values['data'];
     }
 }

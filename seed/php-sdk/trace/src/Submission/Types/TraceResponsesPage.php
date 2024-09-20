@@ -9,12 +9,6 @@ use Seed\Core\ArrayType;
 class TraceResponsesPage extends SerializableType
 {
     /**
-     * @var array<TraceResponse> $traceResponses
-     */
-    #[JsonProperty("traceResponses"), ArrayType([TraceResponse::class])]
-    public array $traceResponses;
-
-    /**
      * @var ?int $offset If present, use this to load subseqent pages.
     The offset is the id of the next trace response to load.
      */
@@ -22,15 +16,21 @@ class TraceResponsesPage extends SerializableType
     public ?int $offset;
 
     /**
-     * @param array<TraceResponse> $traceResponses
-     * @param ?int $offset If present, use this to load subseqent pages.
-    The offset is the id of the next trace response to load.
+     * @var array<TraceResponse> $traceResponses
+     */
+    #[JsonProperty("traceResponses"), ArrayType([TraceResponse::class])]
+    public array $traceResponses;
+
+    /**
+     * @param array{
+     *   offset?: ?int,
+     *   traceResponses: array<TraceResponse>,
+     * } $values
      */
     public function __construct(
-        array $traceResponses,
-        ?int $offset = null,
+        array $values,
     ) {
-        $this->traceResponses = $traceResponses;
-        $this->offset = $offset;
+        $this->offset = $values['offset'] ?? null;
+        $this->traceResponses = $values['traceResponses'];
     }
 }

@@ -20,14 +20,15 @@ class Dog extends SerializableType
     public bool $likesToWoof;
 
     /**
-     * @param string $name
-     * @param bool $likesToWoof
+     * @param array{
+     *   name: string,
+     *   likesToWoof: bool,
+     * } $values
      */
     public function __construct(
-        string $name,
-        bool $likesToWoof,
+        array $values,
     ) {
-        $this->name = $name;
-        $this->likesToWoof = $likesToWoof;
+        $this->name = $values['name'];
+        $this->likesToWoof = $values['likesToWoof'];
     }
 }

@@ -22,14 +22,15 @@ class StoreTracedWorkspaceRequest
     public array $traceResponses;
 
     /**
-     * @param WorkspaceRunDetails $workspaceRunDetails
-     * @param array<TraceResponse> $traceResponses
+     * @param array{
+     *   workspaceRunDetails: WorkspaceRunDetails,
+     *   traceResponses: array<TraceResponse>,
+     * } $values
      */
     public function __construct(
-        WorkspaceRunDetails $workspaceRunDetails,
-        array $traceResponses,
+        array $values,
     ) {
-        $this->workspaceRunDetails = $workspaceRunDetails;
-        $this->traceResponses = $traceResponses;
+        $this->workspaceRunDetails = $values['workspaceRunDetails'];
+        $this->traceResponses = $values['traceResponses'];
     }
 }

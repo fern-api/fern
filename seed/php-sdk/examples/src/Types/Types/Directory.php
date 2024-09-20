@@ -27,17 +27,17 @@ class Directory extends SerializableType
     public ?array $directories;
 
     /**
-     * @param string $name
-     * @param ?array<File> $files
-     * @param ?array<Directory> $directories
+     * @param array{
+     *   name: string,
+     *   files?: ?array<File>,
+     *   directories?: ?array<Directory>,
+     * } $values
      */
     public function __construct(
-        string $name,
-        ?array $files = null,
-        ?array $directories = null,
+        array $values,
     ) {
-        $this->name = $name;
-        $this->files = $files;
-        $this->directories = $directories;
+        $this->name = $values['name'];
+        $this->files = $values['files'] ?? null;
+        $this->directories = $values['directories'] ?? null;
     }
 }

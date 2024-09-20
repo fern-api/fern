@@ -28,17 +28,17 @@ class Moment extends SerializableType
     public DateTime $datetime;
 
     /**
-     * @param string $id
-     * @param DateTime $date
-     * @param DateTime $datetime
+     * @param array{
+     *   id: string,
+     *   date: DateTime,
+     *   datetime: DateTime,
+     * } $values
      */
     public function __construct(
-        string $id,
-        DateTime $date,
-        DateTime $datetime,
+        array $values,
     ) {
-        $this->id = $id;
-        $this->date = $date;
-        $this->datetime = $datetime;
+        $this->id = $values['id'];
+        $this->date = $values['date'];
+        $this->datetime = $values['datetime'];
     }
 }

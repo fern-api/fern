@@ -16,11 +16,13 @@ class GetBasicSolutionFileResponse extends SerializableType
     public array $solutionFileByLanguage;
 
     /**
-     * @param array<Language, FileInfoV2> $solutionFileByLanguage
+     * @param array{
+     *   solutionFileByLanguage: array<Language, FileInfoV2>,
+     * } $values
      */
     public function __construct(
-        array $solutionFileByLanguage,
+        array $values,
     ) {
-        $this->solutionFileByLanguage = $solutionFileByLanguage;
+        $this->solutionFileByLanguage = $values['solutionFileByLanguage'];
     }
 }

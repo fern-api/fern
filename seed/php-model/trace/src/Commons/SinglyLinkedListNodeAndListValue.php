@@ -20,14 +20,15 @@ class SinglyLinkedListNodeAndListValue extends SerializableType
     public SinglyLinkedListValue $fullList;
 
     /**
-     * @param string $nodeId
-     * @param SinglyLinkedListValue $fullList
+     * @param array{
+     *   nodeId: string,
+     *   fullList: SinglyLinkedListValue,
+     * } $values
      */
     public function __construct(
-        string $nodeId,
-        SinglyLinkedListValue $fullList,
+        array $values,
     ) {
-        $this->nodeId = $nodeId;
-        $this->fullList = $fullList;
+        $this->nodeId = $values['nodeId'];
+        $this->fullList = $values['fullList'];
     }
 }

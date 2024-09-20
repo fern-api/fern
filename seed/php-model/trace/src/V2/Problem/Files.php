@@ -15,11 +15,13 @@ class Files extends SerializableType
     public array $files;
 
     /**
-     * @param array<FileInfoV2> $files
+     * @param array{
+     *   files: array<FileInfoV2>,
+     * } $values
      */
     public function __construct(
-        array $files,
+        array $values,
     ) {
-        $this->files = $files;
+        $this->files = $values['files'];
     }
 }

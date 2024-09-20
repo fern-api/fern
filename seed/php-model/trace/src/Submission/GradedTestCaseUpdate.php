@@ -20,14 +20,15 @@ class GradedTestCaseUpdate extends SerializableType
     public mixed $grade;
 
     /**
-     * @param string $testCaseId
-     * @param mixed $grade
+     * @param array{
+     *   testCaseId: string,
+     *   grade: mixed,
+     * } $values
      */
     public function __construct(
-        string $testCaseId,
-        mixed $grade,
+        array $values,
     ) {
-        $this->testCaseId = $testCaseId;
-        $this->grade = $grade;
+        $this->testCaseId = $values['testCaseId'];
+        $this->grade = $values['grade'];
     }
 }

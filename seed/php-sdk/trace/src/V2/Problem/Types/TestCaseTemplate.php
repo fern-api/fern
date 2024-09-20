@@ -26,17 +26,17 @@ class TestCaseTemplate extends SerializableType
     public TestCaseImplementation $implementation;
 
     /**
-     * @param string $templateId
-     * @param string $name
-     * @param TestCaseImplementation $implementation
+     * @param array{
+     *   templateId: string,
+     *   name: string,
+     *   implementation: TestCaseImplementation,
+     * } $values
      */
     public function __construct(
-        string $templateId,
-        string $name,
-        TestCaseImplementation $implementation,
+        array $values,
     ) {
-        $this->templateId = $templateId;
-        $this->name = $name;
-        $this->implementation = $implementation;
+        $this->templateId = $values['templateId'];
+        $this->name = $values['name'];
+        $this->implementation = $values['implementation'];
     }
 }

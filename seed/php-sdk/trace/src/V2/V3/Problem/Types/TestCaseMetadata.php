@@ -26,17 +26,17 @@ class TestCaseMetadata extends SerializableType
     public bool $hidden;
 
     /**
-     * @param string $id
-     * @param string $name
-     * @param bool $hidden
+     * @param array{
+     *   id: string,
+     *   name: string,
+     *   hidden: bool,
+     * } $values
      */
     public function __construct(
-        string $id,
-        string $name,
-        bool $hidden,
+        array $values,
     ) {
-        $this->id = $id;
-        $this->name = $name;
-        $this->hidden = $hidden;
+        $this->id = $values['id'];
+        $this->name = $values['name'];
+        $this->hidden = $values['hidden'];
     }
 }

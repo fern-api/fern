@@ -15,11 +15,13 @@ class Foo extends SerializableType
     public ?Foo $foo;
 
     /**
-     * @param ?Foo $foo
+     * @param array{
+     *   foo?: ?Foo,
+     * } $values
      */
     public function __construct(
-        ?Foo $foo = null,
+        array $values,
     ) {
-        $this->foo = $foo;
+        $this->foo = $values['foo'] ?? null;
     }
 }

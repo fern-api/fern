@@ -9,26 +9,27 @@ use Seed\Core\ArrayType;
 class BinaryTreeValue extends SerializableType
 {
     /**
-     * @var array<string, BinaryTreeNodeValue> $nodes
-     */
-    #[JsonProperty("nodes"), ArrayType(["string" => BinaryTreeNodeValue::class])]
-    public array $nodes;
-
-    /**
      * @var ?string $root
      */
     #[JsonProperty("root")]
     public ?string $root;
 
     /**
-     * @param array<string, BinaryTreeNodeValue> $nodes
-     * @param ?string $root
+     * @var array<string, BinaryTreeNodeValue> $nodes
+     */
+    #[JsonProperty("nodes"), ArrayType(["string" => BinaryTreeNodeValue::class])]
+    public array $nodes;
+
+    /**
+     * @param array{
+     *   root?: ?string,
+     *   nodes: array<string, BinaryTreeNodeValue>,
+     * } $values
      */
     public function __construct(
-        array $nodes,
-        ?string $root = null,
+        array $values,
     ) {
-        $this->nodes = $nodes;
-        $this->root = $root;
+        $this->root = $values['root'] ?? null;
+        $this->nodes = $values['nodes'];
     }
 }

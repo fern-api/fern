@@ -27,17 +27,17 @@ class Metadata extends SerializableType
     public ?string $jsonString;
 
     /**
-     * @param string $id
-     * @param ?array<string, string> $data
-     * @param ?string $jsonString
+     * @param array{
+     *   id: string,
+     *   data?: ?array<string, string>,
+     *   jsonString?: ?string,
+     * } $values
      */
     public function __construct(
-        string $id,
-        ?array $data = null,
-        ?string $jsonString = null,
+        array $values,
     ) {
-        $this->id = $id;
-        $this->data = $data;
-        $this->jsonString = $jsonString;
+        $this->id = $values['id'];
+        $this->data = $values['data'] ?? null;
+        $this->jsonString = $values['jsonString'] ?? null;
     }
 }

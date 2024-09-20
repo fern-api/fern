@@ -25,17 +25,17 @@ class GetTokenRequest
     public string $grantType;
 
     /**
-     * @param string $clientId
-     * @param string $clientSecret
-     * @param string $grantType
+     * @param array{
+     *   clientId: string,
+     *   clientSecret: string,
+     *   grantType: string,
+     * } $values
      */
     public function __construct(
-        string $clientId,
-        string $clientSecret,
-        string $grantType,
+        array $values,
     ) {
-        $this->clientId = $clientId;
-        $this->clientSecret = $clientSecret;
-        $this->grantType = $grantType;
+        $this->clientId = $values['clientId'];
+        $this->clientSecret = $values['clientSecret'];
+        $this->grantType = $values['grantType'];
     }
 }

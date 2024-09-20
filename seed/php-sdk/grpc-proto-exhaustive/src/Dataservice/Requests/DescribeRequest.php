@@ -13,11 +13,13 @@ class DescribeRequest
     public mixed $filter;
 
     /**
-     * @param mixed $filter
+     * @param array{
+     *   filter: mixed,
+     * } $values
      */
     public function __construct(
-        mixed $filter,
+        array $values,
     ) {
-        $this->filter = $filter;
+        $this->filter = $values['filter'];
     }
 }

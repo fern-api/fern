@@ -21,14 +21,15 @@ class UploadRequest
     public ?string $namespace;
 
     /**
-     * @param array<Column> $columns
-     * @param ?string $namespace
+     * @param array{
+     *   columns: array<Column>,
+     *   namespace?: ?string,
+     * } $values
      */
     public function __construct(
-        array $columns,
-        ?string $namespace = null,
+        array $values,
     ) {
-        $this->columns = $columns;
-        $this->namespace = $namespace;
+        $this->columns = $values['columns'];
+        $this->namespace = $values['namespace'] ?? null;
     }
 }

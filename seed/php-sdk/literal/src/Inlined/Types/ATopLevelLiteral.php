@@ -14,11 +14,13 @@ class ATopLevelLiteral extends SerializableType
     public ANestedLiteral $nestedLiteral;
 
     /**
-     * @param ANestedLiteral $nestedLiteral
+     * @param array{
+     *   nestedLiteral: ANestedLiteral,
+     * } $values
      */
     public function __construct(
-        ANestedLiteral $nestedLiteral,
+        array $values,
     ) {
-        $this->nestedLiteral = $nestedLiteral;
+        $this->nestedLiteral = $values['nestedLiteral'];
     }
 }

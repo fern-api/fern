@@ -34,20 +34,19 @@ class BasicCustomFiles extends SerializableType
     public BasicTestCaseTemplate $basicTestCaseTemplate;
 
     /**
-     * @param string $methodName
-     * @param NonVoidFunctionSignature $signature
-     * @param array<Language, Files> $additionalFiles
-     * @param BasicTestCaseTemplate $basicTestCaseTemplate
+     * @param array{
+     *   methodName: string,
+     *   signature: NonVoidFunctionSignature,
+     *   additionalFiles: array<Language, Files>,
+     *   basicTestCaseTemplate: BasicTestCaseTemplate,
+     * } $values
      */
     public function __construct(
-        string $methodName,
-        NonVoidFunctionSignature $signature,
-        array $additionalFiles,
-        BasicTestCaseTemplate $basicTestCaseTemplate,
+        array $values,
     ) {
-        $this->methodName = $methodName;
-        $this->signature = $signature;
-        $this->additionalFiles = $additionalFiles;
-        $this->basicTestCaseTemplate = $basicTestCaseTemplate;
+        $this->methodName = $values['methodName'];
+        $this->signature = $values['signature'];
+        $this->additionalFiles = $values['additionalFiles'];
+        $this->basicTestCaseTemplate = $values['basicTestCaseTemplate'];
     }
 }

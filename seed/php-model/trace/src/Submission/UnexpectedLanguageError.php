@@ -21,14 +21,15 @@ class UnexpectedLanguageError extends SerializableType
     public Language $actualLanguage;
 
     /**
-     * @param Language $expectedLanguage
-     * @param Language $actualLanguage
+     * @param array{
+     *   expectedLanguage: Language,
+     *   actualLanguage: Language,
+     * } $values
      */
     public function __construct(
-        Language $expectedLanguage,
-        Language $actualLanguage,
+        array $values,
     ) {
-        $this->expectedLanguage = $expectedLanguage;
-        $this->actualLanguage = $actualLanguage;
+        $this->expectedLanguage = $values['expectedLanguage'];
+        $this->actualLanguage = $values['actualLanguage'];
     }
 }

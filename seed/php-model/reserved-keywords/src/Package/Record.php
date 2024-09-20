@@ -21,14 +21,15 @@ class Record extends SerializableType
     public int $_3D;
 
     /**
-     * @param array<string, string> $foo
-     * @param int $_3D
+     * @param array{
+     *   foo: array<string, string>,
+     *   _3D: int,
+     * } $values
      */
     public function __construct(
-        array $foo,
-        int $_3D,
+        array $values,
     ) {
-        $this->foo = $foo;
-        $this->_3D = $_3D;
+        $this->foo = $values['foo'];
+        $this->_3D = $values['_3D'];
     }
 }

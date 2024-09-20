@@ -14,11 +14,13 @@ class NamespaceSummary extends SerializableType
     public ?int $count;
 
     /**
-     * @param ?int $count
+     * @param array{
+     *   count?: ?int,
+     * } $values
      */
     public function __construct(
-        ?int $count = null,
+        array $values,
     ) {
-        $this->count = $count;
+        $this->count = $values['count'] ?? null;
     }
 }

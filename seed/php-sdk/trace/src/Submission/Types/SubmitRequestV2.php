@@ -46,26 +46,23 @@ class SubmitRequestV2 extends SerializableType
     public ?string $userId;
 
     /**
-     * @param string $submissionId
-     * @param Language $language
-     * @param array<SubmissionFileInfo> $submissionFiles
-     * @param string $problemId
-     * @param ?int $problemVersion
-     * @param ?string $userId
+     * @param array{
+     *   submissionId: string,
+     *   language: Language,
+     *   submissionFiles: array<SubmissionFileInfo>,
+     *   problemId: string,
+     *   problemVersion?: ?int,
+     *   userId?: ?string,
+     * } $values
      */
     public function __construct(
-        string $submissionId,
-        Language $language,
-        array $submissionFiles,
-        string $problemId,
-        ?int $problemVersion = null,
-        ?string $userId = null,
+        array $values,
     ) {
-        $this->submissionId = $submissionId;
-        $this->language = $language;
-        $this->submissionFiles = $submissionFiles;
-        $this->problemId = $problemId;
-        $this->problemVersion = $problemVersion;
-        $this->userId = $userId;
+        $this->submissionId = $values['submissionId'];
+        $this->language = $values['language'];
+        $this->submissionFiles = $values['submissionFiles'];
+        $this->problemId = $values['problemId'];
+        $this->problemVersion = $values['problemVersion'] ?? null;
+        $this->userId = $values['userId'] ?? null;
     }
 }

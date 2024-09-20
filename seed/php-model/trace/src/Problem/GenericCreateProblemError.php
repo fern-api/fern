@@ -26,17 +26,17 @@ class GenericCreateProblemError extends SerializableType
     public string $stacktrace;
 
     /**
-     * @param string $message
-     * @param string $type
-     * @param string $stacktrace
+     * @param array{
+     *   message: string,
+     *   type: string,
+     *   stacktrace: string,
+     * } $values
      */
     public function __construct(
-        string $message,
-        string $type,
-        string $stacktrace,
+        array $values,
     ) {
-        $this->message = $message;
-        $this->type = $type;
-        $this->stacktrace = $stacktrace;
+        $this->message = $values['message'];
+        $this->type = $values['type'];
+        $this->stacktrace = $values['stacktrace'];
     }
 }

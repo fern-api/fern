@@ -15,11 +15,13 @@ class Tree extends SerializableType
     public ?array $nodes;
 
     /**
-     * @param ?array<Node> $nodes
+     * @param array{
+     *   nodes?: ?array<Node>,
+     * } $values
      */
     public function __construct(
-        ?array $nodes = null,
+        array $values,
     ) {
-        $this->nodes = $nodes;
+        $this->nodes = $values['nodes'] ?? null;
     }
 }

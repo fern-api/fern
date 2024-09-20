@@ -27,17 +27,17 @@ class Node extends SerializableType
     public ?array $trees;
 
     /**
-     * @param string $name
-     * @param ?array<Node> $nodes
-     * @param ?array<Tree> $trees
+     * @param array{
+     *   name: string,
+     *   nodes?: ?array<Node>,
+     *   trees?: ?array<Tree>,
+     * } $values
      */
     public function __construct(
-        string $name,
-        ?array $nodes = null,
-        ?array $trees = null,
+        array $values,
     ) {
-        $this->name = $name;
-        $this->nodes = $nodes;
-        $this->trees = $trees;
+        $this->name = $values['name'];
+        $this->nodes = $values['nodes'] ?? null;
+        $this->trees = $values['trees'] ?? null;
     }
 }

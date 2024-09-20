@@ -14,11 +14,13 @@ class WithCursor extends SerializableType
     public ?string $cursor;
 
     /**
-     * @param ?string $cursor
+     * @param array{
+     *   cursor?: ?string,
+     * } $values
      */
     public function __construct(
-        ?string $cursor = null,
+        array $values,
     ) {
-        $this->cursor = $cursor;
+        $this->cursor = $values['cursor'] ?? null;
     }
 }

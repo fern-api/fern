@@ -5,6 +5,11 @@ namespace Seed\Playlist\Requests;
 class GetPlaylistsRequest
 {
     /**
+     * @var ?int $limit
+     */
+    public ?int $limit;
+
+    /**
      * @var string $otherField i'm another field
      */
     public string $otherField;
@@ -26,29 +31,21 @@ class GetPlaylistsRequest
     public array $multipleField;
 
     /**
-     * @var ?int $limit
-     */
-    public ?int $limit;
-
-    /**
-     * @param string $otherField i'm another field
-     * @param string $multiLineDocs I'm a multiline
-    description
-     * @param array<?string> $optionalMultipleField
-     * @param array<string> $multipleField
-     * @param ?int $limit
+     * @param array{
+     *   limit?: ?int,
+     *   otherField: string,
+     *   multiLineDocs: string,
+     *   optionalMultipleField: array<?string>,
+     *   multipleField: array<string>,
+     * } $values
      */
     public function __construct(
-        string $otherField,
-        string $multiLineDocs,
-        array $optionalMultipleField,
-        array $multipleField,
-        ?int $limit = null,
+        array $values,
     ) {
-        $this->otherField = $otherField;
-        $this->multiLineDocs = $multiLineDocs;
-        $this->optionalMultipleField = $optionalMultipleField;
-        $this->multipleField = $multipleField;
-        $this->limit = $limit;
+        $this->limit = $values['limit'] ?? null;
+        $this->otherField = $values['otherField'];
+        $this->multiLineDocs = $values['multiLineDocs'];
+        $this->optionalMultipleField = $values['optionalMultipleField'];
+        $this->multipleField = $values['multipleField'];
     }
 }

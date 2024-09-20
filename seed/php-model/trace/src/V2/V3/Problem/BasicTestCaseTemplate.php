@@ -32,20 +32,19 @@ class BasicTestCaseTemplate extends SerializableType
     public string $expectedValueParameterId;
 
     /**
-     * @param string $templateId
-     * @param string $name
-     * @param TestCaseImplementationDescription $description
-     * @param string $expectedValueParameterId
+     * @param array{
+     *   templateId: string,
+     *   name: string,
+     *   description: TestCaseImplementationDescription,
+     *   expectedValueParameterId: string,
+     * } $values
      */
     public function __construct(
-        string $templateId,
-        string $name,
-        TestCaseImplementationDescription $description,
-        string $expectedValueParameterId,
+        array $values,
     ) {
-        $this->templateId = $templateId;
-        $this->name = $name;
-        $this->description = $description;
-        $this->expectedValueParameterId = $expectedValueParameterId;
+        $this->templateId = $values['templateId'];
+        $this->name = $values['name'];
+        $this->description = $values['description'];
+        $this->expectedValueParameterId = $values['expectedValueParameterId'];
     }
 }

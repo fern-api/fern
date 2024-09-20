@@ -34,20 +34,19 @@ class TestSubmissionStatusV2 extends SerializableType
     public ProblemInfoV2 $problemInfo;
 
     /**
-     * @param array<TestSubmissionUpdate> $updates
-     * @param string $problemId
-     * @param int $problemVersion
-     * @param ProblemInfoV2 $problemInfo
+     * @param array{
+     *   updates: array<TestSubmissionUpdate>,
+     *   problemId: string,
+     *   problemVersion: int,
+     *   problemInfo: ProblemInfoV2,
+     * } $values
      */
     public function __construct(
-        array $updates,
-        string $problemId,
-        int $problemVersion,
-        ProblemInfoV2 $problemInfo,
+        array $values,
     ) {
-        $this->updates = $updates;
-        $this->problemId = $problemId;
-        $this->problemVersion = $problemVersion;
-        $this->problemInfo = $problemInfo;
+        $this->updates = $values['updates'];
+        $this->problemId = $values['problemId'];
+        $this->problemVersion = $values['problemVersion'];
+        $this->problemInfo = $values['problemInfo'];
     }
 }

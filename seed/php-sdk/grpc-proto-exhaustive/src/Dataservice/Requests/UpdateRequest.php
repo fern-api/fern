@@ -15,16 +15,16 @@ class UpdateRequest
     public string $id;
 
     /**
-     * @var mixed $setMetadata
-     */
-    #[JsonProperty("setMetadata")]
-    public mixed $setMetadata;
-
-    /**
      * @var ?array<float> $values
      */
     #[JsonProperty("values"), ArrayType(["float"])]
     public ?array $values;
+
+    /**
+     * @var mixed $setMetadata
+     */
+    #[JsonProperty("setMetadata")]
+    public mixed $setMetadata;
 
     /**
      * @var ?string $namespace
@@ -39,23 +39,21 @@ class UpdateRequest
     public ?IndexedData $indexedData;
 
     /**
-     * @param string $id
-     * @param mixed $setMetadata
-     * @param ?array<float> $values
-     * @param ?string $namespace
-     * @param ?IndexedData $indexedData
+     * @param array{
+     *   id: string,
+     *   values?: ?array<float>,
+     *   setMetadata: mixed,
+     *   namespace?: ?string,
+     *   indexedData?: ?IndexedData,
+     * } $values
      */
     public function __construct(
-        string $id,
-        mixed $setMetadata,
-        ?array $values = null,
-        ?string $namespace = null,
-        ?IndexedData $indexedData = null,
+        array $values,
     ) {
-        $this->id = $id;
-        $this->setMetadata = $setMetadata;
-        $this->values = $values;
-        $this->namespace = $namespace;
-        $this->indexedData = $indexedData;
+        $this->id = $values['id'];
+        $this->values = $values['values'] ?? null;
+        $this->setMetadata = $values['setMetadata'];
+        $this->namespace = $values['namespace'] ?? null;
+        $this->indexedData = $values['indexedData'] ?? null;
     }
 }

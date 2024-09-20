@@ -22,14 +22,15 @@ class Response extends SerializableType
     public array $identifiers;
 
     /**
-     * @param mixed $response
-     * @param array<Identifier> $identifiers
+     * @param array{
+     *   response: mixed,
+     *   identifiers: array<Identifier>,
+     * } $values
      */
     public function __construct(
-        mixed $response,
-        array $identifiers,
+        array $values,
     ) {
-        $this->response = $response;
-        $this->identifiers = $identifiers;
+        $this->response = $values['response'];
+        $this->identifiers = $values['identifiers'];
     }
 }
