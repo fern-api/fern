@@ -3,7 +3,7 @@ import { Logger } from "@fern-api/logger";
 import { Project } from "@fern-api/project-loader";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { AbstractAPIWorkspace, LazyFernWorkspace, OSSWorkspace } from "@fern-api/workspace-loader";
+import { LazyFernWorkspace, OSSWorkspace } from "@fern-api/workspace-loader";
 import { ReleaseType } from "@fern-fern/generators-sdk/api/resources/generators";
 import { CliContext } from "../CliContext";
 
@@ -134,7 +134,7 @@ async function processGeneratorsYml({
     groupFilter
 }: {
     cliContext: CliContext;
-    apiWorkspaces: AbstractAPIWorkspace<unknown>[];
+    apiWorkspaces: (OSSWorkspace | LazyFernWorkspace)[];
     perGeneratorAction: (
         api: string | undefined,
         group: string,
