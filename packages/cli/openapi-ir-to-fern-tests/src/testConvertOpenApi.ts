@@ -10,7 +10,6 @@ import yaml from "js-yaml";
 import { mapValues as mapValuesLodash } from "lodash-es";
 import { convert, OpenApiConvertedFernDefinition } from "@fern-api/openapi-ir-to-fern";
 import { validateFernWorkspace, ValidationViolation } from "@fern-api/fern-definition-validator";
-import { SpecImportSettings } from "@fern-api/openapi-parser/src/parse";
 
 const FIXTURES_PATH = join(
     AbsoluteFilePath.of(__dirname),
@@ -24,7 +23,6 @@ export declare namespace TestConvertOpenAPI {
         asyncApiFilename?: string;
         environmentOverrides?: RawSchemas.WithEnvironmentsSchema;
         globalHeaderOverrides?: RawSchemas.WithHeadersSchema;
-        settings?: SpecImportSettings;
         authOverrides?: RawSchemas.WithAuthSchema;
     }
 }
@@ -46,7 +44,6 @@ export function testConvertOpenAPI(fixtureName: string, filename: string, opts: 
             specs.push({
                 absoluteFilepath: AbsoluteFilePath.of(openApiPath),
                 absoluteFilepathToOverrides: undefined,
-                settings: opts.settings != null ? opts.settings : undefined,
                 source: {
                     type: "openapi",
                     file: AbsoluteFilePath.of(openApiPath)
@@ -56,7 +53,6 @@ export function testConvertOpenAPI(fixtureName: string, filename: string, opts: 
                 specs.push({
                     absoluteFilepath: absolutePathToAsyncAPI,
                     absoluteFilepathToOverrides: undefined,
-                    settings: opts.settings != null ? opts.settings : undefined,
                     source: {
                         type: "asyncapi",
                         file: absolutePathToAsyncAPI

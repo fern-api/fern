@@ -35,7 +35,6 @@ import { ReadmeSchema } from "./schemas/ReadmeSchema";
 import { ReviewersSchema } from "./schemas/ReviewersSchema";
 import { visitRawApiAuth } from "@fern-api/fern-definition-schema";
 
-
 export async function convertGeneratorsConfiguration({
     absolutePathToGeneratorsConfiguration,
     rawGeneratorsConfiguration

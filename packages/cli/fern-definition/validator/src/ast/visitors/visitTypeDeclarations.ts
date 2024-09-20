@@ -182,8 +182,8 @@ export async function visitTypeDeclaration({
                                 docs: createDocsVisitor(visitor, nodePathForUnionType),
                                 type: async (type) => {
                                     await visitTypeReference(type, [...nodePathForType, "type"]);
-                                }, 
-                                "display-name": noop,
+                                },
+                                "display-name": noop
                             });
                         }
                     }
