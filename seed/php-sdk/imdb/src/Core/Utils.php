@@ -49,7 +49,7 @@ class Utils
     public static function getReadableType(mixed $input): string
     {
         if (is_object($input)) {
-            return 'object(' . get_class($input) . ')';
+            return get_class($input);
         } elseif (is_array($input)) {
             return 'array(' . count($input) . ' items)';
         } elseif (is_null($input)) {
