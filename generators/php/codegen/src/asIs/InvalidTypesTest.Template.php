@@ -8,11 +8,21 @@ use <%= coreNamespace%>\JsonProperty;
 
 class InvalidType extends SerializableType
 {
+    /**
+     * @var int $integerProperty
+     */
+    #[JsonProperty('integer_property')]
+    public int $integerProperty;
+
+    /**
+     * @param array{
+     *   integerProperty: int,
+     * } $values
+     */
     public function __construct(
-        #[JsonProperty('integer_property')]
-        public int $integerProperty
-    )
-    {
+        array $values,
+    ) {
+        $this->integerProperty = $values['integerProperty'];
     }
 }
 

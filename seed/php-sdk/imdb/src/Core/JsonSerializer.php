@@ -118,7 +118,8 @@ class JsonSerializer
      * @return mixed The serialized data.
      * @throws JsonException If the object does not implement JsonSerializable.
      */
-    public static function serializeObject(object $data): mixed {
+    public static function serializeObject(object $data): mixed
+    {
         if (!is_subclass_of($data, JsonSerializable::class)) {
             $type = get_class($data);
             throw new JsonException("Class $type must implement JsonSerializable.");

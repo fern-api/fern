@@ -11,13 +11,21 @@ use Seed\Core\Union;
 class NullableArrayType extends SerializableType
 {
     /**
-     * @param array<string|null> $nullableStringArray
+     * @var array<string|null> $nullableStringArray
+     */
+    #[ArrayType([new Union('string', 'null')])]
+    #[JsonProperty('nullable_string_array')]
+    public array $nullableStringArray;
+
+    /**
+     * @param array{
+     *   nullableStringArray: array<string|null>,
+     * } $values
      */
     public function __construct(
-        #[ArrayType([new Union('string', 'null')])]
-        #[JsonProperty('nullable_string_array')]
-        public array $nullableStringArray
+        array $values,
     ) {
+        $this->nullableStringArray = $values['nullableStringArray'];
     }
 }
 
