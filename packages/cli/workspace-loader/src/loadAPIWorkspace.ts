@@ -207,7 +207,7 @@ export async function loadAPIWorkspace({
             changelog,
             context,
             cliVersion,
-            loadAPIWorkspace: loadAPIWorkspace
+            loadAPIWorkspace
         });
 
         return {

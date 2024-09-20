@@ -174,6 +174,7 @@ function toFernWorkspace(fernDefinition: OpenApiConvertedFernDefinition): FernWo
             packageMarkers: {},
             importedDefinitions: {}
         },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         generatorsConfiguration: undefined as any,
         absoluteFilePath: AbsoluteFilePath.of("/DUMMY_PATH"),
         cliVersion: "0.0.0"
