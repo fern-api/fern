@@ -76,7 +76,8 @@ export async function loadDependency({
                             context: contextForDependency,
                             dependency,
                             cliVersion,
-                            settings
+                            settings,
+                            loadAPIWorkspace
                         });
                         return;
                     case "local":
@@ -84,7 +85,8 @@ export async function loadDependency({
                             context: contextForDependency,
                             dependency,
                             cliVersion,
-                            settings
+                            settings,
+                            loadAPIWorkspace
                         });
                         return;
                     default:
