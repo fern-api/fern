@@ -306,11 +306,9 @@ types:
       leaking.
     union:
       card:
-        display-name: Card
         type: Card
         docs: A card (debit or credit) to take payment from.
       bank_account:
-        display-name: Bank Account
         type: BookingPaymentSourceBankAccount
         docs: >-
           A bank account to take payment from. Must be able to make payments in

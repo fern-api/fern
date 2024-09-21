@@ -11,7 +11,7 @@ import {
     ExampleTypeShape,
     PrimitiveTypeV1
 } from "@fern-api/ir-sdk";
-import { FernWorkspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import {
     isRawObjectDefinition,
     RawSchemas,

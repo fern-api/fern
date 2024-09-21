@@ -8,7 +8,7 @@ import {
     TypeResolver,
     TypeResolverImpl
 } from "@fern-api/ir-generator";
-import { FernWorkspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import {
     DefinitionFileSchema,
     isRawDiscriminatedUnionDefinition,

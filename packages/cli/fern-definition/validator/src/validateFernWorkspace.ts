@@ -1,7 +1,7 @@
 import { generatorsYml, ROOT_API_FILENAME, GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/configuration";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
-import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "@fern-api/workspace-loader";
+import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "@fern-api/api-workspace-commons";
 import { DefinitionFileSchema, PackageMarkerFileSchema, RootApiFileSchema } from "@fern-api/fern-definition-schema";
 import { createDefinitionFileAstVisitorForRules } from "./createDefinitionFileAstVisitorForRules";
 import { createPackageMarkerAstVisitorForRules } from "./createPackageMarkerAstVisitorForRules";

@@ -1,4 +1,4 @@
-import { visitAllDefinitionFiles } from "@fern-api/workspace-loader";
+import { visitAllDefinitionFiles } from "@fern-api/api-workspace-commons";
 import { visitDefinitionFileYamlAst } from "../../ast";
 import chalk from "chalk";
 import { Rule } from "../../Rule";

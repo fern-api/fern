@@ -1,5 +1,5 @@
 import { isPlainObject } from "@fern-api/core-utils";
-import { FernWorkspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
 import { getUnionDiscriminant } from "../converters/type-declarations/convertDiscriminatedUnionTypeDeclaration";
 import { FernFileContext } from "../FernFileContext";

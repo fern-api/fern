@@ -1,7 +1,7 @@
 import { APIS_DIRECTORY, FERN_DIRECTORY, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { FernWorkspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { cp, mkdir, writeFile } from "fs/promises";
 import path from "path";
 import { FixtureConfigurations, OutputMode } from "../../../config/api";

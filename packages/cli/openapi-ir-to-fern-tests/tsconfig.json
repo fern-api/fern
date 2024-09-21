@@ -1,0 +1,17 @@
+{
+  "extends": "../../../shared/tsconfig.shared.json",
+  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
+  "include": ["./src/**/*"],
+  "exclude": ["./src/**/__test__/**/generated"],
+  "references": [
+    { "path": "../../commons/fs-utils" },
+    { "path": "../configuration" },
+    { "path": "../logger" },
+    { "path": "../openapi-parser" },
+    { "path": "../task-context" },
+    { "path": "../workspace-commons" },
+    { "path": "../openapi-ir-to-fern" },
+    { "path": "../fern-definition/schema" },
+    { "path": "../fern-definition/validator" },
+  ]
+}

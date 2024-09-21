@@ -142,7 +142,7 @@ async function createJob({
                 const sources = workspace.getSources();
                 for (const source of sources) {
                     const sourceContents = await readFile(source.absoluteFilePath);
-                    const relativeLocation = relative(workspace.absoluteFilepath, source.absoluteFilePath);
+                    const relativeLocation = relative(workspace.absoluteFilePath, source.absoluteFilePath);
                     const absolutePathToSourceFile = join(
                         absolutePathToTmpFernDirectory,
                         RelativeFilePath.of(relativeLocation)

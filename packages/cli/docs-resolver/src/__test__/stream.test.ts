@@ -26,7 +26,7 @@ it.skip("converts to api reference node", async () => {
     const parsedDocsConfig = await docsYml.parseDocsConfiguration({
         rawDocsConfiguration: docsWorkspace.config,
         context,
-        absolutePathToFernFolder: docsWorkspace.absoluteFilepath,
+        absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
         absoluteFilepathToDocsConfig: docsWorkspace.absoluteFilepathToDocsConfig
     });
 

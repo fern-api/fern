@@ -26,7 +26,7 @@ export async function getGeneratorMetadata({
 
                 // If there are no groups in the configuration, skip this workspace
                 const generatorsConfiguration = await generatorsYml.loadGeneratorsConfiguration({
-                    absolutePathToWorkspace: workspace.absoluteFilepath,
+                    absolutePathToWorkspace: workspace.absoluteFilePath,
                     context
                 });
                 if (generatorsConfiguration == null || generatorsConfiguration.groups == null) {

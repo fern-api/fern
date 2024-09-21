@@ -177,7 +177,7 @@ export class ChangelogNodeConverter {
         if (filepath == null) {
             return undefined;
         }
-        return relative(this.docsWorkspace.absoluteFilepath, filepath);
+        return relative(this.docsWorkspace.absoluteFilePath, filepath);
     }
 }
 

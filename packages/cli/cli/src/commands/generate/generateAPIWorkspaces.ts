@@ -81,7 +81,7 @@ export async function generateAPIWorkspaces({
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 const absolutePathToPreview = preview
-                    ? join(workspace.absoluteFilepath, RelativeFilePath.of(PREVIEW_DIRECTORY))
+                    ? join(workspace.absoluteFilePath, RelativeFilePath.of(PREVIEW_DIRECTORY))
                     : undefined;
 
                 if (absolutePathToPreview != null) {

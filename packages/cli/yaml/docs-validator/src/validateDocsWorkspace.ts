@@ -44,8 +44,8 @@ export async function runRulesOnDocsWorkspace({
     await visitDocsConfigFileYamlAst(
         workspace.config,
         astVisitor,
-        join(workspace.absoluteFilepath, RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME)),
-        workspace.absoluteFilepath,
+        join(workspace.absoluteFilePath, RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME)),
+        workspace.absoluteFilePath,
         context,
         loadApiWorkspace
     );
