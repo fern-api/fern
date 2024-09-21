@@ -68,7 +68,7 @@
     "@fern-api/semver-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/fern-definition-validator": "workspace:*",
-    "@fern-api/venus-api-sdk": "0.0.38",
+    "@fern-api/venus-api-sdk": "0.9.0",
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-api/fern-definition-formatter": "workspace:*",
