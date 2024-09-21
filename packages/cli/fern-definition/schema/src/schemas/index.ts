@@ -22,6 +22,7 @@ export { ErrorDiscriminationSchema } from "./ErrorDiscriminationSchema";
 export { ErrorReferenceSchema } from "./ErrorReferenceSchema";
 export { ExampleCodeSampleSchema, SupportedSdkLanguageSchema } from "./ExampleCodeSampleSchema";
 export { ExampleEndpointCallArraySchema, ExampleEndpointCallSchema } from "./ExampleEndpointCallSchema";
+export { HttpInlineRequestEncoding } from "./HttpInlineRequestEncoding";
 export {
     ExampleBodyResponseSchema,
     ExampleResponseSchema,
