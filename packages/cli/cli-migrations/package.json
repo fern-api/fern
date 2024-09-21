@@ -41,7 +41,7 @@
     "glob-promise": "^5.0.0",
     "inquirer": "^9.2.23",
     "js-yaml": "^4.1.0",
-    "yaml": "^2.4.5",
+    "yaml": "^2.5.1",
     "zod": "^3.22.3"
   },
   "devDependencies": {

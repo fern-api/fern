@@ -91,7 +91,7 @@
     "tar": "^6.2.1",
     "tmp-promise": "^3.0.3",
     "validate-npm-package-name": "^5.0.1",
-    "yaml": "^2.4.5",
+    "yaml": "^2.5.1",
     "yargs": "^17.4.1"
   },
   "devDependencies": {
