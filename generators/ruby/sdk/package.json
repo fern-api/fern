@@ -39,7 +39,7 @@
     "@fern-api/logging-execa": "workspace:*",
     "@fern-api/ruby-codegen": "workspace:*",
     "@fern-api/ruby-generator-cli": "workspace:*",
-    "@fern-fern/generator-exec-sdk": "^0.0.898",
+    "@fern-fern/generator-exec-sdk": "^0.0.941",
     "@fern-fern/ir-sdk": "^39",
     "zod": "^3.22.3"
   },

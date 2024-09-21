@@ -17,8 +17,8 @@ importers:
         specifier: workspace:*
         version: link:packages/commons/logging-execa
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.816
-        version: 0.0.816
+        specifier: ^0.0.941
+        version: 0.0.941
       '@fern-fern/ir-v39-sdk':
         specifier: ^0.0.1
         version: 0.0.1
@@ -162,8 +162,8 @@ importers:
         specifier: 0.0.56
         version: 0.0.56
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.898
-        version: 0.0.898
+        specifier: ^0.0.941
+        version: 0.0.941
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
@@ -292,7 +292,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -336,8 +336,8 @@ importers:
         specifier: 0.0.56
         version: 0.0.56
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.898
-        version: 0.0.898
+        specifier: ^0.0.941
+        version: 0.0.941
       '@fern-fern/ir-sdk':
         specifier: ^53.7.0
         version: 53.7.0
@@ -368,7 +368,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -432,7 +432,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -532,7 +532,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -576,8 +576,8 @@ importers:
         specifier: workspace:*
         version: link:../model
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.898
-        version: 0.0.898
+        specifier: ^0.0.941
+        version: 0.0.941
       '@fern-fern/ir-sdk':
         specifier: ^53.7.0
         version: 53.9.0
@@ -598,7 +598,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -671,7 +671,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -743,8 +743,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.898
-        version: 0.0.898
+        specifier: ^0.0.941
+        version: 0.0.941
       '@fern-fern/ir-sdk':
         specifier: ^39
         version: 39.0.0
@@ -804,8 +804,8 @@ importers:
         specifier: workspace:*
         version: link:../cli
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.898
-        version: 0.0.898
+        specifier: ^0.0.941
+        version: 0.0.941
       '@fern-fern/ir-sdk':
         specifier: ^39
         version: 39.0.0
@@ -827,7 +827,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -871,8 +871,8 @@ importers:
         specifier: workspace:*
         version: link:../cli
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.898
-        version: 0.0.898
+        specifier: ^0.0.941
+        version: 0.0.941
       '@fern-fern/ir-sdk':
         specifier: ^39
         version: 39.0.0
@@ -894,7 +894,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -940,7 +940,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -999,8 +999,8 @@ importers:
   generators/typescript/express/cli:
     devDependencies:
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.898
-        version: 0.0.898
+        specifier: ^0.0.941
+        version: 0.0.941
       '@fern-fern/ir-sdk':
         specifier: 53.8.0
         version: 53.8.0
@@ -2053,8 +2053,8 @@ importers:
         specifier: 0.0.56
         version: 0.0.56
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.898
-        version: 0.0.898
+        specifier: ^0.0.941
+        version: 0.0.941
       '@fern-fern/ir-sdk':
         specifier: 53.8.0
         version: 53.8.0
@@ -2478,8 +2478,8 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/cli/logger
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.898
-        version: 0.0.898
+        specifier: ^0.0.941
+        version: 0.0.941
       '@fern-fern/ir-sdk':
         specifier: 53.8.0
         version: 53.8.0
@@ -2661,8 +2661,8 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/cli/logger
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.898
-        version: 0.0.898
+        specifier: ^0.0.941
+        version: 0.0.941
       '@fern-fern/ir-sdk':
         specifier: 53.8.0
         version: 53.8.0
@@ -3226,7 +3226,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -3327,10 +3327,6 @@ importers:
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
-
-  packages/cli/cli/dist/dev: {}
-
-  packages/cli/cli/dist/prod: {}
 
   packages/cli/configuration:
     dependencies:
@@ -4261,8 +4257,8 @@ importers:
         specifier: 0.0.584
         version: 0.0.584
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.898
-        version: 0.0.898
+        specifier: ^0.0.941
+        version: 0.0.941
       chalk:
         specifier: ^5.3.0
         version: 5.3.0
@@ -5799,8 +5795,8 @@ importers:
         specifier: 0.0.584
         version: 0.0.584
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.898
-        version: 0.0.898
+        specifier: ^0.0.941
+        version: 0.0.941
       '@fern-fern/generators-sdk':
         specifier: 0.109.0-21be2e5be
         version: 0.109.0-21be2e5be
@@ -5861,7 +5857,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -6924,11 +6920,8 @@ packages:
   '@fern-fern/generator-cli-sdk@0.0.56':
     resolution: {integrity: sha512-pmBwEgTtZ7g9vve419Ia980XmZb9zHl1rmjeC2dwAs0QF9IqNbZ+neVG82lIsR3aeWkIwHwCK5kSiV6lyjQR7A==}
 
-  '@fern-fern/generator-exec-sdk@0.0.816':
-    resolution: {integrity: sha512-0i88vvoJjv+sRmSSUrsThJP/Qz4A4uAVUUo8gBXQBKCbjk/76wRxpOAwXh3Twgo/A8XKAfxRA2OBGQ8xv5syXg==}
-
-  '@fern-fern/generator-exec-sdk@0.0.898':
-    resolution: {integrity: sha512-VQYn32CkAd437deesaGk4LKikbVptxrWINAwUwiAUWOy77LelX1zWNKihjU2XDgIPv3VXK07aJwoPR5BDYD46Q==}
+  '@fern-fern/generator-exec-sdk@0.0.941':
+    resolution: {integrity: sha512-x26PwQFamumTpn5FPlSPUE2n19SfuudeAw1eFpgSkgIOwxZqC5pi4w9jaSjityt19JlVLllABEIxCoWvEs+rJw==}
 
   '@fern-fern/generators-sdk@0.107.0-00fe26566':
     resolution: {integrity: sha512-fwk1xrv3wTO/6kJztIwO8Zz/thkRxIMLjYCtHelfbtbYNH9ZZr+yWDiCZGFBOOu7m8tuEZjaoOYOR3wiqmeivQ==}
@@ -8889,8 +8882,8 @@ packages:
     resolution: {integrity: sha512-V0hjH4dGPh9Ao5p0MoRY6BVqtwCjhz6vI5LT8AJ55H+4g9/4vbHx1I54fS0XuclLhDHArPQCiMjDxjaL8fPxhw==}
     engines: {node: '>=0.12'}
 
-  env-cmd@https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b:
-    resolution: {tarball: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b}
+  env-cmd@git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b:
+    resolution: {commit: 8f35b71651f6a78710308ff38ab30896ea72ee8b, repo: git@github.com:toddbluhm/env-cmd.git, type: git}
     version: 10.1.0
     engines: {node: '>=8.0.0'}
     hasBin: true
@@ -14050,16 +14043,7 @@ snapshots:
 
   '@fern-fern/generator-cli-sdk@0.0.56': {}
 
-  '@fern-fern/generator-exec-sdk@0.0.816':
-    dependencies:
-      form-data: 4.0.0
-      node-fetch: 2.7.0
-      qs: 6.11.2
-      url-join: 4.0.1
-    transitivePeerDependencies:
-      - encoding
-
-  '@fern-fern/generator-exec-sdk@0.0.898':
+  '@fern-fern/generator-exec-sdk@0.0.941':
     dependencies:
       form-data: 4.0.0
       node-fetch: 2.7.0
@@ -16332,7 +16316,7 @@ snapshots:
 
   entities@4.5.0: {}
 
-  env-cmd@https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b:
+  env-cmd@git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b:
     dependencies:
       commander: 5.1.0
       cross-spawn: 7.0.3

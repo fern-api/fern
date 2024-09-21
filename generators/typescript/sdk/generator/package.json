@@ -33,7 +33,7 @@
     "@fern-api/generator-commons": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-fern/generator-cli-sdk": "0.0.56",
-    "@fern-fern/generator-exec-sdk": "^0.0.898",
+    "@fern-fern/generator-exec-sdk": "^0.0.941",
     "@fern-fern/ir-sdk": "53.8.0",
     "@fern-fern/snippet-sdk": "^0.0.5526",
     "@fern-typescript/commons": "workspace:*",

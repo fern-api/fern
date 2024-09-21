@@ -38,7 +38,7 @@
     "lodash-es": "^4.17.21",
     "@fern-api/php-codegen": "workspace:*",
     "@fern-api/php-model": "workspace:*",
-    "@fern-fern/generator-exec-sdk": "^0.0.898",
+    "@fern-fern/generator-exec-sdk": "^0.0.941",
     "@fern-fern/ir-sdk": "^53.7.0",
     "@types/jest": "^29.5.12",
     "@types/lodash-es": "^4.17.12",

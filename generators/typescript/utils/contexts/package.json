@@ -29,7 +29,7 @@
   "dependencies": {
     "@fern-api/logger": "workspace:*",
     "@fern-api/generator-commons": "workspace:*",
-    "@fern-fern/generator-exec-sdk": "^0.0.898",
+    "@fern-fern/generator-exec-sdk": "^0.0.941",
     "@fern-fern/ir-sdk": "53.8.0",
     "@fern-typescript/commons": "workspace:*",
     "ts-morph": "^15.1.0"
