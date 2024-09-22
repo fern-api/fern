@@ -13,24 +13,25 @@ class ObjectFieldValue extends SerializableType
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var mixed $value
      */
-    #[JsonProperty("value")]
+    #[JsonProperty('value')]
     public mixed $value;
 
     /**
-     * @param string $name
-     * @param mixed $value
+     * @param array{
+     *   name: string,
+     *   value: mixed,
+     * } $values
      */
     public function __construct(
-        string $name,
-        mixed $value,
+        array $values,
     ) {
-        $this->name = $name;
-        $this->value = $value;
+        $this->name = $values['name'];
+        $this->value = $values['value'];
     }
 }

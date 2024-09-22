@@ -26,7 +26,7 @@ export async function loadDocsWorkspace({
     if (docsConfiguration != null) {
         return {
             type: "docs",
-            absoluteFilepath: fernDirectory,
+            absoluteFilePath: fernDirectory,
             config: docsConfiguration,
             workspaceName: undefined,
             absoluteFilepathToDocsConfig: join(fernDirectory, RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME))

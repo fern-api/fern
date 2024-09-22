@@ -8,26 +8,27 @@ use Seed\Core\JsonProperty;
 class GenericValue extends SerializableType
 {
     /**
-     * @var string $stringifiedValue
-     */
-    #[JsonProperty("stringifiedValue")]
-    public string $stringifiedValue;
-
-    /**
      * @var ?string $stringifiedType
      */
-    #[JsonProperty("stringifiedType")]
+    #[JsonProperty('stringifiedType')]
     public ?string $stringifiedType;
 
     /**
-     * @param string $stringifiedValue
-     * @param ?string $stringifiedType
+     * @var string $stringifiedValue
+     */
+    #[JsonProperty('stringifiedValue')]
+    public string $stringifiedValue;
+
+    /**
+     * @param array{
+     *   stringifiedType?: ?string,
+     *   stringifiedValue: string,
+     * } $values
      */
     public function __construct(
-        string $stringifiedValue,
-        ?string $stringifiedType = null,
+        array $values,
     ) {
-        $this->stringifiedValue = $stringifiedValue;
-        $this->stringifiedType = $stringifiedType;
+        $this->stringifiedType = $values['stringifiedType'] ?? null;
+        $this->stringifiedValue = $values['stringifiedValue'];
     }
 }

@@ -10,24 +10,25 @@ class Script extends SerializableType
     /**
      * @var string $resourceType
      */
-    #[JsonProperty("resource_type")]
+    #[JsonProperty('resource_type')]
     public string $resourceType;
 
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
-     * @param string $resourceType
-     * @param string $name
+     * @param array{
+     *   resourceType: string,
+     *   name: string,
+     * } $values
      */
     public function __construct(
-        string $resourceType,
-        string $name,
+        array $values,
     ) {
-        $this->resourceType = $resourceType;
-        $this->name = $name;
+        $this->resourceType = $values['resourceType'];
+        $this->name = $values['name'];
     }
 }

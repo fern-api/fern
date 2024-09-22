@@ -28,9 +28,8 @@ class ReqWithHeadersClient
     /**
      * @param ReqWithHeaders $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
      */
-    public function getWithCustomHeader(ReqWithHeaders $request, ?array $options = null): mixed
+    public function getWithCustomHeader(ReqWithHeaders $request, ?array $options = null): void
     {
         $headers = [];
         $headers['X-TEST-SERVICE-HEADER'] = $request->xTestServiceHeader;

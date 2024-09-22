@@ -20,7 +20,7 @@ class ExtendedMovie(Movie):
         tag="tag-12efs9dv",
         cast=["John Travolta", "Samuel L. Jackson", "Uma Thurman", "Bruce Willis"],
         metadata={
-            "academyAward": true,
+            "academyAward": True,
             "releaseDate": "2023-12-08",
             "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
         },

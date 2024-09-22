@@ -10,15 +10,17 @@ class ImportingType extends SerializableType
     /**
      * @var string $imported
      */
-    #[JsonProperty("imported")]
+    #[JsonProperty('imported')]
     public string $imported;
 
     /**
-     * @param string $imported
+     * @param array{
+     *   imported: string,
+     * } $values
      */
     public function __construct(
-        string $imported,
+        array $values,
     ) {
-        $this->imported = $imported;
+        $this->imported = $values['imported'];
     }
 }

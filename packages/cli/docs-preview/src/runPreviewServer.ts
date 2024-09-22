@@ -124,7 +124,7 @@ export async function runPreviewServer({
     // initialize docs definition
     docsDefinition = await reloadDocsDefinition();
 
-    const additionalFilepaths = project.apiWorkspaces.flatMap((workspace) => workspace.getAbsoluteFilepaths());
+    const additionalFilepaths = project.apiWorkspaces.flatMap((workspace) => workspace.getAbsoluteFilePaths());
     const bundleRoot = bundlePath ? AbsoluteFilePath.of(path.resolve(bundlePath)) : getPathToBundleFolder();
 
     const watcher = new Watcher([absoluteFilePathToFern, ...additionalFilepaths], {

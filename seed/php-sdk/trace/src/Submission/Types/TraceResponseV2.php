@@ -10,69 +10,65 @@ class TraceResponseV2 extends SerializableType
     /**
      * @var string $submissionId
      */
-    #[JsonProperty("submissionId")]
+    #[JsonProperty('submissionId')]
     public string $submissionId;
 
     /**
      * @var int $lineNumber
      */
-    #[JsonProperty("lineNumber")]
+    #[JsonProperty('lineNumber')]
     public int $lineNumber;
 
     /**
      * @var TracedFile $file
      */
-    #[JsonProperty("file")]
+    #[JsonProperty('file')]
     public TracedFile $file;
 
     /**
      * @var mixed $returnValue
      */
-    #[JsonProperty("returnValue")]
+    #[JsonProperty('returnValue')]
     public mixed $returnValue;
-
-    /**
-     * @var StackInformation $stack
-     */
-    #[JsonProperty("stack")]
-    public StackInformation $stack;
 
     /**
      * @var ?ExpressionLocation $expressionLocation
      */
-    #[JsonProperty("expressionLocation")]
+    #[JsonProperty('expressionLocation')]
     public ?ExpressionLocation $expressionLocation;
+
+    /**
+     * @var StackInformation $stack
+     */
+    #[JsonProperty('stack')]
+    public StackInformation $stack;
 
     /**
      * @var ?string $stdout
      */
-    #[JsonProperty("stdout")]
+    #[JsonProperty('stdout')]
     public ?string $stdout;
 
     /**
-     * @param string $submissionId
-     * @param int $lineNumber
-     * @param TracedFile $file
-     * @param mixed $returnValue
-     * @param StackInformation $stack
-     * @param ?ExpressionLocation $expressionLocation
-     * @param ?string $stdout
+     * @param array{
+     *   submissionId: string,
+     *   lineNumber: int,
+     *   file: TracedFile,
+     *   returnValue: mixed,
+     *   expressionLocation?: ?ExpressionLocation,
+     *   stack: StackInformation,
+     *   stdout?: ?string,
+     * } $values
      */
     public function __construct(
-        string $submissionId,
-        int $lineNumber,
-        TracedFile $file,
-        mixed $returnValue,
-        StackInformation $stack,
-        ?ExpressionLocation $expressionLocation = null,
-        ?string $stdout = null,
+        array $values,
     ) {
-        $this->submissionId = $submissionId;
-        $this->lineNumber = $lineNumber;
-        $this->file = $file;
-        $this->returnValue = $returnValue;
-        $this->stack = $stack;
-        $this->expressionLocation = $expressionLocation;
-        $this->stdout = $stdout;
+        $this->submissionId = $values['submissionId'];
+        $this->lineNumber = $values['lineNumber'];
+        $this->file = $values['file'];
+        $this->returnValue = $values['returnValue'];
+        $this->expressionLocation = $values['expressionLocation'] ?? null;
+        $this->stack = $values['stack'];
+        $this->stdout = $values['stdout'] ?? null;
     }
 }

@@ -8,26 +8,27 @@ use Seed\Core\JsonProperty;
 class GetGeneratedTestCaseFileRequest extends SerializableType
 {
     /**
-     * @var TestCaseV2 $testCase
-     */
-    #[JsonProperty("testCase")]
-    public TestCaseV2 $testCase;
-
-    /**
      * @var ?TestCaseTemplate $template
      */
-    #[JsonProperty("template")]
+    #[JsonProperty('template')]
     public ?TestCaseTemplate $template;
 
     /**
-     * @param TestCaseV2 $testCase
-     * @param ?TestCaseTemplate $template
+     * @var TestCaseV2 $testCase
+     */
+    #[JsonProperty('testCase')]
+    public TestCaseV2 $testCase;
+
+    /**
+     * @param array{
+     *   template?: ?TestCaseTemplate,
+     *   testCase: TestCaseV2,
+     * } $values
      */
     public function __construct(
-        TestCaseV2 $testCase,
-        ?TestCaseTemplate $template = null,
+        array $values,
     ) {
-        $this->testCase = $testCase;
-        $this->template = $template;
+        $this->template = $values['template'] ?? null;
+        $this->testCase = $values['testCase'];
     }
 }

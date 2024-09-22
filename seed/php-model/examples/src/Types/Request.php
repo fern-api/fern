@@ -10,15 +10,17 @@ class Request extends SerializableType
     /**
      * @var mixed $request
      */
-    #[JsonProperty("request")]
+    #[JsonProperty('request')]
     public mixed $request;
 
     /**
-     * @param mixed $request
+     * @param array{
+     *   request: mixed,
+     * } $values
      */
     public function __construct(
-        mixed $request,
+        array $values,
     ) {
-        $this->request = $request;
+        $this->request = $values['request'];
     }
 }

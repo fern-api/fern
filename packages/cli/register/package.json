@@ -38,7 +38,7 @@
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/project-loader": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-api/workspace-loader": "workspace:*",
+    "@fern-api/api-workspace-commons": "workspace:*",
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {

@@ -5,6 +5,7 @@ namespace Seed;
 use Seed\Service\ServiceClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\RawClient;
+use Exception;
 
 class SeedClient
 {
@@ -24,15 +25,19 @@ class SeedClient
     private RawClient $client;
 
     /**
+     * @param ?string $apiKey The apiKey to use for authentication.
      * @param ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
      */
     public function __construct(
+        ?string $apiKey = null,
         ?array $options = null,
     ) {
+        $apiKey ??= $this->getFromEnvOrThrow('COURIER_API_KEY', 'Please pass in apiKey or set the environment variable COURIER_API_KEY.');
         $defaultHeaders = [
-            "X-Fern-Language" => "PHP",
-            "X-Fern-SDK-Name" => "Seed",
-            "X-Fern-SDK-Version" => "0.0.1",
+            'Authorization' => "Bearer $apiKey",
+            'X-Fern-Language' => 'PHP',
+            'X-Fern-SDK-Name' => 'Seed',
+            'X-Fern-SDK-Version' => '0.0.1',
         ];
 
         $this->options = $options ?? [];
@@ -47,4 +52,16 @@ class SeedClient
 
         $this->service = new ServiceClient($this->client);
     }
+
+    /**
+     * @param string $env
+     * @param string $message
+     * @return string
+     */
+    private function getFromEnvOrThrow(string $env, string $message): string
+    {
+        $value = getenv($env);
+        return $value ? (string) $value : throw new Exception($message);
+    }
+
 }

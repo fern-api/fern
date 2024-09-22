@@ -13,7 +13,7 @@ import {
     WebSocketMessage,
     WebSocketMessageBody
 } from "@fern-api/ir-sdk";
-import { FernWorkspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { getHeaderName } from "..";
 import { FernFileContext } from "../FernFileContext";

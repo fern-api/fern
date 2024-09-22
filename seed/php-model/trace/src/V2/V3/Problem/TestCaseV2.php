@@ -11,42 +11,41 @@ class TestCaseV2 extends SerializableType
     /**
      * @var TestCaseMetadata $metadata
      */
-    #[JsonProperty("metadata")]
+    #[JsonProperty('metadata')]
     public TestCaseMetadata $metadata;
 
     /**
      * @var mixed $implementation
      */
-    #[JsonProperty("implementation")]
+    #[JsonProperty('implementation')]
     public mixed $implementation;
 
     /**
      * @var array<string, mixed> $arguments
      */
-    #[JsonProperty("arguments"), ArrayType(["string" => "mixed"])]
+    #[JsonProperty('arguments'), ArrayType(['string' => 'mixed'])]
     public array $arguments;
 
     /**
      * @var ?TestCaseExpects $expects
      */
-    #[JsonProperty("expects")]
+    #[JsonProperty('expects')]
     public ?TestCaseExpects $expects;
 
     /**
-     * @param TestCaseMetadata $metadata
-     * @param mixed $implementation
-     * @param array<string, mixed> $arguments
-     * @param ?TestCaseExpects $expects
+     * @param array{
+     *   metadata: TestCaseMetadata,
+     *   implementation: mixed,
+     *   arguments: array<string, mixed>,
+     *   expects?: ?TestCaseExpects,
+     * } $values
      */
     public function __construct(
-        TestCaseMetadata $metadata,
-        mixed $implementation,
-        array $arguments,
-        ?TestCaseExpects $expects = null,
+        array $values,
     ) {
-        $this->metadata = $metadata;
-        $this->implementation = $implementation;
-        $this->arguments = $arguments;
-        $this->expects = $expects;
+        $this->metadata = $values['metadata'];
+        $this->implementation = $values['implementation'];
+        $this->arguments = $values['arguments'];
+        $this->expects = $values['expects'] ?? null;
     }
 }

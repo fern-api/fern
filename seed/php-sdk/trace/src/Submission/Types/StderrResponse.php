@@ -10,24 +10,25 @@ class StderrResponse extends SerializableType
     /**
      * @var string $submissionId
      */
-    #[JsonProperty("submissionId")]
+    #[JsonProperty('submissionId')]
     public string $submissionId;
 
     /**
      * @var string $stderr
      */
-    #[JsonProperty("stderr")]
+    #[JsonProperty('stderr')]
     public string $stderr;
 
     /**
-     * @param string $submissionId
-     * @param string $stderr
+     * @param array{
+     *   submissionId: string,
+     *   stderr: string,
+     * } $values
      */
     public function __construct(
-        string $submissionId,
-        string $stderr,
+        array $values,
     ) {
-        $this->submissionId = $submissionId;
-        $this->stderr = $stderr;
+        $this->submissionId = $values['submissionId'];
+        $this->stderr = $values['stderr'];
     }
 }

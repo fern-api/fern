@@ -28,9 +28,8 @@ class InlinedRequestClient
     /**
      * @param SendEnumInlinedRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
      */
-    public function send(SendEnumInlinedRequest $request, ?array $options = null): mixed
+    public function send(SendEnumInlinedRequest $request, ?array $options = null): void
     {
         try {
             $response = $this->client->sendRequest(

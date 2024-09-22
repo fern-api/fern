@@ -1,5 +1,5 @@
 import { ContainerType, TypeReference } from "@fern-api/ir-sdk";
-import { FernWorkspace, getDefinitionFile } from "@fern-api/workspace-loader";
+import { FernWorkspace, getDefinitionFile } from "@fern-api/api-workspace-commons";
 import {
     isRawAliasDefinition,
     RawSchemas,

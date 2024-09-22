@@ -10,33 +10,33 @@ class WorkspaceRunDetails extends SerializableType
     /**
      * @var mixed $exceptionV2
      */
-    #[JsonProperty("exceptionV2")]
+    #[JsonProperty('exceptionV2')]
     public mixed $exceptionV2;
-
-    /**
-     * @var string $stdout
-     */
-    #[JsonProperty("stdout")]
-    public string $stdout;
 
     /**
      * @var ?ExceptionInfo $exception
      */
-    #[JsonProperty("exception")]
+    #[JsonProperty('exception')]
     public ?ExceptionInfo $exception;
 
     /**
-     * @param mixed $exceptionV2
-     * @param string $stdout
-     * @param ?ExceptionInfo $exception
+     * @var string $stdout
+     */
+    #[JsonProperty('stdout')]
+    public string $stdout;
+
+    /**
+     * @param array{
+     *   exceptionV2: mixed,
+     *   exception?: ?ExceptionInfo,
+     *   stdout: string,
+     * } $values
      */
     public function __construct(
-        mixed $exceptionV2,
-        string $stdout,
-        ?ExceptionInfo $exception = null,
+        array $values,
     ) {
-        $this->exceptionV2 = $exceptionV2;
-        $this->stdout = $stdout;
-        $this->exception = $exception;
+        $this->exceptionV2 = $values['exceptionV2'];
+        $this->exception = $values['exception'] ?? null;
+        $this->stdout = $values['stdout'];
     }
 }

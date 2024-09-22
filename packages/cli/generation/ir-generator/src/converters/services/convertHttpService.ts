@@ -11,7 +11,7 @@ import {
     Transport,
     TypeReference
 } from "@fern-api/ir-sdk";
-import { FernWorkspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { isVariablePathParameter, RawSchemas } from "@fern-api/fern-definition-schema";
 import urlJoin from "url-join";
 import { FernFileContext } from "../../FernFileContext";

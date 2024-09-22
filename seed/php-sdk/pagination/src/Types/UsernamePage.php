@@ -9,26 +9,27 @@ use Seed\Core\ArrayType;
 class UsernamePage extends SerializableType
 {
     /**
-     * @var array<string> $data
-     */
-    #[JsonProperty("data"), ArrayType(["string"])]
-    public array $data;
-
-    /**
      * @var ?string $after
      */
-    #[JsonProperty("after")]
+    #[JsonProperty('after')]
     public ?string $after;
 
     /**
-     * @param array<string> $data
-     * @param ?string $after
+     * @var array<string> $data
+     */
+    #[JsonProperty('data'), ArrayType(['string'])]
+    public array $data;
+
+    /**
+     * @param array{
+     *   after?: ?string,
+     *   data: array<string>,
+     * } $values
      */
     public function __construct(
-        array $data,
-        ?string $after = null,
+        array $values,
     ) {
-        $this->data = $data;
-        $this->after = $after;
+        $this->after = $values['after'] ?? null;
+        $this->data = $values['data'];
     }
 }

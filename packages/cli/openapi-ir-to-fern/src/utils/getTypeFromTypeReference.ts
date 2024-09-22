@@ -1,22 +1,20 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 
-export function getTypeFromTypeReference(typeReference: RawSchemas.TypeReferenceWithDocsSchema): string {
+export function getTypeFromTypeReference(typeReference: RawSchemas.TypeReferenceSchema): string {
     if (typeof typeReference === "string") {
         return typeReference;
     }
     return typeReference.type;
 }
 
-export function getDocsFromTypeReference(typeReference: RawSchemas.TypeReferenceWithDocsSchema): string | undefined {
+export function getDocsFromTypeReference(typeReference: RawSchemas.TypeReferenceSchema): string | undefined {
     if (typeof typeReference === "string") {
         return undefined;
     }
     return typeReference.docs;
 }
 
-export function getDefaultFromTypeReference(
-    typeReference: RawSchemas.TypeReferenceWithDocsSchema
-): unknown | undefined {
+export function getDefaultFromTypeReference(typeReference: RawSchemas.TypeReferenceSchema): unknown | undefined {
     if (typeof typeReference === "string") {
         return undefined;
     }
@@ -24,7 +22,7 @@ export function getDefaultFromTypeReference(
 }
 
 export function getValidationFromTypeReference(
-    typeReference: RawSchemas.TypeReferenceWithDocsSchema
+    typeReference: RawSchemas.TypeReferenceSchema
 ): RawSchemas.ValidationSchema | undefined {
     if (typeof typeReference === "string") {
         return undefined;

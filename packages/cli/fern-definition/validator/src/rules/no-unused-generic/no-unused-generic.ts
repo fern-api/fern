@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { visitAllDefinitionFiles } from "@fern-api/workspace-loader";
+import { visitAllDefinitionFiles } from "@fern-api/api-workspace-commons";
 import { visitDefinitionFileYamlAst } from "../../ast";
 import { Rule, RuleViolation } from "../../Rule";
 import { visitRawTypeDeclaration, parseGeneric } from "@fern-api/fern-definition-schema";

@@ -1,4 +1,19 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.2.6
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Serialization utilities (necessary when pydantic aliases are removed) now respects dictionaries as well.
+
+- version: 4.2.5
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Parameters of file upload functions now default to OMIT, not None, so that the SDK appropriately
+        filters out unset parameters, while still allowing for user specified None values.
+
 - version: 4.2.4
   irVersion: 53
   changelogEntry:
@@ -12,9 +27,9 @@
   changelogEntry:
     - type: fix
       summary: |
-        The content type of file properties is now respected for multipart 
-        requests. For example, if you have a file property called `image` that has the 
-        content type `image/jpeg`, then it will be sent as: 
+        The content type of file properties is now respected for multipart
+        requests. For example, if you have a file property called `image` that has the
+        content type `image/jpeg`, then it will be sent as:
 
         ```python
         "image": core.with_content_type(file=image, content_type="image/jpeg"),
@@ -25,9 +40,9 @@
   changelogEntry:
     - type: fix
       summary: |
-        The content type of non-file properties is now respected for multipart 
-        requests. For example, if you have a type called `metadata` that has the 
-        content type `application/json`, then it will be sent as: 
+        The content type of non-file properties is now respected for multipart
+        requests. For example, if you have a type called `metadata` that has the
+        content type `application/json`, then it will be sent as:
 
         ```python
         "metadata": (None, json.dumps(jsonable_encoder(metadata)), "application/json"),
@@ -38,8 +53,8 @@
   changelogEntry:
     - type: fix
       summary: |
-        When the generator runs bash commands such as `poetry install` and there is a failure, 
-        now the `stderr` and `stdout` is logged to help improve user debugging. 
+        When the generator runs bash commands such as `poetry install` and there is a failure,
+        now the `stderr` and `stdout` is logged to help improve user debugging.
 
 - version: 4.2.0
   irVersion: 53
@@ -71,7 +86,7 @@
         ```yaml
         config:
           extra_dev_dependencies:
-            covcheck: 
+            covcheck:
               version: "^0.4.3"
               extras: ["toml"]
         ```
@@ -104,7 +119,7 @@
   irVersion: 53
   changelogEntry:
     - type: fix
-      summary: | 
+      summary: |
         Pydantic models that call `update_forward_refs` on non-union circular reference dependencies now pass in `localns` for
         the current member, a field in Pydantic V1 that provides object contexts to models in the event objects are not fully rebuilt.
 
@@ -120,37 +135,37 @@
   irVersion: 53
   changelogEntry:
     - type: fix
-      summary: | 
-        Pydantic models now call update forward refs on non-uion circular references. This 
-        prevents runtime errors in certain cases where types self reference itself through 
-        a union. 
+      summary: |
+        Pydantic models now call update forward refs on non-uion circular references. This
+        prevents runtime errors in certain cases where types self reference itself through
+        a union.
 
 - version: 4.0.0-rc5
   irVersion: 53
   changelogEntry:
     - type: fix
-      summary: | 
-        Pydantic models now call update forward refs on non-uion circular references. This 
-        prevents runtime errors in certain cases where types self reference itself through 
-        a union. 
+      summary: |
+        Pydantic models now call update forward refs on non-uion circular references. This
+        prevents runtime errors in certain cases where types self reference itself through
+        a union.
 
 - version: 4.0.0-rc4
   irVersion: 53
   changelogEntry:
     - type: fix
-      summary: | 
-        Pydantic models now call update forward refs on non-uion circular references. This 
-        prevents runtime errors in certain cases where types self reference itself through 
-        a union. 
+      summary: |
+        Pydantic models now call update forward refs on non-uion circular references. This
+        prevents runtime errors in certain cases where types self reference itself through
+        a union.
 
 - version: 4.0.0-rc3
   irVersion: 53
   changelogEntry:
     - type: fix
-      summary: | 
-        Pydantic models now call update forward refs on non-uion circular references. This 
-        prevents runtime errors in certain cases where types self reference itself through 
-        a union. 
+      summary: |
+        Pydantic models now call update forward refs on non-uion circular references. This
+        prevents runtime errors in certain cases where types self reference itself through
+        a union.
 
 - version: 4.0.0-rc2
   irVersion: 53
@@ -183,7 +198,7 @@
           to introduce the break on a major version.
 
           To maintain parity with pre-3.11.0 behavior, update the flag to `true`:
-            
+
             ```yaml
             - name: fernapi/fern-python-sdk
               version: 4.0.0-rc0
@@ -211,7 +226,6 @@
 
           Now, we've removed the field aliases and replaced them with an internal representation, which allows us to avoid pydantic config altogether.
 
-
 - version: 3.10.8
   irVersion: 53
   changelogEntry:
@@ -223,7 +237,6 @@
   changelogEntry:
     - type: fix
       summary: When not leveraging mock integration tests, still run pytest over everything, not a specific directory.
-
 
 # ===== Migrated versions =====
 
@@ -239,17 +252,17 @@
           pagination, same as if the next cursor were `None`.
   # This field is optional and can be omitted outside of the backfilling usecase
   # here it will default to the day the record was written to the DB
-  createdAt: '2024-08-16'
+  createdAt: "2024-08-16"
 
 - version: 3.10.3
-  createdAt: '2024-08-16'
+  createdAt: "2024-08-16"
   irVersion: 53
   changelogEntry:
     - type: fix
       summary: Upgrade intermediate representation dependency to safely parse null unknown types.
 
 - version: 3.10.4
-  createdAt: '2024-08-14'
+  createdAt: "2024-08-14"
   changelogEntry:
     - type: chore
       summary: Improve performance of Pydantic `.dict` calls
@@ -258,28 +271,28 @@
   irVersion: 53
 
 - version: 3.10.3
-  createdAt: '2024-08-14'
+  createdAt: "2024-08-14"
   changelogEntry:
     - type: fix
       summary: Query encoding now appropriately takes arrays of deep objects into account.
   irVersion: 53
 
 - version: 3.10.2
-  createdAt: '2024-08-13'
+  createdAt: "2024-08-13"
   changelogEntry:
     - type: fix
       summary: Unions with utils now update forward refs again, a regression that was introduced in version 3.7.0
   irVersion: 53
 
 - version: 3.10.1
-  createdAt: '2024-08-13'
+  createdAt: "2024-08-13"
   changelogEntry:
     - type: fix
       summary: If there are no autogenerated examples present, the Python SDK generator no longer fails.
   irVersion: 53
 
 - version: 3.10.0
-  createdAt: '2024-08-09'
+  createdAt: "2024-08-09"
   changelogEntry:
     - type: feat
       summary: Introduce forward compatible Python enums
@@ -292,7 +305,7 @@
   irVersion: 53
 
 - version: 3.9.0
-  createdAt: '2024-08-09'
+  createdAt: "2024-08-09"
   changelogEntry:
     - type: feat
       summary: Introduce Pythonic naming for discriminated union members through `union_naming` configuration flag.
@@ -306,28 +319,28 @@
   irVersion: 53
 
 - version: 3.8.0
-  createdAt: '2024-08-09'
+  createdAt: "2024-08-09"
   changelogEntry:
     - type: chore
       summary: Generated SDKs now use ruff for linting and formatting instead of Black.
   irVersion: 53
 
 - version: 3.7.0
-  createdAt: '2024-08-08'
+  createdAt: "2024-08-08"
   changelogEntry:
     - type: chore
       summary: Python circular referencing types are more robust.
   irVersion: 53
 
 - version: 3.6.0
-  createdAt: '2024-08-08'
+  createdAt: "2024-08-08"
   changelogEntry:
     - type: feat
       summary: The generator now respects returning nested properties from the returned object
   irVersion: 53
 
 - version: 3.5.1
-  createdAt: '2024-08-05'
+  createdAt: "2024-08-05"
   changelogEntry:
     - type: fix
       summary: Auto-completion for unions leveraging union utils now works as expected.
@@ -339,7 +352,7 @@
   irVersion: 53
 
 - version: 3.5.0
-  createdAt: '2024-08-05'
+  createdAt: "2024-08-05"
   changelogEntry:
     - type: chore
       summary: Generated code now respects the pydantic version configuration flag.
@@ -353,21 +366,21 @@
   irVersion: 53
 
 - version: 3.4.2
-  createdAt: '2024-08-05'
+  createdAt: "2024-08-05"
   changelogEntry:
     - type: fix
       summary: The Python generator now instantiates `Any` types as `Optional[Any]` to be able to mitigate breaks in Pydantic V2.
   irVersion: 53
 
 - version: 3.4.1
-  createdAt: '2024-08-04'
+  createdAt: "2024-08-04"
   changelogEntry:
     - type: chore
       summary: Literal templates are generated if they are union members
   irVersion: 53
 
 - version: 3.4.0
-  createdAt: '2024-08-02'
+  createdAt: "2024-08-02"
   changelogEntry:
     - type: internal
       summary: Generator code now uses Pydantic V2, no changes to generated code.
@@ -380,7 +393,7 @@
   irVersion: 53
 
 - version: 3.3.4
-  createdAt: '2024-08-02'
+  createdAt: "2024-08-02"
   changelogEntry:
     - type: chore
       summary: Address a number of issues within generated unit tests.
@@ -398,52 +411,52 @@
   irVersion: 53
 
 - version: 3.3.3
-  createdAt: '2024-08-02'
+  createdAt: "2024-08-02"
   changelogEntry:
     - type: fix
       summary: The generator now allows you to extend aliased types (as long as they're objects).
   irVersion: 53
 
 - version: 3.3.2
-  createdAt: '2024-08-02'
+  createdAt: "2024-08-02"
   changelogEntry:
     - type: fix
       summary: Regression in readme generation introduced in 3.3.1
   irVersion: 53
 
 - version: 3.3.1
-  createdAt: '2024-08-02'
+  createdAt: "2024-08-02"
   changelogEntry:
     - type: fix
       summary: Generated READMEs now reference RequestOptions as TypedDicts correctly.
   irVersion: 53
 
 - version: 3.3.0-rc1
-  createdAt: '2024-08-01'
+  createdAt: "2024-08-01"
   changelogEntry:
     - type: fix
       summary: TypedDict snippets now include literals where available.
   irVersion: 53
 
 - version: 3.3.0-rc0
-  createdAt: '2024-07-31'
+  createdAt: "2024-07-31"
   changelogEntry:
     - type: internal
       summary: Upgrade to IR 53.1.0
       changed:
-        - 'Upgrade to IR 53.1.0'
+        - "Upgrade to IR 53.1.0"
         - The Python generator now creates snippet templates for undiscriminated unions.
   irVersion: 53
 
 - version: 3.2.0-rc1
-  createdAt: '2024-07-29'
+  createdAt: "2024-07-29"
   changelogEntry:
     - type: fix
       summary: The generated README now imports `ApiError` as if it were from outside the module.
   irVersion: 49
 
 - version: 3.2.0-rc0
-  createdAt: '2024-07-25'
+  createdAt: "2024-07-25"
   changelogEntry:
     - type: feat
       summary: The Python SDK can now be generated with TypedDicts as inputs.
@@ -456,7 +469,7 @@
   irVersion: 49
 
 - version: 3.1.0-rc0
-  createdAt: '2024-07-24'
+  createdAt: "2024-07-24"
   changelogEntry:
     - type: chore
       summary: The root client is now exported from the main `__init__.py`.
@@ -475,14 +488,14 @@
   irVersion: 49
 
 - version: 3.0.0-rc2
-  createdAt: '2024-07-24'
+  createdAt: "2024-07-24"
   changelogEntry:
     - type: fix
       summary: "`update_forward_refs` no longer raises errors, preserving original behavior, pre-3.x."
   irVersion: 49
 
 - version: 3.0.0-rc1
-  createdAt: '2024-07-23'
+  createdAt: "2024-07-23"
   changelogEntry:
     - type: fix
       summary: "`expected_types` within our test suite are now typed as `Tuple[typing.Any, typing.Any]`."
@@ -495,7 +508,7 @@
   irVersion: 49
 
 - version: 3.0.0-rc0
-  createdAt: '2024-07-23'
+  createdAt: "2024-07-23"
   changelogEntry:
     - type: break
       summary: The generated models now support Pydantic V2 outright, it no longer uses `pydantic.v1` models.
@@ -508,49 +521,49 @@
   irVersion: 49
 
 - version: 2.16.0
-  createdAt: '2024-07-16'
+  createdAt: "2024-07-16"
   changelogEntry:
     - type: feat
       summary: The generated SDK now allows for specifying whether or not to generate `streaming` functions as overloaded functions or separate functions.
   irVersion: 49
 
 - version: 2.15.6
-  createdAt: '2024-07-17'
+  createdAt: "2024-07-17"
   changelogEntry:
     - type: fix
       summary: The generated python SDK now requires an environment be specified if a default is not provided.
   irVersion: 49
 
 - version: 2.15.5
-  createdAt: '2024-07-17'
+  createdAt: "2024-07-17"
   changelogEntry:
     - type: fix
       summary: The generated python SDK Oauth client now no longer checks for an expiry when getting the access token if an expiry field is not configured.
   irVersion: 49
 
 - version: 2.15.4
-  createdAt: '2024-07-10'
+  createdAt: "2024-07-10"
   changelogEntry:
     - type: fix
       summary: The generated python SDK now serializes bytes within JSON as a utf-8 encoded string.
   irVersion: 49
 
 - version: 2.15.3
-  createdAt: '2024-07-10'
+  createdAt: "2024-07-10"
   changelogEntry:
     - type: fix
       summary: The generated python SDK no longer runs into a recursion error during snippet generation.
   irVersion: 49
 
 - version: 2.15.2
-  createdAt: '2024-07-10'
+  createdAt: "2024-07-10"
   changelogEntry:
     - type: fix
       summary: The generated python SDK no longer treats `set` as a reserved word for method names.
   irVersion: 49
 
 - version: 2.15.1
-  createdAt: '2024-07-09'
+  createdAt: "2024-07-09"
   changelogEntry:
     - type: fix
       summary: The unchecked base model no longer coerces None to a type.
@@ -562,14 +575,14 @@
   irVersion: 49
 
 - version: 2.15.0
-  createdAt: '2024-07-03'
+  createdAt: "2024-07-03"
   changelogEntry:
     - type: feat
       summary: The generated python SDK now respects configured defaults from the API spec.
   irVersion: 49
 
 - version: 2.14.1
-  createdAt: '2024-07-01'
+  createdAt: "2024-07-01"
   changelogEntry:
     - type: fix
       summary: typing within the Sync and AsyncPagers is now correctly passed through to the BasePager.
@@ -581,7 +594,7 @@
   irVersion: 49
 
 - version: 2.14.0
-  createdAt: '2024-07-01'
+  createdAt: "2024-07-01"
   changelogEntry:
     - type: fix
       summary: The offset page now allows for the usage of 0 as a page start.
@@ -593,7 +606,7 @@
   irVersion: 49
 
 - version: 2.14.0-rc3
-  createdAt: '2024-07-01'
+  createdAt: "2024-07-01"
   changelogEntry:
     - type: feat
       summary: Generated readmes now include an "advanced" section.
@@ -605,14 +618,14 @@
   irVersion: 49
 
 - version: 2.14.0-rc2
-  createdAt: '2024-07-01'
+  createdAt: "2024-07-01"
   changelogEntry:
     - type: chore
       summary: Async snippets now run the async function leveraging asyncio.run to be more copy-pastable.
   irVersion: 49
 
 - version: 2.14.0-rc1
-  createdAt: '2024-06-27'
+  createdAt: "2024-06-27"
   changelogEntry:
     - type: fix
       summary: The fix from 2.5.2 is now case-insentitive
@@ -623,14 +636,14 @@
   irVersion: 49
 
 - version: 2.14.0-rc0
-  createdAt: '2024-06-26'
+  createdAt: "2024-06-26"
   changelogEntry:
     - type: feat
       summary: The Python SDK now generates an accompanying SDK reference (`reference.md`) for users to review the SDK methods at a glance within the SDK's GitHub repository.
   irVersion: 49
 
 - version: 2.13.1-rc0
-  createdAt: '2024-06-20'
+  createdAt: "2024-06-20"
   changelogEntry:
     - type: fix
       summary: The Python SDK now does not send additional properties via JSON or data if the request is leveraging the other field.
@@ -645,14 +658,14 @@
   irVersion: 49
 
 - version: 2.13.0-rc0
-  createdAt: '2024-06-20'
+  createdAt: "2024-06-20"
   changelogEntry:
     - type: internal
       summary: The Python SDK generator is now upgraded to IR V49.
   irVersion: 49
 
 - version: 2.12.0-rc0
-  createdAt: '2024-06-25'
+  createdAt: "2024-06-25"
   changelogEntry:
     - type: feat
       summary: README generation now supports a section dedicated to streaming usage, as well as one for paginated endpoints.
@@ -661,11 +674,11 @@
           Feature: README generation now supports a section dedicated to streaming
           usage, as well as one for paginated endpoints.
       changed:
-        - 'Improvement: Paginated endpoint snippets now show using an iterator:'
+        - "Improvement: Paginated endpoint snippets now show using an iterator:"
   irVersion: 49
 
 - version: 2.11.0-rc0
-  createdAt: '2024-06-25'
+  createdAt: "2024-06-25"
   changelogEntry:
     - type: chore
       summary: Snippet templates now support auth variables within the root client.
@@ -677,7 +690,7 @@
   irVersion: 49
 
 - version: 2.10.2
-  createdAt: '2024-06-20'
+  createdAt: "2024-06-20"
   changelogEntry:
     - type: fix
       summary: The SDK now handles stream termination sequences like `[DONE]`.
@@ -689,49 +702,49 @@
   irVersion: 46
 
 - version: 2.10.1
-  createdAt: '2024-06-20'
+  createdAt: "2024-06-20"
   changelogEntry:
     - type: fix
       summary: Improve the SDK to not leak `JSONDecodeError` to SDK users. Instead, an `ApiError` will be thrown with the text content of the response.
   irVersion: 46
 
 - version: 2.10.0
-  createdAt: '2024-06-20'
+  createdAt: "2024-06-20"
   changelogEntry:
     - type: feat
       summary: Add support for higher quality `README.md` generation.
   irVersion: 46
 
 - version: 2.9.10
-  createdAt: '2024-06-20'
+  createdAt: "2024-06-20"
   changelogEntry:
     - type: fix
       summary: The generator now only specifies the readme location within pyproject.toml if one was successfully created.
   irVersion: 46
 
 - version: 2.9.9
-  createdAt: '2024-06-19'
+  createdAt: "2024-06-19"
   changelogEntry:
     - type: internal
       summary: The generator now consumes IRv46.
   irVersion: 46
 
 - version: 2.9.8
-  createdAt: '2024-06-18'
+  createdAt: "2024-06-18"
   changelogEntry:
     - type: chore
       summary: The python generator only adds a publish step in github actions if credentials are specified.
   irVersion: 39
 
 - version: 2.9.7
-  createdAt: '2024-06-12'
+  createdAt: "2024-06-12"
   changelogEntry:
     - type: fix
       summary: The unchecked base model stops special casing defaults and pydantic v2.
   irVersion: 39
 
 - version: 2.9.6
-  createdAt: '2024-06-11'
+  createdAt: "2024-06-11"
   changelogEntry:
     - type: fix
       summary: Offset based pagination is now 1-based, as opposed to 0 based
@@ -744,7 +757,7 @@
   irVersion: 39
 
 - version: 2.9.5
-  createdAt: '2024-06-10'
+  createdAt: "2024-06-10"
   changelogEntry:
     - type: fix
       summary: Unions with elements that specify no properties are generated correctly.
@@ -756,21 +769,21 @@
   irVersion: 39
 
 - version: 2.9.4
-  createdAt: '2024-06-07'
+  createdAt: "2024-06-07"
   changelogEntry:
     - type: fix
       summary: The unchecked base model now handles pulling the discriminant from a dict, not just a model/object.
   irVersion: 39
 
 - version: 2.9.3
-  createdAt: '2024-06-06'
+  createdAt: "2024-06-06"
   changelogEntry:
     - type: fix
       summary: Snippet templates for discrminated unions now specify the `template_input` property which is required to actually see snippets of instantiating discrminated unions.
   irVersion: 39
 
 - version: 2.9.2
-  createdAt: '2024-06-06'
+  createdAt: "2024-06-06"
   changelogEntry:
     - type: fix
       summary: downgrades mypy so we can run it over all our files without concern for their pydantic bug
@@ -782,7 +795,7 @@
   irVersion: 39
 
 - version: 2.9.1
-  createdAt: '2024-06-06'
+  createdAt: "2024-06-06"
   changelogEntry:
     - type: fix
       summary: The SDK removes unset query parameters from requests (regression from the client migration in 2.8.0)
@@ -796,42 +809,42 @@
   irVersion: 39
 
 - version: 2.9.0
-  createdAt: '2024-06-05'
+  createdAt: "2024-06-05"
   changelogEntry:
     - type: fix
       summary: Snippets preserve trailing slashes
   irVersion: 39
 
 - version: 2.9.0-rc1
-  createdAt: '2024-06-05'
+  createdAt: "2024-06-05"
   changelogEntry:
     - type: fix
       summary: The new http client abstraction ensures a slash is postfixed to the baseurl
   irVersion: 39
 
 - version: 2.9.0-rc0
-  createdAt: '2024-06-04'
+  createdAt: "2024-06-04"
   changelogEntry:
     - type: chore
       summary: The Python generator now runs custom unit tests in CI if configured.
   irVersion: 39
 
 - version: 2.8.2
-  createdAt: '2024-06-04'
+  createdAt: "2024-06-04"
   changelogEntry:
     - type: fix
       summary: The none-filtering function now supports mypy's invariance check.
   irVersion: 39
 
 - version: 2.8.1
-  createdAt: '2024-06-04'
+  createdAt: "2024-06-04"
   changelogEntry:
     - type: fix
       summary: The parameter comment/documentation for timeouts on the root client now reflects the custom timeout passed through within configuration.
   irVersion: 39
 
 - version: 2.8.0
-  createdAt: '2024-06-03'
+  createdAt: "2024-06-03"
   changelogEntry:
     - type: chore
       summary: >-
@@ -840,7 +853,7 @@
   irVersion: 39
 
 - version: 2.7.0
-  createdAt: '2024-05-30'
+  createdAt: "2024-05-30"
   changelogEntry:
     - type: internal
       summary: >-
@@ -851,16 +864,16 @@
   irVersion: 39
 
 - version: 2.6.1
-  createdAt: '2024-05-31'
+  createdAt: "2024-05-31"
   changelogEntry:
     - type: internal
       summary: >-
-          this adds a back door token getter function to OAuth clients to better
-          test the functionality.
+        this adds a back door token getter function to OAuth clients to better
+        test the functionality.
   irVersion: 39
 
 - version: 2.6.0
-  createdAt: '2024-05-30'
+  createdAt: "2024-05-30"
   changelogEntry:
     - type: chore
       summary: Support adding optional dependencies and extras to your generated `pyproject.toml`.
@@ -872,23 +885,23 @@
   irVersion: 39
 
 - version: 2.5.7
-  createdAt: '2024-05-30'
+  createdAt: "2024-05-30"
   changelogEntry:
     - type: fix
       summary: tests now carry a type annotation for `expected_types` variable.
   irVersion: 39
 
 - version: 2.5.6
-  createdAt: '2024-05-29'
+  createdAt: "2024-05-29"
   changelogEntry:
     - type: chore
       summary: >-
-          Literal values are now all defaulted such that users are
-          not required to plug in a redundant value.
+        Literal values are now all defaulted such that users are
+        not required to plug in a redundant value.
   irVersion: 39
 
 - version: 2.5.5
-  createdAt: '2024-05-29'
+  createdAt: "2024-05-29"
   changelogEntry:
     - type: fix
       summary: Auto-Pagination now respects optional return values
@@ -900,56 +913,56 @@
   irVersion: 39
 
 - version: 2.5.4
-  createdAt: '2024-05-28'
+  createdAt: "2024-05-28"
   changelogEntry:
     - type: internal
       summary: Add typing library for dateutils in testing lib to satisfy mypy errors.
   irVersion: 39
 
 - version: 2.5.3
-  createdAt: '2024-05-24'
+  createdAt: "2024-05-24"
   changelogEntry:
     - type: chore
       summary: Stops specifying custom licenses manually, lets poetry handle adding them.
   irVersion: 39
 
 - version: 2.5.2
-  createdAt: '2024-05-23'
+  createdAt: "2024-05-23"
   changelogEntry:
     - type: feat
       summary: Support `list` SDK method names instead of defaulting to `list_`.
   irVersion: 39
 
 - version: 2.5.1-rc0
-  createdAt: '2024-05-23'
+  createdAt: "2024-05-23"
   changelogEntry:
     - type: fix
       summary: Literal parameters are added back to the request body.
   irVersion: 39
 
 - version: 2.5.0-rc2
-  createdAt: '2024-05-23'
+  createdAt: "2024-05-23"
   changelogEntry:
     - type: fix
       summary: Do not attempt to run `fern test` in CI until the command is more widely rolled out.
   irVersion: 39
 
 - version: 2.5.0-rc1
-  createdAt: '2024-05-22'
+  createdAt: "2024-05-22"
   changelogEntry:
     - type: chore
       summary: Address `propogate` -> `propagate` typo in python codegen.
   irVersion: 39
 
 - version: 2.5.0-rc0
-  createdAt: '2024-05-22'
+  createdAt: "2024-05-22"
   changelogEntry:
     - type: fix
       summary: This version addresses issues in unit test generation and reenables the creation of unit tests.
   irVersion: 39
 
 - version: 2.4.0-rc0
-  createdAt: '2024-05-21'
+  createdAt: "2024-05-21"
   changelogEntry:
     - type: fix
       summary: >-
@@ -959,7 +972,7 @@
   irVersion: 39
 
 - version: 2.3.4
-  createdAt: '2024-05-21'
+  createdAt: "2024-05-21"
   changelogEntry:
     - type: fix
       summary: >-
@@ -974,14 +987,14 @@
   irVersion: 39
 
 - version: 2.3.3
-  createdAt: '2024-05-21'
+  createdAt: "2024-05-21"
   changelogEntry:
     - type: fix
       summary: Inlined body parameters now deconflict in naming with header and query parameters by prefixing the request objects name.
   irVersion: 39
 
 - version: 2.3.2
-  createdAt: '2024-05-21'
+  createdAt: "2024-05-21"
   changelogEntry:
     - type: fix
       summary: The query encoder now correctly handles none values
@@ -993,21 +1006,21 @@
   irVersion: 39
 
 - version: 2.3.1
-  createdAt: '2024-05-21'
+  createdAt: "2024-05-21"
   changelogEntry:
     - type: fix
       summary: The `pyproject.toml` generator now includes project URLs when specified.
   irVersion: 39
 
 - version: 2.3.0
-  createdAt: '2024-05-21'
+  createdAt: "2024-05-21"
   changelogEntry:
     - type: chore
       summary: Users can now specify information that will appear in their pypi record.
   irVersion: 39
 
 - version: 2.2.2
-  createdAt: '2024-05-20'
+  createdAt: "2024-05-20"
   changelogEntry:
     - type: fix
       summary: Inline request parameters now deconflict in naming with the unnamed path parameter arguments.
@@ -1021,14 +1034,14 @@
   irVersion: 39
 
 - version: 2.2.1
-  createdAt: '2024-05-17'
+  createdAt: "2024-05-17"
   changelogEntry:
     - type: internal
       summary: The generator now uses the latest FDR SDK.
   irVersion: 39
 
 - version: 2.2.0
-  createdAt: '2024-05-16'
+  createdAt: "2024-05-16"
   changelogEntry:
     - type: chore
       summary: The generated SDK will now correctly encode deep object query parameters
@@ -1041,21 +1054,21 @@
   irVersion: 39
 
 - version: 2.1.1
-  createdAt: '2024-05-15'
+  createdAt: "2024-05-15"
   changelogEntry:
     - type: chore
       summary: add enhanced snippet support for streaming endpoints.
   irVersion: 39
 
 - version: 2.1.0
-  createdAt: '2024-05-14'
+  createdAt: "2024-05-14"
   changelogEntry:
     - type: feat
       summary: Add support for cursor and offset pagination ("auto-pagination").
   irVersion: 39
 
 - version: 2.0.1
-  createdAt: '2024-05-14'
+  createdAt: "2024-05-14"
   changelogEntry:
     - type: fix
       summary: The python generator now only excludes unset fields that are not required.
@@ -1067,7 +1080,7 @@
   irVersion: 39
 
 - version: 2.0.0
-  createdAt: '2024-05-09'
+  createdAt: "2024-05-09"
   changelogEntry:
     - type: break
       summary: Release of the Python SDK generator version 2, updating default configuration.
@@ -1080,56 +1093,56 @@
   irVersion: 39
 
 - version: 1.7.0-rc0
-  createdAt: '2024-05-09'
+  createdAt: "2024-05-09"
   changelogEntry:
     - type: chore
       summary: you can now declare a new python version range for your `pyproject.toml`, which will declare a new version range for your pip package.
   irVersion: 39
 
 - version: 1.6.0-rc0
-  createdAt: '2024-05-09'
+  createdAt: "2024-05-09"
   changelogEntry:
     - type: chore
       summary: You can now specify dev dependencies from your `generators.yml` file
   irVersion: 39
 
 - version: 1.5.3-rc0
-  createdAt: '2024-05-02'
+  createdAt: "2024-05-02"
   changelogEntry:
     - type: fix
       summary: the unchecked basemodel no longer tries to dereference an object if it's null.
   irVersion: 39
 
 - version: 1.5.2-rc0
-  createdAt: '2024-05-02'
+  createdAt: "2024-05-02"
   changelogEntry:
     - type: chore
       summary: The python generator now produces sync snippet templates, as opposed to just async templates as it was before
   irVersion: 39
 
 - version: 1.5.1-rc5
-  createdAt: '2024-05-01'
+  createdAt: "2024-05-01"
   changelogEntry:
     - type: fix
       summary: Snippet templates now generate the correct imports for object types.
   irVersion: 39
 
 - version: 1.5.1-rc4
-  createdAt: '2024-05-01'
+  createdAt: "2024-05-01"
   changelogEntry:
     - type: fix
       summary: The SDK now generates discriminated union snippet templates correctly.
   irVersion: 39
 
 - version: 1.5.1-rc3
-  createdAt: '2024-05-01'
+  createdAt: "2024-05-01"
   changelogEntry:
     - type: chore
       summary: Union types leverage the fern aware base model to include JSON and Dict function overrides.
   irVersion: 39
 
 - version: 1.5.1-rc2
-  createdAt: '2024-05-01'
+  createdAt: "2024-05-01"
   changelogEntry:
     - type: fix
       summary: The vanilla pydantic base model now respects the `require_optional_fields`
@@ -1142,7 +1155,7 @@
   irVersion: 39
 
 - version: 1.5.1-rc1
-  createdAt: '2024-05-01'
+  createdAt: "2024-05-01"
   changelogEntry:
     - type: fix
       summary: Improve formatting within snippet templates.
@@ -1154,21 +1167,21 @@
   irVersion: 39
 
 - version: 1.5.1-rc0
-  createdAt: '2024-04-26'
+  createdAt: "2024-04-26"
   changelogEntry:
     - type: fix
       summary: Discriminated union variants that are objects now have inlined properties instead of extending a base type.
   irVersion: 39
 
 - version: 1.5.0-rc0
-  createdAt: '2024-04-30'
+  createdAt: "2024-04-30"
   changelogEntry:
     - type: feat
       summary: The generator now supports inlining top-level request parameters instead of requiring users create a request object.
   irVersion: 39
 
 - version: 1.4.0
-  createdAt: '2024-04-29'
+  createdAt: "2024-04-29"
   changelogEntry:
     - type: feat
       summary: keyword arguments are now ordered such that required params are ordered before optional params
@@ -1177,11 +1190,11 @@
           keyword arguments are now ordered such that required params
           are ordered before optional params. Note that since these are kwargs,
           this is a non-breaking change.
-        - 'docstrings now match numpydoc/PEP257 format'
+        - "docstrings now match numpydoc/PEP257 format"
   irVersion: 39
 
 - version: 1.4.0-rc3
-  createdAt: '2024-04-24'
+  createdAt: "2024-04-24"
   changelogEntry:
     - type: fix
       summary: pin mypy dependency to 1.9.0 to prevent introducing upstream bugs
@@ -1192,25 +1205,25 @@
           is only a dev dependency, so it does not affect the behavior of the SDK.
         - Temporarily disable unit test generation.
       changed:
-        - 'Improvement: Use named parameters for all `httpx` request params.'
+        - "Improvement: Use named parameters for all `httpx` request params."
   irVersion: 39
 
 - version: 1.4.0-rc2
-  createdAt: '2024-04-23'
+  createdAt: "2024-04-23"
   changelogEntry:
     - type: fix
       summary: Initialize the OAuth token provider member variables to their default values before they are set.
   irVersion: 39
 
 - version: 1.4.0-rc1
-  createdAt: '2024-04-22'
+  createdAt: "2024-04-22"
   changelogEntry:
     - type: feat
       summary: The python SDK generator now supports OAuth client generation for the client-credentials flow.
   irVersion: 39
 
 - version: 1.4.0-rc0
-  createdAt: '2024-04-22'
+  createdAt: "2024-04-22"
   changelogEntry:
     - type: chore
       summary: Generated clients now follow redirects by default.
@@ -1222,35 +1235,35 @@
   irVersion: 38
 
 - version: 1.3.1-rc0
-  createdAt: '2024-04-22'
+  createdAt: "2024-04-22"
   changelogEntry:
     - type: fix
       summary: the python SDK generator now checks to make sure a header is not null before casting it to a string.
   irVersion: 38
 
 - version: 1.3.0-rc1
-  createdAt: '2024-04-22'
+  createdAt: "2024-04-22"
   changelogEntry:
     - type: internal
       summary: add logging for python snippet template generation.
   irVersion: 38
 
 - version: 1.3.0-rc0
-  createdAt: '2024-04-21'
+  createdAt: "2024-04-21"
   changelogEntry:
     - type: feat
       summary: "Beta: The generator now registers snippet templates which can be used for dynamic SDK code snippet generation."
   irVersion: 38
 
 - version: 1.2.0-rc2
-  createdAt: '2024-04-10'
+  createdAt: "2024-04-10"
   changelogEntry:
     - type: fix
       summary: The generator now correctly imports `json` when deserializing server sent events.
   irVersion: 38
 
 - version: 1.2.0-rc0
-  createdAt: '2024-04-10'
+  createdAt: "2024-04-10"
   changelogEntry:
     - type: internal
       summary: Consume IR v38
@@ -1262,7 +1275,7 @@
   irVersion: 38
 
 - version: 1.1.0-rc3
-  createdAt: '2024-04-04'
+  createdAt: "2024-04-04"
   changelogEntry:
     - type: fix
       summary: The skip validation code now works as expected.
@@ -1273,14 +1286,14 @@
   irVersion: 37
 
 - version: 1.1.0-rc2
-  createdAt: '2024-04-04'
+  createdAt: "2024-04-04"
   changelogEntry:
     - type: fix
       summary: The generator now writes the skipped-validation `cast` with a suffixing new line so that the code compiles.
   irVersion: 37
 
 - version: 1.1.0-rc1
-  createdAt: '2024-04-04'
+  createdAt: "2024-04-04"
   changelogEntry:
     - type: fix
       summary: The generator no longer attempts to create a version file if Fern does not own generating the full package (e.g. in local generation).
@@ -1293,23 +1306,23 @@
   irVersion: 37
 
 - version: 1.1.0-rc0
-  createdAt: '2024-04-03'
+  createdAt: "2024-04-03"
   changelogEntry:
     - type: feat
       summary: The python SDK now includes a configuration option to skip pydantic validation.
       added:
-      - >-
-        [EXPERIMENTAL]: The python SDK now includes a configuration
-        option to skip pydantic validation. This ensures that Pydantic does not
-        immediately fail if the model being returned from an API does not
-        exactly match the Pydantic model. This is meant to add flexibility,
-        should your SDK fall behind your API, but should be used sparringly, as
-        the type-hinting for users will still reflect the Pydantic model
-        exactly.
+        - >-
+          [EXPERIMENTAL]: The python SDK now includes a configuration
+          option to skip pydantic validation. This ensures that Pydantic does not
+          immediately fail if the model being returned from an API does not
+          exactly match the Pydantic model. This is meant to add flexibility,
+          should your SDK fall behind your API, but should be used sparringly, as
+          the type-hinting for users will still reflect the Pydantic model
+          exactly.
   irVersion: 37
 
 - version: 1.0.1
-  createdAt: '2024-04-03'
+  createdAt: "2024-04-03"
   changelogEntry:
     - type: fix
       summary: Address Pydantic break when introducing `pydantic.v1` import within Pydantic V1
@@ -1322,7 +1335,7 @@
   irVersion: 37
 
 - version: 1.0.0
-  createdAt: '2024-04-02'
+  createdAt: "2024-04-02"
   changelogEntry:
     - type: break
       summary: The python SDK now defaults new (breaking configuration) to introduce general improvements.
@@ -1337,7 +1350,7 @@
   irVersion: 37
 
 - version: 0.13.4
-  createdAt: '2024-04-03'
+  createdAt: "2024-04-03"
   changelogEntry:
     - type: fix
       summary: revert changes introduced within 0.12.2
@@ -1349,35 +1362,35 @@
   irVersion: 37
 
 - version: 0.13.3
-  createdAt: '2024-03-28'
+  createdAt: "2024-03-28"
   changelogEntry:
     - type: fix
       summary: Github workflows for publishing now work again (previously the trigger was incorrect).
   irVersion: 37
 
 - version: 0.13.2
-  createdAt: '2024-03-28'
+  createdAt: "2024-03-28"
   changelogEntry:
     - type: fix
       summary: Asynchronous calls to `httpx.stream` are now awaited. This is applicable to any file download or JSON streaming (chat completion) endpoints.
   irVersion: 37
 
 - version: 0.13.1
-  createdAt: '2024-03-26'
+  createdAt: "2024-03-26"
   changelogEntry:
     - type: feat
       summary: discriminant values in unions are now defaulted such that callers no longer need to specify the discriminant
   irVersion: 37
 
 - version: 0.13.0
-  createdAt: '2024-03-25'
+  createdAt: "2024-03-25"
   changelogEntry:
     - type: feat
       summary: the python SDK now exposes it's version through `__version__` to match module standards and expectations.
   irVersion: 37
 
 - version: 0.12.5
-  createdAt: '2024-03-22'
+  createdAt: "2024-03-22"
   changelogEntry:
     - type: fix
       summary: the python SDK uses the timeout provided to the top level client as the default per-request
@@ -1390,28 +1403,28 @@
   irVersion: 37
 
 - version: 0.12.4
-  createdAt: '2024-03-19'
+  createdAt: "2024-03-19"
   changelogEntry:
     - type: chore
       summary: Allow full forward compat with enums while keeping intellisense by unioning enum literals with `typing.AnyStr`.
   irVersion: 37
 
 - version: 0.12.3
-  createdAt: '2024-03-18'
+  createdAt: "2024-03-18"
   changelogEntry:
     - type: feat
       summary: Allow bytes requests to take in iterators of bytes, mirroring the types allowed by HTTPX.
   irVersion: 37
 
 - version: 0.12.2
-  createdAt: '2024-03-18'
+  createdAt: "2024-03-18"
   changelogEntry:
     - type: fix
       summary: Fix the returned type and value contained within the retrying wrapper for the HTTPX client (http_client.py).
   irVersion: 37
 
 - version: 0.12.1
-  createdAt: '2024-03-14'
+  createdAt: "2024-03-14"
   changelogEntry:
     - type: chore
       summary: Improves example generation and snippets for union types, as well as multi-url environments.
@@ -1426,7 +1439,7 @@
   irVersion: 37
 
 - version: 0.12.0
-  createdAt: '2024-03-11'
+  createdAt: "2024-03-11"
   changelogEntry:
     - type: feat
       summary: Auto-generated unit and integration tests against a mock server.
@@ -1440,7 +1453,7 @@
   irVersion: 37
 
 - version: 0.11.10
-  createdAt: '2024-03-08'
+  createdAt: "2024-03-08"
   changelogEntry:
     - type: feat
       summary: Expose a feature flag to pass through additional properties not specified within your pydantic model from your SDK.
@@ -1452,14 +1465,14 @@
   irVersion: 36
 
 - version: 0.11.9
-  createdAt: '2024-03-04'
+  createdAt: "2024-03-04"
   changelogEntry:
     - type: chore
       summary: use docstrings instead of Pydantic field descriptions.
   irVersion: 36
 
 - version: 0.11.8-rc1
-  createdAt: '2024-03-02'
+  createdAt: "2024-03-02"
   changelogEntry:
     - type: feat
       summary: Introduces a `max_retries` parameter to the RequestOptions dict accepted by all requests.
@@ -1473,7 +1486,7 @@
   irVersion: 36
 
 - version: 0.11.8-rc0
-  createdAt: '2024-02-27'
+  createdAt: "2024-02-27"
   changelogEntry:
     - type: feat
       summary: introduces additional configuration to customize the client class and file name.
@@ -1485,7 +1498,7 @@
   irVersion: 36
 
 - version: 0.11.7
-  createdAt: '2024-02-27'
+  createdAt: "2024-02-27"
   changelogEntry:
     - type: feat
       summary: Introduces a flag `use_str_enums` to swap from using proper Enum classes to using Literals to represent enums.
@@ -1498,28 +1511,28 @@
   irVersion: 36
 
 - version: 0.11.6
-  createdAt: '2024-02-26'
+  createdAt: "2024-02-26"
   changelogEntry:
     - type: feat
       summary: You can now specify envvars to scan for headers, not just auth scheme headers.
   irVersion: 36
 
 - version: 0.11.5
-  createdAt: '2024-02-23'
+  createdAt: "2024-02-23"
   changelogEntry:
     - type: fix
       summary: Fix the usage of ApiError when leveraging auth envvars, when the schema for ApiError was changed, this usage was missed in the update.
   irVersion: 34
 
 - version: 0.11.4
-  createdAt: '2024-02-23'
+  createdAt: "2024-02-23"
   changelogEntry:
     - type: fix
       summary: We now grab enum values appropriately when enums are within unions.
   irVersion: 34
 
 - version: 0.11.3
-  createdAt: '2024-02-22'
+  createdAt: "2024-02-22"
   changelogEntry:
     - type: fix
       summary: Transition from lists to sequences within function calls
@@ -1538,7 +1551,7 @@
   irVersion: 34
 
 - version: 0.11.2
-  createdAt: '2024-02-21'
+  createdAt: "2024-02-21"
   changelogEntry:
     - type: feat
       summary: introduce configuration to flatten the directory structure
@@ -1549,7 +1562,7 @@
   irVersion: 34
 
 - version: 0.11.1
-  createdAt: '2024-02-20'
+  createdAt: "2024-02-20"
   changelogEntry:
     - type: feat
       summary: Python now supports specifying files to auto-export from the root `__init__.py` file
@@ -1558,11 +1571,11 @@
           Python now supports specifying files to auto-export from
           the root `__init__.py` file, this means you can export custom classes
           and functions from your package for users to access like so:
-        - 'Add a docstring for base clients to explain usage, example:'
+        - "Add a docstring for base clients to explain usage, example:"
   irVersion: 34
 
 - version: 0.11.0
-  createdAt: '2024-02-19'
+  createdAt: "2024-02-19"
   changelogEntry:
     - type: feat
       summary: Python now supports a wider range of types for file upload
@@ -1579,7 +1592,7 @@
   irVersion: 34
 
 - version: 0.10.3
-  createdAt: '2024-02-19'
+  createdAt: "2024-02-19"
   changelogEntry:
     - type: fix
       summary: Several bugfixes were made to related to literal properties
@@ -1591,7 +1604,7 @@
   irVersion: 31
 
 - version: 0.10.2
-  createdAt: '2024-02-18'
+  createdAt: "2024-02-18"
   changelogEntry:
     - type: fix
       summary: The SDK always sends the enum wire value instead of the name of the enum.
@@ -1605,7 +1618,7 @@
   irVersion: 31
 
 - version: 0.10.1
-  createdAt: '2024-02-14'
+  createdAt: "2024-02-14"
   changelogEntry:
     - type: feat
       summary: Add support for a RequestOptions object for each generated function within Python SDKs
@@ -1620,7 +1633,7 @@
   irVersion: 31
 
 - version: 0.10.0
-  createdAt: '2024-02-13'
+  createdAt: "2024-02-13"
   changelogEntry:
     - type: break
       summary: The generator no longer supports Python 3.7
@@ -1630,7 +1643,7 @@
   irVersion: 31
 
 - version: 0.9.1
-  createdAt: '2024-02-11'
+  createdAt: "2024-02-11"
   changelogEntry:
     - type: fix
       summary: Remove literals from SDK function signatures, as they are not modifiable for end users
@@ -1646,7 +1659,7 @@
   irVersion: 31
 
 - version: 0.9.0
-  createdAt: '2024-02-11'
+  createdAt: "2024-02-11"
   changelogEntry:
     - type: feat
       summary: The SDK generator now supports whitelabelling
@@ -1657,7 +1670,7 @@
   irVersion: 31
 
 - version: 0.8.3-rc0
-  createdAt: '2024-01-29'
+  createdAt: "2024-01-29"
   changelogEntry:
     - type: fix
       summary: Increase recursion depth to allow for highly nested and complex examples
@@ -1669,7 +1682,7 @@
   irVersion: 31
 
 - version: 0.8.2-rc0
-  createdAt: '2024-01-28'
+  createdAt: "2024-01-28"
   changelogEntry:
     - type: fix
       summary: The Python SDK better handles cyclical references
@@ -1681,7 +1694,7 @@
   irVersion: 31
 
 - version: 0.8.1
-  createdAt: '2024-01-26'
+  createdAt: "2024-01-26"
   changelogEntry:
     - type: feat
       summary: The generated SDK respects environment variables for authentication if specified
@@ -1692,14 +1705,14 @@
   irVersion: 31
 
 - version: 0.8.0
-  createdAt: '2024-01-25'
+  createdAt: "2024-01-25"
   changelogEntry:
     - type: fix
       summary: Enums in inlined requests send the appropriate value.
   irVersion: 31
 
 - version: 0.7.7
-  createdAt: '2024-01-21'
+  createdAt: "2024-01-21"
   changelogEntry:
     - type: internal
       summary: Initialize the changelog

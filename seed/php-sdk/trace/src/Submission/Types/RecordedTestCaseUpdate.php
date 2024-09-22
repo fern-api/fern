@@ -10,24 +10,25 @@ class RecordedTestCaseUpdate extends SerializableType
     /**
      * @var string $testCaseId
      */
-    #[JsonProperty("testCaseId")]
+    #[JsonProperty('testCaseId')]
     public string $testCaseId;
 
     /**
      * @var int $traceResponsesSize
      */
-    #[JsonProperty("traceResponsesSize")]
+    #[JsonProperty('traceResponsesSize')]
     public int $traceResponsesSize;
 
     /**
-     * @param string $testCaseId
-     * @param int $traceResponsesSize
+     * @param array{
+     *   testCaseId: string,
+     *   traceResponsesSize: int,
+     * } $values
      */
     public function __construct(
-        string $testCaseId,
-        int $traceResponsesSize,
+        array $values,
     ) {
-        $this->testCaseId = $testCaseId;
-        $this->traceResponsesSize = $traceResponsesSize;
+        $this->testCaseId = $values['testCaseId'];
+        $this->traceResponsesSize = $values['traceResponsesSize'];
     }
 }

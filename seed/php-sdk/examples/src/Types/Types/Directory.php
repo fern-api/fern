@@ -11,33 +11,33 @@ class Directory extends SerializableType
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var ?array<File> $files
      */
-    #[JsonProperty("files"), ArrayType([File::class])]
+    #[JsonProperty('files'), ArrayType([File::class])]
     public ?array $files;
 
     /**
      * @var ?array<Directory> $directories
      */
-    #[JsonProperty("directories"), ArrayType([Directory::class])]
+    #[JsonProperty('directories'), ArrayType([Directory::class])]
     public ?array $directories;
 
     /**
-     * @param string $name
-     * @param ?array<File> $files
-     * @param ?array<Directory> $directories
+     * @param array{
+     *   name: string,
+     *   files?: ?array<File>,
+     *   directories?: ?array<Directory>,
+     * } $values
      */
     public function __construct(
-        string $name,
-        ?array $files = null,
-        ?array $directories = null,
+        array $values,
     ) {
-        $this->name = $name;
-        $this->files = $files;
-        $this->directories = $directories;
+        $this->name = $values['name'];
+        $this->files = $values['files'] ?? null;
+        $this->directories = $values['directories'] ?? null;
     }
 }

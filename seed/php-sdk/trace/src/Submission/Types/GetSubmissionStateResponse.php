@@ -3,52 +3,51 @@
 namespace Seed\Submission\Types;
 
 use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Commons\Types\Language;
 use DateTime;
+use Seed\Core\JsonProperty;
 use Seed\Core\DateType;
+use Seed\Commons\Types\Language;
 
 class GetSubmissionStateResponse extends SerializableType
 {
     /**
+     * @var ?DateTime $timeSubmitted
+     */
+    #[JsonProperty('timeSubmitted'), DateType(DateType::TYPE_DATETIME)]
+    public ?DateTime $timeSubmitted;
+
+    /**
      * @var string $submission
      */
-    #[JsonProperty("submission")]
+    #[JsonProperty('submission')]
     public string $submission;
 
     /**
      * @var Language $language
      */
-    #[JsonProperty("language")]
+    #[JsonProperty('language')]
     public Language $language;
 
     /**
      * @var mixed $submissionTypeState
      */
-    #[JsonProperty("submissionTypeState")]
+    #[JsonProperty('submissionTypeState')]
     public mixed $submissionTypeState;
 
     /**
-     * @var ?DateTime $timeSubmitted
-     */
-    #[JsonProperty("timeSubmitted"), DateType(DateType::TYPE_DATETIME)]
-    public ?DateTime $timeSubmitted;
-
-    /**
-     * @param string $submission
-     * @param Language $language
-     * @param mixed $submissionTypeState
-     * @param ?DateTime $timeSubmitted
+     * @param array{
+     *   timeSubmitted?: ?DateTime,
+     *   submission: string,
+     *   language: Language,
+     *   submissionTypeState: mixed,
+     * } $values
      */
     public function __construct(
-        string $submission,
-        Language $language,
-        mixed $submissionTypeState,
-        ?DateTime $timeSubmitted = null,
+        array $values,
     ) {
-        $this->submission = $submission;
-        $this->language = $language;
-        $this->submissionTypeState = $submissionTypeState;
-        $this->timeSubmitted = $timeSubmitted;
+        $this->timeSubmitted = $values['timeSubmitted'] ?? null;
+        $this->submission = $values['submission'];
+        $this->language = $values['language'];
+        $this->submissionTypeState = $values['submissionTypeState'];
     }
 }

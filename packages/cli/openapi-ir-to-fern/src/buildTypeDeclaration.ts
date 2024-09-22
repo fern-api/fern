@@ -529,7 +529,7 @@ export function buildOneOfTypeDeclaration({
         };
     }
 
-    const union: RawSchemas.TypeReferenceWithDocsSchema[] = [];
+    const union: RawSchemas.TypeReferenceSchema[] = [];
     for (const subSchema of schema.schemas) {
         union.push(
             buildTypeReference({
@@ -577,7 +577,7 @@ function getSchemaIdOfResolvedType({
 }
 
 function convertPropertyTypeReferenceToTypeDefinition(
-    typeReference: RawSchemas.TypeReferenceWithDocsSchema,
+    typeReference: RawSchemas.TypeReferenceSchema,
     audiences: string[],
     name?: string | undefined,
     availability?: RawSchemas.AvailabilityUnionSchema

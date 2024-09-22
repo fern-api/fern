@@ -10,24 +10,25 @@ class BinaryTreeNodeAndTreeValue extends SerializableType
     /**
      * @var string $nodeId
      */
-    #[JsonProperty("nodeId")]
+    #[JsonProperty('nodeId')]
     public string $nodeId;
 
     /**
      * @var BinaryTreeValue $fullTree
      */
-    #[JsonProperty("fullTree")]
+    #[JsonProperty('fullTree')]
     public BinaryTreeValue $fullTree;
 
     /**
-     * @param string $nodeId
-     * @param BinaryTreeValue $fullTree
+     * @param array{
+     *   nodeId: string,
+     *   fullTree: BinaryTreeValue,
+     * } $values
      */
     public function __construct(
-        string $nodeId,
-        BinaryTreeValue $fullTree,
+        array $values,
     ) {
-        $this->nodeId = $nodeId;
-        $this->fullTree = $fullTree;
+        $this->nodeId = $values['nodeId'];
+        $this->fullTree = $values['fullTree'];
     }
 }

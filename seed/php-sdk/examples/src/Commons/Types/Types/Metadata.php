@@ -11,33 +11,33 @@ class Metadata extends SerializableType
     /**
      * @var string $id
      */
-    #[JsonProperty("id")]
+    #[JsonProperty('id')]
     public string $id;
 
     /**
      * @var ?array<string, string> $data
      */
-    #[JsonProperty("data"), ArrayType(["string" => "string"])]
+    #[JsonProperty('data'), ArrayType(['string' => 'string'])]
     public ?array $data;
 
     /**
      * @var ?string $jsonString
      */
-    #[JsonProperty("jsonString")]
+    #[JsonProperty('jsonString')]
     public ?string $jsonString;
 
     /**
-     * @param string $id
-     * @param ?array<string, string> $data
-     * @param ?string $jsonString
+     * @param array{
+     *   id: string,
+     *   data?: ?array<string, string>,
+     *   jsonString?: ?string,
+     * } $values
      */
     public function __construct(
-        string $id,
-        ?array $data = null,
-        ?string $jsonString = null,
+        array $values,
     ) {
-        $this->id = $id;
-        $this->data = $data;
-        $this->jsonString = $jsonString;
+        $this->id = $values['id'];
+        $this->data = $values['data'] ?? null;
+        $this->jsonString = $values['jsonString'] ?? null;
     }
 }

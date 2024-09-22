@@ -6,6 +6,7 @@
     { "path": "../../commons/fs-utils" },
     { "path": "../configuration" },
     { "path": "../task-context" },
-    { "path": "../workspace-loader" }
+    { "path": "../workspace-loader" },
+    { "path": "../workspace-commons" }
   ]
 }

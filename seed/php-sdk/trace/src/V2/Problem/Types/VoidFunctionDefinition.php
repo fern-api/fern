@@ -11,24 +11,25 @@ class VoidFunctionDefinition extends SerializableType
     /**
      * @var array<Parameter> $parameters
      */
-    #[JsonProperty("parameters"), ArrayType([Parameter::class])]
+    #[JsonProperty('parameters'), ArrayType([Parameter::class])]
     public array $parameters;
 
     /**
      * @var FunctionImplementationForMultipleLanguages $code
      */
-    #[JsonProperty("code")]
+    #[JsonProperty('code')]
     public FunctionImplementationForMultipleLanguages $code;
 
     /**
-     * @param array<Parameter> $parameters
-     * @param FunctionImplementationForMultipleLanguages $code
+     * @param array{
+     *   parameters: array<Parameter>,
+     *   code: FunctionImplementationForMultipleLanguages,
+     * } $values
      */
     public function __construct(
-        array $parameters,
-        FunctionImplementationForMultipleLanguages $code,
+        array $values,
     ) {
-        $this->parameters = $parameters;
-        $this->code = $code;
+        $this->parameters = $values['parameters'];
+        $this->code = $values['code'];
     }
 }

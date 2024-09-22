@@ -10,24 +10,25 @@ class User extends SerializableType
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var int $id
      */
-    #[JsonProperty("id")]
+    #[JsonProperty('id')]
     public int $id;
 
     /**
-     * @param string $name
-     * @param int $id
+     * @param array{
+     *   name: string,
+     *   id: int,
+     * } $values
      */
     public function __construct(
-        string $name,
-        int $id,
+        array $values,
     ) {
-        $this->name = $name;
-        $this->id = $id;
+        $this->name = $values['name'];
+        $this->id = $values['id'];
     }
 }

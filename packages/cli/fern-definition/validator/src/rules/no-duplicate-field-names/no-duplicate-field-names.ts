@@ -7,7 +7,7 @@ import {
     getUnionDiscriminantName,
     TypeResolverImpl
 } from "@fern-api/ir-generator";
-import { getDefinitionFile } from "@fern-api/workspace-loader";
+import { getDefinitionFile } from "@fern-api/api-workspace-commons";
 import { isRawObjectDefinition, visitRawTypeDeclaration } from "@fern-api/fern-definition-schema";
 import { groupBy, noop } from "lodash-es";
 import { Rule, RuleViolation } from "../../Rule";

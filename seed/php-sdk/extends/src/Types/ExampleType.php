@@ -10,15 +10,17 @@ class ExampleType extends SerializableType
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
-     * @param string $name
+     * @param array{
+     *   name: string,
+     * } $values
      */
     public function __construct(
-        string $name,
+        array $values,
     ) {
-        $this->name = $name;
+        $this->name = $values['name'];
     }
 }

@@ -7,7 +7,7 @@ import {
     WebhookGroup,
     WebhookPayload
 } from "@fern-api/ir-sdk";
-import { FernWorkspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { FernFileContext } from "../FernFileContext";
 import { IdGenerator } from "../IdGenerator";

@@ -11,33 +11,33 @@ class StackFrame extends SerializableType
     /**
      * @var string $methodName
      */
-    #[JsonProperty("methodName")]
+    #[JsonProperty('methodName')]
     public string $methodName;
 
     /**
      * @var int $lineNumber
      */
-    #[JsonProperty("lineNumber")]
+    #[JsonProperty('lineNumber')]
     public int $lineNumber;
 
     /**
      * @var array<Scope> $scopes
      */
-    #[JsonProperty("scopes"), ArrayType([Scope::class])]
+    #[JsonProperty('scopes'), ArrayType([Scope::class])]
     public array $scopes;
 
     /**
-     * @param string $methodName
-     * @param int $lineNumber
-     * @param array<Scope> $scopes
+     * @param array{
+     *   methodName: string,
+     *   lineNumber: int,
+     *   scopes: array<Scope>,
+     * } $values
      */
     public function __construct(
-        string $methodName,
-        int $lineNumber,
-        array $scopes,
+        array $values,
     ) {
-        $this->methodName = $methodName;
-        $this->lineNumber = $lineNumber;
-        $this->scopes = $scopes;
+        $this->methodName = $values['methodName'];
+        $this->lineNumber = $values['lineNumber'];
+        $this->scopes = $values['scopes'];
     }
 }

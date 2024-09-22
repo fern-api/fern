@@ -10,15 +10,17 @@ class TestCaseExpects extends SerializableType
     /**
      * @var ?string $expectedStdout
      */
-    #[JsonProperty("expectedStdout")]
+    #[JsonProperty('expectedStdout')]
     public ?string $expectedStdout;
 
     /**
-     * @param ?string $expectedStdout
+     * @param array{
+     *   expectedStdout?: ?string,
+     * } $values
      */
     public function __construct(
-        ?string $expectedStdout = null,
+        array $values,
     ) {
-        $this->expectedStdout = $expectedStdout;
+        $this->expectedStdout = $values['expectedStdout'] ?? null;
     }
 }

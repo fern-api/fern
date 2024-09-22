@@ -10,15 +10,17 @@ class Failure extends SerializableType
     /**
      * @var string $status
      */
-    #[JsonProperty("status")]
+    #[JsonProperty('status')]
     public string $status;
 
     /**
-     * @param string $status
+     * @param array{
+     *   status: string,
+     * } $values
      */
     public function __construct(
-        string $status,
+        array $values,
     ) {
-        $this->status = $status;
+        $this->status = $values['status'];
     }
 }

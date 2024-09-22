@@ -1,13 +1,14 @@
-import { ASYNCAPI_DIRECTORY, DEFINITION_DIRECTORY, generatorsYml, OPENAPI_DIRECTORY } from "@fern-api/configuration";
+import { DEFINITION_DIRECTORY, generatorsYml, OPENAPI_DIRECTORY } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { loadAPIChangelog } from "./loadAPIChangelog";
-import { getValidAbsolutePathToAsyncAPIFromFolder } from "./loadAsyncAPIFile";
-import { getValidAbsolutePathToOpenAPIFromFolder } from "./loadOpenAPIFile";
-import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
 import { Spec } from "./types/Workspace";
-import { OSSWorkspace } from "./workspaces";
-import { LazyFernWorkspace } from "./workspaces/FernWorkspace";
+import {
+    OSSWorkspace,
+    LazyFernWorkspace,
+    WorkspaceLoader,
+    WorkspaceLoaderFailureType
+} from "@fern-api/lazy-fern-workspace";
 
 export async function loadSingleNamespaceAPIWorkspace({
     absolutePathToWorkspace,
@@ -190,7 +191,7 @@ export async function loadAPIWorkspace({
             workspace: new OSSWorkspace({
                 specs,
                 workspaceName,
-                absoluteFilepath: absolutePathToWorkspace,
+                absoluteFilePath: absolutePathToWorkspace,
                 generatorsConfiguration,
                 changelog,
                 cliVersion
@@ -200,12 +201,13 @@ export async function loadAPIWorkspace({
 
     if (await doesPathExist(join(absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY)))) {
         const fernWorkspace = new LazyFernWorkspace({
-            absoluteFilepath: absolutePathToWorkspace,
+            absoluteFilePath: absolutePathToWorkspace,
             generatorsConfiguration,
             workspaceName,
             changelog,
             context,
-            cliVersion
+            cliVersion,
+            loadAPIWorkspace
         });
 
         return {

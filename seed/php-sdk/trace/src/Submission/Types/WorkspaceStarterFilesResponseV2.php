@@ -13,15 +13,17 @@ class WorkspaceStarterFilesResponseV2 extends SerializableType
     /**
      * @var array<Language, Files> $filesByLanguage
      */
-    #[JsonProperty("filesByLanguage"), ArrayType([Language::class => Files::class])]
+    #[JsonProperty('filesByLanguage'), ArrayType([Language::class => Files::class])]
     public array $filesByLanguage;
 
     /**
-     * @param array<Language, Files> $filesByLanguage
+     * @param array{
+     *   filesByLanguage: array<Language, Files>,
+     * } $values
      */
     public function __construct(
-        array $filesByLanguage,
+        array $values,
     ) {
-        $this->filesByLanguage = $filesByLanguage;
+        $this->filesByLanguage = $values['filesByLanguage'];
     }
 }

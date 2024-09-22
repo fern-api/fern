@@ -10,33 +10,33 @@ class File extends SerializableType
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var string $contents
      */
-    #[JsonProperty("contents")]
+    #[JsonProperty('contents')]
     public string $contents;
 
     /**
      * @var FileInfo $info
      */
-    #[JsonProperty("info")]
+    #[JsonProperty('info')]
     public FileInfo $info;
 
     /**
-     * @param string $name
-     * @param string $contents
-     * @param FileInfo $info
+     * @param array{
+     *   name: string,
+     *   contents: string,
+     *   info: FileInfo,
+     * } $values
      */
     public function __construct(
-        string $name,
-        string $contents,
-        FileInfo $info,
+        array $values,
     ) {
-        $this->name = $name;
-        $this->contents = $contents;
-        $this->info = $info;
+        $this->name = $values['name'];
+        $this->contents = $values['contents'];
+        $this->info = $values['info'];
     }
 }

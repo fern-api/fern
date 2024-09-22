@@ -6,6 +6,7 @@ use Seed\BasicAuth\BasicAuthClient;
 use Seed\Errors\ErrorsClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\RawClient;
+use Exception;
 
 class SeedClient
 {
@@ -30,15 +31,21 @@ class SeedClient
     private RawClient $client;
 
     /**
+     * @param ?string $username The username to use for authentication.
+     * @param ?string $password The username to use for authentication.
      * @param ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
      */
     public function __construct(
+        ?string $username = null,
+        ?string $password = null,
         ?array $options = null,
     ) {
+        $username ??= $this->getFromEnvOrThrow('USERNAME', 'Please pass in username or set the environment variable USERNAME.');
+        $password ??= $this->getFromEnvOrThrow('PASSWORD', 'Please pass in password or set the environment variable PASSWORD.');
         $defaultHeaders = [
-            "X-Fern-Language" => "PHP",
-            "X-Fern-SDK-Name" => "Seed",
-            "X-Fern-SDK-Version" => "0.0.1",
+            'X-Fern-Language' => 'PHP',
+            'X-Fern-SDK-Name' => 'Seed',
+            'X-Fern-SDK-Version' => '0.0.1',
         ];
 
         $this->options = $options ?? [];
@@ -54,4 +61,16 @@ class SeedClient
         $this->basicAuth = new BasicAuthClient($this->client);
         $this->errors = new ErrorsClient($this->client);
     }
+
+    /**
+     * @param string $env
+     * @param string $message
+     * @return string
+     */
+    private function getFromEnvOrThrow(string $env, string $message): string
+    {
+        $value = getenv($env);
+        return $value ? (string) $value : throw new Exception($message);
+    }
+
 }

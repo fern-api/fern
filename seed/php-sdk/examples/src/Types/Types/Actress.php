@@ -10,24 +10,25 @@ class Actress extends SerializableType
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var string $id
      */
-    #[JsonProperty("id")]
+    #[JsonProperty('id')]
     public string $id;
 
     /**
-     * @param string $name
-     * @param string $id
+     * @param array{
+     *   name: string,
+     *   id: string,
+     * } $values
      */
     public function __construct(
-        string $name,
-        string $id,
+        array $values,
     ) {
-        $this->name = $name;
-        $this->id = $id;
+        $this->name = $values['name'];
+        $this->id = $values['id'];
     }
 }

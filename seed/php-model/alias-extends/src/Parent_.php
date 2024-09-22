@@ -10,15 +10,17 @@ class Parent_ extends SerializableType
     /**
      * @var string $parent
      */
-    #[JsonProperty("parent")]
+    #[JsonProperty('parent')]
     public string $parent;
 
     /**
-     * @param string $parent
+     * @param array{
+     *   parent: string,
+     * } $values
      */
     public function __construct(
-        string $parent,
+        array $values,
     ) {
-        $this->parent = $parent;
+        $this->parent = $values['parent'];
     }
 }

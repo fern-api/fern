@@ -12,33 +12,33 @@ class Moment extends SerializableType
     /**
      * @var string $id
      */
-    #[JsonProperty("id")]
+    #[JsonProperty('id')]
     public string $id;
 
     /**
      * @var DateTime $date
      */
-    #[JsonProperty("date"), DateType(DateType::TYPE_DATE)]
+    #[JsonProperty('date'), DateType(DateType::TYPE_DATE)]
     public DateTime $date;
 
     /**
      * @var DateTime $datetime
      */
-    #[JsonProperty("datetime"), DateType(DateType::TYPE_DATETIME)]
+    #[JsonProperty('datetime'), DateType(DateType::TYPE_DATETIME)]
     public DateTime $datetime;
 
     /**
-     * @param string $id
-     * @param DateTime $date
-     * @param DateTime $datetime
+     * @param array{
+     *   id: string,
+     *   date: DateTime,
+     *   datetime: DateTime,
+     * } $values
      */
     public function __construct(
-        string $id,
-        DateTime $date,
-        DateTime $datetime,
+        array $values,
     ) {
-        $this->id = $id;
-        $this->date = $date;
-        $this->datetime = $datetime;
+        $this->id = $values['id'];
+        $this->date = $values['date'];
+        $this->datetime = $values['datetime'];
     }
 }

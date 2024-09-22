@@ -4,6 +4,7 @@ namespace Seed\Headers;
 
 use Seed\Core\RawClient;
 use Seed\Headers\Requests\SendLiteralsInHeadersRequest;
+use Seed\Types\SendResponse;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use JsonException;
@@ -29,9 +30,9 @@ class HeadersClient
     /**
      * @param SendLiteralsInHeadersRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @return SendResponse
      */
-    public function send(SendLiteralsInHeadersRequest $request, ?array $options = null): mixed
+    public function send(SendLiteralsInHeadersRequest $request, ?array $options = null): SendResponse
     {
         $headers = [];
         $headers['X-Endpoint-Version'] = $request->endpointVersion;
@@ -48,7 +49,8 @@ class HeadersClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return SendResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

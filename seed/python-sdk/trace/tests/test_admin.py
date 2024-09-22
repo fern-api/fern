@@ -123,9 +123,7 @@ async def test_store_traced_test_case(client: SeedTrace, async_client: AsyncSeed
                     expression_location=ExpressionLocation(start=1, offset=1),
                     stack=StackInformation(
                         num_stack_frames=1,
-                        top_stack_frame=StackFrame(
-                            method_name="string", line_number=1, scopes=[Scope(variables={"string": {"key": "value"}})]
-                        ),
+                        top_stack_frame=StackFrame(method_name="string", line_number=1, scopes=[Scope(variables={})]),
                     ),
                     stdout="string",
                 )
@@ -154,9 +152,7 @@ async def test_store_traced_test_case(client: SeedTrace, async_client: AsyncSeed
                     expression_location=ExpressionLocation(start=1, offset=1),
                     stack=StackInformation(
                         num_stack_frames=1,
-                        top_stack_frame=StackFrame(
-                            method_name="string", line_number=1, scopes=[Scope(variables={"string": {"key": "value"}})]
-                        ),
+                        top_stack_frame=StackFrame(method_name="string", line_number=1, scopes=[Scope(variables={})]),
                     ),
                     stdout="string",
                 )
@@ -181,9 +177,7 @@ async def test_store_traced_test_case_v_2(client: SeedTrace, async_client: Async
                     expression_location=ExpressionLocation(start=1, offset=1),
                     stack=StackInformation(
                         num_stack_frames=1,
-                        top_stack_frame=StackFrame(
-                            method_name="string", line_number=1, scopes=[Scope(variables={"string": {"key": "value"}})]
-                        ),
+                        top_stack_frame=StackFrame(method_name="string", line_number=1, scopes=[Scope(variables={})]),
                     ),
                     stdout="string",
                 )
@@ -205,9 +199,7 @@ async def test_store_traced_test_case_v_2(client: SeedTrace, async_client: Async
                     expression_location=ExpressionLocation(start=1, offset=1),
                     stack=StackInformation(
                         num_stack_frames=1,
-                        top_stack_frame=StackFrame(
-                            method_name="string", line_number=1, scopes=[Scope(variables={"string": {"key": "value"}})]
-                        ),
+                        top_stack_frame=StackFrame(method_name="string", line_number=1, scopes=[Scope(variables={})]),
                     ),
                     stdout="string",
                 )
@@ -239,9 +231,7 @@ async def test_store_traced_workspace(client: SeedTrace, async_client: AsyncSeed
                     expression_location=ExpressionLocation(start=1, offset=1),
                     stack=StackInformation(
                         num_stack_frames=1,
-                        top_stack_frame=StackFrame(
-                            method_name="string", line_number=1, scopes=[Scope(variables={"string": {"key": "value"}})]
-                        ),
+                        top_stack_frame=StackFrame(method_name="string", line_number=1, scopes=[Scope(variables={})]),
                     ),
                     stdout="string",
                 )
@@ -270,9 +260,7 @@ async def test_store_traced_workspace(client: SeedTrace, async_client: AsyncSeed
                     expression_location=ExpressionLocation(start=1, offset=1),
                     stack=StackInformation(
                         num_stack_frames=1,
-                        top_stack_frame=StackFrame(
-                            method_name="string", line_number=1, scopes=[Scope(variables={"string": {"key": "value"}})]
-                        ),
+                        top_stack_frame=StackFrame(method_name="string", line_number=1, scopes=[Scope(variables={})]),
                     ),
                     stdout="string",
                 )
@@ -296,9 +284,7 @@ async def test_store_traced_workspace_v_2(client: SeedTrace, async_client: Async
                     expression_location=ExpressionLocation(start=1, offset=1),
                     stack=StackInformation(
                         num_stack_frames=1,
-                        top_stack_frame=StackFrame(
-                            method_name="string", line_number=1, scopes=[Scope(variables={"string": {"key": "value"}})]
-                        ),
+                        top_stack_frame=StackFrame(method_name="string", line_number=1, scopes=[Scope(variables={})]),
                     ),
                     stdout="string",
                 )
@@ -319,9 +305,7 @@ async def test_store_traced_workspace_v_2(client: SeedTrace, async_client: Async
                     expression_location=ExpressionLocation(start=1, offset=1),
                     stack=StackInformation(
                         num_stack_frames=1,
-                        top_stack_frame=StackFrame(
-                            method_name="string", line_number=1, scopes=[Scope(variables={"string": {"key": "value"}})]
-                        ),
+                        top_stack_frame=StackFrame(method_name="string", line_number=1, scopes=[Scope(variables={})]),
                     ),
                     stdout="string",
                 )

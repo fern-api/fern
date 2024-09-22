@@ -10,24 +10,25 @@ class BuildingExecutorResponse extends SerializableType
     /**
      * @var string $submissionId
      */
-    #[JsonProperty("submissionId")]
+    #[JsonProperty('submissionId')]
     public string $submissionId;
 
     /**
      * @var ExecutionSessionStatus $status
      */
-    #[JsonProperty("status")]
+    #[JsonProperty('status')]
     public ExecutionSessionStatus $status;
 
     /**
-     * @param string $submissionId
-     * @param ExecutionSessionStatus $status
+     * @param array{
+     *   submissionId: string,
+     *   status: ExecutionSessionStatus,
+     * } $values
      */
     public function __construct(
-        string $submissionId,
-        ExecutionSessionStatus $status,
+        array $values,
     ) {
-        $this->submissionId = $submissionId;
-        $this->status = $status;
+        $this->submissionId = $values['submissionId'];
+        $this->status = $values['status'];
     }
 }

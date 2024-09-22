@@ -10,24 +10,25 @@ class Entity extends SerializableType
     /**
      * @var mixed $type
      */
-    #[JsonProperty("type")]
+    #[JsonProperty('type')]
     public mixed $type;
 
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
-     * @param mixed $type
-     * @param string $name
+     * @param array{
+     *   type: mixed,
+     *   name: string,
+     * } $values
      */
     public function __construct(
-        mixed $type,
-        string $name,
+        array $values,
     ) {
-        $this->type = $type;
-        $this->name = $name;
+        $this->type = $values['type'];
+        $this->name = $values['name'];
     }
 }

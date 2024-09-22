@@ -10,15 +10,17 @@ class DeepEqualityCorrectnessCheck extends SerializableType
     /**
      * @var string $expectedValueParameterId
      */
-    #[JsonProperty("expectedValueParameterId")]
+    #[JsonProperty('expectedValueParameterId')]
     public string $expectedValueParameterId;
 
     /**
-     * @param string $expectedValueParameterId
+     * @param array{
+     *   expectedValueParameterId: string,
+     * } $values
      */
     public function __construct(
-        string $expectedValueParameterId,
+        array $values,
     ) {
-        $this->expectedValueParameterId = $expectedValueParameterId;
+        $this->expectedValueParameterId = $values['expectedValueParameterId'];
     }
 }

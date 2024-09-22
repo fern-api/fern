@@ -11,21 +11,39 @@ use Seed\Core\Union;
 class EmptyArraysType extends SerializableType
 {
     /**
-     * @param string[] $emptyStringArray
-     * @param array<string, string|null> $emptyMapArray
-     * @param array<string|null> $emptyDatesArray
+     * @var string[] $emptyStringArray
+     */
+    #[ArrayType(['string'])]
+    #[JsonProperty('empty_string_array')]
+    public array $emptyStringArray;
+
+    /**
+     * @var array<string, string|null> $emptyMapArray
+     */
+    #[JsonProperty('empty_map_array')]
+    #[ArrayType(['integer' => new Union('string', 'null')])]
+    public array $emptyMapArray;
+
+    /**
+     * @var array<string|null> $emptyDatesArray
+     */
+    #[ArrayType([new Union('date', 'null')])]
+    #[JsonProperty('empty_dates_array')]
+    public array $emptyDatesArray;
+
+    /**
+     * @param array{
+     *   emptyStringArray: string[],
+     *   emptyMapArray: array<string, string|null>,
+     *   emptyDatesArray: array<string|null>,
+     * } $values
      */
     public function __construct(
-        #[ArrayType(['string'])]
-        #[JsonProperty('empty_string_array')]
-        public array $emptyStringArray,
-        #[ArrayType(['integer' => new Union('string', 'null')])]
-        #[JsonProperty('empty_map_array')]
-        public array $emptyMapArray,
-        #[ArrayType([new Union('date', 'null')])]
-        #[JsonProperty('empty_dates_array')]
-        public array $emptyDatesArray
+        array $values,
     ) {
+        $this->emptyStringArray = $values['emptyStringArray'];
+        $this->emptyMapArray = $values['emptyMapArray'];
+        $this->emptyDatesArray = $values['emptyDatesArray'];
     }
 }
 

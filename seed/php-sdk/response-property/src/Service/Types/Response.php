@@ -10,15 +10,17 @@ class Response extends SerializableType
     /**
      * @var Movie $data
      */
-    #[JsonProperty("data")]
+    #[JsonProperty('data')]
     public Movie $data;
 
     /**
-     * @param Movie $data
+     * @param array{
+     *   data: Movie,
+     * } $values
      */
     public function __construct(
-        Movie $data,
+        array $values,
     ) {
-        $this->data = $data;
+        $this->data = $values['data'];
     }
 }

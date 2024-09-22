@@ -8,6 +8,7 @@ use Seed\Core\RawClient;
 use Seed\Types\EchoRequest;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
+use Seed\Core\JsonDecoder;
 use JsonException;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -36,9 +37,9 @@ class SeedClient
         ?array $options = null,
     ) {
         $defaultHeaders = [
-            "X-Fern-Language" => "PHP",
-            "X-Fern-SDK-Name" => "Seed",
-            "X-Fern-SDK-Version" => "0.0.1",
+            'X-Fern-Language' => 'PHP',
+            'X-Fern-SDK-Name' => 'Seed',
+            'X-Fern-SDK-Version' => '0.0.1',
         ];
 
         $this->options = $options ?? [];
@@ -58,9 +59,9 @@ class SeedClient
      * @param string $id
      * @param EchoRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @return string
      */
-    public function echo_(string $id, EchoRequest $request, ?array $options = null): mixed
+    public function echo_(string $id, EchoRequest $request, ?array $options = null): string
     {
         try {
             $response = $this->client->sendRequest(
@@ -73,7 +74,8 @@ class SeedClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeString($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

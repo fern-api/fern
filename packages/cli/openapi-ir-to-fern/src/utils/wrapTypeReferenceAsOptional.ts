@@ -2,8 +2,8 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { getTypeFromTypeReference } from "./getTypeFromTypeReference";
 
 export function wrapTypeReferenceAsOptional(
-    typeReference: RawSchemas.TypeReferenceWithDocsSchema
-): RawSchemas.TypeReferenceWithDocsSchema {
+    typeReference: RawSchemas.TypeReferenceSchema
+): RawSchemas.TypeReferenceSchema {
     const type = getTypeFromTypeReference(typeReference);
     if (type.startsWith("optional")) {
         return typeReference;

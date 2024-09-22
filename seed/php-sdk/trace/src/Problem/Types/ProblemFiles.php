@@ -12,24 +12,25 @@ class ProblemFiles extends SerializableType
     /**
      * @var FileInfo $solutionFile
      */
-    #[JsonProperty("solutionFile")]
+    #[JsonProperty('solutionFile')]
     public FileInfo $solutionFile;
 
     /**
      * @var array<FileInfo> $readOnlyFiles
      */
-    #[JsonProperty("readOnlyFiles"), ArrayType([FileInfo::class])]
+    #[JsonProperty('readOnlyFiles'), ArrayType([FileInfo::class])]
     public array $readOnlyFiles;
 
     /**
-     * @param FileInfo $solutionFile
-     * @param array<FileInfo> $readOnlyFiles
+     * @param array{
+     *   solutionFile: FileInfo,
+     *   readOnlyFiles: array<FileInfo>,
+     * } $values
      */
     public function __construct(
-        FileInfo $solutionFile,
-        array $readOnlyFiles,
+        array $values,
     ) {
-        $this->solutionFile = $solutionFile;
-        $this->readOnlyFiles = $readOnlyFiles;
+        $this->solutionFile = $values['solutionFile'];
+        $this->readOnlyFiles = $values['readOnlyFiles'];
     }
 }

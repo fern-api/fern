@@ -3,7 +3,7 @@ import { Logger } from "@fern-api/logger";
 import { Project } from "@fern-api/project-loader";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { LazyFernWorkspace, OSSWorkspace } from "@fern-api/workspace-loader";
+import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { ReleaseType } from "@fern-fern/generators-sdk/api/resources/generators";
 import { CliContext } from "../CliContext";
 
@@ -134,7 +134,7 @@ async function processGeneratorsYml({
     groupFilter
 }: {
     cliContext: CliContext;
-    apiWorkspaces: (OSSWorkspace | LazyFernWorkspace)[];
+    apiWorkspaces: AbstractAPIWorkspace<unknown>[];
     perGeneratorAction: (
         api: string | undefined,
         group: string,
@@ -149,7 +149,7 @@ async function processGeneratorsYml({
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 // If there are no groups in the configuration, skip this workspace
                 const generatorsConfiguration = await generatorsYml.loadGeneratorsConfiguration({
-                    absolutePathToWorkspace: workspace.absoluteFilepath,
+                    absolutePathToWorkspace: workspace.absoluteFilePath,
                     context
                 });
                 if (generatorsConfiguration == null || generatorsConfiguration.groups == null) {

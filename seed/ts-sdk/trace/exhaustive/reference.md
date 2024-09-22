@@ -322,11 +322,7 @@ await client.admin.storeTracedTestCase(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf
                     lineNumber: 1,
                     scopes: [
                         {
-                            variables: {
-                                string: {
-                                    key: "value",
-                                },
-                            },
+                            variables: {},
                         },
                     ],
                 },
@@ -421,11 +417,7 @@ await client.admin.storeTracedTestCaseV2(
                     lineNumber: 1,
                     scopes: [
                         {
-                            variables: {
-                                string: {
-                                    key: "value",
-                                },
-                            },
+                            variables: {},
                         },
                     ],
                 },
@@ -527,11 +519,7 @@ await client.admin.storeTracedWorkspace(SeedTrace.SubmissionId("d5e9c84f-c2b2-4b
                     lineNumber: 1,
                     scopes: [
                         {
-                            variables: {
-                                string: {
-                                    key: "value",
-                                },
-                            },
+                            variables: {},
                         },
                     ],
                 },
@@ -615,11 +603,7 @@ await client.admin.storeTracedWorkspaceV2(SeedTrace.SubmissionId("d5e9c84f-c2b2-
                 lineNumber: 1,
                 scopes: [
                     {
-                        variables: {
-                            string: {
-                                key: "value",
-                            },
-                        },
+                        variables: {},
                     },
                 ],
             },

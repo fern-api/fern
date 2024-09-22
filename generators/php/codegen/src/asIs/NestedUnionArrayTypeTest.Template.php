@@ -14,28 +14,48 @@ use DateTime;
 
 class TestNestedType extends SerializableType
 {
+    /**
+     * @var string $nestedProperty
+     */
+    #[JsonProperty('nested_property')]
+    public string $nestedProperty;
+
+    /**
+     * @param array{
+     *   nestedProperty: string,
+     * } $values
+     */
     public function __construct(
-        #[JsonProperty('nested_property')]
-        public string $nestedProperty
-    )
-    {
+        array $values,
+    ) {
+        $this->nestedProperty = $values['nestedProperty'];
     }
 }
 
 class NestedUnionArrayType extends SerializableType
 {
+    /**
+     * @var array<int, array<int, TestNestedType|null|string>> $nestedArray
+     */
+    #[ArrayType(['integer' => ['integer' => new Union(TestNestedType::class, 'null', 'date')]])]
+    #[JsonProperty('nested_array')]
+    public array $nestedArray;
+
+    /**
+     * @param array{
+     *   nestedArray: array<int, array<int, TestNestedType|null|string>>,
+     * } $values
+     */
     public function __construct(
-        #[ArrayType(['integer' => ['integer' => new Union(TestNestedType::class, 'null', 'date')]])]
-        #[JsonProperty('nested_array')]
-        public array $nestedArray
-    )
-    {
+        array $values,
+    ) {
+        $this->nestedArray = $values['nestedArray'];
     }
 }
 
 class NestedUnionArrayTypeTest extends TestCase
 {
-    public function testNestedUnionTypesInArrays()
+    public function testNestedUnionTypesInArrays(): void
     {
         $data = [
             'nested_array' => [

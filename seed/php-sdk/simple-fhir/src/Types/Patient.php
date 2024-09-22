@@ -11,33 +11,33 @@ class Patient extends SerializableType
     /**
      * @var string $resourceType
      */
-    #[JsonProperty("resource_type")]
+    #[JsonProperty('resource_type')]
     public string $resourceType;
 
     /**
      * @var string $name
      */
-    #[JsonProperty("name")]
+    #[JsonProperty('name')]
     public string $name;
 
     /**
      * @var array<Script> $scripts
      */
-    #[JsonProperty("scripts"), ArrayType([Script::class])]
+    #[JsonProperty('scripts'), ArrayType([Script::class])]
     public array $scripts;
 
     /**
-     * @param string $resourceType
-     * @param string $name
-     * @param array<Script> $scripts
+     * @param array{
+     *   resourceType: string,
+     *   name: string,
+     *   scripts: array<Script>,
+     * } $values
      */
     public function __construct(
-        string $resourceType,
-        string $name,
-        array $scripts,
+        array $values,
     ) {
-        $this->resourceType = $resourceType;
-        $this->name = $name;
-        $this->scripts = $scripts;
+        $this->resourceType = $values['resourceType'];
+        $this->name = $values['name'];
+        $this->scripts = $values['scripts'];
     }
 }

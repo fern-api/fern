@@ -20,17 +20,17 @@ class ReqWithHeaders
     public string $body;
 
     /**
-     * @param string $xTestServiceHeader
-     * @param string $xTestEndpointHeader
-     * @param string $body
+     * @param array{
+     *   xTestServiceHeader: string,
+     *   xTestEndpointHeader: string,
+     *   body: string,
+     * } $values
      */
     public function __construct(
-        string $xTestServiceHeader,
-        string $xTestEndpointHeader,
-        string $body,
+        array $values,
     ) {
-        $this->xTestServiceHeader = $xTestServiceHeader;
-        $this->xTestEndpointHeader = $xTestEndpointHeader;
-        $this->body = $body;
+        $this->xTestServiceHeader = $values['xTestServiceHeader'];
+        $this->xTestEndpointHeader = $values['xTestEndpointHeader'];
+        $this->body = $values['body'];
     }
 }

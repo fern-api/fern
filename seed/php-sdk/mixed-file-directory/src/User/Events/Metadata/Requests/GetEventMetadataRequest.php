@@ -10,11 +10,13 @@ class GetEventMetadataRequest
     public string $id;
 
     /**
-     * @param string $id
+     * @param array{
+     *   id: string,
+     * } $values
      */
     public function __construct(
-        string $id,
+        array $values,
     ) {
-        $this->id = $id;
+        $this->id = $values['id'];
     }
 }

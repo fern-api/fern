@@ -28,9 +28,9 @@ class SeedClient
         ?array $options = null,
     ) {
         $defaultHeaders = [
-            "X-Fern-Language" => "PHP",
-            "X-Fern-SDK-Name" => "Seed",
-            "X-Fern-SDK-Version" => "0.0.1",
+            'X-Fern-Language' => 'PHP',
+            'X-Fern-SDK-Name' => 'Seed',
+            'X-Fern-SDK-Version' => '0.0.1',
         ];
 
         $this->options = $options ?? [];
@@ -47,9 +47,8 @@ class SeedClient
     /**
      * @param string $typeId
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
      */
-    public function get(string $typeId, ?array $options = null): mixed
+    public function get(string $typeId, ?array $options = null): void
     {
         try {
             $response = $this->client->sendRequest(

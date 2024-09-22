@@ -10,24 +10,25 @@ class Memo extends SerializableType
     /**
      * @var string $description
      */
-    #[JsonProperty("description")]
+    #[JsonProperty('description')]
     public string $description;
 
     /**
      * @var ?Account $account
      */
-    #[JsonProperty("account")]
+    #[JsonProperty('account')]
     public ?Account $account;
 
     /**
-     * @param string $description
-     * @param ?Account $account
+     * @param array{
+     *   description: string,
+     *   account?: ?Account,
+     * } $values
      */
     public function __construct(
-        string $description,
-        ?Account $account = null,
+        array $values,
     ) {
-        $this->description = $description;
-        $this->account = $account;
+        $this->description = $values['description'];
+        $this->account = $values['account'] ?? null;
     }
 }

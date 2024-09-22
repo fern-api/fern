@@ -12,24 +12,25 @@ class StoreTracedTestCaseRequest
     /**
      * @var TestCaseResultWithStdout $result
      */
-    #[JsonProperty("result")]
+    #[JsonProperty('result')]
     public TestCaseResultWithStdout $result;
 
     /**
      * @var array<TraceResponse> $traceResponses
      */
-    #[JsonProperty("traceResponses"), ArrayType([TraceResponse::class])]
+    #[JsonProperty('traceResponses'), ArrayType([TraceResponse::class])]
     public array $traceResponses;
 
     /**
-     * @param TestCaseResultWithStdout $result
-     * @param array<TraceResponse> $traceResponses
+     * @param array{
+     *   result: TestCaseResultWithStdout,
+     *   traceResponses: array<TraceResponse>,
+     * } $values
      */
     public function __construct(
-        TestCaseResultWithStdout $result,
-        array $traceResponses,
+        array $values,
     ) {
-        $this->result = $result;
-        $this->traceResponses = $traceResponses;
+        $this->result = $values['result'];
+        $this->traceResponses = $values['traceResponses'];
     }
 }

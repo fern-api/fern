@@ -10,15 +10,17 @@ class GetTraceResponsesPageRequest extends SerializableType
     /**
      * @var ?int $offset
      */
-    #[JsonProperty("offset")]
+    #[JsonProperty('offset')]
     public ?int $offset;
 
     /**
-     * @param ?int $offset
+     * @param array{
+     *   offset?: ?int,
+     * } $values
      */
     public function __construct(
-        ?int $offset = null,
+        array $values,
     ) {
-        $this->offset = $offset;
+        $this->offset = $values['offset'] ?? null;
     }
 }

@@ -28,6 +28,8 @@
     { "path": "../semver-utils" },
     { "path": "../task-context" },
     { "path": "../workspace-loader" },
+    { "path": "../workspace-commons" },
+    { "path": "../lazy-fern-workspace" },
     { "path": "../yaml/docs-validator" },
     { "path": "../fern-definition/formatter" },
     { "path": "../fern-definition/validator" },

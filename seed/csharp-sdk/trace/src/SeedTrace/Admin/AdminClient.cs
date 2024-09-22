@@ -210,16 +210,7 @@ public partial class AdminClient
     ///                         LineNumber = 1,
     ///                         Scopes = new List<Scope>()
     ///                         {
-    ///                             new Scope
-    ///                             {
-    ///                                 Variables = new Dictionary<string, object>()
-    ///                                 {
-    ///                                     {
-    ///                                         "string",
-    ///                                         new Dictionary<object, object?>() { { "key", "value" } }
-    ///                                     },
-    ///                                 },
-    ///                             },
+    ///                             new Scope { Variables = new Dictionary<string, object>() { } },
     ///                         },
     ///                     },
     ///                 },
@@ -284,16 +275,7 @@ public partial class AdminClient
     ///                     LineNumber = 1,
     ///                     Scopes = new List<Scope>()
     ///                     {
-    ///                         new Scope
-    ///                         {
-    ///                             Variables = new Dictionary<string, object>()
-    ///                             {
-    ///                                 {
-    ///                                     "string",
-    ///                                     new Dictionary<object, object?>() { { "key", "value" } }
-    ///                                 },
-    ///                             },
-    ///                         },
+    ///                         new Scope { Variables = new Dictionary<string, object>() { } },
     ///                     },
     ///                 },
     ///             },
@@ -374,16 +356,7 @@ public partial class AdminClient
     ///                         LineNumber = 1,
     ///                         Scopes = new List<Scope>()
     ///                         {
-    ///                             new Scope
-    ///                             {
-    ///                                 Variables = new Dictionary<string, object>()
-    ///                                 {
-    ///                                     {
-    ///                                         "string",
-    ///                                         new Dictionary<object, object?>() { { "key", "value" } }
-    ///                                     },
-    ///                                 },
-    ///                             },
+    ///                             new Scope { Variables = new Dictionary<string, object>() { } },
     ///                         },
     ///                     },
     ///                 },
@@ -446,16 +419,7 @@ public partial class AdminClient
     ///                     LineNumber = 1,
     ///                     Scopes = new List<Scope>()
     ///                     {
-    ///                         new Scope
-    ///                         {
-    ///                             Variables = new Dictionary<string, object>()
-    ///                             {
-    ///                                 {
-    ///                                     "string",
-    ///                                     new Dictionary<object, object?>() { { "key", "value" } }
-    ///                                 },
-    ///                             },
-    ///                         },
+    ///                         new Scope { Variables = new Dictionary<string, object>() { } },
     ///                     },
     ///                 },
     ///             },

@@ -10,7 +10,8 @@
     { "path": "../../generation/ir-generator" },
     { "path": "../../logger" },
     { "path": "../../task-context" },
-    { "path": "../../workspace-loader" },
+    { "path": "../../workspace-commons" },
+    { "path": "../../lazy-fern-workspace" },
     { "path": "../schema" }
   ]
 }

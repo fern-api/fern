@@ -20,17 +20,17 @@ class GetRequest
     public string $name;
 
     /**
-     * @param float $decimal
-     * @param int $even
-     * @param string $name
+     * @param array{
+     *   decimal: float,
+     *   even: int,
+     *   name: string,
+     * } $values
      */
     public function __construct(
-        float $decimal,
-        int $even,
-        string $name,
+        array $values,
     ) {
-        $this->decimal = $decimal;
-        $this->even = $even;
-        $this->name = $name;
+        $this->decimal = $values['decimal'];
+        $this->even = $values['even'];
+        $this->name = $values['name'];
     }
 }

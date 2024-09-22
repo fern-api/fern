@@ -10,24 +10,25 @@ class CreatePaymentRequest
     /**
      * @var int $amount
      */
-    #[JsonProperty("amount")]
+    #[JsonProperty('amount')]
     public int $amount;
 
     /**
      * @var Currency $currency
      */
-    #[JsonProperty("currency")]
+    #[JsonProperty('currency')]
     public Currency $currency;
 
     /**
-     * @param int $amount
-     * @param Currency $currency
+     * @param array{
+     *   amount: int,
+     *   currency: Currency,
+     * } $values
      */
     public function __construct(
-        int $amount,
-        Currency $currency,
+        array $values,
     ) {
-        $this->amount = $amount;
-        $this->currency = $currency;
+        $this->amount = $values['amount'];
+        $this->currency = $values['currency'];
     }
 }

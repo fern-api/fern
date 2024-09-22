@@ -12,24 +12,25 @@ class TestSubmissionUpdate extends SerializableType
     /**
      * @var DateTime $updateTime
      */
-    #[JsonProperty("updateTime"), DateType(DateType::TYPE_DATETIME)]
+    #[JsonProperty('updateTime'), DateType(DateType::TYPE_DATETIME)]
     public DateTime $updateTime;
 
     /**
      * @var mixed $updateInfo
      */
-    #[JsonProperty("updateInfo")]
+    #[JsonProperty('updateInfo')]
     public mixed $updateInfo;
 
     /**
-     * @param DateTime $updateTime
-     * @param mixed $updateInfo
+     * @param array{
+     *   updateTime: DateTime,
+     *   updateInfo: mixed,
+     * } $values
      */
     public function __construct(
-        DateTime $updateTime,
-        mixed $updateInfo,
+        array $values,
     ) {
-        $this->updateTime = $updateTime;
-        $this->updateInfo = $updateInfo;
+        $this->updateTime = $values['updateTime'];
+        $this->updateInfo = $values['updateInfo'];
     }
 }

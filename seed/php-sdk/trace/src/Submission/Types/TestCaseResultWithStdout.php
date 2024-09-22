@@ -10,24 +10,25 @@ class TestCaseResultWithStdout extends SerializableType
     /**
      * @var TestCaseResult $result
      */
-    #[JsonProperty("result")]
+    #[JsonProperty('result')]
     public TestCaseResult $result;
 
     /**
      * @var string $stdout
      */
-    #[JsonProperty("stdout")]
+    #[JsonProperty('stdout')]
     public string $stdout;
 
     /**
-     * @param TestCaseResult $result
-     * @param string $stdout
+     * @param array{
+     *   result: TestCaseResult,
+     *   stdout: string,
+     * } $values
      */
     public function __construct(
-        TestCaseResult $result,
-        string $stdout,
+        array $values,
     ) {
-        $this->result = $result;
-        $this->stdout = $stdout;
+        $this->result = $values['result'];
+        $this->stdout = $values['stdout'];
     }
 }

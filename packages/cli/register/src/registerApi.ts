@@ -4,7 +4,7 @@ import { createFdrService } from "@fern-api/core";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
-import { FernWorkspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
 import { PlaygroundConfig } from "@fern-fern/fdr-cjs-sdk/api/resources/docs/resources/v1/resources/commons";
 import { convertIrToFdrApi } from "./ir-to-fdr-converter/convertIrToFdrApi";

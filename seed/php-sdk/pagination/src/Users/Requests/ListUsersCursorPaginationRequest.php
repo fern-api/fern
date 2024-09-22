@@ -28,21 +28,19 @@ class ListUsersCursorPaginationRequest
     public ?string $startingAfter;
 
     /**
-     * @param ?int $page Defaults to first page
-     * @param ?int $perPage Defaults to per page
-     * @param ?Order $order
-     * @param ?string $startingAfter The cursor used for pagination in order to fetch
-    the next page of results.
+     * @param array{
+     *   page?: ?int,
+     *   perPage?: ?int,
+     *   order?: ?Order,
+     *   startingAfter?: ?string,
+     * } $values
      */
     public function __construct(
-        ?int $page = null,
-        ?int $perPage = null,
-        ?Order $order = null,
-        ?string $startingAfter = null,
+        array $values,
     ) {
-        $this->page = $page;
-        $this->perPage = $perPage;
-        $this->order = $order;
-        $this->startingAfter = $startingAfter;
+        $this->page = $values['page'] ?? null;
+        $this->perPage = $values['perPage'] ?? null;
+        $this->order = $values['order'] ?? null;
+        $this->startingAfter = $values['startingAfter'] ?? null;
     }
 }

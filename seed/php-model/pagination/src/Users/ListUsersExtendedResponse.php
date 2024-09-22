@@ -10,15 +10,17 @@ class ListUsersExtendedResponse extends SerializableType
     /**
      * @var int $totalCount The totall number of /users
      */
-    #[JsonProperty("total_count")]
+    #[JsonProperty('total_count')]
     public int $totalCount;
 
     /**
-     * @param int $totalCount The totall number of /users
+     * @param array{
+     *   totalCount: int,
+     * } $values
      */
     public function __construct(
-        int $totalCount,
+        array $values,
     ) {
-        $this->totalCount = $totalCount;
+        $this->totalCount = $values['totalCount'];
     }
 }

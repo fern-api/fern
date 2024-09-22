@@ -9,60 +9,57 @@ class RefreshTokenRequest
     /**
      * @var string $clientId
      */
-    #[JsonProperty("client_id")]
+    #[JsonProperty('client_id')]
     public string $clientId;
 
     /**
      * @var string $clientSecret
      */
-    #[JsonProperty("client_secret")]
+    #[JsonProperty('client_secret')]
     public string $clientSecret;
 
     /**
      * @var string $refreshToken
      */
-    #[JsonProperty("refresh_token")]
+    #[JsonProperty('refresh_token')]
     public string $refreshToken;
 
     /**
      * @var string $audience
      */
-    #[JsonProperty("audience")]
+    #[JsonProperty('audience')]
     public string $audience;
 
     /**
      * @var string $grantType
      */
-    #[JsonProperty("grant_type")]
+    #[JsonProperty('grant_type')]
     public string $grantType;
 
     /**
      * @var ?string $scope
      */
-    #[JsonProperty("scope")]
+    #[JsonProperty('scope')]
     public ?string $scope;
 
     /**
-     * @param string $clientId
-     * @param string $clientSecret
-     * @param string $refreshToken
-     * @param string $audience
-     * @param string $grantType
-     * @param ?string $scope
+     * @param array{
+     *   clientId: string,
+     *   clientSecret: string,
+     *   refreshToken: string,
+     *   audience: string,
+     *   grantType: string,
+     *   scope?: ?string,
+     * } $values
      */
     public function __construct(
-        string $clientId,
-        string $clientSecret,
-        string $refreshToken,
-        string $audience,
-        string $grantType,
-        ?string $scope = null,
+        array $values,
     ) {
-        $this->clientId = $clientId;
-        $this->clientSecret = $clientSecret;
-        $this->refreshToken = $refreshToken;
-        $this->audience = $audience;
-        $this->grantType = $grantType;
-        $this->scope = $scope;
+        $this->clientId = $values['clientId'];
+        $this->clientSecret = $values['clientSecret'];
+        $this->refreshToken = $values['refreshToken'];
+        $this->audience = $values['audience'];
+        $this->grantType = $values['grantType'];
+        $this->scope = $values['scope'] ?? null;
     }
 }

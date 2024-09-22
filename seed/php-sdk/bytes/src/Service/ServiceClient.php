@@ -26,9 +26,8 @@ class ServiceClient
 
     /**
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
      */
-    public function upload(?array $options = null): mixed
+    public function upload(?array $options = null): void
     {
         try {
             $response = $this->client->sendRequest(

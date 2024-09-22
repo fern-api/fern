@@ -10,42 +10,41 @@ class Page extends SerializableType
     /**
      * @var int $page The current page
      */
-    #[JsonProperty("page")]
+    #[JsonProperty('page')]
     public int $page;
+
+    /**
+     * @var ?NextPage $next
+     */
+    #[JsonProperty('next')]
+    public ?NextPage $next;
 
     /**
      * @var int $perPage
      */
-    #[JsonProperty("per_page")]
+    #[JsonProperty('per_page')]
     public int $perPage;
 
     /**
      * @var int $totalPage
      */
-    #[JsonProperty("total_page")]
+    #[JsonProperty('total_page')]
     public int $totalPage;
 
     /**
-     * @var ?NextPage $next
-     */
-    #[JsonProperty("next")]
-    public ?NextPage $next;
-
-    /**
-     * @param int $page The current page
-     * @param int $perPage
-     * @param int $totalPage
-     * @param ?NextPage $next
+     * @param array{
+     *   page: int,
+     *   next?: ?NextPage,
+     *   perPage: int,
+     *   totalPage: int,
+     * } $values
      */
     public function __construct(
-        int $page,
-        int $perPage,
-        int $totalPage,
-        ?NextPage $next = null,
+        array $values,
     ) {
-        $this->page = $page;
-        $this->perPage = $perPage;
-        $this->totalPage = $totalPage;
-        $this->next = $next;
+        $this->page = $values['page'];
+        $this->next = $values['next'] ?? null;
+        $this->perPage = $values['perPage'];
+        $this->totalPage = $values['totalPage'];
     }
 }

@@ -5,6 +5,7 @@ namespace Seed;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\RawClient;
 use Seed\Requests\CreateRequest;
+use Seed\Types\Type;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use JsonException;
@@ -31,9 +32,9 @@ class SeedClient
         ?array $options = null,
     ) {
         $defaultHeaders = [
-            "X-Fern-Language" => "PHP",
-            "X-Fern-SDK-Name" => "Seed",
-            "X-Fern-SDK-Version" => "0.0.1",
+            'X-Fern-Language' => 'PHP',
+            'X-Fern-SDK-Name' => 'Seed',
+            'X-Fern-SDK-Version' => '0.0.1',
         ];
 
         $this->options = $options ?? [];
@@ -50,9 +51,9 @@ class SeedClient
     /**
      * @param CreateRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @return Type
      */
-    public function create(CreateRequest $request, ?array $options = null): mixed
+    public function create(CreateRequest $request, ?array $options = null): Type
     {
         try {
             $response = $this->client->sendRequest(
@@ -65,7 +66,8 @@ class SeedClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return Type::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -78,9 +80,9 @@ class SeedClient
     /**
      * @param GetRequest $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @return Type
      */
-    public function get(GetRequest $request, ?array $options = null): mixed
+    public function get(GetRequest $request, ?array $options = null): Type
     {
         $query = [];
         $query['decimal'] = $request->decimal;
@@ -97,7 +99,8 @@ class SeedClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return Type::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

@@ -91,7 +91,7 @@
                 }
               },
               "description": null,
-              "body": "{\n    \"user\": {\n        \"id\": \"string\",\n        \"username\": \"string\",\n        \"email\": \"string\",\n        \"age\": 1,\n        \"weight\": 1.1,\n        \"metadata\": {\n            \"string\": {\n                \"key\": \"value\"\n            }\n        }\n    }\n}",
+              "body": "{\n    \"user\": {\n        \"id\": \"string\",\n        \"username\": \"string\",\n        \"email\": \"string\",\n        \"age\": 1,\n        \"weight\": 1.1,\n        \"metadata\": {}\n    }\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -185,7 +185,7 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"id\": \"string\",\n    \"username\": \"string\",\n    \"email\": \"string\",\n    \"age\": 1,\n    \"weight\": 1.1,\n    \"metadata\": {\n        \"string\": {\n            \"key\": \"value\"\n        }\n    }\n}",
+              "body": "{\n    \"id\": \"string\",\n    \"username\": \"string\",\n    \"email\": \"string\",\n    \"age\": 1,\n    \"weight\": 1.1,\n    \"metadata\": {}\n}",
               "_postman_previewlanguage": "json"
             }
           ]

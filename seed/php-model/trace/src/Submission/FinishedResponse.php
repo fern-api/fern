@@ -10,15 +10,17 @@ class FinishedResponse extends SerializableType
     /**
      * @var string $submissionId
      */
-    #[JsonProperty("submissionId")]
+    #[JsonProperty('submissionId')]
     public string $submissionId;
 
     /**
-     * @param string $submissionId
+     * @param array{
+     *   submissionId: string,
+     * } $values
      */
     public function __construct(
-        string $submissionId,
+        array $values,
     ) {
-        $this->submissionId = $submissionId;
+        $this->submissionId = $values['submissionId'];
     }
 }

@@ -10,33 +10,33 @@ class SendResponse extends SerializableType
     /**
      * @var string $message
      */
-    #[JsonProperty("message")]
+    #[JsonProperty('message')]
     public string $message;
 
     /**
      * @var int $status
      */
-    #[JsonProperty("status")]
+    #[JsonProperty('status')]
     public int $status;
 
     /**
      * @var bool $success
      */
-    #[JsonProperty("success")]
+    #[JsonProperty('success')]
     public bool $success;
 
     /**
-     * @param string $message
-     * @param int $status
-     * @param bool $success
+     * @param array{
+     *   message: string,
+     *   status: int,
+     *   success: bool,
+     * } $values
      */
     public function __construct(
-        string $message,
-        int $status,
-        bool $success,
+        array $values,
     ) {
-        $this->message = $message;
-        $this->status = $status;
-        $this->success = $success;
+        $this->message = $values['message'];
+        $this->status = $values['status'];
+        $this->success = $values['success'];
     }
 }

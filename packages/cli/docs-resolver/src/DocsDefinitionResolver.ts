@@ -65,14 +65,14 @@ export class DocsDefinitionResolver {
         this._parsedDocsConfig = await docsYml.parseDocsConfiguration({
             rawDocsConfiguration: this.docsWorkspace.config,
             context: this.taskContext,
-            absolutePathToFernFolder: this.docsWorkspace.absoluteFilepath,
+            absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
             absoluteFilepathToDocsConfig: this.docsWorkspace.absoluteFilepathToDocsConfig
         });
 
         // track all changelog markdown files in parsedDocsConfig.pages
         this.fernWorkspaces.forEach((workspace) => {
             workspace.changelog?.files.forEach((file) => {
-                const relativePath = relative(this.docsWorkspace.absoluteFilepath, file.absoluteFilepath);
+                const relativePath = relative(this.docsWorkspace.absoluteFilePath, file.absoluteFilepath);
                 this.parsedDocsConfig.pages[relativePath] = file.contents;
             });
         });
@@ -86,7 +86,7 @@ export class DocsDefinitionResolver {
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = await replaceReferencedMarkdown({
                 markdown,
-                absolutePathToFernFolder: this.docsWorkspace.absoluteFilepath,
+                absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
                 absolutePathToMdx: this.resolveFilepath(relativePath),
                 context: this.taskContext
             });
@@ -96,7 +96,7 @@ export class DocsDefinitionResolver {
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = await replaceReferencedCode({
                 markdown,
-                absolutePathToFernFolder: this.docsWorkspace.absoluteFilepath,
+                absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
                 absolutePathToMdx: this.resolveFilepath(relativePath),
                 context: this.taskContext
             });
@@ -108,7 +108,7 @@ export class DocsDefinitionResolver {
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             const { filepaths, markdown: newMarkdown } = parseImagePaths(markdown, {
                 absolutePathToMdx: this.resolveFilepath(relativePath),
-                absolutePathToFernFolder: this.docsWorkspace.absoluteFilepath
+                absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath
             });
 
             // store the updated markdown in pages
@@ -147,7 +147,7 @@ export class DocsDefinitionResolver {
                 ),
                 {
                     absolutePathToMdx: this.resolveFilepath(relativePath),
-                    absolutePathToFernFolder: this.docsWorkspace.absoluteFilepath
+                    absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath
                 },
                 this.taskContext
             );
@@ -170,7 +170,7 @@ export class DocsDefinitionResolver {
             const jsFilePaths = new Set<AbsoluteFilePath>();
             await Promise.all(
                 this._parsedDocsConfig.experimental.mdxComponents.map(async (filepath) => {
-                    const absoluteFilePath = resolve(this.docsWorkspace.absoluteFilepath, filepath);
+                    const absoluteFilePath = resolve(this.docsWorkspace.absoluteFilePath, filepath);
 
                     // check if absoluteFilePath is a directory or a file
                     const stats = await stat(absoluteFilePath);
@@ -207,7 +207,7 @@ export class DocsDefinitionResolver {
         if (unresolvedFilepath == null) {
             return undefined;
         }
-        return resolve(this.docsWorkspace.absoluteFilepath, unresolvedFilepath);
+        return resolve(this.docsWorkspace.absoluteFilePath, unresolvedFilepath);
     }
 
     private toRelativeFilepath(filepath: AbsoluteFilePath): RelativeFilePath;
@@ -216,7 +216,7 @@ export class DocsDefinitionResolver {
         if (filepath == null) {
             return undefined;
         }
-        return relative(this.docsWorkspace.absoluteFilepath, filepath);
+        return relative(this.docsWorkspace.absoluteFilePath, filepath);
     }
 
     // currently this only supports slugs that are included in frontmatter

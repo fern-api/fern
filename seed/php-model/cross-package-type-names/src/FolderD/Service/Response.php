@@ -11,15 +11,17 @@ class Response extends SerializableType
     /**
      * @var ?Foo $foo
      */
-    #[JsonProperty("foo")]
+    #[JsonProperty('foo')]
     public ?Foo $foo;
 
     /**
-     * @param ?Foo $foo
+     * @param array{
+     *   foo?: ?Foo,
+     * } $values
      */
     public function __construct(
-        ?Foo $foo = null,
+        array $values,
     ) {
-        $this->foo = $foo;
+        $this->foo = $values['foo'] ?? null;
     }
 }

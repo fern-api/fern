@@ -10,15 +10,17 @@ class WithDocs extends SerializableType
     /**
      * @var string $docs
      */
-    #[JsonProperty("docs")]
+    #[JsonProperty('docs')]
     public string $docs;
 
     /**
-     * @param string $docs
+     * @param array{
+     *   docs: string,
+     * } $values
      */
     public function __construct(
-        string $docs,
+        array $values,
     ) {
-        $this->docs = $docs;
+        $this->docs = $values['docs'];
     }
 }

@@ -3,6 +3,7 @@
 namespace Seed\User;
 
 use Seed\Core\RawClient;
+use Seed\User\Types\User;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use JsonException;
@@ -28,9 +29,9 @@ class UserClient
     /**
      * @param string $userId
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @return User
      */
-    public function getUser(string $userId, ?array $options = null): mixed
+    public function getUser(string $userId, ?array $options = null): User
     {
         try {
             $response = $this->client->sendRequest(
@@ -42,7 +43,8 @@ class UserClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return User::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

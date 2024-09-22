@@ -10,6 +10,7 @@ import {
     FdrAPI,
     SDKSnippetHolder
 } from "@fern-api/fdr-sdk";
+import { convertToFernHostAbsoluteFilePath } from "@fern-api/fs-utils";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { Project } from "@fern-api/project-loader";
 import { convertIrToFdrApi } from "@fern-api/register";
@@ -56,7 +57,7 @@ export async function getPreviewDocsDefinition({
                 const fileId = uuidv4();
                 filesV2[fileId] = {
                     type: "url",
-                    url: `/_local${file.absoluteFilePath}`
+                    url: `/_local${convertToFernHostAbsoluteFilePath(file.absoluteFilePath)}`
                 };
                 return {
                     absoluteFilePath: file.absoluteFilePath,

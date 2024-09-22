@@ -10,24 +10,25 @@ class TestCaseWithActualResultImplementation extends SerializableType
     /**
      * @var NonVoidFunctionDefinition $getActualResult
      */
-    #[JsonProperty("getActualResult")]
+    #[JsonProperty('getActualResult')]
     public NonVoidFunctionDefinition $getActualResult;
 
     /**
      * @var mixed $assertCorrectnessCheck
      */
-    #[JsonProperty("assertCorrectnessCheck")]
+    #[JsonProperty('assertCorrectnessCheck')]
     public mixed $assertCorrectnessCheck;
 
     /**
-     * @param NonVoidFunctionDefinition $getActualResult
-     * @param mixed $assertCorrectnessCheck
+     * @param array{
+     *   getActualResult: NonVoidFunctionDefinition,
+     *   assertCorrectnessCheck: mixed,
+     * } $values
      */
     public function __construct(
-        NonVoidFunctionDefinition $getActualResult,
-        mixed $assertCorrectnessCheck,
+        array $values,
     ) {
-        $this->getActualResult = $getActualResult;
-        $this->assertCorrectnessCheck = $assertCorrectnessCheck;
+        $this->getActualResult = $values['getActualResult'];
+        $this->assertCorrectnessCheck = $values['assertCorrectnessCheck'];
     }
 }

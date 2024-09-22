@@ -10,24 +10,25 @@ class Name extends SerializableType
     /**
      * @var string $id
      */
-    #[JsonProperty("id")]
+    #[JsonProperty('id')]
     public string $id;
 
     /**
      * @var string $value
      */
-    #[JsonProperty("value")]
+    #[JsonProperty('value')]
     public string $value;
 
     /**
-     * @param string $id
-     * @param string $value
+     * @param array{
+     *   id: string,
+     *   value: string,
+     * } $values
      */
     public function __construct(
-        string $id,
-        string $value,
+        array $values,
     ) {
-        $this->id = $id;
-        $this->value = $value;
+        $this->id = $values['id'];
+        $this->value = $values['value'];
     }
 }

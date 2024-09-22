@@ -2,7 +2,7 @@ import { Audiences } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
 import { serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { createMockTaskContext } from "@fern-api/task-context";
-import { APIWorkspace, loadAPIWorkspace } from "@fern-api/workspace-loader";
+import { AbstractAPIWorkspace, loadAPIWorkspace } from "@fern-api/workspace-loader";
 import { writeFile } from "fs/promises";
 import { generateIntermediateRepresentation } from "../generateIntermediateRepresentation";
 
@@ -37,7 +37,7 @@ export async function generateAndSnapshotIR({
     audiences,
     absolutePathToIr
 }: {
-    workspace: APIWorkspace;
+    workspace: AbstractAPIWorkspace<unknown>;
     workspaceName: string;
     absolutePathToIr: AbsoluteFilePath;
     audiences: Audiences;

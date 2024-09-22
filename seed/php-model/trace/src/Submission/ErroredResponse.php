@@ -10,24 +10,25 @@ class ErroredResponse extends SerializableType
     /**
      * @var string $submissionId
      */
-    #[JsonProperty("submissionId")]
+    #[JsonProperty('submissionId')]
     public string $submissionId;
 
     /**
      * @var mixed $errorInfo
      */
-    #[JsonProperty("errorInfo")]
+    #[JsonProperty('errorInfo')]
     public mixed $errorInfo;
 
     /**
-     * @param string $submissionId
-     * @param mixed $errorInfo
+     * @param array{
+     *   submissionId: string,
+     *   errorInfo: mixed,
+     * } $values
      */
     public function __construct(
-        string $submissionId,
-        mixed $errorInfo,
+        array $values,
     ) {
-        $this->submissionId = $submissionId;
-        $this->errorInfo = $errorInfo;
+        $this->submissionId = $values['submissionId'];
+        $this->errorInfo = $values['errorInfo'];
     }
 }

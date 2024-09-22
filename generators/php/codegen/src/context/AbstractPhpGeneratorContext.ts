@@ -113,7 +113,7 @@ export abstract class AbstractPhpGeneratorContext<
     }
 
     public getLiteralAsString(literal: Literal): string {
-        return literal.type === "string" ? `"${literal.string}"` : literal.boolean ? '"true"' : '"false"';
+        return literal.type === "string" ? `'${literal.string}'` : literal.boolean ? "'true'" : "'false'";
     }
 
     public getDateTypeAttributeClassReference(): php.ClassReference {
@@ -248,9 +248,7 @@ export abstract class AbstractPhpGeneratorContext<
     }
 
     public abstract getRawAsIsFiles(): string[];
-
     public abstract getCoreAsIsFiles(): string[];
-
     public abstract getCoreTestAsIsFiles(): string[];
 
     public getCoreSerializationAsIsFiles(): string[] {
@@ -260,7 +258,12 @@ export abstract class AbstractPhpGeneratorContext<
             AsIsFiles.DateType,
             AsIsFiles.JsonProperty,
             AsIsFiles.SerializableType,
-            AsIsFiles.Union
+            AsIsFiles.Union,
+            AsIsFiles.JsonDecoder,
+            AsIsFiles.JsonEncoder,
+            AsIsFiles.JsonDeserializer,
+            AsIsFiles.JsonSerializer,
+            AsIsFiles.Utils
         ];
     }
 

@@ -10,24 +10,25 @@ class TracedTestCase extends SerializableType
     /**
      * @var TestCaseResultWithStdout $result
      */
-    #[JsonProperty("result")]
+    #[JsonProperty('result')]
     public TestCaseResultWithStdout $result;
 
     /**
      * @var int $traceResponsesSize
      */
-    #[JsonProperty("traceResponsesSize")]
+    #[JsonProperty('traceResponsesSize')]
     public int $traceResponsesSize;
 
     /**
-     * @param TestCaseResultWithStdout $result
-     * @param int $traceResponsesSize
+     * @param array{
+     *   result: TestCaseResultWithStdout,
+     *   traceResponsesSize: int,
+     * } $values
      */
     public function __construct(
-        TestCaseResultWithStdout $result,
-        int $traceResponsesSize,
+        array $values,
     ) {
-        $this->result = $result;
-        $this->traceResponsesSize = $traceResponsesSize;
+        $this->result = $values['result'];
+        $this->traceResponsesSize = $values['traceResponsesSize'];
     }
 }

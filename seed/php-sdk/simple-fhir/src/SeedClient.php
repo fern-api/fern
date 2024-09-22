@@ -4,6 +4,7 @@ namespace Seed;
 
 use GuzzleHttp\ClientInterface;
 use Seed\Core\RawClient;
+use Seed\Types\Account;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use JsonException;
@@ -29,9 +30,9 @@ class SeedClient
         ?array $options = null,
     ) {
         $defaultHeaders = [
-            "X-Fern-Language" => "PHP",
-            "X-Fern-SDK-Name" => "Seed",
-            "X-Fern-SDK-Version" => "0.0.1",
+            'X-Fern-Language' => 'PHP',
+            'X-Fern-SDK-Name' => 'Seed',
+            'X-Fern-SDK-Version' => '0.0.1',
         ];
 
         $this->options = $options ?? [];
@@ -48,9 +49,9 @@ class SeedClient
     /**
      * @param string $accountId
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @return Account
      */
-    public function getAccount(string $accountId, ?array $options = null): mixed
+    public function getAccount(string $accountId, ?array $options = null): Account
     {
         try {
             $response = $this->client->sendRequest(
@@ -62,7 +63,8 @@ class SeedClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return Account::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

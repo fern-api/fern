@@ -11,15 +11,17 @@ class ExtendedMovie extends SerializableType
     /**
      * @var array<string> $cast
      */
-    #[JsonProperty("cast"), ArrayType(["string"])]
+    #[JsonProperty('cast'), ArrayType(['string'])]
     public array $cast;
 
     /**
-     * @param array<string> $cast
+     * @param array{
+     *   cast: array<string>,
+     * } $values
      */
     public function __construct(
-        array $cast,
+        array $values,
     ) {
-        $this->cast = $cast;
+        $this->cast = $values['cast'];
     }
 }

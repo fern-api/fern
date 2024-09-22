@@ -11,6 +11,7 @@ use GuzzleHttp\ClientInterface;
 use Seed\Core\RawClient;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
+use Seed\Core\JsonDecoder;
 use JsonException;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -53,16 +54,21 @@ class SeedClient
     private RawClient $client;
 
     /**
+     * @param ?string $token The token to use for authentication.
      * @param ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
      */
     public function __construct(
+        ?string $token = null,
         ?array $options = null,
     ) {
         $defaultHeaders = [
-            "X-Fern-Language" => "PHP",
-            "X-Fern-SDK-Name" => "Seed",
-            "X-Fern-SDK-Version" => "0.0.1",
+            'X-Fern-Language' => 'PHP',
+            'X-Fern-SDK-Name' => 'Seed',
+            'X-Fern-SDK-Version' => '0.0.1',
         ];
+        if ($token != null) {
+            $defaultHeaders['Authorization'] = "Bearer $token";
+        }
 
         $this->options = $options ?? [];
         $this->options['headers'] = array_merge(
@@ -84,9 +90,9 @@ class SeedClient
     /**
      * @param string $request
      * @param ?array{baseUrl?: string} $options
-     * @returns mixed
+     * @return string
      */
-    public function echo_(string $request, ?array $options = null): mixed
+    public function echo_(string $request, ?array $options = null): string
     {
         try {
             $response = $this->client->sendRequest(
@@ -99,7 +105,8 @@ class SeedClient
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
-                return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeString($json);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

@@ -12,33 +12,33 @@ class GeneratedFiles extends SerializableType
     /**
      * @var array<Language, Files> $generatedTestCaseFiles
      */
-    #[JsonProperty("generatedTestCaseFiles"), ArrayType([Language::class => Files::class])]
+    #[JsonProperty('generatedTestCaseFiles'), ArrayType([Language::class => Files::class])]
     public array $generatedTestCaseFiles;
 
     /**
      * @var array<Language, Files> $generatedTemplateFiles
      */
-    #[JsonProperty("generatedTemplateFiles"), ArrayType([Language::class => Files::class])]
+    #[JsonProperty('generatedTemplateFiles'), ArrayType([Language::class => Files::class])]
     public array $generatedTemplateFiles;
 
     /**
      * @var array<Language, Files> $other
      */
-    #[JsonProperty("other"), ArrayType([Language::class => Files::class])]
+    #[JsonProperty('other'), ArrayType([Language::class => Files::class])]
     public array $other;
 
     /**
-     * @param array<Language, Files> $generatedTestCaseFiles
-     * @param array<Language, Files> $generatedTemplateFiles
-     * @param array<Language, Files> $other
+     * @param array{
+     *   generatedTestCaseFiles: array<Language, Files>,
+     *   generatedTemplateFiles: array<Language, Files>,
+     *   other: array<Language, Files>,
+     * } $values
      */
     public function __construct(
-        array $generatedTestCaseFiles,
-        array $generatedTemplateFiles,
-        array $other,
+        array $values,
     ) {
-        $this->generatedTestCaseFiles = $generatedTestCaseFiles;
-        $this->generatedTemplateFiles = $generatedTemplateFiles;
-        $this->other = $other;
+        $this->generatedTestCaseFiles = $values['generatedTestCaseFiles'];
+        $this->generatedTemplateFiles = $values['generatedTemplateFiles'];
+        $this->other = $values['other'];
     }
 }

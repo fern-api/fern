@@ -8,12 +8,29 @@ use Seed\Core\JsonProperty;
 
 class NullPropertyType extends SerializableType
 {
+    /**
+     * @var string $nonNullProperty
+     */
+    #[JsonProperty('non_null_property')]
+    public string $nonNullProperty;
+
+    /**
+     * @var string|null $nullProperty
+     */
+    #[JsonProperty('null_property')]
+    public ?string $nullProperty;
+
+    /**
+     * @param array{
+     *   nonNullProperty: string,
+     *   nullProperty?: string|null,
+     * } $values
+     */
     public function __construct(
-        #[JsonProperty('non_null_property')]
-        public string  $nonNullProperty,
-        #[JsonProperty('null_property')]
-        public ?string $nullProperty = null
+        array $values,
     ) {
+        $this->nonNullProperty = $values['nonNullProperty'];
+        $this->nullProperty = $values['nullProperty'] ?? null;
     }
 }
 
@@ -21,15 +38,13 @@ class NullPropertyTypeTest extends TestCase
 {
     public function testNullPropertiesAreOmitted(): void
     {
-        $object = new NullPropertyType('Test String', null);
+        $object = new NullPropertyType(["nonNullProperty" => "Test String", "nullProperty" => null]);
 
-        $json = $object->toJson();
+        $serializedObject = $object->jsonSerialize();
 
-        $data = json_decode($json, true, JSON_THROW_ON_ERROR);
+        $this->assertArrayHasKey('non_null_property', $serializedObject, 'non_null_property should be present in the serialized JSON.');
+        $this->assertArrayNotHasKey('null_property', $serializedObject, 'null_property should be omitted from the serialized JSON.');
 
-        $this->assertArrayHasKey('non_null_property', $data, 'non_null_property should be present in the serialized JSON.');
-        $this->assertArrayNotHasKey('null_property', $data, 'null_property should be omitted from the serialized JSON.');
-
-        $this->assertEquals('Test String', $data['non_null_property'], 'non_null_property should have the correct value.');
+        $this->assertEquals('Test String', $serializedObject['non_null_property'], 'non_null_property should have the correct value.');
     }
 }
