@@ -35,7 +35,7 @@
     "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-fern/fdr-cjs-sdk": "0.108.0-dcb0f740c",
     "@fern-fern/fiddle-sdk": "0.0.584",
-    "@fern-fern/generators-sdk": "0.110.0-b3ce9a23a",
+    "@fern-fern/generators-sdk": "0.110.0-df1ccffad",
     "find-up": "^6.3.0",
     "js-yaml": "^4.1.0",
     "lodash-es": "^4.17.21",

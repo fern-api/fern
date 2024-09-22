@@ -74,7 +74,7 @@
     "@fern-api/fern-definition-formatter": "workspace:*",
     "@fern-api/cli-migrations": "workspace:*",
     "@fern-api/fern-definition-schema": "workspace:*",
-    "@fern-fern/generators-sdk": "0.110.0-b3ce9a23a",
+    "@fern-fern/generators-sdk": "0.110.0-df1ccffad",
     "@fern-fern/fiddle-sdk": "0.0.584",
     "@types/get-port": "^4.2.0",
     "ansi-escapes": "^5.0.0",
