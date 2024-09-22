@@ -51,8 +51,11 @@ export class Comment extends AstNode {
         writer.writeLine("/**");
         if (this.docs != null) {
             this.docs.split("\n").forEach((line) => {
-                writer.writeLine(`* ${line}`);
+                writer.writeLine(` * ${line}`);
             });
+            if (this.tags.length > 0) {
+                writer.writeLine(" *");
+            }
         }
         for (const tag of this.tags) {
             this.writeTag({ writer, tag });

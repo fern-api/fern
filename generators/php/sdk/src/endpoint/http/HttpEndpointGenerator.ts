@@ -249,7 +249,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     static_: true
                 })
             );
-            writer.writeLine("; // @phpstan-ignore-line");
+            writer.write(";");
+            if (this.context.isMixedArray(type)) {
+                writer.newLine();
+                return;
+            }
+            writer.writeLine(" // @phpstan-ignore-line");
         });
     }
 

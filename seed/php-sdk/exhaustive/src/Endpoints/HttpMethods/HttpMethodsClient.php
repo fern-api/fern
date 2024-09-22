@@ -30,7 +30,9 @@ class HttpMethodsClient
 
     /**
      * @param string $id
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return string
      */
     public function testGet(string $id, ?array $options = null): string
@@ -58,7 +60,9 @@ class HttpMethodsClient
 
     /**
      * @param ObjectWithRequiredField $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return ObjectWithOptionalField
      */
     public function testPost(ObjectWithRequiredField $request, ?array $options = null): ObjectWithOptionalField
@@ -88,7 +92,9 @@ class HttpMethodsClient
     /**
      * @param string $id
      * @param ObjectWithRequiredField $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return ObjectWithOptionalField
      */
     public function testPut(string $id, ObjectWithRequiredField $request, ?array $options = null): ObjectWithOptionalField
@@ -118,7 +124,9 @@ class HttpMethodsClient
     /**
      * @param string $id
      * @param ObjectWithOptionalField $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return ObjectWithOptionalField
      */
     public function testPatch(string $id, ObjectWithOptionalField $request, ?array $options = null): ObjectWithOptionalField
@@ -147,7 +155,9 @@ class HttpMethodsClient
 
     /**
      * @param string $id
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return bool
      */
     public function testDelete(string $id, ?array $options = null): bool

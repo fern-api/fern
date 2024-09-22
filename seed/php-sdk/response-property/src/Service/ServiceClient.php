@@ -30,7 +30,9 @@ class ServiceClient
 
     /**
      * @param string $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return Response
      */
     public function getMovie(string $request, ?array $options = null): Response
@@ -59,7 +61,9 @@ class ServiceClient
 
     /**
      * @param string $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return Response
      */
     public function getMovieDocs(string $request, ?array $options = null): Response
@@ -88,7 +92,9 @@ class ServiceClient
 
     /**
      * @param string $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return StringResponse
      */
     public function getMovieName(string $request, ?array $options = null): StringResponse
@@ -117,7 +123,9 @@ class ServiceClient
 
     /**
      * @param string $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return Response
      */
     public function getMovieMetadata(string $request, ?array $options = null): Response
@@ -146,7 +154,9 @@ class ServiceClient
 
     /**
      * @param string $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return ?Response
      */
     public function getOptionalMovie(string $request, ?array $options = null): ?Response
@@ -178,7 +188,9 @@ class ServiceClient
 
     /**
      * @param string $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return ?WithDocs
      */
     public function getOptionalMovieDocs(string $request, ?array $options = null): ?WithDocs
@@ -210,7 +222,9 @@ class ServiceClient
 
     /**
      * @param string $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return ?StringResponse
      */
     public function getOptionalMovieName(string $request, ?array $options = null): ?StringResponse

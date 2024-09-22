@@ -28,7 +28,9 @@ class QueryParamClient
 
     /**
      * @param SendEnumAsQueryParamRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      */
     public function send(SendEnumAsQueryParamRequest $request, ?array $options = null): void
     {
@@ -62,7 +64,9 @@ class QueryParamClient
 
     /**
      * @param SendEnumListAsQueryParamRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      */
     public function sendList(SendEnumListAsQueryParamRequest $request, ?array $options = null): void
     {

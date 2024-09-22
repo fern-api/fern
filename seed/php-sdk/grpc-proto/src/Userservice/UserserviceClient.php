@@ -29,7 +29,9 @@ class UserserviceClient
 
     /**
      * @param CreateRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return CreateResponse
      */
     public function create(CreateRequest $request, ?array $options = null): CreateResponse

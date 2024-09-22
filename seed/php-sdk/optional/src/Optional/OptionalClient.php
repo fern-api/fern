@@ -5,6 +5,7 @@ namespace Seed\Optional;
 use Seed\Core\RawClient;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
+use Seed\Core\JsonSerializer;
 use Seed\Core\JsonDecoder;
 use JsonException;
 use Exception;
@@ -28,7 +29,9 @@ class OptionalClient
 
     /**
      * @param ?array<string, mixed> $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return string
      */
     public function sendOptionalBody(?array $request = null, ?array $options = null): string
@@ -39,7 +42,7 @@ class OptionalClient
                     baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "send-optional-body",
                     method: HttpMethod::POST,
-                    body: $request,
+                    body: $request ? JsonSerializer::serializeArray($request, ['string' => 'mixed']) : null,
                 ),
             );
             $statusCode = $response->getStatusCode();

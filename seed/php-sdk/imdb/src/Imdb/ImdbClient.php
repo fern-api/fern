@@ -29,9 +29,12 @@ class ImdbClient
     }
 
     /**
-    * Add a movie to the database
+     * Add a movie to the database
+     *
      * @param CreateMovieRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return string
      */
     public function createMovie(CreateMovieRequest $request, ?array $options = null): string
@@ -60,7 +63,9 @@ class ImdbClient
 
     /**
      * @param string $movieId
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return Movie
      */
     public function getMovie(string $movieId, ?array $options = null): Movie

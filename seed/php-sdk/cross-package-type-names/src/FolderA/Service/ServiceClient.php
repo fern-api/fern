@@ -27,7 +27,9 @@ class ServiceClient
     }
 
     /**
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return Response
      */
     public function getDirectThread(?array $options = null): Response

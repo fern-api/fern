@@ -13,7 +13,11 @@ use Exception;
 class SeedClient
 {
     /**
-     * @var ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
+     * @var ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     * } $options
      */
     private ?array $options;
 
@@ -23,7 +27,11 @@ class SeedClient
     private RawClient $client;
 
     /**
-     * @param ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     * } $options
      */
     public function __construct(
         ?array $options = null,
@@ -47,7 +55,9 @@ class SeedClient
 
     /**
      * @param Inlined $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      */
     public function extendedInlineRequestBody(Inlined $request, ?array $options = null): void
     {

@@ -29,7 +29,9 @@ class UnknownClient
 
     /**
      * @param mixed $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return array<mixed>
      */
     public function post(mixed $request, ?array $options = null): array
@@ -46,7 +48,7 @@ class UnknownClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
-                return JsonDecoder::decodeArray($json, ['mixed']); // @phpstan-ignore-line
+                return JsonDecoder::decodeArray($json, ['mixed']);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);
@@ -58,7 +60,9 @@ class UnknownClient
 
     /**
      * @param MyObject $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return array<mixed>
      */
     public function postObject(MyObject $request, ?array $options = null): array
@@ -75,7 +79,7 @@ class UnknownClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
-                return JsonDecoder::decodeArray($json, ['mixed']); // @phpstan-ignore-line
+                return JsonDecoder::decodeArray($json, ['mixed']);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

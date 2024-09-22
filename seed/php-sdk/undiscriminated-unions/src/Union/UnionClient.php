@@ -28,7 +28,9 @@ class UnionClient
 
     /**
      * @param mixed $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return mixed
      */
     public function get(mixed $request, ?array $options = null): mixed
@@ -56,7 +58,9 @@ class UnionClient
     }
 
     /**
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return array<mixed, string>
      */
     public function getMetadata(?array $options = null): array

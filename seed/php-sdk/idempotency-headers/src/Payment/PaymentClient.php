@@ -29,7 +29,9 @@ class PaymentClient
 
     /**
      * @param CreatePaymentRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return string
      */
     public function create(CreatePaymentRequest $request, ?array $options = null): string
@@ -58,7 +60,9 @@ class PaymentClient
 
     /**
      * @param string $paymentId
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      */
     public function delete(string $paymentId, ?array $options = null): void
     {

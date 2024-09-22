@@ -27,7 +27,9 @@ class ServiceClient
     /**
      * @param string $id
      * @param string $nestedId
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      */
     public function nop(string $id, string $nestedId, ?array $options = null): void
     {

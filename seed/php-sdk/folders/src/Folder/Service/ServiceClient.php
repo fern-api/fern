@@ -25,7 +25,9 @@ class ServiceClient
     }
 
     /**
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      */
     public function endpoint(?array $options = null): void
     {
@@ -49,7 +51,9 @@ class ServiceClient
 
     /**
      * @param mixed $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      */
     public function unknownRequest(mixed $request, ?array $options = null): void
     {

@@ -6,7 +6,7 @@ use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 
 /**
-* This type allows us to test a circular reference with a union type (see FieldValue).
+ * This type allows us to test a circular reference with a union type (see FieldValue).
  */
 class ObjectFieldValue extends SerializableType
 {

@@ -28,9 +28,12 @@ class InlinedRequestsClient
     }
 
     /**
-    * POST with custom object in request body, response is an object
+     * POST with custom object in request body, response is an object
+     *
      * @param PostWithObjectBody $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return ObjectWithOptionalField
      */
     public function postWithObjectBodyandResponse(PostWithObjectBody $request, ?array $options = null): ObjectWithOptionalField

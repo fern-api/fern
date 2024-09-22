@@ -27,7 +27,9 @@ class InlinedRequestClient
 
     /**
      * @param SendEnumInlinedRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      */
     public function send(SendEnumInlinedRequest $request, ?array $options = null): void
     {

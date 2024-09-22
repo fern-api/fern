@@ -27,8 +27,11 @@ class PropertyBasedErrorClient
     }
 
     /**
-    * GET request that always throws an error
-     * @param ?array{baseUrl?: string} $options
+     * GET request that always throws an error
+     *
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return string
      */
     public function throwError(?array $options = null): string

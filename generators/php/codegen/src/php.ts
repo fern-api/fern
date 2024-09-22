@@ -1,3 +1,4 @@
+import { Ternary } from "@fern-api/generator-commons";
 import {
     Array as Array_,
     Attribute,
@@ -64,6 +65,10 @@ export function method(args: Method.Args): Method {
 
 export function parameter(args: Parameter.Args): Parameter {
     return new Parameter(args);
+}
+
+export function ternary(args: Ternary.Args): Ternary {
+    return new Ternary(args);
 }
 
 export { AstNode } from "./ast/core/AstNode";

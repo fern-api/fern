@@ -29,14 +29,16 @@ class HeadersClient
 
     /**
      * @param SendLiteralsInHeadersRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return SendResponse
      */
     public function send(SendLiteralsInHeadersRequest $request, ?array $options = null): SendResponse
     {
         $headers = [];
-        $headers['X-Endpoint-Version'] = $request->endpointVersion;
-        $headers['X-Async'] = $request->async;
+        $headers['X-Endpoint-Version'] = '02-12-2024';
+        $headers['X-Async'] = 'true';
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(

@@ -40,7 +40,9 @@ class V2Client
     }
 
     /**
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      */
     public function test(?array $options = null): void
     {

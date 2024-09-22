@@ -28,8 +28,11 @@ class ServiceClient
     }
 
     /**
-    * GET request with custom api key
-     * @param ?array{baseUrl?: string} $options
+     * GET request with custom api key
+     *
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return string
      */
     public function getWithApiKey(?array $options = null): string
@@ -56,9 +59,12 @@ class ServiceClient
     }
 
     /**
-    * GET request with custom api key
+     * GET request with custom api key
+     *
      * @param HeaderAuthRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return string
      */
     public function getWithHeader(HeaderAuthRequest $request, ?array $options = null): string

@@ -28,11 +28,14 @@ class UserClient
     }
 
     /**
-    * Retrieve a user.
-    * This endpoint is used to retrieve a user.
+     * Retrieve a user.
+     * This endpoint is used to retrieve a user.
+     *
      * @param string $userId The ID of the user to retrieve.
     This ID is unique to each user.
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      */
     public function getUser(string $userId, ?array $options = null): void
     {
@@ -55,10 +58,13 @@ class UserClient
     }
 
     /**
-    * Create a new user.
-    * This endpoint is used to create a new user.
+     * Create a new user.
+     * This endpoint is used to create a new user.
+     *
      * @param CreateUserRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return User
      */
     public function createUser(CreateUserRequest $request, ?array $options = null): User

@@ -29,15 +29,17 @@ class QueryClient
 
     /**
      * @param SendLiteralsInQueryRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return SendResponse
      */
     public function send(SendLiteralsInQueryRequest $request, ?array $options = null): SendResponse
     {
         $query = [];
-        $query['prompt'] = $request->prompt;
+        $query['prompt'] = 'You are a helpful assistant';
         $query['query'] = $request->query;
-        $query['stream'] = $request->stream;
+        $query['stream'] = 'false';
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(

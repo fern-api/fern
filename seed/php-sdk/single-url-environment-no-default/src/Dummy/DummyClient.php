@@ -27,7 +27,9 @@ class DummyClient
     }
 
     /**
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return string
      */
     public function getDummy(?array $options = null): string

@@ -35,7 +35,9 @@ export class ReferencedEndpointRequest extends EndpointRequest {
 
     public getRequestBodyCodeBlock(): RequestBodyCodeBlock | undefined {
         return {
-            requestBodyReference: this.getRequestParameterName()
+            requestBodyReference: this.serializeJsonRequest({
+                bodyArgument: php.codeblock(this.getRequestParameterName())
+            })
         };
     }
 }

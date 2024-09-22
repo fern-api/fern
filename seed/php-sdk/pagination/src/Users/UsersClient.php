@@ -42,7 +42,9 @@ class UsersClient
 
     /**
      * @param ListUsersCursorPaginationRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return ListUsersPaginationResponse
      */
     public function listWithCursorPagination(ListUsersCursorPaginationRequest $request, ?array $options = null): ListUsersPaginationResponse
@@ -84,7 +86,9 @@ class UsersClient
 
     /**
      * @param ListUsersBodyCursorPaginationRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return ListUsersPaginationResponse
      */
     public function listWithBodyCursorPagination(ListUsersBodyCursorPaginationRequest $request, ?array $options = null): ListUsersPaginationResponse
@@ -113,7 +117,9 @@ class UsersClient
 
     /**
      * @param ListUsersOffsetPaginationRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return ListUsersPaginationResponse
      */
     public function listWithOffsetPagination(ListUsersOffsetPaginationRequest $request, ?array $options = null): ListUsersPaginationResponse
@@ -155,7 +161,9 @@ class UsersClient
 
     /**
      * @param ListUsersBodyOffsetPaginationRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return ListUsersPaginationResponse
      */
     public function listWithBodyOffsetPagination(ListUsersBodyOffsetPaginationRequest $request, ?array $options = null): ListUsersPaginationResponse
@@ -184,7 +192,9 @@ class UsersClient
 
     /**
      * @param ListUsersOffsetStepPaginationRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return ListUsersPaginationResponse
      */
     public function listWithOffsetStepPagination(ListUsersOffsetStepPaginationRequest $request, ?array $options = null): ListUsersPaginationResponse
@@ -223,7 +233,9 @@ class UsersClient
 
     /**
      * @param ListWithOffsetPaginationHasNextPageRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return ListUsersPaginationResponse
      */
     public function listWithOffsetPaginationHasNextPage(ListWithOffsetPaginationHasNextPageRequest $request, ?array $options = null): ListUsersPaginationResponse
@@ -262,7 +274,9 @@ class UsersClient
 
     /**
      * @param ListUsersExtendedRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return ListUsersExtendedResponse
      */
     public function listWithExtendedResults(ListUsersExtendedRequest $request, ?array $options = null): ListUsersExtendedResponse
@@ -295,7 +309,9 @@ class UsersClient
 
     /**
      * @param ListUsersExtendedRequestForOptionalData $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return ListUsersExtendedOptionalListResponse
      */
     public function listWithExtendedResultsAndOptionalData(ListUsersExtendedRequestForOptionalData $request, ?array $options = null): ListUsersExtendedOptionalListResponse
@@ -328,7 +344,9 @@ class UsersClient
 
     /**
      * @param ListUsernamesRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return UsernameCursor
      */
     public function listUsernames(ListUsernamesRequest $request, ?array $options = null): UsernameCursor
@@ -361,7 +379,9 @@ class UsersClient
 
     /**
      * @param ListWithGlobalConfigRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return UsernameContainer
      */
     public function listWithGlobalConfig(ListWithGlobalConfigRequest $request, ?array $options = null): UsernameContainer

@@ -14,7 +14,11 @@ class SeedClient
     public UnionClient $union;
 
     /**
-     * @var ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
+     * @var ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     * } $options
      */
     private ?array $options;
 
@@ -24,7 +28,11 @@ class SeedClient
     private RawClient $client;
 
     /**
-     * @param ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     * } $options
      */
     public function __construct(
         ?array $options = null,

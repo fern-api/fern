@@ -147,6 +147,12 @@ export abstract class AbstractPhpGeneratorContext<
         });
     }
 
+    public isMixedArray(type: php.Type): boolean {
+        return (
+            type.internalType.type === "array" && type.internalType.value.underlyingType().internalType.type === "mixed"
+        );
+    }
+
     public isOptional(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
             case "container":

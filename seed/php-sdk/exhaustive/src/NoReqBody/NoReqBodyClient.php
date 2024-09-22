@@ -28,7 +28,9 @@ class NoReqBodyClient
     }
 
     /**
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return ObjectWithOptionalField
      */
     public function getWithNoRequestBody(?array $options = null): ObjectWithOptionalField
@@ -55,7 +57,9 @@ class NoReqBodyClient
     }
 
     /**
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return string
      */
     public function postWithNoRequestBody(?array $options = null): string

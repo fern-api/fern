@@ -62,6 +62,10 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             namespace: this.context.getRootNamespace()
         });
 
+        if (!this.context.ir.rootPackage.hasEndpointsInTree) {
+            return this.newRootClientFile(class_);
+        }
+
         class_.addField(
             php.field({
                 name: `$${this.context.getClientOptionsName()}`,
@@ -71,8 +75,8 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         );
         class_.addField(this.context.rawClient.getField());
 
-        const constructorParameters = this.getConstructorParameters();
         const subpackages = this.getRootSubpackages();
+        const constructorParameters = this.getConstructorParameters();
         class_.addConstructor(
             this.getConstructorMethod({
                 constructorParameters,
@@ -100,12 +104,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             class_.addMethod(this.getFromEnvOrThrowMethod());
         }
 
-        return new PhpFile({
-            clazz: class_,
-            directory: RelativeFilePath.of(""),
-            rootNamespace: this.context.getRootNamespace(),
-            customConfig: this.context.customConfig
-        });
+        return this.newRootClientFile(class_);
     }
 
     private getConstructorMethod({
@@ -471,8 +470,19 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
     }
 
     private getRootSubpackages(): Subpackage[] {
-        return this.context.ir.rootPackage.subpackages.map((subpackageId) => {
-            return this.context.getSubpackageOrThrow(subpackageId);
+        return this.context.ir.rootPackage.subpackages
+            .map((subpackageId) => {
+                return this.context.getSubpackageOrThrow(subpackageId);
+            })
+            .filter((subpackage) => this.context.shouldGenerateSubpackageClient(subpackage));
+    }
+
+    private newRootClientFile(class_: php.Class): PhpFile {
+        return new PhpFile({
+            clazz: class_,
+            directory: RelativeFilePath.of(""),
+            rootNamespace: this.context.getRootNamespace(),
+            customConfig: this.context.customConfig
         });
     }
 }

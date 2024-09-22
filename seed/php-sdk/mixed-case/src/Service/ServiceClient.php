@@ -30,7 +30,9 @@ class ServiceClient
 
     /**
      * @param string $resourceId
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return mixed
      */
     public function getResource(string $resourceId, ?array $options = null): mixed
@@ -58,7 +60,9 @@ class ServiceClient
 
     /**
      * @param ListResourcesRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return array<mixed>
      */
     public function listResources(ListResourcesRequest $request, ?array $options = null): array
@@ -78,7 +82,7 @@ class ServiceClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
-                return JsonDecoder::decodeArray($json, ['mixed']); // @phpstan-ignore-line
+                return JsonDecoder::decodeArray($json, ['mixed']);
             }
         } catch (JsonException $e) {
             throw new Exception("Failed to deserialize response", 0, $e);

@@ -7,7 +7,7 @@ use Seed\Core\JsonProperty;
 use Seed\Core\ArrayType;
 
 /**
-* The generated signature will include an additional param, actualResult
+ * The generated signature will include an additional param, actualResult
  */
 class VoidFunctionDefinitionThatTakesActualResult extends SerializableType
 {

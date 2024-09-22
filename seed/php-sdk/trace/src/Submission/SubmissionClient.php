@@ -30,9 +30,12 @@ class SubmissionClient
     }
 
     /**
-    * Returns sessionId and execution server URL for session. Spins up server.
+     * Returns sessionId and execution server URL for session. Spins up server.
+     *
      * @param Language $language
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return ExecutionSessionResponse
      */
     public function createExecutionSession(Language $language, ?array $options = null): ExecutionSessionResponse
@@ -59,9 +62,12 @@ class SubmissionClient
     }
 
     /**
-    * Returns execution server URL for session. Returns empty if session isn't registered.
+     * Returns execution server URL for session. Returns empty if session isn't registered.
+     *
      * @param string $sessionId
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return ?ExecutionSessionResponse
      */
     public function getExecutionSession(string $sessionId, ?array $options = null): ?ExecutionSessionResponse
@@ -91,9 +97,12 @@ class SubmissionClient
     }
 
     /**
-    * Stops execution session.
+     * Stops execution session.
+     *
      * @param string $sessionId
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      */
     public function stopExecutionSession(string $sessionId, ?array $options = null): void
     {
@@ -116,7 +125,9 @@ class SubmissionClient
     }
 
     /**
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return GetExecutionSessionStateResponse
      */
     public function getExecutionSessionsState(?array $options = null): GetExecutionSessionStateResponse

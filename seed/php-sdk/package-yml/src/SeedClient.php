@@ -21,7 +21,11 @@ class SeedClient
     public ServiceClient $service;
 
     /**
-     * @var ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
+     * @var ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     * } $options
      */
     private ?array $options;
 
@@ -31,7 +35,11 @@ class SeedClient
     private RawClient $client;
 
     /**
-     * @param ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     * } $options
      */
     public function __construct(
         ?array $options = null,
@@ -58,7 +66,9 @@ class SeedClient
     /**
      * @param string $id
      * @param EchoRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return string
      */
     public function echo_(string $id, EchoRequest $request, ?array $options = null): string

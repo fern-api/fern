@@ -6,7 +6,7 @@ use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 
 /**
-* An OAuth token response.
+ * An OAuth token response.
  */
 class TokenResponse extends SerializableType
 {

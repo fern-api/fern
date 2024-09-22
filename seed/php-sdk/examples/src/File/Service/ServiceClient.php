@@ -28,10 +28,13 @@ class ServiceClient
     }
 
     /**
-    * This endpoint returns a file by its name.
+     * This endpoint returns a file by its name.
+     *
      * @param string $filename This is a filename
      * @param GetFileRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return File
      */
     public function getFile(string $filename, GetFileRequest $request, ?array $options = null): File

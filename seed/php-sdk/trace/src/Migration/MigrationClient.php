@@ -31,7 +31,9 @@ class MigrationClient
 
     /**
      * @param GetAttemptedMigrationsRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return array<Migration>
      */
     public function getAttemptedMigrations(GetAttemptedMigrationsRequest $request, ?array $options = null): array

@@ -31,7 +31,9 @@ class SyspropClient
     /**
      * @param Language $language
      * @param int $numWarmInstances
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      */
     public function setNumWarmInstances(Language $language, int $numWarmInstances, ?array $options = null): void
     {
@@ -54,7 +56,9 @@ class SyspropClient
     }
 
     /**
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return array<Language, int>
      */
     public function getNumWarmInstances(?array $options = null): array

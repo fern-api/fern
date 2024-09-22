@@ -30,9 +30,12 @@ class ParamsClient
     }
 
     /**
-    * GET with path param
+     * GET with path param
+     *
      * @param string $param
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return string
      */
     public function getWithPath(string $param, ?array $options = null): string
@@ -59,9 +62,12 @@ class ParamsClient
     }
 
     /**
-    * GET with query param
+     * GET with query param
+     *
      * @param GetWithQuery $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      */
     public function getWithQuery(GetWithQuery $request, ?array $options = null): void
     {
@@ -88,9 +94,12 @@ class ParamsClient
     }
 
     /**
-    * GET with multiple of same query param
+     * GET with multiple of same query param
+     *
      * @param GetWithMultipleQuery $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      */
     public function getWithAllowMultipleQuery(GetWithMultipleQuery $request, ?array $options = null): void
     {
@@ -117,10 +126,13 @@ class ParamsClient
     }
 
     /**
-    * GET with path and query params
+     * GET with path and query params
+     *
      * @param string $param
      * @param GetWithPathAndQuery $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      */
     public function getWithPathAndQuery(string $param, GetWithPathAndQuery $request, ?array $options = null): void
     {
@@ -146,10 +158,13 @@ class ParamsClient
     }
 
     /**
-    * PUT to update with path param
+     * PUT to update with path param
+     *
      * @param string $param
      * @param string $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return string
      */
     public function modifyWithPath(string $param, string $request, ?array $options = null): string
