@@ -6,7 +6,7 @@ import {
 } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { FernWorkspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import chalk from "chalk";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator";
 import { getWorkspaceTempDir } from "./runLocalGenerationForWorkspace";

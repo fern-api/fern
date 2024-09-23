@@ -1,7 +1,8 @@
+import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { LazyFernWorkspace } from "@fern-api/lazy-fern-workspace";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
-import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 import stripAnsi from "strip-ansi";
 import { Rule } from "../Rule";
 import { runRulesOnWorkspace } from "../validateFernWorkspace";
@@ -21,22 +22,21 @@ export async function getViolationsForRule({
     cliVersion
 }: getViolationsForRule.Args): Promise<ValidationViolation[]> {
     const context = createMockTaskContext();
-    const parseResult = await loadAPIWorkspace({
-        absolutePathToWorkspace,
+
+    const lazyWorkspace = new LazyFernWorkspace({
+        absoluteFilePath: absolutePathToWorkspace,
+        generatorsConfiguration: await generatorsYml.loadGeneratorsConfiguration({
+            absolutePathToWorkspace,
+            context
+        }),
         context,
         cliVersion: cliVersion ?? "0.0.0",
         workspaceName: undefined
     });
-    if (!parseResult.didSucceed) {
-        throw new Error("Failed to parse workspace: " + JSON.stringify(parseResult));
-    }
-
-    if (parseResult.workspace.type === "oss") {
-        throw new Error("Expected fern workspace, but received openapi");
-    }
+    const fernWorkspace = await lazyWorkspace.toFernWorkspace({ context });
 
     const violations = await runRulesOnWorkspace({
-        workspace: await parseResult.workspace.toFernWorkspace({ context }),
+        workspace: fernWorkspace,
         logger: CONSOLE_LOGGER,
         rules: [rule]
     });

@@ -1,4 +1,4 @@
-import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/workspace-loader";
+import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/api-workspace-commons";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { visitDefinitionFileYamlAst } from "../../ast";
 import { noop } from "lodash-es";

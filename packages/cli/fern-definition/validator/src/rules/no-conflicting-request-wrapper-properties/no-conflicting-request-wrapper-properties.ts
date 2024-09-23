@@ -11,7 +11,7 @@ import {
     ObjectPropertyWithPath,
     TypeResolverImpl
 } from "@fern-api/ir-generator";
-import { FernWorkspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { DefinitionFileSchema, isInlineRequestBody, RawSchemas } from "@fern-api/fern-definition-schema";
 import chalk from "chalk";
 import { Rule, RuleViolation } from "../../Rule";

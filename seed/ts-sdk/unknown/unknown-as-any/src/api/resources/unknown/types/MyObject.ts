@@ -4,7 +4,12 @@
 
 /**
  * @example
- *     {}
+ *     {
+ *         unknown: {
+ *             "boolVal": true,
+ *             "strVal": "string"
+ *         }
+ *     }
  */
 export interface MyObject {
     unknown?: any;

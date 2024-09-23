@@ -8,14 +8,7 @@ from .utilities import validate_response
 
 async def test_create_user(client: SeedApi, async_client: AsyncSeedApi) -> None:
     expected_response: typing.Any = {
-        "user": {
-            "id": "string",
-            "username": "string",
-            "email": "string",
-            "age": 1,
-            "weight": 1.1,
-            "metadata": {"string": {"key": "value"}},
-        }
+        "user": {"id": "string", "username": "string", "email": "string", "age": 1, "weight": 1.1, "metadata": {}}
     }
     expected_types: typing.Any = {
         "user": {
@@ -41,7 +34,7 @@ async def test_get_user(client: SeedApi, async_client: AsyncSeedApi) -> None:
         "email": "string",
         "age": 1,
         "weight": 1.1,
-        "metadata": {"string": {"key": "value"}},
+        "metadata": {},
     }
     expected_types: typing.Any = {
         "id": None,

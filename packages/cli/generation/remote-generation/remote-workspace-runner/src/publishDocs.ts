@@ -113,13 +113,13 @@ export async function publishDocs({
                     docsRegistrationId = startDocsRegisterResponse.body.docsRegistrationId;
                     await uploadFiles(
                         startDocsRegisterResponse.body.uploadUrls,
-                        docsWorkspace.absoluteFilepath,
+                        docsWorkspace.absoluteFilePath,
                         context,
                         UPLOAD_FILE_BATCH_SIZE
                     );
                     return convertToFilePathPairs(
                         startDocsRegisterResponse.body.uploadUrls,
-                        docsWorkspace.absoluteFilepath
+                        docsWorkspace.absoluteFilePath
                     );
                 } else {
                     return await startDocsRegisterFailed(startDocsRegisterResponse.error, context);
@@ -138,13 +138,13 @@ export async function publishDocs({
                     docsRegistrationId = startDocsRegisterResponse.body.docsRegistrationId;
                     await uploadFiles(
                         startDocsRegisterResponse.body.uploadUrls,
-                        docsWorkspace.absoluteFilepath,
+                        docsWorkspace.absoluteFilePath,
                         context,
                         UPLOAD_FILE_BATCH_SIZE
                     );
                     return convertToFilePathPairs(
                         startDocsRegisterResponse.body.uploadUrls,
-                        docsWorkspace.absoluteFilepath
+                        docsWorkspace.absoluteFilePath
                     );
                 } else {
                     return startDocsRegisterFailed(startDocsRegisterResponse.error, context);

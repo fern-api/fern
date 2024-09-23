@@ -1,7 +1,7 @@
 import { keys } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { getResolvedPathOfImportedFile } from "@fern-api/ir-generator";
-import { FernDefinition } from "@fern-api/workspace-loader";
+import { FernDefinition } from "@fern-api/api-workspace-commons";
 import { Rule } from "../../Rule";
 
 type CircularImports = Record<RelativeFilePath, CircularImport[]>;

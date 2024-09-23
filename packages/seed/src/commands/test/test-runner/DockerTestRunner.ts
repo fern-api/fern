@@ -3,7 +3,7 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { runLocalGenerationForSeed } from "@fern-api/local-workspace-runner";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
 import { TaskContext } from "@fern-api/task-context";
-import { FernWorkspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import path from "path";
 import { runScript } from "../../../runScript";
 import { ALL_AUDIENCES, DUMMY_ORGANIZATION } from "../../../utils/constants";

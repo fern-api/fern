@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
-import { loadAPIWorkspace } from "@fern-api/workspace-loader";
+import { LazyFernWorkspace } from "@fern-api/lazy-fern-workspace";
 import { validateFernWorkspace } from "../../validateFernWorkspace";
 import { ValidationViolation } from "../../ValidationViolation";
 
@@ -22,19 +22,17 @@ describe("validateFernWorkspace", () => {
         const context = createMockTaskContext();
         // eslint-disable-next-line jest/valid-title
         it(fixture.name, async () => {
-            const parseResult = await loadAPIWorkspace({
-                absolutePathToWorkspace: join(
+            const lazyWorkspace = new LazyFernWorkspace({
+                absoluteFilePath: join(
                     AbsoluteFilePath.of(__dirname),
                     RelativeFilePath.of(`fixtures/${fixture.name}/fern/api`)
                 ),
+                generatorsConfiguration: undefined,
                 context,
                 cliVersion: "0.0.0",
                 workspaceName: undefined
             });
-            if (!parseResult.didSucceed) {
-                throw new Error("Failed to parse workspace: " + JSON.stringify(parseResult));
-            }
-            const fernWorkspace = await parseResult.workspace.toFernWorkspace({ context });
+            const fernWorkspace = await lazyWorkspace.toFernWorkspace({ context });
 
             const violations = await validateFernWorkspace(fernWorkspace, CONSOLE_LOGGER);
             expect(violations).toEqual(fixture.expectedViolations);

@@ -2,7 +2,7 @@ import { FernToken } from "@fern-api/auth";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { APIWorkspace, getOSSWorkspaceSettingsFromGeneratorInvocation } from "@fern-api/workspace-loader";
+import { AbstractAPIWorkspace, getOSSWorkspaceSettingsFromGeneratorInvocation } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { downloadSnippetsForTask } from "./downloadSnippetsForTask";
 import { runRemoteGenerationForGenerator } from "./runRemoteGenerationForGenerator";
@@ -26,7 +26,7 @@ export async function runRemoteGenerationForAPIWorkspace({
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
-    workspace: APIWorkspace;
+    workspace: AbstractAPIWorkspace<unknown>;
     context: TaskContext;
     generatorGroup: generatorsYml.GeneratorGroup;
     version: string | undefined;

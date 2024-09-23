@@ -421,7 +421,6 @@ export function buildReferenceTypeReference({
         return type;
     }
     return {
-        ...(displayName != null ? { "display-name": displayName } : {}),
         type: resolvedSchema.type === "nullable" ? `optional<${typeWithPrefix}>` : typeWithPrefix,
         ...(schema.description != null ? { docs: schema.description } : {}),
         ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {})
@@ -453,7 +452,6 @@ export function buildArrayTypeReference({
         return type;
     }
     return {
-        ...(schema.title != null ? { "display-name": schema.title } : {}),
         ...(schema.description != null ? { docs: schema.description } : {}),
         ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {}),
         type
@@ -576,7 +574,6 @@ export function buildLiteralTypeReference(schema: LiteralSchema): RawSchemas.Typ
         return value;
     }
     return {
-        ...(schema.title != null ? { "display-name": schema.title } : {}),
         type: value,
         ...(schema.description != null ? { docs: schema.description } : {}),
         ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {})
@@ -649,7 +646,6 @@ export function buildObjectTypeReference({
         return prefixedType;
     }
     return {
-        ...(schema.title != null ? { "display-name": schema.title } : {}),
         type: prefixedType,
         ...(schema.description != null ? { docs: schema.description } : {}),
         ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {})

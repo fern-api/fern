@@ -4,7 +4,7 @@ import { ApiDefinitionSource, SourceConfig } from "@fern-api/ir-sdk";
 import { getGeneratorConfig, getIntermediateRepresentation } from "@fern-api/local-workspace-runner";
 import { LocalTaskHandler } from "@fern-api/local-workspace-runner/src/LocalTaskHandler";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
-import { FernWorkspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import * as GeneratorExecSerialization from "@fern-fern/generator-exec-sdk/serialization";
 import { writeFile } from "fs/promises";
 import path from "path";

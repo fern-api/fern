@@ -1,5 +1,5 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/workspace-loader";
+import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/api-workspace-commons";
 import { visitDefinitionFileYamlAst } from "../../ast";
 import path from "path";
 import { Rule, RuleViolation } from "../../Rule";
