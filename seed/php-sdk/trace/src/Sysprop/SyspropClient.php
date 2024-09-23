@@ -4,11 +4,12 @@ namespace Seed\Sysprop;
 
 use Seed\Core\RawClient;
 use Seed\Commons\Types\Language;
+use Seed\Exceptions\SeedException;
+use Seed\Exceptions\SeedApiException;
 use Seed\Core\JsonApiRequest;
 use Seed\Environments;
 use Seed\Core\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
-use Exception;
 use Seed\Core\JsonDecoder;
 use JsonException;
 
@@ -31,7 +32,11 @@ class SyspropClient
     /**
      * @param Language $language
      * @param int $numWarmInstances
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function setNumWarmInstances(Language $language, int $numWarmInstances, ?array $options = null): void
     {
@@ -48,14 +53,22 @@ class SyspropClient
                 return;
             }
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
 
     /**
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return array<Language, int>
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function getNumWarmInstances(?array $options = null): array
     {
@@ -73,11 +86,14 @@ class SyspropClient
                 return JsonDecoder::decodeArray($json, [Language::class => 'integer']); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
-
 }

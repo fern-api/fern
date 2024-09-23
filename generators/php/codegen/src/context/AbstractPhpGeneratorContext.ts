@@ -116,6 +116,13 @@ export abstract class AbstractPhpGeneratorContext<
         return literal.type === "string" ? `'${literal.string}'` : literal.boolean ? "'true'" : "'false'";
     }
 
+    public getThrowableClassReference(): php.ClassReference {
+        return php.classReference({
+            namespace: GLOBAL_NAMESPACE,
+            name: "Throwable"
+        });
+    }
+
     public getDateTypeAttributeClassReference(): php.ClassReference {
         return this.getCoreClassReference("DateType");
     }
@@ -145,6 +152,12 @@ export abstract class AbstractPhpGeneratorContext<
             name,
             namespace: this.getCoreNamespace()
         });
+    }
+
+    public isMixedArray(type: php.Type): boolean {
+        return (
+            type.internalType.type === "array" && type.internalType.value.underlyingType().internalType.type === "mixed"
+        );
     }
 
     public isOptional(typeReference: TypeReference): boolean {

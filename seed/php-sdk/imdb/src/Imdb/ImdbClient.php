@@ -4,11 +4,12 @@ namespace Seed\Imdb;
 
 use Seed\Core\RawClient;
 use Seed\Imdb\Types\CreateMovieRequest;
+use Seed\Exceptions\SeedException;
+use Seed\Exceptions\SeedApiException;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use Seed\Core\JsonDecoder;
 use JsonException;
-use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Imdb\Types\Movie;
 
@@ -29,10 +30,15 @@ class ImdbClient
     }
 
     /**
-    * Add a movie to the database
+     * Add a movie to the database
+     *
      * @param CreateMovieRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return string
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function createMovie(CreateMovieRequest $request, ?array $options = null): string
     {
@@ -51,17 +57,25 @@ class ImdbClient
                 return JsonDecoder::decodeString($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
 
     /**
      * @param string $movieId
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return Movie
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function getMovie(string $movieId, ?array $options = null): Movie
     {
@@ -79,11 +93,14 @@ class ImdbClient
                 return Movie::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
-
 }

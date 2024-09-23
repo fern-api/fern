@@ -4,10 +4,11 @@ namespace Seed\FolderD\Service;
 
 use Seed\Core\RawClient;
 use Seed\FolderD\Service\Types\Response;
+use Seed\Exceptions\SeedException;
+use Seed\Exceptions\SeedApiException;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use JsonException;
-use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class ServiceClient
@@ -27,8 +28,12 @@ class ServiceClient
     }
 
     /**
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return Response
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function getDirectThread(?array $options = null): Response
     {
@@ -46,11 +51,14 @@ class ServiceClient
                 return Response::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
-
 }

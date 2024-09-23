@@ -78,6 +78,9 @@ export class Class extends AstNode {
         writer.indent();
 
         this.writeFields({ writer, fields: orderByAccess(this.fields) });
+        if (this.constructor != null || this.methods.length > 0) {
+            writer.newLine();
+        }
 
         if (this.constructor_ != null) {
             this.writeConstructor({ writer, constructor: this.constructor_ });
@@ -137,18 +140,22 @@ export class Class extends AstNode {
     }
 
     private writeFields({ writer, fields }: { writer: Writer; fields: Field[] }): void {
-        for (const field of fields) {
+        fields.forEach((field, index) => {
+            if (index > 0) {
+                writer.newLine();
+            }
             field.write(writer);
             writer.writeNewLineIfLastLineNot();
-            writer.newLine();
-        }
+        });
     }
 
     private writeMethods({ writer, methods }: { writer: Writer; methods: Method[] }): void {
-        for (const method of methods) {
+        methods.forEach((method, index) => {
+            if (index > 0) {
+                writer.newLine();
+            }
             method.write(writer);
             writer.writeNewLineIfLastLineNot();
-            writer.newLine();
-        }
+        });
     }
 }

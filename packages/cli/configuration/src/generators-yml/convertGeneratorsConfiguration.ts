@@ -789,26 +789,29 @@ function getGithubPublishInfo(
 }
 
 function getLanguageFromGeneratorName(generatorName: string) {
-    if (generatorName.includes("typescript")) {
-        return GenerationLanguage.TYPESCRIPT;
-    }
-    if (generatorName.includes("java") || generatorName.includes("spring")) {
-        return GenerationLanguage.JAVA;
-    }
-    if (generatorName.includes("python") || generatorName.includes("fastapi") || generatorName.includes("pydantic")) {
-        return GenerationLanguage.PYTHON;
+    if (generatorName.includes("csharp")) {
+        return GenerationLanguage.CSHARP;
     }
     if (generatorName.includes("go")) {
         return GenerationLanguage.GO;
     }
+    if (generatorName.includes("java") || generatorName.includes("spring")) {
+        return GenerationLanguage.JAVA;
+    }
+    if (generatorName.includes("php")) {
+        return GenerationLanguage.PHP;
+    }
+    if (generatorName.includes("python") || generatorName.includes("fastapi") || generatorName.includes("pydantic")) {
+        return GenerationLanguage.PYTHON;
+    }
     if (generatorName.includes("ruby")) {
         return GenerationLanguage.RUBY;
     }
-    if (generatorName.includes("csharp")) {
-        return GenerationLanguage.CSHARP;
-    }
     if (generatorName.includes("swift")) {
         return GenerationLanguage.SWIFT;
+    }
+    if (generatorName.includes("typescript")) {
+        return GenerationLanguage.TYPESCRIPT;
     }
     return undefined;
 }

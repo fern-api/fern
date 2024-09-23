@@ -5,10 +5,11 @@ namespace Seed\Dataservice;
 use Seed\Core\RawClient;
 use Seed\Dataservice\Requests\UploadRequest;
 use Seed\Types\UploadResponse;
+use Seed\Exceptions\SeedException;
+use Seed\Exceptions\SeedApiException;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use JsonException;
-use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Dataservice\Requests\DeleteRequest;
 use Seed\Types\DeleteResponse;
@@ -41,8 +42,12 @@ class DataserviceClient
 
     /**
      * @param UploadRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return UploadResponse
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function upload(UploadRequest $request, ?array $options = null): UploadResponse
     {
@@ -61,17 +66,25 @@ class DataserviceClient
                 return UploadResponse::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
 
     /**
      * @param DeleteRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return DeleteResponse
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function delete(DeleteRequest $request, ?array $options = null): DeleteResponse
     {
@@ -90,17 +103,25 @@ class DataserviceClient
                 return DeleteResponse::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
 
     /**
      * @param DescribeRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return DescribeResponse
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function describe(DescribeRequest $request, ?array $options = null): DescribeResponse
     {
@@ -119,17 +140,25 @@ class DataserviceClient
                 return DescribeResponse::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
 
     /**
      * @param FetchRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return FetchResponse
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function fetch(FetchRequest $request, ?array $options = null): FetchResponse
     {
@@ -155,17 +184,25 @@ class DataserviceClient
                 return FetchResponse::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
 
     /**
      * @param ListRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return ListResponse
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function list(ListRequest $request, ?array $options = null): ListResponse
     {
@@ -197,17 +234,25 @@ class DataserviceClient
                 return ListResponse::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
 
     /**
      * @param QueryRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return QueryResponse
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function query(QueryRequest $request, ?array $options = null): QueryResponse
     {
@@ -226,17 +271,25 @@ class DataserviceClient
                 return QueryResponse::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
 
     /**
      * @param UpdateRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return UpdateResponse
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function update(UpdateRequest $request, ?array $options = null): UpdateResponse
     {
@@ -255,11 +308,14 @@ class DataserviceClient
                 return UpdateResponse::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
-
 }

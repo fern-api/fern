@@ -4,12 +4,13 @@ namespace Seed\Problem;
 
 use Seed\Core\RawClient;
 use Seed\Problem\Types\CreateProblemRequest;
+use Seed\Exceptions\SeedException;
+use Seed\Exceptions\SeedApiException;
 use Seed\Core\JsonApiRequest;
 use Seed\Environments;
 use Seed\Core\HttpMethod;
 use Seed\Core\JsonDecoder;
 use JsonException;
-use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Problem\Types\UpdateProblemResponse;
 use Seed\Problem\Requests\GetDefaultStarterFilesRequest;
@@ -32,10 +33,15 @@ class ProblemClient
     }
 
     /**
-    * Creates a problem
+     * Creates a problem
+     *
      * @param CreateProblemRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return mixed
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function createProblem(CreateProblemRequest $request, ?array $options = null): mixed
     {
@@ -54,19 +60,28 @@ class ProblemClient
                 return JsonDecoder::decodeMixed($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
 
     /**
-    * Updates a problem
+     * Updates a problem
+     *
      * @param string $problemId
      * @param CreateProblemRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return UpdateProblemResponse
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function updateProblem(string $problemId, CreateProblemRequest $request, ?array $options = null): UpdateProblemResponse
     {
@@ -85,17 +100,26 @@ class ProblemClient
                 return UpdateProblemResponse::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
 
     /**
-    * Soft deletes a problem
+     * Soft deletes a problem
+     *
      * @param string $problemId
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function deleteProblem(string $problemId, ?array $options = null): void
     {
@@ -112,16 +136,25 @@ class ProblemClient
                 return;
             }
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
 
     /**
-    * Returns default starter files for problem
+     * Returns default starter files for problem
+     *
      * @param GetDefaultStarterFilesRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return GetDefaultStarterFilesResponse
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function getDefaultStarterFiles(GetDefaultStarterFilesRequest $request, ?array $options = null): GetDefaultStarterFilesResponse
     {
@@ -140,11 +173,14 @@ class ProblemClient
                 return GetDefaultStarterFilesResponse::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
-
 }

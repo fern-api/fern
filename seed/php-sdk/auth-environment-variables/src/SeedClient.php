@@ -15,7 +15,11 @@ class SeedClient
     public ServiceClient $service;
 
     /**
-     * @var ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
+     * @var ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     * } $options
      */
     private ?array $options;
 
@@ -27,7 +31,11 @@ class SeedClient
     /**
      * @param string $xAnotherHeader
      * @param ?string $apiKey The apiKey to use for authentication.
-     * @param ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     * } $options
      */
     public function __construct(
         string $xAnotherHeader,
@@ -67,5 +75,4 @@ class SeedClient
         $value = getenv($env);
         return $value ? (string) $value : throw new Exception($message);
     }
-
 }

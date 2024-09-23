@@ -3,10 +3,11 @@
 namespace Seed\Service;
 
 use Seed\Core\RawClient;
+use Seed\Exceptions\SeedException;
+use Seed\Exceptions\SeedApiException;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
-use Exception;
 
 class ServiceClient
 {
@@ -29,7 +30,11 @@ class ServiceClient
      * @param string $serviceParam
      * @param string $resourceParam
      * @param int $endpointParam
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function post(string $pathParam, string $serviceParam, string $resourceParam, int $endpointParam, ?array $options = null): void
     {
@@ -46,9 +51,12 @@ class ServiceClient
                 return;
             }
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
-
 }

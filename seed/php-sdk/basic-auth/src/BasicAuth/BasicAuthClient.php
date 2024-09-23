@@ -3,11 +3,12 @@
 namespace Seed\BasicAuth;
 
 use Seed\Core\RawClient;
+use Seed\Exceptions\SeedException;
+use Seed\Exceptions\SeedApiException;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use Seed\Core\JsonDecoder;
 use JsonException;
-use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class BasicAuthClient
@@ -27,9 +28,14 @@ class BasicAuthClient
     }
 
     /**
-    * GET request with basic auth scheme
-     * @param ?array{baseUrl?: string} $options
+     * GET request with basic auth scheme
+     *
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return bool
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function getWithBasicAuth(?array $options = null): bool
     {
@@ -47,18 +53,27 @@ class BasicAuthClient
                 return JsonDecoder::decodeBool($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
 
     /**
-    * POST request with basic auth scheme
+     * POST request with basic auth scheme
+     *
      * @param mixed $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return bool
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function postWithBasicAuth(mixed $request, ?array $options = null): bool
     {
@@ -77,11 +92,14 @@ class BasicAuthClient
                 return JsonDecoder::decodeBool($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
-
 }

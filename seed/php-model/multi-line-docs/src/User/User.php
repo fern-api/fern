@@ -6,10 +6,10 @@ use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 
 /**
-* A user object. This type is used throughout the following APIs:
-*
-* - createUser
-* - getUser
+ * A user object. This type is used throughout the following APIs:
+ *
+ * - createUser
+ * - getUser
  */
 class User extends SerializableType
 {

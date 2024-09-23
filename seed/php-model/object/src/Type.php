@@ -10,7 +10,7 @@ use Seed\Core\ArrayType;
 use Seed\Core\Union;
 
 /**
-* Exercises all of the built-in types.
+ * Exercises all of the built-in types.
  */
 class Type extends SerializableType
 {

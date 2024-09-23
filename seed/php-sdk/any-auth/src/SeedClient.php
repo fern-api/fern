@@ -21,7 +21,11 @@ class SeedClient
     public UserClient $user;
 
     /**
-     * @var ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
+     * @var ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     * } $options
      */
     private ?array $options;
 
@@ -33,7 +37,11 @@ class SeedClient
     /**
      * @param ?string $token The token to use for authentication.
      * @param ?string $apiKey The apiKey to use for authentication.
-     * @param ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     * } $options
      */
     public function __construct(
         ?string $token = null,
@@ -74,5 +82,4 @@ class SeedClient
         $value = getenv($env);
         return $value ? (string) $value : throw new Exception($message);
     }
-
 }

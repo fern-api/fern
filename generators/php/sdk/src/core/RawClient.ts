@@ -18,7 +18,7 @@ export declare namespace RawClient {
         /** The reference to the query values */
         queryBagReference?: string;
         /** The reference to the request body */
-        bodyReference?: string;
+        bodyReference?: php.CodeBlock;
     }
 }
 
@@ -98,7 +98,7 @@ export class RawClient {
         if (args.bodyReference != null) {
             arguments_.push({
                 name: "body",
-                assignment: php.codeblock(args.bodyReference)
+                assignment: args.bodyReference
             });
         }
         return php.codeblock((writer) => {
