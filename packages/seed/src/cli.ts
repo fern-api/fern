@@ -599,7 +599,7 @@ function addGenerateCommands(cli: Argv) {
                             }),
                     async (argv) => {
                         const taskContextFactory = new TaskContextFactory(argv["log-level"]);
-                        const context = taskContextFactory.create("Register");
+                        const context = taskContextFactory.create("Changelog");
 
                         const token = await askToLogin(context);
                         const fdrClient = createFdrService({ token: token.value });
@@ -640,7 +640,7 @@ function addGenerateCommands(cli: Argv) {
                             throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: argv.generators });
                         }
                         const taskContextFactory = new TaskContextFactory(argv["log-level"]);
-                        const context = taskContextFactory.create("Register");
+                        const context = taskContextFactory.create("Changelog");
 
                         const token = await askToLogin(context);
                         const fdrClient = createFdrService({ token: token.value });
