@@ -4,15 +4,18 @@ import { writeChangelogEntries, writeChangelogsToFile } from "./writeChangelogEn
 import { parseGeneratorReleasesFile } from "../../utils/convertVersionsFileToReleases";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
 import { mkdir, writeFile } from "fs/promises";
+import { FernRegistryClient } from "@fern-fern/generators-sdk";
 
 export async function generateGeneratorChangelog({
     context,
     generator,
-    outputPath
+    outputPath,
+    fdrClient
 }: {
     context: TaskContext;
     generator: GeneratorWorkspace;
     outputPath: string | undefined;
+    fdrClient: FernRegistryClient;
 }): Promise<void> {
     const resolvedOutputPath =
         outputPath == null
@@ -25,7 +28,7 @@ export async function generateGeneratorChangelog({
     const generatorConfig = generator.workspaceConfig;
     if (generatorConfig.changelogLocation == null) {
         context.logger.error(
-            "No changelog location specified, unable to determine latest version. To register CLI releases, specify a changelog location at: `changelogLocation`."
+            "No changelog location specified, unable to generate changelog. To register generator releases, specify a changelog location at: `changelogLocation`."
         );
         return;
     }
@@ -43,24 +46,37 @@ export async function generateGeneratorChangelog({
 
     // Here we'll collect the changelogs so they're keyed by date, the map is essentially Release Date -> Version -> Changelog string
     const writtenVersions = new Map<Date, Map<string, string>>();
-    // TODO: we might need to make an API call instead, to be able to have the date of the release filled in
+    const generatorId = generator.workspaceName;
     await parseGeneratorReleasesFile({
-        generatorId: generator.workspaceName,
+        generatorId,
         changelogPath: absolutePathToChangelogLocation,
         context,
         action: async (release) => {
-            if (release.createdAt == null) {
+            let createdAt = release.createdAt;
+            if (release.isYanked != null) {
                 context.logger.error(
-                    `Release ${release.version} does not have a createdAt value, skipping this release.`
+                    `Release ${release.version} for generator ${generatorId} has been yanked, skipping this release.`
                 );
                 return;
             }
-            if (release.isYanked != null) {
-                context.logger.error(`Release ${release.version} has been yanked, skipping this release.`);
-                return;
+
+            if (createdAt == null) {
+                const releaseRequest = await fdrClient.generators.versions.getGeneratorRelease(
+                    generatorId,
+                    release.version
+                );
+                if (!releaseRequest.ok || releaseRequest.body.createdAt == null) {
+                    context.logger.error(
+                        `Release ${release.version} for generator ${generatorId} does not have a createdAt value, and could not retrieve one from FDR, defaulting to today...`
+                    );
+                    // This will typically happen if you've added a new release to the versions file and haven't yet registered it with FDR yet
+                    createdAt = new Date().toISOString();
+                } else {
+                    createdAt = releaseRequest.body.createdAt;
+                }
             }
 
-            const releaseDate = new Date(release.createdAt);
+            const releaseDate = new Date(createdAt);
             if (!writtenVersions.has(releaseDate)) {
                 writtenVersions.set(releaseDate, new Map());
             }

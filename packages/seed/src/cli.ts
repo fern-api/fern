@@ -601,9 +601,13 @@ function addGenerateCommands(cli: Argv) {
                         const taskContextFactory = new TaskContextFactory(argv["log-level"]);
                         const context = taskContextFactory.create("Register");
 
+                        const token = await askToLogin(context);
+                        const fdrClient = createFdrService({ token: token.value });
+
                         await generateCliChangelog({
                             context,
-                            outputPath: argv.output
+                            outputPath: argv.output,
+                            fdrClient
                         });
                     }
                 )
@@ -638,6 +642,9 @@ function addGenerateCommands(cli: Argv) {
                         const taskContextFactory = new TaskContextFactory(argv["log-level"]);
                         const context = taskContextFactory.create("Register");
 
+                        const token = await askToLogin(context);
+                        const fdrClient = createFdrService({ token: token.value });
+
                         for (const generator of generators) {
                             // If you've specified a list of generators, and the current generator is not in that list, skip it
                             if (argv.generators != null && !argv.generators.includes(generator.workspaceName)) {
@@ -655,7 +662,8 @@ function addGenerateCommands(cli: Argv) {
                             await generateGeneratorChangelog({
                                 context,
                                 generator,
-                                outputPath
+                                outputPath,
+                                fdrClient
                             });
                         }
                     }

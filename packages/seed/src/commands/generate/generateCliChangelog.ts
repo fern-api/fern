@@ -4,13 +4,16 @@ import { writeChangelogEntries, writeChangelogsToFile } from "./writeChangelogEn
 import { parseCliReleasesFile } from "../../utils/convertVersionsFileToReleases";
 import { loadCliWorkspace } from "../../loadGeneratorWorkspaces";
 import { mkdir } from "fs/promises";
+import { FernRegistryClient } from "@fern-fern/generators-sdk";
 
 export async function generateCliChangelog({
     context,
-    outputPath
+    outputPath,
+    fdrClient
 }: {
     context: TaskContext;
     outputPath: string | undefined;
+    fdrClient: FernRegistryClient;
 }): Promise<void> {
     const resolvedOutputPath =
         outputPath == null
@@ -27,7 +30,7 @@ export async function generateCliChangelog({
     }
     if (cliWorkspace.workspaceConfig.changelogLocation == null) {
         context.logger.error(
-            "No changelog location specified, unable to determine latest version. To register CLI releases, specify a changelog location at: `changelogLocation`."
+            "No changelog location specified, unable to generate changelog. To register CLI releases, specify a changelog location at: `changelogLocation`."
         );
         return;
     }
@@ -50,18 +53,25 @@ export async function generateCliChangelog({
         changelogPath: absolutePathToChangelogLocation,
         context,
         action: async (release) => {
-            if (release.createdAt == null) {
-                context.logger.error(
-                    `Release ${release.version} does not have a createdAt value, skipping this release.`
-                );
-                return;
+            let createdAt = release.createdAt;
+            if (createdAt == null) {
+                const releaseRequest = await fdrClient.generators.cli.getCliRelease(release.version);
+                if (!releaseRequest.ok || releaseRequest.body.createdAt == null) {
+                    context.logger.error(
+                        `Release ${release.version} does not have a createdAt value, and could not retrieve one from FDR, skipping this release.`
+                    );
+                    // This will typically happen if you've added a new release to the versions file and haven't yet registered it with FDR yet
+                    createdAt = new Date().toISOString();
+                } else {
+                    createdAt = releaseRequest.body.createdAt;
+                }
             }
             if (release.isYanked != null) {
                 context.logger.error(`Release ${release.version} has been yanked, skipping this release.`);
                 return;
             }
 
-            const releaseDate = new Date(release.createdAt);
+            const releaseDate = new Date(createdAt);
             if (!writtenVersions.has(releaseDate)) {
                 writtenVersions.set(releaseDate, new Map());
             }
