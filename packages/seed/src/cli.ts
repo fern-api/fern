@@ -41,6 +41,7 @@ export async function tryRunCli(): Promise<void> {
     addPublishCommands(cli);
     addValidateCommands(cli);
     addLatestCommands(cli);
+    addGenerateCommands(cli);
 
     await cli.parse();
 }
@@ -571,6 +572,89 @@ function addValidateCommands(cli: Argv) {
                     }
                 }
             );
+    });
+}
+
+function addGenerateCommands(cli: Argv) {
+    cli.command("generate", "generate artifacts based on your seed declarations", (yargs) => {
+        yargs.command("changelog", "generate a changelog in the Fern Docs format", (tlYargs) => {
+            tlYargs
+                .command(
+                    "cli",
+                    "Generate a changelog for CLI releases",
+                    (addtlYargs) =>
+                        addtlYargs
+                            .option("log-level", {
+                                default: LogLevel.Info,
+                                choices: LOG_LEVELS
+                            })
+                            .option("output", {
+                                alias: "o",
+                                description: "Path to write the changelog to, if not provided, will write to cwd",
+                                string: true,
+                                demandOption: false
+                            }),
+                    async (argv) => {
+                        const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+                        const context = taskContextFactory.create("Register");
+                        const token = await askToLogin(context);
+
+                        const fdrClient = createFdrService({ token: token.value });
+
+                        await registerCliRelease({
+                            fdrClient,
+                            context
+                        });
+                    }
+                )
+                .command(
+                    "generator",
+                    "Generate a changelog for generator releases.",
+                    (yargs) =>
+                        yargs
+                            // This would ideally be positional, but you can't have positional arguments that are arrays with yargs
+                            .option("generators", {
+                                array: true,
+                                type: "string",
+                                demandOption: false,
+                                description: "Generator(s) to register"
+                            })
+                            .option("output", {
+                                alias: "o",
+                                description: "Path to write the changelog to, if not provided, will write to cwd",
+                                string: true,
+                                demandOption: false
+                            })
+                            .option("log-level", {
+                                default: LogLevel.Info,
+                                choices: LOG_LEVELS
+                            }),
+                    async (argv) => {
+                        const generators = await loadGeneratorWorkspaces();
+                        if (argv.generators != null) {
+                            throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: argv.generators });
+                        }
+                        const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+                        const context = taskContextFactory.create("Register");
+                        const token = await askToLogin(context);
+
+                        const fdrClient = createFdrService({ token: token.value });
+
+                        for (const generator of generators) {
+                            // If you've specified a list of generators, and the current generator is not in that list, skip it
+                            if (argv.generators != null && !argv.generators.includes(generator.workspaceName)) {
+                                continue;
+                            }
+                            // Register the generator and it's versions
+                            await registerGenerator({
+                                generator,
+                                fdrClient,
+                                context
+                            });
+                        }
+                    }
+                );
+        });
     });
 }
 

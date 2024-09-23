@@ -148,7 +148,11 @@ export async function upgradeGenerator({
                     return;
                 }
 
-                context.logger.info(`Upgrading generators in workspace: ${workspace.workspaceName}`);
+                if (workspace.workspaceName == null) {
+                    context.logger.info(`Upgrading generators.`);
+                } else {
+                    context.logger.info(`Upgrading generators in workspace: ${workspace.workspaceName}.`);
+                }
 
                 const updatedConfiguration = await loadAndUpdateGenerators({
                     absolutePathToWorkspace: workspace.absoluteFilePath,
