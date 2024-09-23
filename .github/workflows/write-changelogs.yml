@@ -33,6 +33,9 @@ jobs:
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           ref: ${{ github.event.pull_request.head.ref }}
 
+      - name: Install
+        uses: ./.github/actions/install
+
       - name: Write generator changelogs
         run: |
           echo "Generating changelogs for generators"
