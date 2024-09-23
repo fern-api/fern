@@ -406,7 +406,8 @@ export class DocsDefinitionResolver {
                 };
             }
             case "changelog": {
-                const idgen = NodeIdGenerator.init(parentSlug.get());
+                const slug = item.slug ?? kebabCase(item.title);
+                const idgen = NodeIdGenerator.init(parentSlug.get()).append(slug);
                 const node = new ChangelogNodeConverter(
                     this.markdownFilesToFullSlugs,
                     item.changelog,
@@ -420,11 +421,10 @@ export class DocsDefinitionResolver {
                     slug: item.slug
                 });
 
-                const slug = item.slug ?? kebabCase(item.title);
                 return {
                     type: "changelogV3",
                     node: node ?? {
-                        id: idgen.append(slug).append("changelog").get(),
+                        id: idgen.append("changelog").get(),
                         type: "changelog",
                         title: item.title,
                         slug: parentSlug.append(slug).get(),
