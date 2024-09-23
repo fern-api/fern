@@ -419,13 +419,15 @@ export class DocsDefinitionResolver {
                     hidden: item.hidden,
                     slug: item.slug
                 });
+
+                const slug = item.slug ?? kebabCase(item.title);
                 return {
                     type: "changelogV3",
                     node: node ?? {
-                        id: idgen.append("changelog").get(),
+                        id: idgen.append(slug).append("changelog").get(),
                         type: "changelog",
                         title: item.title,
-                        slug: parentSlug.append(item.slug ?? kebabCase(item.title)).get(),
+                        slug: parentSlug.append(slug).get(),
                         children: []
                     }
                 };
