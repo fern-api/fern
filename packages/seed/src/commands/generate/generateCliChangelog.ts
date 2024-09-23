@@ -1,9 +1,26 @@
-import { doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { doesPathExist, join, RelativeFilePath, AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
+import { writeChangelogEntries } from "./writeChangelogEntries";
 import { parseCliReleasesFile } from "../../utils/convertVersionsFileToReleases";
 import { loadCliWorkspace } from "../../loadGeneratorWorkspaces";
+import { mkdir, writeFile } from "fs/promises";
+import { format } from "date-fns";
 
-export async function generateCliChangelog({ context }: { context: TaskContext }): Promise<void> {
+export async function generateCliChangelog({
+    context,
+    outputPath
+}: {
+    context: TaskContext;
+    outputPath: string | undefined;
+}): Promise<void> {
+    const resolvedOutputPath =
+        outputPath == null
+            ? AbsoluteFilePath.of(process.cwd())
+            : outputPath.startsWith("/")
+            ? AbsoluteFilePath.of(outputPath)
+            : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(outputPath));
+    await mkdir(resolvedOutputPath, { recursive: true });
+
     const cliWorkspace = await loadCliWorkspace();
     if (cliWorkspace == null) {
         context.logger.error("Failed to find CLI workspace, no latest version found.");
@@ -50,10 +67,22 @@ export async function generateCliChangelog({ context }: { context: TaskContext }
                 writtenVersions.set(releaseDate, new Map());
             }
 
-            const changelogString = `## ${release.version}\n`;
-            if (release.changelogEntry == null) {
-            }
-            writtenVersions.get(releaseDate)!.set(release.version, release.changelog);
+            writtenVersions
+                .get(releaseDate)!
+                .set(release.version, writeChangelogEntries(release.version, release.changelogEntry));
         }
     });
+
+    // Now we'll write the changelogs to their files
+    for (const [releaseDate, versions] of writtenVersions.entries()) {
+        const changelogPath = join(resolvedOutputPath, RelativeFilePath.of(`${format(releaseDate, "yyyy-MM-dd")}.mdx`));
+
+        let changelogContent = "";
+        for (const [_, changelog] of versions.entries()) {
+            changelogContent += changelog;
+            changelogContent += "\n\n";
+        }
+
+        await writeFile(changelogPath, changelogContent);
+    }
 }

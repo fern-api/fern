@@ -590,7 +590,8 @@ function addGenerateCommands(cli: Argv) {
                             })
                             .option("output", {
                                 alias: "o",
-                                description: "Path to write the changelog to, if not provided, will write to cwd",
+                                description:
+                                    "Path to write the changelog to, if not provided, will write to cwd. Note this should be a directory, not a filename.",
                                 string: true,
                                 demandOption: false
                             }),
@@ -621,7 +622,8 @@ function addGenerateCommands(cli: Argv) {
                             })
                             .option("output", {
                                 alias: "o",
-                                description: "Path to write the changelog to, if not provided, will write to cwd",
+                                description:
+                                    "Path to write the changelog to, if not provided, will write to cwd. Note this should be a directory, not a filename.",
                                 string: true,
                                 demandOption: false
                             })
