@@ -83,9 +83,11 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
     }
 
     private getSubpackages(): Subpackage[] {
-        return this.subpackage.subpackages.map((subpackageId) => {
-            return this.context.getSubpackageOrThrow(subpackageId);
-        });
+        return this.subpackage.subpackages
+            .map((subpackageId) => {
+                return this.context.getSubpackageOrThrow(subpackageId);
+            })
+            .filter((subpackage) => this.context.shouldGenerateSubpackageClient(subpackage));
     }
 
     protected getFilepath(): RelativeFilePath {

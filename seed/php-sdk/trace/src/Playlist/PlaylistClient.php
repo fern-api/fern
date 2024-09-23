@@ -33,10 +33,13 @@ class PlaylistClient
     }
 
     /**
-    * Create a new playlist
+     * Create a new playlist
+     *
      * @param int $serviceParam
      * @param CreatePlaylistRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return Playlist
      */
     public function createPlaylist(int $serviceParam, CreatePlaylistRequest $request, ?array $options = null): Playlist
@@ -70,10 +73,13 @@ class PlaylistClient
     }
 
     /**
-    * Returns the user's playlists
+     * Returns the user's playlists
+     *
      * @param int $serviceParam
      * @param GetPlaylistsRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return array<Playlist>
      */
     public function getPlaylists(int $serviceParam, GetPlaylistsRequest $request, ?array $options = null): array
@@ -111,10 +117,13 @@ class PlaylistClient
     }
 
     /**
-    * Returns a playlist
+     * Returns a playlist
+     *
      * @param int $serviceParam
      * @param string $playlistId
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return Playlist
      */
     public function getPlaylist(int $serviceParam, string $playlistId, ?array $options = null): Playlist
@@ -141,11 +150,14 @@ class PlaylistClient
     }
 
     /**
-    * Updates a playlist
+     * Updates a playlist
+     *
      * @param int $serviceParam
      * @param string $playlistId
      * @param ?UpdatePlaylistRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return ?Playlist
      */
     public function updatePlaylist(int $serviceParam, string $playlistId, ?UpdatePlaylistRequest $request = null, ?array $options = null): ?Playlist
@@ -176,10 +188,13 @@ class PlaylistClient
     }
 
     /**
-    * Deletes a playlist
+     * Deletes a playlist
+     *
      * @param int $serviceParam
      * @param string $playlistId
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      */
     public function deletePlaylist(int $serviceParam, string $playlistId, ?array $options = null): void
     {

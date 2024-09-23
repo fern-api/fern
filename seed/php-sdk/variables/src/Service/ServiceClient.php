@@ -26,7 +26,9 @@ class ServiceClient
 
     /**
      * @param string $endpointParam
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      */
     public function post(string $endpointParam, ?array $options = null): void
     {

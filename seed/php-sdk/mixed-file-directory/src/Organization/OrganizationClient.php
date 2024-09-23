@@ -28,9 +28,12 @@ class OrganizationClient
     }
 
     /**
-    * Create a new organization.
+     * Create a new organization.
+     *
      * @param CreateOrganizationRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return Organization
      */
     public function create(CreateOrganizationRequest $request, ?array $options = null): Organization

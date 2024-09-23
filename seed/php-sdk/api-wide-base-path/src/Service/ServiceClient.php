@@ -29,7 +29,9 @@ class ServiceClient
      * @param string $serviceParam
      * @param string $resourceParam
      * @param int $endpointParam
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      */
     public function post(string $pathParam, string $serviceParam, string $resourceParam, int $endpointParam, ?array $options = null): void
     {

@@ -29,7 +29,9 @@ class AuthClient
 
     /**
      * @param GetTokenRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return TokenResponse
      */
     public function getToken(GetTokenRequest $request, ?array $options = null): TokenResponse

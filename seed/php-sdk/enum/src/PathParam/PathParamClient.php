@@ -30,7 +30,9 @@ class PathParamClient
      * @param ?Operand $maybeOperand
      * @param mixed $operandOrColor
      * @param mixed $maybeOperandOrColor
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      */
     public function send(Operand $operand, ?Operand $maybeOperand = null, mixed $operandOrColor, mixed $maybeOperandOrColor, ?array $options = null): void
     {

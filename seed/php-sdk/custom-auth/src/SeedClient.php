@@ -3,7 +3,6 @@
 namespace Seed;
 
 use Seed\CustomAuth\CustomAuthClient;
-use Seed\Errors\ErrorsClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\RawClient;
 
@@ -15,12 +14,11 @@ class SeedClient
     public CustomAuthClient $customAuth;
 
     /**
-     * @var ErrorsClient $errors
-     */
-    public ErrorsClient $errors;
-
-    /**
-     * @var ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
+     * @var ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     * } $options
      */
     private ?array $options;
 
@@ -31,7 +29,11 @@ class SeedClient
 
     /**
      * @param string $customAuthScheme The customAuthScheme to use for authentication.
-     * @param ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     * } $options
      */
     public function __construct(
         string $customAuthScheme,
@@ -55,6 +57,5 @@ class SeedClient
         );
 
         $this->customAuth = new CustomAuthClient($this->client);
-        $this->errors = new ErrorsClient($this->client);
     }
 }

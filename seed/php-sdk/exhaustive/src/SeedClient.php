@@ -3,12 +3,10 @@
 namespace Seed;
 
 use Seed\Endpoints\EndpointsClient;
-use Seed\GeneralErrors\GeneralErrorsClient;
 use Seed\InlinedRequests\InlinedRequestsClient;
 use Seed\NoAuth\NoAuthClient;
 use Seed\NoReqBody\NoReqBodyClient;
 use Seed\ReqWithHeaders\ReqWithHeadersClient;
-use Seed\Types\TypesClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\RawClient;
 
@@ -18,11 +16,6 @@ class SeedClient
      * @var EndpointsClient $endpoints
      */
     public EndpointsClient $endpoints;
-
-    /**
-     * @var GeneralErrorsClient $generalErrors
-     */
-    public GeneralErrorsClient $generalErrors;
 
     /**
      * @var InlinedRequestsClient $inlinedRequests
@@ -45,12 +38,11 @@ class SeedClient
     public ReqWithHeadersClient $reqWithHeaders;
 
     /**
-     * @var TypesClient $types
-     */
-    public TypesClient $types;
-
-    /**
-     * @var ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
+     * @var ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     * } $options
      */
     private ?array $options;
 
@@ -61,7 +53,11 @@ class SeedClient
 
     /**
      * @param ?string $token The token to use for authentication.
-     * @param ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     * } $options
      */
     public function __construct(
         ?string $token = null,
@@ -87,11 +83,9 @@ class SeedClient
         );
 
         $this->endpoints = new EndpointsClient($this->client);
-        $this->generalErrors = new GeneralErrorsClient($this->client);
         $this->inlinedRequests = new InlinedRequestsClient($this->client);
         $this->noAuth = new NoAuthClient($this->client);
         $this->noReqBody = new NoReqBodyClient($this->client);
         $this->reqWithHeaders = new ReqWithHeadersClient($this->client);
-        $this->types = new TypesClient($this->client);
     }
 }

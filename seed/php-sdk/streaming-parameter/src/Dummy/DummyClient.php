@@ -27,7 +27,9 @@ class DummyClient
 
     /**
      * @param GenerateRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      */
     public function generate(GenerateRequest $request, ?array $options = null): void
     {

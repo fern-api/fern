@@ -10,6 +10,7 @@ use Seed\Core\JsonDecoder;
 use JsonException;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
+use Seed\Core\JsonSerializer;
 
 class HomepageClient
 {
@@ -28,7 +29,9 @@ class HomepageClient
     }
 
     /**
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return array<string>
      */
     public function getHomepageProblems(?array $options = null): array
@@ -56,7 +59,9 @@ class HomepageClient
 
     /**
      * @param array<string> $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      */
     public function setHomepageProblems(array $request, ?array $options = null): void
     {
@@ -66,7 +71,7 @@ class HomepageClient
                     baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/homepage-problems",
                     method: HttpMethod::POST,
-                    body: $request,
+                    body: JsonSerializer::serializeArray($request, ['string']),
                 ),
             );
             $statusCode = $response->getStatusCode();

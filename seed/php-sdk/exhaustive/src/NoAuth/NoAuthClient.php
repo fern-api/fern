@@ -27,9 +27,12 @@ class NoAuthClient
     }
 
     /**
-    * POST request with no auth
+     * POST request with no auth
+     *
      * @param mixed $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return bool
      */
     public function postWithNoAuth(mixed $request, ?array $options = null): bool

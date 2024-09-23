@@ -28,7 +28,9 @@ class UnionClient
 
     /**
      * @param mixed $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return mixed
      */
     public function getAndReturnUnion(mixed $request, ?array $options = null): mixed

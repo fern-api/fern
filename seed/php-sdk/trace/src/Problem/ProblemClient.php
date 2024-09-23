@@ -32,9 +32,12 @@ class ProblemClient
     }
 
     /**
-    * Creates a problem
+     * Creates a problem
+     *
      * @param CreateProblemRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return mixed
      */
     public function createProblem(CreateProblemRequest $request, ?array $options = null): mixed
@@ -62,10 +65,13 @@ class ProblemClient
     }
 
     /**
-    * Updates a problem
+     * Updates a problem
+     *
      * @param string $problemId
      * @param CreateProblemRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return UpdateProblemResponse
      */
     public function updateProblem(string $problemId, CreateProblemRequest $request, ?array $options = null): UpdateProblemResponse
@@ -93,9 +99,12 @@ class ProblemClient
     }
 
     /**
-    * Soft deletes a problem
+     * Soft deletes a problem
+     *
      * @param string $problemId
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      */
     public function deleteProblem(string $problemId, ?array $options = null): void
     {
@@ -118,9 +127,12 @@ class ProblemClient
     }
 
     /**
-    * Returns default starter files for problem
+     * Returns default starter files for problem
+     *
      * @param GetDefaultStarterFilesRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return GetDefaultStarterFilesResponse
      */
     public function getDefaultStarterFiles(GetDefaultStarterFilesRequest $request, ?array $options = null): GetDefaultStarterFilesResponse

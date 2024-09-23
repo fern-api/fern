@@ -27,7 +27,9 @@ class PackageClient
 
     /**
      * @param TestRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      */
     public function test(TestRequest $request, ?array $options = null): void
     {

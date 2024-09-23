@@ -36,9 +36,12 @@ class EventsClient
     }
 
     /**
-    * List all user events.
+     * List all user events.
+     *
      * @param ListUserEventsRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return array<Event>
      */
     public function listEvents(ListUserEventsRequest $request, ?array $options = null): array

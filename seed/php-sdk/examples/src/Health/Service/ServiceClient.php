@@ -27,9 +27,12 @@ class ServiceClient
     }
 
     /**
-    * This endpoint checks the health of a resource.
+     * This endpoint checks the health of a resource.
+     *
      * @param string $id The id to check
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      */
     public function check(string $id, ?array $options = null): void
     {
@@ -52,8 +55,11 @@ class ServiceClient
     }
 
     /**
-    * This endpoint checks the health of the service.
-     * @param ?array{baseUrl?: string} $options
+     * This endpoint checks the health of the service.
+     *
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return bool
      */
     public function ping(?array $options = null): bool

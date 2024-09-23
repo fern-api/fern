@@ -6,7 +6,7 @@ use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 
 /**
-* A simple type with just a name.
+ * A simple type with just a name.
  */
 class Type extends SerializableType
 {

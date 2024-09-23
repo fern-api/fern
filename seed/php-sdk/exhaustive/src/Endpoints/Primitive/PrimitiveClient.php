@@ -10,6 +10,7 @@ use JsonException;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
 use DateTime;
+use Seed\Core\JsonSerializer;
 
 class PrimitiveClient
 {
@@ -29,7 +30,9 @@ class PrimitiveClient
 
     /**
      * @param string $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return string
      */
     public function getAndReturnString(string $request, ?array $options = null): string
@@ -58,7 +61,9 @@ class PrimitiveClient
 
     /**
      * @param int $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return int
      */
     public function getAndReturnInt(int $request, ?array $options = null): int
@@ -87,7 +92,9 @@ class PrimitiveClient
 
     /**
      * @param int $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return int
      */
     public function getAndReturnLong(int $request, ?array $options = null): int
@@ -116,7 +123,9 @@ class PrimitiveClient
 
     /**
      * @param float $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return float
      */
     public function getAndReturnDouble(float $request, ?array $options = null): float
@@ -145,7 +154,9 @@ class PrimitiveClient
 
     /**
      * @param bool $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return bool
      */
     public function getAndReturnBool(bool $request, ?array $options = null): bool
@@ -174,7 +185,9 @@ class PrimitiveClient
 
     /**
      * @param DateTime $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return DateTime
      */
     public function getAndReturnDatetime(DateTime $request, ?array $options = null): DateTime
@@ -185,7 +198,7 @@ class PrimitiveClient
                     baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/primitive/datetime",
                     method: HttpMethod::POST,
-                    body: $request,
+                    body: JsonSerializer::serializeDateTime($request),
                 ),
             );
             $statusCode = $response->getStatusCode();
@@ -203,7 +216,9 @@ class PrimitiveClient
 
     /**
      * @param DateTime $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return DateTime
      */
     public function getAndReturnDate(DateTime $request, ?array $options = null): DateTime
@@ -214,7 +229,7 @@ class PrimitiveClient
                     baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/primitive/date",
                     method: HttpMethod::POST,
-                    body: $request,
+                    body: JsonSerializer::serializeDate($request),
                 ),
             );
             $statusCode = $response->getStatusCode();
@@ -232,7 +247,9 @@ class PrimitiveClient
 
     /**
      * @param string $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return string
      */
     public function getAndReturnUuid(string $request, ?array $options = null): string
@@ -261,7 +278,9 @@ class PrimitiveClient
 
     /**
      * @param string $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return string
      */
     public function getAndReturnBase64(string $request, ?array $options = null): string

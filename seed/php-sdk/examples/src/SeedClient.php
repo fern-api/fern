@@ -2,11 +2,9 @@
 
 namespace Seed;
 
-use Seed\Commons\CommonsClient;
 use Seed\File\FileClient;
 use Seed\Health\HealthClient;
 use Seed\Service\ServiceClient;
-use Seed\Types\TypesClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\RawClient;
 use Seed\Core\JsonApiRequest;
@@ -18,11 +16,6 @@ use Psr\Http\Client\ClientExceptionInterface;
 
 class SeedClient
 {
-    /**
-     * @var CommonsClient $commons
-     */
-    public CommonsClient $commons;
-
     /**
      * @var FileClient $file
      */
@@ -39,12 +32,11 @@ class SeedClient
     public ServiceClient $service;
 
     /**
-     * @var TypesClient $types
-     */
-    public TypesClient $types;
-
-    /**
-     * @var ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
+     * @var ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     * } $options
      */
     private ?array $options;
 
@@ -55,7 +47,11 @@ class SeedClient
 
     /**
      * @param ?string $token The token to use for authentication.
-     * @param ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     * } $options
      */
     public function __construct(
         ?string $token = null,
@@ -80,16 +76,16 @@ class SeedClient
             options: $this->options,
         );
 
-        $this->commons = new CommonsClient($this->client);
         $this->file = new FileClient($this->client);
         $this->health = new HealthClient($this->client);
         $this->service = new ServiceClient($this->client);
-        $this->types = new TypesClient($this->client);
     }
 
     /**
      * @param string $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return string
      */
     public function echo_(string $request, ?array $options = null): string

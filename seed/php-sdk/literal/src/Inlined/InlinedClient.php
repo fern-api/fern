@@ -29,7 +29,9 @@ class InlinedClient
 
     /**
      * @param SendLiteralsInlinedRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return SendResponse
      */
     public function send(SendLiteralsInlinedRequest $request, ?array $options = null): SendResponse

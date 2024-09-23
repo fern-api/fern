@@ -37,6 +37,19 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         this.rawClient = new RawClient(this);
     }
 
+    public shouldGenerateSubpackageClient(subpackage: Subpackage): boolean {
+        if (subpackage.service != null) {
+            return true;
+        }
+        for (const subpackageId of subpackage.subpackages) {
+            const subpackage = this.getSubpackageOrThrow(subpackageId);
+            if (this.shouldGenerateSubpackageClient(subpackage)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public getHttpServiceOrThrow(serviceId: ServiceId): HttpService {
         const service = this.ir.services[serviceId];
         if (service == null) {
@@ -185,33 +198,43 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     public getClientOptionsType(): php.Type {
-        return php.Type.typeDict([
+        return php.Type.typeDict(
+            [
+                {
+                    key: this.getBaseUrlOptionName(),
+                    valueType: php.Type.string(),
+                    optional: true
+                },
+                {
+                    key: this.getGuzzleClientOptionName(),
+                    valueType: php.Type.reference(this.guzzleClient.getClientInterfaceClassReference()),
+                    optional: true
+                },
+                {
+                    key: this.getHeadersOptionName(),
+                    valueType: php.Type.map(php.Type.string(), php.Type.string()),
+                    optional: true
+                }
+            ],
             {
-                key: this.getBaseUrlOptionName(),
-                valueType: php.Type.string(),
-                optional: true
-            },
-            {
-                key: this.getGuzzleClientOptionName(),
-                valueType: php.Type.reference(this.guzzleClient.getClientInterfaceClassReference()),
-                optional: true
-            },
-            {
-                key: this.getHeadersOptionName(),
-                valueType: php.Type.map(php.Type.string(), php.Type.string()),
-                optional: true
+                multiline: true
             }
-        ]);
+        );
     }
 
     public getRequestOptionsType(): php.Type {
-        return php.Type.typeDict([
+        return php.Type.typeDict(
+            [
+                {
+                    key: this.getBaseUrlOptionName(),
+                    valueType: php.Type.string(),
+                    optional: true
+                }
+            ],
             {
-                key: this.getBaseUrlOptionName(),
-                valueType: php.Type.string(),
-                optional: true
+                multiline: true
             }
-        ]);
+        );
     }
 
     public getEnvironmentAccess(name: Name): php.CodeBlock {

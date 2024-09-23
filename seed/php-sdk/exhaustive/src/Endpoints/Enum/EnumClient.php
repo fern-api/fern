@@ -28,7 +28,9 @@ class EnumClient
 
     /**
      * @param WeatherReport $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return WeatherReport
      */
     public function getAndReturnEnum(WeatherReport $request, ?array $options = null): WeatherReport

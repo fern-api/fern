@@ -41,7 +41,9 @@ class DataserviceClient
 
     /**
      * @param UploadRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return UploadResponse
      */
     public function upload(UploadRequest $request, ?array $options = null): UploadResponse
@@ -70,7 +72,9 @@ class DataserviceClient
 
     /**
      * @param DeleteRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return DeleteResponse
      */
     public function delete(DeleteRequest $request, ?array $options = null): DeleteResponse
@@ -99,7 +103,9 @@ class DataserviceClient
 
     /**
      * @param DescribeRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return DescribeResponse
      */
     public function describe(DescribeRequest $request, ?array $options = null): DescribeResponse
@@ -128,7 +134,9 @@ class DataserviceClient
 
     /**
      * @param FetchRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return FetchResponse
      */
     public function fetch(FetchRequest $request, ?array $options = null): FetchResponse
@@ -164,7 +172,9 @@ class DataserviceClient
 
     /**
      * @param ListRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return ListResponse
      */
     public function list(ListRequest $request, ?array $options = null): ListResponse
@@ -206,7 +216,9 @@ class DataserviceClient
 
     /**
      * @param QueryRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return QueryResponse
      */
     public function query(QueryRequest $request, ?array $options = null): QueryResponse
@@ -235,7 +247,9 @@ class DataserviceClient
 
     /**
      * @param UpdateRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return UpdateResponse
      */
     public function update(UpdateRequest $request, ?array $options = null): UpdateResponse

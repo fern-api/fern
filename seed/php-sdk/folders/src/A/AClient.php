@@ -4,7 +4,6 @@ namespace Seed\A;
 
 use Seed\A\B\BClient;
 use Seed\A\C\CClient;
-use Seed\A\D\DClient;
 use Seed\Core\RawClient;
 
 class AClient
@@ -20,11 +19,6 @@ class AClient
     public CClient $c;
 
     /**
-     * @var DClient $d
-     */
-    public DClient $d;
-
-    /**
      * @var RawClient $client
      */
     private RawClient $client;
@@ -38,6 +32,5 @@ class AClient
         $this->client = $client;
         $this->b = new BClient($this->client);
         $this->c = new CClient($this->client);
-        $this->d = new DClient($this->client);
     }
 }

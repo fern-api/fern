@@ -13,6 +13,7 @@ use Seed\Types\Object\Types\ObjectWithRequiredField;
 use Seed\Types\Object\Types\ObjectWithMapOfMap;
 use Seed\Types\Object\Types\NestedObjectWithOptionalField;
 use Seed\Types\Object\Types\NestedObjectWithRequiredField;
+use Seed\Core\JsonSerializer;
 
 class ObjectClient
 {
@@ -32,7 +33,9 @@ class ObjectClient
 
     /**
      * @param ObjectWithOptionalField $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return ObjectWithOptionalField
      */
     public function getAndReturnWithOptionalField(ObjectWithOptionalField $request, ?array $options = null): ObjectWithOptionalField
@@ -61,7 +64,9 @@ class ObjectClient
 
     /**
      * @param ObjectWithRequiredField $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return ObjectWithRequiredField
      */
     public function getAndReturnWithRequiredField(ObjectWithRequiredField $request, ?array $options = null): ObjectWithRequiredField
@@ -90,7 +95,9 @@ class ObjectClient
 
     /**
      * @param ObjectWithMapOfMap $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return ObjectWithMapOfMap
      */
     public function getAndReturnWithMapOfMap(ObjectWithMapOfMap $request, ?array $options = null): ObjectWithMapOfMap
@@ -119,7 +126,9 @@ class ObjectClient
 
     /**
      * @param NestedObjectWithOptionalField $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return NestedObjectWithOptionalField
      */
     public function getAndReturnNestedWithOptionalField(NestedObjectWithOptionalField $request, ?array $options = null): NestedObjectWithOptionalField
@@ -149,7 +158,9 @@ class ObjectClient
     /**
      * @param string $string
      * @param NestedObjectWithRequiredField $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return NestedObjectWithRequiredField
      */
     public function getAndReturnNestedWithRequiredField(string $string, NestedObjectWithRequiredField $request, ?array $options = null): NestedObjectWithRequiredField
@@ -178,7 +189,9 @@ class ObjectClient
 
     /**
      * @param array<NestedObjectWithRequiredField> $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return NestedObjectWithRequiredField
      */
     public function getAndReturnNestedWithRequiredFieldAsList(array $request, ?array $options = null): NestedObjectWithRequiredField
@@ -189,7 +202,7 @@ class ObjectClient
                     baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/object/get-and-return-nested-with-required-field-list",
                     method: HttpMethod::POST,
-                    body: $request,
+                    body: JsonSerializer::serializeArray($request, [NestedObjectWithRequiredField::class]),
                 ),
             );
             $statusCode = $response->getStatusCode();

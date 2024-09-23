@@ -28,7 +28,9 @@ class PathClient
 
     /**
      * @param string $id
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return SendResponse
      */
     public function send(string $id, ?array $options = null): SendResponse

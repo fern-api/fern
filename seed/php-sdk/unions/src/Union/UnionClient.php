@@ -28,7 +28,9 @@ class UnionClient
 
     /**
      * @param string $id
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return mixed
      */
     public function get(string $id, ?array $options = null): mixed
@@ -56,7 +58,9 @@ class UnionClient
 
     /**
      * @param mixed $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return bool
      */
     public function update(mixed $request, ?array $options = null): bool

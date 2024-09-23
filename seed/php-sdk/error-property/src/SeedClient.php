@@ -2,7 +2,6 @@
 
 namespace Seed;
 
-use Seed\Errors\ErrorsClient;
 use Seed\PropertyBasedError\PropertyBasedErrorClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\RawClient;
@@ -10,17 +9,16 @@ use Seed\Core\RawClient;
 class SeedClient
 {
     /**
-     * @var ErrorsClient $errors
-     */
-    public ErrorsClient $errors;
-
-    /**
      * @var PropertyBasedErrorClient $propertyBasedError
      */
     public PropertyBasedErrorClient $propertyBasedError;
 
     /**
-     * @var ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
+     * @var ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     * } $options
      */
     private ?array $options;
 
@@ -30,7 +28,11 @@ class SeedClient
     private RawClient $client;
 
     /**
-     * @param ?array{baseUrl?: string, client?: ClientInterface, headers?: array<string, string>} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   headers?: array<string, string>,
+     * } $options
      */
     public function __construct(
         ?array $options = null,
@@ -51,7 +53,6 @@ class SeedClient
             options: $this->options,
         );
 
-        $this->errors = new ErrorsClient($this->client);
         $this->propertyBasedError = new PropertyBasedErrorClient($this->client);
     }
 }

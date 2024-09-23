@@ -28,7 +28,9 @@ class ServiceClient
 
     /**
      * @param string $notificationId
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return mixed
      */
     public function getException(string $notificationId, ?array $options = null): mixed

@@ -30,7 +30,9 @@ class ServiceClient
 
     /**
      * @param MyRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      */
     public function post(MyRequest $request, ?array $options = null): void
     {
@@ -54,7 +56,9 @@ class ServiceClient
 
     /**
      * @param JustFileRequet $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      */
     public function justFile(JustFileRequet $request, ?array $options = null): void
     {
@@ -78,7 +82,9 @@ class ServiceClient
 
     /**
      * @param JustFileWithQueryParamsRequet $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      */
     public function justFileWithQueryParams(JustFileWithQueryParamsRequet $request, ?array $options = null): void
     {
@@ -115,7 +121,9 @@ class ServiceClient
 
     /**
      * @param WithContentTypeRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      */
     public function withContentType(WithContentTypeRequest $request, ?array $options = null): void
     {

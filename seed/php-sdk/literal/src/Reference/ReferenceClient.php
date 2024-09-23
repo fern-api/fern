@@ -29,7 +29,9 @@ class ReferenceClient
 
     /**
      * @param SendRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return SendResponse
      */
     public function send(SendRequest $request, ?array $options = null): SendResponse

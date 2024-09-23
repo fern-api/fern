@@ -31,7 +31,9 @@ class ServiceClient
 
     /**
      * @param string $movieId
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return Movie
      */
     public function getMovie(string $movieId, ?array $options = null): Movie
@@ -59,7 +61,9 @@ class ServiceClient
 
     /**
      * @param Movie $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return string
      */
     public function createMovie(Movie $request, ?array $options = null): string
@@ -88,7 +92,9 @@ class ServiceClient
 
     /**
      * @param GetMetadataRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return mixed
      */
     public function getMetadata(GetMetadataRequest $request, ?array $options = null): mixed
@@ -126,7 +132,9 @@ class ServiceClient
     }
 
     /**
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return Response
      */
     public function getResponse(?array $options = null): Response

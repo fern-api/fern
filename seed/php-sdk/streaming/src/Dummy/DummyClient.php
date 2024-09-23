@@ -30,7 +30,9 @@ class DummyClient
 
     /**
      * @param GenerateStreamRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      */
     public function generateStream(GenerateStreamRequest $request, ?array $options = null): void
     {
@@ -52,7 +54,9 @@ class DummyClient
 
     /**
      * @param Generateequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return StreamResponse
      */
     public function generate(Generateequest $request, ?array $options = null): StreamResponse

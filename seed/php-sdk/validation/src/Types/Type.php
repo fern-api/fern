@@ -6,7 +6,7 @@ use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 
 /**
-* Defines properties with default values and validation rules.
+ * Defines properties with default values and validation rules.
  */
 class Type extends SerializableType
 {

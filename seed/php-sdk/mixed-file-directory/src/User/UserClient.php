@@ -36,9 +36,12 @@ class UserClient
     }
 
     /**
-    * List all users.
+     * List all users.
+     *
      * @param ListUsersRequest $request
-     * @param ?array{baseUrl?: string} $options
+     * @param ?array{
+     *   baseUrl?: string,
+     * } $options
      * @return array<User>
      */
     public function list(ListUsersRequest $request, ?array $options = null): array
