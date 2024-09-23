@@ -190,10 +190,6 @@ navigation:
           - section: Changelogs
             slug: changelog
             contents:
-              # Uncomment once we've migrated TypeScript
-              # - changelog: ./pages/changelogs/ts-sdk
-              #   title: TypeScript
-              #   slug: typescript
               - changelog: ./pages/changelogs/python-sdk
                 title: Python
                 slug: python
@@ -497,7 +493,6 @@ navigation:
           - page: Commands
             path: ./pages/cli-api/commands.mdx
           - changelog: ./pages/changelogs/cli
-            title: Changelog
       - api: API Reference
         api-name: public-api
         summary: ./pages/cli-api/api-summary.mdx
