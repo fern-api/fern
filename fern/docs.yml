@@ -187,77 +187,28 @@ navigation:
             path: ./pages/sdks/introduction/overview.mdx
           - page: Configuration
             path: ./pages/sdks/introduction/configuration.mdx
-          - section: Generators
-            slug: generators
+          - section: Changelogs
+            slug: changelog
             contents:
-              - section: TypeScript
-                icon: brands node-js
-                slug: typescript
-                contents:
-                  - changelog: ./pages/changelogs/ts-express
-                    title: Express Server Stub Changelog
-                    slug: express-changelog
-                  # Uncomment once we've migrated TypeScript
-                  # - changelog: ./pages/changelogs/ts-sdk
-                  #   title: TypeScript Universal SDK Changelog
-                  #   slug: ts-sdk-changelog
-              - section: Python
-                icon: brands python
+              # Uncomment once we've migrated TypeScript
+              # - changelog: ./pages/changelogs/ts-sdk
+              #   title: TypeScript
+              #   slug: typescript
+              - changelog: ./pages/changelogs/python-sdk
+                title: Python
                 slug: python
-                contents:
-                  - changelog: ./pages/changelogs/fastapi
-                    title: FastAPI Server Stub Changelog
-                    slug: fastapi-changelog
-                  - changelog: ./pages/changelogs/python-sdk
-                    title: Python SDK Changelog
-                    slug: sdk-changelog
-                  - changelog: ./pages/changelogs/pydantic
-                    title: Pydantic Models Changelog
-                    slug: pydantic-changelog
-              - section: Go
-                icon: brands golang
-                slug: golang
-                contents:
-                  # Intentionally not including fiber for now, but happy to include!
-                  - changelog: ./pages/changelogs/go-sdk
-                    title: Go SDK Changelog
-                    slug: sdk-changelog
-                  - changelog: ./pages/changelogs/go-model
-                    title: Go Models Changelog
-                    slug: model-changelog
-              - section: .Net
-                icon: brands microsoft
+              - changelog: ./pages/changelogs/go-sdk
+                title: Go
+                slug: go
+              - changelog: ./pages/changelogs/csharp-sdk
+                title: .Net
                 slug: csharp
-                contents:
-                  - changelog: ./pages/changelogs/csharp-sdk
-                    title: .Net SDK Changelog
-                    slug: sdk-changelog
-                  - changelog: ./pages/changelogs/csharp-model
-                    title: .Net Models Changelog
-                    slug: model-changelog
-              - section: Java
-                icon: brands java
+              - changelog: ./pages/changelogs/java-sdk
+                title: Java
                 slug: java
-                contents:
-                  - changelog: ./pages/changelogs/java-spring
-                    title: Spring Server Stub Changelog
-                    slug: spring-changelog
-                  - changelog: ./pages/changelogs/java-sdk
-                    title: Java SDK Changelog
-                    slug: sdk-changelog
-                  - changelog: ./pages/changelogs/java-model
-                    title: Java Models Changelog
-                    slug: model-changelog
-              - section: Ruby
-                icon: gem
+              - changelog: ./pages/changelogs/ruby-sdk
+                title: Ruby
                 slug: ruby
-                contents:
-                  - changelog: ./pages/changelogs/ruby-sdk
-                    title: Ruby SDK Changelog
-                    slug: sdk-changelog
-                  - changelog: ./pages/changelogs/ruby-model
-                    title: Ruby Models Changelog
-                    slug: model-changelog
       - section: Getting Started
         contents:
           - page: Generate your First SDK
@@ -545,6 +496,8 @@ navigation:
             path: ./pages/cli-api/global-options.mdx
           - page: Commands
             path: ./pages/cli-api/commands.mdx
+          - changelog: ./pages/changelogs/cli
+            title: Changelog
       - api: API Reference
         api-name: public-api
         summary: ./pages/cli-api/api-summary.mdx
