@@ -9,11 +9,14 @@ from fern_python.source_file_factory import SourceFileFactory
 
 
 class CoreUtilities:
-    def __init__(self, allow_skipping_validation: bool, use_typeddict_requests: bool) -> None:
+    def __init__(
+        self, allow_skipping_validation: bool, use_typeddict_requests: bool, use_pydantic_field_aliases: bool
+    ) -> None:
         self.filepath = (Filepath.DirectoryFilepathPart(module_name="core"),)
         self._module_path = tuple(part.module_name for part in self.filepath)
         self._allow_skipping_validation = allow_skipping_validation
         self._use_typeddict_requests = use_typeddict_requests
+        self._use_pydantic_field_aliases = use_pydantic_field_aliases
 
     def copy_to_project(self, *, project: Project) -> None:
         self._copy_file_to_project(
@@ -28,7 +31,9 @@ class CoreUtilities:
 
         self._copy_file_to_project(
             project=project,
-            relative_filepath_on_disk="pydantic_utilities.py",
+            relative_filepath_on_disk="with_pydantic_aliases/pydantic_utilities.py"
+            if self._use_pydantic_field_aliases
+            else "pydantic_utilities.py",
             filepath_in_project=Filepath(
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="pydantic_utilities"),

@@ -142,6 +142,11 @@ class FernAwarePydanticModel:
         return field
 
     def _add_update_forward_ref_for_transitive_circular_dependencies(self, type_id: ir_types.TypeId) -> None:
+        if self._custom_config.include_union_utils:
+            # If you're using union utils, then your unions should be objects, and so these changes should not be necessary it is possible
+            # that we must call update_forward_refs on the union utils class itself, but we'll cross that bridge when we get there
+            return
+
         # Get self-referencing dependencies of the type you are trying to add
         # And add them as ghost references at the bottom of the file
         self_referencing_dependencies_from_non_union_types = (
@@ -281,7 +286,11 @@ class FernAwarePydanticModel:
 
     def finish(self) -> None:
         if self._custom_config.include_validators:
-            self._pydantic_model.add_partial_class()
+            if (
+                self._pydantic_model._v1_root_type is None
+                and self._custom_config.version == PydanticVersionCompatibility.V1
+            ):
+                self._pydantic_model.add_partial_class()
             self._get_validators_generator().add_validators()
         if self._model_contains_forward_refs or self._force_update_forward_refs:
             self._pydantic_model.update_forward_refs()

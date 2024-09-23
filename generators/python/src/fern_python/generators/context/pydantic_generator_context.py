@@ -27,12 +27,14 @@ class PydanticGeneratorContext(ABC):
         use_str_enums: bool,
         skip_formatting: bool,
         union_naming_version: UnionNamingVersions,
+        use_pydantic_field_aliases: bool,
     ):
         self.ir = ir
         self.generator_config = generator_config
         self.core_utilities = CoreUtilities(
             allow_skipping_validation=allow_skipping_validation,
             use_typeddict_requests=use_typeddict_requests,
+            use_pydantic_field_aliases=use_pydantic_field_aliases,
         )
         self.use_typeddict_requests = use_typeddict_requests
         self.type_declaration_referencer = type_declaration_referencer
