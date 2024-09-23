@@ -72,7 +72,7 @@ export class BaseApiExceptionGenerator extends FileGenerator<PhpFile, SdkCustomC
                 writer.writeTextStatement('return "$this->message; Status Code: $this->code\\n"');
                 writer.endControlFlow();
                 writer.writeTextStatement(
-                    'return "$this->message; Status Code: $this->code; Body: " . json_encode($this->body) . "\\n"'
+                    'return "$this->message; Status Code: $this->code; Body: " . $this->body . "\\n"'
                 );
             })
         });

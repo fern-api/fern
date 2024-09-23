@@ -48,6 +48,6 @@ class SeedApiException extends SeedException
         if (empty($this->body)) {
             return "$this->message; Status Code: $this->code\n";
         }
-        return "$this->message; Status Code: $this->code; Body: " . json_encode($this->body) . "\n";
+        return "$this->message; Status Code: $this->code; Body: " . $this->body . "\n";
     }
 }
