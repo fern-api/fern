@@ -149,7 +149,7 @@ export async function upgradeGenerator({
                 }
 
                 if (workspace.workspaceName == null) {
-                    context.logger.info(`Upgrading generators.`);
+                    context.logger.info("Upgrading generators.");
                 } else {
                     context.logger.info(`Upgrading generators in workspace: ${workspace.workspaceName}.`);
                 }
