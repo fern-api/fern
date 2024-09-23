@@ -8,6 +8,7 @@ from fern_python.codegen.ast.nodes.declarations.class_.class_declaration import 
     ClassDeclaration,
 )
 from fern_python.external_dependencies import Pydantic
+from fern_python.external_dependencies.pydantic import PydanticVersionCompatibility
 from fern_python.generators.pydantic_model.type_declaration_handler.type_utilities import (
     declared_type_name_to_named_type,
 )
@@ -367,26 +368,27 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                 )
             )
 
-            external_pydantic_model.set_root_type_unsafe_v1_only(
-                is_forward_ref=True,
-                root_type=root_type,
-                annotation=AST.Expression(
-                    AST.FunctionInvocation(
-                        function_definition=Pydantic.Field(),
-                        kwargs=[
-                            (
-                                "discriminator",
-                                AST.Expression(
-                                    f'"{self._get_discriminant_attr_name()}"',
-                                ),
-                            )
-                        ],
+            if self._custom_config.version == PydanticVersionCompatibility.V1:
+                external_pydantic_model.set_root_type_unsafe_v1_only(
+                    is_forward_ref=True,
+                    root_type=root_type,
+                    annotation=AST.Expression(
+                        AST.FunctionInvocation(
+                            function_definition=Pydantic.Field(),
+                            kwargs=[
+                                (
+                                    "discriminator",
+                                    AST.Expression(
+                                        f'"{self._get_discriminant_attr_name()}"',
+                                    ),
+                                )
+                            ],
+                        )
                     )
+                    # can't use discriminator without single variant pydantic models
+                    # https://github.com/pydantic/pydantic/pull/3639
+                    if len(internal_single_union_types) != 1 else None,
                 )
-                # can't use discriminator without single variant pydantic models
-                # https://github.com/pydantic/pydantic/pull/3639
-                if len(internal_single_union_types) != 1 else None,
-            )
 
     def _create_body_writer(
         self,
