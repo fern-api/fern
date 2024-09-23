@@ -1,4 +1,4 @@
-name: validate changelog
+name: Validate Changelogs
 
 on:
   push:
