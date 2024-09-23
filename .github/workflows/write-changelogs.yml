@@ -3,6 +3,7 @@ name: Write Changelogs
 on:
   pull_request:
     paths:
+      # Changelogs
       - "packages/cli/cli/versions.yml"
       - "generators/csharp/model/versions.yml"
       - "generators/csharp/sdk/versions.yml"
@@ -19,6 +20,8 @@ on:
       - "generators/ruby/model/versions.yml"
       - "generators/ruby/sdk/versions.yml"
       - "generators/typescript/express/versions.yml"
+      # This file
+      - ".github/workflows/write-changelogs.yml"
 
 jobs:
   write-changelogs:
