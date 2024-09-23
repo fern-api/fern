@@ -4,10 +4,11 @@ namespace Seed;
 
 use GuzzleHttp\ClientInterface;
 use Seed\Core\RawClient;
+use Seed\Exceptions\SeedException;
+use Seed\Exceptions\SeedApiException;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
-use Exception;
 
 class SeedClient
 {
@@ -57,6 +58,8 @@ class SeedClient
      * @param ?array{
      *   baseUrl?: string,
      * } $options
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function get(string $typeId, ?array $options = null): void
     {
@@ -73,9 +76,8 @@ class SeedClient
                 return;
             }
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException($e->getMessage());
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
     }
-
 }

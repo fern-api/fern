@@ -4,10 +4,11 @@ namespace Seed\Service;
 
 use Seed\Core\RawClient;
 use Seed\Types\Types\Movie;
+use Seed\Exceptions\SeedException;
+use Seed\Exceptions\SeedApiException;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use JsonException;
-use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Core\JsonDecoder;
 use Seed\Service\Requests\GetMetadataRequest;
@@ -35,6 +36,8 @@ class ServiceClient
      *   baseUrl?: string,
      * } $options
      * @return Movie
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function getMovie(string $movieId, ?array $options = null): Movie
     {
@@ -52,11 +55,11 @@ class ServiceClient
                 return Movie::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException("Failed to deserialize response: {$e->getMessage()}");
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException($e->getMessage());
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
     }
 
     /**
@@ -65,6 +68,8 @@ class ServiceClient
      *   baseUrl?: string,
      * } $options
      * @return string
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function createMovie(Movie $request, ?array $options = null): string
     {
@@ -83,11 +88,11 @@ class ServiceClient
                 return JsonDecoder::decodeString($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException("Failed to deserialize response: {$e->getMessage()}");
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException($e->getMessage());
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
     }
 
     /**
@@ -96,6 +101,8 @@ class ServiceClient
      *   baseUrl?: string,
      * } $options
      * @return mixed
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function getMetadata(GetMetadataRequest $request, ?array $options = null): mixed
     {
@@ -124,11 +131,11 @@ class ServiceClient
                 return JsonDecoder::decodeMixed($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException("Failed to deserialize response: {$e->getMessage()}");
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException($e->getMessage());
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
     }
 
     /**
@@ -136,6 +143,8 @@ class ServiceClient
      *   baseUrl?: string,
      * } $options
      * @return Response
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function getResponse(?array $options = null): Response
     {
@@ -153,11 +162,10 @@ class ServiceClient
                 return Response::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException("Failed to deserialize response: {$e->getMessage()}");
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException($e->getMessage());
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
     }
-
 }

@@ -7,11 +7,12 @@ use Seed\Health\HealthClient;
 use Seed\Service\ServiceClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\RawClient;
+use Seed\Exceptions\SeedException;
+use Seed\Exceptions\SeedApiException;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use Seed\Core\JsonDecoder;
 use JsonException;
-use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class SeedClient
@@ -87,6 +88,8 @@ class SeedClient
      *   baseUrl?: string,
      * } $options
      * @return string
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function echo_(string $request, ?array $options = null): string
     {
@@ -105,11 +108,10 @@ class SeedClient
                 return JsonDecoder::decodeString($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException("Failed to deserialize response: {$e->getMessage()}");
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException($e->getMessage());
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
     }
-
 }

@@ -4,10 +4,11 @@ namespace Seed\QueryParam;
 
 use Seed\Core\RawClient;
 use Seed\QueryParam\Requests\SendEnumAsQueryParamRequest;
+use Seed\Exceptions\SeedException;
+use Seed\Exceptions\SeedApiException;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
-use Exception;
 use Seed\QueryParam\Requests\SendEnumListAsQueryParamRequest;
 
 class QueryParamClient
@@ -31,6 +32,8 @@ class QueryParamClient
      * @param ?array{
      *   baseUrl?: string,
      * } $options
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function send(SendEnumAsQueryParamRequest $request, ?array $options = null): void
     {
@@ -57,9 +60,9 @@ class QueryParamClient
                 return;
             }
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException($e->getMessage());
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
     }
 
     /**
@@ -67,6 +70,8 @@ class QueryParamClient
      * @param ?array{
      *   baseUrl?: string,
      * } $options
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function sendList(SendEnumListAsQueryParamRequest $request, ?array $options = null): void
     {
@@ -93,9 +98,8 @@ class QueryParamClient
                 return;
             }
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException($e->getMessage());
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
     }
-
 }

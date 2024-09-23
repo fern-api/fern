@@ -5,11 +5,12 @@ namespace Seed\V2;
 use Seed\V2\Problem\ProblemClient;
 use Seed\V2\V3\V3Client;
 use Seed\Core\RawClient;
+use Seed\Exceptions\SeedException;
+use Seed\Exceptions\SeedApiException;
 use Seed\Core\JsonApiRequest;
 use Seed\Environments;
 use Seed\Core\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
-use Exception;
 
 class V2Client
 {
@@ -43,6 +44,8 @@ class V2Client
      * @param ?array{
      *   baseUrl?: string,
      * } $options
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function test(?array $options = null): void
     {
@@ -59,9 +62,8 @@ class V2Client
                 return;
             }
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException($e->getMessage());
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
     }
-
 }

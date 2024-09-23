@@ -5,10 +5,11 @@ namespace Seed\InlinedRequests;
 use Seed\Core\RawClient;
 use Seed\InlinedRequests\Requests\PostWithObjectBody;
 use Seed\Types\Object\Types\ObjectWithOptionalField;
+use Seed\Exceptions\SeedException;
+use Seed\Exceptions\SeedApiException;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use JsonException;
-use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class InlinedRequestsClient
@@ -35,6 +36,8 @@ class InlinedRequestsClient
      *   baseUrl?: string,
      * } $options
      * @return ObjectWithOptionalField
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function postWithObjectBodyandResponse(PostWithObjectBody $request, ?array $options = null): ObjectWithOptionalField
     {
@@ -53,11 +56,10 @@ class InlinedRequestsClient
                 return ObjectWithOptionalField::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException("Failed to deserialize response: {$e->getMessage()}");
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException($e->getMessage());
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
     }
-
 }

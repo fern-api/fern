@@ -3,12 +3,13 @@
 namespace Seed\Endpoints\Container;
 
 use Seed\Core\RawClient;
+use Seed\Exceptions\SeedException;
+use Seed\Exceptions\SeedApiException;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use Seed\Core\JsonSerializer;
 use Seed\Core\JsonDecoder;
 use JsonException;
-use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Types\Object\Types\ObjectWithRequiredField;
 
@@ -34,6 +35,8 @@ class ContainerClient
      *   baseUrl?: string,
      * } $options
      * @return array<string>
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function getAndReturnListOfPrimitives(array $request, ?array $options = null): array
     {
@@ -52,11 +55,11 @@ class ContainerClient
                 return JsonDecoder::decodeArray($json, ['string']); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException("Failed to deserialize response: {$e->getMessage()}");
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException($e->getMessage());
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
     }
 
     /**
@@ -65,6 +68,8 @@ class ContainerClient
      *   baseUrl?: string,
      * } $options
      * @return array<ObjectWithRequiredField>
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function getAndReturnListOfObjects(array $request, ?array $options = null): array
     {
@@ -83,11 +88,11 @@ class ContainerClient
                 return JsonDecoder::decodeArray($json, [ObjectWithRequiredField::class]); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException("Failed to deserialize response: {$e->getMessage()}");
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException($e->getMessage());
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
     }
 
     /**
@@ -96,6 +101,8 @@ class ContainerClient
      *   baseUrl?: string,
      * } $options
      * @return array<string>
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function getAndReturnSetOfPrimitives(array $request, ?array $options = null): array
     {
@@ -114,11 +121,11 @@ class ContainerClient
                 return JsonDecoder::decodeArray($json, ['string']); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException("Failed to deserialize response: {$e->getMessage()}");
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException($e->getMessage());
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
     }
 
     /**
@@ -127,6 +134,8 @@ class ContainerClient
      *   baseUrl?: string,
      * } $options
      * @return array<ObjectWithRequiredField>
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function getAndReturnSetOfObjects(array $request, ?array $options = null): array
     {
@@ -145,11 +154,11 @@ class ContainerClient
                 return JsonDecoder::decodeArray($json, [ObjectWithRequiredField::class]); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException("Failed to deserialize response: {$e->getMessage()}");
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException($e->getMessage());
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
     }
 
     /**
@@ -158,6 +167,8 @@ class ContainerClient
      *   baseUrl?: string,
      * } $options
      * @return array<string, string>
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function getAndReturnMapPrimToPrim(array $request, ?array $options = null): array
     {
@@ -176,11 +187,11 @@ class ContainerClient
                 return JsonDecoder::decodeArray($json, ['string' => 'string']); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException("Failed to deserialize response: {$e->getMessage()}");
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException($e->getMessage());
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
     }
 
     /**
@@ -189,6 +200,8 @@ class ContainerClient
      *   baseUrl?: string,
      * } $options
      * @return array<string, ObjectWithRequiredField>
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function getAndReturnMapOfPrimToObject(array $request, ?array $options = null): array
     {
@@ -207,11 +220,11 @@ class ContainerClient
                 return JsonDecoder::decodeArray($json, ['string' => ObjectWithRequiredField::class]); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException("Failed to deserialize response: {$e->getMessage()}");
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException($e->getMessage());
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
     }
 
     /**
@@ -220,6 +233,8 @@ class ContainerClient
      *   baseUrl?: string,
      * } $options
      * @return ?ObjectWithRequiredField
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function getAndReturnOptional(?ObjectWithRequiredField $request = null, ?array $options = null): ?ObjectWithRequiredField
     {
@@ -241,11 +256,10 @@ class ContainerClient
                 return ObjectWithRequiredField::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException("Failed to deserialize response: {$e->getMessage()}");
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException($e->getMessage());
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
     }
-
 }

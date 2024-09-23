@@ -4,10 +4,11 @@ namespace Seed\Endpoints\Enum;
 
 use Seed\Core\RawClient;
 use Seed\Types\Enum\Types\WeatherReport;
+use Seed\Exceptions\SeedException;
+use Seed\Exceptions\SeedApiException;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use JsonException;
-use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class EnumClient
@@ -32,6 +33,8 @@ class EnumClient
      *   baseUrl?: string,
      * } $options
      * @return WeatherReport
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function getAndReturnEnum(WeatherReport $request, ?array $options = null): WeatherReport
     {
@@ -50,11 +53,10 @@ class EnumClient
                 return WeatherReport::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException("Failed to deserialize response: {$e->getMessage()}");
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException($e->getMessage());
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
     }
-
 }

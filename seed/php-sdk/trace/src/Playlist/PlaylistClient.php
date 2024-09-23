@@ -5,12 +5,13 @@ namespace Seed\Playlist;
 use Seed\Core\RawClient;
 use Seed\Playlist\Requests\CreatePlaylistRequest;
 use Seed\Playlist\Types\Playlist;
+use Seed\Exceptions\SeedException;
+use Seed\Exceptions\SeedApiException;
 use Seed\Core\Constant;
 use Seed\Core\JsonApiRequest;
 use Seed\Environments;
 use Seed\Core\HttpMethod;
 use JsonException;
-use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Playlist\Requests\GetPlaylistsRequest;
 use Seed\Core\JsonDecoder;
@@ -41,6 +42,8 @@ class PlaylistClient
      *   baseUrl?: string,
      * } $options
      * @return Playlist
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function createPlaylist(int $serviceParam, CreatePlaylistRequest $request, ?array $options = null): Playlist
     {
@@ -65,11 +68,11 @@ class PlaylistClient
                 return Playlist::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException("Failed to deserialize response: {$e->getMessage()}");
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException($e->getMessage());
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
     }
 
     /**
@@ -81,6 +84,8 @@ class PlaylistClient
      *   baseUrl?: string,
      * } $options
      * @return array<Playlist>
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function getPlaylists(int $serviceParam, GetPlaylistsRequest $request, ?array $options = null): array
     {
@@ -109,11 +114,11 @@ class PlaylistClient
                 return JsonDecoder::decodeArray($json, [Playlist::class]); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException("Failed to deserialize response: {$e->getMessage()}");
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException($e->getMessage());
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
     }
 
     /**
@@ -125,6 +130,8 @@ class PlaylistClient
      *   baseUrl?: string,
      * } $options
      * @return Playlist
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function getPlaylist(int $serviceParam, string $playlistId, ?array $options = null): Playlist
     {
@@ -142,11 +149,11 @@ class PlaylistClient
                 return Playlist::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException("Failed to deserialize response: {$e->getMessage()}");
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException($e->getMessage());
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
     }
 
     /**
@@ -159,6 +166,8 @@ class PlaylistClient
      *   baseUrl?: string,
      * } $options
      * @return ?Playlist
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function updatePlaylist(int $serviceParam, string $playlistId, ?UpdatePlaylistRequest $request = null, ?array $options = null): ?Playlist
     {
@@ -180,11 +189,11 @@ class PlaylistClient
                 return Playlist::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException("Failed to deserialize response: {$e->getMessage()}");
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException($e->getMessage());
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
     }
 
     /**
@@ -195,6 +204,8 @@ class PlaylistClient
      * @param ?array{
      *   baseUrl?: string,
      * } $options
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function deletePlaylist(int $serviceParam, string $playlistId, ?array $options = null): void
     {
@@ -211,9 +222,8 @@ class PlaylistClient
                 return;
             }
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException($e->getMessage());
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
     }
-
 }

@@ -6,11 +6,12 @@ use Seed\User\Events\Metadata\MetadataClient;
 use Seed\Core\RawClient;
 use Seed\User\Events\Requests\ListUserEventsRequest;
 use Seed\User\Events\Types\Event;
+use Seed\Exceptions\SeedException;
+use Seed\Exceptions\SeedApiException;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use Seed\Core\JsonDecoder;
 use JsonException;
-use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class EventsClient
@@ -43,6 +44,8 @@ class EventsClient
      *   baseUrl?: string,
      * } $options
      * @return array<Event>
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function listEvents(ListUserEventsRequest $request, ?array $options = null): array
     {
@@ -65,11 +68,10 @@ class EventsClient
                 return JsonDecoder::decodeArray($json, [Event::class]); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException("Failed to deserialize response: {$e->getMessage()}");
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException($e->getMessage());
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
     }
-
 }

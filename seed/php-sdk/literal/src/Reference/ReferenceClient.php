@@ -5,10 +5,11 @@ namespace Seed\Reference;
 use Seed\Core\RawClient;
 use Seed\Reference\Types\SendRequest;
 use Seed\Types\SendResponse;
+use Seed\Exceptions\SeedException;
+use Seed\Exceptions\SeedApiException;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use JsonException;
-use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class ReferenceClient
@@ -33,6 +34,8 @@ class ReferenceClient
      *   baseUrl?: string,
      * } $options
      * @return SendResponse
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function send(SendRequest $request, ?array $options = null): SendResponse
     {
@@ -51,11 +54,10 @@ class ReferenceClient
                 return SendResponse::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException("Failed to deserialize response: {$e->getMessage()}");
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException($e->getMessage());
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
     }
-
 }

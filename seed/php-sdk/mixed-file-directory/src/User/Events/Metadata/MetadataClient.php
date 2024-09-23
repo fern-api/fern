@@ -5,10 +5,11 @@ namespace Seed\User\Events\Metadata;
 use Seed\Core\RawClient;
 use Seed\User\Events\Metadata\Requests\GetEventMetadataRequest;
 use Seed\User\Events\Metadata\Types\Metadata;
+use Seed\Exceptions\SeedException;
+use Seed\Exceptions\SeedApiException;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use JsonException;
-use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class MetadataClient
@@ -35,6 +36,8 @@ class MetadataClient
      *   baseUrl?: string,
      * } $options
      * @return Metadata
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function getMetadata(GetEventMetadataRequest $request, ?array $options = null): Metadata
     {
@@ -55,11 +58,10 @@ class MetadataClient
                 return Metadata::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException("Failed to deserialize response: {$e->getMessage()}");
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException($e->getMessage());
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
     }
-
 }

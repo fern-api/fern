@@ -4,10 +4,11 @@ namespace Seed\Package;
 
 use Seed\Core\RawClient;
 use Seed\Package\Requests\TestRequest;
+use Seed\Exceptions\SeedException;
+use Seed\Exceptions\SeedApiException;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
-use Exception;
 
 class PackageClient
 {
@@ -30,6 +31,8 @@ class PackageClient
      * @param ?array{
      *   baseUrl?: string,
      * } $options
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function test(TestRequest $request, ?array $options = null): void
     {
@@ -49,9 +52,8 @@ class PackageClient
                 return;
             }
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException($e->getMessage());
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
     }
-
 }

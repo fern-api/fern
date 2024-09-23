@@ -5,10 +5,11 @@ namespace Seed\Auth;
 use Seed\Core\RawClient;
 use Seed\Auth\Requests\GetTokenRequest;
 use Seed\Auth\Types\TokenResponse;
+use Seed\Exceptions\SeedException;
+use Seed\Exceptions\SeedApiException;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use JsonException;
-use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class AuthClient
@@ -33,6 +34,8 @@ class AuthClient
      *   baseUrl?: string,
      * } $options
      * @return TokenResponse
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function getToken(GetTokenRequest $request, ?array $options = null): TokenResponse
     {
@@ -51,11 +54,10 @@ class AuthClient
                 return TokenResponse::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException("Failed to deserialize response: {$e->getMessage()}");
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException($e->getMessage());
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
     }
-
 }

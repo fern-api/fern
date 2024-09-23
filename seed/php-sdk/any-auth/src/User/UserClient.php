@@ -4,11 +4,12 @@ namespace Seed\User;
 
 use Seed\Core\RawClient;
 use Seed\User\Types\User;
+use Seed\Exceptions\SeedException;
+use Seed\Exceptions\SeedApiException;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use Seed\Core\JsonDecoder;
 use JsonException;
-use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class UserClient
@@ -32,6 +33,8 @@ class UserClient
      *   baseUrl?: string,
      * } $options
      * @return array<User>
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function get(?array $options = null): array
     {
@@ -49,11 +52,10 @@ class UserClient
                 return JsonDecoder::decodeArray($json, [User::class]); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException("Failed to deserialize response: {$e->getMessage()}");
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException($e->getMessage());
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
     }
-
 }

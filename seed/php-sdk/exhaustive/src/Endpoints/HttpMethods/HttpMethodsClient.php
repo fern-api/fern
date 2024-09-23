@@ -3,11 +3,12 @@
 namespace Seed\Endpoints\HttpMethods;
 
 use Seed\Core\RawClient;
+use Seed\Exceptions\SeedException;
+use Seed\Exceptions\SeedApiException;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use Seed\Core\JsonDecoder;
 use JsonException;
-use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Types\Object\Types\ObjectWithRequiredField;
 use Seed\Types\Object\Types\ObjectWithOptionalField;
@@ -34,6 +35,8 @@ class HttpMethodsClient
      *   baseUrl?: string,
      * } $options
      * @return string
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function testGet(string $id, ?array $options = null): string
     {
@@ -51,11 +54,11 @@ class HttpMethodsClient
                 return JsonDecoder::decodeString($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException("Failed to deserialize response: {$e->getMessage()}");
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException($e->getMessage());
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
     }
 
     /**
@@ -64,6 +67,8 @@ class HttpMethodsClient
      *   baseUrl?: string,
      * } $options
      * @return ObjectWithOptionalField
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function testPost(ObjectWithRequiredField $request, ?array $options = null): ObjectWithOptionalField
     {
@@ -82,11 +87,11 @@ class HttpMethodsClient
                 return ObjectWithOptionalField::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException("Failed to deserialize response: {$e->getMessage()}");
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException($e->getMessage());
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
     }
 
     /**
@@ -96,6 +101,8 @@ class HttpMethodsClient
      *   baseUrl?: string,
      * } $options
      * @return ObjectWithOptionalField
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function testPut(string $id, ObjectWithRequiredField $request, ?array $options = null): ObjectWithOptionalField
     {
@@ -114,11 +121,11 @@ class HttpMethodsClient
                 return ObjectWithOptionalField::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException("Failed to deserialize response: {$e->getMessage()}");
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException($e->getMessage());
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
     }
 
     /**
@@ -128,6 +135,8 @@ class HttpMethodsClient
      *   baseUrl?: string,
      * } $options
      * @return ObjectWithOptionalField
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function testPatch(string $id, ObjectWithOptionalField $request, ?array $options = null): ObjectWithOptionalField
     {
@@ -146,11 +155,11 @@ class HttpMethodsClient
                 return ObjectWithOptionalField::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException("Failed to deserialize response: {$e->getMessage()}");
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException($e->getMessage());
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
     }
 
     /**
@@ -159,6 +168,8 @@ class HttpMethodsClient
      *   baseUrl?: string,
      * } $options
      * @return bool
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function testDelete(string $id, ?array $options = null): bool
     {
@@ -176,11 +187,10 @@ class HttpMethodsClient
                 return JsonDecoder::decodeBool($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException("Failed to deserialize response: {$e->getMessage()}");
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException($e->getMessage());
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
     }
-
 }

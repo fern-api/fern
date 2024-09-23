@@ -42,6 +42,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             parameters,
             docs: endpoint.docs,
             return_,
+            throws: [this.context.getBaseExceptionClassReference(), this.context.getBaseApiExceptionClassReference()],
             body: php.codeblock((writer) => {
                 const queryParameterCodeBlock = endpointSignatureInfo.request?.getQueryParameterCodeBlock();
                 if (queryParameterCodeBlock != null) {
@@ -81,7 +82,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 writer.writeLine(" $e) {");
                 writer.indent();
                 writer.write("throw new ");
-                writer.writeNode(this.context.getBaseApiExceptionClassReference());
+                writer.writeNode(this.context.getBaseExceptionClassReference());
                 writer.writeTextStatement("($e->getMessage())");
                 writer.dedent();
                 writer.writeLine("}");
@@ -110,7 +111,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         return php.codeblock((writer) => {
             writer.write("throw new ");
             writer.writeNode(this.context.getBaseApiExceptionClassReference());
-            writer.writeTextStatement(`("Error with status code " . ${STATUS_CODE_VARIABLE_NAME})`);
+            writer.writeTextStatement(
+                `("API request failed", ${STATUS_CODE_VARIABLE_NAME}, ${RESPONSE_VARIABLE_NAME}->getBody()->getContents())`
+            );
         });
     }
 
@@ -161,7 +164,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.indent();
                     writer.write("throw new ");
                     writer.writeNode(this.context.getBaseExceptionClassReference());
-                    writer.writeTextStatement('("Failed to deserialize response", 0, $e)');
+                    writer.writeTextStatement('("Failed to deserialize response: {$e->getMessage()}")');
                     writer.dedent();
                 },
                 streaming: () => this.context.logger.error("Streaming not supported"),

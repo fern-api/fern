@@ -5,10 +5,11 @@ namespace Seed\Userservice;
 use Seed\Core\RawClient;
 use Seed\Userservice\Requests\CreateRequest;
 use Seed\Types\CreateResponse;
+use Seed\Exceptions\SeedException;
+use Seed\Exceptions\SeedApiException;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use JsonException;
-use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class UserserviceClient
@@ -33,6 +34,8 @@ class UserserviceClient
      *   baseUrl?: string,
      * } $options
      * @return CreateResponse
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function create(CreateRequest $request, ?array $options = null): CreateResponse
     {
@@ -51,11 +54,10 @@ class UserserviceClient
                 return CreateResponse::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException("Failed to deserialize response: {$e->getMessage()}");
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException($e->getMessage());
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
     }
-
 }
