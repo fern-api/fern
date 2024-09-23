@@ -41,7 +41,7 @@ export function writeChangelogEntries(version: string, entries: ChangelogEntry[]
         changelogString += "Nothing new to report!";
     } else {
         entries.forEach((entry) => {
-            summary.push(`\`*(${entry.type})*\`: ${entry.summary}`);
+            summary.push(`**\`(${entry.type}):\`** ${entry.summary}`);
             added.push(...(entry.added ?? []));
             changed.push(...(entry.changed ?? []));
             deprecated.push(...(entry.deprecated ?? []));
