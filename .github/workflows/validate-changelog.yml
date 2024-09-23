@@ -1,4 +1,4 @@
-name: changelog
+name: validate changelog
 
 on:
   push:
@@ -13,7 +13,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  cli:
+  cli-validate:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo at current ref
@@ -31,7 +31,8 @@ jobs:
   generator-validate:
     strategy:
       matrix:
-        generator: [fastapi, pydantic, python-sdk, go-sdk, ruby-sdk, postman, openapi, java-sdk, java-model, java-spring]
+        generator:
+          [fastapi, pydantic, python-sdk, go-sdk, ruby-sdk, postman, openapi, java-sdk, java-model, java-spring]
 
     runs-on: ubuntu-latest
     steps:
