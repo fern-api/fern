@@ -1,5 +1,5 @@
 ## 0.11.3
-`*(fix)*`: Transition from lists to sequences within function calls
+**`(fix):`** Transition from lists to sequences within function calls
 
 ### What's been fixed
 - Transition from lists to sequences within function calls, this is a fix as a result of how mypy handles type variance. This fix is only for function calls as testing shows that we do not hit the same issue within mypy with list[union[*]] fields on pydantic objects.
