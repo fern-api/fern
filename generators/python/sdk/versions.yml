@@ -1,4 +1,12 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.2.7-rc0
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Dynamic header suppliers, as used within the OAuth provider are now invoked on every request, not just the first.
+        This was a regression introduced within an earlier version that is now fixed. As a results of this fix, the `refresh_token` is now correctly refreshed.
+
 - version: 4.2.6
   irVersion: 53
   changelogEntry:
