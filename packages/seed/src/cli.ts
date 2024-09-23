@@ -20,6 +20,8 @@ import { validateCliRelease } from "./commands/validate/validateCliChangelog";
 import { validateGenerator } from "./commands/validate/validateGeneratorChangelog";
 import { GeneratorWorkspace, loadGeneratorWorkspaces } from "./loadGeneratorWorkspaces";
 import { Semaphore } from "./Semaphore";
+import { generateCliChangelog } from "./commands/generate/generateCliChangelog";
+import { generateGeneratorChangelog } from "./commands/generate/generateGeneratorChangelog";
 
 void tryRunCli();
 
@@ -598,13 +600,10 @@ function addGenerateCommands(cli: Argv) {
                     async (argv) => {
                         const taskContextFactory = new TaskContextFactory(argv["log-level"]);
                         const context = taskContextFactory.create("Register");
-                        const token = await askToLogin(context);
 
-                        const fdrClient = createFdrService({ token: token.value });
-
-                        await registerCliRelease({
-                            fdrClient,
-                            context
+                        await generateCliChangelog({
+                            context,
+                            outputPath: argv.output
                         });
                     }
                 )
@@ -638,20 +637,25 @@ function addGenerateCommands(cli: Argv) {
                         }
                         const taskContextFactory = new TaskContextFactory(argv["log-level"]);
                         const context = taskContextFactory.create("Register");
-                        const token = await askToLogin(context);
-
-                        const fdrClient = createFdrService({ token: token.value });
 
                         for (const generator of generators) {
                             // If you've specified a list of generators, and the current generator is not in that list, skip it
                             if (argv.generators != null && !argv.generators.includes(generator.workspaceName)) {
                                 continue;
                             }
-                            // Register the generator and it's versions
-                            await registerGenerator({
+
+                            let outputPath = argv.output;
+                            if (argv.generators == null || argv.generators?.length > 1) {
+                                outputPath = join(
+                                    RelativeFilePath.of(argv.output ?? "./"),
+                                    RelativeFilePath.of(generator.workspaceName)
+                                );
+                            }
+
+                            await generateGeneratorChangelog({
+                                context,
                                 generator,
-                                fdrClient,
-                                context
+                                outputPath
                             });
                         }
                     }

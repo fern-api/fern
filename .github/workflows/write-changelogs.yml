@@ -1,0 +1,49 @@
+name: Write Changelogs
+
+on:
+  pull_request:
+    paths:
+      - "packages/cli/cli/versions.yml"
+      - "generators/csharp/model/versions.yml"
+      - "generators/csharp/sdk/versions.yml"
+      - "generators/python/fastapi/versions.yml"
+      - "generators/go/model/versions.yml"
+      - "generators/go/sdk/versions.yml"
+      - "generators/java/model/versions.yml"
+      - "generators/java/sdk/versions.yml"
+      - "generators/java/spring/versions.yml"
+      - "generators/openapi/versions.yml"
+      - "generators/postman/versions.yml"
+      - "generators/python/pydantic/versions.yml"
+      - "generators/python/sdk/versions.yml"
+      - "generators/ruby/model/versions.yml"
+      - "generators/ruby/sdk/versions.yml"
+      - "generators/typescript/express/versions.yml"
+
+jobs:
+  write-changelogs:
+    runs-on: ubuntu-latest
+    needs: versions-changed
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Write generator changelogs
+        run: |
+          echo "Generating changelogs for generators"
+          pnpm seed:local generate changelog generator -o pages/changelogs/
+
+      - name: Write CLI changelogs
+        run: |
+          echo "Generating changelogs for CLI"
+          pnpm seed:local generate changelog cli -o pages/changelogs/cli/
+
+      - uses: EndBug/add-and-commit@v9
+        with:
+          message: "chore: update changelog"
+          add: "./pages/changelogs"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

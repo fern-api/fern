@@ -1,10 +1,9 @@
 import { doesPathExist, join, RelativeFilePath, AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { writeChangelogEntries } from "./writeChangelogEntries";
-import { parseCliReleasesFile } from "../../utils/convertVersionsFileToReleases";
-import { GeneratorWorkspace, loadCliWorkspace } from "../../loadGeneratorWorkspaces";
+import { writeChangelogEntries, writeChangelogsToFile } from "./writeChangelogEntries";
+import { parseGeneratorReleasesFile } from "../../utils/convertVersionsFileToReleases";
+import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
 import { mkdir, writeFile } from "fs/promises";
-import { format } from "date-fns";
 
 export async function generateGeneratorChangelog({
     context,
@@ -45,7 +44,8 @@ export async function generateGeneratorChangelog({
     // Here we'll collect the changelogs so they're keyed by date, the map is essentially Release Date -> Version -> Changelog string
     const writtenVersions = new Map<Date, Map<string, string>>();
     // TODO: we might need to make an API call instead, to be able to have the date of the release filled in
-    await parseCliReleasesFile({
+    await parseGeneratorReleasesFile({
+        generatorId: generator.workspaceName,
         changelogPath: absolutePathToChangelogLocation,
         context,
         action: async (release) => {
@@ -71,16 +71,5 @@ export async function generateGeneratorChangelog({
         }
     });
 
-    // Now we'll write the changelogs to their files
-    for (const [releaseDate, versions] of writtenVersions.entries()) {
-        const changelogPath = join(resolvedOutputPath, RelativeFilePath.of(`${format(releaseDate, "yyyy-MM-dd")}.mdx`));
-
-        let changelogContent = "";
-        for (const [_, changelog] of versions.entries()) {
-            changelogContent += changelog;
-            changelogContent += "\n\n";
-        }
-
-        await writeFile(changelogPath, changelogContent);
-    }
+    await writeChangelogsToFile(resolvedOutputPath, writtenVersions);
 }

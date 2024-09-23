@@ -1,10 +1,9 @@
 import { doesPathExist, join, RelativeFilePath, AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { writeChangelogEntries } from "./writeChangelogEntries";
+import { writeChangelogEntries, writeChangelogsToFile } from "./writeChangelogEntries";
 import { parseCliReleasesFile } from "../../utils/convertVersionsFileToReleases";
 import { loadCliWorkspace } from "../../loadGeneratorWorkspaces";
-import { mkdir, writeFile } from "fs/promises";
-import { format } from "date-fns";
+import { mkdir } from "fs/promises";
 
 export async function generateCliChangelog({
     context,
@@ -73,16 +72,5 @@ export async function generateCliChangelog({
         }
     });
 
-    // Now we'll write the changelogs to their files
-    for (const [releaseDate, versions] of writtenVersions.entries()) {
-        const changelogPath = join(resolvedOutputPath, RelativeFilePath.of(`${format(releaseDate, "yyyy-MM-dd")}.mdx`));
-
-        let changelogContent = "";
-        for (const [_, changelog] of versions.entries()) {
-            changelogContent += changelog;
-            changelogContent += "\n\n";
-        }
-
-        await writeFile(changelogPath, changelogContent);
-    }
+    await writeChangelogsToFile(resolvedOutputPath, writtenVersions);
 }

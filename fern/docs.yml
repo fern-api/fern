@@ -194,23 +194,24 @@ navigation:
                 icon: brands node-js
                 slug: typescript
                 contents:
-                  - changelog: ./TODO.mdx
+                  - changelog: ./pages/changelogs/ts-express
                     title: Express Server Stub Changelog
                     slug: express-changelog
-                  - changelog: ./TODO.mdx
-                    title: TypeScript Universal SDK Changelog
-                    slug: ts-sdk-changelog
+                  # Uncomment once we've migrated TypeScript
+                  # - changelog: ./pages/changelogs/ts-sdk
+                  #   title: TypeScript Universal SDK Changelog
+                  #   slug: ts-sdk-changelog
               - section: Python
                 icon: brands python
                 slug: python
                 contents:
-                  - changelog: ./TODO.mdx
+                  - changelog: ./pages/changelogs/fastapi
                     title: FastAPI Server Stub Changelog
                     slug: fastapi-changelog
-                  - changelog: ./TODO.mdx
+                  - changelog: ./pages/changelogs/python-sdk
                     title: Python SDK Changelog
-                    slug: python-sdk-changelog
-                  - changelog: ./TODO.mdx
+                    slug: sdk-changelog
+                  - changelog: ./pages/changelogs/pydantic
                     title: Pydantic Models Changelog
                     slug: pydantic-changelog
               - section: Go
@@ -218,45 +219,45 @@ navigation:
                 slug: golang
                 contents:
                   # Intentionally not including fiber for now, but happy to include!
-                  - changelog: ./TODO.mdx
+                  - changelog: ./pages/changelogs/go-sdk
                     title: Go SDK Changelog
-                    slug: go-sdk-changelog
-                  - changelog: ./TODO.mdx
+                    slug: sdk-changelog
+                  - changelog: ./pages/changelogs/go-model
                     title: Go Models Changelog
-                    slug: go-model-changelog
+                    slug: model-changelog
               - section: .Net
                 icon: brands microsoft
                 slug: csharp
                 contents:
-                  - changelog: ./TODO.mdx
+                  - changelog: ./pages/changelogs/csharp-sdk
                     title: .Net SDK Changelog
-                    slug: csharp-sdk-changelog
-                  - changelog: ./TODO.mdx
+                    slug: sdk-changelog
+                  - changelog: ./pages/changelogs/csharp-model
                     title: .Net Models Changelog
-                    slug: csharp-model-changelog
+                    slug: model-changelog
               - section: Java
                 icon: brands java
                 slug: java
                 contents:
-                  - changelog: ./TODO.mdx
+                  - changelog: ./pages/changelogs/java-spring
                     title: Spring Server Stub Changelog
-                    slug: java-spring-changelog
-                  - changelog: ./TODO.mdx
+                    slug: spring-changelog
+                  - changelog: ./pages/changelogs/java-sdk
                     title: Java SDK Changelog
-                    slug: java-sdk-changelog
-                  - changelog: ./TODO.mdx
+                    slug: sdk-changelog
+                  - changelog: ./pages/changelogs/java-model
                     title: Java Models Changelog
-                    slug: java-model-changelog
+                    slug: model-changelog
               - section: Ruby
                 icon: gem
                 slug: ruby
                 contents:
-                  - changelog: ./TODO.mdx
+                  - changelog: ./pages/changelogs/ruby-sdk
                     title: Ruby SDK Changelog
-                    slug: ruby-sdk-changelog
-                  - changelog: ./TODO.mdx
+                    slug: sdk-changelog
+                  - changelog: ./pages/changelogs/ruby-model
                     title: Ruby Models Changelog
-                    slug: ruby-model-changelog
+                    slug: model-changelog
       - section: Getting Started
         contents:
           - page: Generate your First SDK
