@@ -10,20 +10,20 @@ use Throwable;
 class SeedApiException extends SeedException
 {
     /**
-     * @var string $body
+     * @var mixed $body
      */
-    private string $body;
+    private mixed $body;
 
     /**
      * @param string $message
      * @param int $statusCode
-     * @param string $body
+     * @param mixed $body
      * @param ?Throwable $previous
      */
     public function __construct(
         string $message,
         int $statusCode,
-        string $body,
+        mixed $body,
         ?Throwable $previous = null,
     ) {
         $this->body = $body;
@@ -33,9 +33,9 @@ class SeedApiException extends SeedException
     /**
      * Returns the body of the response that triggered the exception.
      *
-     * @return string
+     * @return mixed
      */
-    public function getBody(): string
+    public function getBody(): mixed
     {
         return $this->body;
     }
@@ -48,6 +48,6 @@ class SeedApiException extends SeedException
         if (empty($this->body)) {
             return "$this->message; Status Code: $this->code\n";
         }
-        return "$this->message; Status Code: $this->code; Body: $this->body\n";
+        return "$this->message; Status Code: $this->code; Body: " . json_encode($this->body) . "\n";
     }
 }

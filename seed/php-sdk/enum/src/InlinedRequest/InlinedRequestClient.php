@@ -50,8 +50,12 @@ class InlinedRequestClient
                 return;
             }
         } catch (ClientExceptionInterface $e) {
-            throw new SeedException($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
 }

@@ -14,7 +14,7 @@ export class BaseApiExceptionGenerator extends FileGenerator<PhpFile, SdkCustomC
         class_.addField(
             php.field({
                 name: "body",
-                type: php.Type.string(),
+                type: php.Type.mixed(),
                 access: "private"
             })
         );
@@ -43,7 +43,7 @@ export class BaseApiExceptionGenerator extends FileGenerator<PhpFile, SdkCustomC
             }),
             php.parameter({
                 name: "body",
-                type: php.Type.string()
+                type: php.Type.mixed()
             }),
             php.parameter({
                 name: "previous",
@@ -71,7 +71,9 @@ export class BaseApiExceptionGenerator extends FileGenerator<PhpFile, SdkCustomC
                 writer.controlFlow("if", php.codeblock("empty($this->body)"));
                 writer.writeTextStatement('return "$this->message; Status Code: $this->code\\n"');
                 writer.endControlFlow();
-                writer.writeTextStatement('return "$this->message; Status Code: $this->code; Body: $this->body\\n"');
+                writer.writeTextStatement(
+                    'return "$this->message; Status Code: $this->code; Body: " . json_encode($this->body) . "\\n"'
+                );
             })
         });
     }
@@ -81,7 +83,7 @@ export class BaseApiExceptionGenerator extends FileGenerator<PhpFile, SdkCustomC
             name: "getBody",
             access: "public",
             parameters: [],
-            return_: php.Type.string(),
+            return_: php.Type.mixed(),
             docs: "Returns the body of the response that triggered the exception.",
             body: php.codeblock((writer) => {
                 writer.writeTextStatement("return $this->body");

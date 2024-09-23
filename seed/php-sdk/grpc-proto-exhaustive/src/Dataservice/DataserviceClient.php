@@ -66,11 +66,15 @@ class DataserviceClient
                 return UploadResponse::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new SeedException("Failed to deserialize response: {$e->getMessage()}");
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new SeedException($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
 
     /**
@@ -99,11 +103,15 @@ class DataserviceClient
                 return DeleteResponse::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new SeedException("Failed to deserialize response: {$e->getMessage()}");
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new SeedException($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
 
     /**
@@ -132,11 +140,15 @@ class DataserviceClient
                 return DescribeResponse::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new SeedException("Failed to deserialize response: {$e->getMessage()}");
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new SeedException($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
 
     /**
@@ -172,11 +184,15 @@ class DataserviceClient
                 return FetchResponse::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new SeedException("Failed to deserialize response: {$e->getMessage()}");
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new SeedException($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
 
     /**
@@ -218,11 +234,15 @@ class DataserviceClient
                 return ListResponse::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new SeedException("Failed to deserialize response: {$e->getMessage()}");
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new SeedException($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
 
     /**
@@ -251,11 +271,15 @@ class DataserviceClient
                 return QueryResponse::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new SeedException("Failed to deserialize response: {$e->getMessage()}");
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new SeedException($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
 
     /**
@@ -284,10 +308,14 @@ class DataserviceClient
                 return UpdateResponse::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new SeedException("Failed to deserialize response: {$e->getMessage()}");
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new SeedException($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new SeedApiException("API request failed", $statusCode, $response->getBody()->getContents());
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
 }
