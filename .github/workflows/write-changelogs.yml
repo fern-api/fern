@@ -26,7 +26,6 @@ on:
 jobs:
   write-changelogs:
     runs-on: ubuntu-latest
-    needs: versions-changed
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
