@@ -37,11 +37,15 @@ jobs:
         uses: ./.github/actions/install
 
       - name: Write generator changelogs
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
         run: |
           echo "Generating changelogs for generators"
           pnpm seed:local generate changelog generator -o pages/changelogs/
 
       - name: Write CLI changelogs
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
         run: |
           echo "Generating changelogs for CLI"
           pnpm seed:local generate changelog cli -o pages/changelogs/cli/
@@ -49,6 +53,6 @@ jobs:
       - uses: EndBug/add-and-commit@v9
         with:
           message: "chore: update changelog"
-          add: "./pages/changelogs"
+          add: -A "./pages/changelogs"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
