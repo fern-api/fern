@@ -48,6 +48,7 @@ class SdkGeneratorContext(ABC):
             reserved_names={exported_root_client.get_class_name(name=None)},
             skip_formatting=custom_config.skip_formatting,
             union_naming_version=custom_config.pydantic_config.union_naming,
+            use_pydantic_field_aliases=custom_config.pydantic_config.use_pydantic_field_aliases,
         )
 
         # This should be replaced with `hasPaginatedEndpoints` in the IR, but that's on IR44, not 39, which is what Python's on

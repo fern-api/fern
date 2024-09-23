@@ -46,7 +46,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
 
     def _add_conditional_base_methods(
         self, base_class: FernAwarePydanticModel, internal_single_union_types: List[LocalClassReference]
-    ) -> None:
+    ) -> AST.TypeHint:
         if self._custom_config.skip_validation:
             root_type = AST.TypeHint.annotated(
                 type=AST.TypeHint.union(
@@ -134,6 +134,8 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
             )
         )
 
+        return root_type
+
     def determine_union_types(self, parent: ClassDeclaration) -> List[LocalClassReference]:
         dummy_parent = self._source_file.get_dummy_class_declaration(parent)
         local_dummy_references = []
@@ -170,7 +172,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                 initializer=AST.Expression(AST.ClassInstantiation(class_=factory)),
             )
 
-            self._add_conditional_base_methods(
+            root_type = self._add_conditional_base_methods(
                 external_pydantic_model,
                 internal_single_union_types=self.determine_union_types(internal_union_class_declaration),
             )
@@ -363,6 +365,27 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                     ],
                     reference_to_current_value=f"unioned_value.{self._get_discriminant_attr_name()}",
                 )
+            )
+
+            external_pydantic_model.set_root_type_unsafe_v1_only(
+                is_forward_ref=True,
+                root_type=root_type,
+                annotation=AST.Expression(
+                    AST.FunctionInvocation(
+                        function_definition=Pydantic.Field(),
+                        kwargs=[
+                            (
+                                "discriminator",
+                                AST.Expression(
+                                    f'"{self._get_discriminant_attr_name()}"',
+                                ),
+                            )
+                        ],
+                    )
+                )
+                # can't use discriminator without single variant pydantic models
+                # https://github.com/pydantic/pydantic/pull/3639
+                if len(internal_single_union_types) != 1 else None,
             )
 
     def _create_body_writer(

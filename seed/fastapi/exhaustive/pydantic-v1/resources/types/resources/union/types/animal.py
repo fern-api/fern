@@ -80,6 +80,10 @@ class Animal(UniversalRootModel):
                 )
             )
 
+    __root__: typing_extensions.Annotated[
+        typing.Union[_Animal.Dog, _Animal.Cat], pydantic.Field(discriminator="animal")
+    ]
+
 
 class _Animal:
     class Dog(resources_types_resources_union_types_dog_Dog):

@@ -286,7 +286,11 @@ class FernAwarePydanticModel:
 
     def finish(self) -> None:
         if self._custom_config.include_validators:
-            self._pydantic_model.add_partial_class()
+            if (
+                self._pydantic_model._v1_root_type is None
+                and self._custom_config.version == PydanticVersionCompatibility.V1
+            ):
+                self._pydantic_model.add_partial_class()
             self._get_validators_generator().add_validators()
         if self._model_contains_forward_refs or self._force_update_forward_refs:
             self._pydantic_model.update_forward_refs()
