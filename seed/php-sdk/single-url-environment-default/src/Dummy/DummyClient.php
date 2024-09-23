@@ -3,12 +3,13 @@
 namespace Seed\Dummy;
 
 use Seed\Core\RawClient;
+use Seed\Exceptions\SeedException;
+use Seed\Exceptions\SeedApiException;
 use Seed\Core\JsonApiRequest;
 use Seed\Environments;
 use Seed\Core\HttpMethod;
 use Seed\Core\JsonDecoder;
 use JsonException;
-use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class DummyClient
@@ -32,6 +33,8 @@ class DummyClient
      *   baseUrl?: string,
      * } $options
      * @return string
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function getDummy(?array $options = null): string
     {
@@ -49,11 +52,14 @@ class DummyClient
                 return JsonDecoder::decodeString($json);
             }
         } catch (JsonException $e) {
-            throw new Exception("Failed to deserialize response", 0, $e);
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
-
 }

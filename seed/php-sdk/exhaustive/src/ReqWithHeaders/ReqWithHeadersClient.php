@@ -4,10 +4,11 @@ namespace Seed\ReqWithHeaders;
 
 use Seed\Core\RawClient;
 use Seed\ReqWithHeaders\Requests\ReqWithHeaders;
+use Seed\Exceptions\SeedException;
+use Seed\Exceptions\SeedApiException;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
-use Exception;
 
 class ReqWithHeadersClient
 {
@@ -30,6 +31,8 @@ class ReqWithHeadersClient
      * @param ?array{
      *   baseUrl?: string,
      * } $options
+     * @throws SeedException
+     * @throws SeedApiException
      */
     public function getWithCustomHeader(ReqWithHeaders $request, ?array $options = null): void
     {
@@ -51,9 +54,12 @@ class ReqWithHeadersClient
                 return;
             }
         } catch (ClientExceptionInterface $e) {
-            throw new Exception($e->getMessage());
+            throw new SeedException(message: $e->getMessage(), previous: $e);
         }
-        throw new Exception("Error with status code " . $statusCode);
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
-
 }

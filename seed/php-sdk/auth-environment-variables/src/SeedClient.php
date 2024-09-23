@@ -75,5 +75,4 @@ class SeedClient
         $value = getenv($env);
         return $value ? (string) $value : throw new Exception($message);
     }
-
 }

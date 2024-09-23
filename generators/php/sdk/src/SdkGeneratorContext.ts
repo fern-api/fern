@@ -18,7 +18,7 @@ import { camelCase, upperFirst } from "lodash-es";
 import { RawClient } from "./core/RawClient";
 import { GuzzleClient } from "./external/GuzzleClient";
 import { ErrorId, ErrorDeclaration } from "@fern-fern/ir-sdk/api";
-import { TYPES_DIRECTORY, ERRORS_DIRECTORY, REQUESTS_DIRECTORY } from "./constants";
+import { EXCEPTIONS_DIRECTORY, TYPES_DIRECTORY, REQUESTS_DIRECTORY } from "./constants";
 import { EndpointGenerator } from "./endpoint/EndpointGenerator";
 
 export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomConfigSchema> {
@@ -100,18 +100,16 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     public getBaseExceptionClassReference(): php.ClassReference {
-        // TODO: Update this to the generated base exception class.
         return php.classReference({
-            name: "Exception",
-            namespace: this.getGlobalNamespace()
+            name: this.getOrganizationPascalCase() + "Exception",
+            namespace: this.getLocationForBaseException().namespace
         });
     }
 
     public getBaseApiExceptionClassReference(): php.ClassReference {
-        // TODO: Update this to the generated base API exception class.
         return php.classReference({
-            name: "Exception",
-            namespace: this.getGlobalNamespace()
+            name: this.getOrganizationPascalCase() + "ApiException",
+            namespace: this.getLocationForBaseException().namespace
         });
     }
 
@@ -292,7 +290,11 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
 
     public getLocationForErrorId(errorId: ErrorId): FileLocation {
         const errorDeclaration = this.getErrorDeclarationOrThrow(errorId);
-        return this.getFileLocation(errorDeclaration.name.fernFilepath, ERRORS_DIRECTORY);
+        return this.getFileLocation(errorDeclaration.name.fernFilepath, EXCEPTIONS_DIRECTORY);
+    }
+
+    public getLocationForBaseException(): FileLocation {
+        return this.getFileLocation({ allParts: [], packagePath: [], file: undefined }, EXCEPTIONS_DIRECTORY);
     }
 
     private getDefaultBaseUrl(): php.CodeBlock {
@@ -327,6 +329,10 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     private getComputedClientName(): string {
-        return `${upperFirst(camelCase(this.config.organization))}Client`;
+        return `${this.getOrganizationPascalCase()}Client`;
+    }
+
+    private getOrganizationPascalCase(): string {
+        return `${upperFirst(camelCase(this.config.organization))}`;
     }
 }

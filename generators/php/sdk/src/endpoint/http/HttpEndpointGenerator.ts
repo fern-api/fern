@@ -42,6 +42,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             parameters,
             docs: endpoint.docs,
             return_,
+            throws: [this.context.getBaseExceptionClassReference(), this.context.getBaseApiExceptionClassReference()],
             body: php.codeblock((writer) => {
                 const queryParameterCodeBlock = endpointSignatureInfo.request?.getQueryParameterCodeBlock();
                 if (queryParameterCodeBlock != null) {
@@ -80,9 +81,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 writer.writeNode(this.context.getClientExceptionInterfaceClassReference());
                 writer.writeLine(" $e) {");
                 writer.indent();
-                writer.write("throw new ");
-                writer.writeNode(this.context.getBaseApiExceptionClassReference());
-                writer.writeTextStatement("($e->getMessage())");
+                writer.writeNodeStatement(
+                    this.throwNewBaseException({
+                        message: php.codeblock("$e->getMessage()")
+                    })
+                );
                 writer.dedent();
                 writer.writeLine("}");
 
@@ -108,9 +111,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
     private getEndpointErrorHandling({ endpoint }: { endpoint: HttpEndpoint }): php.CodeBlock {
         return php.codeblock((writer) => {
-            writer.write("throw new ");
-            writer.writeNode(this.context.getBaseApiExceptionClassReference());
-            writer.writeTextStatement(`("Error with status code " . ${STATUS_CODE_VARIABLE_NAME})`);
+            writer.writeNodeStatement(
+                this.throwNewBaseAPiException({
+                    message: php.codeblock("'API request failed'"),
+                    body: php.codeblock(`${RESPONSE_VARIABLE_NAME}->getBody()->getContents()`)
+                })
+            );
         });
     }
 
@@ -159,9 +165,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeNode(this.context.getJsonExceptionClassReference());
                     writer.writeLine(" $e) {");
                     writer.indent();
-                    writer.write("throw new ");
-                    writer.writeNode(this.context.getBaseExceptionClassReference());
-                    writer.writeTextStatement('("Failed to deserialize response", 0, $e)');
+                    writer.writeNodeStatement(
+                        this.throwNewBaseException({
+                            message: php.codeblock('"Failed to deserialize response: {$e->getMessage()}"')
+                        })
+                    );
                     writer.dedent();
                 },
                 streaming: () => this.context.logger.error("Streaming not supported"),
@@ -280,6 +288,59 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     private getResponseBodyContent(): php.CodeBlock {
         return php.codeblock((writer) => {
             writer.write(`${JSON_VARIABLE_NAME} = ${RESPONSE_VARIABLE_NAME}->getBody()->getContents()`);
+        });
+    }
+
+    private throwNewBaseException({ message }: { message: php.CodeBlock }): php.CodeBlock {
+        return php.codeblock((writer) => {
+            writer.write("throw ");
+            writer.writeNode(
+                php.instantiateClass({
+                    classReference: this.context.getBaseExceptionClassReference(),
+                    arguments_: [
+                        {
+                            name: "message",
+                            assignment: message
+                        },
+                        {
+                            name: "previous",
+                            assignment: php.codeblock("$e")
+                        }
+                    ]
+                })
+            );
+        });
+    }
+
+    private throwNewBaseAPiException({
+        message,
+        body
+    }: {
+        message: php.CodeBlock;
+        body: php.CodeBlock;
+    }): php.CodeBlock {
+        return php.codeblock((writer) => {
+            writer.write("throw ");
+            writer.writeNode(
+                php.instantiateClass({
+                    classReference: this.context.getBaseApiExceptionClassReference(),
+                    arguments_: [
+                        {
+                            name: "message",
+                            assignment: message
+                        },
+                        {
+                            name: "statusCode",
+                            assignment: php.codeblock(STATUS_CODE_VARIABLE_NAME)
+                        },
+                        {
+                            name: "body",
+                            assignment: body
+                        }
+                    ],
+                    multiline: true
+                })
+            );
         });
     }
 }

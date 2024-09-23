@@ -116,6 +116,13 @@ export abstract class AbstractPhpGeneratorContext<
         return literal.type === "string" ? `'${literal.string}'` : literal.boolean ? "'true'" : "'false'";
     }
 
+    public getThrowableClassReference(): php.ClassReference {
+        return php.classReference({
+            namespace: GLOBAL_NAMESPACE,
+            name: "Throwable"
+        });
+    }
+
     public getDateTypeAttributeClassReference(): php.ClassReference {
         return this.getCoreClassReference("DateType");
     }

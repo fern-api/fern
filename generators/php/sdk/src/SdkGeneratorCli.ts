@@ -9,6 +9,8 @@ import { RootClientGenerator } from "./root-client/RootClientGenerator";
 import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
 import { WrappedEndpointRequestGenerator } from "./endpoint/request/WrappedEndpointRequestGenerator";
 import { EnvironmentGenerator } from "./environment/EnvironmentGenerator";
+import { BaseExceptionGenerator } from "./error/BaseExceptionGenerator";
+import { BaseApiExceptionGenerator } from "./error/BaseApiExceptionGenerator";
 
 export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -50,6 +52,7 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
         this.generateRootClient(context);
         this.generateSubpackages(context);
         this.generateEnvironment(context);
+        this.generateErrors(context);
         await context.project.persist();
     }
 
@@ -103,5 +106,13 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
     private generateEnvironment(context: SdkGeneratorContext) {
         const environmentGenerator = new EnvironmentGenerator(context);
         environmentGenerator.generate();
+    }
+
+    private generateErrors(context: SdkGeneratorContext) {
+        const baseException = new BaseExceptionGenerator(context);
+        context.project.addSourceFiles(baseException.generate());
+
+        const baseApiException = new BaseApiExceptionGenerator(context);
+        context.project.addSourceFiles(baseApiException.generate());
     }
 }
