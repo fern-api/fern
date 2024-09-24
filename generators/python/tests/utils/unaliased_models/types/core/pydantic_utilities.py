@@ -177,10 +177,13 @@ class UniversalBaseModel(pydantic.BaseModel):
                     # If the default values are non-null act like they've been set
                     # This effectively allows exclude_unset to work like exclude_none where
                     # the latter passes through intentionally set none values.
-                    if default != None or (
+                    if default is not None or (
                         "exclude_unset" in kwargs and not kwargs["exclude_unset"]
                     ):
                         _fields_set.add(name)
+
+                        if default is not None:
+                            self.__fields_set__.add(name)
 
             kwargs_with_defaults_exclude_unset_include_fields: typing.Any = {
                 "by_alias": True,

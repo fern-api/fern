@@ -7,7 +7,7 @@
         Use of `IS_PYDANTIC_V2` flag is now only used within universal base models (`pydantic_utilities.py`) and if pydantic version compatibility is not specified
         or set to `Both`. Concretely, this means that if your configuration specifies a version for Pydantic, then your generated code will respect that version, and
         generate the code for that specific version of Pydantic, as opposed to always generating code compatible with both versions of Pydantic.
-      fixes:
+      fixed:
         - |
           `exclude_unset` is now respected when passed in as an option to a model's `.dict` call.
 

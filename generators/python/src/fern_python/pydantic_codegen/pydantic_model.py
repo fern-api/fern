@@ -339,6 +339,8 @@ class PydanticModel:
         if len(config_kwargs) > 0:
             return AST.Expression(AST.CodeWriter(write_extras))
 
+        return None
+
     def _maybe_model_config(self) -> None:
         v1_config_class = self._get_v1_config_class()
         v2_model_config = self._get_v2_model_config()
