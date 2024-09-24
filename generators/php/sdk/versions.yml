@@ -1,1 +1,6 @@
-[]
+- version: 0.1.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Initial release.
+  irVersion: 53
