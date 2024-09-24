@@ -41,7 +41,7 @@ export function convertServices({
     environments,
     mode
 }: {
-    ir: IntermediateRepresentation,
+    ir: IntermediateRepresentation;
     httpServices: HttpService[];
     typesByName: Record<string, TypeDeclaration>;
     errorsByName: Record<string, ErrorDeclaration>;
