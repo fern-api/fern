@@ -1,4 +1,10 @@
 # For unreleased changes, use unreleased.yml
+- version: 1.5.0-rc3
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: Dependencies are sorted within the generated code to ensure that even without running isort the imports are deterministically sorted.
+
 - version: 1.5.0-rc2
   irVersion: 53
   changelogEntry:
