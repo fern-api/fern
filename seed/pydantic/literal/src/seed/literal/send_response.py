@@ -2,9 +2,13 @@
 
 from .core.pydantic_utilities import UniversalBaseModel
 import typing
+import pydantic
 
 
 class SendResponse(UniversalBaseModel):
     message: str
     status: int
     success: typing.Literal[True] = True
+
+    class Config:
+        extra = pydantic.Extra.allow

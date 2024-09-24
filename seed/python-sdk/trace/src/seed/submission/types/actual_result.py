@@ -37,6 +37,7 @@ class ActualResult_Exception(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class ActualResult_ExceptionV2(UniversalBaseModel):

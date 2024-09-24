@@ -3,7 +3,6 @@
 from ....core.pydantic_utilities import UniversalBaseModel
 import typing
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class GenericValue(UniversalBaseModel):
@@ -12,11 +11,5 @@ class GenericValue(UniversalBaseModel):
     )
     stringified_value: str = pydantic.Field(alias="stringifiedValue")
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.forbid
+    class Config:
+        extra = pydantic.Extra.forbid

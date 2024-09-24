@@ -21,6 +21,7 @@ class ErrorInfo_CompileError(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class ErrorInfo_RuntimeError(UniversalBaseModel):
@@ -34,6 +35,7 @@ class ErrorInfo_RuntimeError(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class ErrorInfo_InternalError(UniversalBaseModel):
@@ -47,6 +49,7 @@ class ErrorInfo_InternalError(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 ErrorInfo = typing.Union[ErrorInfo_CompileError, ErrorInfo_RuntimeError, ErrorInfo_InternalError]

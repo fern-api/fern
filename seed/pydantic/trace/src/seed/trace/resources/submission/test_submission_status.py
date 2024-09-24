@@ -3,7 +3,6 @@
 from __future__ import annotations
 from ...core.pydantic_utilities import UniversalBaseModel
 import typing
-from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 from .error_info import ErrorInfo
 from .running_submission_state import RunningSubmissionState
@@ -13,12 +12,8 @@ from .submission_status_for_test_case import SubmissionStatusForTestCase
 class TestSubmissionStatus_Stopped(UniversalBaseModel):
     type: typing.Literal["stopped"] = "stopped"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 class TestSubmissionStatus_Errored(UniversalBaseModel):

@@ -2,8 +2,12 @@
 
 from .base_resource import BaseResource
 import typing
+import pydantic
 
 
 class Script(BaseResource):
     resource_type: typing.Literal["Script"] = "Script"
     name: str
+
+    class Config:
+        extra = pydantic.Extra.allow

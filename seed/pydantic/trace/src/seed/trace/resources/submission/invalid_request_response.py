@@ -3,8 +3,6 @@
 from ...core.pydantic_utilities import UniversalBaseModel
 from .submission_request import SubmissionRequest
 from .invalid_request_cause import InvalidRequestCause
-from ...core.pydantic_utilities import IS_PYDANTIC_V2
-import typing
 import pydantic
 
 
@@ -12,9 +10,5 @@ class InvalidRequestResponse(UniversalBaseModel):
     request: SubmissionRequest
     cause: InvalidRequestCause
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
+    class Config:
+        extra = pydantic.Extra.allow

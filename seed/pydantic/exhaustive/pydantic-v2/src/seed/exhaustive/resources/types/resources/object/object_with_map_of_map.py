@@ -7,3 +7,6 @@ import pydantic
 
 class ObjectWithMapOfMap(UniversalBaseModel):
     map_: typing.Dict[str, typing.Dict[str, str]] = pydantic.Field(alias="map")
+
+    class Config:
+        extra = pydantic.Extra.allow

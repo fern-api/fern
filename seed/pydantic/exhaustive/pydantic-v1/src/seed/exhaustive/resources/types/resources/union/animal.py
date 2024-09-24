@@ -11,11 +11,17 @@ class Animal_Dog(UniversalBaseModel):
     name: str
     likes_to_woof: bool = pydantic.Field(alias="likesToWoof")
 
+    class Config:
+        extra = pydantic.Extra.allow
+
 
 class Animal_Cat(UniversalBaseModel):
     animal: typing.Literal["cat"] = "cat"
     name: str
     likes_to_meow: bool = pydantic.Field(alias="likesToMeow")
+
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 Animal = typing.Union[Animal_Dog, Animal_Cat]

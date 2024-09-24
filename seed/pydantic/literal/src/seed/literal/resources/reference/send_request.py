@@ -12,3 +12,6 @@ class SendRequest(UniversalBaseModel):
     stream: typing.Literal[False] = False
     context: SomeLiteral = "You're super wise"
     maybe_context: typing.Optional[SomeLiteral] = pydantic.Field(alias="maybeContext", default=None)
+
+    class Config:
+        extra = pydantic.Extra.allow

@@ -2,9 +2,13 @@
 
 from ....core.pydantic_utilities import UniversalBaseModel
 import typing
+import pydantic
 
 
 class GetTokenRequest(UniversalBaseModel):
     client_id: str
     client_secret: str
     grant_type: typing.Literal["client_credentials"] = "client_credentials"
+
+    class Config:
+        extra = pydantic.Extra.forbid

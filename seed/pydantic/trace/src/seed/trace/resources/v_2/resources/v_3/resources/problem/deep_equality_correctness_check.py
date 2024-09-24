@@ -3,16 +3,10 @@
 from .......core.pydantic_utilities import UniversalBaseModel
 from .parameter_id import ParameterId
 import pydantic
-from .......core.pydantic_utilities import IS_PYDANTIC_V2
-import typing
 
 
 class DeepEqualityCorrectnessCheck(UniversalBaseModel):
     expected_value_parameter_id: ParameterId = pydantic.Field(alias="expectedValueParameterId")
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
+    class Config:
+        extra = pydantic.Extra.allow

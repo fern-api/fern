@@ -2,8 +2,12 @@
 
 from ......core.pydantic_utilities import UniversalBaseModel
 from ......types.id import Id
+import pydantic
 
 
 class Event(UniversalBaseModel):
     id: Id
     name: str
+
+    class Config:
+        extra = pydantic.Extra.forbid

@@ -25,3 +25,6 @@ class ObjectWithOptionalField(UniversalBaseModel):
     set_: typing.Optional[typing.Set[str]] = pydantic.Field(alias="set", default=None)
     map_: typing.Optional[typing.Dict[int, str]] = pydantic.Field(alias="map", default=None)
     bigint: typing.Optional[str] = None
+
+    class Config:
+        extra = pydantic.Extra.allow

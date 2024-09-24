@@ -10,7 +10,6 @@ from .problem_files import ProblemFiles
 from .variable_type_and_name import VariableTypeAndName
 from ...commons.types.variable_type import VariableType
 from ...commons.types.test_case_with_expected_result import TestCaseWithExpectedResult
-from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ProblemInfo(UniversalBaseModel):
@@ -25,11 +24,5 @@ class ProblemInfo(UniversalBaseModel):
     method_name: str = pydantic.Field(alias="methodName")
     supports_custom_test_cases: bool = pydantic.Field(alias="supportsCustomTestCases")
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.forbid
+    class Config:
+        extra = pydantic.Extra.forbid

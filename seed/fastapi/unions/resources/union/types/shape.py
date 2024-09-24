@@ -80,6 +80,9 @@ class Shape(UniversalRootModel):
                 )
             )
 
+    class Config:
+        extra = pydantic.Extra.forbid
+
 
 class _Shape:
     class Circle(resources_union_types_circle_Circle):

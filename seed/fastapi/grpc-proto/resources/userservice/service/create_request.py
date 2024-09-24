@@ -3,6 +3,7 @@
 from ....core.pydantic_utilities import UniversalBaseModel
 import typing
 from ....types.metadata import Metadata
+import pydantic
 
 
 class CreateRequest(UniversalBaseModel):
@@ -11,3 +12,6 @@ class CreateRequest(UniversalBaseModel):
     age: typing.Optional[int] = None
     weight: typing.Optional[float] = None
     metadata: typing.Optional[Metadata] = None
+
+    class Config:
+        extra = pydantic.Extra.forbid

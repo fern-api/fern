@@ -2,6 +2,7 @@
 
 from ...core.pydantic_utilities import UniversalBaseModel
 import typing
+import pydantic
 
 
 class Request(UniversalBaseModel):
@@ -16,3 +17,6 @@ class Request(UniversalBaseModel):
     """
 
     request: typing.Optional[typing.Any] = None
+
+    class Config:
+        extra = pydantic.Extra.allow

@@ -2,11 +2,15 @@
 
 from __future__ import annotations
 from ...core.pydantic_utilities import UniversalBaseModel
+import pydantic
 import typing
 
 
 class Base(UniversalBaseModel):
     id: str
+
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 class UnionWithBaseProperties_Integer(Base):
@@ -22,6 +26,9 @@ class UnionWithBaseProperties_String(Base):
 class UnionWithBaseProperties_Foo(Base):
     type: typing.Literal["foo"] = "foo"
     name: str
+
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 UnionWithBaseProperties = typing.Union[

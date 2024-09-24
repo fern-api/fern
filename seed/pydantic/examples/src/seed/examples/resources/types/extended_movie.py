@@ -2,6 +2,7 @@
 
 from .movie import Movie
 import typing
+import pydantic
 
 
 class ExtendedMovie(Movie):
@@ -27,3 +28,6 @@ class ExtendedMovie(Movie):
     """
 
     cast: typing.List[str]
+
+    class Config:
+        extra = pydantic.Extra.allow

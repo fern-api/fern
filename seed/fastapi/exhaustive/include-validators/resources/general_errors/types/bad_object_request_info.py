@@ -5,6 +5,7 @@ from ....core.pydantic_utilities import UniversalBaseModel
 import typing
 from ....core.pydantic_utilities import universal_root_validator
 from ....core.pydantic_utilities import universal_field_validator
+import pydantic
 
 
 class BadObjectRequestInfo(UniversalBaseModel):
@@ -141,3 +142,6 @@ class BadObjectRequestInfo(UniversalBaseModel):
         for validator in BadObjectRequestInfo.Validators._message_post_validators:
             v = validator(v, values)
         return v
+
+    class Config:
+        extra = pydantic.Extra.forbid

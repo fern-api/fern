@@ -2,7 +2,11 @@
 
 from .core.pydantic_utilities import UniversalBaseModel
 import typing
+import pydantic
 
 
 class WithMetadata(UniversalBaseModel):
     metadata: typing.Dict[str, str]
+
+    class Config:
+        extra = pydantic.Extra.allow

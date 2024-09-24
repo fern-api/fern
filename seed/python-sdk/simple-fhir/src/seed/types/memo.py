@@ -19,6 +19,7 @@ class Memo(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 from .account import Account  # noqa: E402

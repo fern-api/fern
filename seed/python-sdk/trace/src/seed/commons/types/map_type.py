@@ -21,6 +21,7 @@ class MapType(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 from .list_type import ListType  # noqa: E402

@@ -8,3 +8,6 @@ import pydantic
 class NestedObjectWithRequiredField(UniversalBaseModel):
     string: str
     nested_object: ObjectWithOptionalField = pydantic.Field(alias="NestedObject")
+
+    class Config:
+        extra = pydantic.Extra.allow

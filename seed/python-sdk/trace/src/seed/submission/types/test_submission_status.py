@@ -20,6 +20,7 @@ class TestSubmissionStatus_Stopped(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class TestSubmissionStatus_Errored(UniversalBaseModel):

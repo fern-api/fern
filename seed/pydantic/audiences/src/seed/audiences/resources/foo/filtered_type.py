@@ -2,8 +2,12 @@
 
 from ...core.pydantic_utilities import UniversalBaseModel
 import typing
+import pydantic
 
 
 class FilteredType(UniversalBaseModel):
     public_property: typing.Optional[str] = None
     private_property: int
+
+    class Config:
+        extra = pydantic.Extra.allow

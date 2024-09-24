@@ -23,6 +23,7 @@ class WorkspaceSubmissionStatus_Stopped(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class WorkspaceSubmissionStatus_Errored(UniversalBaseModel):
@@ -64,6 +65,7 @@ class WorkspaceSubmissionStatus_Ran(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class WorkspaceSubmissionStatus_Traced(UniversalBaseModel):
@@ -79,6 +81,7 @@ class WorkspaceSubmissionStatus_Traced(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 WorkspaceSubmissionStatus = typing.Union[

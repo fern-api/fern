@@ -17,3 +17,6 @@ class CreateUserRequest(UniversalBaseModel):
     The age of the user.
     This propery is not required.
     """
+
+    class Config:
+        extra = pydantic.Extra.forbid

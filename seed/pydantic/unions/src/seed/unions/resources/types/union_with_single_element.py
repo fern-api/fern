@@ -3,11 +3,15 @@
 from __future__ import annotations
 from ...core.pydantic_utilities import UniversalBaseModel
 import typing
+import pydantic
 
 
 class UnionWithSingleElement_Foo(UniversalBaseModel):
     type: typing.Literal["foo"] = "foo"
     name: str
+
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 UnionWithSingleElement = UnionWithSingleElement_Foo

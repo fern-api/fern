@@ -128,14 +128,8 @@ class FieldValue(UniversalRootModel):
         if unioned_value.type == "container_value":
             return container_value(unioned_value.value)
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.forbid
+    class Config:
+        extra = pydantic.Extra.forbid
 
 
 from .container_value import (

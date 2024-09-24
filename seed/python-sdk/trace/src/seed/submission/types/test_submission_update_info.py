@@ -39,6 +39,7 @@ class TestSubmissionUpdateInfo_Stopped(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class TestSubmissionUpdateInfo_Errored(UniversalBaseModel):
@@ -66,6 +67,7 @@ class TestSubmissionUpdateInfo_GradedTestCase(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class TestSubmissionUpdateInfo_RecordedTestCase(UniversalBaseModel):
@@ -80,6 +82,7 @@ class TestSubmissionUpdateInfo_RecordedTestCase(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class TestSubmissionUpdateInfo_Finished(UniversalBaseModel):
@@ -92,6 +95,7 @@ class TestSubmissionUpdateInfo_Finished(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 TestSubmissionUpdateInfo = typing.Union[

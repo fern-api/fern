@@ -2,6 +2,7 @@
 
 from ......core.pydantic_utilities import UniversalBaseModel
 import typing
+import pydantic
 
 
 class Metadata(UniversalBaseModel):
@@ -20,3 +21,6 @@ class Metadata(UniversalBaseModel):
 
     id: str
     data: typing.Optional[typing.Dict[str, str]] = None
+
+    class Config:
+        extra = pydantic.Extra.forbid

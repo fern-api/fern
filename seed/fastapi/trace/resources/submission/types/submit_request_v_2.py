@@ -7,7 +7,6 @@ from ...commons.types.language import Language
 import typing
 from .submission_file_info import SubmissionFileInfo
 from ...commons.types.problem_id import ProblemId
-from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class SubmitRequestV2(UniversalBaseModel):
@@ -22,11 +21,5 @@ class SubmitRequestV2(UniversalBaseModel):
     )
     user_id: typing.Optional[str] = pydantic.Field(alias="userId", default=None)
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.forbid
+    class Config:
+        extra = pydantic.Extra.forbid

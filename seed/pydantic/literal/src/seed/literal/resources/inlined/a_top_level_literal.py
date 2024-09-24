@@ -7,3 +7,6 @@ import pydantic
 
 class ATopLevelLiteral(UniversalBaseModel):
     nested_literal: ANestedLiteral = pydantic.Field(alias="nestedLiteral")
+
+    class Config:
+        extra = pydantic.Extra.allow

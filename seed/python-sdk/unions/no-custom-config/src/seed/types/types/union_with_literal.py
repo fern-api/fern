@@ -17,6 +17,7 @@ class Base(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class UnionWithLiteral_Fern(Base):

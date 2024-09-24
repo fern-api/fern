@@ -3,16 +3,23 @@
 from __future__ import annotations
 from ...core.pydantic_utilities import UniversalBaseModel
 import typing
+import pydantic
 
 
 class UnionWithoutKey_Foo(UniversalBaseModel):
     type: typing.Literal["foo"] = "foo"
     name: str
 
+    class Config:
+        extra = pydantic.Extra.allow
+
 
 class UnionWithoutKey_Bar(UniversalBaseModel):
     type: typing.Literal["bar"] = "bar"
     name: str
+
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 UnionWithoutKey = typing.Union[UnionWithoutKey_Foo, UnionWithoutKey_Bar]

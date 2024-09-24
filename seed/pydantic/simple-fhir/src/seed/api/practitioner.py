@@ -2,8 +2,12 @@
 
 from .base_resource import BaseResource
 import typing
+import pydantic
 
 
 class Practitioner(BaseResource):
     resource_type: typing.Literal["Practitioner"] = "Practitioner"
     name: str
+
+    class Config:
+        extra = pydantic.Extra.allow

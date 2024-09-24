@@ -22,6 +22,7 @@ class Animal_Dog(UncheckedBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class Animal_Cat(UncheckedBaseModel):
@@ -36,6 +37,7 @@ class Animal_Cat(UncheckedBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 Animal = typing_extensions.Annotated[typing.Union[Animal_Dog, Animal_Cat], UnionMetadata(discriminant="animal")]

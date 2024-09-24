@@ -2,6 +2,7 @@
 
 from ....core.pydantic_utilities import UniversalBaseModel
 import typing
+import pydantic
 
 
 class MyObject(UniversalBaseModel):
@@ -16,3 +17,6 @@ class MyObject(UniversalBaseModel):
     """
 
     unknown: typing.Optional[typing.Any] = None
+
+    class Config:
+        extra = pydantic.Extra.forbid

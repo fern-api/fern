@@ -6,7 +6,6 @@ from ..commons.key_value_pair import KeyValuePair
 from ..commons.map_value import MapValue
 import typing
 from .test_case_result import TestCaseResult
-from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 from .test_case_grade import TestCaseGrade
 from .test_case_result_with_stdout import TestCaseResultWithStdout
@@ -18,12 +17,8 @@ class SubmissionStatusForTestCase_Graded(UniversalBaseModel):
     result: TestCaseResult
     stdout: str
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 class SubmissionStatusForTestCase_GradedV2(UniversalBaseModel):
@@ -36,12 +31,8 @@ class SubmissionStatusForTestCase_Traced(UniversalBaseModel):
     result: TestCaseResultWithStdout
     trace_responses_size: int = pydantic.Field(alias="traceResponsesSize")
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 SubmissionStatusForTestCase = typing.Union[

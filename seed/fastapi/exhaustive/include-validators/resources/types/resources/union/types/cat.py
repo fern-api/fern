@@ -185,3 +185,6 @@ class Cat(UniversalBaseModel):
         for validator in Cat.Validators._likes_to_meow_post_validators:
             v = validator(v, values)
         return v
+
+    class Config:
+        extra = pydantic.Extra.forbid

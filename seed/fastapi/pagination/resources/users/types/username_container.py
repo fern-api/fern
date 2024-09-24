@@ -2,7 +2,11 @@
 
 from ....core.pydantic_utilities import UniversalBaseModel
 import typing
+import pydantic
 
 
 class UsernameContainer(UniversalBaseModel):
     results: typing.List[str]
+
+    class Config:
+        extra = pydantic.Extra.forbid

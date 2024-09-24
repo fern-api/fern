@@ -21,3 +21,6 @@ class User(UniversalBaseModel):
     user_name: str = pydantic.Field(alias="userName")
     metadata_tags: typing.List[str]
     extra_properties: typing.Dict[str, str] = pydantic.Field(alias="EXTRA_PROPERTIES")
+
+    class Config:
+        extra = pydantic.Extra.allow

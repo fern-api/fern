@@ -3,6 +3,7 @@
 from __future__ import annotations
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
+import pydantic
 from ..core.pydantic_utilities import update_forward_refs
 
 
@@ -10,6 +11,9 @@ class BaseResource(UniversalBaseModel):
     id: str
     related_resources: typing.List["ResourceList"]
     memo: "Memo"
+
+    class Config:
+        extra = pydantic.Extra.forbid
 
 
 from .resource_list import ResourceList  # noqa: E402

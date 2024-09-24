@@ -92,6 +92,7 @@ class DebugVariableValue_MapValue(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 from .debug_map_value import DebugMapValue  # noqa: E402
@@ -122,6 +123,7 @@ class DebugVariableValue_BinaryTreeNodeValue(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class DebugVariableValue_SinglyLinkedListNodeValue(UniversalBaseModel):
@@ -136,6 +138,7 @@ class DebugVariableValue_SinglyLinkedListNodeValue(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class DebugVariableValue_DoublyLinkedListNodeValue(UniversalBaseModel):
@@ -150,6 +153,7 @@ class DebugVariableValue_DoublyLinkedListNodeValue(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class DebugVariableValue_UndefinedValue(UniversalBaseModel):
@@ -162,6 +166,7 @@ class DebugVariableValue_UndefinedValue(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class DebugVariableValue_NullValue(UniversalBaseModel):
@@ -174,6 +179,7 @@ class DebugVariableValue_NullValue(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class DebugVariableValue_GenericValue(UniversalBaseModel):
@@ -188,6 +194,7 @@ class DebugVariableValue_GenericValue(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 DebugVariableValue = typing.Union[

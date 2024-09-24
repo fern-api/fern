@@ -2,8 +2,12 @@
 
 from ...core.pydantic_utilities import UniversalBaseModel
 import typing
+import pydantic
 
 
 class RegularResponse(UniversalBaseModel):
     id: str
     name: typing.Optional[str] = None
+
+    class Config:
+        extra = pydantic.Extra.allow

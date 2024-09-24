@@ -12,3 +12,6 @@ class Movie(UniversalBaseModel):
     """
     The rating scale is one to five stars
     """
+
+    class Config:
+        extra = pydantic.Extra.forbid

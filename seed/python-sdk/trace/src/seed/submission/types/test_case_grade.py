@@ -25,6 +25,7 @@ class TestCaseGrade_Hidden(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class TestCaseGrade_NonHidden(UniversalBaseModel):
@@ -43,6 +44,7 @@ class TestCaseGrade_NonHidden(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 TestCaseGrade = typing.Union[TestCaseGrade_Hidden, TestCaseGrade_NonHidden]

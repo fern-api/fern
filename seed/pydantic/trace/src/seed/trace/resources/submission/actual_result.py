@@ -5,7 +5,6 @@ from ...core.pydantic_utilities import UniversalBaseModel
 from ..commons.variable_value import VariableValue
 import typing
 import pydantic
-from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from .exception_v_2 import ExceptionV2
 
 
@@ -20,12 +19,8 @@ class ActualResult_Exception(UniversalBaseModel):
     exception_message: str = pydantic.Field(alias="exceptionMessage")
     exception_stacktrace: str = pydantic.Field(alias="exceptionStacktrace")
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 class ActualResult_ExceptionV2(UniversalBaseModel):

@@ -37,6 +37,7 @@ class CreateProblemRequestV2(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 update_forward_refs(KeyValuePair, CreateProblemRequestV2=CreateProblemRequestV2)

@@ -7,3 +7,6 @@ import pydantic
 
 class ANestedLiteral(UniversalBaseModel):
     my_literal: typing.Literal["How super cool"] = pydantic.Field(alias="myLiteral", default="How super cool")
+
+    class Config:
+        extra = pydantic.Extra.allow

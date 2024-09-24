@@ -19,6 +19,7 @@ class Animal_Dog(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class Animal_Cat(UniversalBaseModel):
@@ -33,6 +34,7 @@ class Animal_Cat(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 Animal = typing.Union[Animal_Dog, Animal_Cat]

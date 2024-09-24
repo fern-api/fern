@@ -3,7 +3,6 @@
 from __future__ import annotations
 from ...core.pydantic_utilities import UniversalBaseModel
 import typing
-from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 from .exception_info import ExceptionInfo
 
@@ -12,36 +11,24 @@ class ErrorInfo_CompileError(UniversalBaseModel):
     type: typing.Literal["compileError"] = "compileError"
     message: str
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 class ErrorInfo_RuntimeError(UniversalBaseModel):
     type: typing.Literal["runtimeError"] = "runtimeError"
     message: str
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 class ErrorInfo_InternalError(UniversalBaseModel):
     type: typing.Literal["internalError"] = "internalError"
     exception_info: ExceptionInfo = pydantic.Field(alias="exceptionInfo")
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 ErrorInfo = typing.Union[ErrorInfo_CompileError, ErrorInfo_RuntimeError, ErrorInfo_InternalError]

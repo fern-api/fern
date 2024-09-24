@@ -152,3 +152,6 @@ class DoubleOptional(UniversalBaseModel):
         for validator in DoubleOptional.Validators._optional_alias_post_validators:
             v = validator(v, values)
         return v
+
+    class Config:
+        extra = pydantic.Extra.forbid

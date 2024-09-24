@@ -29,3 +29,6 @@ class ObjectWithOptionalField(UniversalBaseModel):
         alias="map", default=None
     )
     bigint: typing.Optional[str] = None
+
+    class Config:
+        extra = pydantic.Extra.forbid

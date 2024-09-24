@@ -297,14 +297,8 @@ class VariableValue(UniversalRootModel):
         if unioned_value.type == "nullValue":
             return null_value()
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.forbid
+    class Config:
+        extra = pydantic.Extra.forbid
 
 
 from .map_value import MapValue as resources_commons_types_map_value_MapValue  # noqa: E402

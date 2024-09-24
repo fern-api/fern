@@ -4,7 +4,6 @@ from ......core.pydantic_utilities import UniversalBaseModel
 import typing
 from .....commons.types.language import Language
 import pydantic
-from ......core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class GetFunctionSignatureResponse(UniversalBaseModel):
@@ -12,11 +11,5 @@ class GetFunctionSignatureResponse(UniversalBaseModel):
         alias="functionByLanguage"
     )
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.forbid
+    class Config:
+        extra = pydantic.Extra.forbid

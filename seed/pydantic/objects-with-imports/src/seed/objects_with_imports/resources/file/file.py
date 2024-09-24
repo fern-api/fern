@@ -2,6 +2,7 @@
 
 from ...core.pydantic_utilities import UniversalBaseModel
 from .file_info import FileInfo
+import pydantic
 
 
 class File(UniversalBaseModel):
@@ -20,3 +21,6 @@ class File(UniversalBaseModel):
     name: str
     contents: str
     info: FileInfo
+
+    class Config:
+        extra = pydantic.Extra.allow

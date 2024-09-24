@@ -17,3 +17,4 @@ class Script(BaseResource):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow

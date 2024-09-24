@@ -43,3 +43,6 @@ class Movie(UniversalBaseModel):
     book: typing.Optional[str] = None
     metadata: typing.Dict[str, typing.Optional[typing.Any]]
     revenue: int
+
+    class Config:
+        extra = pydantic.Extra.allow

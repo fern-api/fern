@@ -28,6 +28,7 @@ class AssertCorrectnessCheck_DeepEquality(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class AssertCorrectnessCheck_Custom(UniversalBaseModel):
@@ -44,6 +45,7 @@ class AssertCorrectnessCheck_Custom(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 AssertCorrectnessCheck = typing.Union[AssertCorrectnessCheck_DeepEquality, AssertCorrectnessCheck_Custom]

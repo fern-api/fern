@@ -3,15 +3,22 @@
 from __future__ import annotations
 from ...core.pydantic_utilities import UniversalBaseModel
 import typing
+import pydantic
 
 
 class UnionWithUnknown_Foo(UniversalBaseModel):
     type: typing.Literal["foo"] = "foo"
     name: str
 
+    class Config:
+        extra = pydantic.Extra.allow
+
 
 class UnionWithUnknown_Unknown(UniversalBaseModel):
     type: typing.Literal["unknown"] = "unknown"
+
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 UnionWithUnknown = typing.Union[UnionWithUnknown_Foo, UnionWithUnknown_Unknown]

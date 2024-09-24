@@ -80,6 +80,9 @@ class Animal(UniversalRootModel):
                 )
             )
 
+    class Config:
+        extra = pydantic.Extra.forbid
+
 
 class _Animal:
     class Dog(resources_types_resources_union_types_dog_Dog):

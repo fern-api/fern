@@ -150,3 +150,6 @@ class ObjectWithMapOfMap(UniversalBaseModel):
         for validator in ObjectWithMapOfMap.Validators._map__post_validators:
             v = validator(v, values)
         return v
+
+    class Config:
+        extra = pydantic.Extra.forbid

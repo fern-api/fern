@@ -10,7 +10,6 @@ import typing
 from ....commons.language import Language
 from .files import Files
 from .basic_test_case_template import BasicTestCaseTemplate
-from .....core.pydantic_utilities import IS_PYDANTIC_V2
 from .....core.pydantic_utilities import update_forward_refs
 
 
@@ -20,12 +19,8 @@ class BasicCustomFiles(UniversalBaseModel):
     additional_files: typing.Dict[Language, Files] = pydantic.Field(alias="additionalFiles")
     basic_test_case_template: BasicTestCaseTemplate = pydantic.Field(alias="basicTestCaseTemplate")
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 update_forward_refs(ListType, BasicCustomFiles=BasicCustomFiles)

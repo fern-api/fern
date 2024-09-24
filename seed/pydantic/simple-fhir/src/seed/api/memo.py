@@ -3,12 +3,16 @@
 from __future__ import annotations
 from .core.pydantic_utilities import UniversalBaseModel
 import typing
+import pydantic
 from .core.pydantic_utilities import update_forward_refs
 
 
 class Memo(UniversalBaseModel):
     description: str
     account: typing.Optional["Account"] = None
+
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 from .account import Account  # noqa: E402

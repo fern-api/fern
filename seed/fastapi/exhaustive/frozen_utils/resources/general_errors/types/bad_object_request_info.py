@@ -17,3 +17,4 @@ class BadObjectRequestInfo(UniversalBaseModel):
 
         class Config:
             frozen = True
+            extra = pydantic.Extra.forbid

@@ -3,7 +3,11 @@
 from .....core.pydantic_utilities import UniversalBaseModel
 import typing
 from ....folder_c.resources.common.foo import Foo as resources_folder_c_resources_common_foo_Foo
+import pydantic
 
 
 class Foo(UniversalBaseModel):
     foo: typing.Optional[resources_folder_c_resources_common_foo_Foo] = None
+
+    class Config:
+        extra = pydantic.Extra.allow

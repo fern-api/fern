@@ -2,7 +2,11 @@
 
 from ....core.pydantic_utilities import UniversalBaseModel
 import typing
+import pydantic
 
 
 class WithCursor(UniversalBaseModel):
     cursor: typing.Optional[str] = None
+
+    class Config:
+        extra = pydantic.Extra.forbid

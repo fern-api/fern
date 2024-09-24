@@ -2,9 +2,13 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 from .type import Type
+import pydantic
 
 
 class Identifier(UniversalBaseModel):
     type: Type
     value: str
     label: str
+
+    class Config:
+        extra = pydantic.Extra.forbid

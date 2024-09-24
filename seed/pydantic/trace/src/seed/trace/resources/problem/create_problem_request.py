@@ -14,7 +14,6 @@ from .problem_files import ProblemFiles
 from .variable_type_and_name import VariableTypeAndName
 from ..commons.variable_type import VariableType
 from ..commons.test_case_with_expected_result import TestCaseWithExpectedResult
-from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.pydantic_utilities import update_forward_refs
 
 
@@ -27,12 +26,8 @@ class CreateProblemRequest(UniversalBaseModel):
     testcases: typing.List[TestCaseWithExpectedResult]
     method_name: str = pydantic.Field(alias="methodName")
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 update_forward_refs(KeyValuePair, CreateProblemRequest=CreateProblemRequest)

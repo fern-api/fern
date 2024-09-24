@@ -20,6 +20,7 @@ class VariableType_IntegerType(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class VariableType_DoubleType(UniversalBaseModel):
@@ -32,6 +33,7 @@ class VariableType_DoubleType(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class VariableType_BooleanType(UniversalBaseModel):
@@ -44,6 +46,7 @@ class VariableType_BooleanType(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class VariableType_StringType(UniversalBaseModel):
@@ -56,6 +59,7 @@ class VariableType_StringType(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class VariableType_CharType(UniversalBaseModel):
@@ -68,6 +72,7 @@ class VariableType_CharType(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class VariableType_ListType(UniversalBaseModel):
@@ -82,6 +87,7 @@ class VariableType_ListType(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class VariableType_MapType(UniversalBaseModel):
@@ -96,6 +102,7 @@ class VariableType_MapType(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 from .list_type import ListType  # noqa: E402
@@ -112,6 +119,7 @@ class VariableType_BinaryTreeType(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class VariableType_SinglyLinkedListType(UniversalBaseModel):
@@ -124,6 +132,7 @@ class VariableType_SinglyLinkedListType(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class VariableType_DoublyLinkedListType(UniversalBaseModel):
@@ -136,6 +145,7 @@ class VariableType_DoublyLinkedListType(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 VariableType = typing.Union[

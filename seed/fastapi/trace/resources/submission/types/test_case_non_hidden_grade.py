@@ -5,7 +5,6 @@ import typing
 from ...commons.types.variable_value import VariableValue
 import pydantic
 from .exception_v_2 import ExceptionV2
-from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class TestCaseNonHiddenGrade(UniversalBaseModel):
@@ -16,11 +15,5 @@ class TestCaseNonHiddenGrade(UniversalBaseModel):
     exception: typing.Optional[ExceptionV2] = None
     stdout: str
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.forbid
+    class Config:
+        extra = pydantic.Extra.forbid

@@ -8,3 +8,6 @@ import pydantic
 class Record(UniversalBaseModel):
     foo: typing.Dict[str, str]
     f_3_d: int = pydantic.Field(alias="3d")
+
+    class Config:
+        extra = pydantic.Extra.forbid

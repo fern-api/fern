@@ -90,6 +90,7 @@ class VariableValue_MapValue(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 from .map_value import MapValue  # noqa: E402
@@ -120,6 +121,7 @@ class VariableValue_BinaryTreeValue(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class VariableValue_SinglyLinkedListValue(UniversalBaseModel):
@@ -134,6 +136,7 @@ class VariableValue_SinglyLinkedListValue(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class VariableValue_DoublyLinkedListValue(UniversalBaseModel):
@@ -148,6 +151,7 @@ class VariableValue_DoublyLinkedListValue(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class VariableValue_NullValue(UniversalBaseModel):
@@ -160,6 +164,7 @@ class VariableValue_NullValue(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 VariableValue = typing.Union[

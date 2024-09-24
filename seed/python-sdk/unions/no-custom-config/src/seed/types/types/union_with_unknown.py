@@ -18,6 +18,7 @@ class UnionWithUnknown_Foo(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class UnionWithUnknown_Unknown(UniversalBaseModel):
@@ -30,6 +31,7 @@ class UnionWithUnknown_Unknown(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 UnionWithUnknown = typing.Union[UnionWithUnknown_Foo, UnionWithUnknown_Unknown]

@@ -34,6 +34,7 @@ class Exception_Generic(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class Exception_Timeout(UniversalBaseModel):
@@ -58,6 +59,7 @@ class Exception_Timeout(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 """

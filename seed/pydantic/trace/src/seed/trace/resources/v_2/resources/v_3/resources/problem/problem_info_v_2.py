@@ -15,7 +15,6 @@ from .custom_files import CustomFiles
 from .generated_files import GeneratedFiles
 from .test_case_template import TestCaseTemplate
 from .test_case_v_2 import TestCaseV2
-from .......core.pydantic_utilities import IS_PYDANTIC_V2
 from .......core.pydantic_utilities import update_forward_refs
 
 
@@ -31,12 +30,8 @@ class ProblemInfoV2(UniversalBaseModel):
     testcases: typing.List[TestCaseV2]
     is_public: bool = pydantic.Field(alias="isPublic")
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 update_forward_refs(KeyValuePair, ProblemInfoV2=ProblemInfoV2)

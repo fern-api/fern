@@ -19,3 +19,4 @@ class StoppedResponse(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow

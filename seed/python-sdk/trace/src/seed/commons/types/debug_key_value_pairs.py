@@ -19,6 +19,7 @@ class DebugKeyValuePairs(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 from .debug_map_value import DebugMapValue  # noqa: E402

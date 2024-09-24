@@ -4,7 +4,6 @@ from ....core.pydantic_utilities import UniversalBaseModel
 from .node_id import NodeId
 import pydantic
 import typing
-from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class DoublyLinkedListNodeValue(UniversalBaseModel):
@@ -13,11 +12,5 @@ class DoublyLinkedListNodeValue(UniversalBaseModel):
     next: typing.Optional[NodeId] = None
     prev: typing.Optional[NodeId] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.forbid
+    class Config:
+        extra = pydantic.Extra.forbid

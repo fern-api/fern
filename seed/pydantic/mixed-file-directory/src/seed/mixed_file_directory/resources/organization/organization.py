@@ -4,9 +4,13 @@ from ...core.pydantic_utilities import UniversalBaseModel
 from ...id import Id
 import typing
 from ..user.user import User
+import pydantic
 
 
 class Organization(UniversalBaseModel):
     id: Id
     name: str
     users: typing.List[User]
+
+    class Config:
+        extra = pydantic.Extra.allow

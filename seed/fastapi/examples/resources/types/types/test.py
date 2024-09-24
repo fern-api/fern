@@ -69,6 +69,9 @@ class Test(UniversalRootModel):
         if unioned_value.type == "or":
             return or_(unioned_value.value)
 
+    class Config:
+        extra = pydantic.Extra.forbid
+
 
 class _Test:
     class And(UniversalBaseModel):

@@ -30,6 +30,7 @@ class SubmissionTypeState_Test(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class SubmissionTypeState_Workspace(UniversalBaseModel):
@@ -43,6 +44,7 @@ class SubmissionTypeState_Workspace(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 SubmissionTypeState = typing.Union[SubmissionTypeState_Test, SubmissionTypeState_Workspace]

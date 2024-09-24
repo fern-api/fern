@@ -7,7 +7,6 @@ import typing
 from .....commons.types.language import Language
 from .files import Files
 from .basic_test_case_template import BasicTestCaseTemplate
-from ......core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class BasicCustomFiles(UniversalBaseModel):
@@ -20,11 +19,5 @@ class BasicCustomFiles(UniversalBaseModel):
         alias="basicTestCaseTemplate"
     )
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.forbid
+    class Config:
+        extra = pydantic.Extra.forbid

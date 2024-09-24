@@ -2,8 +2,6 @@
 
 from ....core.pydantic_utilities import UniversalBaseModel
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2
-import typing
 
 
 class ExceptionInfo(UniversalBaseModel):
@@ -11,11 +9,5 @@ class ExceptionInfo(UniversalBaseModel):
     exception_message: str = pydantic.Field(alias="exceptionMessage")
     exception_stacktrace: str = pydantic.Field(alias="exceptionStacktrace")
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.forbid
+    class Config:
+        extra = pydantic.Extra.forbid

@@ -13,7 +13,6 @@ import typing
 from .test_case_template import TestCaseTemplate
 from .test_case_v_2 import TestCaseV2
 from ....commons.language import Language
-from .....core.pydantic_utilities import IS_PYDANTIC_V2
 from .....core.pydantic_utilities import update_forward_refs
 
 
@@ -26,12 +25,8 @@ class CreateProblemRequestV2(UniversalBaseModel):
     supported_languages: typing.Set[Language] = pydantic.Field(alias="supportedLanguages")
     is_public: bool = pydantic.Field(alias="isPublic")
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 update_forward_refs(KeyValuePair, CreateProblemRequestV2=CreateProblemRequestV2)

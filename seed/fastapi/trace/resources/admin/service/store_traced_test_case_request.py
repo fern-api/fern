@@ -5,18 +5,11 @@ from ...submission.types.test_case_result_with_stdout import TestCaseResultWithS
 import typing
 from ...submission.types.trace_response import TraceResponse
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class StoreTracedTestCaseRequest(UniversalBaseModel):
     result: TestCaseResultWithStdout
     trace_responses: typing.List[TraceResponse] = pydantic.Field(alias="traceResponses")
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.forbid
+    class Config:
+        extra = pydantic.Extra.forbid

@@ -7,3 +7,6 @@ import pydantic
 class StuntDouble(UniversalBaseModel):
     name: str
     actor_or_actress_id: str = pydantic.Field(alias="actorOrActressId")
+
+    class Config:
+        extra = pydantic.Extra.forbid

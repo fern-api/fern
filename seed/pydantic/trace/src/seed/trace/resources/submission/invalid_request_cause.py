@@ -5,7 +5,6 @@ from ...core.pydantic_utilities import UniversalBaseModel
 import typing
 from .submission_id import SubmissionId
 import pydantic
-from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ..commons.problem_id import ProblemId
 from ..commons.language import Language
 
@@ -14,12 +13,8 @@ class InvalidRequestCause_SubmissionIdNotFound(UniversalBaseModel):
     type: typing.Literal["submissionIdNotFound"] = "submissionIdNotFound"
     missing_submission_id: SubmissionId = pydantic.Field(alias="missingSubmissionId")
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 class InvalidRequestCause_CustomTestCasesUnsupported(UniversalBaseModel):
@@ -27,12 +22,8 @@ class InvalidRequestCause_CustomTestCasesUnsupported(UniversalBaseModel):
     problem_id: ProblemId = pydantic.Field(alias="problemId")
     submission_id: SubmissionId = pydantic.Field(alias="submissionId")
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 class InvalidRequestCause_UnexpectedLanguage(UniversalBaseModel):
@@ -40,12 +31,8 @@ class InvalidRequestCause_UnexpectedLanguage(UniversalBaseModel):
     expected_language: Language = pydantic.Field(alias="expectedLanguage")
     actual_language: Language = pydantic.Field(alias="actualLanguage")
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 InvalidRequestCause = typing.Union[

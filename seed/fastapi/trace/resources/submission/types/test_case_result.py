@@ -4,8 +4,6 @@ from ....core.pydantic_utilities import UniversalBaseModel
 from ...commons.types.variable_value import VariableValue
 import pydantic
 from .actual_result import ActualResult
-from ....core.pydantic_utilities import IS_PYDANTIC_V2
-import typing
 
 
 class TestCaseResult(UniversalBaseModel):
@@ -13,11 +11,5 @@ class TestCaseResult(UniversalBaseModel):
     actual_result: ActualResult = pydantic.Field(alias="actualResult")
     passed: bool
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.forbid
+    class Config:
+        extra = pydantic.Extra.forbid

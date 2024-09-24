@@ -4,7 +4,6 @@ from __future__ import annotations
 from ...core.pydantic_utilities import UniversalBaseModel
 import typing
 import pydantic
-from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from .node_id import NodeId
 from .binary_tree_node_value import BinaryTreeNodeValue
 from .singly_linked_list_node_value import SinglyLinkedListNodeValue
@@ -41,12 +40,8 @@ class VariableValue_MapValue(UniversalBaseModel):
     type: typing.Literal["mapValue"] = "mapValue"
     key_value_pairs: typing.List["KeyValuePair"] = pydantic.Field(alias="keyValuePairs")
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 from .map_value import MapValue  # noqa: E402
@@ -62,12 +57,8 @@ class VariableValue_BinaryTreeValue(UniversalBaseModel):
     root: typing.Optional[NodeId] = None
     nodes: typing.Dict[NodeId, BinaryTreeNodeValue]
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 class VariableValue_SinglyLinkedListValue(UniversalBaseModel):
@@ -75,12 +66,8 @@ class VariableValue_SinglyLinkedListValue(UniversalBaseModel):
     head: typing.Optional[NodeId] = None
     nodes: typing.Dict[NodeId, SinglyLinkedListNodeValue]
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 class VariableValue_DoublyLinkedListValue(UniversalBaseModel):
@@ -88,23 +75,15 @@ class VariableValue_DoublyLinkedListValue(UniversalBaseModel):
     head: typing.Optional[NodeId] = None
     nodes: typing.Dict[NodeId, DoublyLinkedListNodeValue]
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 class VariableValue_NullValue(UniversalBaseModel):
     type: typing.Literal["nullValue"] = "nullValue"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 VariableValue = typing.Union[

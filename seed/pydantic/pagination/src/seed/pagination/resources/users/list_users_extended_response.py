@@ -9,3 +9,6 @@ class ListUsersExtendedResponse(UserPage):
     """
     The totall number of /users
     """
+
+    class Config:
+        extra = pydantic.Extra.allow

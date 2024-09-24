@@ -2,8 +2,12 @@
 
 from ...core.pydantic_utilities import UniversalBaseModel
 import typing
+import pydantic
 
 
 class User(UniversalBaseModel):
     name: str
     tags: typing.List[str]
+
+    class Config:
+        extra = pydantic.Extra.allow

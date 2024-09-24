@@ -221,3 +221,6 @@ class NestedObjectWithRequiredField(UniversalBaseModel):
         ) in NestedObjectWithRequiredField.Validators._nested_object_post_validators:
             v = validator(v, values)
         return v
+
+    class Config:
+        extra = pydantic.Extra.forbid

@@ -17,6 +17,7 @@ class Base(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class UnionWithBaseProperties_Integer(Base):
@@ -56,6 +57,7 @@ class UnionWithBaseProperties_Foo(Base):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 UnionWithBaseProperties = typing.Union[

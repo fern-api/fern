@@ -5,7 +5,6 @@ import typing
 from ...commons.types.language import Language
 from ...v_2.resources.problem.types.files import Files
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class WorkspaceStarterFilesResponseV2(UniversalBaseModel):
@@ -13,11 +12,5 @@ class WorkspaceStarterFilesResponseV2(UniversalBaseModel):
         alias="filesByLanguage"
     )
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.forbid
+    class Config:
+        extra = pydantic.Extra.forbid

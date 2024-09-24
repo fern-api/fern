@@ -177,14 +177,8 @@ class TestSubmissionUpdateInfo(UniversalRootModel):
         if unioned_value.type == "finished":
             return finished()
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.forbid
+    class Config:
+        extra = pydantic.Extra.forbid
 
 
 class _TestSubmissionUpdateInfo:

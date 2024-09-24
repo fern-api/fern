@@ -27,6 +27,7 @@ class SubmissionStatusForTestCase_Graded(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class SubmissionStatusForTestCase_GradedV2(UniversalBaseModel):
@@ -54,6 +55,7 @@ class SubmissionStatusForTestCase_Traced(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 SubmissionStatusForTestCase = typing.Union[

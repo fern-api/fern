@@ -7,3 +7,6 @@ import pydantic
 class Cat(UniversalBaseModel):
     name: str
     likes_to_meow: bool = pydantic.Field(alias="likesToMeow")
+
+    class Config:
+        extra = pydantic.Extra.allow

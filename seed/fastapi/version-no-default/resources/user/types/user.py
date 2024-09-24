@@ -2,8 +2,12 @@
 
 from ....core.pydantic_utilities import UniversalBaseModel
 from .user_id import UserId
+import pydantic
 
 
 class User(UniversalBaseModel):
     id: UserId
     name: str
+
+    class Config:
+        extra = pydantic.Extra.forbid

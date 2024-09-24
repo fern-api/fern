@@ -21,6 +21,7 @@ class SubmissionResponse_ServerInitialized(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class SubmissionResponse_ProblemInitialized(UniversalBaseModel):
@@ -46,6 +47,7 @@ class SubmissionResponse_WorkspaceInitialized(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class SubmissionResponse_ServerErrored(UniversalBaseModel):
@@ -61,6 +63,7 @@ class SubmissionResponse_ServerErrored(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class SubmissionResponse_CodeExecutionUpdate(UniversalBaseModel):
@@ -86,6 +89,7 @@ class SubmissionResponse_Terminated(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 SubmissionResponse = typing.Union[

@@ -3,8 +3,8 @@
 from __future__ import annotations
 from ...core.pydantic_utilities import UniversalBaseModel
 from .resource_status import ResourceStatus
-import typing
 import pydantic
+import typing
 
 
 class Base(UniversalBaseModel):
@@ -21,6 +21,9 @@ class Base(UniversalBaseModel):
     """
 
     status: ResourceStatus
+
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 class Resource_User(Base):
@@ -41,6 +44,9 @@ class Resource_User(Base):
     metadata_tags: typing.List[str]
     extra_properties: typing.Dict[str, str] = pydantic.Field(alias="EXTRA_PROPERTIES")
 
+    class Config:
+        extra = pydantic.Extra.allow
+
 
 class Resource_Organization(Base):
     """
@@ -57,6 +63,9 @@ class Resource_Organization(Base):
 
     resource_type: typing.Literal["Organization"] = "Organization"
     name: str
+
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 """

@@ -64,6 +64,7 @@ class UnionWithPrimitive(UniversalRootModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class _UnionWithPrimitive:

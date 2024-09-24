@@ -7,8 +7,6 @@ from ....commons.map_type import MapType
 from .parameter_id import ParameterId
 import pydantic
 from ....commons.variable_type import VariableType
-from .....core.pydantic_utilities import IS_PYDANTIC_V2
-import typing
 from .....core.pydantic_utilities import update_forward_refs
 
 
@@ -17,12 +15,8 @@ class Parameter(UniversalBaseModel):
     name: str
     variable_type: VariableType = pydantic.Field(alias="variableType")
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 update_forward_refs(ListType, Parameter=Parameter)

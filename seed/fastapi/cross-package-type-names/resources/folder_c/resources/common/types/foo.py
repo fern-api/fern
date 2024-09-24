@@ -2,7 +2,11 @@
 
 from ......core.pydantic_utilities import UniversalBaseModel
 import uuid
+import pydantic
 
 
 class Foo(UniversalBaseModel):
     bar_property: uuid.UUID
+
+    class Config:
+        extra = pydantic.Extra.forbid

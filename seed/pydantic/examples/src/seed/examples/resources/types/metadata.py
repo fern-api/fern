@@ -3,6 +3,7 @@
 from __future__ import annotations
 from ...core.pydantic_utilities import UniversalBaseModel
 import typing
+import pydantic
 
 
 class Base(UniversalBaseModel):
@@ -16,6 +17,9 @@ class Base(UniversalBaseModel):
 
     extra: typing.Dict[str, str]
     tags: typing.Set[str]
+
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 class Metadata_Html(Base):

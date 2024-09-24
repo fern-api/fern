@@ -2,6 +2,7 @@
 
 from ....core.pydantic_utilities import UniversalBaseModel
 import typing
+import pydantic
 
 
 class TokenResponse(UniversalBaseModel):
@@ -12,3 +13,6 @@ class TokenResponse(UniversalBaseModel):
     access_token: str
     expires_in: int
     refresh_token: typing.Optional[str] = None
+
+    class Config:
+        extra = pydantic.Extra.forbid

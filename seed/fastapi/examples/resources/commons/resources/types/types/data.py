@@ -71,6 +71,9 @@ class Data(UniversalRootModel):
         if unioned_value.type == "base64":
             return base_64(unioned_value.value)
 
+    class Config:
+        extra = pydantic.Extra.forbid
+
 
 class _Data:
     class String(UniversalBaseModel):

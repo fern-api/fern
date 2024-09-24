@@ -32,6 +32,7 @@ class Base(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class Resource_User(Base):
@@ -59,6 +60,7 @@ class Resource_User(Base):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class Resource_Organization(Base):
@@ -84,6 +86,7 @@ class Resource_Organization(Base):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 """

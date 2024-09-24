@@ -2,7 +2,11 @@
 
 from ...core.pydantic_utilities import UniversalBaseModel
 import typing
+import pydantic
 
 
 class WithPage(UniversalBaseModel):
     page: typing.Optional[int] = None
+
+    class Config:
+        extra = pydantic.Extra.allow

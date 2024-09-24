@@ -37,6 +37,7 @@ class TraceResponseV2(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 update_forward_refs(DebugKeyValuePairs, TraceResponseV2=TraceResponseV2)

@@ -10,3 +10,6 @@ class DoubleOptional(UniversalBaseModel):
     optional_alias: typing.Optional[OptionalAlias] = pydantic.Field(
         alias="optionalAlias", default=None
     )
+
+    class Config:
+        extra = pydantic.Extra.forbid

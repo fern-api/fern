@@ -4,8 +4,12 @@ from ....core.pydantic_utilities import UniversalBaseModel
 from .user_list_container import UserListContainer
 import typing
 import uuid
+import pydantic
 
 
 class UserPage(UniversalBaseModel):
     data: UserListContainer
     next: typing.Optional[uuid.UUID] = None
+
+    class Config:
+        extra = pydantic.Extra.forbid

@@ -3,7 +3,11 @@
 from ...core.pydantic_utilities import UniversalBaseModel
 import typing
 from .user import User
+import pydantic
 
 
 class UserListContainer(UniversalBaseModel):
     users: typing.List[User]
+
+    class Config:
+        extra = pydantic.Extra.allow

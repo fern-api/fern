@@ -3,6 +3,7 @@
 from .core.pydantic_utilities import UniversalBaseModel
 import typing
 from .resources.commons.resources.metadata.metadata import Metadata
+import pydantic
 
 
 class Node(UniversalBaseModel):
@@ -25,3 +26,6 @@ class Node(UniversalBaseModel):
     id: str
     label: typing.Optional[str] = None
     metadata: typing.Optional[Metadata] = None
+
+    class Config:
+        extra = pydantic.Extra.allow

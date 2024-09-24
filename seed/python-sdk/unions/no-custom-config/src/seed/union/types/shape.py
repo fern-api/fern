@@ -17,6 +17,7 @@ class Base(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class Shape_Circle(Base):
@@ -30,6 +31,7 @@ class Shape_Circle(Base):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class Shape_Square(Base):
@@ -43,6 +45,7 @@ class Shape_Square(Base):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 Shape = typing.Union[Shape_Circle, Shape_Square]

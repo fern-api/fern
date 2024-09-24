@@ -3,7 +3,11 @@
 from ...with_metadata import WithMetadata
 from .with_docs import WithDocs
 from .movie import Movie
+import pydantic
 
 
 class Response(WithMetadata, WithDocs):
     data: Movie
+
+    class Config:
+        extra = pydantic.Extra.allow

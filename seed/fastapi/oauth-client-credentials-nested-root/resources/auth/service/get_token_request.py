@@ -2,6 +2,7 @@
 
 from ....core.pydantic_utilities import UniversalBaseModel
 import typing
+import pydantic
 
 
 class GetTokenRequest(UniversalBaseModel):
@@ -10,3 +11,6 @@ class GetTokenRequest(UniversalBaseModel):
     audience: typing.Literal["https://api.example.com"] = "https://api.example.com"
     grant_type: typing.Literal["client_credentials"] = "client_credentials"
     scope: typing.Optional[str] = None
+
+    class Config:
+        extra = pydantic.Extra.forbid

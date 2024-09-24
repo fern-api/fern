@@ -12,3 +12,6 @@ class FindRequest(UniversalBaseModel):
     private_property: typing.Optional[int] = pydantic.Field(
         alias="privateProperty", default=None
     )
+
+    class Config:
+        extra = pydantic.Extra.forbid

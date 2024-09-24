@@ -7,3 +7,6 @@ import pydantic
 class Dog(UniversalBaseModel):
     name: str
     likes_to_woof: bool = pydantic.Field(alias="likesToWoof")
+
+    class Config:
+        extra = pydantic.Extra.forbid

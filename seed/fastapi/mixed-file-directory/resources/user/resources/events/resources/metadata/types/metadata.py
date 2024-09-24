@@ -3,8 +3,12 @@
 from ........core.pydantic_utilities import UniversalBaseModel
 from ........types.id import Id
 import typing
+import pydantic
 
 
 class Metadata(UniversalBaseModel):
     id: Id
     value: typing.Optional[typing.Any] = None
+
+    class Config:
+        extra = pydantic.Extra.forbid

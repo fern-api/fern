@@ -2,8 +2,12 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
+import pydantic
 
 
 class UsernamePage(UniversalBaseModel):
     after: typing.Optional[str] = None
     data: typing.List[str]
+
+    class Config:
+        extra = pydantic.Extra.forbid

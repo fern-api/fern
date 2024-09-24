@@ -8,7 +8,6 @@ import typing
 from .test_case_template import TestCaseTemplate
 from .test_case_v_2 import TestCaseV2
 from .......commons.types.language import Language
-from ........core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class CreateProblemRequestV2(UniversalBaseModel):
@@ -24,11 +23,5 @@ class CreateProblemRequestV2(UniversalBaseModel):
     )
     is_public: bool = pydantic.Field(alias="isPublic")
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.forbid
+    class Config:
+        extra = pydantic.Extra.forbid

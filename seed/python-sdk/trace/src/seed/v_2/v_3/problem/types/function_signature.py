@@ -25,6 +25,7 @@ class FunctionSignature_Void(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class FunctionSignature_NonVoid(UniversalBaseModel):
@@ -39,6 +40,7 @@ class FunctionSignature_NonVoid(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class FunctionSignature_VoidThatTakesActualResult(UniversalBaseModel):
@@ -53,6 +55,7 @@ class FunctionSignature_VoidThatTakesActualResult(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 FunctionSignature = typing.Union[

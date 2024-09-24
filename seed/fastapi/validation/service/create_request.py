@@ -2,6 +2,7 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 from ..types.shape import Shape
+import pydantic
 
 
 class CreateRequest(UniversalBaseModel):
@@ -9,3 +10,6 @@ class CreateRequest(UniversalBaseModel):
     even: int
     name: str
     shape: Shape
+
+    class Config:
+        extra = pydantic.Extra.forbid

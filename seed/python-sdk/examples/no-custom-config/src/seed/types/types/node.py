@@ -50,6 +50,7 @@ class Node(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 from .tree import Tree  # noqa: E402

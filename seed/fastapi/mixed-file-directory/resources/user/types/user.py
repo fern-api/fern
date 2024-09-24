@@ -2,9 +2,13 @@
 
 from ....core.pydantic_utilities import UniversalBaseModel
 from ....types.id import Id
+import pydantic
 
 
 class User(UniversalBaseModel):
     id: Id
     name: str
     age: int
+
+    class Config:
+        extra = pydantic.Extra.forbid

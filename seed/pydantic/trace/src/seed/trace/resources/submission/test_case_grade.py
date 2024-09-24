@@ -3,7 +3,6 @@
 from __future__ import annotations
 from ...core.pydantic_utilities import UniversalBaseModel
 import typing
-from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 from ..commons.key_value_pair import KeyValuePair
 from ..commons.map_value import MapValue
@@ -16,12 +15,8 @@ class TestCaseGrade_Hidden(UniversalBaseModel):
     type: typing.Literal["hidden"] = "hidden"
     passed: bool
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 class TestCaseGrade_NonHidden(UniversalBaseModel):
@@ -31,12 +26,8 @@ class TestCaseGrade_NonHidden(UniversalBaseModel):
     exception: typing.Optional[ExceptionV2] = None
     stdout: str
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 TestCaseGrade = typing.Union[TestCaseGrade_Hidden, TestCaseGrade_NonHidden]

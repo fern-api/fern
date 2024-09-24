@@ -9,7 +9,6 @@ from ..commons.problem_id import ProblemId
 import pydantic
 from ..commons.test_case import TestCase
 from .test_submission_status import TestSubmissionStatus
-from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from .workspace_submission_status import WorkspaceSubmissionStatus
 from ...core.pydantic_utilities import update_forward_refs
 
@@ -21,24 +20,16 @@ class SubmissionTypeState_Test(UniversalBaseModel):
     custom_test_cases: typing.List[TestCase] = pydantic.Field(alias="customTestCases")
     status: TestSubmissionStatus
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 class SubmissionTypeState_Workspace(UniversalBaseModel):
     type: typing.Literal["workspace"] = "workspace"
     status: WorkspaceSubmissionStatus
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 SubmissionTypeState = typing.Union[SubmissionTypeState_Test, SubmissionTypeState_Workspace]

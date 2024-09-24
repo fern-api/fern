@@ -3,18 +3,10 @@
 from ......core.pydantic_utilities import UniversalBaseModel
 from .function_signature import FunctionSignature
 import pydantic
-from ......core.pydantic_utilities import IS_PYDANTIC_V2
-import typing
 
 
 class GetFunctionSignatureRequest(UniversalBaseModel):
     function_signature: FunctionSignature = pydantic.Field(alias="functionSignature")
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.forbid
+    class Config:
+        extra = pydantic.Extra.forbid

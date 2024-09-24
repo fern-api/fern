@@ -4,16 +4,11 @@ from ...core.pydantic_utilities import UniversalBaseModel
 from ..commons.file_info import FileInfo
 import pydantic
 import typing
-from ...core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class WorkspaceFiles(UniversalBaseModel):
     main_file: FileInfo = pydantic.Field(alias="mainFile")
     read_only_files: typing.List[FileInfo] = pydantic.Field(alias="readOnlyFiles")
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
+    class Config:
+        extra = pydantic.Extra.allow

@@ -73,14 +73,8 @@ class ContainerValue(UniversalRootModel):
         if unioned_value.type == "optional":
             return optional(unioned_value.value)
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.forbid
+    class Config:
+        extra = pydantic.Extra.forbid
 
 
 from .field_value import FieldValue  # noqa: E402

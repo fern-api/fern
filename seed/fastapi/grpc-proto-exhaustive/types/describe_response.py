@@ -4,7 +4,6 @@ from ..core.pydantic_utilities import UniversalBaseModel
 import typing
 from .namespace_summary import NamespaceSummary
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class DescribeResponse(UniversalBaseModel):
@@ -13,11 +12,5 @@ class DescribeResponse(UniversalBaseModel):
     fullness: typing.Optional[float] = None
     total_count: typing.Optional[int] = pydantic.Field(alias="totalCount", default=None)
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.forbid
+    class Config:
+        extra = pydantic.Extra.forbid

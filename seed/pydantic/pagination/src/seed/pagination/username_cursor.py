@@ -2,7 +2,11 @@
 
 from .core.pydantic_utilities import UniversalBaseModel
 from .username_page import UsernamePage
+import pydantic
 
 
 class UsernameCursor(UniversalBaseModel):
     cursor: UsernamePage
+
+    class Config:
+        extra = pydantic.Extra.allow

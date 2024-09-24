@@ -23,6 +23,7 @@ class InvalidRequestCause_SubmissionIdNotFound(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class InvalidRequestCause_CustomTestCasesUnsupported(UniversalBaseModel):
@@ -37,6 +38,7 @@ class InvalidRequestCause_CustomTestCasesUnsupported(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class InvalidRequestCause_UnexpectedLanguage(UniversalBaseModel):
@@ -51,6 +53,7 @@ class InvalidRequestCause_UnexpectedLanguage(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 InvalidRequestCause = typing.Union[

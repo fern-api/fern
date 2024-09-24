@@ -91,6 +91,9 @@ class UnionWithTime(UniversalRootModel):
         if unioned_value.type == "datetime":
             return datetime(unioned_value.value)
 
+    class Config:
+        extra = pydantic.Extra.forbid
+
 
 class _UnionWithTime:
     class Value(UniversalBaseModel):

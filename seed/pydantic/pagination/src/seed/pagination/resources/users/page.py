@@ -15,3 +15,6 @@ class Page(UniversalBaseModel):
     next: typing.Optional[NextPage] = None
     per_page: int
     total_page: int
+
+    class Config:
+        extra = pydantic.Extra.allow

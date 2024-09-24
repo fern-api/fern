@@ -4,17 +4,11 @@ from ...core.pydantic_utilities import UniversalBaseModel
 from .submission_id import SubmissionId
 import pydantic
 from .workspace_run_details import WorkspaceRunDetails
-from ...core.pydantic_utilities import IS_PYDANTIC_V2
-import typing
 
 
 class WorkspaceRanResponse(UniversalBaseModel):
     submission_id: SubmissionId = pydantic.Field(alias="submissionId")
     run_details: WorkspaceRunDetails = pydantic.Field(alias="runDetails")
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
+    class Config:
+        extra = pydantic.Extra.allow

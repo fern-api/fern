@@ -225,14 +225,8 @@ class VariableType(UniversalRootModel):
         if unioned_value.type == "doublyLinkedListType":
             return doubly_linked_list_type()
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.forbid
+    class Config:
+        extra = pydantic.Extra.forbid
 
 
 from .list_type import ListType as resources_commons_types_list_type_ListType  # noqa: E402

@@ -4,7 +4,6 @@ from ....core.pydantic_utilities import UniversalBaseModel
 import pydantic
 import typing
 from .scope import Scope
-from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class StackFrame(UniversalBaseModel):
@@ -12,11 +11,5 @@ class StackFrame(UniversalBaseModel):
     line_number: int = pydantic.Field(alias="lineNumber")
     scopes: typing.List[Scope]
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.forbid
+    class Config:
+        extra = pydantic.Extra.forbid

@@ -3,7 +3,11 @@
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
 from .user_model import UserModel
+import pydantic
 
 
 class CreateResponse(UniversalBaseModel):
     user: typing.Optional[UserModel] = None
+
+    class Config:
+        extra = pydantic.Extra.forbid

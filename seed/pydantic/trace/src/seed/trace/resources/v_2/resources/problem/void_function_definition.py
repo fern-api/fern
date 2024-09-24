@@ -7,7 +7,6 @@ from ....commons.map_type import MapType
 import typing
 from .parameter import Parameter
 from .function_implementation_for_multiple_languages import FunctionImplementationForMultipleLanguages
-from .....core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 from .....core.pydantic_utilities import update_forward_refs
 
@@ -16,12 +15,8 @@ class VoidFunctionDefinition(UniversalBaseModel):
     parameters: typing.List[Parameter]
     code: FunctionImplementationForMultipleLanguages
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 update_forward_refs(ListType, VoidFunctionDefinition=VoidFunctionDefinition)

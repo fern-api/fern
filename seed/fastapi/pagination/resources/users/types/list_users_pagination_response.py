@@ -18,3 +18,6 @@ class ListUsersPaginationResponse(UniversalBaseModel):
     """
 
     data: typing.List[User]
+
+    class Config:
+        extra = pydantic.Extra.forbid

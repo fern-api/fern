@@ -35,6 +35,7 @@ class EventInfo_Metadata(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class EventInfo_Tag(UniversalBaseModel):

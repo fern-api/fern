@@ -5,6 +5,7 @@ import datetime as dt
 import uuid
 import typing
 from .name import Name
+import pydantic
 
 
 class Type(UniversalBaseModel):
@@ -83,3 +84,6 @@ class Type(UniversalBaseModel):
     twentyone: int
     twentytwo: float
     twentythree: str
+
+    class Config:
+        extra = pydantic.Extra.forbid

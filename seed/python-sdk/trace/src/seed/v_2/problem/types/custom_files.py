@@ -32,6 +32,7 @@ class CustomFiles_Basic(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class CustomFiles_Custom(UniversalBaseModel):

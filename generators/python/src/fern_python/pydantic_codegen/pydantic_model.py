@@ -43,7 +43,7 @@ class PydanticModel:
         snippet: Optional[str] = None,
         extra_fields: Optional[Literal["allow", "forbid"]] = None,
         pydantic_base_model: Optional[AST.ClassReference] = None,
-        is_root_model: Optional[bool] = False,
+        is_root_model: bool = False,
     ):
         self._source_file = source_file
 
@@ -321,8 +321,9 @@ class PydanticModel:
     def _maybe_model_config(self) -> None:
         extra_fields = self._extra_fields
         config_kwargs: List[Tuple[str, AST.Expression]] = []
-        if (extra_fields == "allow" or extra_fields == "forbid") and not self._is_root_model:
-            config_kwargs.append(("extra", AST.Expression(f'"{extra_fields}"')))
+        if not self._is_root_model:
+            if extra_fields == "allow" or extra_fields == "forbid":
+                config_kwargs.append(("extra", AST.Expression(f'"{extra_fields}"')))
         if self._frozen:
             config_kwargs.append(("frozen", AST.Expression("True")))
         if self._orm_mode:
@@ -344,9 +345,9 @@ class PydanticModel:
                     )
                     writer.write("  # type: ignore # Pydantic v2")
                 writer.write_newline_if_last_line_not()
-                writer.write_line("else:")
-                with writer.indent():
-                    if config_class is not None:
+                if config_class is not None:
+                    writer.write_line("else:")
+                    with writer.indent():
                         writer.write_node(config_class)
             elif config_class is not None:
                 writer.write_node(config_class)
@@ -406,21 +407,20 @@ class PydanticModel:
                 )
             )
 
-        if not self._is_root_model:
-            if self._extra_fields == "forbid":
-                config.add_class_var(
-                    AST.VariableDeclaration(
-                        name="extra",
-                        initializer=Pydantic.Extra.forbid(),
-                    )
+        if self._extra_fields == "forbid":
+            config.add_class_var(
+                AST.VariableDeclaration(
+                    name="extra",
+                    initializer=Pydantic.Extra.forbid(),
                 )
-            elif self._extra_fields == "allow":
-                config.add_class_var(
-                    AST.VariableDeclaration(
-                        name="extra",
-                        initializer=Pydantic.Extra.allow(),
-                    )
+            )
+        elif self._extra_fields == "allow":
+            config.add_class_var(
+                AST.VariableDeclaration(
+                    name="extra",
+                    initializer=Pydantic.Extra.allow(),
                 )
+            )
 
         if len(config.class_vars) > 0:
             return config

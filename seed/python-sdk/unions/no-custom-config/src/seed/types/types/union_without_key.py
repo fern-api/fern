@@ -18,6 +18,7 @@ class UnionWithoutKey_Foo(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class UnionWithoutKey_Bar(UniversalBaseModel):
@@ -31,6 +32,7 @@ class UnionWithoutKey_Bar(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 UnionWithoutKey = typing.Union[UnionWithoutKey_Foo, UnionWithoutKey_Bar]

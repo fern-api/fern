@@ -5,7 +5,6 @@ from ...submission.types.workspace_run_details import WorkspaceRunDetails
 import pydantic
 import typing
 from ...submission.types.trace_response import TraceResponse
-from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class StoreTracedWorkspaceRequest(UniversalBaseModel):
@@ -14,11 +13,5 @@ class StoreTracedWorkspaceRequest(UniversalBaseModel):
     )
     trace_responses: typing.List[TraceResponse] = pydantic.Field(alias="traceResponses")
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.forbid
+    class Config:
+        extra = pydantic.Extra.forbid

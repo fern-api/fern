@@ -39,6 +39,7 @@ class WorkspaceSubmissionUpdateInfo_Ran(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class WorkspaceSubmissionUpdateInfo_Stopped(UniversalBaseModel):
@@ -51,6 +52,7 @@ class WorkspaceSubmissionUpdateInfo_Stopped(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class WorkspaceSubmissionUpdateInfo_Traced(UniversalBaseModel):
@@ -63,6 +65,7 @@ class WorkspaceSubmissionUpdateInfo_Traced(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class WorkspaceSubmissionUpdateInfo_TracedV2(UniversalBaseModel):
@@ -76,6 +79,7 @@ class WorkspaceSubmissionUpdateInfo_TracedV2(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class WorkspaceSubmissionUpdateInfo_Errored(UniversalBaseModel):
@@ -101,6 +105,7 @@ class WorkspaceSubmissionUpdateInfo_Finished(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 WorkspaceSubmissionUpdateInfo = typing.Union[

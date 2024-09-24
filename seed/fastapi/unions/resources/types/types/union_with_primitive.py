@@ -75,6 +75,9 @@ class UnionWithPrimitive(UniversalRootModel):
         if unioned_value.type == "string":
             return string(unioned_value.value)
 
+    class Config:
+        extra = pydantic.Extra.forbid
+
 
 class _UnionWithPrimitive:
     class Integer(UniversalBaseModel):

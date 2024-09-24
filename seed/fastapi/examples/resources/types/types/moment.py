@@ -3,6 +3,7 @@
 from ....core.pydantic_utilities import UniversalBaseModel
 import uuid
 import datetime as dt
+import pydantic
 
 
 class Moment(UniversalBaseModel):
@@ -30,3 +31,6 @@ class Moment(UniversalBaseModel):
     id: uuid.UUID
     date: dt.date
     datetime: dt.datetime
+
+    class Config:
+        extra = pydantic.Extra.forbid

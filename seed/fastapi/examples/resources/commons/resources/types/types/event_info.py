@@ -97,6 +97,9 @@ class EventInfo(UniversalRootModel):
         if unioned_value.type == "tag":
             return tag(unioned_value.value)
 
+    class Config:
+        extra = pydantic.Extra.forbid
+
 
 class _EventInfo:
     class Metadata(resources_commons_resources_types_types_metadata_Metadata):

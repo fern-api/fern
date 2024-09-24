@@ -88,6 +88,9 @@ class UnionWithoutKey(UniversalRootModel):
                 )
             )
 
+    class Config:
+        extra = pydantic.Extra.forbid
+
 
 class _UnionWithoutKey:
     class Foo(resources_types_types_foo_Foo):

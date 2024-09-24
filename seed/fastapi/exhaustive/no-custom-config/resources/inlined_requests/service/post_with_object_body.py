@@ -11,3 +11,6 @@ class PostWithObjectBody(UniversalBaseModel):
     string: str
     integer: int
     nested_object: ObjectWithOptionalField = pydantic.Field(alias="NestedObject")
+
+    class Config:
+        extra = pydantic.Extra.forbid

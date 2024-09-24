@@ -2,6 +2,7 @@
 
 from ....core.pydantic_utilities import UniversalBaseModel
 import typing
+import pydantic
 
 
 class CreateUserRequest(UniversalBaseModel):
@@ -9,3 +10,6 @@ class CreateUserRequest(UniversalBaseModel):
     email: typing.Optional[str] = None
     age: typing.Optional[int] = None
     weight: typing.Optional[float] = None
+
+    class Config:
+        extra = pydantic.Extra.forbid

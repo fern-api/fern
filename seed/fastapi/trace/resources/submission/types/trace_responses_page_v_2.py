@@ -4,7 +4,6 @@ from ....core.pydantic_utilities import UniversalBaseModel
 import typing
 import pydantic
 from .trace_response_v_2 import TraceResponseV2
-from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class TraceResponsesPageV2(UniversalBaseModel):
@@ -18,11 +17,5 @@ class TraceResponsesPageV2(UniversalBaseModel):
         alias="traceResponses"
     )
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.forbid
+    class Config:
+        extra = pydantic.Extra.forbid

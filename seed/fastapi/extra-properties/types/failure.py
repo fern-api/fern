@@ -2,7 +2,11 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
+import pydantic
 
 
 class Failure(UniversalBaseModel):
     status: typing.Literal["failure"] = "failure"
+
+    class Config:
+        extra = pydantic.Extra.forbid

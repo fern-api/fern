@@ -7,7 +7,6 @@ from ..commons.debug_map_value import DebugMapValue
 import typing
 import pydantic
 from .trace_response import TraceResponse
-from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.pydantic_utilities import update_forward_refs
 
 
@@ -20,12 +19,8 @@ class TraceResponsesPage(UniversalBaseModel):
 
     trace_responses: typing.List[TraceResponse] = pydantic.Field(alias="traceResponses")
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 update_forward_refs(DebugKeyValuePairs, TraceResponsesPage=TraceResponsesPage)

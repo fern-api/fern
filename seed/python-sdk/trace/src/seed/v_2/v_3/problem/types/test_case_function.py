@@ -30,6 +30,7 @@ class TestCaseFunction_WithActualResult(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class TestCaseFunction_Custom(UniversalBaseModel):
@@ -44,6 +45,7 @@ class TestCaseFunction_Custom(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 TestCaseFunction = typing.Union[TestCaseFunction_WithActualResult, TestCaseFunction_Custom]

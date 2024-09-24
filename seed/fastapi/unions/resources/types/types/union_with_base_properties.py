@@ -113,6 +113,9 @@ class UnionWithBaseProperties(UniversalRootModel):
                 )
             )
 
+    class Config:
+        extra = pydantic.Extra.forbid
+
 
 class _UnionWithBaseProperties:
     class Integer(UniversalBaseModel):

@@ -7,7 +7,6 @@ import typing
 from ...commons.types.debug_variable_value import DebugVariableValue
 from .expression_location import ExpressionLocation
 from .stack_information import StackInformation
-from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class TraceResponse(UniversalBaseModel):
@@ -22,11 +21,5 @@ class TraceResponse(UniversalBaseModel):
     stack: StackInformation
     stdout: typing.Optional[str] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.forbid
+    class Config:
+        extra = pydantic.Extra.forbid

@@ -25,6 +25,9 @@ class EventInfo_Metadata(UniversalBaseModel):
     data: typing.Optional[typing.Dict[str, str]] = None
     json_string: typing.Optional[str] = pydantic.Field(alias="jsonString", default=None)
 
+    class Config:
+        extra = pydantic.Extra.allow
+
 
 class EventInfo_Tag(UniversalBaseModel):
     value: Tag

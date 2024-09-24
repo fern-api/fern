@@ -88,6 +88,7 @@ class Animal(UniversalRootModel):
 
         class Config:
             frozen = True
+            extra = pydantic.Extra.forbid
 
 
 class _Animal:

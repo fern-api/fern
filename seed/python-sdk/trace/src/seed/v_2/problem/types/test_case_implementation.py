@@ -23,6 +23,7 @@ class TestCaseImplementation(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 update_forward_refs(ListType, TestCaseImplementation=TestCaseImplementation)

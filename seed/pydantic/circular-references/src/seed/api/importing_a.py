@@ -3,16 +3,11 @@
 from .core.pydantic_utilities import UniversalBaseModel
 import typing
 from .resources.a.a import A
-from .core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
 class ImportingA(UniversalBaseModel):
     a: typing.Optional[A] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
+    class Config:
+        extra = pydantic.Extra.allow

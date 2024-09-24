@@ -3,10 +3,14 @@
 from __future__ import annotations
 from ...core.pydantic_utilities import UniversalBaseModel
 import typing
+import pydantic
 
 
 class Base(UniversalBaseModel):
     base: typing.Literal["base"] = "base"
+
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 class UnionWithLiteral_Fern(Base):

@@ -12,3 +12,6 @@ class ListUsersBodyOffsetPaginationRequest(UniversalBaseModel):
     The object that contains the offset used for pagination
     in order to fetch the next page of results.
     """
+
+    class Config:
+        extra = pydantic.Extra.forbid

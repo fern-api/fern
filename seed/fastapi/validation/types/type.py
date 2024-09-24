@@ -2,6 +2,7 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 from .shape import Shape
+import pydantic
 
 
 class Type(UniversalBaseModel):
@@ -24,3 +25,6 @@ class Type(UniversalBaseModel):
     even: int
     name: str
     shape: Shape
+
+    class Config:
+        extra = pydantic.Extra.forbid

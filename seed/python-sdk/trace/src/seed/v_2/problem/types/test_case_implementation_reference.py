@@ -38,6 +38,7 @@ class TestCaseImplementationReference_Implementation(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 TestCaseImplementationReference = typing.Union[

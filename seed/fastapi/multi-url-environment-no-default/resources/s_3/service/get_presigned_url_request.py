@@ -6,3 +6,6 @@ import pydantic
 
 class GetPresignedUrlRequest(UniversalBaseModel):
     s_3_key: str = pydantic.Field(alias="s3Key")
+
+    class Config:
+        extra = pydantic.Extra.forbid

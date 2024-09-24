@@ -19,6 +19,7 @@ class Patient(BaseResource):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 from .base_resource import BaseResource  # noqa: E402

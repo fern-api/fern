@@ -3,6 +3,7 @@
 from __future__ import annotations
 from .base_resource import BaseResource
 import typing
+import pydantic
 from ..core.pydantic_utilities import update_forward_refs
 
 
@@ -10,6 +11,9 @@ class Patient(BaseResource):
     resource_type: typing.Literal["Patient"] = "Patient"
     name: str
     scripts: typing.List["Script"]
+
+    class Config:
+        extra = pydantic.Extra.forbid
 
 
 from .script import Script  # noqa: E402

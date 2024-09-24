@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 from ....core.pydantic_utilities import UniversalBaseModel
-from ....core.pydantic_utilities import IS_PYDANTIC_V2
-import typing
 import pydantic
 from ....core.pydantic_utilities import update_forward_refs
 
@@ -12,14 +10,8 @@ class DebugKeyValuePairs(UniversalBaseModel):
     key: "DebugVariableValue"
     value: "DebugVariableValue"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.forbid
+    class Config:
+        extra = pydantic.Extra.forbid
 
 
 from .debug_variable_value import DebugVariableValue  # noqa: E402

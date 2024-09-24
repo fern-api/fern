@@ -33,6 +33,7 @@ class CodeExecutionUpdate_BuildingExecutor(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class CodeExecutionUpdate_Running(UniversalBaseModel):
@@ -47,6 +48,7 @@ class CodeExecutionUpdate_Running(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class CodeExecutionUpdate_Errored(UniversalBaseModel):
@@ -61,6 +63,7 @@ class CodeExecutionUpdate_Errored(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class CodeExecutionUpdate_Stopped(UniversalBaseModel):
@@ -74,6 +77,7 @@ class CodeExecutionUpdate_Stopped(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class CodeExecutionUpdate_Graded(UniversalBaseModel):
@@ -90,6 +94,7 @@ class CodeExecutionUpdate_Graded(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class CodeExecutionUpdate_GradedV2(UniversalBaseModel):
@@ -104,6 +109,7 @@ class CodeExecutionUpdate_GradedV2(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class CodeExecutionUpdate_WorkspaceRan(UniversalBaseModel):
@@ -118,6 +124,7 @@ class CodeExecutionUpdate_WorkspaceRan(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class CodeExecutionUpdate_Recording(UniversalBaseModel):
@@ -137,6 +144,7 @@ class CodeExecutionUpdate_Recording(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class CodeExecutionUpdate_Recorded(UniversalBaseModel):
@@ -152,6 +160,7 @@ class CodeExecutionUpdate_Recorded(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class CodeExecutionUpdate_InvalidRequest(UniversalBaseModel):
@@ -166,6 +175,7 @@ class CodeExecutionUpdate_InvalidRequest(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class CodeExecutionUpdate_Finished(UniversalBaseModel):
@@ -179,6 +189,7 @@ class CodeExecutionUpdate_Finished(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 CodeExecutionUpdate = typing.Union[

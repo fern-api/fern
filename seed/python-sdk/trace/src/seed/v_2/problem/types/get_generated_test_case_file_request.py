@@ -27,6 +27,7 @@ class GetGeneratedTestCaseFileRequest(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 update_forward_refs(ListType, GetGeneratedTestCaseFileRequest=GetGeneratedTestCaseFileRequest)

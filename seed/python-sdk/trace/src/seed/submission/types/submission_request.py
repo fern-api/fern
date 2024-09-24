@@ -25,6 +25,7 @@ class SubmissionRequest_InitializeProblemRequest(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class SubmissionRequest_InitializeWorkspaceRequest(UniversalBaseModel):
@@ -37,6 +38,7 @@ class SubmissionRequest_InitializeWorkspaceRequest(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class SubmissionRequest_SubmitV2(UniversalBaseModel):
@@ -57,6 +59,7 @@ class SubmissionRequest_SubmitV2(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class SubmissionRequest_WorkspaceSubmit(UniversalBaseModel):
@@ -75,6 +78,7 @@ class SubmissionRequest_WorkspaceSubmit(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class SubmissionRequest_Stop(UniversalBaseModel):
@@ -88,6 +92,7 @@ class SubmissionRequest_Stop(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 SubmissionRequest = typing.Union[

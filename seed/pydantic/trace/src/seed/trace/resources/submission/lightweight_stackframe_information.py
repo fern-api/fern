@@ -2,17 +2,11 @@
 
 from ...core.pydantic_utilities import UniversalBaseModel
 import pydantic
-from ...core.pydantic_utilities import IS_PYDANTIC_V2
-import typing
 
 
 class LightweightStackframeInformation(UniversalBaseModel):
     num_stack_frames: int = pydantic.Field(alias="numStackFrames")
     top_stack_frame_method_name: str = pydantic.Field(alias="topStackFrameMethodName")
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
+    class Config:
+        extra = pydantic.Extra.allow

@@ -3,6 +3,7 @@
 from __future__ import annotations
 from .base_resource import BaseResource
 import typing
+import pydantic
 from ..core.pydantic_utilities import update_forward_refs
 
 
@@ -11,6 +12,9 @@ class Account(BaseResource):
     name: str
     patient: typing.Optional["Patient"] = None
     practitioner: typing.Optional["Practitioner"] = None
+
+    class Config:
+        extra = pydantic.Extra.forbid
 
 
 from .patient import Patient  # noqa: E402

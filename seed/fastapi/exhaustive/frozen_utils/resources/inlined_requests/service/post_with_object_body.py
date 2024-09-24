@@ -22,3 +22,4 @@ class PostWithObjectBody(UniversalBaseModel):
 
         class Config:
             frozen = True
+            extra = pydantic.Extra.forbid

@@ -11,3 +11,6 @@ class NestedObjectWithOptionalField(UniversalBaseModel):
     nested_object: typing.Optional[ObjectWithOptionalField] = pydantic.Field(
         alias="NestedObject", default=None
     )
+
+    class Config:
+        extra = pydantic.Extra.forbid

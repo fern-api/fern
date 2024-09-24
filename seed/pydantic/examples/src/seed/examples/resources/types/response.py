@@ -3,6 +3,7 @@
 from ...core.pydantic_utilities import UniversalBaseModel
 import typing
 from ...identifier import Identifier
+import pydantic
 
 
 class Response(UniversalBaseModel):
@@ -31,3 +32,6 @@ class Response(UniversalBaseModel):
 
     response: typing.Optional[typing.Any] = None
     identifiers: typing.List[Identifier]
+
+    class Config:
+        extra = pydantic.Extra.allow

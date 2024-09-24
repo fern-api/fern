@@ -11,3 +11,6 @@ class CreateUserRequest(UniversalBaseModel):
     )
     version: typing.Literal["v1"] = pydantic.Field(alias="_version", default="v1")
     name: str
+
+    class Config:
+        extra = pydantic.Extra.forbid

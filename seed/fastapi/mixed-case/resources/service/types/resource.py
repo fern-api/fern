@@ -106,6 +106,9 @@ class Resource(UniversalRootModel):
                 )
             )
 
+    class Config:
+        extra = pydantic.Extra.forbid
+
 
 class _Resource:
     class User(resources_service_types_user_User):

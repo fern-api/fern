@@ -2,6 +2,7 @@
 
 from ...core.pydantic_utilities import UniversalBaseModel
 from .migration_status import MigrationStatus
+import pydantic
 
 
 class Migration(UniversalBaseModel):
@@ -18,3 +19,6 @@ class Migration(UniversalBaseModel):
 
     name: str
     status: MigrationStatus
+
+    class Config:
+        extra = pydantic.Extra.allow

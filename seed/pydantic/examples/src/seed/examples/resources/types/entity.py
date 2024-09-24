@@ -2,6 +2,7 @@
 
 from ...core.pydantic_utilities import UniversalBaseModel
 from ...type import Type
+import pydantic
 
 
 class Entity(UniversalBaseModel):
@@ -18,3 +19,6 @@ class Entity(UniversalBaseModel):
 
     type: Type
     name: str
+
+    class Config:
+        extra = pydantic.Extra.allow

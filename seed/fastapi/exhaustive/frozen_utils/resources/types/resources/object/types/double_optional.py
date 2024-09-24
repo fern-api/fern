@@ -20,3 +20,4 @@ class DoubleOptional(UniversalBaseModel):
 
         class Config:
             frozen = True
+            extra = pydantic.Extra.forbid

@@ -23,3 +23,6 @@ class NestedUser(UniversalBaseModel):
 
     name: str = pydantic.Field(alias="Name")
     nested_user: User = pydantic.Field(alias="NestedUser")
+
+    class Config:
+        extra = pydantic.Extra.forbid

@@ -3,6 +3,7 @@
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
 from .node import Node
+import pydantic
 
 
 class Tree(UniversalBaseModel):
@@ -37,3 +38,6 @@ class Tree(UniversalBaseModel):
     """
 
     nodes: typing.Optional[typing.List[Node]] = None
+
+    class Config:
+        extra = pydantic.Extra.forbid

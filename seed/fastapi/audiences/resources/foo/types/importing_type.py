@@ -2,7 +2,11 @@
 
 from ....core.pydantic_utilities import UniversalBaseModel
 from ...commons.types.imported import Imported
+import pydantic
 
 
 class ImportingType(UniversalBaseModel):
     imported: Imported
+
+    class Config:
+        extra = pydantic.Extra.forbid

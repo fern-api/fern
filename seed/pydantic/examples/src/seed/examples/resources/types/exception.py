@@ -24,6 +24,9 @@ class Exception_Generic(UniversalBaseModel):
     exception_message: str = pydantic.Field(alias="exceptionMessage")
     exception_stacktrace: str = pydantic.Field(alias="exceptionStacktrace")
 
+    class Config:
+        extra = pydantic.Extra.allow
+
 
 class Exception_Timeout(UniversalBaseModel):
     """
@@ -39,6 +42,9 @@ class Exception_Timeout(UniversalBaseModel):
     """
 
     type: typing.Literal["timeout"] = "timeout"
+
+    class Config:
+        extra = pydantic.Extra.allow
 
 
 """

@@ -27,3 +27,6 @@ class User(UniversalBaseModel):
     """
     The user's age.
     """
+
+    class Config:
+        extra = pydantic.Extra.allow

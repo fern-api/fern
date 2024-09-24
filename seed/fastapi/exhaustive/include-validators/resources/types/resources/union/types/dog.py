@@ -185,3 +185,6 @@ class Dog(UniversalBaseModel):
         for validator in Dog.Validators._likes_to_woof_post_validators:
             v = validator(v, values)
         return v
+
+    class Config:
+        extra = pydantic.Extra.forbid

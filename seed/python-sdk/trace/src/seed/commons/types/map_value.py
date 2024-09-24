@@ -20,6 +20,7 @@ class MapValue(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 from .key_value_pair import KeyValuePair  # noqa: E402
