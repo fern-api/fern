@@ -1,3 +1,11 @@
+- version: 0.1.1
+  changelogEntry:
+    - type: fix
+      summary: >-
+        The generated `.github/workflows/ci.yml` file now uses 'shivammathur/setup-php@v2'
+        to install `php` and `composer`.
+  irVersion: 53
+
 - version: 0.1.0
   changelogEntry:
     - type: feat
