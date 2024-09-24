@@ -298,10 +298,7 @@ export class Type extends AstNode {
         });
     }
 
-    public static typeDict(
-        entries: TypeDictEntry[],
-        { multiline }: { multiline?: boolean; enumsAsString?: boolean } = {}
-    ): Type {
+    public static typeDict(entries: TypeDictEntry[], { multiline }: { multiline?: boolean } = {}): Type {
         return new this({
             type: "typeDict",
             entries,

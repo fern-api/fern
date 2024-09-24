@@ -17,7 +17,6 @@ class JsonSerializer
      */
     public static function serializeDate(DateTime $date): string
     {
-        throw new Exception()
         return $date->format(Constant::DateFormat);
     }
 

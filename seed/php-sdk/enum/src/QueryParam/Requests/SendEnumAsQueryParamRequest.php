@@ -29,18 +29,17 @@ class SendEnumAsQueryParamRequest
     /**
      * @param array{
      *   operand: value-of<Operand>,
+     *   maybeOperand?: ?value-of<Operand>,
+     *   operandOrColor: mixed,
+     *   maybeOperandOrColor: mixed,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
         $this->operand = $values['operand'];
-//        $this->maybeOperand = $values['maybeOperand'] ?? null;
-//        $this->operandOrColor = $values['operandOrColor'];
-//        $this->maybeOperandOrColor = $values['maybeOperandOrColor'];
-    }
-
-    public function boop(): void {
-        $this->__construct(["operand" => ">"]);
+        $this->maybeOperand = $values['maybeOperand'] ?? null;
+        $this->operandOrColor = $values['operandOrColor'];
+        $this->maybeOperandOrColor = $values['maybeOperandOrColor'];
     }
 }

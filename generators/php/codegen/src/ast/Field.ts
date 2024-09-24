@@ -6,7 +6,6 @@ import { Type } from "./Type";
 import { Comment } from "./Comment";
 import { Attribute } from "./Attribute";
 import { convertToPhpVariableName } from "./utils/convertToPhpVariableName";
-import { ClassReference } from "./ClassReference";
 
 export declare namespace Field {
     export interface Args {
@@ -33,11 +32,11 @@ export class Field extends AstNode {
     public readonly name: string;
     public readonly type: Type;
     public readonly access: Access;
-    public readonly readonly_: boolean;
-    public readonly initializer: CodeBlock | undefined;
-    public readonly docs: string | undefined;
-    public readonly inlineDocs: string | undefined;
-    public readonly attributes: Attribute[];
+    private readonly_: boolean;
+    private initializer: CodeBlock | undefined;
+    private docs: string | undefined;
+    private inlineDocs: string | undefined;
+    private attributes: Attribute[];
 
     constructor({ name, type, access, readonly_, initializer, docs, inlineDocs, attributes }: Field.Args) {
         super();

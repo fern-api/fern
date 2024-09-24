@@ -39,7 +39,7 @@ export class Class extends AstNode {
     public readonly docs: string | undefined;
     public readonly parentClassReference: AstNode | undefined;
 
-    public fields: Field[] = [];
+    public readonly fields: Field[] = [];
     public readonly methods: Method[] = [];
     private constructor_: Class.Constructor | undefined;
 
@@ -58,10 +58,6 @@ export class Class extends AstNode {
 
     public addField(field: Field): void {
         this.fields.push(field);
-    }
-
-    public setFields(fields: Field[]): void {
-        this.fields = fields;
     }
 
     public addMethod(method: Method): void {

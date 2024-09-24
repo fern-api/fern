@@ -85,12 +85,7 @@ class JsonDeserializer
         if (gettype($type) != "string") {
             throw new JsonException("Unexpected non-string type.");
         }
-
         return self::deserializeSingleValue($data, $type);
-    }
-
-    private function something(mixed $data): string {
-        return "hi" . $data;
     }
 
     /**

@@ -22,9 +22,9 @@ class BasicCustomFiles extends SerializableType
     public NonVoidFunctionSignature $signature;
 
     /**
-     * @var array<Language, Files> $additionalFiles
+     * @var array<value-of<Language>, Files> $additionalFiles
      */
-    #[JsonProperty('additionalFiles'), ArrayType([Language::class => Files::class])]
+    #[JsonProperty('additionalFiles'), ArrayType(["string" => Files::class])]
     public array $additionalFiles;
 
     /**
@@ -37,7 +37,7 @@ class BasicCustomFiles extends SerializableType
      * @param array{
      *   methodName: string,
      *   signature: NonVoidFunctionSignature,
-     *   additionalFiles: array<Language, Files>,
+     *   additionalFiles: array<value-of<Language>, Files>,
      *   basicTestCaseTemplate: BasicTestCaseTemplate,
      * } $values
      */

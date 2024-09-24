@@ -23,9 +23,9 @@ class CreateProblemRequest extends SerializableType
     public ProblemDescription $problemDescription;
 
     /**
-     * @var array<Language, ProblemFiles> $files
+     * @var array<value-of<Language>, ProblemFiles> $files
      */
-    #[JsonProperty('files'), ArrayType([Language::class => ProblemFiles::class])]
+    #[JsonProperty('files'), ArrayType(["string" => ProblemFiles::class])]
     public array $files;
 
     /**
@@ -56,7 +56,7 @@ class CreateProblemRequest extends SerializableType
      * @param array{
      *   problemName: string,
      *   problemDescription: ProblemDescription,
-     *   files: array<Language, ProblemFiles>,
+     *   files: array<value-of<Language>, ProblemFiles>,
      *   inputParams: array<VariableTypeAndName>,
      *   outputType: mixed,
      *   testcases: array<TestCaseWithExpectedResult>,

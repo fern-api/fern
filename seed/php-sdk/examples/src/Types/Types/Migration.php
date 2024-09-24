@@ -14,15 +14,15 @@ class Migration extends SerializableType
     public string $name;
 
     /**
-     * @var MigrationStatus $status
+     * @var value-of<MigrationStatus> $status
      */
     #[JsonProperty('status')]
-    public MigrationStatus $status;
+    public string $status;
 
     /**
      * @param array{
      *   name: string,
-     *   status: MigrationStatus,
+     *   status: value-of<MigrationStatus>,
      * } $values
      */
     public function __construct(

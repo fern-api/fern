@@ -19,15 +19,15 @@ class ListUsersOffsetStepPaginationRequest
     public ?int $limit;
 
     /**
-     * @var ?Order $order
+     * @var ?value-of<Order> $order
      */
-    public ?Order $order;
+    public ?string $order;
 
     /**
      * @param array{
      *   page?: ?int,
      *   limit?: ?int,
-     *   order?: ?Order,
+     *   order?: ?value-of<Order>,
      * } $values
      */
     public function __construct(

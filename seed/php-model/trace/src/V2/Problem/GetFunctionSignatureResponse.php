@@ -10,14 +10,14 @@ use Seed\Core\ArrayType;
 class GetFunctionSignatureResponse extends SerializableType
 {
     /**
-     * @var array<Language, string> $functionByLanguage
+     * @var array<value-of<Language>, string> $functionByLanguage
      */
-    #[JsonProperty('functionByLanguage'), ArrayType([Language::class => 'string'])]
+    #[JsonProperty('functionByLanguage'), ArrayType(["string" => 'string'])]
     public array $functionByLanguage;
 
     /**
      * @param array{
-     *   functionByLanguage: array<Language, string>,
+     *   functionByLanguage: array<value-of<Language>, string>,
      * } $values
      */
     public function __construct(

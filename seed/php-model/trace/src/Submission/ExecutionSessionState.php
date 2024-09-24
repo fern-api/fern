@@ -33,16 +33,16 @@ class ExecutionSessionState extends SerializableType
     public ?string $awsTaskId;
 
     /**
-     * @var Language $language
+     * @var value-of<Language> $language
      */
     #[JsonProperty('language')]
-    public Language $language;
+    public string $language;
 
     /**
-     * @var ExecutionSessionStatus $status
+     * @var value-of<ExecutionSessionStatus> $status
      */
     #[JsonProperty('status')]
-    public ExecutionSessionStatus $status;
+    public string $status;
 
     /**
      * @param array{
@@ -50,8 +50,8 @@ class ExecutionSessionState extends SerializableType
      *   sessionId: string,
      *   isWarmInstance: bool,
      *   awsTaskId?: ?string,
-     *   language: Language,
-     *   status: ExecutionSessionStatus,
+     *   language: value-of<Language>,
+     *   status: value-of<ExecutionSessionStatus>,
      * } $values
      */
     public function __construct(

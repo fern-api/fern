@@ -10,14 +10,14 @@ use Seed\Core\ArrayType;
 class WorkspaceStarterFilesResponse extends SerializableType
 {
     /**
-     * @var array<Language, WorkspaceFiles> $files
+     * @var array<value-of<Language>, WorkspaceFiles> $files
      */
-    #[JsonProperty('files'), ArrayType([Language::class => WorkspaceFiles::class])]
+    #[JsonProperty('files'), ArrayType(["string" => WorkspaceFiles::class])]
     public array $files;
 
     /**
      * @param array{
-     *   files: array<Language, WorkspaceFiles>,
+     *   files: array<value-of<Language>, WorkspaceFiles>,
      * } $values
      */
     public function __construct(
