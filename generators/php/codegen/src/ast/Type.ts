@@ -18,7 +18,8 @@ type InternalType =
     | TypeDict
     | Union
     | Optional
-    | Reference;
+    | Reference
+    | EnumString;
 
 interface Int {
     type: "int";
@@ -88,7 +89,11 @@ interface Optional {
 interface Reference {
     type: "reference";
     value: ClassReference;
-    isEnum: boolean;
+}
+
+interface EnumString {
+    type: "enumString";
+    value: ClassReference;
 }
 
 /* A PHP parameter to a method */
@@ -179,7 +184,7 @@ export class Type extends AstNode {
                     type.write(writer);
                 });
                 break;
-            case "optional":
+            case "optional": {
                 const isUnion = this.internalType.value.internalType.type === "union";
                 if (!isUnion) {
                     writer.write("?");
@@ -189,8 +194,18 @@ export class Type extends AstNode {
                     writer.write("|null");
                 }
                 break;
+            }
             case "reference":
                 writer.writeNode(this.internalType.value);
+                break;
+            case "enumString":
+                if (comment) {
+                    writer.write("value-of<");
+                    writer.writeNode(this.internalType.value);
+                    writer.write(">");
+                } else {
+                    writer.write("string");
+                }
                 break;
             default:
                 assertNever(this.internalType);
@@ -312,11 +327,17 @@ export class Type extends AstNode {
         });
     }
 
-    public static reference({ value, isEnum = false }: { value: ClassReference; isEnum?: boolean }): Type {
+    public static reference(value: ClassReference): Type {
         return new this({
             type: "reference",
-            value,
-            isEnum
+            value
+        });
+    }
+
+    public static enumString(value: ClassReference): Type {
+        return new this({
+            type: "enumString",
+            value
         });
     }
 

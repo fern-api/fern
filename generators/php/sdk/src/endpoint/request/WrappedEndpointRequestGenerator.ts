@@ -1,6 +1,6 @@
 import { php, PhpFile, FileGenerator, FileLocation } from "@fern-api/php-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { ContainerType, HttpEndpoint, SdkRequestWrapper, ServiceId, TypeReference } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, SdkRequestWrapper, ServiceId } from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "../../SdkCustomConfig";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 
@@ -34,17 +34,14 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
     }
 
     protected doGenerate(): PhpFile {
-        const clazz = php.dataClass({
-            ...this.classReference,
-            parentClassReference: this.context.getSerializableTypeClassReference()
-        });
+        const clazz = php.dataClass(this.classReference);
 
         const service = this.context.getHttpServiceOrThrow(this.serviceId);
         for (const header of [...service.headers, ...this.endpoint.headers]) {
             clazz.addField(
                 php.field({
                     name: this.context.getPropertyName(header.name.name),
-                    ...this.getTypeAndConstructorEnumType(header.valueType),
+                    type: this.context.phpTypeMapper.convert({ reference: header.valueType, enumsAsEnumString: true }),
                     access: "public",
                     docs: header.docs
                 })
@@ -52,13 +49,15 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
         }
 
         for (const query of this.endpoint.queryParameters) {
-            const typeReference = query.allowMultiple
-                ? TypeReference.container(ContainerType.list(query.valueType))
-                : query.valueType;
+            const type = query.allowMultiple
+                ? php.Type.array(
+                      this.context.phpTypeMapper.convert({ reference: query.valueType, enumsAsEnumString: true })
+                  )
+                : this.context.phpTypeMapper.convert({ reference: query.valueType, enumsAsEnumString: true });
             clazz.addField(
                 php.field({
                     name: this.context.getPropertyName(query.name.name),
-                    ...this.getTypeAndConstructorEnumType(typeReference),
+                    type,
                     access: "public",
                     docs: query.docs
                 })
@@ -70,7 +69,10 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
                 clazz.addField(
                     php.field({
                         name: this.context.getPropertyName(this.wrapper.bodyKey),
-                        ...this.getTypeAndConstructorEnumType(reference.requestBodyType),
+                        type: this.context.phpTypeMapper.convert({
+                            reference: reference.requestBodyType,
+                            enumsAsEnumString: true
+                        }),
                         access: "public",
                         docs: reference.docs
                     })
@@ -78,11 +80,14 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
             },
             inlinedRequestBody: (request) => {
                 for (const property of request.properties) {
-                    const type = this.context.phpTypeMapper.convert({ reference: property.valueType });
+                    const type = this.context.phpTypeMapper.convert({
+                        reference: property.valueType,
+                        enumsAsEnumString: true
+                    });
                     clazz.addField(
                         php.field({
                             name: this.context.getPropertyName(property.name.name),
-                            ...this.getTypeAndConstructorEnumType(property.valueType),
+                            type,
                             access: "public",
                             docs: property.docs,
                             attributes: this.context.phpAttributeMapper.convert({ type, property })
@@ -101,32 +106,6 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
             rootNamespace: this.context.getRootNamespace(),
             customConfig: this.context.customConfig
         });
-    }
-
-    private getTypeAndConstructorEnumType(typeReference: TypeReference): {
-        type: php.Type;
-        constructorEnumType: php.Type | undefined;
-    } {
-        const type = this.context.phpTypeMapper.convert({ reference: typeReference, preserveEnumType: true });
-        const internalType = type.underlyingType().internalType;
-        const isEnum = internalType.type === "reference" && internalType.isEnum;
-        if (isEnum) {
-            this.context.logger.error("IS ENUM!");
-            console.log("IS ENUM!");
-        } else {
-            this.context.logger.error("IS NOT ENUM!");
-            console.log("IS NOT ENUM!");
-        }
-        const strippedEnumsType = isEnum
-            ? this.context.phpTypeMapper.convert({
-                  reference: typeReference,
-                  preserveEnumType: false
-              })
-            : undefined;
-        return {
-            type: strippedEnumsType ?? type,
-            constructorEnumType: isEnum ? type : undefined
-        };
     }
 
     protected getFilepath(): RelativeFilePath {

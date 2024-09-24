@@ -19,7 +19,6 @@ export class DataClass extends AstNode {
     public readonly name: string;
     public readonly namespace: string;
     private class_: Class;
-    public fields: Field[] = [];
 
     constructor({ name, namespace, abstract, docs, parentClassReference }: DataClass.Args) {
         super();
@@ -50,19 +49,11 @@ export class DataClass extends AstNode {
                 parameters: this.getConstructorParameters({ orderedFields }),
                 body: php.codeblock((writer) => {
                     for (const field of orderedFields) {
-                        const fieldAccessor = `$${CONSTRUCTOR_PARAMETER_NAME}['${field.name}']`;
-                        writer.write(`$this->${field.name} = ${fieldAccessor}`);
-                        if (field.constructorEnumType != null) {
-                            // writer.write(php.);
-                            if (field.type.isOptional()) {
-                                writer.write("?");
-                            }
-                            writer.write("->value");
-                        }
+                        writer.write(`$this->${field.name} = $${CONSTRUCTOR_PARAMETER_NAME}['${field.name}']`);
                         if (field.type.isOptional()) {
                             writer.write(" ?? null");
                         }
-                        writer.writeLine(";");
+                        writer.write(";");
                     }
                 })
             });
@@ -77,14 +68,7 @@ export class DataClass extends AstNode {
                 type: Type.typeDict(
                     orderedFields.map((field) => ({
                         key: field.name,
-                        valueType:
-                            field.constructorEnumType == null
-                                ? field.type
-                                : field.constructorEnumType.internalType.type === "optional"
-                                ? Type.optional(
-                                      Type.union([field.constructorEnumType.internalType.value, Type.string()])
-                                  )
-                                : Type.union([field.constructorEnumType, Type.string()]),
+                        valueType: field.type,
                         optional: field.type.isOptional()
                     })),
                     {

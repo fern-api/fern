@@ -28,10 +28,9 @@ export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSch
 
         // TODO: handle extended properties
         for (const property of this.objectDeclaration.properties) {
-            const convertedType = this.context.phpTypeMapper.convert({ reference: property.valueType });
-            const convertedTypeWithEnumPreserved = this.context.phpTypeMapper.convert({
+            const convertedType = this.context.phpTypeMapper.convert({
                 reference: property.valueType,
-                preserveEnumType: true
+                enumsAsEnumString: true
             });
             clazz.addField(
                 php.field({
@@ -42,9 +41,7 @@ export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSch
                     attributes: this.context.phpAttributeMapper.convert({
                         type: convertedType,
                         property
-                    }),
-                    constructorEnumType:
-                        convertedTypeWithEnumPreserved !== convertedType ? convertedTypeWithEnumPreserved : undefined
+                    })
                 })
             );
         }

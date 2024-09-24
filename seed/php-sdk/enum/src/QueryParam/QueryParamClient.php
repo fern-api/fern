@@ -38,10 +38,10 @@ class QueryParamClient
     public function send(SendEnumAsQueryParamRequest $request, ?array $options = null): void
     {
         $query = [];
-        $query['operand'] = $request->operand;
+        $query['operand'] = $request->operand->value;
         $query['operandOrColor'] = $request->operandOrColor;
         if ($request->maybeOperand != null) {
-            $query['maybeOperand'] = $request->maybeOperand;
+            $query['maybeOperand'] = $request->maybeOperand->value;
         }
         if ($request->maybeOperandOrColor != null) {
             $query['maybeOperandOrColor'] = $request->maybeOperandOrColor;
@@ -80,10 +80,10 @@ class QueryParamClient
     public function sendList(SendEnumListAsQueryParamRequest $request, ?array $options = null): void
     {
         $query = [];
-        $query['operand'] = $request->operand;
+        $query['operand'] = $request->operand->value;
         $query['operandOrColor'] = $request->operandOrColor;
         if ($request->maybeOperand != null) {
-            $query['maybeOperand'] = $request->maybeOperand;
+            $query['maybeOperand'] = $request->maybeOperand->value;
         }
         if ($request->maybeOperandOrColor != null) {
             $query['maybeOperandOrColor'] = $request->maybeOperandOrColor;

@@ -51,7 +51,7 @@ export class RawClient {
         return php.field({
             access: "private",
             name: `$${this.getFieldName()}`,
-            type: php.Type.reference({ value: this.context.rawClient.getClassReference() })
+            type: php.Type.reference(this.context.rawClient.getClassReference())
         });
     }
 

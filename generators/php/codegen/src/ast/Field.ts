@@ -26,7 +26,6 @@ export declare namespace Field {
         inlineDocs?: string;
         /* Field attributes */
         attributes?: Attribute[];
-        constructorEnumType?: Type;
     }
 }
 
@@ -34,24 +33,13 @@ export class Field extends AstNode {
     public readonly name: string;
     public readonly type: Type;
     public readonly access: Access;
-    private readonly_: boolean;
-    private initializer: CodeBlock | undefined;
-    private docs: string | undefined;
-    private inlineDocs: string | undefined;
-    private attributes: Attribute[];
-    public readonly constructorEnumType: Type | undefined;
+    public readonly readonly_: boolean;
+    public readonly initializer: CodeBlock | undefined;
+    public readonly docs: string | undefined;
+    public readonly inlineDocs: string | undefined;
+    public readonly attributes: Attribute[];
 
-    constructor({
-        name,
-        type,
-        access,
-        readonly_,
-        initializer,
-        docs,
-        inlineDocs,
-        attributes,
-        constructorEnumType
-    }: Field.Args) {
+    constructor({ name, type, access, readonly_, initializer, docs, inlineDocs, attributes }: Field.Args) {
         super();
         this.name = convertToPhpVariableName(name);
         this.type = type;
@@ -61,7 +49,6 @@ export class Field extends AstNode {
         this.docs = docs;
         this.inlineDocs = inlineDocs;
         this.attributes = attributes ?? [];
-        this.constructorEnumType = constructorEnumType;
     }
 
     public write(writer: Writer): void {

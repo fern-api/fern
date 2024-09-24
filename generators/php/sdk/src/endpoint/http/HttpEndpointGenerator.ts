@@ -215,6 +215,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     arguments_,
                     methodSuffix: upperFirst(internalType.type)
                 });
+            case "enumString":
+                return this.decodeJsonResponseForPrimitive({
+                    arguments_,
+                    methodSuffix: "String"
+                });
             case "union":
             case "object":
             case "optional":

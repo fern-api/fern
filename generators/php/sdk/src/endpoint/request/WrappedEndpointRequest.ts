@@ -42,9 +42,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }
 
     public getRequestParameterType(): php.Type {
-        return php.Type.reference({
-            value: this.context.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName)
-        });
+        return php.Type.reference(this.context.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName));
     }
 
     public getQueryParameterCodeBlock(): QueryParameterCodeBlock | undefined {

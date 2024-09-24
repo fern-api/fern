@@ -111,6 +111,8 @@ export class PhpAttributeMapper {
                     writer.write("::class");
                 });
             }
+            case "enumString":
+                return php.codeblock('"string"');
             default:
                 assertNever(type.internalType);
         }

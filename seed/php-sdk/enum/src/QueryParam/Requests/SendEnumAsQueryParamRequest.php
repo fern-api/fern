@@ -2,18 +2,17 @@
 
 namespace Seed\QueryParam\Requests;
 
-use Seed\Core\SerializableType;
 use Seed\Types\Operand;
 
-class SendEnumAsQueryParamRequest extends SerializableType
+class SendEnumAsQueryParamRequest
 {
     /**
-     * @var string $operand
+     * @var value-of<Operand> $operand
      */
     public string $operand;
 
     /**
-     * @var ?string $maybeOperand
+     * @var ?value-of<Operand> $maybeOperand
      */
     public ?string $maybeOperand;
 
@@ -29,18 +28,19 @@ class SendEnumAsQueryParamRequest extends SerializableType
 
     /**
      * @param array{
-     *   operand: Operand|string,
-     *   maybeOperand?: Operand|string|null,
-     *   operandOrColor: mixed,
-     *   maybeOperandOrColor: mixed,
+     *   operand: value-of<Operand>,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
-        $this->operand = $values['operand']->value;
-        $this->maybeOperand = $values['maybeOperand']?->value ?? null;
-        $this->operandOrColor = $values['operandOrColor'];
-        $this->maybeOperandOrColor = $values['maybeOperandOrColor'];
+        $this->operand = $values['operand'];
+//        $this->maybeOperand = $values['maybeOperand'] ?? null;
+//        $this->operandOrColor = $values['operandOrColor'];
+//        $this->maybeOperandOrColor = $values['maybeOperandOrColor'];
+    }
+
+    public function boop(): void {
+        $this->__construct(["operand" => ">"]);
     }
 }
