@@ -46,7 +46,7 @@ class FernAwarePydanticModel:
         base_models: Sequence[AST.ClassReference] = [],
         docstring: Optional[str] = None,
         snippet: Optional[str] = None,
-        include_model_config: Optional[bool] = True,
+        is_root_model: bool = False,
         # Allow overriding the base model from the unchecked base model, or the typical
         # pydantic base model to the universal root model if needed. This is used instead
         # of `base_models` since that field is used for true `extends` declared within
@@ -96,7 +96,7 @@ class FernAwarePydanticModel:
             is_pydantic_v2=self._context.core_utilities.get_is_pydantic_v2(),
             universal_field_validator=self._context.core_utilities.universal_field_validator,
             universal_root_validator=self._context.core_utilities.universal_root_validator,
-            include_model_config=include_model_config,
+            is_root_model=is_root_model,
             update_forward_ref_function_reference=self._context.core_utilities.get_update_forward_refs(),
             field_metadata_getter=lambda: self._context.core_utilities.get_field_metadata(),
             use_pydantic_field_aliases=self._custom_config.use_pydantic_field_aliases,

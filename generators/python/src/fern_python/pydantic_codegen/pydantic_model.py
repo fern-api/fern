@@ -43,7 +43,7 @@ class PydanticModel:
         snippet: Optional[str] = None,
         extra_fields: Optional[Literal["allow", "forbid"]] = None,
         pydantic_base_model: Optional[AST.ClassReference] = None,
-        include_model_config: Optional[bool] = True,
+        is_root_model: bool = False,
     ):
         self._source_file = source_file
 
@@ -74,7 +74,7 @@ class PydanticModel:
         self._universal_root_validator = universal_root_validator
         self._universal_field_validator = universal_field_validator
 
-        self._include_model_config = include_model_config
+        self._is_root_model = is_root_model
 
         self._update_forward_ref_function_reference = update_forward_ref_function_reference
         self._field_metadata_getter = field_metadata_getter
@@ -321,15 +321,17 @@ class PydanticModel:
     def _maybe_model_config(self) -> None:
         extra_fields = self._extra_fields
         config_kwargs: List[Tuple[str, AST.Expression]] = []
-        if extra_fields == "allow" or extra_fields == "forbid":
-            config_kwargs.append(("extra", AST.Expression(f'"{extra_fields}"')))
+        if not self._is_root_model:
+            if extra_fields == "allow" or extra_fields == "forbid":
+                config_kwargs.append(("extra", AST.Expression(f'"{extra_fields}"')))
         if self._frozen:
             config_kwargs.append(("frozen", AST.Expression("True")))
         if self._orm_mode:
             config_kwargs.append(("from_attributes", AST.Expression("True")))
 
+        config_class = self._get_config_class()
+
         def write_extras(writer: AST.NodeWriter) -> None:
-            config_class = self._get_config_class()
             if len(config_kwargs) > 0:
                 writer.write("if ")
                 # TODO: this class needs a context, then we can call get_is_pydantic_v2
@@ -344,14 +346,14 @@ class PydanticModel:
                     )
                     writer.write("  # type: ignore # Pydantic v2")
                 writer.write_newline_if_last_line_not()
-                writer.write_line("else:")
-                with writer.indent():
-                    if config_class is not None:
+                if config_class is not None:
+                    writer.write_line("else:")
+                    with writer.indent():
                         writer.write_node(config_class)
             elif config_class is not None:
                 writer.write_node(config_class)
 
-        if self._include_model_config:
+        if config_class is not None or len(config_kwargs) > 0:
             self._class_declaration.add_expression(AST.Expression(AST.CodeWriter(write_extras)))
 
     def update_forward_refs(self) -> None:
@@ -407,20 +409,21 @@ class PydanticModel:
                 )
             )
 
-        if self._extra_fields == "forbid":
-            config.add_class_var(
-                AST.VariableDeclaration(
-                    name="extra",
-                    initializer=Pydantic.Extra.forbid(),
+        if not self._is_root_model:
+            if self._extra_fields == "forbid":
+                config.add_class_var(
+                    AST.VariableDeclaration(
+                        name="extra",
+                        initializer=Pydantic.Extra.forbid(),
+                    )
                 )
-            )
-        elif self._extra_fields == "allow":
-            config.add_class_var(
-                AST.VariableDeclaration(
-                    name="extra",
-                    initializer=Pydantic.Extra.allow(),
+            elif self._extra_fields == "allow":
+                config.add_class_var(
+                    AST.VariableDeclaration(
+                        name="extra",
+                        initializer=Pydantic.Extra.allow(),
+                    )
                 )
-            )
 
         if len(config.class_vars) > 0:
             return config
