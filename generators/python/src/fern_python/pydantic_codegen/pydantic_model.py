@@ -43,7 +43,7 @@ class PydanticModel:
         snippet: Optional[str] = None,
         extra_fields: Optional[Literal["allow", "forbid"]] = None,
         pydantic_base_model: Optional[AST.ClassReference] = None,
-        include_model_config: Optional[bool] = True,
+        is_root_model: Optional[bool] = False,
     ):
         self._source_file = source_file
 
@@ -74,7 +74,7 @@ class PydanticModel:
         self._universal_root_validator = universal_root_validator
         self._universal_field_validator = universal_field_validator
 
-        self._include_model_config = include_model_config
+        self._is_root_model = is_root_model
 
         self._update_forward_ref_function_reference = update_forward_ref_function_reference
         self._field_metadata_getter = field_metadata_getter
@@ -321,7 +321,7 @@ class PydanticModel:
     def _maybe_model_config(self) -> None:
         extra_fields = self._extra_fields
         config_kwargs: List[Tuple[str, AST.Expression]] = []
-        if extra_fields == "allow" or extra_fields == "forbid":
+        if (extra_fields == "allow" or extra_fields == "forbid") and not self._is_root_model:
             config_kwargs.append(("extra", AST.Expression(f'"{extra_fields}"')))
         if self._frozen:
             config_kwargs.append(("frozen", AST.Expression("True")))
@@ -351,8 +351,7 @@ class PydanticModel:
             elif config_class is not None:
                 writer.write_node(config_class)
 
-        if self._include_model_config:
-            self._class_declaration.add_expression(AST.Expression(AST.CodeWriter(write_extras)))
+        self._class_declaration.add_expression(AST.Expression(AST.CodeWriter(write_extras)))
 
     def update_forward_refs(self) -> None:
         self._source_file.add_footer_expression(
@@ -407,20 +406,21 @@ class PydanticModel:
                 )
             )
 
-        if self._extra_fields == "forbid":
-            config.add_class_var(
-                AST.VariableDeclaration(
-                    name="extra",
-                    initializer=Pydantic.Extra.forbid(),
+        if not self._is_root_model:
+            if self._extra_fields == "forbid":
+                config.add_class_var(
+                    AST.VariableDeclaration(
+                        name="extra",
+                        initializer=Pydantic.Extra.forbid(),
+                    )
                 )
-            )
-        elif self._extra_fields == "allow":
-            config.add_class_var(
-                AST.VariableDeclaration(
-                    name="extra",
-                    initializer=Pydantic.Extra.allow(),
+            elif self._extra_fields == "allow":
+                config.add_class_var(
+                    AST.VariableDeclaration(
+                        name="extra",
+                        initializer=Pydantic.Extra.allow(),
+                    )
                 )
-            )
 
         if len(config.class_vars) > 0:
             return config

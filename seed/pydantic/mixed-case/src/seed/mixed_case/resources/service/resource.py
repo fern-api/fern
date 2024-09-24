@@ -3,7 +3,6 @@
 from __future__ import annotations
 from ...core.pydantic_utilities import UniversalBaseModel
 from .resource_status import ResourceStatus
-from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
 import pydantic
 
@@ -22,13 +21,6 @@ class Base(UniversalBaseModel):
     """
 
     status: ResourceStatus
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
 
 
 class Resource_User(Base):
@@ -49,13 +41,6 @@ class Resource_User(Base):
     metadata_tags: typing.List[str]
     extra_properties: typing.Dict[str, str] = pydantic.Field(alias="EXTRA_PROPERTIES")
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
-
 
 class Resource_Organization(Base):
     """
@@ -72,13 +57,6 @@ class Resource_Organization(Base):
 
     resource_type: typing.Literal["Organization"] = "Organization"
     name: str
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
 
 
 """

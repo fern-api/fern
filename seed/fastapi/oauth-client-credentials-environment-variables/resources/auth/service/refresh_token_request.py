@@ -2,8 +2,6 @@
 
 from ....core.pydantic_utilities import UniversalBaseModel
 import typing
-from ....core.pydantic_utilities import IS_PYDANTIC_V2
-import pydantic
 
 
 class RefreshTokenRequest(UniversalBaseModel):
@@ -13,12 +11,3 @@ class RefreshTokenRequest(UniversalBaseModel):
     audience: typing.Literal["https://api.example.com"] = "https://api.example.com"
     grant_type: typing.Literal["refresh_token"] = "refresh_token"
     scope: typing.Optional[str] = None
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.forbid

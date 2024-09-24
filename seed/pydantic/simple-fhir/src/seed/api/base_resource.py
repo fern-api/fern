@@ -3,8 +3,6 @@
 from __future__ import annotations
 from .core.pydantic_utilities import UniversalBaseModel
 import typing
-from .core.pydantic_utilities import IS_PYDANTIC_V2
-import pydantic
 from .core.pydantic_utilities import update_forward_refs
 
 
@@ -12,13 +10,6 @@ class BaseResource(UniversalBaseModel):
     id: str
     related_resources: typing.List["ResourceList"]
     memo: "Memo"
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
 
 
 from .account import Account  # noqa: E402

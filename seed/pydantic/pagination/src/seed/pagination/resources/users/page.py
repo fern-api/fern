@@ -4,7 +4,6 @@ from ...core.pydantic_utilities import UniversalBaseModel
 import pydantic
 import typing
 from .next_page import NextPage
-from ...core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class Page(UniversalBaseModel):
@@ -16,10 +15,3 @@ class Page(UniversalBaseModel):
     next: typing.Optional[NextPage] = None
     per_page: int
     total_page: int
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow

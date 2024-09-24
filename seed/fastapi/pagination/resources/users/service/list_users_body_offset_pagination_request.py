@@ -4,7 +4,6 @@ from ....core.pydantic_utilities import UniversalBaseModel
 import typing
 from ..types.with_page import WithPage
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ListUsersBodyOffsetPaginationRequest(UniversalBaseModel):
@@ -13,12 +12,3 @@ class ListUsersBodyOffsetPaginationRequest(UniversalBaseModel):
     The object that contains the offset used for pagination
     in order to fetch the next page of results.
     """
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.forbid

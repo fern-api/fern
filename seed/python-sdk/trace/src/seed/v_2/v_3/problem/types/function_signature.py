@@ -19,13 +19,12 @@ class FunctionSignature_Void(UniversalBaseModel):
     parameters: typing.List[Parameter]
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:
             frozen = True
             smart_union = True
-            extra = pydantic.Extra.allow
 
 
 class FunctionSignature_NonVoid(UniversalBaseModel):
@@ -34,13 +33,12 @@ class FunctionSignature_NonVoid(UniversalBaseModel):
     return_type: typing_extensions.Annotated[VariableType, FieldMetadata(alias="returnType")]
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:
             frozen = True
             smart_union = True
-            extra = pydantic.Extra.allow
 
 
 class FunctionSignature_VoidThatTakesActualResult(UniversalBaseModel):
@@ -49,13 +47,12 @@ class FunctionSignature_VoidThatTakesActualResult(UniversalBaseModel):
     actual_result_type: typing_extensions.Annotated[VariableType, FieldMetadata(alias="actualResultType")]
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:
             frozen = True
             smart_union = True
-            extra = pydantic.Extra.allow
 
 
 FunctionSignature = typing.Union[

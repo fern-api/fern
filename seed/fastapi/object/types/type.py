@@ -5,8 +5,6 @@ import datetime as dt
 import uuid
 import typing
 from .name import Name
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-import pydantic
 
 
 class Type(UniversalBaseModel):
@@ -85,12 +83,3 @@ class Type(UniversalBaseModel):
     twentyone: int
     twentytwo: float
     twentythree: str
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.forbid

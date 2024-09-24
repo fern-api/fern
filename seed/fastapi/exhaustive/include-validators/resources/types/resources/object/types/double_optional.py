@@ -7,7 +7,6 @@ from .optional_alias import OptionalAlias
 import pydantic
 from ......core.pydantic_utilities import universal_root_validator
 from ......core.pydantic_utilities import universal_field_validator
-from ......core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class DoubleOptional(UniversalBaseModel):
@@ -153,12 +152,3 @@ class DoubleOptional(UniversalBaseModel):
         for validator in DoubleOptional.Validators._optional_alias_post_validators:
             v = validator(v, values)
         return v
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.forbid

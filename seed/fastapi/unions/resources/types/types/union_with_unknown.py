@@ -78,15 +78,6 @@ class UnionWithUnknown(UniversalRootModel):
         if unioned_value.type == "unknown":
             return unknown()
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.forbid
-
 
 class _UnionWithUnknown:
     class Foo(resources_types_types_foo_Foo):

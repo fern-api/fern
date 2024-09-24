@@ -2,20 +2,8 @@
 
 from ....core.pydantic_utilities import UniversalBaseModel
 from ..types.currency import Currency
-from ....core.pydantic_utilities import IS_PYDANTIC_V2
-import typing
-import pydantic
 
 
 class CreatePaymentRequest(UniversalBaseModel):
     amount: int
     currency: Currency
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.forbid

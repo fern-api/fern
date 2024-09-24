@@ -36,13 +36,12 @@ class ProblemInfoV2(UniversalBaseModel):
     is_public: typing_extensions.Annotated[bool, FieldMetadata(alias="isPublic")]
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:
             frozen = True
             smart_union = True
-            extra = pydantic.Extra.allow
 
 
 update_forward_refs(KeyValuePair, ProblemInfoV2=ProblemInfoV2)

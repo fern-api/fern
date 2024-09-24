@@ -6,7 +6,6 @@ import typing
 import pydantic
 from ......core.pydantic_utilities import universal_root_validator
 from ......core.pydantic_utilities import universal_field_validator
-from ......core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ObjectWithMapOfMap(UniversalBaseModel):
@@ -151,12 +150,3 @@ class ObjectWithMapOfMap(UniversalBaseModel):
         for validator in ObjectWithMapOfMap.Validators._map__post_validators:
             v = validator(v, values)
         return v
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.forbid

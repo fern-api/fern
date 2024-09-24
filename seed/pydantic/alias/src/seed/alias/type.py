@@ -2,9 +2,6 @@
 
 from .core.pydantic_utilities import UniversalBaseModel
 from .type_id import TypeId
-from .core.pydantic_utilities import IS_PYDANTIC_V2
-import typing
-import pydantic
 
 
 class Type(UniversalBaseModel):
@@ -23,10 +20,3 @@ class Type(UniversalBaseModel):
 
     id: TypeId
     name: str
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow

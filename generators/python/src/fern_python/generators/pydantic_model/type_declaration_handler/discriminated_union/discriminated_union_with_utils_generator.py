@@ -163,6 +163,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
             snippet=self._snippet,
             pydantic_base_model_override=self._context.core_utilities.get_universal_root_model(),
             force_update_forward_refs=True,
+            is_root_model=True,
         ) as external_pydantic_model:
             external_pydantic_model.add_class_var_unsafe(
                 name="factory",

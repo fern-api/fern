@@ -71,15 +71,6 @@ class Data(UniversalRootModel):
         if unioned_value.type == "base64":
             return base_64(unioned_value.value)
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.forbid
-
 
 class _Data:
     class String(UniversalBaseModel):

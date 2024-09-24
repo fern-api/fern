@@ -30,13 +30,12 @@ class CreateProblemRequest(UniversalBaseModel):
     method_name: typing_extensions.Annotated[str, FieldMetadata(alias="methodName")]
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:
             frozen = True
             smart_union = True
-            extra = pydantic.Extra.allow
 
 
 update_forward_refs(KeyValuePair, CreateProblemRequest=CreateProblemRequest)

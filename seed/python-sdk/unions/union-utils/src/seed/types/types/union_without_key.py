@@ -63,13 +63,12 @@ class UnionWithoutKey(UniversalRootModel):
             return bar(types_types_bar_Bar(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:
             frozen = True
             smart_union = True
-            extra = pydantic.Extra.allow
 
 
 class _UnionWithoutKey:
