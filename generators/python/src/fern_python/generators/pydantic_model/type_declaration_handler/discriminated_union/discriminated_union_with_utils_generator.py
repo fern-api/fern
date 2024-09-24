@@ -8,6 +8,7 @@ from fern_python.codegen.ast.nodes.declarations.class_.class_declaration import 
     ClassDeclaration,
 )
 from fern_python.external_dependencies import Pydantic
+from fern_python.external_dependencies.pydantic import PydanticVersionCompatibility
 from fern_python.generators.pydantic_model.type_declaration_handler.type_utilities import (
     declared_type_name_to_named_type,
 )
@@ -46,7 +47,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
 
     def _add_conditional_base_methods(
         self, base_class: FernAwarePydanticModel, internal_single_union_types: List[LocalClassReference]
-    ) -> None:
+    ) -> AST.TypeHint:
         if self._custom_config.skip_validation:
             root_type = AST.TypeHint.annotated(
                 type=AST.TypeHint.union(
@@ -134,6 +135,8 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
             )
         )
 
+        return root_type
+
     def determine_union_types(self, parent: ClassDeclaration) -> List[LocalClassReference]:
         dummy_parent = self._source_file.get_dummy_class_declaration(parent)
         local_dummy_references = []
@@ -159,10 +162,8 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
             docstring=self._docs,
             snippet=self._snippet,
             pydantic_base_model_override=self._context.core_utilities.get_universal_root_model(),
-            # No reason to have model config overrides on the base model, but
-            # also Pydantic V2's RootModel doesn't allow for a lot of the configuration.
-            include_model_config=False,
             force_update_forward_refs=True,
+            is_root_model=True,
         ) as external_pydantic_model:
             external_pydantic_model.add_class_var_unsafe(
                 name="factory",
@@ -170,7 +171,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                 initializer=AST.Expression(AST.ClassInstantiation(class_=factory)),
             )
 
-            self._add_conditional_base_methods(
+            root_type = self._add_conditional_base_methods(
                 external_pydantic_model,
                 internal_single_union_types=self.determine_union_types(internal_union_class_declaration),
             )
@@ -278,13 +279,17 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                         ),
                         no_properties=lambda: set(),
                     )
-                    forward_refed_types = [
-                        referenced_type_id
-                        for referenced_type_id in referenced_type_ids
-                        if self._context.does_type_reference_other_type(
-                            type_id=referenced_type_id, other_type_id=self._name.type_id
+                    forward_refed_types = list(
+                        sorted(
+                            [
+                                referenced_type_id
+                                for referenced_type_id in referenced_type_ids
+                                if self._context.does_type_reference_other_type(
+                                    type_id=referenced_type_id, other_type_id=self._name.type_id
+                                )
+                            ]
                         )
-                    ]
+                    )
 
                     if len(forward_refed_types) > 0:
                         # when calling update_forward_refs, Pydantic will throw
@@ -364,6 +369,28 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                     reference_to_current_value=f"unioned_value.{self._get_discriminant_attr_name()}",
                 )
             )
+
+            if self._custom_config.version == PydanticVersionCompatibility.V1:
+                external_pydantic_model.set_root_type_unsafe_v1_only(
+                    is_forward_ref=True,
+                    root_type=root_type,
+                    annotation=AST.Expression(
+                        AST.FunctionInvocation(
+                            function_definition=Pydantic.Field(),
+                            kwargs=[
+                                (
+                                    "discriminator",
+                                    AST.Expression(
+                                        f'"{self._get_discriminant_attr_name()}"',
+                                    ),
+                                )
+                            ],
+                        )
+                    )
+                    # can't use discriminator without single variant pydantic models
+                    # https://github.com/pydantic/pydantic/pull/3639
+                    if len(internal_single_union_types) != 1 else None,
+                )
 
     def _create_body_writer(
         self,

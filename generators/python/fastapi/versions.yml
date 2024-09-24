@@ -1,4 +1,27 @@
 # For unreleased changes, use unreleased.yml
+- version: 1.5.0-rc3
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: Dependencies are sorted within the generated code to ensure that even without running isort the imports are deterministically sorted.
+
+- version: 1.5.0-rc2
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        The FastAPI server generation now adds model configuration back onto the union utils root model a change that was made when Pydantic V2 support was rolled out, believing
+        it was not allowed in Pydantic V2.
+
+- version: 1.5.0-rc1
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        When leveraging the `include_union_utils` configuration flag, the Pydantic models will no longer include transitive dependencies within
+        `update_forward_ref` calls, since these should not be necessary. This effectively scopes back the changes introduced in 1.5.0-rc0, which included
+        changes to improve circular reference handling in Pydantic models.
+
 - version: 1.5.0-rc0
   irVersion: 53
   changelogEntry:

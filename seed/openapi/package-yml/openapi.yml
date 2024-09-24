@@ -3,12 +3,17 @@ info:
   title: package-yml
   version: ''
 paths:
-  /:
+  /{id}/:
     post:
       operationId: echo
       tags:
         - ''
-      parameters: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: ''
@@ -30,12 +35,17 @@ paths:
                 value:
                   name: Hello world!
                   size: 20
-  /{nestedId}:
+  /{id}//{nestedId}:
     get:
       operationId: service_nop
       tags:
         - Service
       parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
         - name: nestedId
           in: path
           required: true

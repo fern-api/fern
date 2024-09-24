@@ -1,5 +1,24 @@
 - changelogEntry:
     - summary: |
+        The CLI now recognizes the fern-php-sdk generator.
+      type: feat
+  irVersion: 53
+  version: 0.43.0
+
+- changelogEntry:
+    - summary: |
+        The documentation resolver now approrpiately creates a unique identifier for changelog sections. Previously, if you had multiple
+        changelogs within the same section, despite their title and slug being different, they would be treated as the same section since the ID
+        only took into account the parents' slug, appended the word "changelog" and that was all.
+
+        As a result previously all changelogs within the same section would get highlighted when one was selected, now only the selected changelog
+        is highlighted.
+      type: internal
+  irVersion: 53
+  version: 0.42.15
+
+- changelogEntry:
+    - summary: |
         The OpenAPI importer now correctly propagates the title field on `oneof` schemas.
       type: fix
   irVersion: 53

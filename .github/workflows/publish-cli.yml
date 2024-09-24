@@ -62,7 +62,7 @@ jobs:
           POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
         run: |
           pnpm --filter @fern-api/cli dist:cli:prod
-          cli_path="$(pwd)/packages/cli/cli/dist/prod/bundle.cjs" 
+          cli_path="$(pwd)/packages/cli/cli/dist/prod/bundle.cjs"
           ./scripts/live-test.sh "$cli_path" "$FERN_TOKEN"
 
   publish:
@@ -80,7 +80,6 @@ jobs:
         with:
           ref: main
           fetch-depth: 2
-          fetch-tags: true
 
       - name: Install
         uses: ./.github/actions/install
@@ -90,6 +89,15 @@ jobs:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
         run: |
           git show HEAD~1:packages/cli/cli/versions.yml > tmp_cli_previous_versions.yml
+
+          previous_commit="$(git rev-parse --short HEAD~1)"
+          echo "Preview of the previous file ${previous_commit}"
+          head tmp_cli_previous_versions.yml
+
+          current_commit="$(git rev-parse --short HEAD)"
+          echo "Preview of the current file ${current_commit}"
+          head packages/cli/cli/versions.yml
+
           pnpm seed:local publish cli  --changelog packages/cli/cli/versions.yml --previous-changelog tmp_cli_previous_versions.yml --log-level debug
           pnpm seed:local register cli
 

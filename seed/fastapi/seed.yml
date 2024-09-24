@@ -36,6 +36,11 @@ fixtures:
           version: v2
       outputFolder: pydantic-v2
     - customConfig:
+        pydantic_config:
+          frozen: True
+          include_union_utils: true
+      outputFolder: frozen_utils
+    - customConfig:
         include_validators: True
         pydantic_config:
           include_union_utils: true
