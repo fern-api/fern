@@ -1,6 +1,7 @@
 irVersion: v53
 displayName: PHP Model
 image: fernapi/fern-php-model
+changelogLocation: ../../generators/php/model/versions.yml
 publish:
   preBuildCommands:
     - pnpm --filter @fern-api/php-model dist:cli
