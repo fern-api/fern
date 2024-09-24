@@ -106,6 +106,15 @@ class Resource(UniversalRootModel):
                 )
             )
 
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="forbid"
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.forbid
+
 
 class _Resource:
     class User(resources_service_types_user_User):

@@ -71,6 +71,15 @@ class Metadata(UniversalRootModel):
         if unioned_value.type == "markdown":
             return markdown(unioned_value.value)
 
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="forbid"
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.forbid
+
 
 class _Metadata:
     class Html(UniversalBaseModel):

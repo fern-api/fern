@@ -5,6 +5,7 @@ from .playlist_id import PlaylistId as resources_playlist_types_playlist_id_Play
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.pydantic_utilities import UniversalRootModel
 import typing
+import pydantic
 from ....core.pydantic_utilities import UniversalBaseModel
 from ....core.pydantic_utilities import update_forward_refs
 
@@ -58,6 +59,15 @@ class PlaylistIdNotFoundErrorBody(UniversalRootModel):
         unioned_value = self.get_as_union()
         if unioned_value.type == "playlistId":
             return playlist_id(unioned_value.value)
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="forbid"
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.forbid
 
 
 class _PlaylistIdNotFoundErrorBody:

@@ -62,6 +62,15 @@ class Shape(UniversalRootModel):
         if unioned_value.type == "square":
             return square(union_types_square_Square(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
 
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
 
 class _Shape:
     class Circle(union_types_circle_Circle):

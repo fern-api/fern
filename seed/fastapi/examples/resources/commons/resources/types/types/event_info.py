@@ -97,6 +97,15 @@ class EventInfo(UniversalRootModel):
         if unioned_value.type == "tag":
             return tag(unioned_value.value)
 
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="forbid"
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.forbid
+
 
 class _EventInfo:
     class Metadata(resources_commons_resources_types_types_metadata_Metadata):

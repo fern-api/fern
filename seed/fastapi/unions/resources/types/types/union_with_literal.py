@@ -4,6 +4,7 @@ from __future__ import annotations
 import typing
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.pydantic_utilities import UniversalRootModel
+import pydantic
 from ....core.pydantic_utilities import UniversalBaseModel
 from ....core.pydantic_utilities import update_forward_refs
 
@@ -48,6 +49,15 @@ class UnionWithLiteral(UniversalRootModel):
         unioned_value = self.get_as_union()
         if unioned_value.type == "fern":
             return fern(unioned_value.value)
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="forbid"
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.forbid
 
 
 class _UnionWithLiteral:

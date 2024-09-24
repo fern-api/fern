@@ -5,6 +5,7 @@ from .foo import Foo as resources_types_types_foo_Foo
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.pydantic_utilities import UniversalRootModel
 import typing
+import pydantic
 from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
@@ -56,6 +57,15 @@ class UnionWithSingleElement(UniversalRootModel):
                     **unioned_value.dict(exclude_unset=True, exclude={"type"})
                 )
             )
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="forbid"
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.forbid
 
 
 class _UnionWithSingleElement:

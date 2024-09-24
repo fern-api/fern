@@ -84,6 +84,15 @@ class Animal(UniversalRootModel):
         typing.Union[_Animal.Dog, _Animal.Cat], pydantic.Field(discriminator="animal")
     ]
 
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="forbid"
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.forbid
+
 
 class _Animal:
     class Dog(resources_types_resources_union_types_dog_Dog):

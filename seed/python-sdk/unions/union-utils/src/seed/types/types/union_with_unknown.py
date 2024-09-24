@@ -60,6 +60,15 @@ class UnionWithUnknown(UniversalRootModel):
         if unioned_value.type == "unknown":
             return unknown()
 
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
 
 class _UnionWithUnknown:
     class Foo(types_types_foo_Foo):

@@ -77,6 +77,15 @@ class UnionWithDiscriminant(UniversalRootModel):
         if unioned_value.type == "bar":
             return bar(unioned_value.bar)
 
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="forbid"
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.forbid
+
 
 class _UnionWithDiscriminant:
     class Foo(UniversalBaseModel):

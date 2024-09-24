@@ -80,6 +80,15 @@ class Shape(UniversalRootModel):
                 )
             )
 
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="forbid"
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.forbid
+
 
 class _Shape:
     class Circle(resources_union_types_circle_Circle):
