@@ -318,7 +318,7 @@ class PydanticModel:
             is_forward_reference=True,
         )
 
-    def _maybe_model_config(self) -> None:
+    def _get_v2_model_config(self) -> Optional[AST.Expression]:
         extra_fields = self._extra_fields
         config_kwargs: List[Tuple[str, AST.Expression]] = []
         if not self._is_root_model:
@@ -329,31 +329,56 @@ class PydanticModel:
         if self._orm_mode:
             config_kwargs.append(("from_attributes", AST.Expression("True")))
 
-        config_class = self._get_config_class()
+        def write_extras(writer: AST.NodeWriter) -> None:
+            writer.write("model_config: ")
+            writer.write_node(AST.TypeHint.class_var(AST.TypeHint(type=Pydantic.ConfigDict())))
+            writer.write(" = ")
+            writer.write_node(AST.Expression(AST.ClassInstantiation(Pydantic.ConfigDict(), kwargs=config_kwargs)))
+            writer.write("  # type: ignore # Pydantic v2")
+
+        if len(config_kwargs) > 0:
+            return AST.Expression(AST.CodeWriter(write_extras))
+
+        return None
+
+    def _maybe_model_config(self) -> None:
+        v1_config_class = self._get_v1_config_class()
+        v2_model_config = self._get_v2_model_config()
 
         def write_extras(writer: AST.NodeWriter) -> None:
-            if len(config_kwargs) > 0:
-                writer.write("if ")
-                # TODO: this class needs a context, then we can call get_is_pydantic_v2
-                writer.write_node(self._is_pydantic_v2)
-                writer.write_line(":")
-                with writer.indent():
-                    writer.write("model_config: ")
-                    writer.write_node(AST.TypeHint.class_var(AST.TypeHint(type=Pydantic.ConfigDict())))
-                    writer.write(" = ")
-                    writer.write_node(
-                        AST.Expression(AST.ClassInstantiation(Pydantic.ConfigDict(), kwargs=config_kwargs))
-                    )
-                    writer.write("  # type: ignore # Pydantic v2")
-                writer.write_newline_if_last_line_not()
-                if config_class is not None:
+            if self._version == PydanticVersionCompatibility.Both:
+                if v1_config_class is not None and v2_model_config is not None:
+                    writer.write("if ")
+                    writer.write_node(self._is_pydantic_v2)
+                    writer.write_line(":")
+                    with writer.indent():
+                        writer.write_node(v2_model_config)
+                    writer.write_newline_if_last_line_not()
                     writer.write_line("else:")
                     with writer.indent():
-                        writer.write_node(config_class)
-            elif config_class is not None:
-                writer.write_node(config_class)
+                        writer.write_node(v1_config_class)
+                elif v1_config_class is not None or v2_model_config is not None:
+                    writer.write("if ")
+                    if v2_model_config is None:
+                        writer.write("not ")
+                    writer.write_node(self._is_pydantic_v2)
+                    writer.write_line(":")
+                    with writer.indent():
+                        non_none_config: AST.AstNode = v1_config_class if v1_config_class is not None else v2_model_config  # type: ignore  # this is not None, by pyright says otherwise
+                        writer.write_node(non_none_config)
+            elif self._version == PydanticVersionCompatibility.V1 and v1_config_class is not None:
+                writer.write_node(v1_config_class)
+            elif self._version == PydanticVersionCompatibility.V2 and v2_model_config is not None:
+                writer.write_node(v2_model_config)
 
-        if config_class is not None or len(config_kwargs) > 0:
+        if (
+            (
+                self._version == PydanticVersionCompatibility.Both
+                and (v1_config_class is not None or v2_model_config is not None)
+            )
+            or (self._version == PydanticVersionCompatibility.V1 and v1_config_class is not None)
+            or (self._version == PydanticVersionCompatibility.V2 and v2_model_config is not None)
+        ):
             self._class_declaration.add_expression(AST.Expression(AST.CodeWriter(write_extras)))
 
     def update_forward_refs(self) -> None:
@@ -382,7 +407,7 @@ class PydanticModel:
             )
         )
 
-    def _get_config_class(self) -> Optional[AST.ClassDeclaration]:
+    def _get_v1_config_class(self) -> Optional[AST.ClassDeclaration]:
         config = AST.ClassDeclaration(name="Config")
 
         if self._frozen:

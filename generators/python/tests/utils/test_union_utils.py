@@ -14,3 +14,11 @@ def test_union_utils() -> None:
 
     assert is_circle
     assert circle.dict() == json.loads(dummy)
+
+def test_equality() -> None:
+    dummy = '{ "type": "circle", "radius": 1.1 }'
+    circle = Shape.parse_raw(dummy)
+    circle2 = Shape.parse_raw(dummy)
+
+    circle.dict(exclude_unset=False)
+    assert circle == circle2
