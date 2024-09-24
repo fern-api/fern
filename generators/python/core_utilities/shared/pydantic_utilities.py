@@ -150,7 +150,7 @@ class UniversalBaseModel(pydantic.BaseModel):
             )
 
         else:
-            _fields_set = self.__fields_set__
+            _fields_set = self.__fields_set__.copy()
 
             fields = _get_model_fields(self.__class__)
             for name, field in fields.items():
