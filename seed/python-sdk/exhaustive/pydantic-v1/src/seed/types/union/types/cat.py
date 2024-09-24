@@ -3,8 +3,6 @@
 from ....core.pydantic_utilities import UniversalBaseModel
 import typing_extensions
 from ....core.serialization import FieldMetadata
-from ....core.pydantic_utilities import IS_PYDANTIC_V2
-import typing
 import pydantic
 
 
@@ -12,11 +10,7 @@ class Cat(UniversalBaseModel):
     name: str
     likes_to_meow: typing_extensions.Annotated[bool, FieldMetadata(alias="likesToMeow")]
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    class Config:
+        frozen = True
+        smart_union = True
+        extra = pydantic.Extra.allow

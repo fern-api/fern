@@ -4,15 +4,10 @@ from .....core.pydantic_utilities import UniversalBaseModel
 import typing
 from .optional_alias import OptionalAlias
 import pydantic
-from .....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class DoubleOptional(UniversalBaseModel):
     optional_alias: typing.Optional[OptionalAlias] = pydantic.Field(alias="optionalAlias", default=None)
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
+    class Config:
+        extra = pydantic.Extra.allow
