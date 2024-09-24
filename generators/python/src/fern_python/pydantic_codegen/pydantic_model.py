@@ -330,6 +330,7 @@ class PydanticModel:
             config_kwargs.append(("from_attributes", AST.Expression("True")))
 
         config_class = self._get_config_class()
+
         def write_extras(writer: AST.NodeWriter) -> None:
             if len(config_kwargs) > 0:
                 writer.write("if ")
