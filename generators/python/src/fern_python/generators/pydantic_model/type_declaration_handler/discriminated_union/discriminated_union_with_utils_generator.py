@@ -303,7 +303,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                 self.add_statements_v1_v2_or_both(
                     v1_nodes=[AST.Expression("return self.__root__.dict(**kwargs)")],
                     v2_nodes=[AST.Expression("return self.root.dict(**kwargs)")],
-                    write_node=writer.write_node
+                    write_node=writer.write_node,
                 )
 
             external_pydantic_model.add_method_unsafe(
