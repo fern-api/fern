@@ -6,6 +6,8 @@ from ..commons.key_value_pair import KeyValuePair
 from ..commons.map_value import MapValue
 from .test_case_result_with_stdout import TestCaseResultWithStdout
 import pydantic
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
+import typing
 from ...core.pydantic_utilities import update_forward_refs
 
 
@@ -13,8 +15,12 @@ class TracedTestCase(UniversalBaseModel):
     result: TestCaseResultWithStdout
     trace_responses_size: int = pydantic.Field(alias="traceResponsesSize")
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 update_forward_refs(KeyValuePair, TracedTestCase=TracedTestCase)

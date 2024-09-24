@@ -16,7 +16,7 @@ class DescribeResponse(UniversalBaseModel):
     total_count: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="totalCount")] = None
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:

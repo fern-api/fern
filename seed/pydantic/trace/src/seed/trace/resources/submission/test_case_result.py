@@ -7,6 +7,8 @@ from ..commons.map_value import MapValue
 from ..commons.variable_value import VariableValue
 import pydantic
 from .actual_result import ActualResult
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
+import typing
 from ...core.pydantic_utilities import update_forward_refs
 
 
@@ -15,8 +17,12 @@ class TestCaseResult(UniversalBaseModel):
     actual_result: ActualResult = pydantic.Field(alias="actualResult")
     passed: bool
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 update_forward_refs(KeyValuePair, TestCaseResult=TestCaseResult)

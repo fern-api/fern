@@ -4,6 +4,7 @@ from ....core.pydantic_utilities import UniversalBaseModel
 import pydantic
 import typing
 from .next_page import NextPage
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class Page(UniversalBaseModel):
@@ -16,5 +17,11 @@ class Page(UniversalBaseModel):
     per_page: int
     total_page: int
 
-    class Config:
-        extra = pydantic.Extra.forbid
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="forbid"
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.forbid

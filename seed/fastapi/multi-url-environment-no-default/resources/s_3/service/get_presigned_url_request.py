@@ -2,10 +2,18 @@
 
 from ....core.pydantic_utilities import UniversalBaseModel
 import pydantic
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
+import typing
 
 
 class GetPresignedUrlRequest(UniversalBaseModel):
     s_3_key: str = pydantic.Field(alias="s3Key")
 
-    class Config:
-        extra = pydantic.Extra.forbid
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="forbid"
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.forbid

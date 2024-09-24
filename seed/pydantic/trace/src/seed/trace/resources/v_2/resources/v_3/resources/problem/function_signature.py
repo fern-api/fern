@@ -6,6 +6,7 @@ from ......commons.list_type import ListType
 from ......commons.map_type import MapType
 import typing
 from .parameter import Parameter
+from .......core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 from ......commons.variable_type import VariableType
 from .......core.pydantic_utilities import update_forward_refs
@@ -15,8 +16,12 @@ class FunctionSignature_Void(UniversalBaseModel):
     type: typing.Literal["void"] = "void"
     parameters: typing.List[Parameter]
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 class FunctionSignature_NonVoid(UniversalBaseModel):
@@ -24,8 +29,12 @@ class FunctionSignature_NonVoid(UniversalBaseModel):
     parameters: typing.List[Parameter]
     return_type: VariableType = pydantic.Field(alias="returnType")
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 class FunctionSignature_VoidThatTakesActualResult(UniversalBaseModel):
@@ -33,8 +42,12 @@ class FunctionSignature_VoidThatTakesActualResult(UniversalBaseModel):
     parameters: typing.List[Parameter]
     actual_result_type: VariableType = pydantic.Field(alias="actualResultType")
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 FunctionSignature = typing.Union[

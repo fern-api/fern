@@ -76,9 +76,6 @@ class CustomFiles(UniversalRootModel):
         if unioned_value.type == "custom":
             return custom(unioned_value.value)
 
-    class Config:
-        extra = pydantic.Extra.forbid
-
 
 class _CustomFiles:
     class Basic(BasicCustomFiles):

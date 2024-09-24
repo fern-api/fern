@@ -3,11 +3,19 @@
 from ....core.pydantic_utilities import UniversalBaseModel
 from ...commons.types.variable_type import VariableType
 import pydantic
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
+import typing
 
 
 class VariableTypeAndName(UniversalBaseModel):
     variable_type: VariableType = pydantic.Field(alias="variableType")
     name: str
 
-    class Config:
-        extra = pydantic.Extra.forbid
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="forbid"
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.forbid

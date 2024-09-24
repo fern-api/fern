@@ -4,6 +4,7 @@ from __future__ import annotations
 from ...core.pydantic_utilities import UniversalBaseModel
 from .primitive_value import PrimitiveValue
 import typing
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 from ...core.pydantic_utilities import update_forward_refs
 
@@ -16,8 +17,12 @@ class FieldValue_PrimitiveValue(UniversalBaseModel):
 class FieldValue_ObjectValue(UniversalBaseModel):
     type: typing.Literal["object_value"] = "object_value"
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 class FieldValue_ContainerValue(UniversalBaseModel):

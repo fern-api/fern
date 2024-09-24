@@ -2,31 +2,44 @@
 
 from __future__ import annotations
 from ...core.pydantic_utilities import UniversalBaseModel
-import pydantic
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
+import pydantic
 
 
 class Base(UniversalBaseModel):
     id: str
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 class Shape_Circle(Base):
     type: typing.Literal["circle"] = "circle"
     radius: float
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 class Shape_Square(Base):
     type: typing.Literal["square"] = "square"
     length: float
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 Shape = typing.Union[Shape_Circle, Shape_Square]

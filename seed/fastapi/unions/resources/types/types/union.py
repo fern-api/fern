@@ -67,9 +67,6 @@ class Union(UniversalRootModel):
         if unioned_value.type == "bar":
             return bar(unioned_value.bar)
 
-    class Config:
-        extra = pydantic.Extra.forbid
-
 
 class _Union:
     class Foo(UniversalBaseModel):

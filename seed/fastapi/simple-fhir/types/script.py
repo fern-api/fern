@@ -2,6 +2,7 @@
 
 from .base_resource import BaseResource
 import typing
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
@@ -9,5 +10,11 @@ class Script(BaseResource):
     resource_type: typing.Literal["Script"] = "Script"
     name: str
 
-    class Config:
-        extra = pydantic.Extra.forbid
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="forbid"
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.forbid

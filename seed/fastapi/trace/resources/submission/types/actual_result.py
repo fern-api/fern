@@ -109,9 +109,6 @@ class ActualResult(UniversalRootModel):
         if unioned_value.type == "exceptionV2":
             return exception_v_2(unioned_value.value)
 
-    class Config:
-        extra = pydantic.Extra.forbid
-
 
 class _ActualResult:
     class Value(UniversalBaseModel):

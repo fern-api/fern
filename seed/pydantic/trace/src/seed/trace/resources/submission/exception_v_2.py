@@ -4,6 +4,7 @@ from __future__ import annotations
 from ...core.pydantic_utilities import UniversalBaseModel
 import typing
 import pydantic
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ExceptionV2_Generic(UniversalBaseModel):
@@ -12,15 +13,23 @@ class ExceptionV2_Generic(UniversalBaseModel):
     exception_message: str = pydantic.Field(alias="exceptionMessage")
     exception_stacktrace: str = pydantic.Field(alias="exceptionStacktrace")
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 class ExceptionV2_Timeout(UniversalBaseModel):
     type: typing.Literal["timeout"] = "timeout"
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 ExceptionV2 = typing.Union[ExceptionV2_Generic, ExceptionV2_Timeout]

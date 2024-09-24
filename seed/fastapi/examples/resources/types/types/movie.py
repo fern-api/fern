@@ -5,6 +5,7 @@ from .movie_id import MovieId
 import typing
 import pydantic
 from ...commons.resources.types.types.tag import Tag
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class Movie(UniversalBaseModel):
@@ -44,5 +45,11 @@ class Movie(UniversalBaseModel):
     metadata: typing.Dict[str, typing.Optional[typing.Any]]
     revenue: int
 
-    class Config:
-        extra = pydantic.Extra.forbid
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="forbid"
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.forbid

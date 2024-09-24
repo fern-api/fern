@@ -8,6 +8,7 @@ import typing
 from .parameter import Parameter
 from ....commons.variable_type import VariableType
 import pydantic
+from .....core.pydantic_utilities import IS_PYDANTIC_V2
 from .....core.pydantic_utilities import update_forward_refs
 
 
@@ -15,8 +16,12 @@ class NonVoidFunctionSignature(UniversalBaseModel):
     parameters: typing.List[Parameter]
     return_type: VariableType = pydantic.Field(alias="returnType")
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 update_forward_refs(ListType, NonVoidFunctionSignature=NonVoidFunctionSignature)

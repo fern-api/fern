@@ -338,9 +338,6 @@ class CodeExecutionUpdate(UniversalRootModel):
                 )
             )
 
-    class Config:
-        extra = pydantic.Extra.forbid
-
 
 class _CodeExecutionUpdate:
     class BuildingExecutor(BuildingExecutorResponse):

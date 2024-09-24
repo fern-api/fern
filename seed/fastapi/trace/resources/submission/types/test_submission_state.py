@@ -6,6 +6,7 @@ import pydantic
 import typing
 from ...commons.types.test_case import TestCase
 from .test_submission_status import TestSubmissionStatus
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class TestSubmissionState(UniversalBaseModel):
@@ -14,5 +15,11 @@ class TestSubmissionState(UniversalBaseModel):
     custom_test_cases: typing.List[TestCase] = pydantic.Field(alias="customTestCases")
     status: TestSubmissionStatus
 
-    class Config:
-        extra = pydantic.Extra.forbid
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="forbid"
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.forbid

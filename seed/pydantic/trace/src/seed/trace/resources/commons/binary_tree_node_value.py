@@ -4,6 +4,7 @@ from ...core.pydantic_utilities import UniversalBaseModel
 from .node_id import NodeId
 import pydantic
 import typing
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class BinaryTreeNodeValue(UniversalBaseModel):
@@ -12,5 +13,9 @@ class BinaryTreeNodeValue(UniversalBaseModel):
     right: typing.Optional[NodeId] = None
     left: typing.Optional[NodeId] = None
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow

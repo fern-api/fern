@@ -3,11 +3,17 @@
 from ...core.pydantic_utilities import UniversalBaseModel
 from ..commons.language import Language
 import pydantic
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
+import typing
 
 
 class UnexpectedLanguageError(UniversalBaseModel):
     expected_language: Language = pydantic.Field(alias="expectedLanguage")
     actual_language: Language = pydantic.Field(alias="actualLanguage")
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow

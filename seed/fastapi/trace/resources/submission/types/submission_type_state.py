@@ -92,9 +92,6 @@ class SubmissionTypeState(UniversalRootModel):
                 )
             )
 
-    class Config:
-        extra = pydantic.Extra.forbid
-
 
 class _SubmissionTypeState:
     class Test(TestSubmissionState):

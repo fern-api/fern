@@ -3,6 +3,7 @@
 from .core.pydantic_utilities import UniversalBaseModel
 import typing
 from .resources.commons.resources.metadata.metadata import Metadata
+from .core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
@@ -27,5 +28,9 @@ class Node(UniversalBaseModel):
     label: typing.Optional[str] = None
     metadata: typing.Optional[Metadata] = None
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow

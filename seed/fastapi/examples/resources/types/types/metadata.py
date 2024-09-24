@@ -71,9 +71,6 @@ class Metadata(UniversalRootModel):
         if unioned_value.type == "markdown":
             return markdown(unioned_value.value)
 
-    class Config:
-        extra = pydantic.Extra.forbid
-
 
 class _Metadata:
     class Html(UniversalBaseModel):

@@ -3,6 +3,7 @@
 from __future__ import annotations
 from ...core.pydantic_utilities import UniversalBaseModel
 import typing
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 from ...core.pydantic_utilities import update_forward_refs
 
@@ -10,36 +11,56 @@ from ...core.pydantic_utilities import update_forward_refs
 class VariableType_IntegerType(UniversalBaseModel):
     type: typing.Literal["integerType"] = "integerType"
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 class VariableType_DoubleType(UniversalBaseModel):
     type: typing.Literal["doubleType"] = "doubleType"
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 class VariableType_BooleanType(UniversalBaseModel):
     type: typing.Literal["booleanType"] = "booleanType"
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 class VariableType_StringType(UniversalBaseModel):
     type: typing.Literal["stringType"] = "stringType"
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 class VariableType_CharType(UniversalBaseModel):
     type: typing.Literal["charType"] = "charType"
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 class VariableType_ListType(UniversalBaseModel):
@@ -47,8 +68,12 @@ class VariableType_ListType(UniversalBaseModel):
     value_type: "VariableType" = pydantic.Field(alias="valueType")
     is_fixed_length: typing.Optional[bool] = pydantic.Field(alias="isFixedLength", default=None)
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 class VariableType_MapType(UniversalBaseModel):
@@ -56,8 +81,12 @@ class VariableType_MapType(UniversalBaseModel):
     key_type: "VariableType" = pydantic.Field(alias="keyType")
     value_type: "VariableType" = pydantic.Field(alias="valueType")
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 from .list_type import ListType  # noqa: E402
@@ -67,22 +96,34 @@ from .map_type import MapType  # noqa: E402
 class VariableType_BinaryTreeType(UniversalBaseModel):
     type: typing.Literal["binaryTreeType"] = "binaryTreeType"
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 class VariableType_SinglyLinkedListType(UniversalBaseModel):
     type: typing.Literal["singlyLinkedListType"] = "singlyLinkedListType"
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 class VariableType_DoublyLinkedListType(UniversalBaseModel):
     type: typing.Literal["doublyLinkedListType"] = "doublyLinkedListType"
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 VariableType = typing.Union[

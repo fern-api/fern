@@ -8,6 +8,7 @@ from ......commons.list_type import ListType
 from ......commons.map_type import MapType
 from .test_case_implementation_description import TestCaseImplementationDescription
 from .test_case_function import TestCaseFunction
+from .......core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 from .......core.pydantic_utilities import update_forward_refs
 
@@ -22,8 +23,12 @@ class TestCaseImplementationReference_Implementation(UniversalBaseModel):
     description: TestCaseImplementationDescription
     function: TestCaseFunction
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 TestCaseImplementationReference = typing.Union[

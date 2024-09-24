@@ -144,9 +144,6 @@ class ErrorInfo(UniversalRootModel):
                 )
             )
 
-    class Config:
-        extra = pydantic.Extra.forbid
-
 
 class _ErrorInfo:
     class CompileError(resources_submission_types_compile_error_CompileError):

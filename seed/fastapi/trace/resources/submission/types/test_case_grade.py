@@ -92,9 +92,6 @@ class TestCaseGrade(UniversalRootModel):
                 )
             )
 
-    class Config:
-        extra = pydantic.Extra.forbid
-
 
 class _TestCaseGrade:
     class Hidden(TestCaseHiddenGrade):

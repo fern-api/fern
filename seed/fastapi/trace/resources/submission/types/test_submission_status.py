@@ -132,9 +132,6 @@ class TestSubmissionStatus(UniversalRootModel):
         if unioned_value.type == "testCaseIdToState":
             return test_case_id_to_state(unioned_value.value)
 
-    class Config:
-        extra = pydantic.Extra.forbid
-
 
 class _TestSubmissionStatus:
     class Stopped(UniversalBaseModel):

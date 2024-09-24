@@ -15,7 +15,7 @@ class WorkspaceSubmissionUpdate(UniversalBaseModel):
     update_info: typing_extensions.Annotated[WorkspaceSubmissionUpdateInfo, FieldMetadata(alias="updateInfo")]
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:

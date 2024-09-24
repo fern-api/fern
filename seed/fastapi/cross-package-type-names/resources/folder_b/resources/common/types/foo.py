@@ -5,11 +5,18 @@ import typing
 from .....folder_c.resources.common.types.foo import (
     Foo as resources_folder_c_resources_common_types_foo_Foo,
 )
+from ......core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
 class Foo(UniversalBaseModel):
     foo: typing.Optional[resources_folder_c_resources_common_types_foo_Foo] = None
 
-    class Config:
-        extra = pydantic.Extra.forbid
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="forbid"
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.forbid

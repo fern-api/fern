@@ -8,6 +8,7 @@ import typing
 from ..commons.variable_value import VariableValue
 import pydantic
 from .exception_v_2 import ExceptionV2
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.pydantic_utilities import update_forward_refs
 
 
@@ -17,8 +18,12 @@ class TestCaseNonHiddenGrade(UniversalBaseModel):
     exception: typing.Optional[ExceptionV2] = None
     stdout: str
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 update_forward_refs(KeyValuePair, TestCaseNonHiddenGrade=TestCaseNonHiddenGrade)

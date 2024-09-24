@@ -3,11 +3,17 @@
 from ...core.pydantic_utilities import UniversalBaseModel
 from ..v_2.resources.problem.test_case_id import TestCaseId
 import pydantic
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
+import typing
 
 
 class RecordedTestCaseUpdate(UniversalBaseModel):
     test_case_id: TestCaseId = pydantic.Field(alias="testCaseId")
     trace_responses_size: int = pydantic.Field(alias="traceResponsesSize")
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow

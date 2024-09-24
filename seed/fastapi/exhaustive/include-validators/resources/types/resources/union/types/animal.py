@@ -140,9 +140,6 @@ class Animal(UniversalRootModel):
             values = validator(values)
         return values
 
-    class Config:
-        extra = pydantic.Extra.forbid
-
 
 class _Animal:
     class Dog(resources_types_resources_union_types_dog_Dog):

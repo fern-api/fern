@@ -96,9 +96,6 @@ class TestCaseImplementationDescriptionBoard(UniversalRootModel):
         if unioned_value.type == "paramId":
             return param_id(unioned_value.value)
 
-    class Config:
-        extra = pydantic.Extra.forbid
-
 
 class _TestCaseImplementationDescriptionBoard:
     class Html(UniversalBaseModel):

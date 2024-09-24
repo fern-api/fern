@@ -2,6 +2,7 @@
 
 from ....core.pydantic_utilities import UniversalBaseModel
 import typing
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
@@ -13,5 +14,11 @@ class RefreshTokenRequest(UniversalBaseModel):
     grant_type: typing.Literal["refresh_token"] = "refresh_token"
     scope: typing.Optional[str] = None
 
-    class Config:
-        extra = pydantic.Extra.forbid
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="forbid"
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.forbid

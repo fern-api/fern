@@ -3,6 +3,7 @@
 from __future__ import annotations
 from ....core.pydantic_utilities import UniversalBaseModel
 import typing
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 from ....core.pydantic_utilities import update_forward_refs
 
@@ -42,8 +43,14 @@ class Node(UniversalBaseModel):
     nodes: typing.Optional[typing.List["Node"]] = None
     trees: typing.Optional[typing.List["Tree"]] = None
 
-    class Config:
-        extra = pydantic.Extra.forbid
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="forbid"
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.forbid
 
 
 from .tree import Tree  # noqa: E402

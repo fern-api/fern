@@ -88,9 +88,6 @@ class Exception(UniversalRootModel):
         if unioned_value.type == "timeout":
             return timeout()
 
-    class Config:
-        extra = pydantic.Extra.forbid
-
 
 class _Exception:
     class Generic(ExceptionInfo):

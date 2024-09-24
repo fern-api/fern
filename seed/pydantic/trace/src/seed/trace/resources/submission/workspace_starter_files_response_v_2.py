@@ -5,10 +5,15 @@ import typing
 from ..commons.language import Language
 from ..v_2.resources.problem.files import Files
 import pydantic
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class WorkspaceStarterFilesResponseV2(UniversalBaseModel):
     files_by_language: typing.Dict[Language, Files] = pydantic.Field(alias="filesByLanguage")
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow

@@ -17,7 +17,7 @@ class InvalidRequestCause_SubmissionIdNotFound(UniversalBaseModel):
     missing_submission_id: typing_extensions.Annotated[SubmissionId, FieldMetadata(alias="missingSubmissionId")]
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -32,7 +32,7 @@ class InvalidRequestCause_CustomTestCasesUnsupported(UniversalBaseModel):
     submission_id: typing_extensions.Annotated[SubmissionId, FieldMetadata(alias="submissionId")]
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -47,7 +47,7 @@ class InvalidRequestCause_UnexpectedLanguage(UniversalBaseModel):
     actual_language: typing_extensions.Annotated[Language, FieldMetadata(alias="actualLanguage")]
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:

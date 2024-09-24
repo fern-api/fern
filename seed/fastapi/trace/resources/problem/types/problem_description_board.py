@@ -107,9 +107,6 @@ class ProblemDescriptionBoard(UniversalRootModel):
         if unioned_value.type == "testCaseId":
             return test_case_id(unioned_value.value)
 
-    class Config:
-        extra = pydantic.Extra.forbid
-
 
 class _ProblemDescriptionBoard:
     class Html(UniversalBaseModel):

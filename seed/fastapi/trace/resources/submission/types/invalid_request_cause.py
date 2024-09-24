@@ -150,9 +150,6 @@ class InvalidRequestCause(UniversalRootModel):
                 )
             )
 
-    class Config:
-        extra = pydantic.Extra.forbid
-
 
 class _InvalidRequestCause:
     class SubmissionIdNotFound(

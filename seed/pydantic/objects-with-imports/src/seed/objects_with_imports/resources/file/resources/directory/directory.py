@@ -4,6 +4,7 @@ from __future__ import annotations
 from .....core.pydantic_utilities import UniversalBaseModel
 import typing
 from ...file import File
+from .....core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 from .....core.pydantic_utilities import update_forward_refs
 
@@ -43,8 +44,12 @@ class Directory(UniversalBaseModel):
     files: typing.Optional[typing.List[File]] = None
     directories: typing.Optional[typing.List["Directory"]] = None
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 update_forward_refs(Directory)

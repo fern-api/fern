@@ -77,9 +77,6 @@ class CreateProblemResponse(UniversalRootModel):
         if unioned_value.type == "error":
             return error(unioned_value.value)
 
-    class Config:
-        extra = pydantic.Extra.forbid
-
 
 class _CreateProblemResponse:
     class Success(UniversalBaseModel):

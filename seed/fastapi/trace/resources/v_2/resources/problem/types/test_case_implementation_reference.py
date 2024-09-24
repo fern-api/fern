@@ -103,9 +103,6 @@ class TestCaseImplementationReference(UniversalRootModel):
                 )
             )
 
-    class Config:
-        extra = pydantic.Extra.forbid
-
 
 class _TestCaseImplementationReference:
     class TemplateId(UniversalBaseModel):

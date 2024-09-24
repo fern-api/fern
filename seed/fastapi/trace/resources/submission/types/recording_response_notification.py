@@ -6,6 +6,7 @@ import pydantic
 import typing
 from .lightweight_stackframe_information import LightweightStackframeInformation
 from .traced_file import TracedFile
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class RecordingResponseNotification(UniversalBaseModel):
@@ -21,5 +22,11 @@ class RecordingResponseNotification(UniversalBaseModel):
         alias="tracedFile", default=None
     )
 
-    class Config:
-        extra = pydantic.Extra.forbid
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="forbid"
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.forbid

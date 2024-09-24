@@ -4,6 +4,7 @@ from ..core.pydantic_utilities import UniversalBaseModel
 import typing
 from .column import Column
 from .usage import Usage
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
@@ -12,5 +13,11 @@ class FetchResponse(UniversalBaseModel):
     namespace: typing.Optional[str] = None
     usage: typing.Optional[Usage] = None
 
-    class Config:
-        extra = pydantic.Extra.forbid
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="forbid"
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.forbid

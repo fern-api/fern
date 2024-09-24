@@ -128,9 +128,6 @@ class FieldValue(UniversalRootModel):
         if unioned_value.type == "container_value":
             return container_value(unioned_value.value)
 
-    class Config:
-        extra = pydantic.Extra.forbid
-
 
 from .container_value import (
     ContainerValue as resources_ast_types_container_value_ContainerValue,

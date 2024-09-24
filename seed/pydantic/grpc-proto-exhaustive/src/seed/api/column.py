@@ -5,6 +5,7 @@ import typing
 from .metadata import Metadata
 from .indexed_data import IndexedData
 import pydantic
+from .core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class Column(UniversalBaseModel):
@@ -13,5 +14,9 @@ class Column(UniversalBaseModel):
     metadata: typing.Optional[Metadata] = None
     indexed_data: typing.Optional[IndexedData] = pydantic.Field(alias="indexedData", default=None)
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow

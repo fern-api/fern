@@ -136,9 +136,6 @@ class FunctionSignature(UniversalRootModel):
                 )
             )
 
-    class Config:
-        extra = pydantic.Extra.forbid
-
 
 class _FunctionSignature:
     class Void(VoidFunctionSignature):

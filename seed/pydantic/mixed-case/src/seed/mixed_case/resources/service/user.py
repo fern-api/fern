@@ -3,6 +3,7 @@
 from ...core.pydantic_utilities import UniversalBaseModel
 import pydantic
 import typing
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class User(UniversalBaseModel):
@@ -22,5 +23,9 @@ class User(UniversalBaseModel):
     metadata_tags: typing.List[str]
     extra_properties: typing.Dict[str, str] = pydantic.Field(alias="EXTRA_PROPERTIES")
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow

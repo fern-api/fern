@@ -13,7 +13,7 @@ class LightweightStackframeInformation(UniversalBaseModel):
     top_stack_frame_method_name: typing_extensions.Annotated[str, FieldMetadata(alias="topStackFrameMethodName")]
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:

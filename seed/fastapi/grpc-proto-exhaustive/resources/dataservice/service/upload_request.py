@@ -3,6 +3,7 @@
 from ....core.pydantic_utilities import UniversalBaseModel
 import typing
 from ....types.column import Column
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
@@ -10,5 +11,11 @@ class UploadRequest(UniversalBaseModel):
     columns: typing.List[Column]
     namespace: typing.Optional[str] = None
 
-    class Config:
-        extra = pydantic.Extra.forbid
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="forbid"
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.forbid

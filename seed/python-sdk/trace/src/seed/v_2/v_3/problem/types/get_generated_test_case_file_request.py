@@ -21,7 +21,7 @@ class GetGeneratedTestCaseFileRequest(UniversalBaseModel):
     test_case: typing_extensions.Annotated[TestCaseV2, FieldMetadata(alias="testCase")]
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:

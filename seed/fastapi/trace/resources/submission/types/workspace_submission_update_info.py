@@ -196,9 +196,6 @@ class WorkspaceSubmissionUpdateInfo(UniversalRootModel):
         if unioned_value.type == "finished":
             return finished()
 
-    class Config:
-        extra = pydantic.Extra.forbid
-
 
 class _WorkspaceSubmissionUpdateInfo:
     class Running(UniversalBaseModel):

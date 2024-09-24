@@ -195,9 +195,6 @@ class SubmissionResponse(UniversalRootModel):
                 )
             )
 
-    class Config:
-        extra = pydantic.Extra.forbid
-
 
 class _SubmissionResponse:
     class ServerInitialized(UniversalBaseModel):

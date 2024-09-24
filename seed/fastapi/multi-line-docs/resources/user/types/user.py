@@ -3,6 +3,7 @@
 from ....core.pydantic_utilities import UniversalBaseModel
 import pydantic
 import typing
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class User(UniversalBaseModel):
@@ -28,5 +29,11 @@ class User(UniversalBaseModel):
     The user's age.
     """
 
-    class Config:
-        extra = pydantic.Extra.forbid
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="forbid"
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.forbid

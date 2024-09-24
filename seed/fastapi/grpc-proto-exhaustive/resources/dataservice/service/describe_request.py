@@ -3,11 +3,18 @@
 from ....core.pydantic_utilities import UniversalBaseModel
 import typing
 from ....types.metadata import Metadata
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
 class DescribeRequest(UniversalBaseModel):
     filter: typing.Optional[Metadata] = None
 
-    class Config:
-        extra = pydantic.Extra.forbid
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="forbid"
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.forbid

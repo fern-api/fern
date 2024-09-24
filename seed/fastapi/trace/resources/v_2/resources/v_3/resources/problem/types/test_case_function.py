@@ -98,9 +98,6 @@ class TestCaseFunction(UniversalRootModel):
                 )
             )
 
-    class Config:
-        extra = pydantic.Extra.forbid
-
 
 class _TestCaseFunction:
     class WithActualResult(TestCaseWithActualResultImplementation):

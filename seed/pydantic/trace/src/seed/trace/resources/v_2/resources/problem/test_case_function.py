@@ -8,6 +8,7 @@ import typing
 from .non_void_function_definition import NonVoidFunctionDefinition
 import pydantic
 from .assert_correctness_check import AssertCorrectnessCheck
+from .....core.pydantic_utilities import IS_PYDANTIC_V2
 from .parameter import Parameter
 from .function_implementation_for_multiple_languages import FunctionImplementationForMultipleLanguages
 from .....core.pydantic_utilities import update_forward_refs
@@ -18,8 +19,12 @@ class TestCaseFunction_WithActualResult(UniversalBaseModel):
     get_actual_result: NonVoidFunctionDefinition = pydantic.Field(alias="getActualResult")
     assert_correctness_check: AssertCorrectnessCheck = pydantic.Field(alias="assertCorrectnessCheck")
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 class TestCaseFunction_Custom(UniversalBaseModel):
@@ -27,8 +32,12 @@ class TestCaseFunction_Custom(UniversalBaseModel):
     parameters: typing.List[Parameter]
     code: FunctionImplementationForMultipleLanguages
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 TestCaseFunction = typing.Union[TestCaseFunction_WithActualResult, TestCaseFunction_Custom]

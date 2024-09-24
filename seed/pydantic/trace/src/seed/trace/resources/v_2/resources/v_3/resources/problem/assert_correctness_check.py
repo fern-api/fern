@@ -5,6 +5,7 @@ from .......core.pydantic_utilities import UniversalBaseModel
 import typing
 from .parameter_id import ParameterId
 import pydantic
+from .......core.pydantic_utilities import IS_PYDANTIC_V2
 from ......commons.list_type import ListType
 from ......commons.map_type import MapType
 from .parameter import Parameter
@@ -16,8 +17,12 @@ class AssertCorrectnessCheck_DeepEquality(UniversalBaseModel):
     type: typing.Literal["deepEquality"] = "deepEquality"
     expected_value_parameter_id: ParameterId = pydantic.Field(alias="expectedValueParameterId")
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 class AssertCorrectnessCheck_Custom(UniversalBaseModel):
@@ -25,8 +30,12 @@ class AssertCorrectnessCheck_Custom(UniversalBaseModel):
     additional_parameters: typing.List[Parameter] = pydantic.Field(alias="additionalParameters")
     code: FunctionImplementationForMultipleLanguages
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 AssertCorrectnessCheck = typing.Union[AssertCorrectnessCheck_DeepEquality, AssertCorrectnessCheck_Custom]

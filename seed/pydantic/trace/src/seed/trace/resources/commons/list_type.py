@@ -4,6 +4,7 @@ from __future__ import annotations
 from ...core.pydantic_utilities import UniversalBaseModel
 import pydantic
 import typing
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.pydantic_utilities import update_forward_refs
 
 
@@ -14,8 +15,12 @@ class ListType(UniversalBaseModel):
     Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.
     """
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 from .map_type import MapType  # noqa: E402

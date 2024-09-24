@@ -5,6 +5,7 @@ from ...core.pydantic_utilities import UniversalBaseModel
 import typing
 from ..commons.problem_id import ProblemId
 import pydantic
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from .submission_id import SubmissionId
 from ..commons.language import Language
 from .submission_file_info import SubmissionFileInfo
@@ -15,15 +16,23 @@ class SubmissionRequest_InitializeProblemRequest(UniversalBaseModel):
     problem_id: ProblemId = pydantic.Field(alias="problemId")
     problem_version: typing.Optional[int] = pydantic.Field(alias="problemVersion", default=None)
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 class SubmissionRequest_InitializeWorkspaceRequest(UniversalBaseModel):
     type: typing.Literal["initializeWorkspaceRequest"] = "initializeWorkspaceRequest"
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 class SubmissionRequest_SubmitV2(UniversalBaseModel):
@@ -35,8 +44,12 @@ class SubmissionRequest_SubmitV2(UniversalBaseModel):
     problem_version: typing.Optional[int] = pydantic.Field(alias="problemVersion", default=None)
     user_id: typing.Optional[str] = pydantic.Field(alias="userId", default=None)
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 class SubmissionRequest_WorkspaceSubmit(UniversalBaseModel):
@@ -46,16 +59,24 @@ class SubmissionRequest_WorkspaceSubmit(UniversalBaseModel):
     submission_files: typing.List[SubmissionFileInfo] = pydantic.Field(alias="submissionFiles")
     user_id: typing.Optional[str] = pydantic.Field(alias="userId", default=None)
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 class SubmissionRequest_Stop(UniversalBaseModel):
     type: typing.Literal["stop"] = "stop"
     submission_id: SubmissionId = pydantic.Field(alias="submissionId")
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 SubmissionRequest = typing.Union[

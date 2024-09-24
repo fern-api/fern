@@ -92,9 +92,6 @@ class SubmissionStatusV2(UniversalRootModel):
                 )
             )
 
-    class Config:
-        extra = pydantic.Extra.forbid
-
 
 class _SubmissionStatusV2:
     class Test(TestSubmissionStatusV2):

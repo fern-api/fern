@@ -33,7 +33,7 @@ class ObjectWithOptionalField(UniversalBaseModel):
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            frozen=True
+            extra="forbid", frozen=True
         )  # type: ignore # Pydantic v2
     else:
 

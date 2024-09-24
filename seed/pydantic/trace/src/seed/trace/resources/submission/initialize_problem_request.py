@@ -4,11 +4,16 @@ from ...core.pydantic_utilities import UniversalBaseModel
 from ..commons.problem_id import ProblemId
 import pydantic
 import typing
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class InitializeProblemRequest(UniversalBaseModel):
     problem_id: ProblemId = pydantic.Field(alias="problemId")
     problem_version: typing.Optional[int] = pydantic.Field(alias="problemVersion", default=None)
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow

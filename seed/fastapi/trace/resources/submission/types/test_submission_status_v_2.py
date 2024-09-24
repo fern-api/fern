@@ -6,6 +6,7 @@ from .test_submission_update import TestSubmissionUpdate
 from ...commons.types.problem_id import ProblemId
 import pydantic
 from ...v_2.resources.problem.types.problem_info_v_2 import ProblemInfoV2
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class TestSubmissionStatusV2(UniversalBaseModel):
@@ -14,5 +15,11 @@ class TestSubmissionStatusV2(UniversalBaseModel):
     problem_version: int = pydantic.Field(alias="problemVersion")
     problem_info: ProblemInfoV2 = pydantic.Field(alias="problemInfo")
 
-    class Config:
-        extra = pydantic.Extra.forbid
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="forbid"
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.forbid

@@ -9,6 +9,7 @@ import pydantic
 import typing
 from ..commons.test_case import TestCase
 from .test_submission_status import TestSubmissionStatus
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.pydantic_utilities import update_forward_refs
 
 
@@ -18,8 +19,12 @@ class TestSubmissionState(UniversalBaseModel):
     custom_test_cases: typing.List[TestCase] = pydantic.Field(alias="customTestCases")
     status: TestSubmissionStatus
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 update_forward_refs(KeyValuePair, TestSubmissionState=TestSubmissionState)

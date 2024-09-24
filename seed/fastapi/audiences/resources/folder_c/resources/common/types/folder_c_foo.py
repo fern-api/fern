@@ -2,11 +2,19 @@
 
 from ......core.pydantic_utilities import UniversalBaseModel
 import uuid
+from ......core.pydantic_utilities import IS_PYDANTIC_V2
+import typing
 import pydantic
 
 
 class FolderCFoo(UniversalBaseModel):
     bar_property: uuid.UUID
 
-    class Config:
-        extra = pydantic.Extra.forbid
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="forbid"
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.forbid

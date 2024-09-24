@@ -4,6 +4,7 @@ from ....core.pydantic_utilities import UniversalBaseModel
 import typing
 from ..types.with_cursor import WithCursor
 import pydantic
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ListUsersBodyCursorPaginationRequest(UniversalBaseModel):
@@ -13,5 +14,11 @@ class ListUsersBodyCursorPaginationRequest(UniversalBaseModel):
     in order to fetch the next page of results.
     """
 
-    class Config:
-        extra = pydantic.Extra.forbid
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="forbid"
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.forbid

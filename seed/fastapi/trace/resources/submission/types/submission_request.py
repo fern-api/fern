@@ -186,9 +186,6 @@ class SubmissionRequest(UniversalRootModel):
                 StopRequest(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
             )
 
-    class Config:
-        extra = pydantic.Extra.forbid
-
 
 class _SubmissionRequest:
     class InitializeProblemRequest(

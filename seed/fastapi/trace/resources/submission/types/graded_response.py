@@ -5,6 +5,7 @@ from .submission_id import SubmissionId
 import pydantic
 import typing
 from .test_case_result_with_stdout import TestCaseResultWithStdout
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class GradedResponse(UniversalBaseModel):
@@ -13,5 +14,11 @@ class GradedResponse(UniversalBaseModel):
         alias="testCases"
     )
 
-    class Config:
-        extra = pydantic.Extra.forbid
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="forbid"
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.forbid

@@ -177,9 +177,6 @@ class TestSubmissionUpdateInfo(UniversalRootModel):
         if unioned_value.type == "finished":
             return finished()
 
-    class Config:
-        extra = pydantic.Extra.forbid
-
 
 class _TestSubmissionUpdateInfo:
     class Running(UniversalBaseModel):

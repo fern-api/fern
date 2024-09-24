@@ -5,11 +5,18 @@ import typing
 from .test_case_implementation_description_board import (
     TestCaseImplementationDescriptionBoard,
 )
+from ......core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
 class TestCaseImplementationDescription(UniversalBaseModel):
     boards: typing.List[TestCaseImplementationDescriptionBoard]
 
-    class Config:
-        extra = pydantic.Extra.forbid
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="forbid"
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.forbid

@@ -76,9 +76,6 @@ class UnionWithOptionalTime(UniversalRootModel):
         if unioned_value.type == "dateimte":
             return dateimte(unioned_value.value)
 
-    class Config:
-        extra = pydantic.Extra.forbid
-
 
 class _UnionWithOptionalTime:
     class Date(UniversalBaseModel):

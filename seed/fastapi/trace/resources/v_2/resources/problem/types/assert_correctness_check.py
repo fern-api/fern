@@ -108,9 +108,6 @@ class AssertCorrectnessCheck(UniversalRootModel):
                 )
             )
 
-    class Config:
-        extra = pydantic.Extra.forbid
-
 
 class _AssertCorrectnessCheck:
     class DeepEquality(DeepEqualityCorrectnessCheck):

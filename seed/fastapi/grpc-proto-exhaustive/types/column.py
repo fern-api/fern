@@ -5,6 +5,7 @@ import typing
 from .metadata import Metadata
 from .indexed_data import IndexedData
 import pydantic
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class Column(UniversalBaseModel):
@@ -15,5 +16,11 @@ class Column(UniversalBaseModel):
         alias="indexedData", default=None
     )
 
-    class Config:
-        extra = pydantic.Extra.forbid
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="forbid"
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.forbid

@@ -4,6 +4,8 @@ from ........core.pydantic_utilities import UniversalBaseModel
 from .non_void_function_definition import NonVoidFunctionDefinition
 import pydantic
 from .assert_correctness_check import AssertCorrectnessCheck
+from ........core.pydantic_utilities import IS_PYDANTIC_V2
+import typing
 
 
 class TestCaseWithActualResultImplementation(UniversalBaseModel):
@@ -14,5 +16,11 @@ class TestCaseWithActualResultImplementation(UniversalBaseModel):
         alias="assertCorrectnessCheck"
     )
 
-    class Config:
-        extra = pydantic.Extra.forbid
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="forbid"
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.forbid

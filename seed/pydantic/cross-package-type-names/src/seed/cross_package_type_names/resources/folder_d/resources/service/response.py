@@ -3,11 +3,16 @@
 from .....core.pydantic_utilities import UniversalBaseModel
 import typing
 from ....folder_b.resources.common.foo import Foo
+from .....core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
 class Response(UniversalBaseModel):
     foo: typing.Optional[Foo] = None
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow

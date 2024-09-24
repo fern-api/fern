@@ -4,6 +4,7 @@ from ....core.pydantic_utilities import UniversalBaseModel
 import typing
 import pydantic
 from ....types.metadata import Metadata
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class DeleteRequest(UniversalBaseModel):
@@ -12,5 +13,11 @@ class DeleteRequest(UniversalBaseModel):
     namespace: typing.Optional[str] = None
     filter: typing.Optional[Metadata] = None
 
-    class Config:
-        extra = pydantic.Extra.forbid
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="forbid"
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.forbid

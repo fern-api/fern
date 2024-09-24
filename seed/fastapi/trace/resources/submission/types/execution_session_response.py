@@ -5,6 +5,7 @@ import pydantic
 import typing
 from ...commons.types.language import Language
 from .execution_session_status import ExecutionSessionStatus
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ExecutionSessionResponse(UniversalBaseModel):
@@ -15,5 +16,11 @@ class ExecutionSessionResponse(UniversalBaseModel):
     language: Language
     status: ExecutionSessionStatus
 
-    class Config:
-        extra = pydantic.Extra.forbid
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="forbid"
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.forbid

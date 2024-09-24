@@ -7,6 +7,8 @@ from ......commons.map_type import MapType
 from .test_case_template_id import TestCaseTemplateId
 import pydantic
 from .test_case_implementation import TestCaseImplementation
+from .......core.pydantic_utilities import IS_PYDANTIC_V2
+import typing
 from .......core.pydantic_utilities import update_forward_refs
 
 
@@ -15,8 +17,12 @@ class TestCaseTemplate(UniversalBaseModel):
     name: str
     implementation: TestCaseImplementation
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 update_forward_refs(ListType, TestCaseTemplate=TestCaseTemplate)

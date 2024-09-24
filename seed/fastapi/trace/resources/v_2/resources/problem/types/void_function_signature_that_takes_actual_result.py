@@ -5,11 +5,18 @@ import typing
 from .parameter import Parameter
 from .....commons.types.variable_type import VariableType
 import pydantic
+from ......core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class VoidFunctionSignatureThatTakesActualResult(UniversalBaseModel):
     parameters: typing.List[Parameter]
     actual_result_type: VariableType = pydantic.Field(alias="actualResultType")
 
-    class Config:
-        extra = pydantic.Extra.forbid
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="forbid"
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.forbid

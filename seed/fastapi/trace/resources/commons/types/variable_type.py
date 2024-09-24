@@ -225,9 +225,6 @@ class VariableType(UniversalRootModel):
         if unioned_value.type == "doublyLinkedListType":
             return doubly_linked_list_type()
 
-    class Config:
-        extra = pydantic.Extra.forbid
-
 
 from .list_type import ListType as resources_commons_types_list_type_ListType  # noqa: E402
 from .map_type import MapType as resources_commons_types_map_type_MapType  # noqa: E402

@@ -3,6 +3,8 @@
 from ...core.pydantic_utilities import UniversalBaseModel
 import pydantic
 from .user import User
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
+import typing
 
 
 class NestedUser(UniversalBaseModel):
@@ -24,5 +26,9 @@ class NestedUser(UniversalBaseModel):
     name: str = pydantic.Field(alias="Name")
     nested_user: User = pydantic.Field(alias="NestedUser")
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow

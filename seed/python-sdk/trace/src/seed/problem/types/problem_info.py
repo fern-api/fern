@@ -34,7 +34,7 @@ class ProblemInfo(UniversalBaseModel):
     supports_custom_test_cases: typing_extensions.Annotated[bool, FieldMetadata(alias="supportsCustomTestCases")]
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:

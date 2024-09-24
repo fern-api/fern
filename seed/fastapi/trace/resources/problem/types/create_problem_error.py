@@ -58,9 +58,6 @@ class CreateProblemError(UniversalRootModel):
                 )
             )
 
-    class Config:
-        extra = pydantic.Extra.forbid
-
 
 class _CreateProblemError:
     class Generic(GenericCreateProblemError):

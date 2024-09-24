@@ -3,6 +3,7 @@
 from __future__ import annotations
 from ...core.pydantic_utilities import UniversalBaseModel
 import typing
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 from .error_info import ErrorInfo
 from .running_submission_state import RunningSubmissionState
@@ -13,8 +14,12 @@ from .exception_info import ExceptionInfo
 class WorkspaceSubmissionStatus_Stopped(UniversalBaseModel):
     type: typing.Literal["stopped"] = "stopped"
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 class WorkspaceSubmissionStatus_Errored(UniversalBaseModel):
@@ -33,8 +38,12 @@ class WorkspaceSubmissionStatus_Ran(UniversalBaseModel):
     exception: typing.Optional[ExceptionInfo] = None
     stdout: str
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 class WorkspaceSubmissionStatus_Traced(UniversalBaseModel):
@@ -43,8 +52,12 @@ class WorkspaceSubmissionStatus_Traced(UniversalBaseModel):
     exception: typing.Optional[ExceptionInfo] = None
     stdout: str
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 WorkspaceSubmissionStatus = typing.Union[

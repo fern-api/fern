@@ -5,6 +5,7 @@ from ......core.pydantic_utilities import UniversalBaseModel
 import typing
 from ......core.pydantic_utilities import universal_root_validator
 from ......core.pydantic_utilities import universal_field_validator
+from ......core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
@@ -145,5 +146,11 @@ class ObjectWithRequiredField(UniversalBaseModel):
             v = validator(v, values)
         return v
 
-    class Config:
-        extra = pydantic.Extra.forbid
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="forbid"
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.forbid

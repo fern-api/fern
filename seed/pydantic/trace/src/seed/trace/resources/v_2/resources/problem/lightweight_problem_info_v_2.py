@@ -8,6 +8,7 @@ from ....commons.problem_id import ProblemId
 import pydantic
 import typing
 from ....commons.variable_type import VariableType
+from .....core.pydantic_utilities import IS_PYDANTIC_V2
 from .....core.pydantic_utilities import update_forward_refs
 
 
@@ -17,8 +18,12 @@ class LightweightProblemInfoV2(UniversalBaseModel):
     problem_version: int = pydantic.Field(alias="problemVersion")
     variable_types: typing.List[VariableType] = pydantic.Field(alias="variableTypes")
 
-    class Config:
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.allow
 
 
 update_forward_refs(ListType, LightweightProblemInfoV2=LightweightProblemInfoV2)

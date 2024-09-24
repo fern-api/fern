@@ -4,6 +4,7 @@ from ....core.pydantic_utilities import UniversalBaseModel
 import typing
 from .execution_session_state import ExecutionSessionState
 import pydantic
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class GetExecutionSessionStateResponse(UniversalBaseModel):
@@ -13,5 +14,11 @@ class GetExecutionSessionStateResponse(UniversalBaseModel):
     )
     warming_session_ids: typing.List[str] = pydantic.Field(alias="warmingSessionIds")
 
-    class Config:
-        extra = pydantic.Extra.forbid
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="forbid"
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.forbid

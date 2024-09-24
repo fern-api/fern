@@ -329,8 +329,8 @@ class PydanticModel:
         if self._orm_mode:
             config_kwargs.append(("from_attributes", AST.Expression("True")))
 
+        config_class = self._get_config_class()
         def write_extras(writer: AST.NodeWriter) -> None:
-            config_class = self._get_config_class()
             if len(config_kwargs) > 0:
                 writer.write("if ")
                 # TODO: this class needs a context, then we can call get_is_pydantic_v2
@@ -352,7 +352,8 @@ class PydanticModel:
             elif config_class is not None:
                 writer.write_node(config_class)
 
-        self._class_declaration.add_expression(AST.Expression(AST.CodeWriter(write_extras)))
+        if config_class is not None or len(config_kwargs) > 0:
+            self._class_declaration.add_expression(AST.Expression(AST.CodeWriter(write_extras)))
 
     def update_forward_refs(self) -> None:
         self._source_file.add_footer_expression(
@@ -407,20 +408,21 @@ class PydanticModel:
                 )
             )
 
-        if self._extra_fields == "forbid":
-            config.add_class_var(
-                AST.VariableDeclaration(
-                    name="extra",
-                    initializer=Pydantic.Extra.forbid(),
+        if not self._is_root_model:
+            if self._extra_fields == "forbid":
+                config.add_class_var(
+                    AST.VariableDeclaration(
+                        name="extra",
+                        initializer=Pydantic.Extra.forbid(),
+                    )
                 )
-            )
-        elif self._extra_fields == "allow":
-            config.add_class_var(
-                AST.VariableDeclaration(
-                    name="extra",
-                    initializer=Pydantic.Extra.allow(),
+            elif self._extra_fields == "allow":
+                config.add_class_var(
+                    AST.VariableDeclaration(
+                        name="extra",
+                        initializer=Pydantic.Extra.allow(),
+                    )
                 )
-            )
 
         if len(config.class_vars) > 0:
             return config

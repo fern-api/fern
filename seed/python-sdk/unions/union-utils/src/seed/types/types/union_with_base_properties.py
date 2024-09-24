@@ -96,7 +96,6 @@ class UnionWithBaseProperties(UniversalRootModel):
         class Config:
             frozen = True
             smart_union = True
-            extra = pydantic.Extra.allow
 
 
 class _UnionWithBaseProperties:

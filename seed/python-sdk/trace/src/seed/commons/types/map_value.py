@@ -14,7 +14,7 @@ class MapValue(UniversalBaseModel):
     key_value_pairs: typing_extensions.Annotated[typing.List["KeyValuePair"], FieldMetadata(alias="keyValuePairs")]
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:

@@ -157,9 +157,6 @@ class WorkspaceSubmissionStatus(UniversalRootModel):
                 )
             )
 
-    class Config:
-        extra = pydantic.Extra.forbid
-
 
 class _WorkspaceSubmissionStatus:
     class Stopped(UniversalBaseModel):

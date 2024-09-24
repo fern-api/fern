@@ -125,9 +125,6 @@ class SubmissionStatusForTestCase(UniversalRootModel):
                 )
             )
 
-    class Config:
-        extra = pydantic.Extra.forbid
-
 
 class _SubmissionStatusForTestCase:
     class Graded(TestCaseResultWithStdout):

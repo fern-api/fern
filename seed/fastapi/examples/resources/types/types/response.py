@@ -3,6 +3,7 @@
 from ....core.pydantic_utilities import UniversalBaseModel
 import typing
 from ....types.identifier import Identifier
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
@@ -33,5 +34,11 @@ class Response(UniversalBaseModel):
     response: typing.Optional[typing.Any] = None
     identifiers: typing.List[Identifier]
 
-    class Config:
-        extra = pydantic.Extra.forbid
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="forbid"
+        )  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            extra = pydantic.Extra.forbid
