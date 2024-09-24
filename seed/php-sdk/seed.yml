@@ -1,6 +1,13 @@
 irVersion: v53
 displayName: PHP SDK
 image: fernapi/fern-php-sdk
+publish:
+  preBuildCommands:
+    - pnpm --filter @fern-api/php-sdk dist:cli
+  docker:
+    file: ./generators/php/sdk/Dockerfile
+    image: fernapi/fern-php-sdk
+    context: .
 test:
   docker:
     image: fernapi/fern-php-sdk:latest

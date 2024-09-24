@@ -1,6 +1,13 @@
 irVersion: v53
 displayName: PHP Model
 image: fernapi/fern-php-model
+publish:
+  preBuildCommands:
+    - pnpm --filter @fern-api/php-model dist:cli
+  docker:
+    file: ./generators/php/model/Dockerfile
+    image: fernapi/fern-php-model
+    context: .
 test:
   docker:
     image: fernapi/fern-php-model:latest
