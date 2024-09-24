@@ -26,6 +26,9 @@ types:
           id: kljasc85
           name: bar
 
+  Break:
+    properties: {}
+
 service:
   auth: false
   base-path: /

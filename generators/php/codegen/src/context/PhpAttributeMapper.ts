@@ -91,6 +91,14 @@ export class PhpAttributeMapper {
                     ]
                 });
             }
+            case "union": {
+                return php.instantiateClass({
+                    classReference: this.context.getUnionClassReference(),
+                    arguments_: type.internalType.types.map((unionType) =>
+                        this.getArrayTypeAttributeArgument(unionType)
+                    )
+                });
+            }
             case "optional":
                 return php.instantiateClass({
                     classReference: this.context.getUnionClassReference(),

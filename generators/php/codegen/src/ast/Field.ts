@@ -6,6 +6,7 @@ import { Type } from "./Type";
 import { Comment } from "./Comment";
 import { Attribute } from "./Attribute";
 import { convertToPhpVariableName } from "./utils/convertToPhpVariableName";
+import { ClassReference } from "./ClassReference";
 
 export declare namespace Field {
     export interface Args {
@@ -25,6 +26,7 @@ export declare namespace Field {
         inlineDocs?: string;
         /* Field attributes */
         attributes?: Attribute[];
+        constructorEnumType?: Type;
     }
 }
 
@@ -37,8 +39,19 @@ export class Field extends AstNode {
     private docs: string | undefined;
     private inlineDocs: string | undefined;
     private attributes: Attribute[];
+    public readonly constructorEnumType: Type | undefined;
 
-    constructor({ name, type, access, readonly_, initializer, docs, inlineDocs, attributes }: Field.Args) {
+    constructor({
+        name,
+        type,
+        access,
+        readonly_,
+        initializer,
+        docs,
+        inlineDocs,
+        attributes,
+        constructorEnumType
+    }: Field.Args) {
         super();
         this.name = convertToPhpVariableName(name);
         this.type = type;
@@ -48,6 +61,7 @@ export class Field extends AstNode {
         this.docs = docs;
         this.inlineDocs = inlineDocs;
         this.attributes = attributes ?? [];
+        this.constructorEnumType = constructorEnumType;
     }
 
     public write(writer: Writer): void {

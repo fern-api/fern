@@ -16,6 +16,7 @@ type InternalType =
     | Array_
     | Map
     | TypeDict
+    | Union
     | Optional
     | Reference;
 
@@ -68,6 +69,11 @@ interface TypeDict {
     multiline?: boolean;
 }
 
+interface Union {
+    type: "union";
+    types: Type[];
+}
+
 interface TypeDictEntry {
     key: string;
     valueType: Type;
@@ -82,6 +88,7 @@ interface Optional {
 interface Reference {
     type: "reference";
     value: ClassReference;
+    isEnum: boolean;
 }
 
 /* A PHP parameter to a method */
@@ -164,9 +171,23 @@ export class Type extends AstNode {
                 writer.write("}");
                 break;
             }
+            case "union":
+                this.internalType.types.forEach((type, index) => {
+                    if (index > 0) {
+                        writer.write("|");
+                    }
+                    type.write(writer);
+                });
+                break;
             case "optional":
-                writer.write("?");
+                const isUnion = this.internalType.value.internalType.type === "union";
+                if (!isUnion) {
+                    writer.write("?");
+                }
                 this.internalType.value.write(writer, { comment });
+                if (isUnion) {
+                    writer.write("|null");
+                }
                 break;
             case "reference":
                 writer.writeNode(this.internalType.value);
@@ -185,7 +206,7 @@ export class Type extends AstNode {
 
     public underlyingTypeIfOptional(): Type | undefined {
         if (this.internalType.type === "optional") {
-            return (this.internalType as Optional).value;
+            return this.internalType.value;
         }
         return undefined;
     }
@@ -262,11 +283,21 @@ export class Type extends AstNode {
         });
     }
 
-    public static typeDict(entries: TypeDictEntry[], { multiline }: { multiline?: boolean } = {}): Type {
+    public static typeDict(
+        entries: TypeDictEntry[],
+        { multiline }: { multiline?: boolean; enumsAsString?: boolean } = {}
+    ): Type {
         return new this({
             type: "typeDict",
             entries,
             multiline
+        });
+    }
+
+    public static union(types: Type[]): Type {
+        return new this({
+            type: "union",
+            types
         });
     }
 
@@ -281,10 +312,11 @@ export class Type extends AstNode {
         });
     }
 
-    public static reference(value: ClassReference): Type {
+    public static reference({ value, isEnum = false }: { value: ClassReference; isEnum?: boolean }): Type {
         return new this({
             type: "reference",
-            value
+            value,
+            isEnum
         });
     }
 

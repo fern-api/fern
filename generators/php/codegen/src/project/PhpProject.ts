@@ -238,7 +238,7 @@ class ComposerJson {
         return `
 {
   "name": "${composerProjectName}",
-  "version": ${this.context.version != null ? `"${this.context.version}"` : "0.0.0"},
+  "version": ${this.context.version != null ? `"${this.context.version}"` : '"0.0.0"'},
   "description": "${this.projectName} PHP Library",
   "keywords": [
     "${this.context.config.organization}",

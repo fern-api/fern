@@ -63,7 +63,7 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
             parameters: [
                 php.parameter({
                     name: "$client",
-                    type: php.Type.reference(this.context.rawClient.getClassReference())
+                    type: php.Type.reference({ value: this.context.rawClient.getClassReference() })
                 })
             ],
             body: php.codeblock((writer) => {

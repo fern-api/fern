@@ -39,7 +39,7 @@ export class Class extends AstNode {
     public readonly docs: string | undefined;
     public readonly parentClassReference: AstNode | undefined;
 
-    public readonly fields: Field[] = [];
+    public fields: Field[] = [];
     public readonly methods: Method[] = [];
     private constructor_: Class.Constructor | undefined;
 
@@ -60,6 +60,10 @@ export class Class extends AstNode {
         this.fields.push(field);
     }
 
+    public setFields(fields: Field[]): void {
+        this.fields = fields;
+    }
+
     public addMethod(method: Method): void {
         this.methods.push(method);
     }
@@ -69,11 +73,12 @@ export class Class extends AstNode {
             writer.write("abstract ");
         }
         this.writeComment(writer);
-        writer.writeLine(`class ${this.name} `);
+        writer.write(`class ${this.name} `);
         if (this.parentClassReference != null) {
             writer.write("extends ");
             this.parentClassReference.write(writer);
         }
+        writer.newLine();
         writer.writeLine("{");
         writer.indent();
 

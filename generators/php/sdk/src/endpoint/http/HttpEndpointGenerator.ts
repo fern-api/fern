@@ -215,6 +215,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     arguments_,
                     methodSuffix: upperFirst(internalType.type)
                 });
+            case "union":
             case "object":
             case "optional":
             case "typeDict":

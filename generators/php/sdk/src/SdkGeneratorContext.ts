@@ -81,7 +81,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return php.field({
             name: `$${subpackage.name.camelCase.safeName}`,
             access: "public",
-            type: php.Type.reference(this.getSubpackageClassReference(subpackage))
+            type: php.Type.reference({ value: this.getSubpackageClassReference(subpackage) })
         });
     }
 
@@ -205,7 +205,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
                 },
                 {
                     key: this.getGuzzleClientOptionName(),
-                    valueType: php.Type.reference(this.guzzleClient.getClientInterfaceClassReference()),
+                    valueType: php.Type.reference({ value: this.guzzleClient.getClientInterfaceClassReference() }),
                     optional: true
                 },
                 {

@@ -187,10 +187,7 @@ export abstract class AbstractPhpGeneratorContext<
                 return false;
             case "named": {
                 const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
-                if (declaration.shape.type === "alias") {
-                    return this.isEnum(declaration.shape.aliasOf);
-                }
-                return declaration.shape.type === "enum";
+                return this.typeDeclarationIsEnum(declaration);
             }
             case "primitive": {
                 return false;
@@ -199,6 +196,13 @@ export abstract class AbstractPhpGeneratorContext<
                 return false;
             }
         }
+    }
+
+    public typeDeclarationIsEnum(declaration: TypeDeclaration): boolean {
+        if (declaration.shape.type === "alias") {
+            return this.isEnum(declaration.shape.aliasOf);
+        }
+        return declaration.shape.type === "enum";
     }
 
     public isDate(typeReference: TypeReference): boolean {

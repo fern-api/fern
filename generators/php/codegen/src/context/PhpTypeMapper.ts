@@ -17,6 +17,7 @@ import { AbstractPhpGeneratorContext } from "./AbstractPhpGeneratorContext";
 export declare namespace PhpTypeMapper {
     interface Args {
         reference: TypeReference;
+        preserveEnumType?: boolean;
     }
 }
 
@@ -27,14 +28,15 @@ export class PhpTypeMapper {
         this.context = context;
     }
 
-    public convert({ reference }: PhpTypeMapper.Args): Type {
+    public convert({ reference, preserveEnumType = true }: PhpTypeMapper.Args): Type {
         switch (reference.type) {
             case "container":
                 return this.convertContainer({
-                    container: reference.container
+                    container: reference.container,
+                    preserveEnumType
                 });
             case "named":
-                return this.convertNamed({ named: reference });
+                return this.convertNamed({ named: reference, preserveEnumType });
             case "primitive":
                 return this.convertPrimitive(reference);
             case "unknown":
@@ -51,19 +53,26 @@ export class PhpTypeMapper {
         });
     }
 
-    private convertContainer({ container }: { container: ContainerType }): Type {
+    private convertContainer({
+        container,
+        preserveEnumType = false
+    }: {
+        container: ContainerType;
+        preserveEnumType: boolean;
+    }): Type {
+        // for now, we're never preserving enum types in collections to avoid having map them to string in our object constructors
         switch (container.type) {
             case "list":
-                return Type.array(this.convert({ reference: container.list }));
+                return Type.array(this.convert({ reference: container.list, preserveEnumType: false }));
             case "map": {
-                const key = this.convert({ reference: container.keyType });
-                const value = this.convert({ reference: container.valueType });
+                const key = this.convert({ reference: container.keyType, preserveEnumType: false });
+                const value = this.convert({ reference: container.valueType, preserveEnumType: false });
                 return Type.map(key, value);
             }
             case "set":
-                return Type.array(this.convert({ reference: container.set }));
+                return Type.array(this.convert({ reference: container.set, preserveEnumType: false }));
             case "optional":
-                return Type.optional(this.convert({ reference: container.optional }));
+                return Type.optional(this.convert({ reference: container.optional, preserveEnumType }));
             case "literal":
                 return this.convertLiteral({ literal: container.literal });
             default:
@@ -99,16 +108,24 @@ export class PhpTypeMapper {
         }
     }
 
-    private convertNamed({ named }: { named: DeclaredTypeName }): Type {
+    private convertNamed({
+        named,
+        preserveEnumType = false
+    }: {
+        named: DeclaredTypeName;
+        preserveEnumType: boolean;
+    }): Type {
         const classReference = this.convertToClassReference(named);
         const typeDeclaration = this.context.getTypeDeclarationOrThrow(named.typeId);
         switch (typeDeclaration.shape.type) {
             case "alias":
-                return this.convert({ reference: typeDeclaration.shape.aliasOf });
+                return this.convert({ reference: typeDeclaration.shape.aliasOf, preserveEnumType });
             case "enum":
-                return php.Type.reference(classReference);
+                return preserveEnumType
+                    ? php.Type.reference({ value: classReference, isEnum: true })
+                    : php.Type.string();
             case "object":
-                return php.Type.reference(classReference);
+                return php.Type.reference({ value: classReference });
             case "union":
                 return php.Type.mixed();
             case "undiscriminatedUnion": {

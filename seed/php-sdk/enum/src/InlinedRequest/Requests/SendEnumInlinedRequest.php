@@ -2,22 +2,23 @@
 
 namespace Seed\InlinedRequest\Requests;
 
-use Seed\Types\Operand;
+use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
+use Seed\Types\Operand;
 
-class SendEnumInlinedRequest
+class SendEnumInlinedRequest extends SerializableType
 {
     /**
-     * @var Operand $operand
+     * @var string $operand
      */
     #[JsonProperty('operand')]
-    public Operand $operand;
+    public string $operand;
 
     /**
-     * @var ?Operand $maybeOperand
+     * @var ?string $maybeOperand
      */
     #[JsonProperty('maybeOperand')]
-    public ?Operand $maybeOperand;
+    public ?string $maybeOperand;
 
     /**
      * @var mixed $operandOrColor
@@ -33,8 +34,8 @@ class SendEnumInlinedRequest
 
     /**
      * @param array{
-     *   operand: Operand,
-     *   maybeOperand?: ?Operand,
+     *   operand: Operand|string,
+     *   maybeOperand?: Operand|string|null,
      *   operandOrColor: mixed,
      *   maybeOperandOrColor: mixed,
      * } $values
@@ -42,8 +43,8 @@ class SendEnumInlinedRequest
     public function __construct(
         array $values,
     ) {
-        $this->operand = $values['operand'];
-        $this->maybeOperand = $values['maybeOperand'] ?? null;
+        $this->operand = $values['operand']->value;
+        $this->maybeOperand = $values['maybeOperand']?->value ?? null;
         $this->operandOrColor = $values['operandOrColor'];
         $this->maybeOperandOrColor = $values['maybeOperandOrColor'];
     }
