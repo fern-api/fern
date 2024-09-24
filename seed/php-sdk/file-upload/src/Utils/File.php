@@ -28,7 +28,7 @@ class File
      */
     public function __construct(
         StreamInterface $stream,
-        ?string $filename,
+        ?string $filename = null,
         ?string $contentType = null,
     ) {
         $this->filename = $filename;
@@ -50,12 +50,14 @@ class File
         ?string $filename = null,
         ?string $contentType = null,
     ): File {
-        $stream = Utils::streamFor(fopen($filepath, 'r'));
-
-        if (!$stream->isReadable()) {
-            throw new Exception("Failed to open the file: $filepath");
+        $resource = fopen($filepath, 'r');
+        if (!$resource) {
+            throw new Exception("Unable to open file $filepath");
         }
-
+        $stream = Utils::streamFor($resource);
+        if (!$stream->isReadable()) {
+            throw new Exception("File $filepath is not readable");
+        }
         return new self(
             stream: $stream,
             filename: $filename ?? basename($filepath),
