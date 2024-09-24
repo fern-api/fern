@@ -37,7 +37,9 @@ export const V4_TO_V3_MIGRATION: IrMigration<
         [GeneratorName.CSHARP_MODEL]: GeneratorWasNotCreatedYet,
         [GeneratorName.CSHARP_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.SWIFT_MODEL]: GeneratorWasNotCreatedYet,
-        [GeneratorName.SWIFT_SDK]: GeneratorWasNotCreatedYet
+        [GeneratorName.SWIFT_SDK]: GeneratorWasNotCreatedYet,
+        [GeneratorName.PHP_MODEL]: GeneratorWasNotCreatedYet,
+        [GeneratorName.PHP_SDK]: GeneratorWasNotCreatedYet
     },
     jsonifyEarlierVersion: (ir) => ir,
     migrateBackwards: (v4): IrVersions.V3.ir.IntermediateRepresentation => {

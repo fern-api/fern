@@ -143,5 +143,15 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
             location: "local-file-system",
             path: "../sdks/swift/sdk"
         }
+    },
+    [GeneratorName.PHP_MODEL]: {
+        version: "0.0.0"
+    },
+    [GeneratorName.PHP_SDK]: {
+        version: "0.1.0",
+        output: {
+            location: "local-file-system",
+            path: "../sdks/php/sdk"
+        }
     }
 };

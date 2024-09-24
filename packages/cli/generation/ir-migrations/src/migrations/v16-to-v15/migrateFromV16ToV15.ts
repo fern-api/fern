@@ -38,7 +38,9 @@ export const V16_TO_V15_MIGRATION: IrMigration<
         [GeneratorName.CSHARP_MODEL]: GeneratorWasNotCreatedYet,
         [GeneratorName.CSHARP_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.SWIFT_MODEL]: GeneratorWasNotCreatedYet,
-        [GeneratorName.SWIFT_SDK]: GeneratorWasNotCreatedYet
+        [GeneratorName.SWIFT_SDK]: GeneratorWasNotCreatedYet,
+        [GeneratorName.PHP_MODEL]: GeneratorWasNotCreatedYet,
+        [GeneratorName.PHP_SDK]: GeneratorWasNotCreatedYet
     },
     jsonifyEarlierVersion: (ir) => ir,
     migrateBackwards: (v16, { taskContext, targetGenerator }): IrVersions.V15.ir.IntermediateRepresentation => {
