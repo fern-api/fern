@@ -26,17 +26,17 @@ class CreateRequest
     public string $name;
 
     /**
-     * @var value-of<Shape> $shape
+     * @var Shape $shape
      */
     #[JsonProperty('shape')]
-    public string $shape;
+    public Shape $shape;
 
     /**
      * @param array{
      *   decimal: float,
      *   even: int,
      *   name: string,
-     *   shape: value-of<Shape>,
+     *   shape: Shape,
      * } $values
      */
     public function __construct(

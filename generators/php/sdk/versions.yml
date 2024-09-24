@@ -1,3 +1,8 @@
+- version: 0.2.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Represent enums in objects as .
 - version: 0.1.0
   changelogEntry:
     - type: feat

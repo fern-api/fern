@@ -8,16 +8,16 @@ use Seed\Core\JsonProperty;
 class SendEnumInlinedRequest
 {
     /**
-     * @var value-of<Operand> $operand
+     * @var Operand $operand
      */
     #[JsonProperty('operand')]
-    public string $operand;
+    public Operand $operand;
 
     /**
-     * @var ?value-of<Operand> $maybeOperand
+     * @var ?Operand $maybeOperand
      */
     #[JsonProperty('maybeOperand')]
-    public ?string $maybeOperand;
+    public ?Operand $maybeOperand;
 
     /**
      * @var mixed $operandOrColor
@@ -33,8 +33,8 @@ class SendEnumInlinedRequest
 
     /**
      * @param array{
-     *   operand: value-of<Operand>,
-     *   maybeOperand?: ?value-of<Operand>,
+     *   operand: Operand,
+     *   maybeOperand?: ?Operand,
      *   operandOrColor: mixed,
      *   maybeOperandOrColor: mixed,
      * } $values

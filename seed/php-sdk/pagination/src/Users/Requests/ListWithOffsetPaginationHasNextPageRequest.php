@@ -19,15 +19,15 @@ class ListWithOffsetPaginationHasNextPageRequest
     public ?int $limit;
 
     /**
-     * @var ?value-of<Order> $order
+     * @var ?Order $order
      */
-    public ?string $order;
+    public ?Order $order;
 
     /**
      * @param array{
      *   page?: ?int,
      *   limit?: ?int,
-     *   order?: ?value-of<Order>,
+     *   order?: ?Order,
      * } $values
      */
     public function __construct(

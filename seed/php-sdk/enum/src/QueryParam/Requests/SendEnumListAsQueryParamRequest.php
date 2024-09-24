@@ -7,12 +7,12 @@ use Seed\Types\Operand;
 class SendEnumListAsQueryParamRequest
 {
     /**
-     * @var array<value-of<Operand>> $operand
+     * @var array<Operand> $operand
      */
     public array $operand;
 
     /**
-     * @var array<?value-of<Operand>> $maybeOperand
+     * @var array<?Operand> $maybeOperand
      */
     public array $maybeOperand;
 
@@ -28,8 +28,8 @@ class SendEnumListAsQueryParamRequest
 
     /**
      * @param array{
-     *   operand: array<value-of<Operand>>,
-     *   maybeOperand: array<?value-of<Operand>>,
+     *   operand: array<Operand>,
+     *   maybeOperand: array<?Operand>,
      *   operandOrColor: array<mixed>,
      *   maybeOperandOrColor: array<mixed>,
      * } $values

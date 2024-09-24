@@ -7,14 +7,14 @@ use Seed\Types\Operand;
 class SendEnumAsQueryParamRequest
 {
     /**
-     * @var value-of<Operand> $operand
+     * @var Operand $operand
      */
-    public string $operand;
+    public Operand $operand;
 
     /**
-     * @var ?value-of<Operand> $maybeOperand
+     * @var ?Operand $maybeOperand
      */
-    public ?string $maybeOperand;
+    public ?Operand $maybeOperand;
 
     /**
      * @var mixed $operandOrColor
@@ -28,8 +28,8 @@ class SendEnumAsQueryParamRequest
 
     /**
      * @param array{
-     *   operand: value-of<Operand>,
-     *   maybeOperand?: ?value-of<Operand>,
+     *   operand: Operand,
+     *   maybeOperand?: ?Operand,
      *   operandOrColor: mixed,
      *   maybeOperandOrColor: mixed,
      * } $values

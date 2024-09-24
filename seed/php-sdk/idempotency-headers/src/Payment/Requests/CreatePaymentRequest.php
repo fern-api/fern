@@ -14,15 +14,15 @@ class CreatePaymentRequest
     public int $amount;
 
     /**
-     * @var value-of<Currency> $currency
+     * @var Currency $currency
      */
     #[JsonProperty('currency')]
-    public string $currency;
+    public Currency $currency;
 
     /**
      * @param array{
      *   amount: int,
-     *   currency: value-of<Currency>,
+     *   currency: Currency,
      * } $values
      */
     public function __construct(

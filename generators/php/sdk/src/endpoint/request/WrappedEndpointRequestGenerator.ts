@@ -41,7 +41,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
             clazz.addField(
                 php.field({
                     name: this.context.getPropertyName(header.name.name),
-                    type: this.context.phpTypeMapper.convert({ reference: header.valueType, enumsAsEnumString: true }),
+                    type: this.context.phpTypeMapper.convert({ reference: header.valueType }),
                     access: "public",
                     docs: header.docs
                 })
@@ -50,10 +50,8 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
 
         for (const query of this.endpoint.queryParameters) {
             const type = query.allowMultiple
-                ? php.Type.array(
-                      this.context.phpTypeMapper.convert({ reference: query.valueType, enumsAsEnumString: true })
-                  )
-                : this.context.phpTypeMapper.convert({ reference: query.valueType, enumsAsEnumString: true });
+                ? php.Type.array(this.context.phpTypeMapper.convert({ reference: query.valueType }))
+                : this.context.phpTypeMapper.convert({ reference: query.valueType });
             clazz.addField(
                 php.field({
                     name: this.context.getPropertyName(query.name.name),
@@ -70,8 +68,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
                     php.field({
                         name: this.context.getPropertyName(this.wrapper.bodyKey),
                         type: this.context.phpTypeMapper.convert({
-                            reference: reference.requestBodyType,
-                            enumsAsEnumString: true
+                            reference: reference.requestBodyType
                         }),
                         access: "public",
                         docs: reference.docs
@@ -81,8 +78,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
             inlinedRequestBody: (request) => {
                 for (const property of request.properties) {
                     const type = this.context.phpTypeMapper.convert({
-                        reference: property.valueType,
-                        enumsAsEnumString: true
+                        reference: property.valueType
                     });
                     clazz.addField(
                         php.field({

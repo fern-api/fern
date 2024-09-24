@@ -17,9 +17,9 @@ class ListUsersOffsetPaginationRequest
     public ?int $perPage;
 
     /**
-     * @var ?value-of<Order> $order
+     * @var ?Order $order
      */
-    public ?string $order;
+    public ?Order $order;
 
     /**
      * @var ?string $startingAfter The cursor used for pagination in order to fetch
@@ -31,7 +31,7 @@ class ListUsersOffsetPaginationRequest
      * @param array{
      *   page?: ?int,
      *   perPage?: ?int,
-     *   order?: ?value-of<Order>,
+     *   order?: ?Order,
      *   startingAfter?: ?string,
      * } $values
      */
