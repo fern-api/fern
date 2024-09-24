@@ -1,0 +1,6 @@
+## 0.13.4
+**`(fix):`** revert changes introduced within 0.12.2
+
+### What's been fixed
+- revert the change from 0.13.2, the stream call returns a context manager, which is not awaited. The issue that this was meant to solve was actually fixed in version `0.12.2`.
+

@@ -1,0 +1,6 @@
+## 3.2.0-rc0
+**`(feat):`** The Python SDK can now be generated with TypedDicts as inputs.
+
+### What's new
+- The Python SDK can now be generated such that inputs to requests are TypedDicts, instead of Pydantic models. This allows for consumers of the SDK to continue to have type hinting and autocomplete, but not need to import new object types when creating requests.
+

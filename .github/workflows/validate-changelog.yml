@@ -1,4 +1,4 @@
-name: changelog
+name: Validate Changelogs
 
 on:
   push:
@@ -13,7 +13,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  cli:
+  cli-validate:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo at current ref

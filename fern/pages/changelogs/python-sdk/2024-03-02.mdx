@@ -1,0 +1,6 @@
+## 0.11.8-rc1
+**`(feat):`** Introduces a `max_retries` parameter to the RequestOptions dict accepted by all requests.
+
+### What's changed
+- Beta: Introduces a `max_retries` parameter to the RequestOptions dict accepted by all requests. This parameter will retry requests automatically, with exponential backoff and a jitter. The client will automatically retry requests of a 5XX status code, or certain 4XX codes (429, 408, 409).
+

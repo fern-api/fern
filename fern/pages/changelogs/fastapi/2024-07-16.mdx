@@ -1,0 +1,11 @@
+## 1.0.0-rc0
+**`(break):`** The generated models now support Pydantic V2 outright, it no longer uses `pydantic.v1` models.
+
+### What's changed
+- The generated server stubs now support Pydantic V2 outright, it no longer uses `pydantic.v1` models.
+- Public fields previously prefixed with `_` are now prefixed with `f_` (Pydantic V2 does not allow for `_` prefixes on public fields and Python does not allow for a numeric prefix)
+
+### What's been removed
+- wrapped aliases outside of Pydantic V1
+- custom root validators outside of Pydantic V1
+

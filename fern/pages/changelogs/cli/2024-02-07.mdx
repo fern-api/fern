@@ -1,0 +1,11 @@
+## 0.17.0
+**`(chore):`** - **break**: The OpenAPI importer now considers the `title` field when generating a schema name. It only considers this field if there is no whitespace and only contains alphabetic characters. We're constantly trying to improve Fern to generate as idiomatic code as possible and naming schemas correctly is a huge part of that. 
+ 
+   By upgrading the Fern CLI to a `0.17.x` version, any SDKs with the following OpenAPI would receive compile breaks b/c the object would be renamed as `Bar`.
+   ```yaml
+   Foo: 
+     title: Bar
+     type: object
+   ```
+
+

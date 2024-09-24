@@ -1,0 +1,25 @@
+## 0.39.17
+**`(fix):`** object declarations with extends and no properties now has examples propagating in the Docs and SDKs
+
+### What's been fixed
+- Previously, object declarations with extends and no properties did not have examples
+propagating in the Docs and SDKs. The core issue was in IR generation which has now
+been resolved.
+
+The following will now work as expected:
+
+```yaml
+types:
+
+  ObjectWithNoProperties:
+    extends:
+      - ParentA
+      - ParentB
+    examples:
+      - name: Default
+        value:
+          propertyFromParentA: foo
+          propertyFromParentB: bar
+```
+
+
