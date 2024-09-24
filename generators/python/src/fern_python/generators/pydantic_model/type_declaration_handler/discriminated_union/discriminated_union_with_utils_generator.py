@@ -1,4 +1,4 @@
-from typing import List, Optional, Set
+from typing import Callable, List, Optional, Sequence, Set
 
 import fern.ir.resources as ir_types
 from typing_extensions import Never
@@ -103,37 +103,30 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
             else root_type
         )
 
-        base_class.add_statement(
-            AST.ConditionalTree(
-                conditions=[
-                    AST.IfConditionLeaf(
-                        condition=AST.Expression(self._context.core_utilities.get_is_pydantic_v2()),
-                        code=[
-                            AST.VariableDeclaration(name="root", type_hint=annotated_type_hint),
-                            AST.FunctionDeclaration(
-                                name="get_as_union",
-                                signature=AST.FunctionSignature(
-                                    parameters=[AST.FunctionParameter(name="self")],
-                                    return_type=root_type,
-                                ),
-                                body=AST.CodeWriter("return self.root"),
-                            ),
-                        ],
-                    )
-                ],
-                else_code=[
-                    AST.VariableDeclaration(name="__root__", type_hint=annotated_type_hint),
-                    AST.FunctionDeclaration(
-                        name="get_as_union",
-                        signature=AST.FunctionSignature(
-                            parameters=[AST.FunctionParameter(name="self")],
-                            return_type=root_type,
-                        ),
-                        body=AST.CodeWriter("return self.__root__"),
-                    ),
-                ],
-            )
-        )
+        v1_nodes: List[AST.AstNode] = [
+            AST.VariableDeclaration(name="__root__", type_hint=annotated_type_hint),
+            AST.FunctionDeclaration(
+                name="get_as_union",
+                signature=AST.FunctionSignature(
+                    parameters=[AST.FunctionParameter(name="self")],
+                    return_type=root_type,
+                ),
+                body=AST.CodeWriter("return self.__root__"),
+            ),
+        ]
+        v2_nodes = [
+            AST.VariableDeclaration(name="root", type_hint=annotated_type_hint),
+            AST.FunctionDeclaration(
+                name="get_as_union",
+                signature=AST.FunctionSignature(
+                    parameters=[AST.FunctionParameter(name="self")],
+                    return_type=root_type,
+                ),
+                body=AST.CodeWriter("return self.root"),
+            ),
+        ]
+
+        self.add_statements_v1_v2_or_both(v1_nodes=v1_nodes, v2_nodes=v2_nodes, write_node=base_class.add_statement)
 
         return root_type
 
@@ -307,12 +300,11 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                             external_pydantic_model.add_ghost_reference(type_id)
 
             def get_dict_method(writer: AST.NodeWriter) -> None:
-                writer.write_line("if IS_PYDANTIC_V2:")
-                with writer.indent():
-                    writer.write_line("return self.root.dict(**kwargs)")
-                writer.write_line("else:")
-                with writer.indent():
-                    writer.write_line("return self.__root__.dict(**kwargs)")
+                self.add_statements_v1_v2_or_both(
+                    v1_nodes=[AST.Expression("return self.__root__.dict(**kwargs)")],
+                    v2_nodes=[AST.Expression("return self.root.dict(**kwargs)")],
+                    write_node=writer.write_node
+                )
 
             external_pydantic_model.add_method_unsafe(
                 declaration=AST.FunctionDeclaration(
@@ -444,16 +436,13 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
 
                 return AST.CodeWriter(write_condition_for_root)
 
-            writer.write_node(
-                AST.ConditionalTree(
-                    conditions=[
-                        AST.IfConditionLeaf(
-                            condition=AST.Expression(self._context.core_utilities.get_is_pydantic_v2()),
-                            code=[AST.Expression(write_condition("root"))],
-                        )
-                    ],
-                    else_code=[AST.Expression(write_condition("__root__"))],
-                )
+            v1_nodes = [AST.Expression(write_condition("__root__"))]
+            v2_nodes = [AST.Expression(write_condition("root"))]
+
+            self.add_statements_v1_v2_or_both(
+                v1_nodes=v1_nodes,
+                v2_nodes=v2_nodes,
+                write_node=writer.write_node,
             )
 
         return write
@@ -478,6 +467,31 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
         single_union_type: ir_types.SingleUnionType,
     ) -> AST.Expression:
         return AST.Expression(f'"{single_union_type.discriminant_value.wire_value}"')
+
+    def add_statements_v1_v2_or_both(
+        self,
+        v1_nodes: Sequence[AST.AstNode],
+        v2_nodes: Sequence[AST.AstNode],
+        write_node: Callable[[AST.AstNode], None],
+    ) -> None:
+        if self._custom_config.version == PydanticVersionCompatibility.Both:
+            write_node(
+                AST.ConditionalTree(
+                    conditions=[
+                        AST.IfConditionLeaf(
+                            condition=AST.Expression(self._context.core_utilities.get_is_pydantic_v2()),
+                            code=list(v2_nodes),
+                        )
+                    ],
+                    else_code=list(v1_nodes),
+                )
+            )
+        elif self._custom_config.version == PydanticVersionCompatibility.V1:
+            for node in v1_nodes:
+                write_node(node)
+        elif self._custom_config.version == PydanticVersionCompatibility.V2:
+            for node in v2_nodes:
+                write_node(node)
 
 
 def assert_never(arg: Never) -> Never:
