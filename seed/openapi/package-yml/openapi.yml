@@ -8,7 +8,12 @@ paths:
       operationId: echo
       tags:
         - ''
-      parameters: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: ''
@@ -36,6 +41,11 @@ paths:
       tags:
         - Service
       parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
         - name: nestedId
           in: path
           required: true

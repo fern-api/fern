@@ -9,6 +9,11 @@ paths:
       tags:
         - Service
       parameters:
+        - name: pathParam
+          in: path
+          required: true
+          schema:
+            type: string
         - name: serviceParam
           in: path
           required: true

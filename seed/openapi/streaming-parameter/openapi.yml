@@ -1,0 +1,30 @@
+openapi: 3.0.1
+info:
+  title: streaming
+  version: ''
+paths: {}
+components:
+  schemas:
+    RegularResponse:
+      title: RegularResponse
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          nullable: true
+      required:
+        - id
+    StreamResponse:
+      title: StreamResponse
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          nullable: true
+      required:
+        - id
+  securitySchemes: {}

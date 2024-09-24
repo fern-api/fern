@@ -1,3 +1,11 @@
+- version: 0.0.32
+  createdAt: '2024-03-24'
+  changelogEntry:
+    - type: fix
+      summary: | 
+        The generated OpenAPI spec now takes into account global path parameters. 
+  irVersion: 23
+
 - version: 0.0.31
   createdAt: '2024-03-22'
   changelogEntry:
