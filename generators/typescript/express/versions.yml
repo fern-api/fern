@@ -1,4 +1,22 @@
 - changelogEntry:
+  - summary: | 
+      Introduces a configuration `noOptionalProperties` which forces consumers to explicitly pass 
+      in `undefined` instead of excluding the key. To turn this setting on, do the following: 
+
+      ```yml generators.yml
+      groups: 
+        server: 
+          generators: 
+            - name: fernapi/fern-typescript-express
+              version: 0.17.5
+              config: 
+                noOptionalProperties: true
+      ```
+    type: feat
+  irVersion: 53
+  version: 0.17.5
+
+- changelogEntry:
   - summary: Update inlined request objects to respect `noSerdeLayer`
     type: fix
   irVersion: 53
