@@ -14,6 +14,7 @@ import {
     HttpRequestBody,
     HttpResponse,
     HttpService,
+    IntermediateRepresentation,
     PathParameter,
     QueryParameter,
     ResponseError,
@@ -31,6 +32,7 @@ import { convertObject } from "./convertObject";
 import { convertTypeReference, OpenApiComponentSchema } from "./typeConverter";
 
 export function convertServices({
+    ir,
     httpServices,
     typesByName,
     errorsByName,
@@ -39,6 +41,7 @@ export function convertServices({
     environments,
     mode
 }: {
+    ir: IntermediateRepresentation;
     httpServices: HttpService[];
     typesByName: Record<string, TypeDeclaration>;
     errorsByName: Record<string, ErrorDeclaration>;
@@ -51,6 +54,7 @@ export function convertServices({
     httpServices.forEach((httpService) => {
         httpService.endpoints.forEach((httpEndpoint) => {
             const { fullPath, convertedHttpMethod, operationObject } = convertHttpEndpoint({
+                ir,
                 httpEndpoint,
                 httpService,
                 typesByName,
@@ -84,8 +88,10 @@ function convertHttpEndpoint({
     errorDiscriminationStrategy,
     security,
     environments,
-    mode
+    mode,
+    ir
 }: {
+    ir: IntermediateRepresentation;
     httpEndpoint: HttpEndpoint;
     httpService: HttpService;
     typesByName: Record<string, TypeDeclaration>;
@@ -95,9 +101,16 @@ function convertHttpEndpoint({
     environments: EnvironmentsConfig | undefined;
     mode: Mode;
 }): ConvertedHttpEndpoint {
-    let fullPath = urlJoin(convertHttpPathToString(httpService.basePath), convertHttpPathToString(httpEndpoint.path));
+    let fullPath = urlJoin(
+        ir.basePath != null ? convertHttpPathToString(ir.basePath) : "",
+        convertHttpPathToString(httpService.basePath),
+        convertHttpPathToString(httpEndpoint.path)
+    );
     fullPath = !fullPath.startsWith("/") ? `/${fullPath}` : fullPath;
     const convertedHttpMethod = convertHttpMethod(httpEndpoint.method);
+    const convertedGlobalPathParameters = ir.pathParameters.map((pathParameter) =>
+        convertPathParameter({ pathParameter, examples: httpEndpoint.examples })
+    );
     const convertedServicePathParameters = httpService.pathParameters.map((pathParameter) =>
         convertPathParameter({ pathParameter, examples: httpEndpoint.examples })
     );
@@ -111,6 +124,7 @@ function convertHttpEndpoint({
         convertHeader({ httpHeader: header, typesByName, examples: httpEndpoint.examples })
     );
     const parameters: OpenAPIV3.ParameterObject[] = [
+        ...convertedGlobalPathParameters,
         ...convertedServicePathParameters,
         ...convertedEndpointPathParameters,
         ...convertedQueryParameters,

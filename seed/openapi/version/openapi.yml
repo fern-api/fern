@@ -1,0 +1,40 @@
+openapi: 3.0.1
+info:
+  title: version
+  version: ''
+paths:
+  /users/{userId}:
+    get:
+      operationId: user_getUser
+      tags:
+        - User
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserId'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+components:
+  schemas:
+    UserId:
+      title: UserId
+      type: string
+    User:
+      title: User
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/UserId'
+        name:
+          type: string
+      required:
+        - id
+        - name
+  securitySchemes: {}
