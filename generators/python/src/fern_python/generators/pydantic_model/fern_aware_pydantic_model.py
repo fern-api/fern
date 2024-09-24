@@ -46,7 +46,7 @@ class FernAwarePydanticModel:
         base_models: Sequence[AST.ClassReference] = [],
         docstring: Optional[str] = None,
         snippet: Optional[str] = None,
-        is_root_model: Optional[bool] = False,
+        is_root_model: bool = False,
         # Allow overriding the base model from the unchecked base model, or the typical
         # pydantic base model to the universal root model if needed. This is used instead
         # of `base_models` since that field is used for true `extends` declared within
