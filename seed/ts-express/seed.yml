@@ -60,6 +60,9 @@ fixtures:
         retainOriginalCasing: true
       outputFolder: retain-original-casing
     - customConfig:
+        noOptionalProperties: true
+      outputFolder: no-optional-properties
+    - customConfig:
         allowExtraFields: true
       outputFolder: allow-extra-fields
     - customConfig:
