@@ -3,7 +3,7 @@ info:
   title: api-wide-base-path
   version: ''
 paths:
-  /{serviceParam}/{endpointParam}/{resourceParam}:
+  /test/{pathParam}/{serviceParam}/{endpointParam}/{resourceParam}:
     post:
       operationId: service_post
       tags:
