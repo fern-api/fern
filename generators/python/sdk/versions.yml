@@ -1,4 +1,12 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.2.7-rc2
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        When sending Snippet Templates back to Fern, the generator will not try to coerce a potentially missing ID into the `api_definition_id` field.
+        This, had been a cause of the error log `Failed to upload snippet templates to FDR, this is ok: one of the hex, bytes, bytes_le, fields, or int arguments must be given`.
+
 - version: 4.2.7-rc1
   irVersion: 53
   changelogEntry:

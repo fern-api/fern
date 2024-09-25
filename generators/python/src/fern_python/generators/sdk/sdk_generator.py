@@ -4,6 +4,7 @@ import uuid
 from typing import Literal, Optional, Sequence, Tuple, Union, cast
 from uuid import uuid4
 
+from fdr.commons.types import api_definition_id
 import fern.ir.resources as ir_types
 from fern.generator_exec import GeneratorUpdate, LogLevel, LogUpdate, Snippets
 from fern.generator_exec.config import GeneratorConfig
@@ -538,10 +539,24 @@ __version__ = metadata.version("{project._project_config.package_name}")
             if fdr_client is not None:
                 # API Definition ID doesn't matter right now
                 try:
+                    api_definition_id = uuid4()
+                    if ir.fdr_api_definition_id is not None:
+                        try:
+                            api_definition_id = uuid.UUID(ir.fdr_api_definition_id)
+                        except Exception as e:
+                            generator_exec_wrapper.send_update(
+                                GeneratorUpdate.factory.log(
+                                    LogUpdate(
+                                        level=LogLevel.DEBUG,
+                                        message=f"Failed to convert FDR API Definition ID to UUID: {str(e)}, generating a new one.",
+                                    )
+                                )
+                            )
+
                     fdr_client.templates.register_batch(
                         org_id=org_id,
                         api_id=api_name,
-                        api_definition_id=uuid.UUID(ir.fdr_api_definition_id) or uuid4(),
+                        api_definition_id=api_definition_id,
                         snippets=snippets,
                     )
                     generator_exec_wrapper.send_update(
