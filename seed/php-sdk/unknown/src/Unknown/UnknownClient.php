@@ -42,7 +42,7 @@ class UnknownClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "",
                     method: HttpMethod::POST,
                     body: $request,
@@ -79,7 +79,7 @@ class UnknownClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/with-object",
                     method: HttpMethod::POST,
                     body: $request,

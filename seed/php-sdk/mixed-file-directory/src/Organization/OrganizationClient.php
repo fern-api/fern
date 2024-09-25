@@ -44,7 +44,7 @@ class OrganizationClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/organizations/",
                     method: HttpMethod::POST,
                     body: $request,

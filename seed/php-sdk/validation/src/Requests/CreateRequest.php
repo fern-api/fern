@@ -27,17 +27,17 @@ class CreateRequest extends SerializableType
     public string $name;
 
     /**
-     * @var Shape $shape
+     * @var value-of<Shape> $shape
      */
     #[JsonProperty('shape')]
-    public Shape $shape;
+    public string $shape;
 
     /**
      * @param array{
      *   decimal: float,
      *   even: int,
      *   name: string,
-     *   shape: Shape,
+     *   shape: value-of<Shape>,
      * } $values
      */
     public function __construct(
