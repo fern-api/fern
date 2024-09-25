@@ -45,6 +45,7 @@ paths:
                   nullable: true
                 weight:
                   type: integer
+                  format: float
                   nullable: true
                 metadata:
                   $ref: '#/components/schemas/Metadata'
@@ -77,6 +78,7 @@ components:
           nullable: true
         weight:
           type: integer
+          format: float
           nullable: true
         metadata:
           $ref: '#/components/schemas/Metadata'

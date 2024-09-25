@@ -21,7 +21,7 @@ paths:
               properties:
                 stream:
                   type: boolean
-                  enum:
+                  const:
                     - true
                 num_events:
                   type: integer
@@ -55,7 +55,7 @@ paths:
               properties:
                 stream:
                   type: boolean
-                  enum:
+                  const:
                     - false
                 num_events:
                   type: integer

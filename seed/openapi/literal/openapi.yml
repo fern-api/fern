@@ -25,7 +25,7 @@ paths:
           required: true
           schema:
             type: boolean
-            enum:
+            const:
               - true
           examples:
             Example1:
@@ -103,7 +103,7 @@ paths:
                   nullable: true
                 stream:
                   type: boolean
-                  enum:
+                  const:
                     - false
                 aliasedContext:
                   $ref: '#/components/schemas/SomeAliasedLiteral'
@@ -189,7 +189,7 @@ paths:
           required: true
           schema:
             type: boolean
-            enum:
+            const:
               - false
           examples:
             Example1:
@@ -253,7 +253,7 @@ components:
           example: 200
         success:
           type: boolean
-          enum:
+          const:
             - true
       required:
         - message
@@ -295,7 +295,7 @@ components:
           example: What is the weather today
         stream:
           type: boolean
-          enum:
+          const:
             - false
         context:
           $ref: '#/components/schemas/SomeLiteral'

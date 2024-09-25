@@ -278,6 +278,7 @@ paths:
                   type: array
                   items:
                     type: integer
+                    format: float
                   nullable: true
                 id:
                   type: string
@@ -321,6 +322,7 @@ paths:
                   type: array
                   items:
                     type: integer
+                    format: float
                   nullable: true
                 setMetadata:
                   $ref: '#/components/schemas/Metadata'
@@ -349,6 +351,7 @@ components:
           type: array
           items:
             type: integer
+            format: float
         metadata:
           $ref: '#/components/schemas/Metadata'
           nullable: true
@@ -377,6 +380,7 @@ components:
           nullable: true
         fullness:
           type: integer
+          format: float
           nullable: true
         totalCount:
           type: integer
@@ -410,6 +414,7 @@ components:
           type: array
           items:
             type: integer
+            format: float
       required:
         - indices
         - values
@@ -461,6 +466,7 @@ components:
           type: array
           items:
             type: integer
+            format: float
         topK:
           type: integer
           format: int64
@@ -516,11 +522,13 @@ components:
           type: string
         score:
           type: integer
+          format: float
           nullable: true
         values:
           type: array
           items:
             type: integer
+            format: float
           nullable: true
         metadata:
           $ref: '#/components/schemas/Metadata'

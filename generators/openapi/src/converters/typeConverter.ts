@@ -308,12 +308,14 @@ function convertPrimitiveType(primitiveType: PrimitiveType): OpenAPIV3.NonArrayS
             },
             float: () => {
                 return {
-                    type: "integer"
+                    type: "integer",
+                    format: "float"
                 };
             },
             bigInteger: () => {
                 return {
-                    type: "integer"
+                    type: "integer",
+                    format: "bigint"
                 };
             },
             _other: () => {
@@ -364,7 +366,7 @@ function convertContainerType(containerType: ContainerType): OpenApiComponentSch
                 boolean: (val) => {
                     return {
                         type: "boolean",
-                        enum: [val]
+                        const: [val]
                     };
                 },
                 string: (val) => {

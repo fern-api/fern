@@ -98,9 +98,11 @@ components:
           example: 21
         twentytwo:
           type: integer
+          format: float
           example: 22.22
         twentythree:
           type: integer
+          format: bigint
           example: '23'
       required:
         - one
