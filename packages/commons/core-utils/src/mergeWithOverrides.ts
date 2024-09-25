@@ -33,10 +33,8 @@ export const omitDeepBy: OmitDeepBy = (object: unknown, cb: any): any => {
 
         if (isPlainObject(object)) {
             const temp: Record<string, unknown> = {};
-            for (const [key, value] of Object.entries<{
-                [x: string]: PropertyName | object;
-                // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-            }>(object as any)) {
+            // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+            for (const [key, value] of Object.entries<Record<string, PropertyName | object>>(object as any)) {
                 temp[key] = omitDeepBy(value, cb);
             }
             return omitBy(temp, cb);
