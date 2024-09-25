@@ -16,6 +16,7 @@ paths:
           schema:
             type: string
             const: 02-12-2024
+          example: 02-12-2024
           examples:
             Example1:
               value: 02-12-2024
@@ -25,6 +26,7 @@ paths:
           schema:
             type: boolean
             const: true
+          example: true
           examples:
             Example1:
               value: true
@@ -138,6 +140,7 @@ paths:
           schema:
             type: string
             const: '123'
+          example: '123'
           examples:
             Example1:
               value: '123'
@@ -166,6 +169,7 @@ paths:
           schema:
             type: string
             const: You are a helpful assistant
+          example: You are a helpful assistant
           examples:
             Example1:
               value: You are a helpful assistant
@@ -174,6 +178,7 @@ paths:
           required: true
           schema:
             type: string
+          example: What is the weather today
           examples:
             Example1:
               value: What is the weather today
@@ -183,6 +188,7 @@ paths:
           schema:
             type: boolean
             const: false
+          example: false
           examples:
             Example1:
               value: false

@@ -48,6 +48,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/Operand'
+          example: '>'
           examples:
             Example1:
               value: '>'
@@ -57,6 +58,7 @@ paths:
           schema:
             $ref: '#/components/schemas/Operand'
             nullable: true
+          example: less_than
           examples:
             Example1:
               value: less_than
@@ -65,6 +67,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/ColorOrOperand'
+          example: red
           examples:
             Example1:
               value: red
@@ -74,6 +77,7 @@ paths:
           schema:
             $ref: '#/components/schemas/ColorOrOperand'
             nullable: true
+          example: red
           examples:
             Example1:
               value: red
@@ -91,6 +95,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/Operand'
+          example: '>'
           examples:
             Example1:
               value: '>'
@@ -105,6 +110,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/ColorOrOperand'
+          example: red
           examples:
             Example1:
               value: red

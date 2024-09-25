@@ -614,6 +614,10 @@ function convertPathParameter({
                     value: pathParameterExample.value.jsonExample
                 };
             }
+
+            if (convertedParameter.example == null) {
+                convertedParameter.example = pathParameterExample.value.jsonExample;
+            }
         }
     }
     if (size(openapiExamples) > 0) {
@@ -657,6 +661,10 @@ function convertQueryParameter({
                     value: queryParameterExample.value.jsonExample
                 };
             }
+
+            if (convertedParameter.example == null) {
+                convertedParameter.example = queryParameterExample.value.jsonExample;
+            }
         }
     }
     if (size(openapiExamples) > 0) {
@@ -697,6 +705,10 @@ function convertHeader({
                 openapiExamples[`Example${size(openapiExamples) + 1}`] = {
                     value: headerExample.value.jsonExample
                 };
+            }
+
+            if (convertedParameter.example == null) {
+                convertedParameter.example = headerExample.value.jsonExample;
             }
         }
     }
