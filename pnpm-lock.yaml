@@ -4982,9 +4982,6 @@ importers:
       '@types/js-yaml':
         specifier: ^4.0.8
         version: 4.0.8
-      '@types/lodash':
-        specifier: ^4.17.4
-        version: 4.17.4
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
