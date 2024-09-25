@@ -4,13 +4,15 @@ from .types import SendResponse
 from . import headers, inlined, path, query, reference
 from .client import AsyncSeedLiteral, SeedLiteral
 from .inlined import ANestedLiteral, ATopLevelLiteral, SomeAliasedLiteral
-from .reference import SendRequest, SomeLiteral
+from .reference import ContainerObject, NestedObjectWithLiterals, SendRequest, SomeLiteral
 from .version import __version__
 
 __all__ = [
     "ANestedLiteral",
     "ATopLevelLiteral",
     "AsyncSeedLiteral",
+    "ContainerObject",
+    "NestedObjectWithLiterals",
     "SeedLiteral",
     "SendRequest",
     "SendResponse",

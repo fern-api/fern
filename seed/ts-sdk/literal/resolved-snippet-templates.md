@@ -96,6 +96,13 @@ import { SeedLiteralClient } from "@fern/literal";
 const client = new SeedLiteralClient({ environment: "YOUR_BASE_URL" });
 await client.reference.send({
   query: "What is the weather today",
+  containerObject: {
+    nestedObjects: [
+      {
+        strProp: "strProp",
+      },
+    ],
+  },
 });
  
 ```                        
@@ -107,6 +114,13 @@ import { SeedLiteralClient } from "@fern/literal";
 const client = new SeedLiteralClient({ environment: "YOUR_BASE_URL" });
 await client.reference.send({
   query: "What is the weather today",
+  containerObject: {
+    nestedObjects: [
+      {
+        strProp: "strProp",
+      },
+    ],
+  },
 });
  
 ```                        

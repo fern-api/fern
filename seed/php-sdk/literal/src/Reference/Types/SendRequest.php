@@ -38,12 +38,19 @@ class SendRequest extends SerializableType
     public ?string $maybeContext;
 
     /**
+     * @var ContainerObject $containerObject
+     */
+    #[JsonProperty('containerObject')]
+    public ContainerObject $containerObject;
+
+    /**
      * @param array{
      *   prompt: string,
      *   query: string,
      *   stream: bool,
      *   context: string,
      *   maybeContext?: ?string,
+     *   containerObject: ContainerObject,
      * } $values
      */
     public function __construct(
@@ -54,5 +61,6 @@ class SendRequest extends SerializableType
         $this->stream = $values['stream'];
         $this->context = $values['context'];
         $this->maybeContext = $values['maybeContext'] ?? null;
+        $this->containerObject = $values['containerObject'];
     }
 }

@@ -58,7 +58,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedLiteral;\n\nvar client = new SeedLiteralClient();\nawait client.Reference.SendAsync(\n    new SendRequest\n    {\n        Prompt = \"You are a helpful assistant\",\n        Stream = false,\n        Context = \"You're super wise\",\n        Query = \"What is the weather today\",\n    }\n);\n"
+                "client": "using SeedLiteral;\n\nvar client = new SeedLiteralClient();\nawait client.Reference.SendAsync(\n    new SendRequest\n    {\n        Prompt = \"You are a helpful assistant\",\n        Stream = false,\n        Context = \"You're super wise\",\n        Query = \"What is the weather today\",\n        ContainerObject = new ContainerObject\n        {\n            NestedObjects = new List<NestedObjectWithLiterals>()\n            {\n                new NestedObjectWithLiterals\n                {\n                    Literal1 = \"literal1\",\n                    Literal2 = \"literal2\",\n                    StrProp = \"strProp\",\n                },\n            },\n        },\n    }\n);\n"
             }
         }
     ]
