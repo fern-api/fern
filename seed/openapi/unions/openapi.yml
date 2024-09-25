@@ -170,8 +170,7 @@ components:
                 - fern
             value:
               type: string
-              enum:
-                - fern
+              const: fern
           required:
             - type
       required:
@@ -179,8 +178,7 @@ components:
       properties:
         base:
           type: string
-          enum:
-            - base
+          const: base
     UnionWithBaseProperties:
       title: UnionWithBaseProperties
       oneOf:

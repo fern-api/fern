@@ -9,7 +9,9 @@ paths:
       tags:
         - Service
       parameters: []
-      responses: {}
+      responses:
+        '204':
+          description: ''
 components:
   schemas: {}
   securitySchemes: {}

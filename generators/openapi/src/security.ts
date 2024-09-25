@@ -42,6 +42,10 @@ export function constructSecuritySchemes(apiAuth: ApiAuth): Record<string, OpenA
                 in: "header",
                 name: header.name.wireValue
             }),
+            oauth: () => ({
+                type: "http",
+                scheme: "bearer"
+            }),
             _other: () => {
                 throw new Error("Unknown auth scheme: " + scheme.type);
             }
@@ -55,6 +59,7 @@ function getNameForAuthScheme(authScheme: AuthScheme): string {
     return AuthScheme._visit(authScheme, {
         bearer: () => "BearerAuth",
         basic: () => "BasicAuth",
+        oauth: () => "BearerAuth",
         header: (header) => `${header.name.name.pascalCase.unsafeName}Auth`,
         _other: () => {
             throw new Error("Unknown auth scheme: " + authScheme.type);

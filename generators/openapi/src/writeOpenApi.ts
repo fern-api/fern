@@ -15,9 +15,7 @@ import {
     parseIR
 } from "@fern-api/generator-commons";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-
-const OPENAPI_JSON_FILENAME = "openapi.json";
-const OPENAPI_YML_FILENAME = "openapi.yml";
+import { mergeWithOverrides } from "@fern-api/core-utils";
 
 export type Mode = "stoplight" | "openapi";
 
@@ -38,24 +36,30 @@ export async function writeOpenApi(mode: Mode, pathToConfig: string): Promise<vo
 
             const ir = await loadIntermediateRepresentation(config.irFilepath);
 
-            const openApiDefinition = convertToOpenApi({
+            let openapi = convertToOpenApi({
                 apiName: config.workspaceName,
                 ir,
                 mode
             });
 
-            const openApiDefinitionWithCustomOverrides = merge(customConfig.customOverrides, openApiDefinition);
+            if (customConfig.customOverrides != null) {
+                openapi = await mergeWithOverrides({
+                    data: openapi,
+                    overrides: customConfig.customOverrides
+                });
+            }
 
             if (customConfig.format === "json") {
                 await writeFile(
-                    path.join(config.output.path, OPENAPI_JSON_FILENAME),
-                    JSON.stringify(openApiDefinitionWithCustomOverrides, undefined, 2)
+                    path.join(config.output.path, replaceExtension(customConfig.filename, "json")),
+                    JSON.stringify(openapi, undefined, 2)
                 );
             } else {
-                await writeFile(
-                    path.join(config.output.path, OPENAPI_YML_FILENAME),
-                    yaml.dump(openApiDefinitionWithCustomOverrides)
-                );
+                const filename =
+                    customConfig.filename.endsWith("yml") || customConfig.filename.endsWith("yaml")
+                        ? customConfig.filename
+                        : replaceExtension(customConfig.filename, "yml");
+                await writeFile(path.join(config.output.path, filename), yaml.dump(openapi));
             }
             await generatorLoggingClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful({})));
         } catch (e) {
@@ -79,4 +83,9 @@ async function loadIntermediateRepresentation(pathToFile: string): Promise<Inter
         absolutePathToIR: AbsoluteFilePath.of(pathToFile),
         parse: IrSerialization.IntermediateRepresentation.parse
     });
+}
+
+function replaceExtension(filename: string, newExtension: string): string {
+    const baseName = filename.substring(0, filename.lastIndexOf("."));
+    return `${baseName}.${newExtension}`;
 }

@@ -51,6 +51,7 @@ paths:
           required: true
           schema:
             type: string
+          example: id-219xca8
           examples:
             Example1:
               value: id-219xca8
