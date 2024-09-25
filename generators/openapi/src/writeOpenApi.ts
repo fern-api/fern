@@ -17,9 +17,6 @@ import {
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { mergeWithOverrides } from "@fern-api/core-utils";
 
-const OPENAPI_JSON_FILENAME = "openapi.json";
-const OPENAPI_YML_FILENAME = "openapi.yml";
-
 export type Mode = "stoplight" | "openapi";
 
 export async function writeOpenApi(mode: Mode, pathToConfig: string): Promise<void> {
@@ -54,11 +51,15 @@ export async function writeOpenApi(mode: Mode, pathToConfig: string): Promise<vo
 
             if (customConfig.format === "json") {
                 await writeFile(
-                    path.join(config.output.path, OPENAPI_JSON_FILENAME),
+                    path.join(config.output.path, replaceExtension(customConfig.filename, "json")),
                     JSON.stringify(openapi, undefined, 2)
                 );
             } else {
-                await writeFile(path.join(config.output.path, OPENAPI_YML_FILENAME), yaml.dump(openapi));
+                const filename =
+                    customConfig.filename.endsWith("yml") || customConfig.filename.endsWith("yaml")
+                        ? customConfig.filename
+                        : replaceExtension(customConfig.filename, "yml");
+                await writeFile(path.join(config.output.path, filename), yaml.dump(openapi));
             }
             await generatorLoggingClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful({})));
         } catch (e) {
@@ -82,4 +83,9 @@ async function loadIntermediateRepresentation(pathToFile: string): Promise<Inter
         absolutePathToIR: AbsoluteFilePath.of(pathToFile),
         parse: IrSerialization.IntermediateRepresentation.parse
     });
+}
+
+function replaceExtension(filename: string, newExtension: string): string {
+    const baseName = filename.substring(0, filename.lastIndexOf("."));
+    return `${baseName}.${newExtension}`;
 }

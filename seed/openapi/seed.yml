@@ -32,6 +32,9 @@ fixtures:
             license: MIT
       outputFolder: custom-overrides
     - customConfig:
+        filename: imdb.yaml
+      outputFolder: custom-filename
+    - customConfig:
         format: json
       outputFolder: json-format
 

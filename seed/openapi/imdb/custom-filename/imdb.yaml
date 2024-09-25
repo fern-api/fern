@@ -51,6 +51,7 @@ components:
   schemas:
     MovieId:
       title: MovieId
+      type: string
     Movie:
       title: Movie
       type: object
