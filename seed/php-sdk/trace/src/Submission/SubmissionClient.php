@@ -33,7 +33,7 @@ class SubmissionClient
     /**
      * Returns sessionId and execution server URL for session. Spins up server.
      *
-     * @param Language $language
+     * @param value-of<Language> $language
      * @param ?array{
      *   baseUrl?: string,
      * } $options
@@ -41,12 +41,12 @@ class SubmissionClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createExecutionSession(Language $language, ?array $options = null): ExecutionSessionResponse
+    public function createExecutionSession(string $language, ?array $options = null): ExecutionSessionResponse
     {
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/sessions/create-session/$language",
                     method: HttpMethod::POST,
                 ),
@@ -84,7 +84,7 @@ class SubmissionClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/sessions/$sessionId",
                     method: HttpMethod::GET,
                 ),
@@ -124,7 +124,7 @@ class SubmissionClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/sessions/stop/$sessionId",
                     method: HttpMethod::DELETE,
                 ),
@@ -156,7 +156,7 @@ class SubmissionClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/sessions/execution-sessions-state",
                     method: HttpMethod::GET,
                 ),

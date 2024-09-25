@@ -2,7 +2,17 @@
   changelogEntry:
     - type: feat
       summary: >-
-        Represent enums in objects as .
+        Represent enums in objects as strings.
+    - type: fix
+      summary: >-
+        Generated wrapped requests now implement `SerializableType`.
+        Represent enums in objects as strings.
+    - type: fix
+      summary: >-
+        Fix a bug where we don't set the request options baseurl properly.
+    - type: fix
+      summary: >-
+        Fix bugs in our numeric type serde and add tests.
 - version: 0.1.0
   changelogEntry:
     - type: feat

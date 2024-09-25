@@ -41,7 +41,7 @@ class ServiceClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/test/$pathParam/$serviceParam/$endpointParam/$resourceParam",
                     method: HttpMethod::POST,
                 ),

@@ -2,10 +2,11 @@
 
 namespace Seed\Requests;
 
+use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 use Seed\Types\Shape;
 
-class CreateRequest
+class CreateRequest extends SerializableType
 {
     /**
      * @var float $decimal

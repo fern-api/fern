@@ -2,10 +2,11 @@
 
 namespace Seed\InlinedRequests\Requests;
 
+use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 use Seed\Types\Object\Types\ObjectWithOptionalField;
 
-class PostWithObjectBody
+class PostWithObjectBody extends SerializableType
 {
     /**
      * @var string $string

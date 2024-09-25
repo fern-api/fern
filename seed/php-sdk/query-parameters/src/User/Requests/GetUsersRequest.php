@@ -2,11 +2,12 @@
 
 namespace Seed\User\Requests;
 
+use Seed\Core\SerializableType;
 use DateTime;
 use Seed\User\Types\User;
 use Seed\User\Types\NestedUser;
 
-class GetUsersRequest
+class GetUsersRequest extends SerializableType
 {
     /**
      * @var int $limit

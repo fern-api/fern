@@ -2,9 +2,10 @@
 
 namespace Seed\Dataservice\Requests;
 
+use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 
-class DescribeRequest
+class DescribeRequest extends SerializableType
 {
     /**
      * @var mixed $filter

@@ -2,10 +2,11 @@
 
 namespace Seed\Dataservice\Requests;
 
+use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 use Seed\Core\ArrayType;
 
-class DeleteRequest
+class DeleteRequest extends SerializableType
 {
     /**
      * @var ?array<string> $ids

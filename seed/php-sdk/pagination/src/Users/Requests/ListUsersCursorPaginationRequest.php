@@ -2,9 +2,10 @@
 
 namespace Seed\Users\Requests;
 
+use Seed\Core\SerializableType;
 use Seed\Users\Types\Order;
 
-class ListUsersCursorPaginationRequest
+class ListUsersCursorPaginationRequest extends SerializableType
 {
     /**
      * @var ?int $page Defaults to first page
@@ -17,9 +18,9 @@ class ListUsersCursorPaginationRequest
     public ?int $perPage;
 
     /**
-     * @var ?Order $order
+     * @var ?value-of<Order> $order
      */
-    public ?Order $order;
+    public ?string $order;
 
     /**
      * @var ?string $startingAfter The cursor used for pagination in order to fetch
@@ -31,7 +32,7 @@ class ListUsersCursorPaginationRequest
      * @param array{
      *   page?: ?int,
      *   perPage?: ?int,
-     *   order?: ?Order,
+     *   order?: ?value-of<Order>,
      *   startingAfter?: ?string,
      * } $values
      */

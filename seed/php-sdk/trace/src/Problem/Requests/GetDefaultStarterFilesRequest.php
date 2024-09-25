@@ -2,11 +2,12 @@
 
 namespace Seed\Problem\Requests;
 
+use Seed\Core\SerializableType;
 use Seed\Problem\Types\VariableTypeAndName;
 use Seed\Core\JsonProperty;
 use Seed\Core\ArrayType;
 
-class GetDefaultStarterFilesRequest
+class GetDefaultStarterFilesRequest extends SerializableType
 {
     /**
      * @var array<VariableTypeAndName> $inputParams

@@ -30,7 +30,7 @@ class SyspropClient
     }
 
     /**
-     * @param Language $language
+     * @param value-of<Language> $language
      * @param int $numWarmInstances
      * @param ?array{
      *   baseUrl?: string,
@@ -38,12 +38,12 @@ class SyspropClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function setNumWarmInstances(Language $language, int $numWarmInstances, ?array $options = null): void
+    public function setNumWarmInstances(string $language, int $numWarmInstances, ?array $options = null): void
     {
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/sysprop/num-warm-instances/$language/$numWarmInstances",
                     method: HttpMethod::PUT,
                 ),
@@ -66,7 +66,7 @@ class SyspropClient
      * @param ?array{
      *   baseUrl?: string,
      * } $options
-     * @return array<Language, int>
+     * @return array<value-of<Language>, int>
      * @throws SeedException
      * @throws SeedApiException
      */
@@ -75,7 +75,7 @@ class SyspropClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/sysprop/num-warm-instances",
                     method: HttpMethod::GET,
                 ),
@@ -83,7 +83,7 @@ class SyspropClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
-                return JsonDecoder::decodeArray($json, [Language::class => 'integer']); // @phpstan-ignore-line
+                return JsonDecoder::decodeArray($json, ["string" => 'integer']); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);

@@ -17,7 +17,11 @@ import { AbstractPhpGeneratorContext } from "./AbstractPhpGeneratorContext";
 export declare namespace PhpTypeMapper {
     interface Args {
         reference: TypeReference;
-        enumsAsEnumString?: boolean;
+        /*
+         * By default, we represent enums as strings, with a phpstan phpdoc referencing the generated enum. If this flag is
+         * is true, then we reference the enum type directly.
+         */
+        preserveEnums?: boolean;
     }
 }
 
@@ -28,15 +32,15 @@ export class PhpTypeMapper {
         this.context = context;
     }
 
-    public convert({ reference, enumsAsEnumString = false }: PhpTypeMapper.Args): Type {
+    public convert({ reference, preserveEnums = false }: PhpTypeMapper.Args): Type {
         switch (reference.type) {
             case "container":
                 return this.convertContainer({
                     container: reference.container,
-                    enumsAsEnumString
+                    preserveEnums
                 });
             case "named":
-                return this.convertNamed({ named: reference, enumsAsEnumString });
+                return this.convertNamed({ named: reference, preserveEnums });
             case "primitive":
                 return this.convertPrimitive(reference);
             case "unknown":
@@ -53,25 +57,19 @@ export class PhpTypeMapper {
         });
     }
 
-    private convertContainer({
-        container,
-        enumsAsEnumString
-    }: {
-        container: ContainerType;
-        enumsAsEnumString: boolean;
-    }): Type {
+    private convertContainer({ container, preserveEnums }: { container: ContainerType; preserveEnums: boolean }): Type {
         switch (container.type) {
             case "list":
-                return Type.array(this.convert({ reference: container.list, enumsAsEnumString }));
+                return Type.array(this.convert({ reference: container.list, preserveEnums }));
             case "map": {
-                const key = this.convert({ reference: container.keyType, enumsAsEnumString });
-                const value = this.convert({ reference: container.valueType, enumsAsEnumString });
+                const key = this.convert({ reference: container.keyType, preserveEnums });
+                const value = this.convert({ reference: container.valueType, preserveEnums });
                 return Type.map(key, value);
             }
             case "set":
-                return Type.array(this.convert({ reference: container.set, enumsAsEnumString }));
+                return Type.array(this.convert({ reference: container.set, preserveEnums }));
             case "optional":
-                return Type.optional(this.convert({ reference: container.optional, enumsAsEnumString }));
+                return Type.optional(this.convert({ reference: container.optional, preserveEnums }));
             case "literal":
                 return this.convertLiteral({ literal: container.literal });
             default:
@@ -107,14 +105,14 @@ export class PhpTypeMapper {
         }
     }
 
-    private convertNamed({ named, enumsAsEnumString }: { named: DeclaredTypeName; enumsAsEnumString: boolean }): Type {
+    private convertNamed({ named, preserveEnums }: { named: DeclaredTypeName; preserveEnums: boolean }): Type {
         const classReference = this.convertToClassReference(named);
         const typeDeclaration = this.context.getTypeDeclarationOrThrow(named.typeId);
         switch (typeDeclaration.shape.type) {
             case "alias":
-                return this.convert({ reference: typeDeclaration.shape.aliasOf, enumsAsEnumString });
+                return this.convert({ reference: typeDeclaration.shape.aliasOf, preserveEnums });
             case "enum":
-                return enumsAsEnumString ? php.Type.enumString(classReference) : php.Type.reference(classReference);
+                return preserveEnums ? php.Type.reference(classReference) : php.Type.enumString(classReference);
             case "object":
                 return php.Type.reference(classReference);
             case "union":

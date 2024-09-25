@@ -2,9 +2,10 @@
 
 namespace Seed\Requests;
 
+use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 
-class InlinedChildRequest
+class InlinedChildRequest extends SerializableType
 {
     /**
      * @var string $child

@@ -295,7 +295,8 @@ export abstract class AbstractPhpGeneratorContext<
             AsIsFiles.NullPropertyTypeTest,
             AsIsFiles.ScalarTypesTest,
             AsIsFiles.TestTypeTest,
-            AsIsFiles.UnionArrayTypeTest
+            AsIsFiles.UnionArrayTypeTest,
+            AsIsFiles.EnumTest
         ];
     }
 

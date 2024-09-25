@@ -104,6 +104,11 @@ class JsonSerializer
             return self::serializeObject($data);
         }
 
+        // Handle floats as a special case since gettype($data) returns "double" for float values in PHP.
+        if ($type === 'float' && is_float($data)) {
+            return $data;
+        }
+
         if (gettype($data) === $type) {
             return $data;
         }
@@ -118,7 +123,8 @@ class JsonSerializer
      * @return mixed The serialized data.
      * @throws JsonException If the object does not implement JsonSerializable.
      */
-    public static function serializeObject(object $data): mixed {
+    public static function serializeObject(object $data): mixed
+    {
         if (!is_subclass_of($data, JsonSerializable::class)) {
             $type = get_class($data);
             throw new JsonException("Class $type must implement JsonSerializable.");

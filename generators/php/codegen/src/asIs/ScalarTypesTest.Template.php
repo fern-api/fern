@@ -8,7 +8,7 @@ use <%= coreNamespace%>\JsonProperty;
 use <%= coreNamespace%>\ArrayType;
 use <%= coreNamespace%>\Union;
 
-class ScalarTypesTest extends SerializableType
+class ScalarTypesTestType extends SerializableType
 {
     /**
      * @var int $integerProperty
@@ -21,6 +21,11 @@ class ScalarTypesTest extends SerializableType
      */
     #[JsonProperty('float_property')]
     public float $floatProperty;
+    /**
+     * @var float $otherFloatProperty
+     */
+    #[JsonProperty('other_float_property')]
+    public float $otherFloatProperty;
 
     /**
      * @var bool $booleanProperty
@@ -42,6 +47,13 @@ class ScalarTypesTest extends SerializableType
     public array $intFloatArray;
 
     /**
+     * @var array<float> $floatArray
+     */
+    #[ArrayType(['float'])]
+    #[JsonProperty('float_array')]
+    public array $floatArray;
+
+    /**
      * @var bool|null $nullableBooleanProperty
      */
     #[JsonProperty('nullable_boolean_property')]
@@ -51,9 +63,11 @@ class ScalarTypesTest extends SerializableType
      * @param array{
      *   integerProperty: int,
      *   floatProperty: float,
+     *   otherFloatProperty: float,
      *   booleanProperty: bool,
      *   stringProperty: string,
      *   intFloatArray: array<int|float>,
+     *   floatArray: array<float>,
      *   nullableBooleanProperty?: bool|null,
      * } $values
      */
@@ -62,14 +76,16 @@ class ScalarTypesTest extends SerializableType
     ) {
         $this->integerProperty = $values['integerProperty'];
         $this->floatProperty = $values['floatProperty'];
+        $this->otherFloatProperty = $values['otherFloatProperty'];
         $this->booleanProperty = $values['booleanProperty'];
         $this->stringProperty = $values['stringProperty'];
         $this->intFloatArray = $values['intFloatArray'];
+        $this->floatArray = $values['floatArray'];
         $this->nullableBooleanProperty = $values['nullableBooleanProperty'] ?? null;
     }
 }
 
-class ScalarTypesTestTest extends TestCase
+class ScalarTypesTest extends TestCase
 {
     public function testAllScalarTypesIncludingFloat(): void
     {
@@ -77,15 +93,16 @@ class ScalarTypesTestTest extends TestCase
         $data = [
             'integer_property' => 42,
             'float_property' => 3.14159,
+            'other_float_property' => 3,
             'boolean_property' => true,
             'string_property' => 'Hello, World!',
-            'nullable_boolean_property' => null,
-            'int_float_array' => [1, 2.5, 3, 4.75]
+            'int_float_array' => [1, 2.5, 3, 4.75],
+            'float_array' => [1, 2, 3, 4] // ensure we handle "integer-looking" floats
         ];
 
         $json = json_encode($data, JSON_THROW_ON_ERROR);
 
-        $object = ScalarTypesTest::fromJson($json);
+        $object = ScalarTypesTestType::fromJson($json);
 
         $serializedJson = $object->toJson();
 

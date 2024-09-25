@@ -2,7 +2,9 @@
 
 namespace Seed\User\Events\Requests;
 
-class ListUserEventsRequest
+use Seed\Core\SerializableType;
+
+class ListUserEventsRequest extends SerializableType
 {
     /**
      * @var ?int $limit The maximum number of results to return.

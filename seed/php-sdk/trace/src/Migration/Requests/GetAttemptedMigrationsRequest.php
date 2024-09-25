@@ -2,7 +2,9 @@
 
 namespace Seed\Migration\Requests;
 
-class GetAttemptedMigrationsRequest
+use Seed\Core\SerializableType;
+
+class GetAttemptedMigrationsRequest extends SerializableType
 {
     /**
      * @var string $adminKeyHeader

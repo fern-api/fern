@@ -2,7 +2,9 @@
 
 namespace Seed\Requests;
 
-class GetRequest
+use Seed\Core\SerializableType;
+
+class GetRequest extends SerializableType
 {
     /**
      * @var float $decimal

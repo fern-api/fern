@@ -2,7 +2,9 @@
 
 namespace Seed\User\Requests;
 
-class ListUsersRequest
+use Seed\Core\SerializableType;
+
+class ListUsersRequest extends SerializableType
 {
     /**
      * @var ?int $limit The maximum number of results to return.

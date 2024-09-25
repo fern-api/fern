@@ -2,7 +2,9 @@
 
 namespace Seed\Package\Requests;
 
-class TestRequest
+use Seed\Core\SerializableType;
+
+class TestRequest extends SerializableType
 {
     /**
      * @var string $for

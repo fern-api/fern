@@ -43,7 +43,7 @@ class PrimitiveClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/primitive/string",
                     method: HttpMethod::POST,
                     body: $request,
@@ -80,7 +80,7 @@ class PrimitiveClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/primitive/integer",
                     method: HttpMethod::POST,
                     body: $request,
@@ -117,7 +117,7 @@ class PrimitiveClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/primitive/long",
                     method: HttpMethod::POST,
                     body: $request,
@@ -154,7 +154,7 @@ class PrimitiveClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/primitive/double",
                     method: HttpMethod::POST,
                     body: $request,
@@ -191,7 +191,7 @@ class PrimitiveClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/primitive/boolean",
                     method: HttpMethod::POST,
                     body: $request,
@@ -228,7 +228,7 @@ class PrimitiveClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/primitive/datetime",
                     method: HttpMethod::POST,
                     body: JsonSerializer::serializeDateTime($request),
@@ -265,7 +265,7 @@ class PrimitiveClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/primitive/date",
                     method: HttpMethod::POST,
                     body: JsonSerializer::serializeDate($request),
@@ -302,7 +302,7 @@ class PrimitiveClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/primitive/uuid",
                     method: HttpMethod::POST,
                     body: $request,
@@ -339,7 +339,7 @@ class PrimitiveClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/primitive/base64",
                     method: HttpMethod::POST,
                     body: $request,

@@ -48,7 +48,7 @@ class ProblemClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/problem-crud/create",
                     method: HttpMethod::POST,
                     body: $request,
@@ -88,7 +88,7 @@ class ProblemClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/problem-crud/update/$problemId",
                     method: HttpMethod::POST,
                     body: $request,
@@ -126,7 +126,7 @@ class ProblemClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/problem-crud/delete/$problemId",
                     method: HttpMethod::DELETE,
                 ),
@@ -161,7 +161,7 @@ class ProblemClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/problem-crud/default-starter-files",
                     method: HttpMethod::POST,
                     body: $request,

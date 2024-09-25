@@ -2,7 +2,9 @@
 
 namespace Seed\Dataservice\Requests;
 
-class ListRequest
+use Seed\Core\SerializableType;
+
+class ListRequest extends SerializableType
 {
     /**
      * @var ?string $prefix

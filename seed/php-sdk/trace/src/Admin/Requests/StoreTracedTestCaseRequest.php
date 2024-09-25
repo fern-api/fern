@@ -2,12 +2,13 @@
 
 namespace Seed\Admin\Requests;
 
+use Seed\Core\SerializableType;
 use Seed\Submission\Types\TestCaseResultWithStdout;
 use Seed\Core\JsonProperty;
 use Seed\Submission\Types\TraceResponse;
 use Seed\Core\ArrayType;
 
-class StoreTracedTestCaseRequest
+class StoreTracedTestCaseRequest extends SerializableType
 {
     /**
      * @var TestCaseResultWithStdout $result

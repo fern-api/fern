@@ -104,6 +104,11 @@ class JsonSerializer
             return self::serializeObject($data);
         }
 
+        // Handle floats as a special case since gettype($data) returns "double" for float values in PHP.
+        if ($type === 'float' && is_float($data)) {
+            return $data;
+        }
+
         if (gettype($data) === $type) {
             return $data;
         }

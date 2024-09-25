@@ -17,6 +17,7 @@ export enum AsIsFiles {
     NullableArrayTypeTest = "NullableArrayTypeTest.Template.php",
     NullPropertyTypeTest = "NullPropertyTypeTest.Template.php",
     ScalarTypesTest = "ScalarTypesTest.Template.php",
+    EnumTest = "EnumTest.Template.php",
     TestTypeTest = "TestTypeTest.Template.php",
     UnionArrayTypeTest = "UnionArrayTypeTest.Template.php",
     ArrayType = "ArrayType.Template.php",
