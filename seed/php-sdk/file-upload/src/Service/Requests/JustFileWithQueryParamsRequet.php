@@ -2,6 +2,8 @@
 
 namespace Seed\Service\Requests;
 
+use Seed\Utils\File;
+
 class JustFileWithQueryParamsRequet
 {
     /**
@@ -30,12 +32,18 @@ class JustFileWithQueryParamsRequet
     public array $optionalListOfStrings;
 
     /**
+     * @var File $file
+     */
+    public File $file;
+
+    /**
      * @param array{
      *   maybeString?: ?string,
      *   integer: int,
      *   maybeInteger?: ?int,
      *   listOfStrings: array<string>,
      *   optionalListOfStrings: array<?string>,
+     *   file: File,
      * } $values
      */
     public function __construct(
@@ -46,5 +54,6 @@ class JustFileWithQueryParamsRequet
         $this->maybeInteger = $values['maybeInteger'] ?? null;
         $this->listOfStrings = $values['listOfStrings'];
         $this->optionalListOfStrings = $values['optionalListOfStrings'];
+        $this->file = $values['file'];
     }
 }

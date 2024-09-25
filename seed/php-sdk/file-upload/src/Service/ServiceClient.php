@@ -2,6 +2,10 @@
 
 namespace Seed\Service;
 
+use Exception;
+use Seed\Core\MultipartApiRequest;
+use Seed\Core\MultipartFormData;
+use Seed\Core\MultipartFormDataPart;
 use Seed\Core\RawClient;
 use Seed\Service\Requests\MyRequest;
 use Seed\Exceptions\SeedException;
@@ -39,12 +43,31 @@ class ServiceClient
      */
     public function post(MyRequest $request, ?array $options = null): void
     {
+        $body = new MultipartFormData();
+        if ($request->maybeString != null) {
+            $body->add(name: 'maybeString', value: $request->maybeString);
+        }
+        $body->add(name: 'integer', value: $request->integer);
+        $body->addPart($request->file->toMultipartFormDataPart('file'));
+        foreach ($request->fileList as $file) {
+            $body->addPart($file->toMultipartFormDataPart('fileList'));
+        }
+        if ($request->maybeFile != null) {
+            $body->addPart($request->maybeFile->toMultipartFormDataPart('maybeFile'));
+        }
+        if ($request->maybeFileList != null) {
+            foreach ($request->fileList as $file) {
+                $body->addPart($file->toMultipartFormDataPart('maybeFileList'));
+            }
+        }
+
         try {
             $response = $this->client->sendRequest(
-                new JsonApiRequest(
+                new MultipartApiRequest(
                     baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "",
                     method: HttpMethod::POST,
+                    body: $body,
                 ),
             );
             $statusCode = $response->getStatusCode();
@@ -71,12 +94,16 @@ class ServiceClient
      */
     public function justFile(JustFileRequet $request, ?array $options = null): void
     {
+        $body = new MultipartFormData();
+        $body->addPart($request->file->toMultipartFormDataPart('file'));
+
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/just-file",
                     method: HttpMethod::POST,
+                    body: $body,
                 ),
             );
             $statusCode = $response->getStatusCode();
@@ -115,6 +142,10 @@ class ServiceClient
         if ($request->optionalListOfStrings != null) {
             $query['optionalListOfStrings'] = $request->optionalListOfStrings;
         }
+
+        $body = new MultipartFormData();
+        $body->addPart($request->file->toMultipartFormDataPart('file'));
+
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -122,6 +153,7 @@ class ServiceClient
                     path: "/just-file-with-query-params",
                     method: HttpMethod::POST,
                     query: $query,
+                    body: $body,
                 ),
             );
             $statusCode = $response->getStatusCode();
@@ -149,11 +181,26 @@ class ServiceClient
     public function withContentType(WithContentTypeRequest $request, ?array $options = null): void
     {
         try {
+            $body = new MultipartFormData();
+            $body->addPart(
+                $request->file->toMultipartFormDataPart(
+                    name: 'file',
+                    contentType:'application/octet-stream',
+                ),
+            );
+            $body->add('foo', $request->foo);
+            $body->add('bar', $request->bar->toJson());
+        } catch (Exception $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+
+        try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/with-content-type",
                     method: HttpMethod::POST,
+                    body: $body,
                 ),
             );
             $statusCode = $response->getStatusCode();
