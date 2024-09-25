@@ -13,7 +13,7 @@ jobs:
       - name: Setup Composer
         uses: php-actions/composer@v6
         with:
-          php_version: "8.1"
+          php-version: "8.1"
           version: "2.7.9"
 
       - name: Install tools
@@ -34,7 +34,7 @@ jobs:
       - name: Setup Composer
         uses: php-actions/composer@v6
         with:
-          php_version: "8.1"
+          php-version: "8.1"
           version: "2.7.9"
 
       - name: Install tools
