@@ -10,6 +10,7 @@ import {
     IntermediateRepresentation,
     PrimitiveType,
     PrimitiveTypeV1,
+    PrimitiveTypeV2,
     SingleUnionTypeProperties,
     Type,
     TypeDeclaration,
@@ -245,84 +246,166 @@ export function convertTypeReference(typeReference: TypeReference): OpenApiCompo
 }
 
 function convertPrimitiveType(primitiveType: PrimitiveType): OpenAPIV3.NonArraySchemaObject {
-    return (
-        PrimitiveTypeV1._visit<OpenAPIV3.NonArraySchemaObject>(primitiveType.v1, {
-            boolean: () => {
-                return { type: "boolean" };
-            },
-            dateTime: () => {
-                return {
-                    type: "string",
-                    format: "date-time"
-                };
-            },
-            double: () => {
-                return {
-                    type: "number",
-                    format: "double"
-                };
-            },
-            integer: () => {
-                return {
-                    type: "integer"
-                };
-            },
-            long: () => {
-                return {
-                    type: "integer",
-                    format: "int64"
-                };
-            },
-            string: () => {
-                return { type: "string" };
-            },
-            uuid: () => {
-                return {
-                    type: "string",
-                    format: "uuid"
-                };
-            },
-            date: () => {
-                return {
-                    type: "string",
-                    format: "date"
-                };
-            },
-            base64: () => {
-                return {
-                    type: "string",
-                    format: "byte"
-                };
-            },
-            uint: () => {
-                return {
-                    type: "integer",
-                    format: "int64"
-                };
-            },
-            uint64: () => {
-                return {
-                    type: "integer",
-                    format: "int64"
-                };
-            },
-            float: () => {
-                return {
-                    type: "integer",
-                    format: "float"
-                };
-            },
-            bigInteger: () => {
-                return {
-                    type: "integer",
-                    format: "bigint"
-                };
-            },
-            _other: () => {
-                throw new Error("Encountered unknown primitiveType: " + primitiveType.v1);
+    if (primitiveType.v2 == null) {
+        return (
+            PrimitiveTypeV1._visit<OpenAPIV3.NonArraySchemaObject>(primitiveType.v1, {
+                boolean: () => {
+                    return { type: "boolean" };
+                },
+                dateTime: () => {
+                    return {
+                        type: "string",
+                        format: "date-time"
+                    };
+                },
+                double: () => {
+                    return {
+                        type: "number",
+                        format: "double"
+                    };
+                },
+                integer: () => {
+                    return {
+                        type: "integer"
+                    };
+                },
+                long: () => {
+                    return {
+                        type: "integer",
+                        format: "int64"
+                    };
+                },
+                string: () => {
+                    return { type: "string" };
+                },
+                uuid: () => {
+                    return {
+                        type: "string",
+                        format: "uuid"
+                    };
+                },
+                date: () => {
+                    return {
+                        type: "string",
+                        format: "date"
+                    };
+                },
+                base64: () => {
+                    return {
+                        type: "string",
+                        format: "byte"
+                    };
+                },
+                uint: () => {
+                    return {
+                        type: "integer",
+                        format: "int64"
+                    };
+                },
+                uint64: () => {
+                    return {
+                        type: "integer",
+                        format: "int64"
+                    };
+                },
+                float: () => {
+                    return {
+                        type: "integer",
+                        format: "float"
+                    };
+                },
+                bigInteger: () => {
+                    return {
+                        type: "integer",
+                        format: "bigint"
+                    };
+                },
+                _other: () => {
+                    throw new Error("Encountered unknown primitiveType: " + primitiveType.v1);
+                }
+            }) ?? {}
+        );
+    }
+    return PrimitiveTypeV2._visit<OpenAPIV3.NonArraySchemaObject>(primitiveType.v2, {
+        boolean: () => {
+            return { type: "boolean" };
+        },
+        dateTime: () => {
+            return {
+                type: "string",
+                format: "date-time"
+            };
+        },
+        double: () => {
+            return {
+                type: "number",
+                format: "double"
+            };
+        },
+        integer: () => {
+            return {
+                type: "integer"
+            };
+        },
+        long: () => {
+            return {
+                type: "integer",
+                format: "int64"
+            };
+        },
+        string: (val) => {
+            const type: OpenAPIV3.NonArraySchemaObject = { type: "string" };
+            if (val.validation?.format != null) {
+                type.format = val.validation.format;
             }
-        }) ?? {}
-    );
+            return type;
+        },
+        uuid: () => {
+            return {
+                type: "string",
+                format: "uuid"
+            };
+        },
+        date: () => {
+            return {
+                type: "string",
+                format: "date"
+            };
+        },
+        base64: () => {
+            return {
+                type: "string",
+                format: "byte"
+            };
+        },
+        uint: () => {
+            return {
+                type: "integer",
+                format: "int64"
+            };
+        },
+        uint64: () => {
+            return {
+                type: "integer",
+                format: "int64"
+            };
+        },
+        float: () => {
+            return {
+                type: "integer",
+                format: "float"
+            };
+        },
+        bigInteger: () => {
+            return {
+                type: "integer",
+                format: "bigint"
+            };
+        },
+        _other: () => {
+            throw new Error("Encountered unknown primitiveType: " + primitiveType.v1);
+        }
+    });
 }
 
 function convertContainerType(containerType: ContainerType): OpenApiComponentSchema {
