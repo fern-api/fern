@@ -1,0 +1,13 @@
+## 0.11.12-rc2
+**`(chore):`** * Add `ServiceTypeReferenceInfo` to IR so that generators can recognize what types are referenced from exactly one service (@amckinney).
+```yaml
+  ServiceTypeReferenceInfo:
+    properties:
+      typesReferencedOnlyByService:
+        docs: "Types referenced by exactly one service."
+        type: map<commons.ServiceId, list<commons.TypeId>>
+      sharedTypes:
+        docs: "Types referenced by either zero or multiple services."
+        type: list<commons.TypeId>
+```
+

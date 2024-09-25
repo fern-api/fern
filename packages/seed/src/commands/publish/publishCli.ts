@@ -22,6 +22,9 @@ export async function publishCli({
     if (typeof version !== "string") {
         // We were given two version files, so we need to compare them to find if any new
         // versions have been added since the last publish.
+        context.logger.info(
+            `Checking for new version between ${version.previousChangelogPath} (previous) and ${version.latestChangelogPath} (latest)`
+        );
         const maybeNewVersion = await getNewCliVersion({
             versionFilePair: version,
             context

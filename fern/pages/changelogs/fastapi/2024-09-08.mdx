@@ -1,0 +1,6 @@
+## 1.4.9
+**`(fix):`** Default on `pydantic aliases`
+
+### What's been fixed
+- The previous version of the FastAPI generator defaulted on a setting which removed pydantic aliases. Because FastAPI calls into the pydantic serializers itself, the generated models must have aliases.
+

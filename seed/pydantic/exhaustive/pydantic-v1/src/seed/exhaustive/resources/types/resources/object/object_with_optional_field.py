@@ -5,7 +5,6 @@ import typing
 import pydantic
 import datetime as dt
 import uuid
-from .....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ObjectWithOptionalField(UniversalBaseModel):
@@ -27,9 +26,5 @@ class ObjectWithOptionalField(UniversalBaseModel):
     map_: typing.Optional[typing.Dict[int, str]] = pydantic.Field(alias="map", default=None)
     bigint: typing.Optional[str] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            extra = pydantic.Extra.allow
+    class Config:
+        extra = pydantic.Extra.allow

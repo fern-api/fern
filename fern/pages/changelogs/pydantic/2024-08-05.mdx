@@ -1,0 +1,6 @@
+## 1.3.0
+**`(feat):`** Generated code now respects the pydantic version configuration flag.
+
+### What's changed
+- The generated server code now respects the pydantic version flag, generating V1 only code and V2 only code if specified. If not, the server is generated as it is today, with compatibility for BOTH Pydantic versions. This cleans up the generated code, and brings back features liked wrapped aliases and custom root validators for V1-only servers.
+

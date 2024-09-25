@@ -1,0 +1,6 @@
+## 0.12.5
+**`(fix):`** the python SDK uses the timeout provided to the top level client as the default per-request
+
+### What's been fixed
+- the python SDK uses the timeout provided to the top level client as the default per-request, previously if there was no timeout override in the RequestOptions, we'd default to 60s, even if a timeout was provided at the client level.
+

@@ -1,0 +1,5 @@
+## 4.2.7-rc0
+**`(fix):`** Dynamic header suppliers, as used within the OAuth provider are now invoked on every request, not just the first.
+This was a regression introduced within an earlier version that is now fixed. As a results of this fix, the `refresh_token` is now correctly refreshed.
+
+

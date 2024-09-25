@@ -1,0 +1,13 @@
+## 0.42.9
+**`(fix):`** Previously, the OpenAPI importer would ignore skip parsing arbitrary
+content types "*/*". Now it treats this content type as application/json.
+
+```json openapi.json
+"responses": {
+  "200": {
+    "description": "Success reply",
+    "content": {
+      "*/*": {
+```
+
+

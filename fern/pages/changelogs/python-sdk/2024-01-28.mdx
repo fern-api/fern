@@ -1,0 +1,6 @@
+## 0.8.2-rc0
+**`(fix):`** The Python SDK better handles cyclical references
+
+### What's been fixed
+- The Python SDK better handles cyclical references. In particular, cyclical references are tracked for undiscriminated unions, and update_forward_refs is always called with object references.
+

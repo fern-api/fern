@@ -1,0 +1,6 @@
+## 2.2.0
+**`(chore):`** The generated SDK will now correctly encode deep object query parameters
+
+### What's changed
+- The generated SDK will now correctly encode deep object query parameters. For example, if you have an object `{"test": {"nested": "object"}}` as a query parameter, we will now encode it as `test[nested]=object`.
+

@@ -38,7 +38,7 @@ tabs:
 
 css: ./assets/styles.css
 
-redirects: 
+redirects:
   - source: /api-definition/fern/api-yml-reference
     destination: /api-definition/fern/api-yml/overview
 
@@ -62,18 +62,18 @@ navigation:
         contents:
           - page: Overview
             icon: fa-regular fa-brackets-curly
-            path: ./pages/api-definition/openapi/overview.mdx     
+            path: ./pages/api-definition/openapi/overview.mdx
           - page: Authentication
             icon: fa-regular fa-lock-keyhole
-            path: ./pages/api-definition/openapi/auth.mdx                      
+            path: ./pages/api-definition/openapi/auth.mdx
           # - page: OpenAPI Examples
           #   icon: fa-regular fa-square-terminal
           #   path: ./pages/api-definition/openapi/examples.mdx
-          #   slug: examples    
+          #   slug: examples
           - section: Endpoints
             icon: fa-regular fa-object-intersect
-            slug: endpoints       
-            contents: 
+            slug: endpoints
+            contents:
               - page: HTTP JSON Endpoints
                 icon: fa-regular fa-display-code
                 path: ./pages/api-definition/openapi/endpoints/rest.mdx
@@ -84,19 +84,19 @@ navigation:
                 slug: multipart
               - page: Server Sent Events
                 path: ./pages/api-definition/openapi/endpoints/sse.mdx
-                icon: fa-regular fa-signal-stream    
-                slug: sse                                                                            
+                icon: fa-regular fa-signal-stream
+                slug: sse
           - page: Webhooks
             path: ./pages/api-definition/openapi/webhooks.mdx
-            icon: fa-regular fa-webhook    
+            icon: fa-regular fa-webhook
           - page: Audiences
             icon: fa-duotone fa-users
             path: ./pages/api-definition/openapi/extensions/audiences.mdx
-            slug: audiences              
+            slug: audiences
           - section: Extensions
             icon: fa-regular fa-object-intersect
             slug: extensions
-            contents: 
+            contents:
               - page: SDK Method Names
                 icon: fa-regular fa-display-code
                 path: ./pages/api-definition/openapi/extensions/method-names.mdx
@@ -104,14 +104,14 @@ navigation:
               - page: Parameter Names
                 icon: fa-regular fa-input-text
                 path: ./pages/api-definition/openapi/extensions/parameter-names.mdx
-                slug: parameter-names          
+                slug: parameter-names
               - page: Other
                 icon: fa-regular fa-ellipsis-h
                 path: ./pages/api-definition/openapi/extensions/others.mdx
-                slug: others                   
-          - page: Overlay Customizations 
+                slug: others
+          - page: Overlay Customizations
             icon: fa-regular fa-shuffle
-            path: ./pages/api-definition/openapi/overrides.mdx                    
+            path: ./pages/api-definition/openapi/overrides.mdx
           - section: Integrate your Server Framework
             icon: fa-regular fa-server
             slug: frameworks
@@ -119,7 +119,7 @@ navigation:
               - page: FastAPI
                 icon: fa-regular fa-circle-bolt
                 path: ./pages/api-definition/openapi/server-frameworks/fastapi.mdx
-                slug: fastapi            
+                slug: fastapi
       - section: Fern Definition
         slug: fern
         contents:
@@ -128,7 +128,7 @@ navigation:
             path: ./pages/api-definition/fern-definition/overview.mdx
           - page: Authentication
             icon: fa-regular fa-lock-keyhole
-            path: ./pages/api-definition/fern-definition/auth.mdx                       
+            path: ./pages/api-definition/fern-definition/auth.mdx
           - page: Types
             icon: fa-regular fa-shapes
             path: ./pages/api-definition/fern-definition/types.mdx
@@ -156,7 +156,7 @@ navigation:
           - section: api.yml Reference
             icon: fa-regular fa-books
             slug: api-yml
-            contents: 
+            contents:
               - page: Overview
                 icon: fa-regular fa-book
                 path: ./pages/api-definition/fern-definition/api-yml/overview.mdx
@@ -186,7 +186,25 @@ navigation:
           - page: Overview
             path: ./pages/sdks/introduction/overview.mdx
           - page: Configuration
-            path: ./pages/sdks/introduction/configuration.mdx            
+            path: ./pages/sdks/introduction/configuration.mdx
+          - section: Changelogs
+            slug: changelog
+            contents:
+              - changelog: ./pages/changelogs/python-sdk
+                title: Python
+                slug: python
+              - changelog: ./pages/changelogs/go-sdk
+                title: Go
+                slug: go
+              - changelog: ./pages/changelogs/csharp-sdk
+                title: .Net
+                slug: csharp
+              - changelog: ./pages/changelogs/java-sdk
+                title: Java
+                slug: java
+              - changelog: ./pages/changelogs/ruby-sdk
+                title: Ruby
+                slug: ruby
       - section: Getting Started
         contents:
           - page: Generate your First SDK
@@ -267,10 +285,10 @@ navigation:
           - page: Maven Central
             slug: maven-central
             path: ./pages/sdks/integration/maven-central.mdx
-      
+
       - section: Alternatives
         hidden: true
-        contents: 
+        contents:
           - page: Speakeasy
             path: ./pages/sdks/comparison/speakeasy.mdx
   - tab: docs
@@ -285,17 +303,17 @@ navigation:
             slug: development
             path: ./pages/docs/getting-started/development.mdx
             icon: fa-regular fa-terminal
-          - page: Global Configuration 
+          - page: Global Configuration
             slug: global-configuration
-            path: ./pages/docs/getting-started/global-configuration.mdx   
-            icon: fa-regular fa-wrench               
-          - page: Project Structure 
+            path: ./pages/docs/getting-started/global-configuration.mdx
+            icon: fa-regular fa-wrench
+          - page: Project Structure
             slug: project-structure
-            path: ./pages/docs/getting-started/project-structure.mdx   
-            icon: fa-regular fa-map      
+            path: ./pages/docs/getting-started/project-structure.mdx
+            icon: fa-regular fa-map
 
-      - section: Building Your Docs 
-        contents: 
+      - section: Building Your Docs
+        contents:
           - page: Navigation
             icon: fa-regular fa-compass
             path: ./pages/docs/building-your-docs/navigation.mdx
@@ -310,7 +328,7 @@ navigation:
             path: ./pages/docs/building-your-docs/customizing-slugs.mdx
           - page: Hiding Content
             icon: fa-regular fa-eye-slash
-            path: ./pages/docs/building-your-docs/hiding-content.mdx            
+            path: ./pages/docs/building-your-docs/hiding-content.mdx
           - page: Custom CSS & Global JS
             icon: fa-regular fa-paintbrush
             path: ./pages/docs/building-your-docs/custom-css-js.mdx
@@ -418,38 +436,37 @@ navigation:
           - page: Customize API Playground
             icon: fa-regular fa-square-terminal
             path: ./pages/fern-docs/content/customize-api-playground.mdx
-      
+
       - section: Integrations
         slug: integrations
-        contents: 
+        contents:
           - page: Overview
             icon: fa-regular fa-link
             slug: overview
-            path: ./pages/docs/integrations/overview.mdx         
+            path: ./pages/docs/integrations/overview.mdx
           - section: Analytics
             icon: fa-regular fa-chart-simple
             slug: analytics
-            contents: 
+            contents:
               - page: PostHog
-                path: ./pages/docs/integrations/analytics/posthog.mdx 
-                slug: posthog           
+                path: ./pages/docs/integrations/analytics/posthog.mdx
+                slug: posthog
               - page: Fullstory
                 path: ./pages/docs/integrations/analytics/fullstory.mdx
               - page: Segment
-                path: ./pages/docs/integrations/analytics/segment.mdx                
+                path: ./pages/docs/integrations/analytics/segment.mdx
           - section: Support
             icon: fa-regular fa-headset
             slug: support
-            contents: 
+            contents:
               - page: Intercom
-                path: ./pages/docs/integrations/support/intercom.mdx            
+                path: ./pages/docs/integrations/support/intercom.mdx
           - page: Postman
             slug: postman
-            path: ./pages/docs/integrations/postman.mdx            
-              
-    
+            path: ./pages/docs/integrations/postman.mdx
+
       - section: Developer Tools
-        contents: 
+        contents:
           - page: GitLab
             slug: gitlab
             icon: fa-brands fa-gitlab
@@ -460,7 +477,7 @@ navigation:
 
       - section: Alternatives
         hidden: true
-        contents: 
+        contents:
           - page: ReadMe
             slug: readme
             path: ./pages/docs/comparison/readme.mdx
@@ -475,15 +492,16 @@ navigation:
             path: ./pages/cli-api/global-options.mdx
           - page: Commands
             path: ./pages/cli-api/commands.mdx
+          - changelog: ./pages/changelogs/cli
       - api: API Reference
         api-name: public-api
         summary: ./pages/cli-api/api-summary.mdx
         paginated: true
         audiences:
-          - external 
-        layout: 
+          - external
+        layout:
           - page: Overview
-            path:  ./pages/cli-api/api-summary.mdx        
+            path: ./pages/cli-api/api-summary.mdx
         # snippets:
         #   python: fern-api
         #   typescript: "@fern-api/node-sdk"
@@ -495,7 +513,7 @@ navbar-links:
   - type: filled
     text: Book a demo
     url: https://buildwithfern.com/contact
-    
+
 typography:
   bodyFont:
     name: GT-Planar
@@ -503,7 +521,7 @@ typography:
     weight: 400
   headingsFont:
     name: GT-Planar
-    path: ./assets/GT-Planar-Bold.woff2  
+    path: ./assets/GT-Planar-Bold.woff2
 
 logo:
   href: https://www.buildwithfern.com
@@ -519,7 +537,7 @@ colors:
   background:
     dark: "#081008"
     light: "#FBFFFA"
-  header-background: 
+  header-background:
     dark: "#081008"
     light: "#FBFFFA"
 favicon: ./images/favicon.ico
@@ -531,9 +549,9 @@ layout:
   tabs-placement: header
 
 js:
- - url: https://guidebar-backend-727ab3a68ba9.herokuapp.com/install/buildwithfern_com
- - ./js/koala.js
- - ./js/rbtob.js
+  - url: https://guidebar-backend-727ab3a68ba9.herokuapp.com/install/buildwithfern_com
+  - ./js/koala.js
+  - ./js/rbtob.js
 
 analytics:
   posthog:

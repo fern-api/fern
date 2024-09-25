@@ -1,0 +1,21 @@
+## 0.41.2
+**`(fix):`** Fixes an issue introduced in `0.41.1` that ignored server urls for docs generation.
+
+
+**`(feat):`** Adds a `auth-schemes` and `auth` block where you can override auth for an existing spec.
+See below:
+
+```generators.yml
+auth-schemes:
+  Oauth:
+    scheme: oauth
+    type: client-credentials
+    get-token:
+      endpoint: auth.get-token
+api:
+  auth: Oauth # overrides auth scheme
+  specs:
+    - openapi: path/to/openapi
+```
+
+
