@@ -41,28 +41,33 @@ export async function writeOpenApi(mode: Mode, pathToConfig: string): Promise<vo
                 ir,
                 mode
             });
+            console.log(`openapi before override ${JSON.stringify(openapi)}`);
 
             if (customConfig.customOverrides != null) {
                 openapi = await mergeWithOverrides({
                     data: openapi,
                     overrides: customConfig.customOverrides
                 });
+                console.log(`openapi after override ${JSON.stringify(openapi)}`);
             }
 
+            let filename: string = customConfig.filename ?? "openapi.yml";
             if (customConfig.format === "json") {
-                await writeFile(
-                    path.join(config.output.path, replaceExtension(customConfig.filename, "json")),
-                    JSON.stringify(openapi, undefined, 2)
-                );
+                filename = path.join(config.output.path, replaceExtension(filename, "json"));
+                await writeFile(filename, JSON.stringify(openapi, undefined, 2));
             } else {
-                const filename =
-                    customConfig.filename.endsWith("yml") || customConfig.filename.endsWith("yaml")
-                        ? customConfig.filename
-                        : replaceExtension(customConfig.filename, "yml");
+                filename =
+                    filename.endsWith("yml") || filename.endsWith("yaml")
+                        ? filename
+                        : replaceExtension(filename, "yml");
                 await writeFile(path.join(config.output.path, filename), yaml.dump(openapi));
             }
             await generatorLoggingClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful({})));
         } catch (e) {
+            if (e instanceof Error) {
+                console.log((e as Error)?.message);
+                console.log((e as Error)?.stack);
+            }
             await generatorLoggingClient.sendUpdate(
                 GeneratorUpdate.exitStatusUpdate(
                     ExitStatusUpdate.error({
