@@ -1,3 +1,5 @@
+// eslint-disable-file no-console
+
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 import { readFile, writeFile } from "fs/promises";
