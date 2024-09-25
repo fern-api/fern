@@ -4,7 +4,6 @@ import uuid
 from typing import Literal, Optional, Sequence, Tuple, Union, cast
 from uuid import uuid4
 
-from fdr.commons.types import api_definition_id
 import fern.ir.resources as ir_types
 from fern.generator_exec import GeneratorUpdate, LogLevel, LogUpdate, Snippets
 from fern.generator_exec.config import GeneratorConfig
