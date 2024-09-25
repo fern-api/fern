@@ -9,6 +9,7 @@ import {
     ExampleType,
     IntermediateRepresentation,
     PrimitiveType,
+    PrimitiveTypeV1,
     SingleUnionTypeProperties,
     Type,
     TypeDeclaration,
@@ -38,7 +39,7 @@ export function convertType(typeDeclaration: TypeDeclaration, ir: IntermediateRe
             return convertEnum({ enumTypeDeclaration, docs });
         },
         object: (objectTypeDeclaration) => {
-            const exampleType: ExampleType | undefined = typeDeclaration.examples[0];
+            const exampleType: ExampleType | undefined = typeDeclaration.userProvidedExamples[0];
             const exampleTypeFromEndpointRequest =
                 exampleType == null ? getExampleFromEndpointRequest(ir, typeDeclaration.name) : undefined;
             const exampleTypeFromEndpointResponse =
@@ -51,7 +52,7 @@ export function convertType(typeDeclaration: TypeDeclaration, ir: IntermediateRe
                     let exampleProperty: ExampleObjectProperty | undefined = undefined;
                     if (exampleType != null && exampleType.shape.type === "object") {
                         exampleProperty = exampleType.shape.properties.find((example) => {
-                            return example.wireKey === property.name.wireValue;
+                            return example.name.wireValue === property.name.wireValue;
                         });
                     } else if (exampleTypeFromEndpointRequest != null) {
                         if (
@@ -60,17 +61,20 @@ export function convertType(typeDeclaration: TypeDeclaration, ir: IntermediateRe
                             exampleTypeFromEndpointRequest.shape.shape.type === "object"
                         ) {
                             exampleProperty = exampleTypeFromEndpointRequest.shape.shape.properties.find((example) => {
-                                return example.wireKey === property.name.wireValue;
+                                return example.name.wireValue === property.name.wireValue;
                             });
                         }
-                    } else if (exampleTypeFromEndpointResponse != null) {
+                    } else if (
+                        exampleTypeFromEndpointResponse != null &&
+                        exampleTypeFromEndpointResponse.type === "body"
+                    ) {
                         if (
-                            exampleTypeFromEndpointResponse.body?.shape.type === "named" &&
-                            exampleTypeFromEndpointResponse.body.shape.shape.type === "object"
+                            exampleTypeFromEndpointResponse.value?.shape.type === "named" &&
+                            exampleTypeFromEndpointResponse.value.shape.shape.type === "object"
                         ) {
-                            exampleProperty = exampleTypeFromEndpointResponse.body.shape.shape.properties.find(
+                            exampleProperty = exampleTypeFromEndpointResponse.value.shape.shape.properties.find(
                                 (example) => {
-                                    return example.wireKey === property.name.wireValue;
+                                    return example.name.wireValue === property.name.wireValue;
                                 }
                             );
                         }
@@ -241,58 +245,82 @@ export function convertTypeReference(typeReference: TypeReference): OpenApiCompo
 }
 
 function convertPrimitiveType(primitiveType: PrimitiveType): OpenAPIV3.NonArraySchemaObject {
-    return PrimitiveType._visit<OpenAPIV3.NonArraySchemaObject>(primitiveType, {
-        boolean: () => {
-            return { type: "boolean" };
-        },
-        dateTime: () => {
-            return {
-                type: "string",
-                format: "date-time"
-            };
-        },
-        double: () => {
-            return {
-                type: "number",
-                format: "double"
-            };
-        },
-        integer: () => {
-            return {
-                type: "integer"
-            };
-        },
-        long: () => {
-            return {
-                type: "integer",
-                format: "int64"
-            };
-        },
-        string: () => {
-            return { type: "string" };
-        },
-        uuid: () => {
-            return {
-                type: "string",
-                format: "uuid"
-            };
-        },
-        date: () => {
-            return {
-                type: "string",
-                format: "date"
-            };
-        },
-        base64: () => {
-            return {
-                type: "string",
-                format: "byte"
-            };
-        },
-        _other: () => {
-            throw new Error("Encountered unknown primitiveType: " + primitiveType);
-        }
-    });
+    return (
+        PrimitiveTypeV1._visit<OpenAPIV3.NonArraySchemaObject>(primitiveType.v1, {
+            boolean: () => {
+                return { type: "boolean" };
+            },
+            dateTime: () => {
+                return {
+                    type: "string",
+                    format: "date-time"
+                };
+            },
+            double: () => {
+                return {
+                    type: "number",
+                    format: "double"
+                };
+            },
+            integer: () => {
+                return {
+                    type: "integer"
+                };
+            },
+            long: () => {
+                return {
+                    type: "integer",
+                    format: "int64"
+                };
+            },
+            string: () => {
+                return { type: "string" };
+            },
+            uuid: () => {
+                return {
+                    type: "string",
+                    format: "uuid"
+                };
+            },
+            date: () => {
+                return {
+                    type: "string",
+                    format: "date"
+                };
+            },
+            base64: () => {
+                return {
+                    type: "string",
+                    format: "byte"
+                };
+            },
+            uint: () => {
+                return {
+                    type: "integer",
+                    format: "int64"
+                };
+            },
+            uint64: () => {
+                return {
+                    type: "integer",
+                    format: "int64"
+                };
+            },
+            float: () => {
+                return {
+                    type: "integer"
+                };
+            },
+            bigInteger: () => {
+                return {
+                    type: "integer"
+                };
+            },
+            _other: () => {
+                throw new Error("Encountered unknown primitiveType: " + primitiveType);
+            }
+        }) ?? {}
+    );
 }
 
 function convertContainerType(containerType: ContainerType): OpenApiComponentSchema {
@@ -312,7 +340,7 @@ function convertContainerType(containerType: ContainerType): OpenApiComponentSch
         map: (mapType) => {
             if (
                 mapType.keyType.type === "primitive" &&
-                mapType.keyType.primitive === "STRING" &&
+                mapType.keyType.primitive.v1 === "STRING" &&
                 mapType.valueType.type === "unknown"
             ) {
                 return {
@@ -332,10 +360,21 @@ function convertContainerType(containerType: ContainerType): OpenApiComponentSch
             };
         },
         literal: (literalType) => {
-            return {
-                type: "string",
-                enum: [literalType.string]
-            };
+            return literalType._visit({
+                boolean: (val) => {
+                    return {
+                        type: "boolean",
+                        enum: [val]
+                    };
+                },
+                string: (val) => {
+                    return {
+                        type: "string",
+                        enum: [val]
+                    };
+                },
+                _other: () => ({})
+            });
         },
         _other: () => {
             throw new Error("Encountered unknown containerType: " + containerType.type);
@@ -360,7 +399,7 @@ function getExampleFromEndpointRequest(
 ): ExampleRequestBody | undefined {
     for (const service of Object.values(ir.services)) {
         for (const endpoint of service.endpoints) {
-            if (endpoint.examples.length <= 0) {
+            if (endpoint.userSpecifiedExamples.length <= 0) {
                 continue;
             }
             if (
@@ -368,7 +407,7 @@ function getExampleFromEndpointRequest(
                 endpoint.requestBody.requestBodyType.type === "named" &&
                 areDeclaredTypeNamesEqual(endpoint.requestBody.requestBodyType, declaredTypeName)
             ) {
-                return endpoint.examples[0]?.request ?? undefined;
+                return endpoint.userSpecifiedExamples[0]?.example?.request ?? undefined;
             }
         }
     }
@@ -381,18 +420,18 @@ function getExampleFromEndpointResponse(
 ): ExampleEndpointSuccessResponse | undefined {
     for (const service of Object.values(ir.services)) {
         for (const endpoint of service.endpoints) {
-            if (endpoint.examples.length <= 0 || endpoint.response?.type !== "json") {
+            if (endpoint.userSpecifiedExamples.length <= 0 || endpoint.response?.body?.type !== "json") {
                 continue;
             }
             if (
-                endpoint.response.responseBodyType.type === "named" &&
-                areDeclaredTypeNamesEqual(endpoint.response.responseBodyType, declaredTypeName)
+                endpoint.response.body.value.responseBodyType.type === "named" &&
+                endpoint.response.body.value.responseBodyType.typeId === declaredTypeName.typeId
             ) {
-                const okResponseExample = endpoint.examples.find((exampleEndpoint) => {
-                    return exampleEndpoint.response.type === "ok";
+                const okResponseExample = endpoint.userSpecifiedExamples.find((exampleEndpoint) => {
+                    return exampleEndpoint.example?.response.type === "ok";
                 });
-                if (okResponseExample != null && okResponseExample.response.type === "ok") {
-                    return okResponseExample.response;
+                if (okResponseExample != null && okResponseExample.example?.response.type === "ok") {
+                    return okResponseExample.example.response.value;
                 }
             }
         }

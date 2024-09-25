@@ -65,6 +65,9 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/ColorOrOperand'
+          examples:
+            Example1:
+              value: red
         - name: maybeOperandOrColor
           in: path
           required: true
@@ -99,15 +102,17 @@ paths:
             nullable: true
         - name: operandOrColor
           in: query
-          required: false
+          required: true
           schema:
-            type: string
-            nullable: true
+            $ref: '#/components/schemas/ColorOrOperand'
+          examples:
+            Example1:
+              value: red
         - name: maybeOperandOrColor
           in: query
           required: false
           schema:
-            type: string
+            $ref: '#/components/schemas/ColorOrOperand'
             nullable: true
       responses:
         '204':
@@ -135,19 +140,18 @@ paths:
               nullable: true
         - name: operandOrColor
           in: query
-          required: false
+          required: true
           schema:
             type: array
             items:
-              type: string
-              nullable: true
+              $ref: '#/components/schemas/ColorOrOperand'
         - name: maybeOperandOrColor
           in: query
           required: false
           schema:
             type: array
             items:
-              type: string
+              $ref: '#/components/schemas/ColorOrOperand'
               nullable: true
       responses:
         '204':

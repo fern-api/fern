@@ -25,6 +25,8 @@ paths:
           required: true
           schema:
             type: boolean
+            enum:
+              - true
           examples:
             Example1:
               value: true
@@ -101,7 +103,8 @@ paths:
                   nullable: true
                 stream:
                   type: boolean
-                  example: false
+                  enum:
+                    - false
                 aliasedContext:
                   $ref: '#/components/schemas/SomeAliasedLiteral'
                 maybeContext:
@@ -186,6 +189,8 @@ paths:
           required: true
           schema:
             type: boolean
+            enum:
+              - false
           examples:
             Example1:
               value: false
@@ -248,7 +253,8 @@ components:
           example: 200
         success:
           type: boolean
-          example: true
+          enum:
+            - true
       required:
         - message
         - status
@@ -289,7 +295,8 @@ components:
           example: What is the weather today
         stream:
           type: boolean
-          example: false
+          enum:
+            - false
         context:
           $ref: '#/components/schemas/SomeLiteral'
         maybeContext:

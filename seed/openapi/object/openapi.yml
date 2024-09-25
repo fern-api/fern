@@ -90,17 +90,17 @@ components:
           $ref: '#/components/schemas/Name'
         twenty:
           type: integer
+          format: int64
           example: 20
         twentyone:
           type: integer
           format: int64
           example: 21
         twentytwo:
-          type: number
-          format: double
+          type: integer
           example: 22.22
         twentythree:
-          type: string
+          type: integer
           example: '23'
       required:
         - one

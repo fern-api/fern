@@ -1,4 +1,4 @@
-irVersion: v23
+irVersion: v53
 displayName: OpenAPI
 image: fernapi/fern-openapi
 changelogLocation: ../../generators/openapi/versions.yml

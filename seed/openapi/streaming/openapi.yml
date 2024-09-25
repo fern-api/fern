@@ -9,7 +9,9 @@ paths:
       tags:
         - Dummy
       parameters: []
-      responses: {}
+      responses:
+        '204':
+          description: ''
       requestBody:
         required: true
         content:
@@ -19,6 +21,8 @@ paths:
               properties:
                 stream:
                   type: boolean
+                  enum:
+                    - true
                 num_events:
                   type: integer
               required:
@@ -51,7 +55,8 @@ paths:
               properties:
                 stream:
                   type: boolean
-                  example: false
+                  enum:
+                    - false
                 num_events:
                   type: integer
                   example: 5
