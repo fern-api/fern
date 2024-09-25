@@ -397,8 +397,8 @@ importers:
         specifier: workspace:*
         version: link:../commons
       '@fern-fern/ir-sdk':
-        specifier: 0.0.2828
-        version: 0.0.2828
+        specifier: 53.9.0
+        version: 53.9.0
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
@@ -6938,9 +6938,6 @@ packages:
 
   '@fern-fern/generators-sdk@0.109.0-21be2e5be':
     resolution: {integrity: sha512-McFSFWNqfZBC7E0gUQfhj45tTl8Eu+6bahqD6FHf0fQm+TXI/oQf8mhPJw/TVqzAGxP/2kOzSYNqkDg1DwkIFQ==}
-
-  '@fern-fern/ir-sdk@0.0.2828':
-    resolution: {integrity: sha512-qFZZHyw0cuHtoR9v7KsrPpz0PFH0V6/ORSMHdTKU/82KcaNCMjk0BbzicK8jjrMD0mYS4JxNUzEjcUOvgeuqaA==}
 
   '@fern-fern/ir-sdk@39.0.0':
     resolution: {integrity: sha512-cx8g0hX3gS/JveQPKanSWAyhM8SGhVOiQEcovqmcF/j9wvpjO8FXXNNI1+ZR1Wdmkcggx9UIqXDbS7jzefh6Rw==}
@@ -14095,8 +14092,6 @@ snapshots:
       url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
-
-  '@fern-fern/ir-sdk@0.0.2828': {}
 
   '@fern-fern/ir-sdk@39.0.0': {}
 

@@ -41,10 +41,11 @@ paths:
                   nullable: true
                 age:
                   type: integer
+                  format: int64
                   nullable: true
                 weight:
-                  type: number
-                  format: double
+                  type: integer
+                  format: float
                   nullable: true
                 metadata:
                   $ref: '#/components/schemas/Metadata'
@@ -73,10 +74,11 @@ components:
           nullable: true
         age:
           type: integer
+          format: int64
           nullable: true
         weight:
-          type: number
-          format: double
+          type: integer
+          format: float
           nullable: true
         metadata:
           $ref: '#/components/schemas/Metadata'

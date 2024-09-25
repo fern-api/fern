@@ -1,3 +1,13 @@
+- version: 0.1.0
+  createdAt: '2024-03-24'
+  changelogEntry:
+    - type: chore
+      summary: | 
+        The OpenAPI generator now uses version 53 of the IR (previously was on version 23). You 
+        will need to upgrade your Fern CLI to the latest to run this version of the OpenAPI 
+        generator. 
+  irVersion: 53
+
 - version: 0.0.32
   createdAt: '2024-03-24'
   changelogEntry:
