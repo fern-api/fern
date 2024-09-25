@@ -2,7 +2,6 @@ openapi: 3.0.1
 info:
   title: api
   version: ''
-  license: MIT
 paths:
   /movies/create-movie:
     post:
@@ -52,7 +51,6 @@ components:
   schemas:
     MovieId:
       title: MovieId
-      type: string
     Movie:
       title: Movie
       type: object
