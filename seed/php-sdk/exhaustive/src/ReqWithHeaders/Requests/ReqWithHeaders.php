@@ -2,7 +2,9 @@
 
 namespace Seed\ReqWithHeaders\Requests;
 
-class ReqWithHeaders
+use Seed\Core\SerializableType;
+
+class ReqWithHeaders extends SerializableType
 {
     /**
      * @var string $xTestServiceHeader

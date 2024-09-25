@@ -60,7 +60,7 @@ class UsersClient
             $query['per_page'] = $request->perPage;
         }
         if ($request->order != null) {
-            $query['order'] = $request->order->value;
+            $query['order'] = $request->order;
         }
         if ($request->startingAfter != null) {
             $query['starting_after'] = $request->startingAfter;
@@ -68,7 +68,7 @@ class UsersClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/users",
                     method: HttpMethod::GET,
                     query: $query,
@@ -105,7 +105,7 @@ class UsersClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/users",
                     method: HttpMethod::POST,
                     body: $request,
@@ -147,7 +147,7 @@ class UsersClient
             $query['per_page'] = $request->perPage;
         }
         if ($request->order != null) {
-            $query['order'] = $request->order->value;
+            $query['order'] = $request->order;
         }
         if ($request->startingAfter != null) {
             $query['starting_after'] = $request->startingAfter;
@@ -155,7 +155,7 @@ class UsersClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/users",
                     method: HttpMethod::GET,
                     query: $query,
@@ -192,7 +192,7 @@ class UsersClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/users",
                     method: HttpMethod::POST,
                     body: $request,
@@ -234,12 +234,12 @@ class UsersClient
             $query['limit'] = $request->limit;
         }
         if ($request->order != null) {
-            $query['order'] = $request->order->value;
+            $query['order'] = $request->order;
         }
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/users",
                     method: HttpMethod::GET,
                     query: $query,
@@ -281,12 +281,12 @@ class UsersClient
             $query['limit'] = $request->limit;
         }
         if ($request->order != null) {
-            $query['order'] = $request->order->value;
+            $query['order'] = $request->order;
         }
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/users",
                     method: HttpMethod::GET,
                     query: $query,
@@ -327,7 +327,7 @@ class UsersClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/users",
                     method: HttpMethod::GET,
                     query: $query,
@@ -368,7 +368,7 @@ class UsersClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/users",
                     method: HttpMethod::GET,
                     query: $query,
@@ -409,7 +409,7 @@ class UsersClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/users",
                     method: HttpMethod::GET,
                     query: $query,
@@ -450,7 +450,7 @@ class UsersClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/users",
                     method: HttpMethod::GET,
                     query: $query,

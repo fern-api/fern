@@ -2,9 +2,10 @@
 
 namespace Seed\Auth\Requests;
 
+use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 
-class GetTokenRequest
+class GetTokenRequest extends SerializableType
 {
     /**
      * @var string $clientId

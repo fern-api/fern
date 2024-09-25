@@ -14,15 +14,15 @@ class RunningResponse extends SerializableType
     public string $submissionId;
 
     /**
-     * @var RunningSubmissionState $state
+     * @var value-of<RunningSubmissionState> $state
      */
     #[JsonProperty('state')]
-    public RunningSubmissionState $state;
+    public string $state;
 
     /**
      * @param array{
      *   submissionId: string,
-     *   state: RunningSubmissionState,
+     *   state: value-of<RunningSubmissionState>,
      * } $values
      */
     public function __construct(

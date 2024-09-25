@@ -16,10 +16,10 @@ class WorkspaceSubmitRequest extends SerializableType
     public string $submissionId;
 
     /**
-     * @var Language $language
+     * @var value-of<Language> $language
      */
     #[JsonProperty('language')]
-    public Language $language;
+    public string $language;
 
     /**
      * @var array<SubmissionFileInfo> $submissionFiles
@@ -36,7 +36,7 @@ class WorkspaceSubmitRequest extends SerializableType
     /**
      * @param array{
      *   submissionId: string,
-     *   language: Language,
+     *   language: value-of<Language>,
      *   submissionFiles: array<SubmissionFileInfo>,
      *   userId?: ?string,
      * } $values

@@ -35,9 +35,9 @@ class ProblemInfoV2 extends SerializableType
     public int $problemVersion;
 
     /**
-     * @var array<Language> $supportedLanguages
+     * @var array<value-of<Language>> $supportedLanguages
      */
-    #[JsonProperty('supportedLanguages'), ArrayType([Language::class])]
+    #[JsonProperty('supportedLanguages'), ArrayType(['string'])]
     public array $supportedLanguages;
 
     /**
@@ -76,7 +76,7 @@ class ProblemInfoV2 extends SerializableType
      *   problemDescription: ProblemDescription,
      *   problemName: string,
      *   problemVersion: int,
-     *   supportedLanguages: array<Language>,
+     *   supportedLanguages: array<value-of<Language>>,
      *   customFiles: mixed,
      *   generatedFiles: GeneratedFiles,
      *   customTestCaseTemplates: array<TestCaseTemplate>,

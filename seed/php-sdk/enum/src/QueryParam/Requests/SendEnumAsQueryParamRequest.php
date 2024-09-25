@@ -2,19 +2,20 @@
 
 namespace Seed\QueryParam\Requests;
 
+use Seed\Core\SerializableType;
 use Seed\Types\Operand;
 
-class SendEnumAsQueryParamRequest
+class SendEnumAsQueryParamRequest extends SerializableType
 {
     /**
-     * @var Operand $operand
+     * @var value-of<Operand> $operand
      */
-    public Operand $operand;
+    public string $operand;
 
     /**
-     * @var ?Operand $maybeOperand
+     * @var ?value-of<Operand> $maybeOperand
      */
-    public ?Operand $maybeOperand;
+    public ?string $maybeOperand;
 
     /**
      * @var mixed $operandOrColor
@@ -28,8 +29,8 @@ class SendEnumAsQueryParamRequest
 
     /**
      * @param array{
-     *   operand: Operand,
-     *   maybeOperand?: ?Operand,
+     *   operand: value-of<Operand>,
+     *   maybeOperand?: ?value-of<Operand>,
      *   operandOrColor: mixed,
      *   maybeOperandOrColor: mixed,
      * } $values

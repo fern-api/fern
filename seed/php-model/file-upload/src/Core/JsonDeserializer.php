@@ -118,6 +118,12 @@ class JsonDeserializer
             return self::deserializeObject($data, $type);
         }
 
+        // Handle floats as a special case since gettype($data) returns "double" for float values in PHP, and because
+        // floats make come through from json_decoded as integers
+        if ($type === 'float' && (is_numeric($data))) {
+            return (float) $data;
+        }
+
         if (gettype($data) === $type) {
             return $data;
         }

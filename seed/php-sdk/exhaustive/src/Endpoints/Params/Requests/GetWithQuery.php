@@ -2,7 +2,9 @@
 
 namespace Seed\Endpoints\Params\Requests;
 
-class GetWithQuery
+use Seed\Core\SerializableType;
+
+class GetWithQuery extends SerializableType
 {
     /**
      * @var string $query

@@ -2,9 +2,10 @@
 
 namespace Seed\Headers\Requests;
 
+use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 
-class SendLiteralsInHeadersRequest
+class SendLiteralsInHeadersRequest extends SerializableType
 {
     /**
      * @var string $endpointVersion

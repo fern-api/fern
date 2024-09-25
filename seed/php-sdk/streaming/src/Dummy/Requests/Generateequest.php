@@ -2,9 +2,10 @@
 
 namespace Seed\Dummy\Requests;
 
+use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 
-class Generateequest
+class Generateequest extends SerializableType
 {
     /**
      * @var bool $stream

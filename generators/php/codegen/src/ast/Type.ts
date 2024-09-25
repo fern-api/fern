@@ -16,8 +16,10 @@ type InternalType =
     | Array_
     | Map
     | TypeDict
+    | Union
     | Optional
-    | Reference;
+    | Reference
+    | EnumString;
 
 interface Int {
     type: "int";
@@ -68,6 +70,11 @@ interface TypeDict {
     multiline?: boolean;
 }
 
+interface Union {
+    type: "union";
+    types: Type[];
+}
+
 interface TypeDictEntry {
     key: string;
     valueType: Type;
@@ -81,6 +88,11 @@ interface Optional {
 
 interface Reference {
     type: "reference";
+    value: ClassReference;
+}
+
+interface EnumString {
+    type: "enumString";
     value: ClassReference;
 }
 
@@ -164,12 +176,36 @@ export class Type extends AstNode {
                 writer.write("}");
                 break;
             }
-            case "optional":
-                writer.write("?");
-                this.internalType.value.write(writer, { comment });
+            case "union":
+                this.internalType.types.forEach((type, index) => {
+                    if (index > 0) {
+                        writer.write("|");
+                    }
+                    type.write(writer);
+                });
                 break;
+            case "optional": {
+                const isUnion = this.internalType.value.internalType.type === "union";
+                if (!isUnion) {
+                    writer.write("?");
+                }
+                this.internalType.value.write(writer, { comment });
+                if (isUnion) {
+                    writer.write("|null");
+                }
+                break;
+            }
             case "reference":
                 writer.writeNode(this.internalType.value);
+                break;
+            case "enumString":
+                if (comment) {
+                    writer.write("value-of<");
+                    writer.writeNode(this.internalType.value);
+                    writer.write(">");
+                } else {
+                    writer.write("string");
+                }
                 break;
             default:
                 assertNever(this.internalType);
@@ -185,7 +221,7 @@ export class Type extends AstNode {
 
     public underlyingTypeIfOptional(): Type | undefined {
         if (this.internalType.type === "optional") {
-            return (this.internalType as Optional).value;
+            return this.internalType.value;
         }
         return undefined;
     }
@@ -270,6 +306,13 @@ export class Type extends AstNode {
         });
     }
 
+    public static union(types: Type[]): Type {
+        return new this({
+            type: "union",
+            types
+        });
+    }
+
     public static optional(value: Type): Type {
         // Avoids double optional.
         if (this.isAlreadyOptional(value)) {
@@ -284,6 +327,13 @@ export class Type extends AstNode {
     public static reference(value: ClassReference): Type {
         return new this({
             type: "reference",
+            value
+        });
+    }
+
+    public static enumString(value: ClassReference): Type {
+        return new this({
+            type: "enumString",
             value
         });
     }

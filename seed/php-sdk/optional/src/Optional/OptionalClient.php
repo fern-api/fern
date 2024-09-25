@@ -42,7 +42,7 @@ class OptionalClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "send-optional-body",
                     method: HttpMethod::POST,
                     body: $request ? JsonSerializer::serializeArray($request, ['string' => 'mixed']) : null,

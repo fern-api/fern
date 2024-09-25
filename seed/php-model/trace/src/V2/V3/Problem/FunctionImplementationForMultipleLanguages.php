@@ -10,14 +10,14 @@ use Seed\Core\ArrayType;
 class FunctionImplementationForMultipleLanguages extends SerializableType
 {
     /**
-     * @var array<Language, FunctionImplementation> $codeByLanguage
+     * @var array<value-of<Language>, FunctionImplementation> $codeByLanguage
      */
-    #[JsonProperty('codeByLanguage'), ArrayType([Language::class => FunctionImplementation::class])]
+    #[JsonProperty('codeByLanguage'), ArrayType(['string' => FunctionImplementation::class])]
     public array $codeByLanguage;
 
     /**
      * @param array{
-     *   codeByLanguage: array<Language, FunctionImplementation>,
+     *   codeByLanguage: array<value-of<Language>, FunctionImplementation>,
      * } $values
      */
     public function __construct(

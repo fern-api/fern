@@ -55,7 +55,7 @@ class PlaylistClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/v2/playlist/$serviceParam/create",
                     method: HttpMethod::POST,
                     query: $query,
@@ -106,7 +106,7 @@ class PlaylistClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/v2/playlist/$serviceParam/all",
                     method: HttpMethod::GET,
                     query: $query,
@@ -146,7 +146,7 @@ class PlaylistClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/v2/playlist/$serviceParam/$playlistId",
                     method: HttpMethod::GET,
                 ),
@@ -186,7 +186,7 @@ class PlaylistClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/v2/playlist/$serviceParam/$playlistId",
                     method: HttpMethod::PUT,
                     body: $request,
@@ -228,7 +228,7 @@ class PlaylistClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "/v2/playlist/$serviceParam/$playlistId",
                     method: HttpMethod::DELETE,
                 ),

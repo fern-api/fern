@@ -20,16 +20,16 @@ class File extends SerializableType
     public string $contents;
 
     /**
-     * @var FileInfo $info
+     * @var value-of<FileInfo> $info
      */
     #[JsonProperty('info')]
-    public FileInfo $info;
+    public string $info;
 
     /**
      * @param array{
      *   name: string,
      *   contents: string,
-     *   info: FileInfo,
+     *   info: value-of<FileInfo>,
      * } $values
      */
     public function __construct(

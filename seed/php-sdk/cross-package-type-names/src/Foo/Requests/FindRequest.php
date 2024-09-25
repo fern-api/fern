@@ -2,9 +2,10 @@
 
 namespace Seed\Foo\Requests;
 
+use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 
-class FindRequest
+class FindRequest extends SerializableType
 {
     /**
      * @var ?string $optionalString

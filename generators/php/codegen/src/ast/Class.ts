@@ -69,11 +69,12 @@ export class Class extends AstNode {
             writer.write("abstract ");
         }
         this.writeComment(writer);
-        writer.writeLine(`class ${this.name} `);
+        writer.write(`class ${this.name} `);
         if (this.parentClassReference != null) {
             writer.write("extends ");
             this.parentClassReference.write(writer);
         }
+        writer.newLine();
         writer.writeLine("{");
         writer.indent();
 

@@ -2,6 +2,8 @@
 
 namespace Seed\Service\Requests;
 
-class WithContentTypeRequest
+use Seed\Core\SerializableType;
+
+class WithContentTypeRequest extends SerializableType
 {
 }

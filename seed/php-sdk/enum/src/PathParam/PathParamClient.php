@@ -27,8 +27,8 @@ class PathParamClient
     }
 
     /**
-     * @param Operand $operand
-     * @param ?Operand $maybeOperand
+     * @param value-of<Operand> $operand
+     * @param ?value-of<Operand> $maybeOperand
      * @param mixed $operandOrColor
      * @param mixed $maybeOperandOrColor
      * @param ?array{
@@ -37,12 +37,12 @@ class PathParamClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function send(Operand $operand, ?Operand $maybeOperand = null, mixed $operandOrColor, mixed $maybeOperandOrColor, ?array $options = null): void
+    public function send(string $operand, ?string $maybeOperand = null, mixed $operandOrColor, mixed $maybeOperandOrColor, ?array $options = null): void
     {
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "path/$operand/$maybeOperand/$operandOrColor/$maybeOperandOrColor",
                     method: HttpMethod::POST,
                 ),

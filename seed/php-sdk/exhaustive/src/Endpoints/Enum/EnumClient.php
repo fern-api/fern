@@ -8,6 +8,7 @@ use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
+use Seed\Core\JsonDecoder;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 
@@ -28,20 +29,20 @@ class EnumClient
     }
 
     /**
-     * @param WeatherReport $request
+     * @param value-of<WeatherReport> $request
      * @param ?array{
      *   baseUrl?: string,
      * } $options
-     * @return WeatherReport
+     * @return value-of<WeatherReport>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnEnum(WeatherReport $request, ?array $options = null): WeatherReport
+    public function getAndReturnEnum(string $request, ?array $options = null): string
     {
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/enum",
                     method: HttpMethod::POST,
                     body: $request,
@@ -50,7 +51,7 @@ class EnumClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
-                return WeatherReport::fromJson($json);
+                return JsonDecoder::decodeString($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);

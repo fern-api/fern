@@ -75,7 +75,8 @@ class JsonDeserializer
             }
             $readableType = Utils::getReadableType($data);
             throw new JsonException(
-                "Cannot deserialize value of type $readableType with any of the union types: " . $type);
+                "Cannot deserialize value of type $readableType with any of the union types: " . $type
+            );
         }
         if (is_array($type)) {
             return self::deserializeArray((array)$data, $type);
@@ -117,6 +118,12 @@ class JsonDeserializer
             return self::deserializeObject($data, $type);
         }
 
+        // Handle floats as a special case since gettype($data) returns "double" for float values in PHP, and because
+        // floats make come through from json_decoded as integers
+        if ($type === 'float' && (is_numeric($data))) {
+            return (float) $data;
+        }
+
         if (gettype($data) === $type) {
             return $data;
         }
@@ -134,7 +141,8 @@ class JsonDeserializer
      *
      * @throws JsonException If the type does not implement SerializableType.
      */
-    public static function deserializeObject(array $data, string $type): object {
+    public static function deserializeObject(array $data, string $type): object
+    {
         if (!is_subclass_of($type, SerializableType::class)) {
             throw new JsonException("$type is not a subclass of SerializableType.");
         }

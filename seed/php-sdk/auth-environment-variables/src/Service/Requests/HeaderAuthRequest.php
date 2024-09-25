@@ -2,7 +2,9 @@
 
 namespace Seed\Service\Requests;
 
-class HeaderAuthRequest
+use Seed\Core\SerializableType;
+
+class HeaderAuthRequest extends SerializableType
 {
     /**
      * @var string $xEndpointHeader Specifies the endpoint key.

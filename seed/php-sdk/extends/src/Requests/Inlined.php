@@ -2,9 +2,10 @@
 
 namespace Seed\Requests;
 
+use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 
-class Inlined
+class Inlined extends SerializableType
 {
     /**
      * @var string $unique

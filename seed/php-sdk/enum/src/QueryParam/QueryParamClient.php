@@ -38,10 +38,10 @@ class QueryParamClient
     public function send(SendEnumAsQueryParamRequest $request, ?array $options = null): void
     {
         $query = [];
-        $query['operand'] = $request->operand->value;
+        $query['operand'] = $request->operand;
         $query['operandOrColor'] = $request->operandOrColor;
         if ($request->maybeOperand != null) {
-            $query['maybeOperand'] = $request->maybeOperand->value;
+            $query['maybeOperand'] = $request->maybeOperand;
         }
         if ($request->maybeOperandOrColor != null) {
             $query['maybeOperandOrColor'] = $request->maybeOperandOrColor;
@@ -49,7 +49,7 @@ class QueryParamClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "query",
                     method: HttpMethod::POST,
                     query: $query,
@@ -80,10 +80,10 @@ class QueryParamClient
     public function sendList(SendEnumListAsQueryParamRequest $request, ?array $options = null): void
     {
         $query = [];
-        $query['operand'] = $request->operand->value;
+        $query['operand'] = $request->operand;
         $query['operandOrColor'] = $request->operandOrColor;
         if ($request->maybeOperand != null) {
-            $query['maybeOperand'] = $request->maybeOperand->value;
+            $query['maybeOperand'] = $request->maybeOperand;
         }
         if ($request->maybeOperandOrColor != null) {
             $query['maybeOperandOrColor'] = $request->maybeOperandOrColor;
@@ -91,7 +91,7 @@ class QueryParamClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "query-list",
                     method: HttpMethod::POST,
                     query: $query,

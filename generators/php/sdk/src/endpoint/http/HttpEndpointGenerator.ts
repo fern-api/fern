@@ -103,7 +103,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             const defaultBaseUrl = this.context.getDefaultBaseUrlForEndpoint(endpoint);
 
             writer.write(
-                `$this->${requestOptionName}['${baseUrlOptionName}'] ?? $this->${rawClientFieldName}->${clientOptionsName}['${baseUrlOptionName}'] ?? `
+                `$${requestOptionName}['${baseUrlOptionName}'] ?? $this->${rawClientFieldName}->${clientOptionsName}['${baseUrlOptionName}'] ?? `
             );
             writer.writeNode(defaultBaseUrl);
         });
@@ -215,6 +215,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     arguments_,
                     methodSuffix: upperFirst(internalType.type)
                 });
+            case "enumString":
+                return this.decodeJsonResponseForPrimitive({
+                    arguments_,
+                    methodSuffix: "String"
+                });
+            case "union":
             case "object":
             case "optional":
             case "typeDict":

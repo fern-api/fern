@@ -9,21 +9,21 @@ use Seed\Core\JsonProperty;
 class UnexpectedLanguageError extends SerializableType
 {
     /**
-     * @var Language $expectedLanguage
+     * @var value-of<Language> $expectedLanguage
      */
     #[JsonProperty('expectedLanguage')]
-    public Language $expectedLanguage;
+    public string $expectedLanguage;
 
     /**
-     * @var Language $actualLanguage
+     * @var value-of<Language> $actualLanguage
      */
     #[JsonProperty('actualLanguage')]
-    public Language $actualLanguage;
+    public string $actualLanguage;
 
     /**
      * @param array{
-     *   expectedLanguage: Language,
-     *   actualLanguage: Language,
+     *   expectedLanguage: value-of<Language>,
+     *   actualLanguage: value-of<Language>,
      * } $values
      */
     public function __construct(

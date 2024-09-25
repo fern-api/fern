@@ -2,7 +2,9 @@
 
 namespace Seed\Users\Requests;
 
-class ListUsersExtendedRequest
+use Seed\Core\SerializableType;
+
+class ListUsersExtendedRequest extends SerializableType
 {
     /**
      * @var ?string $cursor

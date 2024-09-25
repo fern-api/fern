@@ -46,7 +46,7 @@ class MetadataClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/users/events/metadata/",
                     method: HttpMethod::GET,
                     query: $query,

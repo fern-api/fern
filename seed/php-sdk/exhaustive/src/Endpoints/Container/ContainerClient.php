@@ -43,7 +43,7 @@ class ContainerClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/container/list-of-primitives",
                     method: HttpMethod::POST,
                     body: JsonSerializer::serializeArray($request, ['string']),
@@ -80,7 +80,7 @@ class ContainerClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/container/list-of-objects",
                     method: HttpMethod::POST,
                     body: JsonSerializer::serializeArray($request, [ObjectWithRequiredField::class]),
@@ -117,7 +117,7 @@ class ContainerClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/container/set-of-primitives",
                     method: HttpMethod::POST,
                     body: JsonSerializer::serializeArray($request, ['string']),
@@ -154,7 +154,7 @@ class ContainerClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/container/set-of-objects",
                     method: HttpMethod::POST,
                     body: JsonSerializer::serializeArray($request, [ObjectWithRequiredField::class]),
@@ -191,7 +191,7 @@ class ContainerClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/container/map-prim-to-prim",
                     method: HttpMethod::POST,
                     body: JsonSerializer::serializeArray($request, ['string' => 'string']),
@@ -228,7 +228,7 @@ class ContainerClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/container/map-prim-to-object",
                     method: HttpMethod::POST,
                     body: JsonSerializer::serializeArray($request, ['string' => ObjectWithRequiredField::class]),
@@ -265,7 +265,7 @@ class ContainerClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/container/opt-objects",
                     method: HttpMethod::POST,
                     body: $request,

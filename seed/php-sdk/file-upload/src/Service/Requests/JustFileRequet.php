@@ -2,6 +2,8 @@
 
 namespace Seed\Service\Requests;
 
-class JustFileRequet
+use Seed\Core\SerializableType;
+
+class JustFileRequet extends SerializableType
 {
 }

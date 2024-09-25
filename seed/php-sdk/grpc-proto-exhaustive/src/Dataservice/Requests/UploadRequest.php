@@ -2,11 +2,12 @@
 
 namespace Seed\Dataservice\Requests;
 
+use Seed\Core\SerializableType;
 use Seed\Types\Column;
 use Seed\Core\JsonProperty;
 use Seed\Core\ArrayType;
 
-class UploadRequest
+class UploadRequest extends SerializableType
 {
     /**
      * @var array<Column> $columns

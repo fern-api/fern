@@ -2,7 +2,9 @@
 
 namespace Seed\Users\Requests;
 
-class ListUsernamesRequest
+use Seed\Core\SerializableType;
+
+class ListUsernamesRequest extends SerializableType
 {
     /**
      * @var ?string $startingAfter The cursor used for pagination in order to fetch

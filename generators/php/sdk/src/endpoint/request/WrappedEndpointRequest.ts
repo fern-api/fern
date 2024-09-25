@@ -136,9 +136,6 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 writer.write(")");
             });
         }
-        if (this.context.isEnum(reference)) {
-            return php.codeblock(`${parameter}->value`);
-        }
         const maybeLiteral = this.context.maybeLiteral(reference);
         if (maybeLiteral != null) {
             return php.codeblock(this.context.getLiteralAsString(maybeLiteral));

@@ -1,3 +1,18 @@
+- version: 0.1.2
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Represent enums in objects as strings.
+    - type: fix
+      summary: >-
+        Generated wrapped requests now implement `SerializableType`.
+    - type: fix
+      summary: >-
+        Fix a bug where we don't set the request options baseurl properly.
+    - type: fix
+      summary: >-
+        Fix bugs in our numeric type serde and add tests.
+  irVersion: 53
 - version: 0.1.1
   changelogEntry:
     - type: fix
@@ -5,7 +20,6 @@
         The generated `.github/workflows/ci.yml` file now uses 'shivammathur/setup-php@v2'
         to install `php` and `composer`.
   irVersion: 53
-
 - version: 0.1.0
   changelogEntry:
     - type: feat

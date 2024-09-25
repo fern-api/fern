@@ -2,9 +2,10 @@
 
 namespace Seed\User\Requests;
 
+use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
 
-class CreateUserRequest
+class CreateUserRequest extends SerializableType
 {
     /**
      * @var string $type
