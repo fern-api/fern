@@ -83,7 +83,7 @@ class SyspropClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
-                return JsonDecoder::decodeArray($json, ["string" => 'integer']); // @phpstan-ignore-line
+                return JsonDecoder::decodeArray($json, ['string' => 'integer']); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);

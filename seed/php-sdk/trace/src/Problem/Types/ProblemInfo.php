@@ -37,7 +37,7 @@ class ProblemInfo extends SerializableType
     /**
      * @var array<value-of<Language>, ProblemFiles> $files
      */
-    #[JsonProperty('files'), ArrayType(["string" => ProblemFiles::class])]
+    #[JsonProperty('files'), ArrayType(['string' => ProblemFiles::class])]
     public array $files;
 
     /**

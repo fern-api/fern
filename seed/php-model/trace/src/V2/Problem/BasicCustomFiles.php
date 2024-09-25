@@ -24,7 +24,7 @@ class BasicCustomFiles extends SerializableType
     /**
      * @var array<value-of<Language>, Files> $additionalFiles
      */
-    #[JsonProperty('additionalFiles'), ArrayType(["string" => Files::class])]
+    #[JsonProperty('additionalFiles'), ArrayType(['string' => Files::class])]
     public array $additionalFiles;
 
     /**

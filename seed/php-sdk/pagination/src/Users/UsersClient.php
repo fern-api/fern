@@ -60,7 +60,7 @@ class UsersClient
             $query['per_page'] = $request->perPage;
         }
         if ($request->order != null) {
-            $query['order'] = $request->order->value;
+            $query['order'] = $request->order;
         }
         if ($request->startingAfter != null) {
             $query['starting_after'] = $request->startingAfter;
@@ -147,7 +147,7 @@ class UsersClient
             $query['per_page'] = $request->perPage;
         }
         if ($request->order != null) {
-            $query['order'] = $request->order->value;
+            $query['order'] = $request->order;
         }
         if ($request->startingAfter != null) {
             $query['starting_after'] = $request->startingAfter;
@@ -234,7 +234,7 @@ class UsersClient
             $query['limit'] = $request->limit;
         }
         if ($request->order != null) {
-            $query['order'] = $request->order->value;
+            $query['order'] = $request->order;
         }
         try {
             $response = $this->client->sendRequest(
@@ -281,7 +281,7 @@ class UsersClient
             $query['limit'] = $request->limit;
         }
         if ($request->order != null) {
-            $query['order'] = $request->order->value;
+            $query['order'] = $request->order;
         }
         try {
             $response = $this->client->sendRequest(

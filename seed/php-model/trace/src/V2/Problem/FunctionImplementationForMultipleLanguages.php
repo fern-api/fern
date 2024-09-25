@@ -12,7 +12,7 @@ class FunctionImplementationForMultipleLanguages extends SerializableType
     /**
      * @var array<value-of<Language>, FunctionImplementation> $codeByLanguage
      */
-    #[JsonProperty('codeByLanguage'), ArrayType(["string" => FunctionImplementation::class])]
+    #[JsonProperty('codeByLanguage'), ArrayType(['string' => FunctionImplementation::class])]
     public array $codeByLanguage;
 
     /**

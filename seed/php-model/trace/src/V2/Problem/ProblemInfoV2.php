@@ -37,7 +37,7 @@ class ProblemInfoV2 extends SerializableType
     /**
      * @var array<value-of<Language>> $supportedLanguages
      */
-    #[JsonProperty('supportedLanguages'), ArrayType(["string"])]
+    #[JsonProperty('supportedLanguages'), ArrayType(['string'])]
     public array $supportedLanguages;
 
     /**

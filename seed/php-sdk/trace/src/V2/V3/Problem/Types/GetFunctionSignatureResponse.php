@@ -12,7 +12,7 @@ class GetFunctionSignatureResponse extends SerializableType
     /**
      * @var array<value-of<Language>, string> $functionByLanguage
      */
-    #[JsonProperty('functionByLanguage'), ArrayType(["string" => 'string'])]
+    #[JsonProperty('functionByLanguage'), ArrayType(['string' => 'string'])]
     public array $functionByLanguage;
 
     /**

@@ -12,7 +12,7 @@ class WorkspaceStarterFilesResponse extends SerializableType
     /**
      * @var array<value-of<Language>, WorkspaceFiles> $files
      */
-    #[JsonProperty('files'), ArrayType(["string" => WorkspaceFiles::class])]
+    #[JsonProperty('files'), ArrayType(['string' => WorkspaceFiles::class])]
     public array $files;
 
     /**

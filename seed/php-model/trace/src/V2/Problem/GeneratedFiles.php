@@ -12,19 +12,19 @@ class GeneratedFiles extends SerializableType
     /**
      * @var array<value-of<Language>, Files> $generatedTestCaseFiles
      */
-    #[JsonProperty('generatedTestCaseFiles'), ArrayType(["string" => Files::class])]
+    #[JsonProperty('generatedTestCaseFiles'), ArrayType(['string' => Files::class])]
     public array $generatedTestCaseFiles;
 
     /**
      * @var array<value-of<Language>, Files> $generatedTemplateFiles
      */
-    #[JsonProperty('generatedTemplateFiles'), ArrayType(["string" => Files::class])]
+    #[JsonProperty('generatedTemplateFiles'), ArrayType(['string' => Files::class])]
     public array $generatedTemplateFiles;
 
     /**
      * @var array<value-of<Language>, Files> $other
      */
-    #[JsonProperty('other'), ArrayType(["string" => Files::class])]
+    #[JsonProperty('other'), ArrayType(['string' => Files::class])]
     public array $other;
 
     /**
