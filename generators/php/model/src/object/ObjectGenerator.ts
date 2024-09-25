@@ -28,9 +28,7 @@ export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSch
 
         // TODO: handle extended properties
         for (const property of this.objectDeclaration.properties) {
-            const convertedType = this.context.phpTypeMapper.convert({
-                reference: property.valueType
-            });
+            const convertedType = this.context.phpTypeMapper.convert({ reference: property.valueType });
             clazz.addField(
                 php.field({
                     type: convertedType,

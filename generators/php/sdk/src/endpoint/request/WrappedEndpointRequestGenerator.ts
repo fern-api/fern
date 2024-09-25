@@ -70,9 +70,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
                 clazz.addField(
                     php.field({
                         name: this.context.getPropertyName(this.wrapper.bodyKey),
-                        type: this.context.phpTypeMapper.convert({
-                            reference: reference.requestBodyType
-                        }),
+                        type: this.context.phpTypeMapper.convert({ reference: reference.requestBodyType }),
                         access: "public",
                         docs: reference.docs
                     })
@@ -80,9 +78,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
             },
             inlinedRequestBody: (request) => {
                 for (const property of request.properties) {
-                    const type = this.context.phpTypeMapper.convert({
-                        reference: property.valueType
-                    });
+                    const type = this.context.phpTypeMapper.convert({ reference: property.valueType });
                     clazz.addField(
                         php.field({
                             name: this.context.getPropertyName(property.name.name),
