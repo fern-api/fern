@@ -1,5 +1,24 @@
+- version: 0.1.1
+  createdAt: '2024-09-25'
+  changelogEntry:
+    - type: fix
+      summary: | 
+        The `customOverrides` configuration flag now supports explict nulls as a way to 
+        delete keys in the generated OpenAPI spec. For example, if you want to 
+        exclude the `openapi.info` block in the generated spec, then you can do something 
+        along the lines: 
+
+        ```yml generators.yml
+        - name: fernapi/fern-openapi
+          version: 0.1.1
+          config: 
+            customOverrides: 
+              info: null # excludes the info field
+        ```
+  irVersion: 53
+
 - version: 0.1.0
-  createdAt: '2024-03-24'
+  createdAt: '2024-09-25'
   changelogEntry:
     - type: chore
       summary: | 

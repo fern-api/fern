@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "@fern-api/fs-utils": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
     "@fern-api/generator-commons": "workspace:*",
     "@fern-fern/ir-sdk": "53.9.0",
     "js-yaml": "^4.1.0",
