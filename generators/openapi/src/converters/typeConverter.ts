@@ -366,13 +366,13 @@ function convertContainerType(containerType: ContainerType): OpenApiComponentSch
                 boolean: (val) => {
                     return {
                         type: "boolean",
-                        const: [val]
+                        const: val
                     };
                 },
                 string: (val) => {
                     return {
                         type: "string",
-                        enum: [val]
+                        const: val
                     };
                 },
                 _other: () => ({})

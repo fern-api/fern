@@ -21,8 +21,7 @@ paths:
               properties:
                 stream:
                   type: boolean
-                  const:
-                    - true
+                  const: true
                 num_events:
                   type: integer
               required:
@@ -55,8 +54,7 @@ paths:
               properties:
                 stream:
                   type: boolean
-                  const:
-                    - false
+                  const: false
                 num_events:
                   type: integer
                   example: 5

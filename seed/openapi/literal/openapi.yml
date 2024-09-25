@@ -15,8 +15,7 @@ paths:
           required: true
           schema:
             type: string
-            enum:
-              - 02-12-2024
+            const: 02-12-2024
           examples:
             Example1:
               value: 02-12-2024
@@ -25,8 +24,7 @@ paths:
           required: true
           schema:
             type: boolean
-            const:
-              - true
+            const: true
           examples:
             Example1:
               value: true
@@ -87,12 +85,10 @@ paths:
               properties:
                 prompt:
                   type: string
-                  enum:
-                    - You are a helpful assistant
+                  const: You are a helpful assistant
                 context:
                   type: string
-                  enum:
-                    - You're super wise
+                  const: You're super wise
                   nullable: true
                 query:
                   type: string
@@ -103,8 +99,7 @@ paths:
                   nullable: true
                 stream:
                   type: boolean
-                  const:
-                    - false
+                  const: false
                 aliasedContext:
                   $ref: '#/components/schemas/SomeAliasedLiteral'
                 maybeContext:
@@ -142,8 +137,7 @@ paths:
           required: true
           schema:
             type: string
-            enum:
-              - '123'
+            const: '123'
           examples:
             Example1:
               value: '123'
@@ -171,8 +165,7 @@ paths:
           required: true
           schema:
             type: string
-            enum:
-              - You are a helpful assistant
+            const: You are a helpful assistant
           examples:
             Example1:
               value: You are a helpful assistant
@@ -189,8 +182,7 @@ paths:
           required: true
           schema:
             type: boolean
-            const:
-              - false
+            const: false
           examples:
             Example1:
               value: false
@@ -253,8 +245,7 @@ components:
           example: 200
         success:
           type: boolean
-          const:
-            - true
+          const: true
       required:
         - message
         - status
@@ -262,8 +253,7 @@ components:
     SomeAliasedLiteral:
       title: SomeAliasedLiteral
       type: string
-      enum:
-        - You're super wise
+      const: You're super wise
     ATopLevelLiteral:
       title: ATopLevelLiteral
       type: object
@@ -278,8 +268,7 @@ components:
       properties:
         myLiteral:
           type: string
-          enum:
-            - How super cool
+          const: How super cool
       required:
         - myLiteral
     SendRequest:
@@ -288,15 +277,13 @@ components:
       properties:
         prompt:
           type: string
-          enum:
-            - You are a helpful assistant
+          const: You are a helpful assistant
         query:
           type: string
           example: What is the weather today
         stream:
           type: boolean
-          const:
-            - false
+          const: false
         context:
           $ref: '#/components/schemas/SomeLiteral'
         maybeContext:
@@ -310,6 +297,5 @@ components:
     SomeLiteral:
       title: SomeLiteral
       type: string
-      enum:
-        - You're super wise
+      const: You're super wise
   securitySchemes: {}

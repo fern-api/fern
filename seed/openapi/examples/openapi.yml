@@ -423,8 +423,7 @@ components:
           example: 8
         type:
           type: string
-          enum:
-            - movie
+          const: movie
         tag:
           $ref: '#/components/schemas/commonsTag'
         book:

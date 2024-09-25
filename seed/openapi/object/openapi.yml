@@ -84,8 +84,7 @@ components:
             nullable: true
         eighteen:
           type: string
-          enum:
-            - eighteen
+          const: eighteen
         nineteen:
           $ref: '#/components/schemas/Name'
         twenty:
