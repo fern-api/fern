@@ -319,7 +319,7 @@ function convertPrimitiveType(primitiveType: PrimitiveType): OpenAPIV3.NonArrayS
                 };
             },
             _other: () => {
-                throw new Error("Encountered unknown primitiveType: " + primitiveType);
+                throw new Error("Encountered unknown primitiveType: " + primitiveType.v1);
             }
         }) ?? {}
     );
