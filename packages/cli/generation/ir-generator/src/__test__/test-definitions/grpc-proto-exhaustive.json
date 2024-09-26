@@ -3654,7 +3654,7 @@
                             }
                         },
                         "extends": [],
-                        "contentType": null,
+                        "contentType": "application/json",
                         "properties": [
                             {
                                 "name": {
@@ -4762,7 +4762,7 @@
                             }
                         },
                         "extends": [],
-                        "contentType": null,
+                        "contentType": "application/json",
                         "properties": [
                             {
                                 "name": {
@@ -5258,7 +5258,7 @@
                             }
                         },
                         "extends": [],
-                        "contentType": null,
+                        "contentType": "application/json",
                         "properties": [
                             {
                                 "name": {
@@ -11975,7 +11975,7 @@
                             }
                         },
                         "extends": [],
-                        "contentType": null,
+                        "contentType": "application/json",
                         "properties": [
                             {
                                 "name": {
@@ -16556,7 +16556,7 @@
                             }
                         },
                         "extends": [],
-                        "contentType": null,
+                        "contentType": "application/json",
                         "properties": [
                             {
                                 "name": {
