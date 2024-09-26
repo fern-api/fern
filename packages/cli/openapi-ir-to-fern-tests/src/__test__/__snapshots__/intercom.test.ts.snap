@@ -407,6 +407,7 @@ You can view the currently authorised admin along with the embedded app object (
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -1522,6 +1523,7 @@ You can view the currently authorised admin along with the embedded app object (
               "body": {
                 "type": "optional<root.CreateArticleRequest>",
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -3151,6 +3153,7 @@ You can view the currently authorised admin along with the embedded app object (
               "body": {
                 "type": "optional<root.UpdateArticleRequest>",
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -3936,6 +3939,7 @@ You can view the currently authorised admin along with the embedded app object (
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -4030,6 +4034,7 @@ Companies are looked up via \`company_id\` in a \`POST\` request, if not found v
               "body": {
                 "type": "optional<root.CreateOrUpdateCompanyRequest>",
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -4833,6 +4838,7 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
             "path": "/contacts",
             "request": {
               "body": "root.CreateContactRequestTwo",
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -5132,6 +5138,7 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -5360,6 +5367,7 @@ The table below shows the operators you can use to define how you want to search
               "body": {
                 "type": "root.SearchRequest",
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -5719,6 +5727,7 @@ The table below shows the operators you can use to define how you want to search
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -6636,6 +6645,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -7157,6 +7167,7 @@ It is not possible to use this endpoint with Workflows.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -7247,6 +7258,7 @@ This will return the Message model that has been created.
                   "from": "CreateConversationRequestFrom",
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -7993,6 +8005,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -9871,6 +9884,7 @@ You can optionally request the result page size and the cursor to start after to
             },
             "request": {
               "body": "ManageConversationRequestBody",
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -10287,6 +10301,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
             "path": "/conversations/redact",
             "request": {
               "body": "root.RedactConversationRequest",
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -11698,6 +11713,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
             },
             "request": {
               "body": "root.ReplyConversationRequest",
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -12197,6 +12213,7 @@ The table below shows the operators you can use to define how you want to search
               "body": {
                 "type": "root.SearchRequest",
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -12699,6 +12716,7 @@ If you want to reply to a coveration or take an action such as assign, unassign,
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -13244,6 +13262,7 @@ If you want to reply to a coveration or take an action such as assign, unassign,
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -13874,6 +13893,7 @@ You can update a data attribute.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -14093,6 +14113,7 @@ Duplicated events are responded to using the normal \`202 Accepted\` code - an e
             "path": "/events",
             "request": {
               "body": "root.CreateDataEventRequestTwo",
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -14132,6 +14153,7 @@ Duplicated events are responded to using the normal \`202 Accepted\` code - an e
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -14414,6 +14436,7 @@ The only parameters you need to provide are the range of dates that you want exp
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -15027,6 +15050,7 @@ Your exported message data will be streamed continuously back down to you in a g
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -15968,6 +15992,7 @@ Collections will be returned in descending order on the \`updated_at\` attribute
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -16353,6 +16378,7 @@ This will return the Message model that has been created.
             "path": "/messages",
             "request": {
               "body": "root.CreateMessageRequestOne",
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -16502,6 +16528,7 @@ This will return the Message model that has been created.
               "body": {
                 "type": "root.NewsItemRequest",
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -16967,6 +16994,7 @@ This will return the Message model that has been created.
               "body": {
                 "type": "root.NewsItemRequest",
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -17288,6 +17316,7 @@ Newsfeeds currently cannot be edited through the API, please refer to [this arti
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -17872,6 +17901,7 @@ This will return a subscription type model for the subscription type that was ad
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -18179,6 +18209,7 @@ If custom attributes are specified, they will be added to the user or lead's cus
               "body": {
                 "type": "optional<root.CreatePhoneSwitchRequest>",
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -18299,6 +18330,7 @@ If custom attributes are specified, they will be added to the user or lead's cus
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -18389,6 +18421,7 @@ If custom attributes are specified, they will be added to the user or lead's cus
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -18479,6 +18512,7 @@ If custom attributes are specified, they will be added to the user or lead's cus
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -18604,6 +18638,7 @@ Each operation will return a tag object.
             "path": "/tags",
             "request": {
               "body": "CreateTagRequestBody",
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -18806,6 +18841,7 @@ Each operation will return a tag object.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -18918,6 +18954,7 @@ Each operation will return a tag object.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -19347,6 +19384,7 @@ This will return a tag object.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -19465,6 +19503,7 @@ This will return a tag object.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -19581,6 +19620,7 @@ This will return a tag object.
               "body": {
                 "type": "optional<root.CreateTicketTypeRequest>",
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -19793,6 +19833,7 @@ You can update a ticket type.
               "body": {
                 "type": "optional<root.UpdateTicketTypeRequest>",
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -19963,6 +20004,7 @@ You can update a ticket type.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -20428,6 +20470,7 @@ You can update a ticket type.
             },
             "request": {
               "body": "ReplyTicketRequestBody",
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -20638,6 +20681,7 @@ The table below shows the operators you can use to define how you want to search
               "body": {
                 "type": "root.SearchRequest",
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -21414,6 +21458,7 @@ The table below shows the operators you can use to define how you want to search
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -21948,6 +21993,7 @@ The table below shows the operators you can use to define how you want to search
                   "visitor": "unknown",
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -22317,6 +22363,7 @@ The table below shows the operators you can use to define how you want to search
             "path": "/visitors",
             "request": {
               "body": "root.UpdateVisitorRequestOne",
+              "content-type": "application/json",
               "headers": {
                 "Intercom-Version": {
                   "name": "intercomVersion",
@@ -30768,6 +30815,7 @@ You can view the currently authorised admin along with the embedded app object (
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "SetAwayAdminRequest",
               "query-parameters": undefined,
@@ -31878,6 +31926,7 @@ You can view the currently authorised admin along with the embedded app object (
               "body": {
                 "type": "optional<root.CreateArticleRequest>",
               },
+              "content-type": "application/json",
             },
             "response": {
               "docs": "article created",
@@ -33467,6 +33516,7 @@ You can view the currently authorised admin along with the embedded app object (
               "body": {
                 "type": "optional<root.UpdateArticleRequest>",
               },
+              "content-type": "application/json",
             },
             "response": {
               "docs": "successful",
@@ -34209,6 +34259,7 @@ You can view the currently authorised admin along with the embedded app object (
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "AttachContactToACompanyRequest",
               "query-parameters": undefined,
@@ -34298,6 +34349,7 @@ Companies are looked up via \`company_id\` in a \`POST\` request, if not found v
               "body": {
                 "type": "optional<root.CreateOrUpdateCompanyRequest>",
               },
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Successful",
@@ -35049,6 +35101,7 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
             "path": "/contacts",
             "request": {
               "body": "root.CreateContactRequestTwo",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "successful",
@@ -35323,6 +35376,7 @@ You can fetch all companies and filter by \`segment_id\` or \`tag_id\` as a quer
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "MergeContactsRequest",
               "query-parameters": undefined,
@@ -35546,6 +35600,7 @@ The table below shows the operators you can use to define how you want to search
               "body": {
                 "type": "root.SearchRequest",
               },
+              "content-type": "application/json",
             },
             "response": {
               "docs": "successful",
@@ -35880,6 +35935,7 @@ The table below shows the operators you can use to define how you want to search
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "UpdateContactRequest",
               "query-parameters": undefined,
@@ -36756,6 +36812,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "AttachContactToConversationRequest",
               "query-parameters": undefined,
@@ -37263,6 +37320,7 @@ It is not possible to use this endpoint with Workflows.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "ConvertConversationToTicketRequest",
               "query-parameters": undefined,
@@ -37348,6 +37406,7 @@ This will return the Message model that has been created.
                   "from": "CreateConversationRequestFrom",
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "CreateConversationRequest",
               "query-parameters": undefined,
@@ -38089,6 +38148,7 @@ If you add a contact via the email parameter and there is no user/lead found on 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "DetachContactFromConversationRequest",
               "query-parameters": undefined,
@@ -39956,6 +40016,7 @@ You can optionally request the result page size and the cursor to start after to
             },
             "request": {
               "body": "ManageConversationRequestBody",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Assign a conversation",
@@ -40365,6 +40426,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
             "path": "/conversations/redact",
             "request": {
               "body": "root.RedactConversationRequest",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Redact a conversation part",
@@ -41769,6 +41831,7 @@ If you are redacting a conversation part, it must have a \`body\`. If you are re
             },
             "request": {
               "body": "root.ReplyConversationRequest",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "User last conversation reply",
@@ -42255,6 +42318,7 @@ The table below shows the operators you can use to define how you want to search
               "body": {
                 "type": "root.SearchRequest",
               },
+              "content-type": "application/json",
             },
             "response": {
               "docs": "successful",
@@ -42750,6 +42814,7 @@ If you want to reply to a coveration or take an action such as assign, unassign,
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "UpdateConversationRequest",
               "query-parameters": {
@@ -43290,6 +43355,7 @@ If you want to reply to a coveration or take an action such as assign, unassign,
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "CreateDataAttributeRequest",
               "query-parameters": undefined,
@@ -43909,6 +43975,7 @@ You can update a data attribute.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "UpdateDataAttributeRequest",
               "query-parameters": undefined,
@@ -44123,6 +44190,7 @@ Duplicated events are responded to using the normal \`202 Accepted\` code - an e
             "path": "/events",
             "request": {
               "body": "root.CreateDataEventRequestTwo",
+              "content-type": "application/json",
             },
           },
           "dataEventSummaries": {
@@ -44155,6 +44223,7 @@ Duplicated events are responded to using the normal \`202 Accepted\` code - an e
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "CreateDataEventSummariesRequest",
               "query-parameters": undefined,
@@ -44414,6 +44483,7 @@ The only parameters you need to provide are the range of dates that you want exp
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "CreateDataExportsRequest",
               "query-parameters": undefined,
@@ -45004,6 +45074,7 @@ Your exported message data will be streamed continuously back down to you in a g
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "CreateCollectionRequest",
               "query-parameters": undefined,
@@ -45895,6 +45966,7 @@ Collections will be returned in descending order on the \`updated_at\` attribute
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "UpdateCollectionRequest",
               "query-parameters": undefined,
@@ -46275,6 +46347,7 @@ This will return the Message model that has been created.
             "path": "/messages",
             "request": {
               "body": "root.CreateMessageRequestOne",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "admin message created",
@@ -46417,6 +46490,7 @@ This will return the Message model that has been created.
               "body": {
                 "type": "root.NewsItemRequest",
               },
+              "content-type": "application/json",
             },
             "response": {
               "docs": "successful",
@@ -46821,6 +46895,7 @@ This will return the Message model that has been created.
               "body": {
                 "type": "root.NewsItemRequest",
               },
+              "content-type": "application/json",
             },
             "response": {
               "docs": "successful",
@@ -47135,6 +47210,7 @@ Newsfeeds currently cannot be edited through the API, please refer to [this arti
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "CreateNoteRequest",
               "query-parameters": undefined,
@@ -47681,6 +47757,7 @@ This will return a subscription type model for the subscription type that was ad
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "AttachSubscriptionTypeToContactRequest",
               "query-parameters": undefined,
@@ -47965,6 +48042,7 @@ If custom attributes are specified, they will be added to the user or lead's cus
               "body": {
                 "type": "optional<root.CreatePhoneSwitchRequest>",
               },
+              "content-type": "application/json",
             },
             "response": {
               "docs": "successful",
@@ -48078,6 +48156,7 @@ If custom attributes are specified, they will be added to the user or lead's cus
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "AttachTagToContactRequest",
               "query-parameters": undefined,
@@ -48163,6 +48242,7 @@ If custom attributes are specified, they will be added to the user or lead's cus
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "AttachTagToConversationRequest",
               "query-parameters": undefined,
@@ -48248,6 +48328,7 @@ If custom attributes are specified, they will be added to the user or lead's cus
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "AttachTagToTicketRequest",
               "query-parameters": undefined,
@@ -48368,6 +48449,7 @@ Each operation will return a tag object.
             "path": "/tags",
             "request": {
               "body": "CreateTagRequestBody",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Action successful",
@@ -48545,6 +48627,7 @@ Each operation will return a tag object.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "DetachTagFromConversationRequest",
               "query-parameters": undefined,
@@ -48652,6 +48735,7 @@ Each operation will return a tag object.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "DetachTagFromTicketRequest",
               "query-parameters": undefined,
@@ -49040,6 +49124,7 @@ This will return a tag object.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "CreateTicketTypeAttributeRequest",
               "query-parameters": undefined,
@@ -49153,6 +49238,7 @@ This will return a tag object.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "UpdateTicketTypeAttributeRequest",
               "query-parameters": undefined,
@@ -49264,6 +49350,7 @@ This will return a tag object.
               "body": {
                 "type": "optional<root.CreateTicketTypeRequest>",
               },
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Ticket type created",
@@ -49451,6 +49538,7 @@ You can update a ticket type.
               "body": {
                 "type": "optional<root.UpdateTicketTypeRequest>",
               },
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Ticket type updated",
@@ -49614,6 +49702,7 @@ You can update a ticket type.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "CreateTicketRequest",
               "query-parameters": undefined,
@@ -50065,6 +50154,7 @@ You can update a ticket type.
             },
             "request": {
               "body": "ReplyTicketRequestBody",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Admin quick_reply reply",
@@ -50268,6 +50358,7 @@ The table below shows the operators you can use to define how you want to search
               "body": {
                 "type": "root.SearchRequest",
               },
+              "content-type": "application/json",
             },
             "response": {
               "docs": "successful",
@@ -51037,6 +51128,7 @@ The table below shows the operators you can use to define how you want to search
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "UpdateTicketRequest",
               "query-parameters": undefined,
@@ -51566,6 +51658,7 @@ The table below shows the operators you can use to define how you want to search
                   "visitor": "unknown",
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "ConvertVisitorRequest",
               "query-parameters": undefined,
@@ -51924,6 +52017,7 @@ The table below shows the operators you can use to define how you want to search
             "path": "/visitors",
             "request": {
               "body": "root.UpdateVisitorRequestOne",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "successful",

@@ -98,6 +98,7 @@ exports[`open api parser > devrev > docs 1`] = `
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "ArtifactsPrepareRequest",
               "query-parameters": undefined,
@@ -167,6 +168,7 @@ enterprise connections can be created by an organization.
               "body": {
                 "type": "root.DevOrgAuthConnectionsCreateRequest",
               },
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Success.",
@@ -207,6 +209,7 @@ connections can not be deleted using this method.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "DevOrgAuthConnectionsDeleteRequest",
               "query-parameters": undefined,
@@ -342,6 +345,7 @@ disabled.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "DevOrgAuthConnectionsToggleRequest",
               "query-parameters": undefined,
@@ -387,6 +391,7 @@ disabled.
               "body": {
                 "type": "root.DevOrgAuthConnectionsUpdateRequest",
               },
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Success.",
@@ -491,6 +496,7 @@ requesting an application access token (AAT).
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "AuthTokensCreateRequest",
               "query-parameters": undefined,
@@ -534,6 +540,7 @@ JTI claim of the token in the authorization header.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "AuthTokensDeleteRequest",
               "query-parameters": undefined,
@@ -732,6 +739,7 @@ authenticated user.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "AuthTokensSelfDeleteRequest",
               "query-parameters": undefined,
@@ -820,6 +828,7 @@ organization.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "AuthTokensUpdateRequest",
               "query-parameters": undefined,
@@ -1120,6 +1129,7 @@ used.
               "body": {
                 "type": "root.PartsCreateRequest",
               },
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Success.",
@@ -1162,6 +1172,7 @@ used.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "PartsDeleteRequest",
               "query-parameters": undefined,
@@ -1458,6 +1469,7 @@ used.
               "body": {
                 "type": "root.PartsUpdateRequest",
               },
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Success.",
@@ -1572,6 +1584,7 @@ records.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "RevOrgsCreateRequest",
               "query-parameters": undefined,
@@ -1617,6 +1630,7 @@ records.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "RevOrgsDeleteRequest",
               "query-parameters": undefined,
@@ -1909,6 +1923,7 @@ records.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "RevOrgsUpdateRequest",
               "query-parameters": undefined,
@@ -2016,6 +2031,7 @@ permitted.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "TagsCreateRequest",
               "query-parameters": undefined,
@@ -2061,6 +2077,7 @@ permitted.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "TagsDeleteRequest",
               "query-parameters": undefined,
@@ -2299,6 +2316,7 @@ tags.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "TagsUpdateRequest",
               "query-parameters": undefined,
@@ -2395,6 +2413,7 @@ tags.
               "body": {
                 "type": "root.TimelineEntriesCreateRequest",
               },
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Success.",
@@ -2640,6 +2659,7 @@ used.
               "body": {
                 "type": "root.TimelineEntriesUpdateRequest",
               },
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Success.",
@@ -2750,6 +2770,7 @@ response.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "WebhooksCreateRequest",
               "query-parameters": undefined,
@@ -2795,6 +2816,7 @@ response.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "WebhooksDeleteRequest",
               "query-parameters": undefined,
@@ -3028,6 +3050,7 @@ won't receive any object events until successfully verified.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "WebhooksUpdateRequest",
               "query-parameters": undefined,
@@ -3174,6 +3197,7 @@ won't receive any object events until successfully verified.
               "body": {
                 "type": "root.WorksCreateRequest",
               },
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Success.",
@@ -3216,6 +3240,7 @@ won't receive any object events until successfully verified.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "WorksDeleteRequest",
               "query-parameters": undefined,
@@ -3762,6 +3787,7 @@ organizations.
               "body": {
                 "type": "root.WorksUpdateRequest",
               },
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Success.",
@@ -8323,6 +8349,7 @@ exports[`open api parser > devrev > simple 1`] = `
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "ArtifactsPrepareRequest",
               "query-parameters": undefined,
@@ -8392,6 +8419,7 @@ enterprise connections can be created by an organization.
               "body": {
                 "type": "root.DevOrgAuthConnectionsCreateRequest",
               },
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Success.",
@@ -8432,6 +8460,7 @@ connections can not be deleted using this method.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "DevOrgAuthConnectionsDeleteRequest",
               "query-parameters": undefined,
@@ -8567,6 +8596,7 @@ disabled.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "DevOrgAuthConnectionsToggleRequest",
               "query-parameters": undefined,
@@ -8612,6 +8642,7 @@ disabled.
               "body": {
                 "type": "root.DevOrgAuthConnectionsUpdateRequest",
               },
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Success.",
@@ -8716,6 +8747,7 @@ requesting an application access token (AAT).
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "AuthTokensCreateRequest",
               "query-parameters": undefined,
@@ -8759,6 +8791,7 @@ JTI claim of the token in the authorization header.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "AuthTokensDeleteRequest",
               "query-parameters": undefined,
@@ -8957,6 +8990,7 @@ authenticated user.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "AuthTokensSelfDeleteRequest",
               "query-parameters": undefined,
@@ -9045,6 +9079,7 @@ organization.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "AuthTokensUpdateRequest",
               "query-parameters": undefined,
@@ -9345,6 +9380,7 @@ used.
               "body": {
                 "type": "root.PartsCreateRequest",
               },
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Success.",
@@ -9387,6 +9423,7 @@ used.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "PartsDeleteRequest",
               "query-parameters": undefined,
@@ -9683,6 +9720,7 @@ used.
               "body": {
                 "type": "root.PartsUpdateRequest",
               },
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Success.",
@@ -9797,6 +9835,7 @@ records.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "RevOrgsCreateRequest",
               "query-parameters": undefined,
@@ -9842,6 +9881,7 @@ records.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "RevOrgsDeleteRequest",
               "query-parameters": undefined,
@@ -10134,6 +10174,7 @@ records.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "RevOrgsUpdateRequest",
               "query-parameters": undefined,
@@ -10241,6 +10282,7 @@ permitted.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "TagsCreateRequest",
               "query-parameters": undefined,
@@ -10286,6 +10328,7 @@ permitted.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "TagsDeleteRequest",
               "query-parameters": undefined,
@@ -10524,6 +10567,7 @@ tags.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "TagsUpdateRequest",
               "query-parameters": undefined,
@@ -10620,6 +10664,7 @@ tags.
               "body": {
                 "type": "root.TimelineEntriesCreateRequest",
               },
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Success.",
@@ -10865,6 +10910,7 @@ used.
               "body": {
                 "type": "root.TimelineEntriesUpdateRequest",
               },
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Success.",
@@ -10975,6 +11021,7 @@ response.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "WebhooksCreateRequest",
               "query-parameters": undefined,
@@ -11020,6 +11067,7 @@ response.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "WebhooksDeleteRequest",
               "query-parameters": undefined,
@@ -11253,6 +11301,7 @@ won't receive any object events until successfully verified.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "WebhooksUpdateRequest",
               "query-parameters": undefined,
@@ -11399,6 +11448,7 @@ won't receive any object events until successfully verified.
               "body": {
                 "type": "root.WorksCreateRequest",
               },
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Success.",
@@ -11441,6 +11491,7 @@ won't receive any object events until successfully verified.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "WorksDeleteRequest",
               "query-parameters": undefined,
@@ -11987,6 +12038,7 @@ organizations.
               "body": {
                 "type": "root.WorksUpdateRequest",
               },
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Success.",

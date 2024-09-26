@@ -453,7 +453,7 @@ exports[`open api parser > hume > parse open api 1`] = `
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json; charset=utf-8",
         "description": null,
         "schema": {
           "availability": null,
