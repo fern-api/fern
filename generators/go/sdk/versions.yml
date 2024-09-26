@@ -1,3 +1,9 @@
+- version: 0.26.0
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Add support for sending custom Content-Type header values defined in the API.
+  irVersion: 40
 - version: 0.25.0
   changelogEntry:
     - type: feat

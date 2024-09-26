@@ -2118,9 +2118,6 @@ func (f *fileWriter) endpointFromIR(
 					requestType = typeReferenceToGoType(requestBody.TypeReference.RequestBodyType, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false)
 				case "bytes":
 					contentType = "application/octet-stream"
-					if irEndpoint.RequestBody.Bytes.ContentType != nil {
-						contentType = *irEndpoint.RequestBody.Bytes.ContentType
-					}
 					requestType = "[]byte"
 					requestValueName = "requestBuffer"
 					requestIsBytes = true
@@ -2135,9 +2132,6 @@ func (f *fileWriter) endpointFromIR(
 				requestType = fmt.Sprintf("*%s.%s", scope.AddImport(requestImportPath), irEndpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName)
 				if irEndpoint.RequestBody != nil && irEndpoint.RequestBody.Bytes != nil {
 					contentType = "application/octet-stream"
-					if irEndpoint.RequestBody.Bytes.ContentType != nil {
-						contentType = *irEndpoint.RequestBody.Bytes.ContentType
-					}
 					requestValueName = "requestBuffer"
 					requestIsBytes = true
 					requestIsOptional = irEndpoint.RequestBody.Bytes.IsOptional
@@ -2312,6 +2306,11 @@ func (f *fileWriter) endpointFromIR(
 	optionConstructor := "core.NewRequestOptions(opts...)"
 	if irEndpoint.Idempotent {
 		optionConstructor = "core.NewIdempotentRequestOptions(opts...)"
+	}
+
+	contentTypeOverride := contentTypeFromRequestBody(irEndpoint.RequestBody)
+	if contentTypeOverride != "" {
+		contentType = contentTypeOverride
 	}
 
 	return &endpoint{
@@ -3045,6 +3044,45 @@ func formatForValueType(typeReference *ir.TypeReference, types map[ir.TypeId]*ir
 		IsOptional:  isOptional,
 		IsPrimitive: isPrimitive,
 	}
+}
+
+func contentTypeFromRequestBody(
+	requestBody *ir.HttpRequestBody,
+) string {
+	if requestBody == nil {
+		return ""
+	}
+	visitor := new(contentTypeVisitor)
+	if err := requestBody.Accept(visitor); err != nil {
+		return ""
+	}
+	if visitor.contentType == nil {
+		return ""
+	}
+	return *visitor.contentType
+}
+
+type contentTypeVisitor struct {
+	contentType *string
+}
+
+func (c *contentTypeVisitor) VisitInlinedRequestBody(inlinedRequestBody *ir.InlinedRequestBody) error {
+	c.contentType = inlinedRequestBody.ContentType
+	return nil
+}
+
+func (c *contentTypeVisitor) VisitReference(reference *ir.HttpRequestBodyReference) error {
+	c.contentType = reference.ContentType
+	return nil
+}
+
+func (c *contentTypeVisitor) VisitFileUpload(fileUpload *ir.FileUploadRequest) error {
+	return nil
+}
+
+func (c *contentTypeVisitor) VisitBytes(bytes *ir.BytesRequest) error {
+	c.contentType = bytes.ContentType
+	return nil
 }
 
 func typeReferenceFromJsonResponse(
