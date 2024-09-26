@@ -11576,6 +11576,144 @@ exports[`fdr test definitions > folders 1`] = `
 }
 `;
 
+exports[`fdr test definitions > go-content-type 1`] = `
+{
+  "auth": {
+    "tokenName": "token",
+    "type": "bearerAuth",
+  },
+  "globalHeaders": [],
+  "rootPackage": {
+    "endpoints": [],
+    "pointsTo": undefined,
+    "subpackages": [
+      "subpackage_imdb",
+    ],
+    "types": [],
+    "webhooks": [],
+    "websockets": [],
+  },
+  "snippetsConfiguration": {},
+  "subpackages": {
+    "subpackage_imdb": {
+      "description": undefined,
+      "displayName": undefined,
+      "endpoints": [
+        {
+          "auth": false,
+          "availability": undefined,
+          "defaultEnvironment": undefined,
+          "description": "Add a movie to the database",
+          "environments": undefined,
+          "errors": undefined,
+          "errorsV2": [],
+          "examples": [],
+          "headers": [],
+          "id": "createMovie",
+          "method": "POST",
+          "name": "Create Movie",
+          "originalEndpointId": "endpoint_imdb.createMovie",
+          "path": {
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/movies",
+              },
+              {
+                "type": "literal",
+                "value": "/create-movie",
+              },
+            ],
+            "pathParameters": [],
+          },
+          "queryParameters": [],
+          "request": {
+            "type": {
+              "contentType": "application/custom+json",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "type_imdb:CreateMovieRequest",
+                },
+              },
+              "type": "json",
+            },
+          },
+          "response": {
+            "statusCode": undefined,
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+            },
+          },
+        },
+      ],
+      "name": "imdb",
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_imdb",
+      "subpackages": [],
+      "types": [
+        "type_imdb:CreateMovieRequest",
+      ],
+      "webhooks": [],
+      "websockets": [],
+    },
+  },
+  "types": {
+    "type_imdb:CreateMovieRequest": {
+      "availability": undefined,
+      "description": undefined,
+      "name": "CreateMovieRequest",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "title",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "rating",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maximum": undefined,
+                "minimum": undefined,
+                "type": "double",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+  },
+}
+`;
+
 exports[`fdr test definitions > grpc-proto 1`] = `
 {
   "auth": undefined,

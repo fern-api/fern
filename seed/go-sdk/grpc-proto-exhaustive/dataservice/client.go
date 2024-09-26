@@ -47,6 +47,7 @@ func (c *Client) Upload(
 	endpointURL := baseURL + "/data"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers.Set("Content-Type", "application/json")
 
 	var response *fern.UploadResponse
 	if err := c.caller.Call(
@@ -85,6 +86,7 @@ func (c *Client) Delete(
 	endpointURL := baseURL + "/data/delete"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers.Set("Content-Type", "application/json")
 
 	var response *fern.DeleteResponse
 	if err := c.caller.Call(
@@ -123,6 +125,7 @@ func (c *Client) Describe(
 	endpointURL := baseURL + "/data/describe"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers.Set("Content-Type", "application/json")
 
 	var response *fern.DescribeResponse
 	if err := c.caller.Call(
@@ -251,6 +254,7 @@ func (c *Client) Query(
 	endpointURL := baseURL + "/data/query"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers.Set("Content-Type", "application/json")
 
 	var response *fern.QueryResponse
 	if err := c.caller.Call(
@@ -289,6 +293,7 @@ func (c *Client) Update(
 	endpointURL := baseURL + "/data/update"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+	headers.Set("Content-Type", "application/json")
 
 	var response *fern.UpdateResponse
 	if err := c.caller.Call(
