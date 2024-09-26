@@ -17,6 +17,7 @@ import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
@@ -36,12 +37,12 @@ public class ServiceClient {
                 .newBuilder()
                 .addPathSegments("upload-content")
                 .build();
+        RequestBody body = new InputStreamRequestBody(MediaType.parse("application/octet-stream"), inputStream);
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
-                .method("POST", new InputStreamRequestBody(MediaType.parse("application/octet-stream"), inputStream))
+                .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .build();
-
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
