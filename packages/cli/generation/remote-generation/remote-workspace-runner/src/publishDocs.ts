@@ -151,7 +151,7 @@ export async function publishDocs({
                 }
             }
         },
-        async ({ ir, snippetsConfig, playgroundConfig }) => {
+        async ({ ir, snippetsConfig, playgroundConfig, apiName }) => {
             const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig });
             context.logger.debug("Calling registerAPI... ", JSON.stringify(apiDefinition, undefined, 4));
             const response = await fdr.api.v1.register.registerApiDefinition({
@@ -172,7 +172,11 @@ export async function publishDocs({
                         );
                     }
                     default:
-                        return context.failAndThrow("Failed to register API", response.error);
+                        if (apiName != null) {
+                            return context.failAndThrow(`Failed to register API ${apiName}`, response.error);
+                        } else {
+                            return context.failAndThrow("Failed to register API", response.error);
+                        }
                 }
             }
         }
