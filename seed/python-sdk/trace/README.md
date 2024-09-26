@@ -94,7 +94,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.admin.update_test_submission_status(..., {
+client.admin.update_test_submission_status(..., request_options={
     "max_retries": 1
 })
 ```
@@ -114,7 +114,7 @@ client = SeedTrace(
 
 
 # Override timeout for a specific method
-client.admin.update_test_submission_status(..., {
+client.admin.update_test_submission_status(..., request_options={
     "timeout_in_seconds": 1
 })
 ```

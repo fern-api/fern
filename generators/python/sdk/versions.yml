@@ -1,4 +1,10 @@
-# For unreleased changes, use unreleased.yml 
+# For unreleased changes, use unreleased.yml
+- version: 4.2.7-rc4
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: Generated readmes now include the parameter name required for the request options parameter within the example snippets.
+
 - version: 4.2.7-rc3
   irVersion: 53
   changelogEntry:

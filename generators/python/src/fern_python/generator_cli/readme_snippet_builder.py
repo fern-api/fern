@@ -136,7 +136,7 @@ class ReadmeSnippetBuilder:
 {client_instantiation_str}
 
 # Override timeout for a specific method
-client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_parameters else ""}{{
+client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_parameters else ""}request_options={{
     "timeout_in_seconds": 1
 }})
 """
@@ -190,7 +190,7 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
             if endpoint is not None:
                 has_parameters = self._endpoint_metadata.has_parameters(endpoint_id)
                 retry_snippets.append(
-                    f"""client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_parameters else ""}{{
+                    f"""client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_parameters else ""}request_options={{
     "max_retries": 1
 }})
 """

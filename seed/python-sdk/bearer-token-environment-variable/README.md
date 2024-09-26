@@ -79,7 +79,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.service.get_with_bearer_token({
+client.service.get_with_bearer_token(request_options={
     "max_retries": 1
 })
 ```
@@ -99,7 +99,7 @@ client = SeedBearerTokenEnvironmentVariable(
 
 
 # Override timeout for a specific method
-client.service.get_with_bearer_token({
+client.service.get_with_bearer_token(request_options={
     "timeout_in_seconds": 1
 })
 ```

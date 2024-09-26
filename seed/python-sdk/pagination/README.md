@@ -123,7 +123,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.users.list_with_body_cursor_pagination(..., {
+client.users.list_with_body_cursor_pagination(..., request_options={
     "max_retries": 1
 })
 ```
@@ -143,7 +143,7 @@ client = SeedPagination(
 
 
 # Override timeout for a specific method
-client.users.list_with_body_cursor_pagination(..., {
+client.users.list_with_body_cursor_pagination(..., request_options={
     "timeout_in_seconds": 1
 })
 ```
