@@ -6,6 +6,7 @@ import * as serializers from "../../../index";
 import * as SeedLiteral from "../../../../api/index";
 import * as core from "../../../../core";
 import { SomeLiteral } from "./SomeLiteral";
+import { ContainerObject } from "./ContainerObject";
 
 export const SendRequest: core.serialization.ObjectSchema<serializers.SendRequest.Raw, SeedLiteral.SendRequest> =
     core.serialization.object({
@@ -14,6 +15,7 @@ export const SendRequest: core.serialization.ObjectSchema<serializers.SendReques
         stream: core.serialization.booleanLiteral(false),
         context: SomeLiteral,
         maybeContext: SomeLiteral.optional(),
+        containerObject: ContainerObject,
     });
 
 export declare namespace SendRequest {
@@ -23,5 +25,6 @@ export declare namespace SendRequest {
         stream: false;
         context: SomeLiteral.Raw;
         maybeContext?: SomeLiteral.Raw | null;
+        containerObject: ContainerObject.Raw;
     }
 }

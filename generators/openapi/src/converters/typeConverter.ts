@@ -358,6 +358,9 @@ function convertPrimitiveType(primitiveType: PrimitiveType): OpenAPIV3.NonArrayS
             if (val.validation?.format != null) {
                 type.format = val.validation.format;
             }
+            if (val.validation?.pattern != null) {
+                type.pattern = val.validation.pattern;
+            }
             return type;
         },
         uuid: () => {

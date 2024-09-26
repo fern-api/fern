@@ -49,6 +49,7 @@ export class DocsDefinitionResolver {
             ir: IntermediateRepresentation;
             snippetsConfig: APIV1Write.SnippetsConfig;
             playgroundConfig?: DocsV1Write.PlaygroundConfig;
+            apiName?: string;
         }) => Promise<string>
     ) {}
 
@@ -383,7 +384,8 @@ export class DocsDefinitionResolver {
                 const apiDefinitionId = await this.registerApi({
                     ir,
                     snippetsConfig,
-                    playgroundConfig: { oauth: item.playground?.oauth }
+                    playgroundConfig: { oauth: item.playground?.oauth },
+                    apiName: item.apiName
                 });
                 const api = convertIrToApiDefinition(ir, apiDefinitionId, { oauth: item.playground?.oauth });
                 const node = new ApiReferenceNodeConverter(

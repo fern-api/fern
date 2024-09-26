@@ -4,6 +4,7 @@ from ...core.pydantic_utilities import UniversalBaseModel
 import typing
 from .some_literal import SomeLiteral
 import pydantic
+from .container_object import ContainerObject
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -13,6 +14,7 @@ class SendRequest(UniversalBaseModel):
     stream: typing.Literal[False] = False
     context: SomeLiteral = "You're super wise"
     maybe_context: typing.Optional[SomeLiteral] = pydantic.Field(alias="maybeContext", default=None)
+    container_object: ContainerObject = pydantic.Field(alias="containerObject")
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
