@@ -35,7 +35,6 @@ describe("fern generate", () => {
             throw new Error(`Failed to get path to IR:\n${stdout}`);
         }
 
-        // Fails because ts cant issue commands to a temp directory cat ${filepath}
         const response = await loggingExeca(CONSOLE_LOGGER, `./ir-contains-fdr-definition-id.sh`, [filepath], {
             cwd: __dirname
         });
