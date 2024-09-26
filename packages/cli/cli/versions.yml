@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        The CLI now prints which API cannot be registered if `fern generate --docs` fails. 
+      type: fix
+  irVersion: 53
+  version: 0.43.2
+
+- changelogEntry:
+    - summary: |
         The CLI now supports running OpenAPI generator 0.1.0 with IR version 53. 
       type: feat
   irVersion: 53
