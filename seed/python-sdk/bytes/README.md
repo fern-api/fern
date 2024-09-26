@@ -77,7 +77,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.service.upload({
+client.service.upload(request_options={
     "max_retries": 1
 })
 ```
@@ -97,7 +97,7 @@ client = SeedBytes(
 
 
 # Override timeout for a specific method
-client.service.upload({
+client.service.upload(request_options={
     "timeout_in_seconds": 1
 })
 ```

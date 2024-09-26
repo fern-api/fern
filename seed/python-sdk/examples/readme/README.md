@@ -134,7 +134,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.service.create_movie(..., {
+client.service.create_movie(..., request_options={
     "max_retries": 1
 })
 ```
@@ -154,7 +154,7 @@ client = SeedExamples(
 
 
 # Override timeout for a specific method
-client.service.create_movie(..., {
+client.service.create_movie(..., request_options={
     "timeout_in_seconds": 1
 })
 ```

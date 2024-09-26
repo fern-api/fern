@@ -85,7 +85,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.extended_inline_request_body({
+client.extended_inline_request_body(request_options={
     "max_retries": 1
 })
 ```
@@ -105,7 +105,7 @@ client = SeedExtends(
 
 
 # Override timeout for a specific method
-client.extended_inline_request_body({
+client.extended_inline_request_body(request_options={
     "timeout_in_seconds": 1
 })
 ```

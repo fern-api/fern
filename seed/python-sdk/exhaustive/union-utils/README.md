@@ -83,7 +83,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.endpoints.container.get_and_return_list_of_primitives(..., {
+client.endpoints.container.get_and_return_list_of_primitives(..., request_options={
     "max_retries": 1
 })
 ```
@@ -103,7 +103,7 @@ client = SeedExhaustive(
 
 
 # Override timeout for a specific method
-client.endpoints.container.get_and_return_list_of_primitives(..., {
+client.endpoints.container.get_and_return_list_of_primitives(..., request_options={
     "timeout_in_seconds": 1
 })
 ```

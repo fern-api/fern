@@ -81,7 +81,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.user.get_user({
+client.user.get_user(request_options={
     "max_retries": 1
 })
 ```
@@ -101,7 +101,7 @@ client = SeedVersion(
 
 
 # Override timeout for a specific method
-client.user.get_user({
+client.user.get_user(request_options={
     "timeout_in_seconds": 1
 })
 ```
