@@ -178,7 +178,9 @@ class UniversalBaseModel(pydantic.BaseModel):
         return convert_and_respect_annotation_metadata(object_=dict_dump, annotation=self.__class__, direction="write")
 
 
-def _union_list_of_pydantic_dicts(source: typing.List[typing.Any], destination: typing.List[typing.Any]) -> typing.List[typing.Any]:
+def _union_list_of_pydantic_dicts(
+    source: typing.List[typing.Any], destination: typing.List[typing.Any]
+) -> typing.List[typing.Any]:
     converted_list: typing.List[typing.Any] = []
     for i, item in enumerate(source):
         destination_value = destination[i]  # type: ignore
@@ -189,6 +191,7 @@ def _union_list_of_pydantic_dicts(source: typing.List[typing.Any], destination: 
         else:
             converted_list.append(item)
     return converted_list
+
 
 def deep_union_pydantic_dicts(
     source: typing.Dict[str, typing.Any], destination: typing.Dict[str, typing.Any]

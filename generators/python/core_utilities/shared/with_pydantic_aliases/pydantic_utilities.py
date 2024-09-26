@@ -147,8 +147,9 @@ class UniversalBaseModel(pydantic.BaseModel):
             return super().dict(**kwargs_with_defaults_exclude_unset_include_fields)
 
 
-
-def _union_list_of_pydantic_dicts(source: typing.List[typing.Any], destination: typing.List[typing.Any]) -> typing.List[typing.Any]:
+def _union_list_of_pydantic_dicts(
+    source: typing.List[typing.Any], destination: typing.List[typing.Any]
+) -> typing.List[typing.Any]:
     converted_list: typing.List[typing.Any] = []
     for i, item in enumerate(source):
         destination_value = destination[i]  # type: ignore
@@ -159,6 +160,7 @@ def _union_list_of_pydantic_dicts(source: typing.List[typing.Any], destination: 
         else:
             converted_list.append(item)
     return converted_list
+
 
 def deep_union_pydantic_dicts(
     source: typing.Dict[str, typing.Any], destination: typing.Dict[str, typing.Any]
