@@ -26,7 +26,6 @@ on:
 jobs:
   write-changelogs:
     runs-on: ubuntu-latest
-    permissions: write-all
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -55,3 +54,4 @@ jobs:
         with:
           commit_message: "chore: update changelog"
           add_options: "-A ./fern/pages/changelogs"
+          token: ${{ secrets.FERN_GITHUB_PAT }}

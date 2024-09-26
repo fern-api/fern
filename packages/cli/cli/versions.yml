@@ -1,13 +1,21 @@
 - changelogEntry:
     - summary: |
-        The CLI now prints which API cannot be registered if `fern generate --docs` fails. 
+        The CLI now passes in the API definition ID once again, this is necessary so that generated snippet templates
+        may reference schemas within the API. This was a regression that was recently introduced.
+      type: chore
+  irVersion: 53
+  version: 0.43.3
+
+- changelogEntry:
+    - summary: |
+        The CLI now prints which API cannot be registered if `fern generate --docs` fails.
       type: fix
   irVersion: 53
   version: 0.43.2
 
 - changelogEntry:
     - summary: |
-        The CLI now supports running OpenAPI generator 0.1.0 with IR version 53. 
+        The CLI now supports running OpenAPI generator 0.1.0 with IR version 53.
       type: feat
   irVersion: 53
   version: 0.43.1
