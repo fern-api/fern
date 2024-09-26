@@ -93,6 +93,7 @@ export const FernOpenAPIExtension = {
      *       x-fern-streaming:
      *         format: sse # or json
      *         stream-condition: $request.stream
+     *         stream-description: A description
      *         response:
      *           $ref: ./path/to/response/type.yaml
      *         response-stream:
