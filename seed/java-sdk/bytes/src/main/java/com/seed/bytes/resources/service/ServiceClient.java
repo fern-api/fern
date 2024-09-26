@@ -4,13 +4,16 @@
 package com.seed.bytes.resources.service;
 
 import com.seed.bytes.core.ClientOptions;
+import com.seed.bytes.core.FileStream;
 import com.seed.bytes.core.ObjectMappers;
 import com.seed.bytes.core.RequestOptions;
 import com.seed.bytes.core.SeedBytesApiException;
 import com.seed.bytes.core.SeedBytesException;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -28,18 +31,22 @@ public class ServiceClient {
         upload(request, null);
     }
 
-    public void upload(byte[] request, RequestOptions requestOptions) {
+    public void upload(FileStream fileStream, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("upload-content")
-                .build();
-        RequestBody body = RequestBody.create(request);
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/octet-stream")
-                .build();
+            .newBuilder()
+            .addPathSegments("upload-content")
+            .build();
+        Request.Builder requestBuilder = new Request.Builder()
+            .url(httpUrl)
+            .method("POST", fileStream.toRequestBody())
+            .headers(Headers.of(clientOptions.headers(requestOptions)));
+
+        if (fileStream.getContentType() != null) {
+            requestBuilder.addHeader("Content-Type", fileStream.getContentType().toString());
+        }
+
+        Request okhttpRequest = requestBuilder.build();
+
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -57,5 +64,15 @@ public class ServiceClient {
         } catch (IOException e) {
             throw new SeedBytesException("Network error executing HTTP request", e);
         }
+    }
+
+    // Overload for backward compatibility
+    public void upload(byte[] request, RequestOptions requestOptions) {
+        FileStream fileStream = new FileStream(
+            new ByteArrayInputStream(request),
+            null,
+            MediaType.parse("application/octet-stream")
+        );
+        upload(fileStream, requestOptions);
     }
 }

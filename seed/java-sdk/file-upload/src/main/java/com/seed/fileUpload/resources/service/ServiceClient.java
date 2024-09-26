@@ -4,8 +4,6 @@
 package com.seed.fileUpload.resources.service;
 
 import com.seed.fileUpload.core.ClientOptions;
-import com.seed.fileUpload.core.FileStream;
-import com.seed.fileUpload.core.InputStreamRequestBody;
 import com.seed.fileUpload.core.ObjectMappers;
 import com.seed.fileUpload.core.RequestOptions;
 import com.seed.fileUpload.core.SeedFileUploadApiException;
@@ -16,7 +14,6 @@ import com.seed.fileUpload.resources.service.requests.MyRequest;
 import com.seed.fileUpload.resources.service.requests.WithContentTypeRequest;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.Optional;
 import okhttp3.Headers;
@@ -141,14 +138,16 @@ public class ServiceClient {
         justFile(file, request, null);
     }
 
-    public void justFile(FileStream file, JustFileRequet request, RequestOptions requestOptions) {
+    public void justFile(File file, JustFileRequet request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("just-file")
                 .build();
         MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
         try {
-            body.addFormDataPart("file", file.getFileName(), file.toRequestBody());
+            String fileMimeType = Files.probeContentType(file.toPath());
+            MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
+            body.addFormDataPart("file", file.getName(), RequestBody.create(fileMimeTypeMediaType, file));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
