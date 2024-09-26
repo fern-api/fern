@@ -19,7 +19,7 @@ class WithPage extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->page = $values['page'] ?? null;
     }

@@ -17,7 +17,7 @@ class ListUsersExtendedRequestForOptionalData extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->cursor = $values['cursor'] ?? null;
     }

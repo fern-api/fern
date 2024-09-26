@@ -19,7 +19,7 @@ class Pagination extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->next = $values['next'] ?? null;
     }

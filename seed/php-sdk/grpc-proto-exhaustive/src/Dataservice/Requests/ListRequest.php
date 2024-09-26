@@ -35,7 +35,7 @@ class ListRequest extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->prefix = $values['prefix'] ?? null;
         $this->limit = $values['limit'] ?? null;

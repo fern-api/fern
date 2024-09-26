@@ -19,7 +19,7 @@ class DoubleOptional extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->optionalAlias = $values['optionalAlias'] ?? null;
     }
