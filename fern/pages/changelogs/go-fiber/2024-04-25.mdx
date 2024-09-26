@@ -1,9 +1,5 @@
-## 0.20.2
-**`(internal):`** Enhance extra property serialization performance.
+## 0.20.1
+**`(fix):`** The `omitempty` struct tag is now only used for nil-able types.
 
-**`(internal):`** Generate additional extra property tests into the SDK.
-
-**`(fix):`** Resolve a non-deterministic key ordering issue for snippets of type `unknown`.
-
-**`(fix):`** Resolve an issue with discriminated union serialization.
+**`(fix):`** Update the query encoder to prevent unintentional errors whenever the `omitempty` is used for a non-optional field.
 

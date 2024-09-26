@@ -1,6 +1,6 @@
-## 0.8.1-rc0
-**`(fix):`** Increase allowed recursion depth to account for highly nested and complex examples.
+## 0.8.0-rc0
+**`(fix):`** The SDK now better handles cyclical references.
 
 ### What's been fixed
-- Recursion depth is increased to allow for highly nested and complex examples, this is a temporary solution while the example datamodel is further refined.
+- The SDK now better handles cyclical references. In particular, cyclical references are tracked for undiscriminated unions, and update_forward_refs is always called with object references.
 
