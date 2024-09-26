@@ -22,6 +22,9 @@ public record SendRequest
     [JsonPropertyName("maybeContext")]
     public string? MaybeContext { get; set; }
 
+    [JsonPropertyName("containerObject")]
+    public required ContainerObject ContainerObject { get; set; }
+
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

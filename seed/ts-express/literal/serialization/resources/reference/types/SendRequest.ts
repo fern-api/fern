@@ -13,6 +13,7 @@ export const SendRequest: core.serialization.ObjectSchema<serializers.SendReques
         stream: core.serialization.booleanLiteral(false),
         context: core.serialization.lazy(() => serializers.SomeLiteral),
         maybeContext: core.serialization.lazy(() => serializers.SomeLiteral).optional(),
+        containerObject: core.serialization.lazyObject(() => serializers.ContainerObject),
     });
 
 export declare namespace SendRequest {
@@ -22,5 +23,6 @@ export declare namespace SendRequest {
         stream: false;
         context: serializers.SomeLiteral.Raw;
         maybeContext?: serializers.SomeLiteral.Raw | null;
+        containerObject: serializers.ContainerObject.Raw;
     }
 }

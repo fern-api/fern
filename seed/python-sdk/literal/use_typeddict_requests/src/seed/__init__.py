@@ -4,7 +4,15 @@ from .types import SendResponse
 from . import headers, inlined, path, query, reference
 from .client import AsyncSeedLiteral, SeedLiteral
 from .inlined import ANestedLiteral, ANestedLiteralParams, ATopLevelLiteral, ATopLevelLiteralParams, SomeAliasedLiteral
-from .reference import SendRequest, SendRequestParams, SomeLiteral
+from .reference import (
+    ContainerObject,
+    ContainerObjectParams,
+    NestedObjectWithLiterals,
+    NestedObjectWithLiteralsParams,
+    SendRequest,
+    SendRequestParams,
+    SomeLiteral,
+)
 from .requests import SendResponseParams
 from .version import __version__
 
@@ -14,6 +22,10 @@ __all__ = [
     "ATopLevelLiteral",
     "ATopLevelLiteralParams",
     "AsyncSeedLiteral",
+    "ContainerObject",
+    "ContainerObjectParams",
+    "NestedObjectWithLiterals",
+    "NestedObjectWithLiteralsParams",
     "SeedLiteral",
     "SendRequest",
     "SendRequestParams",

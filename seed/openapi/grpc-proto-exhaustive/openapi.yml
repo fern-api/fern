@@ -180,6 +180,7 @@ paths:
           required: false
           schema:
             type: integer
+            format: int64
             nullable: true
         - name: paginationToken
           in: query
@@ -257,6 +258,7 @@ paths:
                   nullable: true
                 topK:
                   type: integer
+                  format: int64
                   example: 1
                 filter:
                   $ref: '#/components/schemas/Metadata'
@@ -275,8 +277,8 @@ paths:
                 column:
                   type: array
                   items:
-                    type: number
-                    format: double
+                    type: integer
+                    format: float
                   nullable: true
                 id:
                   type: string
@@ -319,8 +321,8 @@ paths:
                 values:
                   type: array
                   items:
-                    type: number
-                    format: double
+                    type: integer
+                    format: float
                   nullable: true
                 setMetadata:
                   $ref: '#/components/schemas/Metadata'
@@ -348,8 +350,8 @@ components:
         values:
           type: array
           items:
-            type: number
-            format: double
+            type: integer
+            format: float
         metadata:
           $ref: '#/components/schemas/Metadata'
           nullable: true
@@ -374,13 +376,15 @@ components:
           nullable: true
         dimension:
           type: integer
+          format: int64
           nullable: true
         fullness:
-          type: number
-          format: double
+          type: integer
+          format: float
           nullable: true
         totalCount:
           type: integer
+          format: int64
           nullable: true
     FetchResponse:
       title: FetchResponse
@@ -405,11 +409,12 @@ components:
           type: array
           items:
             type: integer
+            format: int64
         values:
           type: array
           items:
-            type: number
-            format: double
+            type: integer
+            format: float
       required:
         - indices
         - values
@@ -444,6 +449,7 @@ components:
       properties:
         count:
           type: integer
+          format: int64
           nullable: true
     Pagination:
       title: Pagination
@@ -459,10 +465,11 @@ components:
         values:
           type: array
           items:
-            type: number
-            format: double
+            type: integer
+            format: float
         topK:
           type: integer
+          format: int64
           nullable: true
         namespace:
           type: string
@@ -514,14 +521,14 @@ components:
         id:
           type: string
         score:
-          type: number
-          format: double
+          type: integer
+          format: float
           nullable: true
         values:
           type: array
           items:
-            type: number
-            format: double
+            type: integer
+            format: float
           nullable: true
         metadata:
           $ref: '#/components/schemas/Metadata'
@@ -541,6 +548,7 @@ components:
       properties:
         count:
           type: integer
+          format: int64
           nullable: true
     Usage:
       title: Usage
@@ -548,6 +556,7 @@ components:
       properties:
         units:
           type: integer
+          format: int64
           nullable: true
     Metadata:
       title: Metadata

@@ -10,4 +10,5 @@ export interface SendRequest {
     stream: false;
     context: SeedLiteral.SomeLiteral;
     maybeContext?: SeedLiteral.SomeLiteral;
+    containerObject: SeedLiteral.ContainerObject;
 }

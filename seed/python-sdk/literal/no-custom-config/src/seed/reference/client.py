@@ -2,9 +2,11 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .types.container_object import ContainerObject
 from .types.some_literal import SomeLiteral
 from ..core.request_options import RequestOptions
 from ..types.send_response import SendResponse
+from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
@@ -22,6 +24,7 @@ class ReferenceClient:
         self,
         *,
         query: str,
+        container_object: ContainerObject,
         maybe_context: typing.Optional[SomeLiteral] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SendResponse:
@@ -29,6 +32,8 @@ class ReferenceClient:
         Parameters
         ----------
         query : str
+
+        container_object : ContainerObject
 
         maybe_context : typing.Optional[SomeLiteral]
 
@@ -42,12 +47,20 @@ class ReferenceClient:
         Examples
         --------
         from seed import SeedLiteral
+        from seed.reference import ContainerObject, NestedObjectWithLiterals
 
         client = SeedLiteral(
             base_url="https://yourhost.com/path/to/api",
         )
         client.reference.send(
             query="What is the weather today",
+            container_object=ContainerObject(
+                nested_objects=[
+                    NestedObjectWithLiterals(
+                        str_prop="strProp",
+                    )
+                ],
+            ),
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -56,6 +69,9 @@ class ReferenceClient:
             json={
                 "query": query,
                 "maybeContext": maybe_context,
+                "containerObject": convert_and_respect_annotation_metadata(
+                    object_=container_object, annotation=ContainerObject, direction="write"
+                ),
                 "prompt": "You are a helpful assistant",
                 "stream": False,
                 "context": "You're super wise",
@@ -86,6 +102,7 @@ class AsyncReferenceClient:
         self,
         *,
         query: str,
+        container_object: ContainerObject,
         maybe_context: typing.Optional[SomeLiteral] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SendResponse:
@@ -93,6 +110,8 @@ class AsyncReferenceClient:
         Parameters
         ----------
         query : str
+
+        container_object : ContainerObject
 
         maybe_context : typing.Optional[SomeLiteral]
 
@@ -108,6 +127,7 @@ class AsyncReferenceClient:
         import asyncio
 
         from seed import AsyncSeedLiteral
+        from seed.reference import ContainerObject, NestedObjectWithLiterals
 
         client = AsyncSeedLiteral(
             base_url="https://yourhost.com/path/to/api",
@@ -117,6 +137,13 @@ class AsyncReferenceClient:
         async def main() -> None:
             await client.reference.send(
                 query="What is the weather today",
+                container_object=ContainerObject(
+                    nested_objects=[
+                        NestedObjectWithLiterals(
+                            str_prop="strProp",
+                        )
+                    ],
+                ),
             )
 
 
@@ -128,6 +155,9 @@ class AsyncReferenceClient:
             json={
                 "query": query,
                 "maybeContext": maybe_context,
+                "containerObject": convert_and_respect_annotation_metadata(
+                    object_=container_object, annotation=ContainerObject, direction="write"
+                ),
                 "prompt": "You are a helpful assistant",
                 "stream": False,
                 "context": "You're super wise",

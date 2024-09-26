@@ -103,7 +103,14 @@ client.query.send(
 
 client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )        
 client.reference.send(
-	query="What is the weather today"
+	query="What is the weather today",
+	container_object={
+		"nested_objects": [
+			{
+				"str_prop": "strProp"
+			}
+		]
+	}
 )
  
 ```                        
@@ -114,7 +121,14 @@ client.reference.send(
 
 client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )        
 client.reference.send(
-	query="What is the weather today"
+	query="What is the weather today",
+	container_object={
+		"nested_objects": [
+			{
+				"str_prop": "strProp"
+			}
+		]
+	}
 )
  
 ```                        

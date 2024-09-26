@@ -28,7 +28,7 @@ export async function loadAndUpdateGenerators({
 }): Promise<string | undefined> {
     const filepath = generatorsYml.getPathToGeneratorsConfiguration({ absolutePathToWorkspace });
     if (!(await doesPathExist(filepath))) {
-        context.failAndThrow("Generators configuration file was not found, no generators to upgrade.");
+        context.logger.debug("Generators configuration file was not found, no generators to upgrade.");
         return undefined;
     }
     const contents = await readFile(filepath);
@@ -39,7 +39,7 @@ export async function loadAndUpdateGenerators({
     // is there a better, type-safe way to do this???
     const generatorGroups = parsedDocument.get("groups");
     if (generatorGroups == null) {
-        context.failAndThrow("No groups were found within the generators configuration, no generators to upgrade.");
+        context.logger.debug("No groups were found within the generators configuration, no generators to upgrade.");
         return undefined;
     }
     if (!YAML.isMap(generatorGroups)) {
@@ -142,7 +142,7 @@ export async function upgradeGenerator({
                         context
                     })) ?? {};
                 if (generatorsConfiguration == null || generatorsConfiguration.groups == null) {
-                    context.failAndThrow(
+                    context.logger.debug(
                         "No groups were found within the generators configuration, no generators to upgrade."
                     );
                     return;

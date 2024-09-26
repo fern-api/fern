@@ -21,3 +21,4 @@ export { replaceEnvVariables } from "./replaceEnvVars";
 export type { Digit, Letter, LowercaseLetter, UppercaseLetter } from "./types";
 export { visitDiscriminatedUnion } from "./visitDiscriminatedUnion";
 export type { WithoutQuestionMarks } from "./withoutQuestionMarks";
+export { mergeWithOverrides } from "./mergeWithOverrides";
