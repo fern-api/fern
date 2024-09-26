@@ -1,5 +1,23 @@
 - changelogEntry:
     - summary: |
+        If you use the `x-fern-streaming` extension and want to provide different descriptions 
+        for the streaming endpoint, then you can now specify `streaming-description`. 
+
+        ```yml openapi.yml
+        x-fern-streaming: 
+          stream-condition: $request.stream
+          stream-description: The streaming version of this endpoint returns a series of chunks ... 
+          response: 
+            $ref: #/components/schemas/Response
+          stream-response: 
+            $ref: #/components/schemas/ResponseChunk
+        ```
+      type: fix
+  irVersion: 53
+  version: 0.43.5
+
+- changelogEntry:
+    - summary: |
         The OpenAPI parser now respects the content type in your OpenAPI spec, instead of always sending
         `application/json`. With this upgrade, your SDKs will also start to send the correct content type. 
       type: fix
