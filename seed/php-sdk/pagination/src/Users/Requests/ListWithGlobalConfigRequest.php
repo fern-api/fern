@@ -17,7 +17,7 @@ class ListWithGlobalConfigRequest extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->offset = $values['offset'] ?? null;
     }

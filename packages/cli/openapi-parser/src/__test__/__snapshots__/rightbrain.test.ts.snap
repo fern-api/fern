@@ -1117,7 +1117,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -1478,7 +1478,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -1848,7 +1848,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -2368,7 +2368,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -3343,7 +3343,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -4119,7 +4119,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -4951,7 +4951,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -5756,7 +5756,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -6467,7 +6467,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -7072,7 +7072,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -8598,7 +8598,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -8998,7 +8998,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -9861,7 +9861,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -10677,7 +10677,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -11849,7 +11849,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -12586,7 +12586,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -13016,7 +13016,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -14343,7 +14343,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -14782,7 +14782,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -17986,7 +17986,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -20302,7 +20302,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -20741,7 +20741,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -21548,7 +21548,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -22158,7 +22158,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -22433,7 +22433,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -23819,7 +23819,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -24180,7 +24180,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -27343,7 +27343,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -30669,7 +30669,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -33995,7 +33995,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -37321,7 +37321,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -40647,7 +40647,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -43973,7 +43973,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -47299,7 +47299,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -47635,7 +47635,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -47911,7 +47911,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -48106,7 +48106,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -48301,7 +48301,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -48815,7 +48815,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -49805,7 +49805,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -50135,7 +50135,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -50479,7 +50479,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -50804,7 +50804,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -51100,7 +51100,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -52228,7 +52228,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -53232,7 +53232,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -55514,7 +55514,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -55953,7 +55953,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -56782,7 +56782,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -57540,7 +57540,7 @@ Brain Core API. 🚀
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,

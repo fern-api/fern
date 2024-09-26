@@ -530,7 +530,7 @@ exports[`open api parser > devrev > parse open api 1`] = `
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -815,7 +815,7 @@ authenticated user.
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -1078,7 +1078,7 @@ given Dev organization.
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -2311,7 +2311,7 @@ authenticated user.
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -2791,7 +2791,7 @@ organization.
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -3106,7 +3106,7 @@ enterprise connections can be created by an organization.
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -3379,7 +3379,7 @@ connections can not be deleted using this method.
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -4250,7 +4250,7 @@ disabled.
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -4569,7 +4569,7 @@ disabled.
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -6208,7 +6208,7 @@ used.
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -6497,7 +6497,7 @@ used.
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -8282,7 +8282,7 @@ used.
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -8726,7 +8726,7 @@ organization.
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -9015,7 +9015,7 @@ organization.
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -10697,7 +10697,7 @@ them.
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -11139,7 +11139,7 @@ and a logical concept denoted by the tag's name.
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -11428,7 +11428,7 @@ and a logical concept denoted by the tag's name.
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -12809,7 +12809,7 @@ used.
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -13292,7 +13292,7 @@ used.
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -14822,7 +14822,7 @@ used.
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -15263,7 +15263,7 @@ used.
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -15552,7 +15552,7 @@ used.
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -16811,7 +16811,7 @@ used.
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -17518,7 +17518,7 @@ used.
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -17807,7 +17807,7 @@ used.
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -21159,7 +21159,7 @@ organizations.
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,

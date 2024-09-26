@@ -874,7 +874,7 @@ Creates a new document index.",
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -1287,7 +1287,7 @@ Executes a deployed Workflow and streams back its results.",
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -1580,7 +1580,7 @@ Generate a completion using a previously defined deployment.
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -1764,7 +1764,7 @@ Generate a stream of completions using a previously defined deployment.
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -2282,7 +2282,7 @@ Compiles the prompt backing the model version using the provided input values.",
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -2628,7 +2628,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -3088,7 +3088,7 @@ or overwritten with default values.",
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -3450,7 +3450,7 @@ Perform a search against a document index.
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -3635,7 +3635,7 @@ Used to submit feedback regarding the quality of previously generated completion
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -3837,7 +3837,7 @@ or overwritten with default values.",
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,

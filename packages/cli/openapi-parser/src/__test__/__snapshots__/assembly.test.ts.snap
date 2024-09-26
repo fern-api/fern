@@ -2294,7 +2294,7 @@ The parameter should map to a JSON encoded list of strings.
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -6387,7 +6387,7 @@ The parameter should map to a JSON encoded list of strings.
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -6666,7 +6666,7 @@ The parameter should map to a JSON encoded list of strings.
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -6979,7 +6979,7 @@ The parameter should map to a JSON encoded list of strings.
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -7258,7 +7258,7 @@ The parameter should map to a JSON encoded list of strings.
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -7544,7 +7544,7 @@ The parameter should map to a JSON encoded list of strings.
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,

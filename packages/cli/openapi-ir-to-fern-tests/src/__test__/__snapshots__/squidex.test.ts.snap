@@ -1163,6 +1163,7 @@ You will be assigned as owner of the new app automatically.",
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "CreateAppDto",
               "query-parameters": undefined,
@@ -1244,6 +1245,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "CreateClientDto",
               "query-parameters": undefined,
@@ -1312,6 +1314,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.AssignContributorDto",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Contributor assigned to app.",
@@ -1389,6 +1392,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "AddLanguageDto",
               "query-parameters": undefined,
@@ -1472,6 +1476,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "AddRoleDto",
               "query-parameters": undefined,
@@ -1557,6 +1562,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "AddWorkflowDto",
               "query-parameters": undefined,
@@ -1633,6 +1639,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "UpdateAppDto",
               "query-parameters": undefined,
@@ -1705,6 +1712,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "TransferToTeamDto",
               "query-parameters": undefined,
@@ -1792,6 +1800,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "UpdateAssetScriptsDto",
               "query-parameters": undefined,
@@ -1891,6 +1900,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "UpdateClientDto",
               "query-parameters": undefined,
@@ -1976,6 +1986,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "UpdateLanguageDto",
               "query-parameters": undefined,
@@ -2064,6 +2075,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "UpdateRoleDto",
               "query-parameters": undefined,
@@ -2160,6 +2172,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "UpdateAppSettingsDto",
               "query-parameters": undefined,
@@ -2265,6 +2278,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "UpdateWorkflowDto",
               "query-parameters": undefined,
@@ -2424,6 +2438,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "BulkUpdateAssetsDto",
               "query-parameters": undefined,
@@ -3034,6 +3049,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.QueryDto",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Assets returned.",
@@ -3233,6 +3249,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "CreateAssetFolderDto",
               "query-parameters": undefined,
@@ -3437,6 +3454,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "AnnotateAssetDto",
               "query-parameters": undefined,
@@ -3598,6 +3616,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "RenameAssetFolderDto",
               "query-parameters": undefined,
@@ -3662,6 +3681,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "MoveAssetFolderDto",
               "query-parameters": undefined,
@@ -3752,6 +3772,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "MoveAssetDto",
               "query-parameters": undefined,
@@ -3814,6 +3835,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "RenameTagDto",
               "query-parameters": undefined,
@@ -4084,6 +4106,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "RestoreRequestDto",
               "query-parameters": undefined,
@@ -4290,6 +4313,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.UpsertCommentDto",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Comment created.",
@@ -4336,6 +4360,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.UpsertCommentDto",
+              "content-type": "application/json",
             },
           },
         },
@@ -4440,6 +4465,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "BulkUpdateContentsDto",
               "query-parameters": undefined,
@@ -5308,6 +5334,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.QueryDto",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Contents returned.",
@@ -5695,6 +5722,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.ContentData",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Content patched.",
@@ -5819,6 +5847,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.ContentData",
+              "content-type": "application/json",
               "name": "ContentsPostContentRequest",
               "query-parameters": {
                 "id": {
@@ -5921,6 +5950,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "ImportContentsDto",
               "query-parameters": undefined,
@@ -6053,6 +6083,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.ContentData",
+              "content-type": "application/json",
               "name": "ContentsPostUpsertContentRequest",
               "query-parameters": {
                 "patch": {
@@ -6197,6 +6228,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.ContentData",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Content updated.",
@@ -6345,6 +6377,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "ChangeStatusDto",
               "query-parameters": undefined,
@@ -7155,6 +7188,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.ChangePlanDto",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Plan changed or redirect url returned.",
@@ -7196,6 +7230,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.ChangePlanDto",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Plan changed or redirect url returned.",
@@ -7828,6 +7863,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.CreateRuleDto",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Rule created.",
@@ -7953,6 +7989,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "UpdateRuleDto",
               "query-parameters": undefined,
@@ -8139,6 +8176,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.CreateRuleDto",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Rule simulated.",
@@ -10050,6 +10088,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.AddFieldDto",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Schema field created.",
@@ -10206,6 +10245,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.AddFieldDto",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Schema field created.",
@@ -10372,6 +10412,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "CreateSchemaDto",
               "query-parameters": undefined,
@@ -10660,6 +10701,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "ChangeCategoryDto",
               "query-parameters": undefined,
@@ -10817,6 +10859,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.UpdateFieldDto",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Schema field updated.",
@@ -10976,6 +11019,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.UpdateFieldDto",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Schema field updated.",
@@ -11126,6 +11170,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.ReorderFieldsDto",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Schema fields reordered.",
@@ -11269,6 +11314,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.ConfigurePreviewUrlsDto",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Schema updated.",
@@ -11417,6 +11463,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "ConfigureFieldRulesDto",
               "query-parameters": undefined,
@@ -11606,6 +11653,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "UpdateSchemaDto",
               "query-parameters": undefined,
@@ -11754,6 +11802,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.ReorderFieldsDto",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Schema fields reordered.",
@@ -11913,6 +11962,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "SynchronizeSchemaDto",
               "query-parameters": undefined,
@@ -12068,6 +12118,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "ConfigureUiFieldsDto",
               "query-parameters": undefined,
@@ -12212,6 +12263,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.SchemaScriptsDto",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Schema updated.",
@@ -13385,6 +13437,7 @@ You will retrieve all teams, where you are assigned as a contributor.",
             },
             "request": {
               "body": "root.AssignContributorDto",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Contributor assigned to team.",
@@ -13443,6 +13496,7 @@ You will be assigned as owner of the new team automatically.",
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "CreateTeamDto",
               "query-parameters": undefined,
@@ -13512,6 +13566,7 @@ You will be assigned as owner of the new team automatically.",
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "UpdateTeamDto",
               "query-parameters": undefined,
@@ -13697,6 +13752,7 @@ You will be assigned as owner of the new team automatically.",
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "TranslateDto",
               "query-parameters": undefined,
@@ -13988,6 +14044,7 @@ You will be assigned as owner of the new team automatically.",
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "CreateUserDto",
               "query-parameters": undefined,
@@ -14080,6 +14137,7 @@ You will be assigned as owner of the new team automatically.",
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "UpdateUserDto",
               "query-parameters": undefined,
@@ -22345,6 +22403,7 @@ You will be assigned as owner of the new app automatically.",
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "CreateAppDto",
               "query-parameters": undefined,
@@ -22426,6 +22485,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "CreateClientDto",
               "query-parameters": undefined,
@@ -22494,6 +22554,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.AssignContributorDto",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Contributor assigned to app.",
@@ -22571,6 +22632,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "AddLanguageDto",
               "query-parameters": undefined,
@@ -22654,6 +22716,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "AddRoleDto",
               "query-parameters": undefined,
@@ -22739,6 +22802,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "AddWorkflowDto",
               "query-parameters": undefined,
@@ -22815,6 +22879,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "UpdateAppDto",
               "query-parameters": undefined,
@@ -22887,6 +22952,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "TransferToTeamDto",
               "query-parameters": undefined,
@@ -22974,6 +23040,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "UpdateAssetScriptsDto",
               "query-parameters": undefined,
@@ -23073,6 +23140,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "UpdateClientDto",
               "query-parameters": undefined,
@@ -23158,6 +23226,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "UpdateLanguageDto",
               "query-parameters": undefined,
@@ -23246,6 +23315,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "UpdateRoleDto",
               "query-parameters": undefined,
@@ -23342,6 +23412,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "UpdateAppSettingsDto",
               "query-parameters": undefined,
@@ -23447,6 +23518,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "UpdateWorkflowDto",
               "query-parameters": undefined,
@@ -23606,6 +23678,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "BulkUpdateAssetsDto",
               "query-parameters": undefined,
@@ -24216,6 +24289,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.QueryDto",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Assets returned.",
@@ -24415,6 +24489,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "CreateAssetFolderDto",
               "query-parameters": undefined,
@@ -24619,6 +24694,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "AnnotateAssetDto",
               "query-parameters": undefined,
@@ -24780,6 +24856,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "RenameAssetFolderDto",
               "query-parameters": undefined,
@@ -24844,6 +24921,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "MoveAssetFolderDto",
               "query-parameters": undefined,
@@ -24934,6 +25012,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "MoveAssetDto",
               "query-parameters": undefined,
@@ -24996,6 +25075,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "RenameTagDto",
               "query-parameters": undefined,
@@ -25266,6 +25346,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "RestoreRequestDto",
               "query-parameters": undefined,
@@ -25472,6 +25553,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.UpsertCommentDto",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Comment created.",
@@ -25518,6 +25600,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.UpsertCommentDto",
+              "content-type": "application/json",
             },
           },
         },
@@ -25622,6 +25705,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "BulkUpdateContentsDto",
               "query-parameters": undefined,
@@ -26490,6 +26574,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.QueryDto",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Contents returned.",
@@ -26877,6 +26962,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.ContentData",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Content patched.",
@@ -27001,6 +27087,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.ContentData",
+              "content-type": "application/json",
               "name": "ContentsPostContentRequest",
               "query-parameters": {
                 "id": {
@@ -27103,6 +27190,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "ImportContentsDto",
               "query-parameters": undefined,
@@ -27235,6 +27323,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.ContentData",
+              "content-type": "application/json",
               "name": "ContentsPostUpsertContentRequest",
               "query-parameters": {
                 "patch": {
@@ -27379,6 +27468,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.ContentData",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Content updated.",
@@ -27527,6 +27617,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "ChangeStatusDto",
               "query-parameters": undefined,
@@ -28337,6 +28428,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.ChangePlanDto",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Plan changed or redirect url returned.",
@@ -28378,6 +28470,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.ChangePlanDto",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Plan changed or redirect url returned.",
@@ -29010,6 +29103,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.CreateRuleDto",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Rule created.",
@@ -29135,6 +29229,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "UpdateRuleDto",
               "query-parameters": undefined,
@@ -29321,6 +29416,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.CreateRuleDto",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Rule simulated.",
@@ -31232,6 +31328,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.AddFieldDto",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Schema field created.",
@@ -31388,6 +31485,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.AddFieldDto",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Schema field created.",
@@ -31554,6 +31652,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "CreateSchemaDto",
               "query-parameters": undefined,
@@ -31842,6 +31941,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "ChangeCategoryDto",
               "query-parameters": undefined,
@@ -31999,6 +32099,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.UpdateFieldDto",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Schema field updated.",
@@ -32158,6 +32259,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.UpdateFieldDto",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Schema field updated.",
@@ -32308,6 +32410,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.ReorderFieldsDto",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Schema fields reordered.",
@@ -32451,6 +32554,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.ConfigurePreviewUrlsDto",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Schema updated.",
@@ -32599,6 +32703,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "ConfigureFieldRulesDto",
               "query-parameters": undefined,
@@ -32788,6 +32893,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "UpdateSchemaDto",
               "query-parameters": undefined,
@@ -32936,6 +33042,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.ReorderFieldsDto",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Schema fields reordered.",
@@ -33095,6 +33202,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "SynchronizeSchemaDto",
               "query-parameters": undefined,
@@ -33250,6 +33358,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "ConfigureUiFieldsDto",
               "query-parameters": undefined,
@@ -33394,6 +33503,7 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": "root.SchemaScriptsDto",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Schema updated.",
@@ -34567,6 +34677,7 @@ You will retrieve all teams, where you are assigned as a contributor.",
             },
             "request": {
               "body": "root.AssignContributorDto",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Contributor assigned to team.",
@@ -34625,6 +34736,7 @@ You will be assigned as owner of the new team automatically.",
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "CreateTeamDto",
               "query-parameters": undefined,
@@ -34694,6 +34806,7 @@ You will be assigned as owner of the new team automatically.",
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "UpdateTeamDto",
               "query-parameters": undefined,
@@ -34879,6 +34992,7 @@ You will be assigned as owner of the new team automatically.",
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "TranslateDto",
               "query-parameters": undefined,
@@ -35170,6 +35284,7 @@ You will be assigned as owner of the new team automatically.",
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "CreateUserDto",
               "query-parameters": undefined,
@@ -35262,6 +35377,7 @@ You will be assigned as owner of the new team automatically.",
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "UpdateUserDto",
               "query-parameters": undefined,

@@ -110,6 +110,7 @@ exports[`open api parser > ada > docs 1`] = `
             },
             "request": {
               "body": "root.EndUserRequest",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "OK",
@@ -552,6 +553,7 @@ exports[`open api parser > ada > simple 1`] = `
             },
             "request": {
               "body": "root.EndUserRequest",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "OK",

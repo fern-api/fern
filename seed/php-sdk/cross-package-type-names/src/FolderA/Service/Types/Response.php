@@ -20,7 +20,7 @@ class Response extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->foo = $values['foo'] ?? null;
     }

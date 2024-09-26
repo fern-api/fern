@@ -679,7 +679,7 @@ Here are some of the most used payload fields explained (you can find the full p
       ],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -2260,7 +2260,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -2812,7 +2812,7 @@ Each consumer User entity needs three mandatory fields:
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -3827,7 +3827,7 @@ Each consumer Business entity needs three mandatory fields:
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -6147,7 +6147,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -7751,7 +7751,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,

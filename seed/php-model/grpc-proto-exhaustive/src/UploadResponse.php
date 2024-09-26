@@ -19,7 +19,7 @@ class UploadResponse extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->count = $values['count'] ?? null;
     }

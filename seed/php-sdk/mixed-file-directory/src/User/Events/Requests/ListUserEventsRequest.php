@@ -17,7 +17,7 @@ class ListUserEventsRequest extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->limit = $values['limit'] ?? null;
     }

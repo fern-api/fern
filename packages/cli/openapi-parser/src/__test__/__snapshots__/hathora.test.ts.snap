@@ -443,7 +443,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -921,7 +921,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -1793,7 +1793,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -2055,7 +2055,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -4139,7 +4139,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -5759,7 +5759,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       ],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -6279,7 +6279,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       ],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -6799,7 +6799,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       ],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -7323,7 +7323,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       ],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -8281,7 +8281,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -10443,7 +10443,7 @@ exports[`open api parser > hathora > parse open api 1`] = `
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,

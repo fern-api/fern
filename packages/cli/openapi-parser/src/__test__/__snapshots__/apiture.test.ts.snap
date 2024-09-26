@@ -3371,7 +3371,7 @@ This error response may have one of the following \`type\` values:
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -3786,7 +3786,7 @@ This error response may have one of the following \`type\` values:
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -9090,7 +9090,7 @@ This error response may have one of the following \`type\` values:
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -10319,7 +10319,7 @@ This error response may have one of the following \`type\` values:
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/merge-patch+json",
         "description": null,
         "schema": {
           "availability": null,

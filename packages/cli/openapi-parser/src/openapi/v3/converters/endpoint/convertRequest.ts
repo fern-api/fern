@@ -202,7 +202,7 @@ export function convertRequest({
     return RequestWithExample.json({
         description: undefined,
         schema: requestSchema,
-        contentType: undefined,
+        contentType: jsonMediaObject.contentType,
         fullExamples: jsonMediaObject.examples,
         additionalProperties:
             !isReferenceObject(jsonMediaObject.schema) &&

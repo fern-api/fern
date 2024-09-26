@@ -32,7 +32,7 @@ class FindRequest extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->optionalString = $values['optionalString'] ?? null;
         $this->publicProperty = $values['publicProperty'] ?? null;

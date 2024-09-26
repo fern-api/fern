@@ -942,7 +942,7 @@ exports[`open api parser > ada > parse open api 1`] = `
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,

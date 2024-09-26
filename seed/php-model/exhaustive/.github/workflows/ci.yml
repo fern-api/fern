@@ -13,7 +13,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php_version: "8.1"
+          php-version: "8.1"
 
       - name: Install tools
         run: |
@@ -37,7 +37,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php_version: "8.1"
+          php-version: "8.1"
 
       - name: Install tools
         run: |

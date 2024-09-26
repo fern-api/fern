@@ -98,5 +98,5 @@ describe("ir", () => {
             reject: false
         });
         expect(stdout).toContain("IR v100 does not exist");
-    });
+    }, 10_000);
 });

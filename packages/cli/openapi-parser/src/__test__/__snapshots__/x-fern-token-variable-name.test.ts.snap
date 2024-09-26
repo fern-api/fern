@@ -56,7 +56,7 @@ exports[`x-fern-token-variable-name > x-fern-token-variable-name > parse open ap
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,

@@ -316,7 +316,7 @@ exports[`open api parser > supertokens > parse open api 1`] = `
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -854,7 +854,7 @@ exports[`open api parser > supertokens > parse open api 1`] = `
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -1927,7 +1927,7 @@ exports[`open api parser > supertokens > parse open api 1`] = `
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -2416,7 +2416,7 @@ exports[`open api parser > supertokens > parse open api 1`] = `
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -2965,7 +2965,7 @@ exports[`open api parser > supertokens > parse open api 1`] = `
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -4113,7 +4113,7 @@ exports[`open api parser > supertokens > parse open api 1`] = `
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -4696,7 +4696,7 @@ exports[`open api parser > supertokens > parse open api 1`] = `
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -5234,7 +5234,7 @@ exports[`open api parser > supertokens > parse open api 1`] = `
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -5796,7 +5796,7 @@ exports[`open api parser > supertokens > parse open api 1`] = `
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "type": "oneOf",
@@ -6649,7 +6649,7 @@ Passing the optional deviceId signifies a resend code flow.
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "type": "oneOf",
@@ -7557,7 +7557,7 @@ Passing the optional deviceId signifies a resend code flow.
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -8848,7 +8848,7 @@ Passing the optional deviceId signifies a resend code flow.
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "type": "oneOf",
@@ -9959,7 +9959,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -10473,7 +10473,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -10946,7 +10946,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -12000,7 +12000,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -12510,7 +12510,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -13550,7 +13550,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -14474,7 +14474,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -15097,7 +15097,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -17705,7 +17705,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -18112,7 +18112,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -18958,7 +18958,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -19461,7 +19461,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,
@@ -20410,7 +20410,7 @@ e.g.:
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -20876,7 +20876,7 @@ e.g.:
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -21298,7 +21298,7 @@ e.g.:
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -21767,7 +21767,7 @@ e.g.:
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -23096,7 +23096,7 @@ e.g.:
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -24007,7 +24007,7 @@ e.g.:
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -24900,7 +24900,7 @@ e.g.:
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -26410,7 +26410,7 @@ e.g.:
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -27073,7 +27073,7 @@ e.g.:
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "type": "oneOf",
@@ -27586,7 +27586,7 @@ e.g.:
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -28252,7 +28252,7 @@ e.g.:
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -29387,7 +29387,7 @@ e.g.:
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -30331,7 +30331,7 @@ e.g.:
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -30745,7 +30745,7 @@ e.g.:
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -31994,7 +31994,7 @@ e.g.:
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -32524,7 +32524,7 @@ e.g.:
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -33182,7 +33182,7 @@ e.g.:
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "type": "oneOf",
@@ -35061,7 +35061,7 @@ e.g.:
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -35920,7 +35920,7 @@ e.g.:
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -40190,7 +40190,7 @@ e.g.:
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,
@@ -41620,7 +41620,7 @@ e.g.:
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "additionalProperties": false,

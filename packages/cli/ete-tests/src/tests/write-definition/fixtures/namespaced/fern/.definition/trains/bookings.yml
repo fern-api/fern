@@ -75,6 +75,7 @@ service:
       display-name: Create a booking
       request:
         body: trainsRoot.Booking
+        content-type: application/json
       response:
         docs: Booking successful
         type: CreateBookingResponse

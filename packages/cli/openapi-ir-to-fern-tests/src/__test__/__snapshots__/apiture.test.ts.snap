@@ -823,6 +823,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
                 ],
                 "properties": {},
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "NewJointOwnerInvitation",
               "query-parameters": undefined,
@@ -1001,6 +1002,7 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
                 ],
                 "properties": {},
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "OverdraftProtectionPatch",
               "query-parameters": undefined,
@@ -1338,6 +1340,7 @@ Note: This operation requires an identity challenge if the financial institution
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "Challenge": {
                   "docs": "This operation may require a completed challenge. If the first attempt calling this operation fails with a 401 \`challengeRequired\` error, the client should complete the challenge flow as described in the Challenges API, then retry the operation with this \`Challenge\` request header using the \`challengeToken\` returned at the end of that flow. If this is passed but the value is invalid, the operation fails with a 401 status code and the \`invalidChallengeHeader\` problem type.",
@@ -1650,6 +1653,7 @@ Note: This operation requires an identity challenge if the financial institution
                   },
                 },
               },
+              "content-type": "application/merge-patch+json",
               "headers": {
                 "Challenge": {
                   "docs": "This operation may require a completed challenge. If the first attempt calling this operation fails with a 401 \`challengeRequired\` error, the client should complete the challenge flow as described in the Challenges API, then retry the operation with this \`Challenge\` request header using the \`challengeToken\` returned at the end of that flow. If this is passed but the value is invalid, the operation fails with a 401 status code and the \`invalidChallengeHeader\` problem type.",
@@ -6915,6 +6919,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
                 ],
                 "properties": {},
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "NewJointOwnerInvitation",
               "query-parameters": undefined,
@@ -7093,6 +7098,7 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
                 ],
                 "properties": {},
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "OverdraftProtectionPatch",
               "query-parameters": undefined,
@@ -7430,6 +7436,7 @@ Note: This operation requires an identity challenge if the financial institution
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "Challenge": {
                   "docs": "This operation may require a completed challenge. If the first attempt calling this operation fails with a 401 \`challengeRequired\` error, the client should complete the challenge flow as described in the Challenges API, then retry the operation with this \`Challenge\` request header using the \`challengeToken\` returned at the end of that flow. If this is passed but the value is invalid, the operation fails with a 401 status code and the \`invalidChallengeHeader\` problem type.",
@@ -7742,6 +7749,7 @@ Note: This operation requires an identity challenge if the financial institution
                   },
                 },
               },
+              "content-type": "application/merge-patch+json",
               "headers": {
                 "Challenge": {
                   "docs": "This operation may require a completed challenge. If the first attempt calling this operation fails with a 401 \`challengeRequired\` error, the client should complete the challenge flow as described in the Challenges API, then retry the operation with this \`Challenge\` request header using the \`challengeToken\` returned at the end of that flow. If this is passed but the value is invalid, the operation fails with a 401 status code and the \`invalidChallengeHeader\` problem type.",

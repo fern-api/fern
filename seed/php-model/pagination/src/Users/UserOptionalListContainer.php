@@ -20,7 +20,7 @@ class UserOptionalListContainer extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->users = $values['users'] ?? null;
     }
