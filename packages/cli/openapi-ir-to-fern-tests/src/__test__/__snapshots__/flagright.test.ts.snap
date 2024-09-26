@@ -855,6 +855,7 @@ Each consumer Business entity needs three mandatory fields:
           "path": "/business/users",
           "request": {
             "body": "Business",
+            "content-type": "application/json",
           },
           "response": {
             "docs": "Created",
@@ -1283,6 +1284,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 },
               },
             },
+            "content-type": "application/json",
             "headers": undefined,
             "name": "BusinessUserEvent",
             "query-parameters": undefined,
@@ -1437,6 +1439,7 @@ Here are some of the most used payload fields explained (you can find the full p
           "path": "/transactions",
           "request": {
             "body": "Transaction",
+            "content-type": "application/json",
             "name": "PostConsumerTransactionRequest",
             "query-parameters": {
               "validateDestinationUserId": {
@@ -1583,6 +1586,7 @@ Each consumer User entity needs three mandatory fields:
             "body": {
               "type": "User",
             },
+            "content-type": "application/json",
           },
           "response": {
             "docs": "Created",
@@ -1804,6 +1808,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "updatedTransactionAttributes": "optional<TransactionUpdatable>",
               },
             },
+            "content-type": "application/json",
             "headers": undefined,
             "name": "TransactionEvent",
             "query-parameters": undefined,
@@ -2041,6 +2046,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 },
               },
             },
+            "content-type": "application/json",
             "headers": undefined,
             "name": "ConsumerUserEvent",
             "query-parameters": undefined,
@@ -5956,6 +5962,7 @@ Each consumer Business entity needs three mandatory fields:
           "path": "/business/users",
           "request": {
             "body": "Business",
+            "content-type": "application/json",
           },
           "response": {
             "docs": "Created",
@@ -6384,6 +6391,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 },
               },
             },
+            "content-type": "application/json",
             "headers": undefined,
             "name": "BusinessUserEvent",
             "query-parameters": undefined,
@@ -6538,6 +6546,7 @@ Here are some of the most used payload fields explained (you can find the full p
           "path": "/transactions",
           "request": {
             "body": "Transaction",
+            "content-type": "application/json",
             "name": "PostConsumerTransactionRequest",
             "query-parameters": {
               "validateDestinationUserId": {
@@ -6684,6 +6693,7 @@ Each consumer User entity needs three mandatory fields:
             "body": {
               "type": "User",
             },
+            "content-type": "application/json",
           },
           "response": {
             "docs": "Created",
@@ -6905,6 +6915,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "updatedTransactionAttributes": "optional<TransactionUpdatable>",
               },
             },
+            "content-type": "application/json",
             "headers": undefined,
             "name": "TransactionEvent",
             "query-parameters": undefined,
@@ -7142,6 +7153,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 },
               },
             },
+            "content-type": "application/json",
             "headers": undefined,
             "name": "ConsumerUserEvent",
             "query-parameters": undefined,

@@ -34,7 +34,7 @@ class FetchResponse extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->columns = $values['columns'] ?? null;
         $this->namespace = $values['namespace'] ?? null;

@@ -41,7 +41,7 @@ class QueryResponse extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->results = $values['results'] ?? null;
         $this->matches = $values['matches'] ?? null;

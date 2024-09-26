@@ -20,7 +20,7 @@ class Tree extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->nodes = $values['nodes'] ?? null;
     }

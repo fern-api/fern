@@ -384,6 +384,7 @@ service:
               audiences:
                 - public
               availability: pre-release
+        content-type: application/json
       response:
         docs: OK
         type: list<string>

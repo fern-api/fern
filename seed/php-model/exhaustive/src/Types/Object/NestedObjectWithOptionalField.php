@@ -26,7 +26,7 @@ class NestedObjectWithOptionalField extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->string = $values['string'] ?? null;
         $this->nestedObject = $values['nestedObject'] ?? null;

@@ -1,8 +1,13 @@
-- version: 0.1.3
+- version: 0.1.4
   changelogEntry:
     - type: fix
       summary: >-
         Fix ci.yml `php-version` field name.
+- version: 0.1.3
+  changelogEntry:
+    - type: feat
+      summary: >-
+        We now allow an empty constructor on types with no required properties.
 - version: 0.1.2
   changelogEntry:
     - type: feat

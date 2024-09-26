@@ -19,7 +19,7 @@ class TestCaseExpects extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->expectedStdout = $values['expectedStdout'] ?? null;
     }

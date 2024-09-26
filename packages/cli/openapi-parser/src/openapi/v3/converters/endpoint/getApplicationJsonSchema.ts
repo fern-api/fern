@@ -6,6 +6,7 @@ import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserCon
 import { OpenAPIExtension } from "../../extensions/extensions";
 
 export interface ApplicationJsonMediaObject {
+    contentType?: string;
     schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
     examples: NamedFullExample[];
 }
@@ -24,6 +25,7 @@ export function getApplicationJsonSchemaMediaObject(
             const schema = mediaObject.schema;
 
             return {
+                contentType: !contentType.includes("*") ? contentType : undefined,
                 schema: schema ?? {},
                 examples: getExamples(mediaObject, context)
             };

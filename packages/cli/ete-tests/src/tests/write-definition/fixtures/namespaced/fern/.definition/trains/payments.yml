@@ -26,6 +26,7 @@ service:
       display-name: Pay for a Booking
       request:
         body: trainsRoot.BookingPayment
+        content-type: application/json
       response:
         docs: Payment successful
         type: CreateBookingPaymentResponse

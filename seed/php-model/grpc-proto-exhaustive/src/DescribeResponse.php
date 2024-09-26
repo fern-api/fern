@@ -41,7 +41,7 @@ class DescribeResponse extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->namespaces = $values['namespaces'] ?? null;
         $this->dimension = $values['dimension'] ?? null;

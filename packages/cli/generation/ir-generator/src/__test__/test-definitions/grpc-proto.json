@@ -857,7 +857,7 @@
                             }
                         },
                         "extends": [],
-                        "contentType": null,
+                        "contentType": "application/json",
                         "properties": [
                             {
                                 "name": {

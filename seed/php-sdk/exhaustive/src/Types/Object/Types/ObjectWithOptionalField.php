@@ -106,7 +106,7 @@ class ObjectWithOptionalField extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->string = $values['string'] ?? null;
         $this->integer = $values['integer'] ?? null;

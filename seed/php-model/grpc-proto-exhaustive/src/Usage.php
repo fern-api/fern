@@ -19,7 +19,7 @@ class Usage extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->units = $values['units'] ?? null;
     }

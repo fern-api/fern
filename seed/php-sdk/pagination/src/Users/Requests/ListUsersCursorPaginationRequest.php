@@ -37,7 +37,7 @@ class ListUsersCursorPaginationRequest extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->page = $values['page'] ?? null;
         $this->perPage = $values['perPage'] ?? null;

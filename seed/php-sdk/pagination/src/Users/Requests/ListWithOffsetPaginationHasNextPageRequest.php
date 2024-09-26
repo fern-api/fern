@@ -32,7 +32,7 @@ class ListWithOffsetPaginationHasNextPageRequest extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->page = $values['page'] ?? null;
         $this->limit = $values['limit'] ?? null;

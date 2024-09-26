@@ -373,6 +373,7 @@ exports[`open api parser > axle > docs 1`] = `
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "x-client-id": {
                   "docs": "Your client ID. This will be shared with you during onboarding.",
@@ -627,6 +628,7 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "x-client-id": {
                   "docs": "Your client ID. This will be shared with you during onboarding.",
@@ -1252,6 +1254,7 @@ exports[`open api parser > axle > simple 1`] = `
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "StartIgnitionRequest",
               "query-parameters": undefined,
@@ -1477,6 +1480,7 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "ExchangeTokenRequest",
               "query-parameters": undefined,

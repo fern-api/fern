@@ -19,7 +19,7 @@ class CreateResponse extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->user = $values['user'] ?? null;
     }
