@@ -112,6 +112,7 @@ export async function runRemoteGenerationForGenerator({
         version,
         intermediateRepresentation: {
             ...ir,
+            fdrApiDefinitionId,
             publishConfig: getPublishConfig({ generatorInvocation: generatorInvocationWithEnvVarSubstitutions })
         },
         shouldLogS3Url,
