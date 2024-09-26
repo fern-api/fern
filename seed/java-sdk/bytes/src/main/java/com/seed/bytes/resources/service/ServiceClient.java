@@ -4,7 +4,6 @@
 package com.seed.bytes.resources.service;
 
 import com.seed.bytes.core.ClientOptions;
-import com.seed.bytes.core.FileStream;
 import com.seed.bytes.core.InputStreamRequestBody;
 import com.seed.bytes.core.ObjectMappers;
 import com.seed.bytes.core.RequestOptions;
@@ -37,12 +36,11 @@ public class ServiceClient {
                 .newBuilder()
                 .addPathSegments("upload-content")
                 .build();
-        Request.Builder requestBuilder = new Request.Builder()
+        Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("POST", new InputStreamRequestBody(MediaType.parse("application/octet-stream"), inputStream))
-                .headers(Headers.of(clientOptions.headers(requestOptions)));
-
-        Request okhttpRequest = requestBuilder.build();
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .build();
 
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
