@@ -237,6 +237,11 @@ paths:
                   stream: false
                   context: You're super wise
                   query: What is the weather today
+                  containerObject:
+                    nestedObjects:
+                      - literal1: literal1
+                        literal2: literal2
+                        strProp: strProp
 components:
   schemas:
     SendResponse:
@@ -295,11 +300,40 @@ components:
         maybeContext:
           $ref: '#/components/schemas/SomeLiteral'
           nullable: true
+        containerObject:
+          $ref: '#/components/schemas/ContainerObject'
       required:
         - prompt
         - query
         - stream
         - context
+        - containerObject
+    ContainerObject:
+      title: ContainerObject
+      type: object
+      properties:
+        nestedObjects:
+          type: array
+          items:
+            $ref: '#/components/schemas/NestedObjectWithLiterals'
+      required:
+        - nestedObjects
+    NestedObjectWithLiterals:
+      title: NestedObjectWithLiterals
+      type: object
+      properties:
+        literal1:
+          type: string
+          const: literal1
+        literal2:
+          type: string
+          const: literal2
+        strProp:
+          type: string
+      required:
+        - literal1
+        - literal2
+        - strProp
     SomeLiteral:
       title: SomeLiteral
       type: string

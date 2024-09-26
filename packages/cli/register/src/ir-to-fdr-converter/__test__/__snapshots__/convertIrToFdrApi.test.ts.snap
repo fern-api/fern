@@ -15106,6 +15106,15 @@ exports[`fdr test definitions > literal 1`] = `
               "pathParameters": {},
               "queryParameters": {},
               "requestBody": {
+                "containerObject": {
+                  "nestedObjects": [
+                    {
+                      "literal1": "literal1",
+                      "literal2": "literal2",
+                      "strProp": "strProp",
+                    },
+                  ],
+                },
                 "context": "You're super wise",
                 "prompt": "You are a helpful assistant",
                 "query": "What is the weather today",
@@ -15114,6 +15123,15 @@ exports[`fdr test definitions > literal 1`] = `
               "requestBodyV3": {
                 "type": "json",
                 "value": {
+                  "containerObject": {
+                    "nestedObjects": [
+                      {
+                        "literal1": "literal1",
+                        "literal2": "literal2",
+                        "strProp": "strProp",
+                      },
+                    ],
+                  },
                   "context": "You're super wise",
                   "prompt": "You are a helpful assistant",
                   "query": "What is the weather today",
@@ -15186,6 +15204,8 @@ exports[`fdr test definitions > literal 1`] = `
       "subpackages": [],
       "types": [
         "type_reference:SendRequest",
+        "type_reference:ContainerObject",
+        "type_reference:NestedObjectWithLiterals",
         "type_reference:SomeLiteral",
       ],
       "webhooks": [],
@@ -15303,6 +15323,79 @@ exports[`fdr test definitions > literal 1`] = `
         },
       },
     },
+    "type_reference:ContainerObject": {
+      "availability": undefined,
+      "description": undefined,
+      "name": "ContainerObject",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "nestedObjects",
+            "valueType": {
+              "itemType": {
+                "type": "id",
+                "value": "type_reference:NestedObjectWithLiterals",
+              },
+              "type": "list",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "type_reference:NestedObjectWithLiterals": {
+      "availability": undefined,
+      "description": undefined,
+      "name": "NestedObjectWithLiterals",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "literal1",
+            "valueType": {
+              "type": "literal",
+              "value": {
+                "type": "stringLiteral",
+                "value": "literal1",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "literal2",
+            "valueType": {
+              "type": "literal",
+              "value": {
+                "type": "stringLiteral",
+                "value": "literal2",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "strProp",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
     "type_reference:SendRequest": {
       "availability": undefined,
       "description": undefined,
@@ -15368,6 +15461,15 @@ exports[`fdr test definitions > literal 1`] = `
                 "value": "type_reference:SomeLiteral",
               },
               "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "containerObject",
+            "valueType": {
+              "type": "id",
+              "value": "type_reference:ContainerObject",
             },
           },
         ],

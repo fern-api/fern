@@ -274,6 +274,15 @@ client = SeedLiteral(
 )
 client.reference.send(
     query="What is the weather today",
+    container_object={
+        "nested_objects": [
+            {
+                "literal_1": "literal1",
+                "literal_2": "literal2",
+                "str_prop": "strProp",
+            }
+        ]
+    },
 )
 
 ```
@@ -291,6 +300,14 @@ client.reference.send(
 <dd>
 
 **query:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**container_object:** `ContainerObjectParams` 
     
 </dd>
 </dl>

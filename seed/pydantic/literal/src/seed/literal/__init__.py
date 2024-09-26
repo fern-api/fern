@@ -3,6 +3,8 @@
 from .resources import (
     ANestedLiteral,
     ATopLevelLiteral,
+    ContainerObject,
+    NestedObjectWithLiterals,
     SendRequest,
     SomeAliasedLiteral,
     SomeLiteral,
@@ -14,6 +16,8 @@ from .send_response import SendResponse
 __all__ = [
     "ANestedLiteral",
     "ATopLevelLiteral",
+    "ContainerObject",
+    "NestedObjectWithLiterals",
     "SendRequest",
     "SendResponse",
     "SomeAliasedLiteral",
