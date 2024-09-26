@@ -947,6 +947,7 @@ service:
       display-name: Create a booking
       request:
         body: trainsRoot.Booking
+        content-type: application/json
       response:
         docs: Booking successful
         type: CreateBookingResponse
@@ -1061,6 +1062,7 @@ service:
       display-name: Pay for a Booking
       request:
         body: trainsRoot.BookingPayment
+        content-type: application/json
       response:
         docs: Payment successful
         type: CreateBookingPaymentResponse
@@ -1867,6 +1869,7 @@ service:
               audiences:
                 - public
               availability: pre-release
+        content-type: application/json
       response:
         docs: OK
         type: list<string>
@@ -2150,6 +2153,7 @@ service:
             return_prompt:
               type: optional<boolean>
               docs: Whether to return the prompt in the response.
+        content-type: application/json
       response:
         docs: OK
         type: list<string>

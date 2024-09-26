@@ -48,6 +48,7 @@ exports[`open api parser > hathora > docs 1`] = `
             "path": "/apps/v1/create",
             "request": {
               "body": "root.AppConfig",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "",
@@ -212,6 +213,7 @@ exports[`open api parser > hathora > docs 1`] = `
             },
             "request": {
               "body": "root.AppConfig",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Ok",
@@ -295,6 +297,7 @@ exports[`open api parser > hathora > docs 1`] = `
                   "idToken": "string",
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "LoginGoogleRequest",
               "query-parameters": undefined,
@@ -337,6 +340,7 @@ exports[`open api parser > hathora > docs 1`] = `
                   "nickname": "string",
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "LoginNicknameRequest",
               "query-parameters": undefined,
@@ -650,6 +654,7 @@ exports[`open api parser > hathora > docs 1`] = `
             },
             "request": {
               "body": "root.DeploymentConfig",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "",
@@ -1031,6 +1036,7 @@ exports[`open api parser > hathora > docs 1`] = `
                   "visibility": "CreateLobbyRequestVisibility",
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "Authorization": {
                   "name": "authorization",
@@ -1104,6 +1110,7 @@ exports[`open api parser > hathora > docs 1`] = `
                   "region": "root.Region",
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "Authorization": {
                   "name": "authorization",
@@ -1177,6 +1184,7 @@ exports[`open api parser > hathora > docs 1`] = `
                   "region": "root.Region",
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "Authorization": {
                   "name": "authorization",
@@ -1250,6 +1258,7 @@ exports[`open api parser > hathora > docs 1`] = `
                   "region": "root.Region",
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "Authorization": {
                   "name": "authorization",
@@ -1405,6 +1414,7 @@ exports[`open api parser > hathora > docs 1`] = `
                   "state": "map<string, unknown>",
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "SetLobbyStateRequest",
               "query-parameters": undefined,
@@ -1814,6 +1824,7 @@ exports[`open api parser > hathora > docs 1`] = `
                   "region": "root.Region",
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "CreateRoomRequest",
               "query-parameters": undefined,
@@ -2982,6 +2993,7 @@ exports[`open api parser > hathora > simple 1`] = `
             "path": "/apps/v1/create",
             "request": {
               "body": "root.AppConfig",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "",
@@ -3146,6 +3158,7 @@ exports[`open api parser > hathora > simple 1`] = `
             },
             "request": {
               "body": "root.AppConfig",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "Ok",
@@ -3229,6 +3242,7 @@ exports[`open api parser > hathora > simple 1`] = `
                   "idToken": "string",
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "LoginGoogleRequest",
               "query-parameters": undefined,
@@ -3271,6 +3285,7 @@ exports[`open api parser > hathora > simple 1`] = `
                   "nickname": "string",
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "LoginNicknameRequest",
               "query-parameters": undefined,
@@ -3584,6 +3599,7 @@ exports[`open api parser > hathora > simple 1`] = `
             },
             "request": {
               "body": "root.DeploymentConfig",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "",
@@ -3965,6 +3981,7 @@ exports[`open api parser > hathora > simple 1`] = `
                   "visibility": "CreateLobbyRequestVisibility",
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "Authorization": {
                   "name": "authorization",
@@ -4038,6 +4055,7 @@ exports[`open api parser > hathora > simple 1`] = `
                   "region": "root.Region",
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "Authorization": {
                   "name": "authorization",
@@ -4111,6 +4129,7 @@ exports[`open api parser > hathora > simple 1`] = `
                   "region": "root.Region",
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "Authorization": {
                   "name": "authorization",
@@ -4184,6 +4203,7 @@ exports[`open api parser > hathora > simple 1`] = `
                   "region": "root.Region",
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "Authorization": {
                   "name": "authorization",
@@ -4339,6 +4359,7 @@ exports[`open api parser > hathora > simple 1`] = `
                   "state": "map<string, unknown>",
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "SetLobbyStateRequest",
               "query-parameters": undefined,
@@ -4748,6 +4769,7 @@ exports[`open api parser > hathora > simple 1`] = `
                   "region": "root.Region",
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "CreateRoomRequest",
               "query-parameters": undefined,

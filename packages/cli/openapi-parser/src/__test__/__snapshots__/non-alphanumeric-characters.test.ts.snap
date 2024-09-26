@@ -50,7 +50,7 @@ exports[`non alphanumeric characters > non-alphanumeric-characters > parse open 
       "queryParameters": [],
       "request": {
         "additionalProperties": false,
-        "contentType": null,
+        "contentType": "application/json",
         "description": null,
         "schema": {
           "availability": null,

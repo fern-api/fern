@@ -2512,6 +2512,7 @@ client.connect()
             "path": "/api/accounts/",
             "request": {
               "body": "root.PatchBody",
+              "content-type": "application/json",
               "name": "PatchAccountsRequest",
               "query-parameters": {
                 "fields": {
@@ -3488,6 +3489,7 @@ client.connect()
             "path": "/api/accounts/",
             "request": {
               "body": "root.StandardRequest",
+              "content-type": "application/json",
               "name": "RetrieveAccountsRequest",
               "query-parameters": {
                 "fields": {
@@ -4395,6 +4397,7 @@ client.connect()
             "path": "/api/balances/",
             "request": {
               "body": "root.PatchBody",
+              "content-type": "application/json",
               "name": "PatchBalancesRequest",
               "query-parameters": {
                 "fields": {
@@ -4654,6 +4657,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "BalancesRequest",
               "query-parameters": {
@@ -4963,6 +4967,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             "path": "/payments/bank-accounts/",
             "request": {
               "body": "CreateBankAccountRequest",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "OK (Created)",
@@ -5473,6 +5478,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "CategorizationRequest",
               "query-parameters": undefined,
@@ -5673,6 +5679,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             "path": "/payments/customers/",
             "request": {
               "body": "CreateCustomerRequest",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "OK (Created)",
@@ -6378,6 +6385,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "EmploymentRecordRequest",
               "query-parameters": {
@@ -6561,6 +6569,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "EyodIncomeVerificationRequest",
               "query-parameters": undefined,
@@ -7216,6 +7225,7 @@ client.connect()
             "path": "/api/incomes/",
             "request": {
               "body": "root.PatchBody",
+              "content-type": "application/json",
               "name": "PatchIncomesRequest",
               "query-parameters": {
                 "fields": {
@@ -7441,6 +7451,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "IncomesRequest",
               "query-parameters": {
@@ -8518,6 +8529,7 @@ client.connect()
             "path": "/investments/portfolios/",
             "request": {
               "body": "root.PatchBodyWithoutSaveData",
+              "content-type": "application/json",
               "name": "PatchPortfolioRequest",
               "query-parameters": {
                 "fields": {
@@ -8681,6 +8693,7 @@ client.connect()
             "path": "/investments/portfolios/",
             "request": {
               "body": "root.StandardRequest",
+              "content-type": "application/json",
               "name": "RetrievePortfolioRequest",
               "query-parameters": {
                 "fields": {
@@ -11310,6 +11323,7 @@ client.connect()
             "path": "/api/invoices/",
             "request": {
               "body": "root.PatchBody",
+              "content-type": "application/json",
               "name": "PatchInvoicesRequest",
               "query-parameters": {
                 "fields": {
@@ -12425,6 +12439,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   "type": "optional<root.EnumInvoiceType>",
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "InvoicesRequest",
               "query-parameters": {
@@ -12592,6 +12607,7 @@ For single links, you have to perform POST calls to an institution **every time*
                   "access_mode": "root.EnumLinkAccessModeRequest",
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "ChangeAccessMode",
               "query-parameters": {
@@ -13221,6 +13237,7 @@ client.connect()
             "path": "/api/links/",
             "request": {
               "body": "root.PatchBodyWithoutSaveData",
+              "content-type": "application/json",
               "name": "PatchLinksRequest",
               "query-parameters": {
                 "fields": {
@@ -13513,6 +13530,7 @@ For a list of standards codes, see the table below.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "LinksRequest",
               "query-parameters": {
@@ -13740,6 +13758,7 @@ Belvo supports a base64 encoded \`private_key\`. If the \`private_key\` paramete
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "LinksPutRequest",
               "query-parameters": {
@@ -14410,6 +14429,7 @@ Cancun, COL 10447",
             "path": "/api/owners/",
             "request": {
               "body": "root.PatchBody",
+              "content-type": "application/json",
               "name": "PatchOwnersRequest",
               "query-parameters": {
                 "fields": {
@@ -14560,6 +14580,7 @@ Cancun, COL 10447",
             "path": "/api/owners/",
             "request": {
               "body": "root.StandardRequest",
+              "content-type": "application/json",
               "name": "RetrieveOwnersRequest",
               "query-parameters": {
                 "fields": {
@@ -14962,6 +14983,7 @@ A payment intent captures all payment information (such as the amount to be char
                   "provider": "root.EnumPaymentLinkProvider",
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "CreatePaymentIntentPse",
               "query-parameters": undefined,
@@ -15459,6 +15481,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "PatchPaymentIntentPse",
               "query-parameters": undefined,
@@ -15634,6 +15657,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
             "path": "/payments/payment-links/",
             "request": {
               "body": "CreatePaymentlinkRequest",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "OK (Created)",
@@ -16367,6 +16391,7 @@ You can use the Payment Transactions resource in order to get useful information
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "PaymentWebhookRequest",
               "query-parameters": undefined,
@@ -16774,6 +16799,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "ReceivableTransactionRequest",
               "query-parameters": {
@@ -17497,6 +17523,7 @@ client.connect()
             "path": "/api/recurring-expenses/",
             "request": {
               "body": "root.PatchBody",
+              "content-type": "application/json",
               "name": "PatchRecurringExpensesRequest",
               "query-parameters": {
                 "fields": {
@@ -17731,6 +17758,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "RecurringExpensesRequest",
               "query-parameters": {
@@ -18544,6 +18572,7 @@ client.connect()
             "path": "/api/risk-insights/",
             "request": {
               "body": "root.PatchBody",
+              "content-type": "application/json",
               "name": "PatchRiskInsightsRequest",
               "query-parameters": {
                 "fields": {
@@ -18755,6 +18784,7 @@ client.connect()
             "path": "/api/risk-insights/",
             "request": {
               "body": "root.StandardRequest",
+              "content-type": "application/json",
               "name": "RetrieveRiskInsightsRequest",
               "query-parameters": {
                 "fields": {
@@ -19522,6 +19552,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "TaxComplianceStatusRequest",
               "query-parameters": {
@@ -20366,6 +20397,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "TaxDeclarationsRequest",
               "query-parameters": {
@@ -20852,6 +20884,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   "type": "root.EnumTaxRetentionType",
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "TaxRetentionsRequest",
               "query-parameters": {
@@ -25473,6 +25506,7 @@ client.connect()
             "path": "/api/tax-returns/",
             "request": {
               "body": "RetrieveTaxReturnsRequestBody",
+              "content-type": "application/json",
               "name": "RetrieveTaxReturnsRequest",
               "query-parameters": {
                 "fields": {
@@ -26869,6 +26903,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "TaxStatusRequest",
               "query-parameters": {
@@ -29197,6 +29232,7 @@ client.connect()
             "path": "/api/transactions/",
             "request": {
               "body": "root.PatchBody",
+              "content-type": "application/json",
               "name": "PatchTransactionsRequest",
               "query-parameters": {
                 "fields": {
@@ -29811,6 +29847,7 @@ client.connect()
             "path": "/api/transactions/",
             "request": {
               "body": "root.TransactionsRequest",
+              "content-type": "application/json",
               "name": "RetrieveTransactionsRequest",
               "query-parameters": {
                 "fields": {
@@ -29962,6 +29999,7 @@ client.connect()
             "path": "/api/transactions/",
             "request": {
               "body": "root.TransactionsRequest",
+              "content-type": "application/json",
               "headers": {
                 "X-Belvo-Request-Mode": {
                   "name": "belvoRequestMode",
@@ -45228,6 +45266,7 @@ client.connect()
             "path": "/api/accounts/",
             "request": {
               "body": "root.PatchBody",
+              "content-type": "application/json",
               "name": "PatchAccountsRequest",
               "query-parameters": {
                 "fields": {
@@ -46204,6 +46243,7 @@ client.connect()
             "path": "/api/accounts/",
             "request": {
               "body": "root.StandardRequest",
+              "content-type": "application/json",
               "name": "RetrieveAccountsRequest",
               "query-parameters": {
                 "fields": {
@@ -47111,6 +47151,7 @@ client.connect()
             "path": "/api/balances/",
             "request": {
               "body": "root.PatchBody",
+              "content-type": "application/json",
               "name": "PatchBalancesRequest",
               "query-parameters": {
                 "fields": {
@@ -47370,6 +47411,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "BalancesRequest",
               "query-parameters": {
@@ -47679,6 +47721,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             "path": "/payments/bank-accounts/",
             "request": {
               "body": "CreateBankAccountRequest",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "OK (Created)",
@@ -48189,6 +48232,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "CategorizationRequest",
               "query-parameters": undefined,
@@ -48389,6 +48433,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             "path": "/payments/customers/",
             "request": {
               "body": "CreateCustomerRequest",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "OK (Created)",
@@ -49094,6 +49139,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "EmploymentRecordRequest",
               "query-parameters": {
@@ -49277,6 +49323,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "EyodIncomeVerificationRequest",
               "query-parameters": undefined,
@@ -49932,6 +49979,7 @@ client.connect()
             "path": "/api/incomes/",
             "request": {
               "body": "root.PatchBody",
+              "content-type": "application/json",
               "name": "PatchIncomesRequest",
               "query-parameters": {
                 "fields": {
@@ -50157,6 +50205,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "IncomesRequest",
               "query-parameters": {
@@ -51234,6 +51283,7 @@ client.connect()
             "path": "/investments/portfolios/",
             "request": {
               "body": "root.PatchBodyWithoutSaveData",
+              "content-type": "application/json",
               "name": "PatchPortfolioRequest",
               "query-parameters": {
                 "fields": {
@@ -51397,6 +51447,7 @@ client.connect()
             "path": "/investments/portfolios/",
             "request": {
               "body": "root.StandardRequest",
+              "content-type": "application/json",
               "name": "RetrievePortfolioRequest",
               "query-parameters": {
                 "fields": {
@@ -54026,6 +54077,7 @@ client.connect()
             "path": "/api/invoices/",
             "request": {
               "body": "root.PatchBody",
+              "content-type": "application/json",
               "name": "PatchInvoicesRequest",
               "query-parameters": {
                 "fields": {
@@ -55141,6 +55193,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   "type": "optional<root.EnumInvoiceType>",
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "InvoicesRequest",
               "query-parameters": {
@@ -55308,6 +55361,7 @@ For single links, you have to perform POST calls to an institution **every time*
                   "access_mode": "root.EnumLinkAccessModeRequest",
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "ChangeAccessMode",
               "query-parameters": {
@@ -55937,6 +55991,7 @@ client.connect()
             "path": "/api/links/",
             "request": {
               "body": "root.PatchBodyWithoutSaveData",
+              "content-type": "application/json",
               "name": "PatchLinksRequest",
               "query-parameters": {
                 "fields": {
@@ -56229,6 +56284,7 @@ For a list of standards codes, see the table below.
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "LinksRequest",
               "query-parameters": {
@@ -56456,6 +56512,7 @@ Belvo supports a base64 encoded \`private_key\`. If the \`private_key\` paramete
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "LinksPutRequest",
               "query-parameters": {
@@ -57126,6 +57183,7 @@ Cancun, COL 10447",
             "path": "/api/owners/",
             "request": {
               "body": "root.PatchBody",
+              "content-type": "application/json",
               "name": "PatchOwnersRequest",
               "query-parameters": {
                 "fields": {
@@ -57276,6 +57334,7 @@ Cancun, COL 10447",
             "path": "/api/owners/",
             "request": {
               "body": "root.StandardRequest",
+              "content-type": "application/json",
               "name": "RetrieveOwnersRequest",
               "query-parameters": {
                 "fields": {
@@ -57678,6 +57737,7 @@ A payment intent captures all payment information (such as the amount to be char
                   "provider": "root.EnumPaymentLinkProvider",
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "CreatePaymentIntentPse",
               "query-parameters": undefined,
@@ -58175,6 +58235,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "PatchPaymentIntentPse",
               "query-parameters": undefined,
@@ -58350,6 +58411,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
             "path": "/payments/payment-links/",
             "request": {
               "body": "CreatePaymentlinkRequest",
+              "content-type": "application/json",
             },
             "response": {
               "docs": "OK (Created)",
@@ -59083,6 +59145,7 @@ You can use the Payment Transactions resource in order to get useful information
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "PaymentWebhookRequest",
               "query-parameters": undefined,
@@ -59490,6 +59553,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "ReceivableTransactionRequest",
               "query-parameters": {
@@ -60213,6 +60277,7 @@ client.connect()
             "path": "/api/recurring-expenses/",
             "request": {
               "body": "root.PatchBody",
+              "content-type": "application/json",
               "name": "PatchRecurringExpensesRequest",
               "query-parameters": {
                 "fields": {
@@ -60447,6 +60512,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "RecurringExpensesRequest",
               "query-parameters": {
@@ -61260,6 +61326,7 @@ client.connect()
             "path": "/api/risk-insights/",
             "request": {
               "body": "root.PatchBody",
+              "content-type": "application/json",
               "name": "PatchRiskInsightsRequest",
               "query-parameters": {
                 "fields": {
@@ -61471,6 +61538,7 @@ client.connect()
             "path": "/api/risk-insights/",
             "request": {
               "body": "root.StandardRequest",
+              "content-type": "application/json",
               "name": "RetrieveRiskInsightsRequest",
               "query-parameters": {
                 "fields": {
@@ -62238,6 +62306,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "TaxComplianceStatusRequest",
               "query-parameters": {
@@ -63082,6 +63151,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "TaxDeclarationsRequest",
               "query-parameters": {
@@ -63568,6 +63638,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   "type": "root.EnumTaxRetentionType",
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "TaxRetentionsRequest",
               "query-parameters": {
@@ -68189,6 +68260,7 @@ client.connect()
             "path": "/api/tax-returns/",
             "request": {
               "body": "RetrieveTaxReturnsRequestBody",
+              "content-type": "application/json",
               "name": "RetrieveTaxReturnsRequest",
               "query-parameters": {
                 "fields": {
@@ -69585,6 +69657,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "TaxStatusRequest",
               "query-parameters": {
@@ -71913,6 +71986,7 @@ client.connect()
             "path": "/api/transactions/",
             "request": {
               "body": "root.PatchBody",
+              "content-type": "application/json",
               "name": "PatchTransactionsRequest",
               "query-parameters": {
                 "fields": {
@@ -72527,6 +72601,7 @@ client.connect()
             "path": "/api/transactions/",
             "request": {
               "body": "root.TransactionsRequest",
+              "content-type": "application/json",
               "name": "RetrieveTransactionsRequest",
               "query-parameters": {
                 "fields": {
@@ -72678,6 +72753,7 @@ client.connect()
             "path": "/api/transactions/",
             "request": {
               "body": "root.TransactionsRequest",
+              "content-type": "application/json",
               "headers": {
                 "X-Belvo-Request-Mode": {
                   "name": "belvoRequestMode",

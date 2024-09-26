@@ -108,6 +108,7 @@ service:
             return_prompt:
               type: optional<boolean>
               docs: Whether to return the prompt in the response.
+        content-type: application/json
       response:
         docs: OK
         type: list<string>

@@ -26,6 +26,7 @@ exports[`non alphanumeric characters > non-alphanumeric-characters > docs 1`] = 
           "path": "/settings",
           "request": {
             "body": "Settings",
+            "content-type": "application/json",
           },
           "response": {
             "docs": "OK",
@@ -112,6 +113,7 @@ exports[`non alphanumeric characters > non-alphanumeric-characters > simple 1`] 
           "path": "/settings",
           "request": {
             "body": "Settings",
+            "content-type": "application/json",
           },
           "response": {
             "docs": "OK",

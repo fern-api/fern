@@ -51,6 +51,7 @@ exports[`x-fern-global-headers > x-fern-global-headers > docs 1`] = `
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "x-api-key": {
                   "name": "apiKey",
@@ -86,6 +87,7 @@ exports[`x-fern-global-headers > x-fern-global-headers > docs 1`] = `
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "x-api-key": {
                   "name": "apiKey",
@@ -234,6 +236,7 @@ exports[`x-fern-global-headers > x-fern-global-headers > docs 2`] = `
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "x-api-key": {
                   "name": "apiKey",
@@ -269,6 +272,7 @@ exports[`x-fern-global-headers > x-fern-global-headers > docs 2`] = `
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "x-api-key": {
                   "name": "apiKey",
@@ -415,6 +419,7 @@ exports[`x-fern-global-headers > x-fern-global-headers > simple 1`] = `
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "UserGetRequest",
               "query-parameters": undefined,
@@ -445,6 +450,7 @@ exports[`x-fern-global-headers > x-fern-global-headers > simple 1`] = `
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": undefined,
               "name": "UserGetStreamRequest",
               "query-parameters": undefined,
@@ -594,6 +600,7 @@ exports[`x-fern-global-headers > x-fern-global-headers > simple 2`] = `
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "another_header": {
                   "name": "anotherHeader",
@@ -637,6 +644,7 @@ exports[`x-fern-global-headers > x-fern-global-headers > simple 2`] = `
                   },
                 },
               },
+              "content-type": "application/json",
               "headers": {
                 "another_header": {
                   "name": "anotherHeader",
