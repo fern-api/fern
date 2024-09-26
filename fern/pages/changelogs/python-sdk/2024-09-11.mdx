@@ -1,6 +1,5 @@
-## 4.0.0-rc6
-**`(fix):`** Pydantic models now call update forward refs on non-uion circular references. This
-prevents runtime errors in certain cases where types self reference itself through
-a union.
+## 4.0.0-rc7
+**`(fix):`** The generator now respects the old use_str_enums flag again, a regression was introduced where only the new flag `enum_type`
+was respected.
 
 

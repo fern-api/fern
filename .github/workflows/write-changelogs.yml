@@ -51,7 +51,10 @@ jobs:
           pnpm seed:local generate changelog cli -o ./fern/pages/changelogs/cli/
 
       - uses: stefanzweifel/git-auto-commit-action@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.FERN_GITHUB_PAT }}
         with:
           commit_message: "chore: update changelog"
-          add_options: "-A ./fern/pages/changelogs"
+          add_options: -A
+          file_pattern: fern/pages/changelogs/
           token: ${{ secrets.FERN_GITHUB_PAT }}
