@@ -32,6 +32,7 @@ jobs:
         with:
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           ref: ${{ github.event.pull_request.head.ref }}
+          token: ${{ secrets.FERN_GITHUB_PAT }}
 
       - name: Install
         uses: ./.github/actions/install
@@ -53,5 +54,5 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore: update changelog"
-          add_options: "-A ./fern/pages/changelogs"
-          token: ${{ secrets.FERN_GITHUB_PAT }}
+          add_options: -A
+          file_pattern: fern/pages/changelogs/
