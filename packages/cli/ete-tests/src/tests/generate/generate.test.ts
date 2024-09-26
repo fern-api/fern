@@ -21,7 +21,7 @@ describe("fern generate", () => {
         expect(await doesPathExist(join(pathOfDirectory, RelativeFilePath.of("sdks/typescript")))).toBe(true);
     }, 180_000);
 
-    it.skip("ir contains fdr definitionid", async () => {
+    it("ir contains fdr definitionid", async () => {
         const { stdout, stderr } = await runFernCli(["generate", "--log-level", "debug"], {
             cwd: join(fixturesDir, RelativeFilePath.of("basic")),
             reject: false
@@ -34,10 +34,12 @@ describe("fern generate", () => {
         if (filepath == null) {
             throw new Error(`Failed to get path to IR:\n${stdout}`);
         }
-        
+
         // Fails because ts cant issue commands to a temp directory cat ${filepath}
-        const response = await loggingExeca(CONSOLE_LOGGER, `cat ${filepath}`);
-        console.log("stdout", response.stdout);
+        const response = await loggingExeca(CONSOLE_LOGGER, `./ir-contains-fdr-definition-id.sh`, [filepath], {
+            cwd: __dirname
+        });
+        expect(response.exitCode).toEqual(0);
     }, 180_000);
 
     it("missing docs page", async () => {
