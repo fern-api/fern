@@ -5,12 +5,14 @@ package com.seed.bytes.resources.service;
 
 import com.seed.bytes.core.ClientOptions;
 import com.seed.bytes.core.FileStream;
+import com.seed.bytes.core.InputStreamRequestBody;
 import com.seed.bytes.core.ObjectMappers;
 import com.seed.bytes.core.RequestOptions;
 import com.seed.bytes.core.SeedBytesApiException;
 import com.seed.bytes.core.SeedBytesException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
@@ -30,19 +32,15 @@ public class ServiceClient {
         upload(request, null);
     }
 
-    public void upload(FileStream fileStream, RequestOptions requestOptions) {
+    public void upload(InputStream inputStream, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("upload-content")
                 .build();
         Request.Builder requestBuilder = new Request.Builder()
                 .url(httpUrl)
-                .method("POST", fileStream.toRequestBody())
+                .method("POST", new InputStreamRequestBody(MediaType.parse("application/octet-stream"), inputStream))
                 .headers(Headers.of(clientOptions.headers(requestOptions)));
-
-        if (fileStream.getContentType() != null) {
-            requestBuilder.addHeader("Content-Type", fileStream.getContentType().toString());
-        }
 
         Request okhttpRequest = requestBuilder.build();
 
@@ -67,8 +65,6 @@ public class ServiceClient {
 
     // Overload for backward compatibility
     public void upload(byte[] request, RequestOptions requestOptions) {
-        FileStream fileStream =
-                new FileStream(new ByteArrayInputStream(request), null, MediaType.parse("application/octet-stream"));
-        upload(fileStream, requestOptions);
+        upload(new ByteArrayInputStream(request), requestOptions);
     }
 }
