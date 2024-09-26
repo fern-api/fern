@@ -120,5 +120,13 @@ module.exports = {
         "@typescript-eslint/no-empty-interface": "off",
         "@typescript-eslint/no-unnecessary-condition": "off",
         "eslint-comments/no-unused-disable": "off"
-    }
+    },
+    overrides: [
+        {
+            files: ['**/*.test.ts', '**/*.spec.ts'],
+            rules: {
+            'no-console': 'off'
+            }
+        }
+    ]
 };
