@@ -55,4 +55,4 @@ jobs:
         with:
           commit_message: "chore: update changelog"
           add_options: "-A ./fern/pages/changelogs"
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.FERN_GITHUB_PAT }}
