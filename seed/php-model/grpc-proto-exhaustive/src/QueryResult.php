@@ -27,7 +27,7 @@ class QueryResult extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->matches = $values['matches'] ?? null;
         $this->namespace = $values['namespace'] ?? null;
