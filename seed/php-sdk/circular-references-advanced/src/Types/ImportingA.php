@@ -20,7 +20,7 @@ class ImportingA extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->a = $values['a'] ?? null;
     }

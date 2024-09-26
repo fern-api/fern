@@ -1,6 +1,7 @@
 import { AstNode } from "./core/AstNode";
 import { Class } from "./Class";
 import { Writer } from "./core/Writer";
+import { CodeBlock } from "./CodeBlock";
 import { Parameter } from "./Parameter";
 import { Field } from "./Field";
 import { Method } from "./Method";
@@ -61,6 +62,10 @@ export class DataClass extends AstNode {
         this.class_.write(writer);
     }
 
+    private allFieldsAreOptional(): boolean {
+        return this.class_.fields.every((field) => field.type.isOptional());
+    }
+
     private getConstructorParameters({ orderedFields }: { orderedFields: Field[] }): Parameter[] {
         return [
             new Parameter({
@@ -74,7 +79,8 @@ export class DataClass extends AstNode {
                     {
                         multiline: true
                     }
-                )
+                ),
+                initializer: this.allFieldsAreOptional() ? new CodeBlock("[]") : undefined
             })
         ];
     }

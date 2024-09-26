@@ -18,7 +18,7 @@ class ListUsernamesRequest extends SerializableType
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->startingAfter = $values['startingAfter'] ?? null;
     }
