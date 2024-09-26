@@ -68,7 +68,7 @@ export function convertStreamingOperation({
                             : undefined,
                     operation: {
                         ...operationContext.operation,
-                        description: streamingExtension.streamDescription ? operationContext.operation.description,
+                        description: streamingExtension.streamDescription ?? operationContext.operation.description,
                         requestBody: streamingRequestBody?.requestBody,
                         responses: streamingResponses
                     },
