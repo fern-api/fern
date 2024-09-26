@@ -16,7 +16,7 @@ if [ ! -f "$file" ]; then
     exit 1
 fi
 
-# Use jq to check if "bar" key exists
+# Use jq to check if "fdrApiDefinitionId" key exists
 if cat "$file" | jq 'has("fdrApiDefinitionId")' | grep -q true; then
     echo "Success: 'fdrApiDefinitionId' key found in $file"
     exit 0
