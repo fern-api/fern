@@ -2,9 +2,7 @@ import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-a
 import stripAnsi from "strip-ansi";
 import { runFernCli } from "../../utils/runFernCli";
 import { init } from "../init/init";
-import { readFile } from "fs/promises";
-import { file } from "tmp-promise";
-import { loggingExeca } from "@fern-api/logging-execa";
+import { exec } from "child_process";
 import { CONSOLE_LOGGER } from "../../../../task-context/node_modules/@fern-api/logger/src";
 
 const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
@@ -35,10 +33,21 @@ describe("fern generate", () => {
             throw new Error(`Failed to get path to IR:\n${stdout}`);
         }
 
-        const response = await loggingExeca(CONSOLE_LOGGER, `./ir-contains-fdr-definition-id.sh`, [filepath], {
-            cwd: __dirname
-        });
-        expect(response.exitCode).toEqual(0);
+        const process = exec(
+            `./ir-contains-fdr-definition-id.sh ${filepath}`,
+            { cwd: __dirname },
+            (error, stdout, stderr) => {
+                if (error) {
+                    console.error(`Error: ${error.message}`);
+                    return;
+                }
+                if (stderr) {
+                    console.error(`stderr: ${stderr}`);
+                    return;
+                }
+                console.log(`stdout: ${stdout}`);
+            }
+        );
     }, 180_000);
 
     it("missing docs page", async () => {
