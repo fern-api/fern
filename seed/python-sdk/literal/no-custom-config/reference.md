@@ -271,12 +271,20 @@ client.query.send(
 
 ```python
 from seed import SeedLiteral
+from seed.reference import ContainerObject, NestedObjectWithLiterals
 
 client = SeedLiteral(
     base_url="https://yourhost.com/path/to/api",
 )
 client.reference.send(
     query="What is the weather today",
+    container_object=ContainerObject(
+        nested_objects=[
+            NestedObjectWithLiterals(
+                str_prop="strProp",
+            )
+        ],
+    ),
 )
 
 ```
@@ -294,6 +302,14 @@ client.reference.send(
 <dd>
 
 **query:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**container_object:** `ContainerObject` 
     
 </dd>
 </dl>

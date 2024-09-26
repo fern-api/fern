@@ -37,4 +37,13 @@ fixtures:
     - customConfig:
         format: json
       outputFolder: json-format
-
+  enum: 
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        customOverrides: 
+          components: 
+            schemas: 
+              Operand: 
+                type: null     
+      outputFolder: custom-overrides  

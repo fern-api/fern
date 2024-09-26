@@ -43,7 +43,14 @@ export class Reference {
      *         prompt: "You are a helpful assistant",
      *         stream: false,
      *         context: "You're super wise",
-     *         query: "What is the weather today"
+     *         query: "What is the weather today",
+     *         containerObject: {
+     *             nestedObjects: [{
+     *                     literal1: "literal1",
+     *                     literal2: "literal2",
+     *                     strProp: "strProp"
+     *                 }]
+     *         }
      *     })
      */
     public async send(

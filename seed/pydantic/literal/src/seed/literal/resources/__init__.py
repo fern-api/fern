@@ -2,11 +2,13 @@
 
 from . import inlined, reference
 from .inlined import ANestedLiteral, ATopLevelLiteral, SomeAliasedLiteral
-from .reference import SendRequest, SomeLiteral
+from .reference import ContainerObject, NestedObjectWithLiterals, SendRequest, SomeLiteral
 
 __all__ = [
     "ANestedLiteral",
     "ATopLevelLiteral",
+    "ContainerObject",
+    "NestedObjectWithLiterals",
     "SendRequest",
     "SomeAliasedLiteral",
     "SomeLiteral",
