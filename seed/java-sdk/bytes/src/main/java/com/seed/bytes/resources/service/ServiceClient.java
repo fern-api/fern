@@ -16,7 +16,6 @@ import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
@@ -33,13 +32,13 @@ public class ServiceClient {
 
     public void upload(FileStream fileStream, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-            .newBuilder()
-            .addPathSegments("upload-content")
-            .build();
+                .newBuilder()
+                .addPathSegments("upload-content")
+                .build();
         Request.Builder requestBuilder = new Request.Builder()
-            .url(httpUrl)
-            .method("POST", fileStream.toRequestBody())
-            .headers(Headers.of(clientOptions.headers(requestOptions)));
+                .url(httpUrl)
+                .method("POST", fileStream.toRequestBody())
+                .headers(Headers.of(clientOptions.headers(requestOptions)));
 
         if (fileStream.getContentType() != null) {
             requestBuilder.addHeader("Content-Type", fileStream.getContentType().toString());
@@ -68,11 +67,8 @@ public class ServiceClient {
 
     // Overload for backward compatibility
     public void upload(byte[] request, RequestOptions requestOptions) {
-        FileStream fileStream = new FileStream(
-            new ByteArrayInputStream(request),
-            null,
-            MediaType.parse("application/octet-stream")
-        );
+        FileStream fileStream =
+                new FileStream(new ByteArrayInputStream(request), null, MediaType.parse("application/octet-stream"));
         upload(fileStream, requestOptions);
     }
 }
