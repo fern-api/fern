@@ -26,15 +26,12 @@ import java.nio.charset.StandardCharsets;
 public final class FileStreamGenerator extends AbstractFileGenerator {
 
     public FileStreamGenerator(ClientGeneratorContext clientGeneratorContext) {
-        super(
-                clientGeneratorContext.getPoetClassNameFactory().getFileStreamClassName(),
-                clientGeneratorContext);
+        super(clientGeneratorContext.getPoetClassNameFactory().getFileStreamClassName(), clientGeneratorContext);
     }
 
     @Override
     public GeneratedResourcesJavaFile generateFile() {
-        try (InputStream is =
-                FileStreamGenerator.class.getResourceAsStream("/FileStream.java")) {
+        try (InputStream is = FileStreamGenerator.class.getResourceAsStream("/FileStream.java")) {
             String contents = new String(is.readAllBytes(), StandardCharsets.UTF_8);
             return GeneratedResourcesJavaFile.builder()
                     .className(className)
