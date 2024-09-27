@@ -1038,6 +1038,9 @@ func (f *fileWriter) WriteClient(
 				}
 			}
 		}
+		if endpoint.Accept != "" {
+			f.P(fmt.Sprintf(`%s.Set("Accept", %q)`, headersParameter, endpoint.Accept))
+		}
 		if endpoint.ContentType != "" {
 			f.P(fmt.Sprintf(`%s.Set("Content-Type", %q)`, headersParameter, endpoint.ContentType))
 		}
@@ -1114,7 +1117,7 @@ func (f *fileWriter) WriteClient(
 		}
 
 		// Prepare a response variable.
-		if endpoint.ResponseType != "" && !endpoint.IsStreaming && endpoint.PaginationInfo == nil {
+		if endpoint.ResponseType != "" && endpoint.StreamingInfo == nil && endpoint.PaginationInfo == nil {
 			f.P(fmt.Sprintf(endpoint.ResponseInitializerFormat, endpoint.ResponseType))
 		}
 
@@ -1208,13 +1211,23 @@ func (f *fileWriter) WriteClient(
 		}
 
 		// Issue the request.
-		if endpoint.IsStreaming {
+		if endpoint.StreamingInfo != nil {
+			streamingInfo := endpoint.StreamingInfo
 			f.P("streamer := core.NewStreamer[", endpoint.ResponseType, "](", receiver, ".caller)")
 			f.P("return streamer.Stream(")
 			f.P("ctx,")
 			f.P("&core.StreamParams{")
 			f.P("URL: endpointURL, ")
 			f.P("Method:", endpoint.Method, ",")
+			if streamingInfo.Delimiter != "" {
+				f.P("Delimiter: ", streamingInfo.Delimiter, ",")
+			}
+			if streamingInfo.Prefix != "" {
+				f.P("Prefix:", streamingInfo.Prefix, ",")
+			}
+			if streamingInfo.Terminator != "" {
+				f.P("Terminator:", streamingInfo.Terminator, ",")
+			}
 			f.P("MaxAttempts: options.MaxAttempts,")
 			f.P("BodyProperties: options.BodyProperties,")
 			f.P("QueryParameters: options.QueryParameters,")
@@ -1225,9 +1238,6 @@ func (f *fileWriter) WriteClient(
 			}
 			if endpoint.ErrorDecoderParameterName != "" {
 				f.P("ErrorDecoder:", endpoint.ErrorDecoderParameterName, ",")
-			}
-			if endpoint.StreamDelimiter != "" {
-				f.P("Delimiter: ", endpoint.StreamDelimiter, ",")
 			}
 			f.P("},")
 			f.P(")")
@@ -1388,6 +1398,48 @@ func (f *fileWriter) WriteClient(
 		irEndpoints,
 		rootClientInstantiation,
 	)
+}
+
+type streamingInfo struct {
+	Delimiter    string
+	Prefix       string
+	Terminator   string
+	AcceptHeader string
+}
+
+func getStreamingInfo(
+	irEndpoint *ir.HttpEndpoint,
+) (*streamingInfo, error) {
+	if irEndpoint == nil || irEndpoint.Response == nil || irEndpoint.Response.Streaming == nil {
+		return nil, nil
+	}
+	streamingResponse := irEndpoint.Response.Streaming
+	switch streamingResponse.Type {
+	case "text":
+		return &streamingInfo{}, nil
+	case "json":
+		var terminator string
+		if value := valueOf(streamingResponse.Json.Terminator); value != "" {
+			terminator = fmt.Sprintf("%q", value)
+		}
+		return &streamingInfo{
+			Terminator: terminator,
+		}, nil
+	case "sse":
+		terminator := valueOf(streamingResponse.Sse.Terminator)
+		if terminator != "" {
+			terminator = fmt.Sprintf("%q", terminator)
+		} else {
+			terminator = "core.DefaultSSETerminator"
+		}
+		return &streamingInfo{
+			Prefix:       "core.DefaultSSEDataPrefix",
+			Terminator:   terminator,
+			AcceptHeader: "text/event-stream",
+		}, nil
+	default:
+		return nil, fmt.Errorf("stream response type %q is not supported", streamingResponse.Type)
+	}
 }
 
 type paginationInfo struct {
@@ -1996,10 +2048,9 @@ type endpoint struct {
 	OptionConstructor           string
 	PathSuffix                  string
 	Method                      string
-	IsStreaming                 bool
-	StreamDelimiter             string
 	ErrorDecoderParameterName   string
 	Idempotent                  bool
+	Accept                      string
 	ContentType                 string
 	Errors                      ir.ResponseErrors
 	QueryParameters             []*ir.QueryParameter
@@ -2008,6 +2059,7 @@ type endpoint struct {
 	FilePropertyInfo            *filePropertyInfo
 	FileProperties              []*ir.FileProperty
 	FileBodyProperties          []*ir.InlinedRequestBodyProperty
+	StreamingInfo               *streamingInfo
 	PaginationInfo              *paginationInfo
 }
 
@@ -2172,6 +2224,11 @@ func (f *fileWriter) endpointFromIR(
 		},
 	)
 
+	streamingInfo, err := getStreamingInfo(irEndpoint)
+	if err != nil {
+		return nil, err
+	}
+
 	paginationInfo, err := f.getPaginationInfo(irEndpoint, scope, requestParameterName)
 	if err != nil {
 		return nil, err
@@ -2185,8 +2242,6 @@ func (f *fileWriter) endpointFromIR(
 		signatureReturnValues     string
 		successfulReturnValues    string
 		errorReturnValues         string
-		streamDelimiter           string
-		isStreaming               bool
 	)
 	var responseIsOptionalParameter bool
 	if irEndpoint.Response != nil {
@@ -2234,12 +2289,6 @@ func (f *fileWriter) endpointFromIR(
 			successfulReturnValues = "response.String(), nil"
 			errorReturnValues = `"", err`
 		case "streaming":
-			if irEndpoint.Response.Streaming.Json == nil && irEndpoint.Response.Streaming.Text == nil {
-				return nil, fmt.Errorf("unsupported streaming response type: %s", irEndpoint.Response.Streaming.Type)
-			}
-			if irEndpoint.Response.Streaming.Json != nil && irEndpoint.Response.Streaming.Json.Terminator != nil {
-				streamDelimiter = *irEndpoint.Response.Streaming.Json.Terminator
-			}
 			typeReference, err := typeReferenceFromStreamingResponse(irEndpoint.Response.Streaming)
 			if err != nil {
 				return nil, err
@@ -2248,7 +2297,6 @@ func (f *fileWriter) endpointFromIR(
 			responseParameterName = "response"
 			signatureReturnValues = fmt.Sprintf("(*core.Stream[%s], error)", responseType)
 			errorReturnValues = "nil, err"
-			isStreaming = true
 		default:
 			return nil, fmt.Errorf("%s requests are not supported yet", irEndpoint.Response.Type)
 		}
@@ -2308,6 +2356,11 @@ func (f *fileWriter) endpointFromIR(
 		optionConstructor = "core.NewIdempotentRequestOptions(opts...)"
 	}
 
+	var accept string
+	if streamingInfo != nil && streamingInfo.AcceptHeader != "" {
+		accept = streamingInfo.AcceptHeader
+	}
+
 	contentTypeOverride := contentTypeFromRequestBody(irEndpoint.RequestBody)
 	if contentTypeOverride != "" {
 		contentType = contentTypeOverride
@@ -2336,9 +2389,8 @@ func (f *fileWriter) endpointFromIR(
 		BaseURL:                     baseURL,
 		PathSuffix:                  pathSuffix,
 		Method:                      irMethodToMethodEnum(irEndpoint.Method),
-		IsStreaming:                 isStreaming,
-		StreamDelimiter:             streamDelimiter,
 		ErrorDecoderParameterName:   errorDecoderParameterName,
+		Accept:                      accept,
 		ContentType:                 contentType,
 		Idempotent:                  irEndpoint.Idempotent,
 		Errors:                      irEndpoint.Errors,
@@ -2348,6 +2400,7 @@ func (f *fileWriter) endpointFromIR(
 		FilePropertyInfo:            filePropertyInfo,
 		FileProperties:              fileProperties,
 		FileBodyProperties:          fileBodyProperties,
+		StreamingInfo:               streamingInfo,
 		PaginationInfo:              paginationInfo,
 	}, nil
 }
@@ -3109,6 +3162,8 @@ func typeReferenceFromStreamingResponse(
 	switch streamingResponse.Type {
 	case "json":
 		return streamingResponse.Json.Payload, nil
+	case "sse":
+		return streamingResponse.Sse.Payload, nil
 	case "text":
 		return ir.NewTypeReferenceFromPrimitive(ir.PrimitiveTypeString), nil
 	}
