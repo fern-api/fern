@@ -208,7 +208,7 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
 
         @Override
         public RequestBodyGetter visitBytes(BytesRequest bytes) {
-            return BytesRequestBodyGetters.builder()
+            return ReferencedRequestBodyGetter.builder()
                     .requestBodyGetter(generatedObject
                             .objectPropertyGetters()
                             .get(requestBodyProperties.get(0))

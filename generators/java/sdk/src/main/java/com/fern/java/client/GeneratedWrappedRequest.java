@@ -60,17 +60,6 @@ public abstract class GeneratedWrappedRequest extends AbstractGeneratedJavaFile 
         }
     }
 
-    @Value.Immutable
-    @StagedBuilderImmutablesStyle
-    public interface BytesRequestBodyGetters extends RequestBodyGetter {
-
-        MethodSpec requestBodyGetter();
-
-        static ImmutableBytesRequestBodyGetters.RequestBodyGetterBuildStage builder() {
-            return ImmutableBytesRequestBodyGetters.builder();
-        }
-    }
-
     public interface FileUploadProperty {}
 
     @Value.Immutable
