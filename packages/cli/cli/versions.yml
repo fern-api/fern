@@ -1,5 +1,14 @@
 - changelogEntry:
     - summary: |
+        The OpenAPI importer now appropriately brings in responses that are under the `text/event-stream`
+        Content-Type if your endpoint is annotated with `x-fern-streaming`. 
+        If your endpoint is not annotated with `x-fern-streaming`, then the response will be ignored.
+      type: fix
+  irVersion: 53
+  version: 0.43.6
+
+- changelogEntry:
+    - summary: |
         If you use the `x-fern-streaming` extension and want to provide different descriptions 
         for the streaming endpoint, then you can now specify `streaming-description`. 
 

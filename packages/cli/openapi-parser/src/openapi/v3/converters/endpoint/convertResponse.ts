@@ -9,7 +9,7 @@ import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserCon
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
 import { OperationContext } from "../contexts";
 import { ERROR_NAMES_BY_STATUS_CODE } from "../convertToHttpError";
-import { getApplicationJsonSchemaMediaObject, getSchemaMediaObject } from "./getApplicationJsonSchema";
+import { getApplicationJsonSchemaMediaObject, getSchemaMediaObject, getTextEventStreamObject } from "./getApplicationJsonSchema";
 
 // The converter will attempt to get response in priority order
 // (i.e. try for 200, then 201, then 202...)
@@ -139,6 +139,44 @@ function convertResolvedResponse({
         });
         if (isdownloadFile) {
             return ResponseWithExample.file({ description: resolvedResponse.description, source });
+        }
+    }
+
+    const textEventStreamObject = getTextEventStreamObject(resolvedResponse.content ?? {}, context);
+    if (textEventStreamObject != null && streamFormat != null) {
+        switch (streamFormat) {
+            case "json":
+                return ResponseWithExample.streamingJson({
+                    description: resolvedResponse.description,
+                    responseProperty: undefined,
+                    schema: convertSchemaWithExampleToSchema(
+                        convertSchema(
+                            textEventStreamObject.schema,
+                            false,
+                            context,
+                            responseBreadcrumbs,
+                            source,
+                            namespace
+                        )
+                    ),
+                    source
+                });
+            case "sse":
+                return ResponseWithExample.streamingSse({
+                    description: resolvedResponse.description,
+                    responseProperty: undefined,
+                    schema: convertSchemaWithExampleToSchema(
+                        convertSchema(
+                            textEventStreamObject.schema,
+                            false,
+                            context,
+                            responseBreadcrumbs,
+                            source,
+                            namespace
+                        )
+                    ),
+                    source
+                });
         }
     }
 
