@@ -28,16 +28,16 @@ public class ServiceClient {
         this.clientOptions = clientOptions;
     }
 
-    public void upload(byte[] request) {
+    public void upload(InputStream request) {
         upload(request, null);
     }
 
-    public void upload(InputStream inputStream, RequestOptions requestOptions) {
+    public void upload(InputStream request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("upload-content")
                 .build();
-        RequestBody body = new InputStreamRequestBody(MediaType.parse("application/octet-stream"), inputStream);
+        RequestBody body = new InputStreamRequestBody(MediaType.parse("application/octet-stream"), request);
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("POST", body)
@@ -62,7 +62,10 @@ public class ServiceClient {
         }
     }
 
-    // Overload for backward compatibility
+    public void upload(byte[] request) {
+        upload(new ByteArrayInputStream(request));
+    }
+
     public void upload(byte[] request, RequestOptions requestOptions) {
         upload(new ByteArrayInputStream(request), requestOptions);
     }

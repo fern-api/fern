@@ -184,7 +184,6 @@ public abstract class AbstractEndpointWriter {
                 .collect(Collectors.toList()));
         this.endpointParameterNames.add(REQUEST_OPTIONS_PARAMETER_NAME);
 
-
         // Step 0: Populate JavaDoc
         if (httpEndpoint.getDocs().isPresent()) {
             endpointMethodBuilder.addJavadoc(
