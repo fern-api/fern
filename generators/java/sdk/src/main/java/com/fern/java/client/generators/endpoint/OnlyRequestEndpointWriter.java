@@ -34,18 +34,17 @@ import com.fern.java.client.generators.CoreMediaTypesGenerator;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
-import com.squareup.javapoet.ArrayTypeName;
-import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.ParameterSpec;
-import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
+import java.io.InputStream;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import okhttp3.Headers;
+import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
@@ -149,17 +148,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
 
                 @Override
                 public ParameterSpec visitBytes(BytesRequest bytes) {
-                    TypeName typeName = ArrayTypeName.of(byte.class);
-                    if (bytes.getIsOptional()) {
-                        typeName = ParameterizedTypeName.get(ClassName.get(Optional.class), typeName);
-                    }
-                    return ParameterSpec.builder(
-                                    typeName,
-                                    sdkRequest
-                                            .getRequestParameterName()
-                                            .getCamelCase()
-                                            .getSafeName())
-                            .build();
+                    return getBytesRequestParameterSpec(bytes, sdkRequest, TypeName.get(InputStream.class));
                 }
 
                 @Override
@@ -212,10 +201,6 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
 
                     @Override
                     public Void visitBytes(BytesRequest bytes) {
-                        builder.add(
-                                ".addHeader($S, $S)\n",
-                                AbstractEndpointWriter.CONTENT_TYPE_HEADER,
-                                bytes.getContentType().orElse(AbstractEndpointWriter.APPLICATION_OCTET_STREAM));
                         return null;
                     }
 
@@ -304,10 +289,12 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
         @Override
         public Void visitBytes(BytesRequest bytes) {
             codeBlock.addStatement(
-                    "$T $L = $T.create($L)",
+                    "$T $L = new $T($T.parse($S), $L)",
                     RequestBody.class,
                     getOkhttpRequestBodyName(),
-                    RequestBody.class,
+                    clientGeneratorContext.getPoetClassNameFactory().getInputStreamRequestBodyClassName(),
+                    MediaType.class,
+                    bytes.getContentType().orElse(APPLICATION_OCTET_STREAM),
                     sdkRequest.getRequestParameterName().getCamelCase().getSafeName());
             return null;
         }

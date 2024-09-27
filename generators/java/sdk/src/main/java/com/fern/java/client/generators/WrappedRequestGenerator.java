@@ -38,6 +38,7 @@ import com.fern.ir.model.types.TypeReference;
 import com.fern.java.RequestBodyUtils;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedWrappedRequest;
+import com.fern.java.client.GeneratedWrappedRequest.BytesRequestBodyGetters;
 import com.fern.java.client.GeneratedWrappedRequest.FilePropertyContainer;
 import com.fern.java.client.GeneratedWrappedRequest.FileUploadProperty;
 import com.fern.java.client.GeneratedWrappedRequest.FileUploadRequestBodyGetters;
@@ -207,7 +208,7 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
 
         @Override
         public RequestBodyGetter visitBytes(BytesRequest bytes) {
-            return ReferencedRequestBodyGetter.builder()
+            return BytesRequestBodyGetters.builder()
                     .requestBodyGetter(generatedObject
                             .objectPropertyGetters()
                             .get(requestBodyProperties.get(0))

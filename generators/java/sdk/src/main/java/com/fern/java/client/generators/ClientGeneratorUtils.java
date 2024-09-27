@@ -118,6 +118,17 @@ public final class ClientGeneratorUtils {
                 }
                 implBuilder.addMethod(httpEndpointMethodSpecs.getNonRequestOptionsMethodSpec());
                 implBuilder.addMethod(httpEndpointMethodSpecs.getRequestOptionsMethodSpec());
+                if (httpEndpointMethodSpecs
+                        .getNonRequestOptionsByteArrayMethodSpec()
+                        .isPresent()) {
+                    implBuilder.addMethod(httpEndpointMethodSpecs
+                            .getNonRequestOptionsByteArrayMethodSpec()
+                            .get());
+                }
+                if (httpEndpointMethodSpecs.getByteArrayMethodSpec().isPresent()) {
+                    implBuilder.addMethod(
+                            httpEndpointMethodSpecs.getByteArrayMethodSpec().get());
+                }
                 generatedWrappedRequests.addAll(httpEndpointMethodSpecFactory.getGeneratedWrappedRequests());
             }
         }

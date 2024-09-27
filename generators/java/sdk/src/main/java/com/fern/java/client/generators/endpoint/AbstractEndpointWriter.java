@@ -73,6 +73,7 @@ import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.fern.java.utils.JavaDocUtils;
 import com.fern.java.utils.TypeReferenceUtils.ContainerTypeToUnderlyingType;
+import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.CodeBlock.Builder;
@@ -81,6 +82,7 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -182,6 +184,7 @@ public abstract class AbstractEndpointWriter {
                 .collect(Collectors.toList()));
         this.endpointParameterNames.add(REQUEST_OPTIONS_PARAMETER_NAME);
 
+
         // Step 0: Populate JavaDoc
         if (httpEndpoint.getDocs().isPresent()) {
             endpointMethodBuilder.addJavadoc(
@@ -194,7 +197,7 @@ public abstract class AbstractEndpointWriter {
         // Step 2: Add additional parameters
         List<ParameterSpec> additionalParameters = additionalParameters();
 
-        // Step 3: Add path parameters
+        // Step 3: Add parameters
         endpointMethodBuilder.addParameters(pathParameters);
         endpointMethodBuilder.addParameters(additionalParameters);
         if (httpEndpoint.getIdempotent()) {
@@ -203,10 +206,7 @@ public abstract class AbstractEndpointWriter {
                             REQUEST_OPTIONS_PARAMETER_NAME)
                     .build());
         } else {
-            endpointMethodBuilder.addParameter(ParameterSpec.builder(
-                            clientGeneratorContext.getPoetClassNameFactory().getRequestOptionsClassName(),
-                            REQUEST_OPTIONS_PARAMETER_NAME)
-                    .build());
+            endpointMethodBuilder.addParameter(requestOptionsParameterSpec());
         }
 
         // Step 4: Get http client initializer
@@ -309,9 +309,53 @@ public abstract class AbstractEndpointWriter {
                             bodyParameterSpec.type)
                     .build();
         }
+        Optional<BytesRequest> maybeBytes = httpEndpoint
+                .getSdkRequest()
+                .flatMap(
+                        sdkRequest -> sdkRequest.getShape().getJustRequestBody().flatMap(SdkRequestBodyType::getBytes));
+        MethodSpec nonRequestOptionsByteArrayMethodSpec = null;
+        MethodSpec byteArrayMethodSpec = null;
+
+        // add direct byte array endpoints for backwards compatibility
+        if (maybeBytes.isPresent()) {
+            BytesRequest bytes = maybeBytes.get();
+            ParameterSpec requestParameterSpec =
+                    getBytesRequestParameterSpec(bytes, sdkRequest().get(), ArrayTypeName.of(byte.class));
+            MethodSpec byteArrayBaseMethodSpec = MethodSpec.methodBuilder(endpointWithRequestOptions.name)
+                    .addModifiers(Modifier.PUBLIC)
+                    .addParameters(pathParameters)
+                    .addParameters(List.of(requestParameterSpec))
+                    .addJavadoc(endpointWithRequestOptions.javadoc)
+                    .returns(endpointWithRequestOptions.returnType)
+                    .build();
+            Builder methodBodyBuilder = CodeBlock.builder();
+            if (!byteArrayBaseMethodSpec.returnType.equals(TypeName.VOID)) {
+                methodBodyBuilder.add("return ");
+            }
+            CodeBlock baseMethodBody = methodBodyBuilder
+                    .add(
+                            "$L(new $T($L)",
+                            endpointWithRequestOptions.name,
+                            ByteArrayInputStream.class,
+                            requestParameterSpec.name)
+                    .build();
+            nonRequestOptionsByteArrayMethodSpec = byteArrayBaseMethodSpec.toBuilder()
+                    .addStatement(baseMethodBody.toBuilder().add(")").build())
+                    .build();
+            byteArrayMethodSpec = byteArrayBaseMethodSpec.toBuilder()
+                    .addParameter(requestOptionsParameterSpec())
+                    .addStatement(baseMethodBody.toBuilder()
+                            .add(", $L)", REQUEST_OPTIONS_PARAMETER_NAME)
+                            .build())
+                    .build();
+        }
 
         return new HttpEndpointMethodSpecs(
-                endpointWithRequestOptions, endpointWithoutRequestOptions, endpointWithoutRequest);
+                endpointWithRequestOptions,
+                endpointWithoutRequestOptions,
+                endpointWithoutRequest,
+                byteArrayMethodSpec,
+                nonRequestOptionsByteArrayMethodSpec);
     }
 
     public abstract Optional<SdkRequest> sdkRequest();
@@ -329,6 +373,24 @@ public abstract class AbstractEndpointWriter {
             GeneratedObjectMapper objectMapper,
             CodeBlock inlineableHttpUrl,
             boolean sendContentType);
+
+    public final ParameterSpec requestOptionsParameterSpec() {
+        return ParameterSpec.builder(
+                        clientGeneratorContext.getPoetClassNameFactory().getRequestOptionsClassName(),
+                        REQUEST_OPTIONS_PARAMETER_NAME)
+                .build();
+    }
+
+    protected final ParameterSpec getBytesRequestParameterSpec(
+            BytesRequest bytes, SdkRequest sdkRequest, TypeName typeName) {
+        if (bytes.getIsOptional()) {
+            typeName = ParameterizedTypeName.get(ClassName.get(Optional.class), typeName);
+        }
+        return ParameterSpec.builder(
+                        typeName,
+                        sdkRequest.getRequestParameterName().getCamelCase().getSafeName())
+                .build();
+    }
 
     public final CodeBlock getResponseParserCodeBlock() {
         CodeBlock.Builder httpResponseBuilder = CodeBlock.builder()
