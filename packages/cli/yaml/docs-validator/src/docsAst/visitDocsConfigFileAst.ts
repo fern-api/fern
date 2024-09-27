@@ -56,9 +56,7 @@ export async function visitDocsConfigFileYamlAst(
             absolutePathToMdx: resolve(absolutePathToFernFolder, relativePath),
             context
         });
-    }
 
-    for (const [relativePath, markdown] of Object.entries(pageEntries)) {
         const { filepaths } = parseImagePaths(markdown, {
             absolutePathToFernFolder,
             absolutePathToMdx: resolve(absolutePathToFernFolder, relativePath)
