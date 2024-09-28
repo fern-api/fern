@@ -14,7 +14,7 @@ export async function visitFilepath({
     visitor: Partial<DocsConfigFileAstVisitor>;
     nodePath: NodePath;
     willBeUploaded?: boolean;
-}) {
+}): Promise<void> {
     const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), rawUnresolvedFilepath);
     await visitor.filepath?.(
         {
