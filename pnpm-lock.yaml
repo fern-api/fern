@@ -159,8 +159,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/commons/logging-execa
       '@fern-fern/generator-cli-sdk':
-        specifier: 0.0.56
-        version: 0.0.56
+        specifier: 0.0.17
+        version: 0.0.17
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.898
         version: 0.0.898
@@ -333,8 +333,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/cli/logger
       '@fern-fern/generator-cli-sdk':
-        specifier: 0.0.56
-        version: 0.0.56
+        specifier: 0.0.17
+        version: 0.0.17
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.898
         version: 0.0.898
@@ -2053,8 +2053,8 @@ importers:
         specifier: workspace:*
         version: link:../../codegen
       '@fern-fern/generator-cli-sdk':
-        specifier: 0.0.56
-        version: 0.0.56
+        specifier: 0.0.17
+        version: 0.0.17
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.898
         version: 0.0.898
@@ -6933,8 +6933,8 @@ packages:
   '@fern-fern/fiddle-sdk@0.0.584':
     resolution: {integrity: sha512-92z/Pwo7EDV7PCLwNdxtZiTQpaUpbeXCqKWSLUQwTwFAQEAp+8QKYAA6VJXVQtHLrZg0NqPTXEnE5XF8NbluYA==}
 
-  '@fern-fern/generator-cli-sdk@0.0.56':
-    resolution: {integrity: sha512-pmBwEgTtZ7g9vve419Ia980XmZb9zHl1rmjeC2dwAs0QF9IqNbZ+neVG82lIsR3aeWkIwHwCK5kSiV6lyjQR7A==}
+  '@fern-fern/generator-cli-sdk@0.0.17':
+    resolution: {integrity: sha512-uu+Oi9b2KrFo3tj5vqmEShi9CH3FKqNboDtm+3wYO8Z1LAuqo9wZIsxew8EI/bpxc9Xi6gpHi7CLKweKPxjz/Q==}
 
   '@fern-fern/generator-exec-sdk@0.0.816':
     resolution: {integrity: sha512-0i88vvoJjv+sRmSSUrsThJP/Qz4A4uAVUUo8gBXQBKCbjk/76wRxpOAwXh3Twgo/A8XKAfxRA2OBGQ8xv5syXg==}
@@ -14060,7 +14060,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@fern-fern/generator-cli-sdk@0.0.56': {}
+  '@fern-fern/generator-cli-sdk@0.0.17': {}
 
   '@fern-fern/generator-exec-sdk@0.0.816':
     dependencies:
