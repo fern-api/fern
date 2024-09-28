@@ -1,7 +1,11 @@
 # Seed TypeScript Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FTypeScript)
+<<<<<<< HEAD:seed/ts-sdk/path-parameters/default/README.md
 [![npm shield](https://img.shields.io/npm/v/@fern/path-parameters)](https://www.npmjs.com/package/@fern/path-parameters)
+=======
+[![npm shield](https://img.shields.io/npm/v/@fern/query-parameters)](https://www.npmjs.com/package/@fern/query-parameters)
+>>>>>>> 85141d4d30 (feat(typescript): generate a link to reference.md in readme):seed/ts-sdk/query-parameters/no-serde-layer-query/README.md
 
 The Seed TypeScript library provides convenient access to the Seed API from TypeScript.
 

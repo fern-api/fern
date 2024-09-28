@@ -1,7 +1,11 @@
 # Seed TypeScript Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FTypeScript)
+<<<<<<< HEAD:seed/ts-sdk/ts-inline-types/inline/README.md
 [![npm shield](https://img.shields.io/npm/v/@fern/ts-inline-types)](https://www.npmjs.com/package/@fern/ts-inline-types)
+=======
+[![npm shield](https://img.shields.io/npm/v/@fern/file-upload)](https://www.npmjs.com/package/@fern/file-upload)
+>>>>>>> 85141d4d30 (feat(typescript): generate a link to reference.md in readme):seed/ts-sdk/file-upload/no-custom-config/README.md
 
 The Seed TypeScript library provides convenient access to the Seed API from TypeScript.
 

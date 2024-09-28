@@ -204,19 +204,27 @@ reference = "fern-prod"
 
 [[package]]
 name = "fern-fern-generator-cli-sdk"
+<<<<<<< HEAD
 version = "0.0.18"
+=======
+version = "0.0.17"
+>>>>>>> 85141d4d30 (feat(typescript): generate a link to reference.md in readme)
 description = ""
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
+<<<<<<< HEAD
     {file = "fern_fern_generator_cli_sdk-0.0.18-py3-none-any.whl", hash = "sha256:9356c32022785a3e7ab5f0e81dbfe7d2521705a6fc914a1fe558df8e05211d1c"},
     {file = "fern_fern_generator_cli_sdk-0.0.18.tar.gz", hash = "sha256:49c8001c02193433b570facb15c8f1ddda375366e23bbae2aa8b2fad3bac82b7"},
+=======
+    {file = "fern_fern_generator_cli_sdk-0.0.17-py3-none-any.whl", hash = "sha256:b5cc5c29dbdfb1d1569c5006aad94e49d36b9a6de92c2678c7db3895c8f037e2"},
+    {file = "fern_fern_generator_cli_sdk-0.0.17.tar.gz", hash = "sha256:abe3fda300e0cc52513811d70255f298a721036c267277ba147f7948de1d8b3c"},
+>>>>>>> 85141d4d30 (feat(typescript): generate a link to reference.md in readme)
 ]
 
 [package.dependencies]
 httpx = ">=0.21.2"
 pydantic = ">=1.9.2"
-pydantic-core = ">=2.18.2,<3.0.0"
 typing_extensions = ">=4.0.0"
 
 [package.source]
@@ -1064,4 +1072,8 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
+<<<<<<< HEAD
 content-hash = "72c1c6f923defd1f9e128ae832823218cf060a8e198caad3a06873fb06ae1fdf"
+=======
+content-hash = "6f8243a7f89479c2cf0e97888c0651b554d717a20d6e3d8b1f75e978495b0594"
+>>>>>>> 85141d4d30 (feat(typescript): generate a link to reference.md in readme)
