@@ -7,7 +7,7 @@ import grayMatter from "gray-matter";
 import jsyaml from "js-yaml";
 import path from "path";
 import { MintJsonSchema, MintNavigationItemPage, MintlifyFrontmatter } from "./mintlify";
-import { AbsoluteFilePath, getAllFilesInDirectory } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, getAllFilesInDirectory, join, RelativeFilePath, relativize } from "@fern-api/fs-utils";
 import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 
 export declare namespace MigrateFromMintlify {
@@ -23,9 +23,14 @@ export async function migrateFromMintlify({
     outputDirectory,
     organization
 }: MigrateFromMintlify.Args): Promise<void> {
-    console.log("mintlifyDirectory", mintlifyDirectory);
-    const files = new Set(await getAllFilesInDirectory(mintlifyDirectory));
-    console.log("files", files);
+    const files = new Set(
+        (await getAllFilesInDirectory(mintlifyDirectory)).map((file) => {
+            if (file.startsWith(mintlifyDirectory)) {
+                return file.slice(mintlifyDirectory.length);
+            }
+            return file;
+        })
+    );
     const migrator = new MigrateFromMintlify(mintlifyDirectory, files, outputDirectory, organization);
     await migrator.run();
 }
@@ -49,13 +54,12 @@ interface MarkdownWithFernDocsFrontmatter {
     content: string;
 }
 
-class MigrateFromMintlify {
+export class MigrateFromMintlify {
     private markdownFiles: string[];
     private imageFiles: string[];
     private primaryMintJsonFile: string;
     private additionalMintJsonFiles: readonly string[];
     private mintlifyMarkdownPages: Record<string, MarkdownWithMintlifyFrontmatter> = {};
-
     public constructor(
         private dir: string,
         private files: Set<string>,
@@ -68,6 +72,7 @@ class MigrateFromMintlify {
             throw new Error("No mint.json file found.");
         }
 
+        mintJsonFiles.forEach((file) => files.delete(file));
         this.markdownFiles = Array.from(files).filter((file) => file.endsWith(".md") || file.endsWith(".mdx"));
         this.imageFiles = Array.from(files).filter(
             (file) =>
@@ -88,7 +93,7 @@ class MigrateFromMintlify {
     public async loadMintlifyMarkdownPages(): Promise<void> {
         await Promise.all(
             this.markdownFiles.map(async (file) => {
-                const content = await fs.promises.readFile(file, "utf-8");
+                const content = await fs.promises.readFile(path.join(this.dir, file), "utf-8");
                 const { data, content: markdownContent } = parseMintlifyFrontmatter(content);
                 const key = file.replace(/\.(md|mdx)$/, "");
                 this.mintlifyMarkdownPages[key] = {
@@ -122,7 +127,7 @@ class MigrateFromMintlify {
         await fs.promises.writeFile(path.join(fernDir, "fern.config.json"), JSON.stringify(fernConfig, null, 4));
 
         await this.loadMintlifyMarkdownPages();
-        const mintJsonContent = await fs.promises.readFile(this.primaryMintJsonFile, "utf-8");
+        const mintJsonContent = await fs.promises.readFile(path.join(this.dir, this.primaryMintJsonFile), "utf-8");
         const mint = JSON.parse(mintJsonContent) as MintJsonSchema;
         const docsYml = await serializeDocsConfigToYaml(this.migrateMintlifyToDocsConfig(mint));
 
@@ -154,7 +159,7 @@ class MigrateFromMintlify {
         // copy all image files
         await Promise.all(
             this.imageFiles.map(async (file) => {
-                const absoluteFilePath = file;
+                const absoluteFilePath = path.join(this.dir, file);
                 const newFilePath = path.join(fernDir, file);
                 await fs.promises.mkdir(path.dirname(newFilePath), { recursive: true });
                 await fs.promises.copyFile(absoluteFilePath, newFilePath);

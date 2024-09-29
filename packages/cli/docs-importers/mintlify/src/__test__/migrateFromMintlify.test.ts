@@ -23,7 +23,7 @@ describe("add-generator-groups", () => {
             if (await doesPathExist(outputPath)) {
                 await rmdir(outputPath, { recursive: true });
             }
-            await mkdir(outputPath);
+            await mkdir(outputPath, { recursive: true});
 
             await migrateFromMintlify({
                 mintlifyDirectory: fixturePath,
