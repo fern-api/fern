@@ -1,0 +1,51 @@
+---
+title: "Custom Twilio Integration"
+description: "Connect Bland to your own Twilio account"
+---
+
+## Overview
+
+Enterprise customers can connect their own Twilio account to Bland. Easily bring over your existing phone numbers, integrations, and more.
+
+Pre-requisites:
+
+- Your own Twilio account
+- An [Enterprise plan](https://forms.default.com/361589) with Bland
+
+## Step 1: Creating an Encrypted Key with your Twilio Credentials
+
+1. Go to your [Twilio Console](https://www.twilio.com/console) and get your Account SID and Auth Token.
+2. Create an `encrypted_key` by [sending an API request](/api-v1/post/accounts) to Bland.
+
+This is the only time that your `encrypted_key` will be returned to you. Make sure to store it securely, and new keys will need to be generated if lost.
+
+## Step 2: Using the Encrypted Key in Outbound Calls
+
+Include `encrypted_key` in the headers (in addition to the `Authorization` header) of your API requests, and we'll use that account's credentials to make the call.
+
+For example:
+
+```json
+{
+  "Authorization": "BLAND_API_KEY",
+  "encrypted_key": "YOUR_ENCRYPTED_KEY"
+}
+```
+
+Note:
+
+- You can set your `from` number in the API request - this will need to be a number owned by that Twilio account (and not one purchased through Bland).
+- By default, we'll send calls from a randomly selected number in the specified Twilio account if a `from` is not specified.
+
+## Step 3: Uploading Inbound numbers
+
+1. Go to your [Twilio Console](https://www.twilio.com/console) and get your Twilio phone number(s).
+2. Upload your numbers [through the API](/api-v1/post/inbound-insert).
+
+We'll validate that these numbers are owned by that account and add them to your Bland account.
+
+## Step 4: Configuring Inbound Numbers/Webhooks
+
+Note: When updating inbound numbers, the headers need to include the `encrypted_key` in addition to the `Authorization` header. Doing so makes sure the updates are applied to the correct Twilio account.
+
+Once you update an inbound number through the [Dev Portal](https://app.bland.ai) or [API](/api-v1/post/inbound-number-update), that number will be automatically configured to run on Bland's infrastructure. No additional steps are required!

@@ -1,0 +1,71 @@
+---
+title: "List Inbound Numbers"
+api: "GET https://api.bland.ai/v1/inbound"
+description: "Retrieves a list of all inbound phone numbers configured for your account, along with their associated settings."
+---
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+<ParamField header="encrypted_key" type="string">
+  Use your own Twilio account and only return inbound numbers associated with that account sid (optional).
+</ParamField>{" "}
+
+### Response
+
+<ResponseField name="inbound_numbers" type="array">
+  An array of objects, each representing an inbound phone number and its configuration.
+</ResponseField>
+
+<ResponseExample>
+```json Response
+{
+    "inbound_numbers": [
+        {
+            "created_at": "2023-11-27T17:21:38.33359+00:00",
+            "phone_number": "+18005551234",
+            "prompt": "When you receive a call, recite a random poem from 'Sunset Boulevard' and then ask, 'How may I assist you in your poetic journey today?'",
+            "webhook": "https://api.example.com/poetry-line",
+            "voice_id": 2,
+            "dynamic_data": [/* Use [Dynamic Data](/api-reference/endpoint/dynamic_validate) to make API requests mid-call */],
+            "interruption_threshold": null,
+            "first_sentence": null,
+            "reduce_latency": true,
+            "transfer_phone_number": null,
+            "voice_settings": null,
+            "record": false,
+            "max_duration": 30
+        },
+        {
+            "created_at": "2023-11-25T21:42:22.325993+00:00",
+            "phone_number": "+18005559876",
+            "prompt": "Answer with 'You've reached the Secret Society of Enigmatic Enthusiasts. Please state the password or leave a message after the beep.'",
+            "webhook": "https://mysteryclub.example.com/inbound-call-hook",
+            "voice_id": 1,
+            "dynamic_data": null,
+            "interruption_threshold": null,
+            "first_sentence": null,
+            "reduce_latency": true,
+            "transfer_phone_number": null,
+            "voice_settings": null,
+            "record": false,
+            "max_duration": 30
+        },
+        //...
+    ]
+}
+
+```
+</ResponseExample>
+
+
+
+
+
+
+
+
+```

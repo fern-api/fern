@@ -1,0 +1,81 @@
+---
+title: "ZepChatMessageHistory"
+---
+
+<Note>
+  **You can find a complete [Message History Example](examples/messagehistory-example) that showcases how to use the
+  `ZepChatMessageHistory` class in the chain.**
+</Note>
+
+<Tabs group="langchain">
+
+    <Tab title="Python" group-key="python">
+
+        The Zep Python SDK includes the `ZepChatMessageHistory` class, compatible with [LangChain Expression Language (LCEL)](https://python.langchain.com/docs/expression_language/get_started).
+
+        It expects the following initialization parameters:
+
+        <ParamField path="session_id" type="str" required>
+            The unique identifier for Zep Session.
+            If a session for the provided identifier doesn't exist, one will be created
+        </ParamField>
+
+        <ParamField path="zep_client" type="ZepClient">
+            The Zep client used for making API requests.
+            You can pass it rather than the API Key.
+        </ParamField>
+
+        <ParamField path="api_key" type="str">
+            Zep Project API Key.
+            You can pass it rather than `zep_client` and we will initialize `ZepClient` for you.
+        </ParamField>
+
+        <ParamField path="memory_type" type="str">
+            The type of memory to use.
+            Can be `"message_window"` (the default value if None provided) or `"perpetual"`.
+            You can find out more about the memory types in the [Chat History documentation](Chat-Histories.md).
+        </ParamField>
+
+
+        ```python Initialization Example
+        chat_history = ZepChatMessageHistory(
+            session_id=session_id,
+            zep_client=client,
+            memory_type="perpetual",
+        )
+        ```
+    </Tab>
+
+    <Tab title="Typescript" group-key="ts">
+
+        The Zep JS SDK includes the `ZepChatMessageHistory` class, compatible with [LangChain Expression Language (LCEL)](https://js.langchain.com/docs/expression_language/).
+
+        It expects the following initialization parameters:
+
+        <ParamField path="session_id" type="string" required>
+            The unique identifier for Zep Session.
+            If a session for the provided identifier doesn't exist, one will be created.
+        </ParamField>
+
+        <ParamField path="zep_client" type="ZepClient" required>
+            The Zep client used for making API requests.
+            You can pass it rather than the API Key.
+        </ParamField>
+
+        <ParamField path="memory_type" type="string" default="message_window">
+            The type of memory to use.
+            Can be `"message_window"` or `"perpetual"`.
+            You can find out more about the memory types in the [Chat History documentation](Chat-Histories.md).
+        </ParamField>
+
+
+        ```typescript Initialization Example
+        const history = new ZepChatMessageHistory({
+            client: zepClient,
+            sessionId: sessionId,
+            memoryType: "perpetual",
+        })
+        ```
+    </Tab>
+
+</Tabs>

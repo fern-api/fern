@@ -1,0 +1,32 @@
+---
+title: "Overview"
+---
+
+Zep's [Python](https://github.com/getzep/zep-python) and [Typescript](https://github.com/getzep/zep-js) SDKs ship with [ZepVectorStore](vectorstore) and [ZepChatMessageHistory](messagehistory) classes that are compatible with Langchain's JS and Python Expression Languages.
+
+### Managing Chat History Memory
+
+Zep's `ZepChatMessageHistory` class can be used to provide long-term memory for your LangChain chat apps or agents. Zep will store the entire historical message stream, and automatically enrich chat sessions.
+
+You can also provide your bot or agent with access to relevant messages in long-term storage by using Zep's built-in search.
+
+### Building Retrieval Augmented Generation Apps (Q&A over Docs)
+
+Zep's `ZepVectorStore` class can be used to store a collection of documents, metadata, and related embeddings. Retrieval Augmented Generation (RAG) apps can then use Zep's vector search to surface documents relevant to a prompt.
+
+Zep will automatically embed the documents using low-latency local models, ensuring that your app is fast and responsive.
+
+## Using Zep as a VectorStore and Document Retriever
+
+See [Python and Typescript examples](examples/vectorstore-example) of how to use **ZepVectorStore** with LangChain Expression Language in your application.
+
+## Using Zep as a LangChain Memory Store
+
+See [Python and Typescript examples](examples/messagehistory-example) of how to use **ZepChatMessageHistory** with LangChain Expression Language in your application.
+
+<Note>
+    **Want to use `ZepChatMessageHistory` together with `ZepVectorStore`?**
+
+    Please check our complete [Python and Typescript examples](examples/rag-message-history-example)
+
+</Note>

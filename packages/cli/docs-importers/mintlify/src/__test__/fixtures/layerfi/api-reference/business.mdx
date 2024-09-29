@@ -1,0 +1,85 @@
+---
+title: "Business object"
+---
+A Business is Layer’s representation of an end business on your platform. The Business object contains all the information about the business needed for Layer’s embedded accounting logic.
+
+### Attributes
+
+<ParamField body="id" type="string">
+  Unique identifier for the business.
+</ParamField>
+<ParamField body="type" type="string">
+  Resource type. Value will be "Business".
+</ParamField>
+<ParamField body="external_id" type="string">
+  Unique ID of the business in your system for linking purposes. **Idempotency key.**
+</ParamField>
+<ParamField body="legal_name" type="string">
+  Legal name of the business as it has been registered.
+</ParamField>
+<ParamField body="tin" type="string">
+  Tax identification number of the business.
+</ParamField>
+<ParamField body="us_state" type="enum">
+  Two letter state abbreviation. (`AK`, `AL`, `AR`, etc.)
+</ParamField>
+<ParamField body="entity_type" type="enum">
+  Entity type of the business. Used to determine tax filing status.
+  Values can be: `SOLE_PROP`, `C_CORP`, `LLC`, `S_CORP`, `PARTNERSHIP`
+</ParamField>
+<ParamField body="phone_number" type="string">
+  Phone number used for SMS based categorization.
+</ParamField>
+<ParamField body="unit_accounts" type="array containing UnitAccount objects">
+  List of unit accounts associated with this business.
+  <Expandable title="properties">
+    <ResponseField name="unit_id" type="string">
+      The Unit account's ID
+    </ResponseField>
+  </Expandable>
+</ParamField>
+<ParamField body="plaid_items" type="PlaidItem Object">
+  Plaid items linked to this account.
+  <Expandable title="properties">
+    <ResponseField name="item_id" type="string">
+      `item_id` returned by Plaid on the initial link.
+    </ResponseField>
+    <ResponseField name="access_token" type="string">
+      `access_token` returned by Plaid on the initial link.
+    </ResponseField>
+  </Expandable>
+</ParamField>
+<ParamField body="imported_at" type="ISO8601 timestamp">
+  Time when the business entity was created in Layer. **Eligible sort key.**
+</ParamField>
+<ParamField body="updated_at" type="ISO8601 timestamp">
+  Time when the business' information was last updated in Layer. **Eligible sort key.**
+</ParamField>
+
+
+<ResponseExample>
+
+```json Example
+{
+  "id": "863ed926-e30d-40f4-8e7e-b0d5387ce4fb",
+  "type": "Business",
+  "external_id": "test-acme-id",
+  "legal_name": "ACME LLC",
+  "tin": null,
+  "business_activity_code": null,
+  "us_state": "CA",
+  "entityType": "LLC",
+  "phone_number": "+16504651359",
+  "imported_at": "2023-06-15T22:12:05.467940Z",
+  "updated_at": "2023-06-15T22:12:05.467940Z",
+  "archived_at": null,
+  "unit_accounts": [
+    {
+      "id": "111111",
+      "imported_at": "2023-06-15T22:12:05.467940Z"
+    }
+  ]
+}
+```
+
+</ResponseExample>

@@ -1,0 +1,9 @@
+version: 1.2
+pr_review:
+  confidence_threshold: 0.5
+  rules:
+    - Ensure you check grammar and spelling. Suggest alternatives if needed.
+    - Tone should be appropriate for a developer audience.
+    - Review code blocks for syntax and logical errors.
+pr_address_comments:
+  delivery: "new_pr"
