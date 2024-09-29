@@ -4,9 +4,9 @@ package completions
 
 import (
 	context "context"
-	fern "github.com/server-sent-events/fern"
-	core "github.com/server-sent-events/fern/core"
-	option "github.com/server-sent-events/fern/option"
+	fern "github.com/server-sent-event-examples/fern"
+	core "github.com/server-sent-event-examples/fern/core"
+	option "github.com/server-sent-event-examples/fern/option"
 	http "net/http"
 )
 

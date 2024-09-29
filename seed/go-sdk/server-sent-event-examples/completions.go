@@ -5,7 +5,7 @@ package serversentevents
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/server-sent-events/fern/core"
+	core "github.com/server-sent-event-examples/fern/core"
 )
 
 type StreamCompletionRequest struct {

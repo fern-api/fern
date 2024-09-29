@@ -3,7 +3,7 @@
 package option
 
 import (
-	core "github.com/server-sent-events/fern/core"
+	core "github.com/server-sent-event-examples/fern/core"
 	http "net/http"
 	url "net/url"
 )
