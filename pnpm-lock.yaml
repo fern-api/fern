@@ -3428,42 +3428,15 @@ importers:
       '@fern-fern/fdr-cjs-sdk':
         specifier: 0.111.0-51d403bce
         version: 0.111.0-51d403bce
-      execa:
-        specifier: ^5.1.1
-        version: 5.1.1
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
-      rehype-remark:
-        specifier: ^10.0.0
-        version: 10.0.0
-      remark-mdx:
-        specifier: ^3.0.1
-        version: 3.0.1
-      remark-parse:
-        specifier: ^11.0.0
-        version: 11.0.0
-      remark-rehype:
-        specifier: ^11.1.0
-        version: 11.1.0
-      remark-stringify:
-        specifier: ^11.0.0
-        version: 11.0.0
       tmp-promise:
         specifier: ^3.0.3
         version: 3.0.3
-      unified:
-        specifier: ^11.0.4
-        version: 11.0.5
-      unified-prettier:
-        specifier: ^2.0.1
-        version: 2.0.1(prettier@2.7.1)
     devDependencies:
       '@types/js-yaml':
         specifier: ^4.0.8
@@ -5784,9 +5757,6 @@ importers:
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../cli/fern-definition/schema
-      '@fern-api/fs-utils':
-        specifier: workspace:*
-        version: link:../commons/fs-utils
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
@@ -9758,9 +9728,6 @@ packages:
     resolution: {integrity: sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==}
     engines: {node: '>= 0.4'}
 
-  hast-util-embedded@3.0.0:
-    resolution: {integrity: sha512-naH8sld4Pe2ep03qqULEtvYr7EjrLK2QHY8KJR6RJkTUjPGObe1vnx585uzem2hGra+s1q08DZZpfgDVYRbaXA==}
-
   hast-util-from-dom@5.0.0:
     resolution: {integrity: sha512-d6235voAp/XR3Hh5uy7aGLbM3S4KamdW0WEgOaU1YoewnuYw4HXb5eRtv9g65m/RFGEfUY1Mw4UqCc5Y8L4Stg==}
 
@@ -9773,35 +9740,17 @@ packages:
   hast-util-from-parse5@8.0.1:
     resolution: {integrity: sha512-Er/Iixbc7IEa7r/XLtuG52zoqn/b3Xng/w6aZQ0xGVxzhw5xUFxcRqdPzP6yFi/4HBYRaifaI5fQ1RH8n0ZeOQ==}
 
-  hast-util-has-property@3.0.0:
-    resolution: {integrity: sha512-MNilsvEKLFpV604hwfhVStK0usFY/QmM5zX16bo7EjnAEGofr5YyI37kzopBlZJkHD4t887i+q/C8/tr5Q94cA==}
-
-  hast-util-is-body-ok-link@3.0.1:
-    resolution: {integrity: sha512-0qpnzOBLztXHbHQenVB8uNuxTnm/QBFUOmdOSsEn7GnBtyY07+ENTWVFBAnXd/zEgd9/SUG3lRY7hSIBWRgGpQ==}
-
   hast-util-is-element@3.0.0:
     resolution: {integrity: sha512-Val9mnv2IWpLbNPqc/pUem+a7Ipj2aHacCwgNfTiK0vJKl0LF+4Ba4+v1oPHFpf3bLYmreq0/l3Gud9S5OH42g==}
-
-  hast-util-minify-whitespace@1.0.1:
-    resolution: {integrity: sha512-L96fPOVpnclQE0xzdWb/D12VT5FabA7SnZOUMtL1DbXmYiHJMXZvFkIZfiMmTCNJHUeO2K9UYNXoVyfz+QHuOw==}
 
   hast-util-parse-selector@4.0.0:
     resolution: {integrity: sha512-wkQCkSYoOGCRKERFWcxMVMOcYE2K1AaNLU8DXS9arxnLOUEWbOXKXiJUNzEpqZ3JOKpnha3jkFrumEjVliDe7A==}
 
-  hast-util-phrasing@3.0.1:
-    resolution: {integrity: sha512-6h60VfI3uBQUxHqTyMymMZnEbNl1XmEGtOxxKYL7stY2o601COo62AWAYBQR9lZbYXYSBoxag8UpPRXK+9fqSQ==}
-
   hast-util-to-estree@3.1.0:
     resolution: {integrity: sha512-lfX5g6hqVh9kjS/B9E2gSkvHH4SZNiQFiqWS0x9fENzEl+8W12RqdRxX6d/Cwxi30tPQs3bIO+aolQJNp1bIyw==}
 
-  hast-util-to-html@9.0.3:
-    resolution: {integrity: sha512-M17uBDzMJ9RPCqLMO92gNNUDuBSq10a25SDBI08iCCxmorf4Yy6sYHK57n9WAbRAAaU+DuR4W6GN9K4DFZesYg==}
-
   hast-util-to-jsx-runtime@2.3.0:
     resolution: {integrity: sha512-H/y0+IWPdsLLS738P8tDnrQ8Z+dj12zQQ6WC11TIM21C8WFVoIxcqWXf2H3hiTVZjF1AWqoimGwrTWecWrnmRQ==}
-
-  hast-util-to-mdast@10.1.0:
-    resolution: {integrity: sha512-DsL/SvCK9V7+vfc6SLQ+vKIyBDXTk2KLSbfBYkH4zeF/uR1yBajHRhkzuaUSGOB1WJSTieJBdHwxlC+HLKvZZw==}
 
   hast-util-to-text@4.0.2:
     resolution: {integrity: sha512-KK6y/BN8lbaq654j7JgBydev7wuNMcID54lkRav1P0CaE1e47P72AWWPiGKXTJU271ooYzcvTAn/Zt0REnvc7A==}
@@ -9833,9 +9782,6 @@ packages:
   html-tags@3.3.1:
     resolution: {integrity: sha512-ztqyC3kLto0e9WbNp0aeP+M3kTt+nbaIveGmUxAtZa+8iFgKLUOD4YKM5j+f3QD89bra7UeumolZHKuOXnTmeQ==}
     engines: {node: '>=8'}
-
-  html-void-elements@3.0.0:
-    resolution: {integrity: sha512-bEqo66MRXsUGxWHV5IP0PUiAWwoEjba4VCzg0LjFJBpchPaTfyfCKTG6bc5F8ucKec3q5y6qOdGyYTSBEvhCrg==}
 
   http-errors@2.0.0:
     resolution: {integrity: sha512-FtwrG/euBzaEjYeRqOgly7G0qviiXoJWnvEH2Z1plBdXgbyjv34pHTSb9zoeHMyDy33+DWy5Wt9Wo+TURtOYSQ==}
@@ -11727,12 +11673,6 @@ packages:
   rehype-katex@7.0.0:
     resolution: {integrity: sha512-h8FPkGE00r2XKU+/acgqwWUlyzve1IiOKwsEkg4pDL3k48PiE0Pt+/uLtVHDVkN1yA4iurZN6UES8ivHVEQV6Q==}
 
-  rehype-minify-whitespace@6.0.2:
-    resolution: {integrity: sha512-Zk0pyQ06A3Lyxhe9vGtOtzz3Z0+qZ5+7icZ/PL/2x1SHPbKao5oB/g/rlc6BCTajqBb33JcOe71Ye1oFsuYbnw==}
-
-  rehype-remark@10.0.0:
-    resolution: {integrity: sha512-+aDXY/icqMFOafJQomVjxe3BAP7aR3lIsQ3GV6VIwpbCD2nvNFOXjGvotMe5p0Ny+Gt6L13DhEf/FjOOpTuUbQ==}
-
   remark-gfm@4.0.0:
     resolution: {integrity: sha512-U92vJgBPkbw4Zfu/IiW2oTZLSL3Zpv+uI7My2eq8JxKgqraFdU8YUGicEJCEgSbeaG+QDFqIcwwfMTOEelPxuA==}
 
@@ -12445,9 +12385,6 @@ packages:
     resolution: {integrity: sha512-c1PTsA3tYrIsLGkJkzHF+w9F2EyxfXGo4UyJc4pFL++FMjnq0HJS69T3M7d//gKrFKwy429bouPescbjecU+Zw==}
     engines: {node: '>=8'}
 
-  trim-trailing-lines@2.1.0:
-    resolution: {integrity: sha512-5UR5Biq4VlVOtzqkm2AZlgvSlDJtME46uV0br0gENbwN4l5+mMKT4b9gJKqWtuL2zAIqajGJGuvbCbcAJUZqBg==}
-
   trough@2.1.0:
     resolution: {integrity: sha512-AqTiAOLcj85xS7vQ8QkAV41hPDIJ71XJB4RCUrzo/1GM2CQwhkJGaf9Hgr7BOugMRpgGUrqRg/DrBDl4H40+8g==}
 
@@ -12647,11 +12584,6 @@ packages:
   unicode-property-aliases-ecmascript@2.0.0:
     resolution: {integrity: sha512-5Zfuy9q/DFr4tfO7ZPeVXb1aPoeQSdeFMLpYuFebehDAhbuevLs5yxSZmIFN1tP5F9Wl4IpJrYojg85/zgyZHQ==}
     engines: {node: '>=4'}
-
-  unified-prettier@2.0.1:
-    resolution: {integrity: sha512-6KKgdlY8wLsUMdGOFx61RVfCggKF47iE1cFvUcrs5jjH9xbkVMaQ48Qy8MXNjhexzKwxsoBYB/Qc7ZtPw7/Oyg==}
-    peerDependencies:
-      prettier: ^3.0.0
 
   unified@11.0.5:
     resolution: {integrity: sha512-xKvGhPWw3k84Qjh8bI3ZeJjqnyadK+GEFtazSfZv/rKeTkTjOJho6mFqh2SM96iIcZokxiOpg78GazTSg8+KHA==}
@@ -17438,11 +17370,6 @@ snapshots:
     dependencies:
       function-bind: 1.1.2
 
-  hast-util-embedded@3.0.0:
-    dependencies:
-      '@types/hast': 3.0.4
-      hast-util-is-element: 3.0.0
-
   hast-util-from-dom@5.0.0:
     dependencies:
       '@types/hast': 3.0.4
@@ -17476,37 +17403,13 @@ snapshots:
       vfile-location: 5.0.3
       web-namespaces: 2.0.1
 
-  hast-util-has-property@3.0.0:
-    dependencies:
-      '@types/hast': 3.0.4
-
-  hast-util-is-body-ok-link@3.0.1:
-    dependencies:
-      '@types/hast': 3.0.4
-
   hast-util-is-element@3.0.0:
     dependencies:
       '@types/hast': 3.0.4
 
-  hast-util-minify-whitespace@1.0.1:
-    dependencies:
-      '@types/hast': 3.0.4
-      hast-util-embedded: 3.0.0
-      hast-util-is-element: 3.0.0
-      hast-util-whitespace: 3.0.0
-      unist-util-is: 6.0.0
-
   hast-util-parse-selector@4.0.0:
     dependencies:
       '@types/hast': 3.0.4
-
-  hast-util-phrasing@3.0.1:
-    dependencies:
-      '@types/hast': 3.0.4
-      hast-util-embedded: 3.0.0
-      hast-util-has-property: 3.0.0
-      hast-util-is-body-ok-link: 3.0.1
-      hast-util-is-element: 3.0.0
 
   hast-util-to-estree@3.1.0:
     dependencies:
@@ -17529,20 +17432,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  hast-util-to-html@9.0.3:
-    dependencies:
-      '@types/hast': 3.0.4
-      '@types/unist': 3.0.2
-      ccount: 2.0.1
-      comma-separated-tokens: 2.0.3
-      hast-util-whitespace: 3.0.0
-      html-void-elements: 3.0.0
-      mdast-util-to-hast: 13.2.0
-      property-information: 6.3.0
-      space-separated-tokens: 2.0.2
-      stringify-entities: 4.0.3
-      zwitch: 2.0.4
-
   hast-util-to-jsx-runtime@2.3.0:
     dependencies:
       '@types/estree': 1.0.5
@@ -17562,23 +17451,6 @@ snapshots:
       vfile-message: 4.0.2
     transitivePeerDependencies:
       - supports-color
-
-  hast-util-to-mdast@10.1.0:
-    dependencies:
-      '@types/hast': 3.0.4
-      '@types/mdast': 4.0.3
-      '@ungap/structured-clone': 1.2.0
-      hast-util-phrasing: 3.0.1
-      hast-util-to-html: 9.0.3
-      hast-util-to-text: 4.0.2
-      hast-util-whitespace: 3.0.0
-      mdast-util-phrasing: 4.1.0
-      mdast-util-to-hast: 13.2.0
-      mdast-util-to-string: 4.0.0
-      rehype-minify-whitespace: 6.0.2
-      trim-trailing-lines: 2.1.0
-      unist-util-position: 5.0.0
-      unist-util-visit: 5.0.0
 
   hast-util-to-text@4.0.2:
     dependencies:
@@ -17616,8 +17488,6 @@ snapshots:
   html-escaper@2.0.2: {}
 
   html-tags@3.3.1: {}
-
-  html-void-elements@3.0.0: {}
 
   http-errors@2.0.0:
     dependencies:
@@ -19872,19 +19742,6 @@ snapshots:
       unist-util-visit-parents: 6.0.1
       vfile: 6.0.2
 
-  rehype-minify-whitespace@6.0.2:
-    dependencies:
-      '@types/hast': 3.0.4
-      hast-util-minify-whitespace: 1.0.1
-
-  rehype-remark@10.0.0:
-    dependencies:
-      '@types/hast': 3.0.4
-      '@types/mdast': 4.0.3
-      hast-util-to-mdast: 10.1.0
-      unified: 11.0.5
-      vfile: 6.0.2
-
   remark-gfm@4.0.0:
     dependencies:
       '@types/mdast': 4.0.3
@@ -20801,8 +20658,6 @@ snapshots:
 
   trim-newlines@3.0.1: {}
 
-  trim-trailing-lines@2.1.0: {}
-
   trough@2.1.0: {}
 
   ts-api-utils@1.0.3(typescript@4.6.4):
@@ -21014,11 +20869,6 @@ snapshots:
   unicode-match-property-value-ecmascript@2.1.0: {}
 
   unicode-property-aliases-ecmascript@2.0.0: {}
-
-  unified-prettier@2.0.1(prettier@2.7.1):
-    dependencies:
-      prettier: 2.7.1
-      unified: 11.0.5
 
   unified@11.0.5:
     dependencies:
