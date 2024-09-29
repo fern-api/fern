@@ -1,10 +1,8 @@
-import { cwd, resolve } from "@fern-api/fs-utils";
 import { noop } from "lodash-es";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
 import { checkReleaseBlockers } from "./checkReleaseBlockers";
 import { checkRootPackage } from "./checkRootPackage";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { DefinitionFileSchema } from "@fern-api/fern-definition-schema";
 import { writeFile } from "fs/promises";
 import prettier from "prettier";
@@ -23,7 +21,8 @@ void yargs(hideBin(process.argv))
             }),
         async (argv) => {
             const filepath = argv.filepath;
-            const jsonSchema = zodToJsonSchema(DefinitionFileSchema, "Fern Definition");
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const jsonSchema = zodToJsonSchema(DefinitionFileSchema as any, "Fern Definition");
             const jsonSchemaStr = JSON.stringify(jsonSchema);
             const config = (await prettier.resolveConfig(filepath)) ?? undefined;
             const jsonSchemaFormatted = prettier.format(jsonSchemaStr, { ...config, filepath });
