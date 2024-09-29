@@ -57,9 +57,7 @@ export interface MintJsonSchema {
               }
         )[]
     ];
-    metadata?: {
-        [k: string]: string;
-    };
+    metadata?: Record<string, string>;
     /**
      * The colors to use in your documentation. At the very least, you must define the primary color. For example: { "colors": { "primary": "#ff0000" } }
      */
@@ -170,9 +168,7 @@ export interface MintJsonSchema {
               type: string;
               url: string;
           }[]
-        | {
-              [k: string]: string;
-          };
+        | Record<string, string>;
     backgroundImage?: string;
     feedback?: {
         thumbsRating?: boolean;
@@ -225,9 +221,7 @@ export interface MintJsonSchema {
     integrations?: {
         intercom?: string;
         frontchat?: string;
-        osano?: {
-            [k: string]: unknown;
-        } & string;
+        osano?: Record<string, unknown> & string;
     };
     isWhiteLabeled?: boolean;
     search?: {
