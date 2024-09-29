@@ -1,0 +1,66 @@
+instances: []
+title: Bland AI
+logo:
+  light: logo/light.svg
+  dark: logo/dark.svg
+  height: 28
+favicon: logo.png
+colors:
+  accent-primary:
+    dark: "#0b0a18"
+    light: "#847AF9"
+  background:
+    dark: "#0A141B"
+navbar-links:
+  - type: secondary
+    text: Support
+    url: mailto:hello@bland.ai
+  - type: primary
+    text: GET YOUR KEYS
+    url: https://app.bland.ai
+tabs:
+  V1 API Reference:
+    display-name: V1 API Reference
+    slug: api-v1
+layout:
+  tabs-placement: sidebar
+  searchbar-placement: header
+navigation:
+  - section: Get Started
+    contents: []
+  - section: Bland Enterprise
+    contents: []
+  - section: Featured guides
+    contents: []
+  - section: Basic Tutorials
+    contents: []
+  - section: Basic
+    contents: []
+  - section: Calls
+    contents: []
+  - section: Web Agents
+    contents: []
+  - section: Inbound Numbers
+    contents: []
+  - section: Outbound Numbers
+    contents: []
+  - section: Voices
+    contents: []
+  - section: Custom Tools
+    contents: []
+  - section: Custom Twilio Accounts
+    contents: []
+  - section: Subaccounts
+    contents: []
+  - section: Batches
+    contents: []
+  - section: Primary Endpoints
+    contents: []
+  - section: Batch Endpoints
+    contents: []
+  - section: SMS
+    contents: []
+  - section: Account
+    contents: []
+  - section: Hold Endpoint
+    contents: []

@@ -1,0 +1,63 @@
+instances: []
+title: Layer
+logo:
+  light: logo/layer_logo.svg
+  dark: logo/layer_logo.svg
+  href: http://layerfi.com
+  height: 28
+favicon: favicon.png
+colors:
+  accent-primary:
+    dark: "#0c48e5"
+    light: "#7e9be5"
+  background:
+    dark: "#090014"
+navbar-links: []
+tabs:
+  API Reference:
+    display-name: API Reference
+    slug: api-reference
+layout:
+  tabs-placement: sidebar
+  searchbar-placement: header
+navigation:
+  - section: Get Started
+    contents: []
+  - section: Importing Financial Data
+    contents: []
+  - section: Offering Accounting
+    contents: []
+  - section: Embedded Components
+    contents: []
+  - section: Businesses
+    contents:
+      - section: Plaid Configuration
+        contents: []
+  - section: Financial Activities
+    contents:
+      - section: Transactions
+        contents: []
+      - section: Payouts
+        contents: []
+      - section: Accounts Receivable
+        contents:
+          - section: Invoices
+            contents: []
+          - section: Payments
+            contents: []
+          - section: Refunds
+            contents: []
+  - section: Reporting
+    contents: []
+  - section: General Ledger
+    contents: []
+  - section: External Accounts
+    contents:
+      - section: Custom Accounts
+        contents: []
+  - section: Tags
+    contents: []
+  - section: Client Admin
+    contents:
+      - section: Configuration
+        contents: []

@@ -1,0 +1,36 @@
+---
+title: "Delete Web Agent"
+api: "POST https://api.bland.ai/v1/agents/{agent_id}/delete"
+description: "Delete a web agent."
+---
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+### Path
+
+<ParamField path="agent_id" type="string" required>
+  The web agent to delete.
+</ParamField>
+
+### Response
+
+<ResponseField name="status" type="string">
+  Can be `success` or `error`.
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  A message saying whether the deletion succeeded, or a helpful message describing why it failed.
+</ResponseField>
+
+<ResponseExample>
+```json
+{
+  "status": "success",
+  "message": "Successfully deleted agent 2c565dc7-f41f-43db-a99f-e4c8ba9d7d18"
+}
+```
+</ResponseExample>

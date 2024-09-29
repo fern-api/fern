@@ -1,0 +1,59 @@
+instances: []
+title: Zep Documentation
+logo:
+  light: logo/zep-name-logo-gradient.svg
+  dark: logo/zep-name-logo-pink.svg
+  height: 28
+favicon: logo/favicon.png
+colors:
+  accent-primary:
+    dark: "#D5479D"
+    light: "#D5479D"
+  background: {}
+navbar-links:
+  - type: secondary
+    text: Support
+    url: mailto:help@getzep.com
+  - type: primary
+    text: Dashboard
+    url: https://app.getzep.com
+tabs:
+  API Reference:
+    display-name: API Reference
+    slug: api-reference
+layout:
+  tabs-placement: sidebar
+  searchbar-placement: header
+navigation:
+  - section: Getting Started
+    contents: []
+  - section: Chat History Memory
+    contents: []
+  - section: Dialog Tools
+    contents: []
+  - section: Working with Search
+    contents: []
+  - section: Document Collections
+    contents: []
+  - section: Ecosystem
+    contents:
+      - section: LangChain
+        contents:
+          - section: Examples
+            contents: []
+  - section: Legal
+    contents: []
+  - section: document
+    contents: []
+  - section: collection
+    contents: []
+  - section: session
+    contents: []
+  - section: memory
+    contents: []
+  - section: messages
+    contents: []
+  - section: search
+    contents: []
+  - section: user
+    contents: []

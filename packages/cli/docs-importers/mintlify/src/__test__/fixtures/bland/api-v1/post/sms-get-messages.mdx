@@ -1,0 +1,33 @@
+---
+title: "Get SMS Messages"
+api: "POST https://api.bland.ai/v1/sms/messages/get"
+description: "Get the list of SMS messages for a given conversation."
+---
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+### Body
+
+<ParamField body="to" type="string">
+The `to` number in the conversation. This is the number you *do not* own. 
+</ParamField>
+<ParamField body="from" type="string">
+The `from` number in the conversation. This is the number you *do* own.
+
+**Please note any ordering of numbers will work**
+
+</ParamField>
+
+<ResponseExample>
+
+```json Response
+{
+  "messages": "[]"
+}
+```
+
+</ResponseExample>
