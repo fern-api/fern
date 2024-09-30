@@ -7,7 +7,7 @@ import {
     replaceReferencedMarkdown
 } from "@fern-api/docs-markdown-utils";
 import { APIV1Write, DocsV1Write, FernNavigation } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, listFiles, relative, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, listFiles, relative, RelativeFilePath, relativize, resolve } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
@@ -177,12 +177,12 @@ export class DocsDefinitionResolver {
                     const stats = await stat(absoluteFilePath);
 
                     if (stats.isDirectory()) {
-                        const files = await listFiles(absoluteFilePath, "{js,ts,jsx,tsx}");
+                        const files = await listFiles(absoluteFilePath, "{js,ts,jsx,tsx,md,mdx}");
 
                         files.forEach((file) => {
                             jsFilePaths.add(file);
                         });
-                    } else if (absoluteFilePath.match(/\.(js|ts|jsx|tsx)$/) != null) {
+                    } else if (absoluteFilePath.match(/\.(js|ts|jsx|tsx|md|mdx)$/) != null) {
                         jsFilePaths.add(absoluteFilePath);
                     }
                 })
