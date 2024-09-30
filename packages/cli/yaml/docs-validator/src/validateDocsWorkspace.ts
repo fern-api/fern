@@ -4,7 +4,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
 import { createDocsConfigFileAstVisitorForRules } from "./createDocsConfigFileAstVisitorForRules";
 import { APIWorkspaceLoader } from "./docsAst/APIWorkspaceLoader";
-import { visitDocsConfigFileYamlAst } from "./docsAst/visitDocsConfigFileAst";
+import { visitDocsConfigFileYamlAst } from "./docsAst/visitDocsConfigFileYamlAst";
 import { getAllRules } from "./getAllRules";
 import { Rule } from "./Rule";
 import { ValidationViolation } from "./ValidationViolation";
@@ -41,14 +41,17 @@ export async function runRulesOnDocsWorkspace({
         }
     });
 
-    await visitDocsConfigFileYamlAst(
-        workspace.config,
-        astVisitor,
-        join(workspace.absoluteFilePath, RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME)),
-        workspace.absoluteFilePath,
+    await visitDocsConfigFileYamlAst({
+        contents: workspace.config,
+        visitor: astVisitor,
+        absoluteFilepathToConfiguration: join(
+            workspace.absoluteFilePath,
+            RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME)
+        ),
+        absolutePathToFernFolder: workspace.absoluteFilePath,
         context,
-        loadApiWorkspace
-    );
+        loadAPIWorkspace: loadApiWorkspace
+    });
 
     return violations;
 }

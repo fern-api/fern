@@ -5,6 +5,36 @@ import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { OpenAPIExtension } from "../../extensions/extensions";
 
+export interface TextEventStreamObject {
+    contentType?: string;
+    schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
+    examples: NamedFullExample[];
+}
+
+export function getTextEventStreamObject(
+    media: Record<string, OpenAPIV3.MediaTypeObject>,
+    context: AbstractOpenAPIV3ParserContext
+): TextEventStreamObject | undefined {
+    for (const contentType of Object.keys(media)) {
+        // See swagger.io/docs/specification/media-types for reference on "*/*"
+        if (contentType.includes("text/event-stream")) {
+            const mediaObject = media[contentType];
+            if (mediaObject == null) {
+                continue;
+            }
+            const schema = mediaObject.schema;
+
+            return {
+                contentType,
+                schema: schema ?? {},
+                examples: getExamples(mediaObject, context)
+            };
+        }
+    }
+
+    return undefined;
+}
+
 export interface ApplicationJsonMediaObject {
     contentType?: string;
     schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;

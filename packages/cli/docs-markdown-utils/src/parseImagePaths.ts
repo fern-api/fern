@@ -6,6 +6,7 @@ import { fromMarkdown } from "mdast-util-from-markdown";
 import { mdxFromMarkdown } from "mdast-util-mdx";
 import { mdx } from "micromark-extension-mdx";
 import { visit } from "unist-util-visit";
+import { parseMarkdownToTree } from "./parseMarkdownToTree";
 
 interface AbsolutePathMetadata {
     absolutePathToMdx: AbsoluteFilePath;
@@ -48,10 +49,7 @@ export function parseImagePaths(
 
     visitFrontmatterImages(data, ["image", "og:image", "og:logo", "twitter:image"], mapImage);
 
-    const tree = fromMarkdown(content, {
-        extensions: [mdx()],
-        mdastExtensions: [mdxFromMarkdown()]
-    });
+    const tree = parseMarkdownToTree(content);
 
     let offset = 0;
 

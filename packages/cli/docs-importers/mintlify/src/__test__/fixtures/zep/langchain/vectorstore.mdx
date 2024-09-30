@@ -1,0 +1,84 @@
+---
+title: "ZepVectorStore"
+---
+
+<Note>
+  **You can find a complete [Vector Store Example](examples/vectorstore-example) that showcases how to use the
+  `ZepVectorStore` class in the chain.**
+</Note>
+
+<Tabs group="langchain">
+
+    <Tab title="Python" group-key="python">
+
+        The Zep Python SDK includes the `ZepVectorStore` class, compatible with [LangChain Expression Language (LCEL)](https://python.langchain.com/docs/expression_language/get_started).
+
+        It expects the following initialization parameters:
+
+        <ParamField path="collection_name" type="str" required>
+            The name of the collection in the Zep Store.
+        </ParamField>
+
+        <ParamField path="description" type="str">
+            The description of the collection.
+        </ParamField>
+
+        <ParamField path="metadata" type="Dict[str, Any]">
+            The metadata to associate with the collection.
+        </ParamField>
+
+        <ParamField path="zep_client" type="ZepClient">
+            The Zep client used for making API requests. You can pass it rather than the API Key.
+        </ParamField>
+
+        <ParamField path="api_key" type="str">
+            Zep Project API Key. You can pass it rather than `zep_client` and we will initialize `ZepClient` for you.
+        </ParamField>
+
+
+        ```python Initialization Example
+        vectorstore = ZepVectorStore(
+            collection_name=ZEP_COLLECTION_NAME,
+            zep_client=zep,
+        )
+        ```
+    </Tab>
+
+    <Tab title="Typescript" group-key="ts">
+
+        The Zep JS SDK includes the `ZepVectorStore` class, compatible with [LangChain Expression Language (LCEL)](https://js.langchain.com/docs/expression_language/).
+
+        It expects the following initialization parameters:
+
+        <ParamField path="collectionName" type="string" required>
+            The name of the collection in the Zep Store.
+        </ParamField>
+
+        <ParamField path="description" type="string">
+            The description of the collection.
+        </ParamField>
+
+        <ParamField path="metadata" type="Record<string, any>">
+            The metadata to associate with the collection.
+        </ParamField>
+
+        <ParamField path="client" type="ZepClient" required>
+            The Zep client used for making API requests.
+        </ParamField>
+
+
+        ```typescript Initialization Example
+        const vectorStore = await ZepVectorStore.init({
+            client: zepClient,
+            collectionName: "testcollection",
+        });
+        ```
+        <Note>
+            **We also expose `fromDocuments` and `fromTexts` static methods to initialize `ZepVectorStore` extending Langchain's `VectorStore` interface.**
+
+            In order to initialize using these methods instead of `init`, make sure you are passing
+            `FakeEmbeddings` as `embeddings` argument as we don't expose the ability to provide your own embeddings on Cloud Version of our SDK.
+        </Note>
+    </Tab>
+
+</Tabs>

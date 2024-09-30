@@ -1,5 +1,31 @@
 - changelogEntry:
     - summary: |
+        Any markdown files that have custom components are also pushed up to the Fern Docs 
+        platform.
+      type: fix
+  irVersion: 53
+  version: 0.43.8
+
+- changelogEntry:
+    - summary: |
+        The `valid-markdown` rule has been updated to try and parse the markdown file into a 
+        valid AST. If the file fails to parse, `fern check` will log an error as well 
+        as the path to the markdown. 
+      type: fix
+  irVersion: 53
+  version: 0.43.7
+
+- changelogEntry:
+    - summary: |
+        The OpenAPI importer now appropriately brings in responses that are under the `text/event-stream`
+        Content-Type if your endpoint is annotated with `x-fern-streaming`. 
+        If your endpoint is not annotated with `x-fern-streaming`, then the response will be ignored.
+      type: fix
+  irVersion: 53
+  version: 0.43.6
+
+- changelogEntry:
+    - summary: |
         If you use the `x-fern-streaming` extension and want to provide different descriptions 
         for the streaming endpoint, then you can now specify `streaming-description`. 
 

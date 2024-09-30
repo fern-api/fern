@@ -1,0 +1,79 @@
+---
+title: "List Calls"
+api: "GET https://api.bland.ai/v1/calls"
+description: "Returns a set of metadata for each call dispatched by your account."
+---
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+### Query Parameters
+
+<ParamField query="from_number" type="string">
+  Filter calls by the number they were dispatched from.
+
+The number that initiated the call - the user's phone number for inbound calls, or the number your AI Agent called from for outbound calls.
+
+</ParamField>
+
+<ParamField query="to_number" type="string">
+  Filter calls by the number they were dispatched to.
+
+The number that answered the call - the user's phone number for outbound calls, or your AI Agent's number for inbound calls.
+
+</ParamField>
+
+<ParamField query="from" type="int">
+  The starting index (inclusive) for the range of calls to retrieve.
+</ParamField>
+
+<ParamField query="to" type="int">
+  The ending index for the range of calls to retrieve.
+</ParamField>
+
+<ParamField query="limit" type="int" default="1000">
+  The maximum number of calls to return in the response.
+</ParamField>
+
+<ParamField query="ascending" type="boolean" default="false">
+  Whether to sort the calls in ascending order of their creation time.
+</ParamField>
+
+### Response
+
+<ResponseField name="count" type="integer">
+  The total number of calls returned in the response.
+</ResponseField>
+
+<ResponseField name="calls" type="array">
+  An array of call data objects. See the [Call](/api-v1/get/calls-id) section for details.
+
+Note: Individual call transcripts are not included due to their size.
+
+</ResponseField>
+
+<ResponseExample>
+```json Response
+{
+    "count": 784,
+    "calls": [
+        {
+            "call_id": "c1234567-89ab-cdef-0123-456789abcdef",
+            "created_at": "2023-12-21T23:25:14.801193+00:00",
+            "call_length": 0.834, // minutes
+            "to": "5551234567",
+            "from": "+15551234567",
+            "completed": true,
+            "queue_status": "complete",
+            "error_message": null,
+            "answered_by": "human",
+            "batch_id": "b1234567-89ab-cdef-0123-gen-batch",
+        },
+        //... Additional call objects
+    ]
+}
+```
+</ResponseExample>

@@ -1,0 +1,137 @@
+---
+title: Bank Transaction object
+slug: api-reference/bank-transaction
+---
+
+Bank transactions are transactions that have occurred within a bank account owned by a business.
+
+### Attributes
+
+<ParamField body="id" type="string">
+  Unique identifier for the bank transaction.
+</ParamField>
+<ParamField body="external_id" type="string">
+  Unique ID of the bank transaction in your system for linking purposes. **Idempotency key.**
+</ParamField>
+<ParamField body="type" type="string">
+  Resource type. Value will be "Bank_Transaction".
+</ParamField>
+<ParamField body="business_id" type="string">
+  Id for the Business this transaction belongs to.
+</ParamField>
+<ParamField body="source" type="enum">
+  The source that the bank transaction was imported from.
+  Values can be: `UNIT`, `PLAID`, `API`
+</ParamField>
+<ParamField body="source_transaction_id" type="string">
+  Unique ID of the bank transaction in its source system. **Idempotency key.**
+</ParamField>
+<ParamField body="source_account_id" type="string">
+  Id of the source account in the source system.
+</ParamField>
+<ParamField body="date" type="ISO8601 timestamp">
+  Date the transaction occurred.
+</ParamField>
+<ParamField body="direction" type="enum">
+  The direction of the transaction relative to the source account.
+  Values can be: `CREDIT`, `DEBIT`
+</ParamField>
+<ParamField body="amount" type="integer">
+  The amount of the transaction in cents.
+</ParamField>
+<ParamField body="counterparty_name" type="string">
+  The name of the merchant or counterparty associated with the transaction.
+</ParamField>
+<ParamField body="description" type="string">
+  Description of the transaction.
+</ParamField>
+<ParamField body="type" type="string">
+  The type of bank account transaction.
+  Example values: `PURCHASE`, `BOOK`, `ATM`, `WIRE`, etc.
+</ParamField>
+<ParamField body="categorization_status" type="enum">
+  The status of the transaction's categorization in Layer's systems.
+  Values can be: `PENDING`, `READY_FOR_INPUT`, `CATEGORIZED`, `LAYER_REVIEW`
+</ParamField>
+<ParamField body="categorization_method" type="enum">
+  How the transaction was categorized.
+  Values can be: `SMS`, `API`, `LAYER_AUTO`, `LAYER_MANUAL`
+</ParamField>
+<ParamField body="category" type="Category object">
+  The category assigned to the transaction. Only populated for transactions that have a finalized category.
+  <Expandable title="properties">
+    <ResponseField name="category" type="enum">
+      String enum for the category assigned to the transaction. The set of category enums will vary based on chart of account configured for the business.
+    </ResponseField>
+    <ResponseField name="display_name" type="string">
+      A human-readable string describing the category. This can be presented to the end user in your UI.
+    </ResponseField>
+  </Expandable>
+</ParamField>
+<ParamField body="categorization_flow" type="Categorization Flow object">
+  Layer's suggested categorization for the transaction.
+  <Expandable title="properties">
+    <ResponseField name="type" type="string">
+      The type of categorization approach used.
+    </ResponseField>
+    <ParamField body="category" type="Category object">
+      The category assigned to the transaction. Only populated for transactions that have a finalized category.
+      <Expandable title="properties">
+        <ResponseField name="category" type="enum">
+          String enum for the category assigned to the transaction. The set of category enums will vary based on chart of account configured for the business.
+        </ResponseField>
+        <ResponseField name="display_name" type="string">
+          A human-readable string describing the category. This can be presented to the end user in your UI.
+        </ResponseField>
+      </Expandable>
+    </ParamField>
+    <ResponseField name="suggestions" type="array of Category objects">
+      Layer's list of suggested categories for the transaction.
+      <Expandable title="properties">
+        <ResponseField name="category" type="enum">
+          String enum for the category assigned to the transaction. The set of category enums will vary based on chart of account configured for the business.
+        </ResponseField>
+        <ResponseField name="display_name" type="string">
+          A human-readable string describing the category. This can be presented to the end user in your UI.
+        </ResponseField>
+      </Expandable>
+    </ResponseField>
+  </Expandable>
+</ParamField>
+
+
+
+<ResponseExample>
+
+```json Example
+{
+  "id":"67cee0d8-3b8e-4b4b-a857-78ce3bb1d895",
+  "type":"Bank_Transaction",
+  "transaction_type":"Purchase",
+  "business_id":"cfee5365-dcc3-425e-b403-cc9568f7121e",
+  "source":"API",
+  "source_transaction_id":"11111113",
+  "source_account_id":"111113",
+  "imported_at":"2023-06-07T00:42:08.664543Z",
+  "date":"2023-05-15T14:13:07Z",
+  "direction":"Debit",
+  "amount":8026,
+  "counterparty_name":"SUNOCO",
+  "description":null,
+  "categorization_status":"CATEGORIZED",
+  "category":{
+    "category":"FUEL",
+    "display_name":"Fuel"
+  },
+  "categorization_method":"LAYER_AUTO",
+  "categorization_flow":{
+    "type":"AUTO",
+    "category":{
+      "category":"FUEL",
+      "display_name":"Fuel"
+    }
+  }
+}
+```
+
+</ResponseExample>

@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.40.7] - 2024-09-28
+
+- Fix: The generated README will now have a section that links to the generated
+  SDK Reference (in `reference.md`). 
+  
+  ```md
+  ## Reference
+
+  A full reference for this library can be found [here](./reference.md). 
+  ```
+
+## [0.40.6] - 2024-09-18
+
+- Fix: The TypeScript SDK now supports specifying a custom contentType if one is specified.
+
 ## [0.40.5] - 2024-09-18
 
 - Fix: The snippet templates for file upload are now accurate and also respect the feature 

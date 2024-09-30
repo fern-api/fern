@@ -181,7 +181,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             headers: this.getHeaders(context),
             queryParameters: this.queryParams.getReferenceTo(context),
             body: this.getSerializedRequestBodyWithNullCheck(context),
-            contentType: "application/json",
+            contentType: this.requestBody?.contentType ?? "application/json",
             requestType: "json"
         };
     }

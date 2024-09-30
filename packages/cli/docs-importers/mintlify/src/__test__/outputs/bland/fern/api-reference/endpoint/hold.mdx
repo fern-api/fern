@@ -1,0 +1,54 @@
+---
+title: Wait on Hold (HoldForMe)
+subtitle: >-
+  This endpoint sends an outbound call where the AI navigates customer service
+  and waits on hold until a human being answers. Then it dispatches a call to a
+  number you provide, patching in another human.
+slug: api-reference/endpoint/hold
+---
+
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+### Body
+
+<ParamField body="phone_number" type="string" required>
+  This is the phone number of the person or company you want to call. - International numbers: must include the country
+  code and may not include additional formatting (like parentheses and dashes). E.g. '+447700900077'. - U.S. numbers:
+  may include formatting, but we recommend stripping all additional characters.
+</ParamField>
+
+<ParamField body="hold_connect" type="string" required>
+  Once the AI detects a human has answered the call, it will call this number. Must follow the same formatting as
+  `phone_number`
+</ParamField>
+
+<ParamField body="task" type="string">
+  By default, the AI will wait on hold, then call you when a human answers. If you want the AI to first ask the other
+  human a few questions, or want to give it special rules about when to patch you into the phone call, provide those
+  instructions here.
+</ParamField>
+
+### Response
+
+<ResponseField name="status" type="string">
+  Can be `success` or `error`.
+</ResponseField>
+
+<ResponseField name="call_id" type="string">
+  A unique identifier for the call (present only if status is `success`)
+</ResponseField>
+
+<ResponseExample>
+
+```json Response
+{
+  "status": "success",
+  "call_id": "9d404c1b-6a23-4426-953a-a52c392ff8f1"
+}
+```
+
+</ResponseExample>

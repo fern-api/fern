@@ -197,7 +197,7 @@ navigation:
                 title: Go
                 slug: go
               - changelog: ./pages/changelogs/csharp-sdk
-                title: .Net
+                title: .NET
                 slug: csharp
               - changelog: ./pages/changelogs/java-sdk
                 title: Java

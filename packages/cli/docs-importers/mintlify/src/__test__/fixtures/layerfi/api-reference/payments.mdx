@@ -1,0 +1,81 @@
+---
+title: "Invoice Payment object"
+---
+
+A refund represents a transaction that returns value to from a business to a customer. A specific payment can be refunded or a general refund can be applied to an invoice.
+
+### Attributes
+
+<ParamField body="id" required="true" type="string">
+  Unique identifier for the payment.
+</ParamField>
+<ParamField body="external_id" type="string">
+  Unique ID of the invoice payment in an external system for linking and
+  idempotency.
+</ParamField>
+<ParamField body="at" required="true" type="string">
+  Timestamp when the payment was completed.
+</ParamField>
+<ParamField body="method" required="true" type="enum">
+  Payment method. Possible values are: `CASH`, `CHECK`, `CREDIT_CARD`, `ACH`,
+  `REDEEMED_PREPAYMENT`, `OTHER`
+</ParamField>
+<ParamField body="fee" required="true" type="integer">
+  Fee paid by business for processing of payment in positive cents.
+</ParamField>
+<ParamField body="amount" required="true" type="integer">
+  Customer payment amount, in cents.
+</ParamField>
+<ParamField body="processor" type="string">
+  Processor used to make the payment, if any.
+  Any processor name can be provided and will be tracked.
+  Supported processors (`STRIPE`, `SHOPIFY`) will have additional asset balance tracking.
+</ParamField>
+<ParamField body="imported_at" required="true" type="ISO8601 timestamp">
+  Timestamp when the payment was imported into Layer.
+</ParamField>
+<ParamField
+  body="allocations"
+  required="true"
+  type="array of InvoicePaymentAllocation objects"
+>
+  Timestamp when the payment was imported into Layer.
+  <Expandable title="InvoicePaymentAllocation properties">
+    <ResponseField name="invoice_id" type="string">
+      Id of an invoice to which this payment is be applied.
+    </ResponseField>
+    <ResponseField name="payment_id" type="string">
+      Id of the payment this this allocationa applies from.
+    </ResponseField>
+    <ResponseField name="amount" required="true" type="integer">
+      Customer payment amount, in cents.
+    </ResponseField>
+  </Expandable>
+</ParamField>
+
+<ResponseExample>
+```json Response
+ {
+   "data": {
+     "type": "Payment",
+     "id": "e67c216b-28f4-4a0e-9a21-7f05c19e4c66",
+     "external_id": "payment-1",
+     "at": "2024-02-27T02:16:40.369432Z",
+     "method": "CREDIT_CARD",
+     "fee": 20,
+     "amount": 90,
+     "processor": "STRIPE",
+     "imported_at": "2024-02-27T02:16:40.389772Z",
+     "allocations": [
+       {
+         "invoice_id": "57f0fada-bb56-4f3e-9afa-2a222b68009e",
+         "payment_id": "e67c216b-28f4-4a0e-9a21-7f05c19e4c66",
+         "amount": 90,
+         "transaction_tags": []
+       }
+     ],
+     "transaction_tags": []
+   }
+ }
+ ```
+</ResponseExample>

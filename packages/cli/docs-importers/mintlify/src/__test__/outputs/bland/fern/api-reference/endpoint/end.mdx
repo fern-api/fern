@@ -1,0 +1,39 @@
+---
+title: End phone call
+subtitle: Send a POST request to end a phone call that's in progress
+slug: api-reference/endpoint/end
+---
+
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+### Body
+
+<ParamField body="call_id" type="string" required>
+  The unique identifier for the call.
+</ParamField>
+
+### Response
+
+<ResponseField name="status" type="string">
+  Can be `success` or `error`.
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  If the status is `success`, the message will say "Call ended successfully." Otherwise if the status is `error`, the
+  message will say "SID not found for the given c_id." or "Internal server error."
+</ResponseField>
+
+<ResponseExample>
+
+```json Response
+{
+  "status": "success",
+  "message": "Call ended successfully."
+}
+```
+
+</ResponseExample>

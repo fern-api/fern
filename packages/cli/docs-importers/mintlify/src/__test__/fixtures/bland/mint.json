@@ -1,0 +1,230 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "Bland AI",
+  "logo": {
+    "dark": "/logo/dark.svg",
+    "light": "/logo/light.svg"
+  },
+  "favicon": "/logo.png",
+  "colors": {
+    "primary": "#6D64EF",
+    "light": "#847AF9",
+    "dark": "#0b0a18",
+    "background": {
+      "dark": "#0A141B"
+    },
+    "anchors": {
+      "from": "#847AF9",
+      "to": "#847AF9"
+    }
+  },
+  "topbarLinks": [
+    {
+      "name": "Support",
+      "url": "mailto:hello@bland.ai"
+    }
+  ],
+  "topbarCtaButton": {
+    "name": "GET YOUR KEYS",
+    "url": "https://app.bland.ai"
+  },
+  "tabs": [
+    {
+      "name": "V1 API Reference",
+      "url": "api-v1"
+    }
+  ],
+  "anchors": [
+    {
+      "name": "Community & Support",
+      "icon": "discord",
+      "url": "https://discord.gg/QvxDz8zcKe"
+    },
+    {
+      "name": "Blog",
+      "icon": "newspaper",
+      "url": "https://www.bland.ai/blog"
+    },
+    {
+      "name": "AMHLB Prompting Guide",
+      "icon": "file",
+      "url": "https://docs.google.com/document/d/19JVeaM3c9a0JzsjsnzaZ2BOoBve4IeWx-fARDAgaEm8/edit"
+    },
+    {
+      "name": "Full Code Examples",
+      "icon": "github",
+      "url": "https://github.com/Bland-AI/Bland-AI-Cookbooks/tree/main"
+    },
+    {
+      "name": "Zapier No-code integration",
+      "icon": "bolt",
+      "url": "https://zapier.com/apps/bland-ai/integrations"
+    },
+    {
+      "name": "Enterprise inquiries",
+      "icon": "building",
+      "url": "https://forms.default.com/361589"
+    }
+  ],
+  "navigation": [
+    {
+      "group": "Get Started",
+      "pages": ["welcome-to-bland", "starter-guide"]
+    },
+    {
+      "group": "Bland Enterprise",
+      "pages": [
+        "enterprise-features/custom-twilio",
+        "enterprise-features/custom-llm",
+        "enterprise-features/unlimited-support",
+        "enterprise-features/custom-tts",
+        "enterprise-features/bring-your-own-twilio",
+        "enterprise-features/enterprise-rate-limits"
+      ]
+    },
+    {
+      "group": "Featured guides",
+      "pages": ["featured-guides/bland-and-botpress"]
+    },
+    {
+      "group": "Basic Tutorials",
+      "pages": [
+        "tutorials/pathways",
+        "tutorials/custom-tools",
+        "tutorials/send-first-call",
+        "tutorials/webhook-signing",
+        "tutorials/send-1000-calls-at-once",
+        "tutorials/dynamic-data",
+        "tutorials/max-duration",
+        "tutorials/live-transfer",
+        "tutorials/webhooks"
+      ]
+    },
+    {
+      "group": "Basic",
+      "pages": ["api-v1/post/calls-simple", "api-v1/post/calls-simple-pathway"]
+    },
+    {
+      "group": "Calls",
+      "pages": [
+        "api-v1/post/calls",
+        "api-v1/post/calls-id-analyze",
+        "api-v1/post/calls-id-stop",
+        "api-v1/get/calls",
+        "api-v1/get/calls-id",
+        "api-v1/get/calls-id-recording",
+        "api-v1/get/calls-corrected-transcript"
+      ]
+    },
+    {
+      "group": "Web Agents",
+      "pages": [
+        "api-v1/post/agents",
+        "api-v1/post/agents-id",
+        "api-v1/post/agents-id-authorize",
+        "api-v1/post/agents-id-delete",
+        "api-v1/get/agents"
+      ]
+    },
+    {
+      "group": "Inbound Numbers",
+      "pages": [
+        "api-v1/post/inbound-purchase",
+        "api-v1/post/inbound-number-update",
+        "api-v1/get/inbound",
+        "api-v1/get/inbound-number"
+      ]
+    },
+    {
+      "group": "Outbound Numbers",
+      "pages": ["api-v1/post/outbound-purchase", "api-v1/get/outbound"]
+    },
+    {
+      "group": "Voices",
+      "pages": ["api-v1/get/voices", "api-v1/get/voices-id", "api-v1/post/voices-id-sample"]
+    },
+    {
+      "group": "Custom Tools",
+      "pages": ["api-v1/post/tools", "api-v1/post/tools-tool-id", "api-v1/get/tools", "api-v1/get/tools-tool-id"]
+    },
+    {
+      "group": "Custom Twilio Accounts",
+      "pages": [
+        "api-v1/post/accounts",
+        "api-v1/post/accounts-delete",
+        "api-v1/post/inbound-insert",
+        "api-v1/post/inbound-number-delete"
+      ]
+    },
+    {
+      "group": "Subaccounts",
+      "pages": [
+        "api-v1/post/subaccounts",
+        "api-v1/post/subaccounts-id-transfer",
+        "api-v1/post/subaccounts-id-rotate",
+        "api-v1/post/subaccounts-id-disable",
+        "api-v1/get/subaccounts",
+        "api-v1/get/subaccounts-id"
+      ]
+    },
+    {
+      "group": "Batches",
+      "pages": [
+        "api-v1/post/batches",
+        "api-v1/post/batches-id-analyze",
+        "api-v1/post/batches-id-stop",
+        "api-v1/get/batches",
+        "api-v1/get/batches-id",
+        "api-v1/get/batches-id-analysis"
+      ]
+    },
+    {
+      "group": "Primary Endpoints",
+      "pages": [
+        "api-reference/endpoint/call",
+        "api-reference/endpoint/logs",
+        "api-reference/endpoint/hold",
+        "api-reference/endpoint/end",
+        "api-reference/endpoint/dynamic_validate",
+        "api-reference/endpoint/purchase",
+        "api-reference/endpoint/inbound_prompt",
+        "api-reference/endpoint/recording"
+      ]
+    },
+    {
+      "group": "Batch Endpoints",
+      "pages": [
+        "api-reference/batch-endpoint/batch",
+        "api-reference/batch-endpoint/batch_get",
+        "api-reference/batch-endpoint/batches_get",
+        "api-reference/batch-endpoint/batch_stop",
+        "api-reference/batch-endpoint/end_batches"
+      ]
+    },
+    {
+      "group": "SMS",
+      "pages": [
+        "api-v1/post/sms-submit-reg",
+        "api-v1/post/sms-check-registration",
+        "api-v1/post/sms-prompt-update",
+        "api-v1/post/sms-analyze",
+        "api-v1/post/sms-get-messages",
+        "api-v1/post/sms-toggle-human",
+        "api-v1/post/sms-webhook-update"
+      ]
+    },
+    {
+      "group": "Account",
+      "pages": ["api-v1/get/me"]
+    },
+    {
+      "group": "Hold Endpoint",
+      "pages": ["api-reference/hold-endpoint/hold"]
+    }
+  ],
+  "footerSocials": {
+    "twitter": "https://twitter.com/usebland",
+    "linkedin": "https://www.linkedin.com/company/bland-ai/",
+    "discord": "https://discord.gg/QvxDz8zcKe"
+  }
+}

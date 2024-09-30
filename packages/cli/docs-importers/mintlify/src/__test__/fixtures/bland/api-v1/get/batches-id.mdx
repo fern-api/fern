@@ -1,0 +1,281 @@
+---
+title: "Batch Details"
+api: "GET https://api.bland.ai/v1/batches/{batch_id}"
+description: "Retrieves calls and batch data for a specific batch_id."
+---
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+### Path Parameters
+
+<ParamField path="batch_id" type="string" required>
+  The unique identifier for the batch of calls you want to retrieve.
+</ParamField>
+
+### Query Parameters
+
+<ParamField query="include_calls" type="boolean" default="true">
+  Whether or not to include individual call data in the response.
+</ParamField>
+
+<ParamField query="include_transcripts" type="boolean" default="true">
+  If calls are included, can be set to false to exclude transcripts from the response.
+</ParamField>
+
+<ParamField query="include_analysis" type="boolean" default="true">
+  If calls are included, can be set to false to exclude analysis from the response.
+</ParamField>
+
+### Response
+
+<ResponseField name="batch_params" type="object">
+  An object containing parameters and settings for the batch.
+</ResponseField>
+
+<ResponseField name="batch_params.id" type="string">
+  The unique identifier of the batch - used as the `batch_id` parameter in other API calls.
+</ResponseField>
+
+<ResponseField name="batch_params.created_at" type="string">
+  The creation timestamp of the batch.
+</ResponseField>
+
+<ResponseField name="batch_params.label" type="string">
+  The label or description of the batch.
+</ResponseField>
+
+<ResponseField name="batch_params.base_prompt" type="string">
+  The base prompt used for calls in this batch.
+</ResponseField>
+
+<ResponseField name="batch_params.endpoint_code" type="string">
+  The endpoint code used for API integration.
+</ResponseField>
+
+<ResponseField name="batch_params.call_params" type="object">
+  An object containing parameters for the calls in the batch.
+</ResponseField>
+
+<ResponseField name="analysis" type="object">
+  An object containing analysis data for the batch.
+</ResponseField>
+
+<ResponseField name="analysis.total_calls" type="object">
+  The total number of calls in the batch, including completed and in-progress calls.
+</ResponseField>
+
+<ResponseField name="analysis.completed_calls" type="object">
+  The total number of completed calls in the batch.
+</ResponseField>
+
+<ResponseField name="analysis.in_progress_calls" type="object">
+  The total number of in-progress calls in the batch.
+</ResponseField>
+
+<ResponseField name="analysis.queue_statuses" type="object">
+  An object containing the number of calls in each queue status.
+
+Example:
+
+```json
+{
+  "complete": 237,
+  "queued": 2,
+  "call_error": 1
+}
+```
+
+</ResponseField>
+
+<ResponseField name="analysis.call_lengths" type="object">
+  Contains `average`, `average_nonzero`, `summary` and `all` fields.
+
+- `average`: The average call length in minutes.
+- `average_nonzero`: The average call length in minutes, excluding calls with a length of less than one second.
+- `summary`: A summary of the call lengths, grouped into ranges.
+- `all`: Contains each call length, in case you want to use a different grouping than the default.
+  </ResponseField>
+
+<ResponseField name="analysis.call_ids" type="array">
+  Contains each `call_id` in the batch.
+</ResponseField>
+
+<ResponseField name="analysis.error_messages" type="array">
+  Contains any error messages that calls in the batch may have.
+
+Example:
+
+```json
+[
+  {
+    "call_id": "c52f5f8c-147e-478c-4b40-88214feeba29",
+    "error_message": "Cannot transfer to +12223334444 - Call is no longer active"
+  }
+]
+```
+
+</ResponseField>
+
+<ResponseField name="analysis.endpoints" type="object">
+  Contains the number of calls that have been sent to each endpoint. Applicable only to API integrations.
+</ResponseField>
+
+<ResponseField name="call_data" type="array">
+  An array of objects, each representing individual call data.
+</ResponseField>
+
+<ResponseField name="call_data[].created_at" type="string">
+  The timestamp when the individual call was created.
+</ResponseField>
+
+<ResponseField name="call_data[].to" type="string">
+  The phone number the call was made to.
+</ResponseField>
+
+<ResponseField name="call_data[].from" type="string">
+  The phone number the call was made from.
+</ResponseField>
+
+<ResponseField name="call_data[].completed" type="boolean">
+  Indicates if the call was completed.
+</ResponseField>
+
+<ResponseField name="call_data[].call_id" type="string">
+  The unique identifier for each individual call.
+</ResponseField>
+
+<ResponseField name="call_data[].call_length" type="number">
+  The duration of the call in minutes.
+</ResponseField>
+
+<ResponseField name="call_data[].answered_by" type="array">
+  Contains a string value if the batch had `answered_by_enabled` set to true.
+
+Values:
+
+- `voicemail`
+- `human`
+- `unknown`
+- `no-answer`
+- `null`
+  </ResponseField>
+
+<ResponseExample>
+
+```json Response
+{
+  "batch_params": {
+    "id": "AAcQq8zXxLB56LWg-gen-batch",
+    "campaign_id": null,
+    "created_at": "2023-12-07T20:43:44.544773+00:00",
+    "label": "Customer Satisfaction Follow-up",
+    "base_prompt": "You are calling {{name}} about their recent purchase of the item: {{item}}. Ask them each of the following questions about the specific item they purchased: {{questions}}",
+    "endpoint_code": "api",
+    "call_params": {
+      "reduce_latency": true,
+      "voice_id": 0,
+      "language": "eng",
+      "max_duration": 10,
+      "wait_for_greeting": false
+    }
+  },
+  "call_data": [
+    {
+      "status": "completed",
+      "corrected_duration": "12",
+      "end_at": "2023-12-16T00:17:38.000Z",
+      "call_id": "ffa99be3-63dd-44dc-9523-380cd25c1b9e",
+      "to": "1112223333",
+      "from": "+17473423273",
+      "completed": true,
+      "created_at": "2023-12-16T00:17:22.383682+00:00",
+      "queue_status": "complete",
+      "endpoint_url": "api.bland.ai",
+      "max_duration": 30,
+      "error_message": null,
+      "answered_by": "voicemail",
+      "request_data": {
+        "phone_number": "1112223333",
+        "reduce_latency": true,
+        "wait": false,
+        "language": "ENG"
+      },
+      "transcripts": [
+        {
+          "id": 1188954,
+          "created_at": "2023-12-16T00:17:30.46833+00:00",
+          "text": " Hi, Im calling about the laundromat for sale.  —  ",
+          "user": "assistant",
+          "c_id": "ffa99be3-63dd-44dc-9523-380cd25c1b9e"
+        },
+        {
+          "id": 1188957,
+          "created_at": "2023-12-16T00:17:35.14056+00:00",
+          "text": "I'll get back to you as soon as you can. Just leave a message. Thank you. Bye.",
+          "user": "user",
+          "c_id": "ffa99be3-63dd-44dc-9523-380cd25c1b9e"
+        },
+        {
+          "id": 1188959,
+          "created_at": "2023-12-16T00:17:36.710551+00:00",
+          "text": "Ended call: Goodbye",
+          "user": "agent-action",
+          "c_id": "ffa99be3-63dd-44dc-9523-380cd25c1b9e"
+        }
+      ],
+      "call_length": 0.12345
+    }
+    //...
+  ],
+  "analysis": {
+    "total_calls": 88,
+    "completed_calls": 86,
+    "in_progress_calls": 2,
+    "queue_statuses": {
+      "complete": 85,
+      "started": 2,
+      "call_error": 1
+    },
+    "call_lengths": {
+      "average": 17,
+      "average_nonzero": 31,
+      "summary": {
+        "0-5": 18,
+        "5-10": 4,
+        "10-15": 3,
+        "15-20": 2,
+        "20-30": 14,
+        "30-45": 28,
+        "45-60": 11,
+        "60-90": 6,
+        "90-120": 1,
+        "120+": 1
+      },
+      "all": [
+        7, 32
+        //...
+      ]
+    },
+    "call_ids": [
+      "ffa99be3-63dd-44dc-9523-380cd25c1b9e",
+      "591338a8-34b2-41e6-93da-b9029c9bdedc"
+      //...
+    ],
+    "error_messages": [
+      {
+        "call_id": "c52f5f8c-147e-478c-4b40-88214feeba29",
+        "error_message": "Cannot transfer to +12223334444 - Call is no longer active"
+      }
+    ],
+    "endpoints": {
+      "api.bland.ai": 88
+    }
+  }
+}
+```
+
+</ResponseExample>

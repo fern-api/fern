@@ -7,12 +7,9 @@ import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
 import { printTestCases } from "./printTestCases";
 import { TestRunner } from "./test-runner";
 
-export const FIXTURES_TO_IGNORE = ["server-sent-event-examples", "server-sent-events"];
 export const LANGUAGE_SPECIFIC_FIXTURE_PREFIXES = ["csharp", "go", "java", "python", "ruby", "ts"];
 
-export const FIXTURES = readDirectories(path.join(__dirname, FERN_DIRECTORY, APIS_DIRECTORY)).filter(
-    (fixture) => !FIXTURES_TO_IGNORE.includes(fixture)
-);
+export const FIXTURES = readDirectories(path.join(__dirname, FERN_DIRECTORY, APIS_DIRECTORY));
 
 export async function testGenerator({
     runner,
@@ -77,7 +74,7 @@ export async function testGenerator({
             CONSOLE_LOGGER.info(`Unexpected fixtures include ${unexpectedFixtures.join(", ")}.`);
             return false;
         } else {
-            CONSOLE_LOGGER.info(`All failures were expected.`);
+            CONSOLE_LOGGER.info("All failures were expected.");
         }
     }
     return true;

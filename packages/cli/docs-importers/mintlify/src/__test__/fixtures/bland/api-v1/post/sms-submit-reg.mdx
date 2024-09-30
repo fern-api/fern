@@ -1,0 +1,68 @@
+---
+title: "A2P Registration"
+api: "POST https://api.bland.ai/v1/sms/register"
+description: "Learn how to register your A2P brand using our API. This guide covers all you need to know about making a POST request, including required parameters, error handling, and response expectations."
+---
+
+# Registering an A2P Brand via API
+
+This documentation provides detailed information on how to register an Application-to-Person (A2P) brand by making a POST request to our API. The process involves submitting your brand's details for registration and verification purposes.
+
+A2P Registration is required for _all_ businesses who wish to send SMS. There can be signifcant fines for any non compliant messages. A2P Registration can take 2 days -> 2 Weeks.
+
+## Endpoint
+
+`POST /api/registerA2PBrand`
+
+## Required Headers
+
+- `Authorization`: Your API key for authentication.
+
+## Request Parameters
+
+Your request should include a JSON body with the following parameters:
+
+- `businessName` (string): The legal name of your business.
+- `ein` (string): Your Employer Identification Number.
+- `vertical` (string): Industry vertical. Possible values include: "AUTOMOTIVE", "AGRICULTURE", "BANKING", "CONSTRUCTION", "CONSUMER", "EDUCATION", "ENGINEERING", "ENERGY", "OIL_AND_GAS", "FAST_MOVING_CONSUMER_GOODS", "FINANCIAL", "FINTECH", "FOOD_AND_BEVERAGE", "GOVERNMENT", "HEALTHCARE", "HOSPITALITY", "INSURANCE", "LEGAL", "MANUFACTURING", "MEDIA", "ONLINE", "PROFESSIONAL_SERVICES", "RAW_MATERIALS", "REAL_ESTATE", "RELIGION", "RETAIL", "JEWELRY", "TECHNOLOGY", "TELECOMMUNICATIONS", "TRANSPORTATION", "TRAVEL", "ELECTRONICS", "NOT_FOR_PROFIT"
+- `address` (string): The business address.
+- `city` (string): The city of your business.
+- `state` (string): The state of your business. Must be a valid US state code.
+- `postalCode` (string): The postal code of your business.
+- `country` (string): The country of your business.
+- `email` (string): The email address for your business.
+- `type` (string): Legal structure of the business. Possible values: "Partnership", "Limited Liability Corporation", "Co-operative", "Non-profit Corporation", "Corporation"
+- `website` (string): Your business's website URL.
+- `opt_in_info` (string): Information regarding opt-in procedures for your messaging service. EX: "Customers must explicitly consent on our website and during the phone call."
+- `messageSamples` (array): An array of three strings, each a sample message you plan to use.
+- `trusted_user` (object): An object containing details about the trusted user registering the brand. Includes `position`, `last_name`, `phone_number`, `first_name`, and `email`.
+
+Ex. of trusted_user obj:
+
+```json
+{
+    "position": "CEO" //must be C Suite or VP,
+    "last_name":"Smith",
+    "first_name":"John"
+}
+```
+
+## Error Handling
+
+Our API provides detailed error messages to help you understand what went wrong in case of a failure:
+
+- `400 Bad Request`: This response occurs if any required fields are missing in your request or if the state code is invalid. The response body will include a message specifying the missing or incorrect fields.
+- `500 Internal Server Error`: Indicates an unexpected error on the server side. The response body will contain an error message with more details.
+
+## Successful Response
+
+A successful request returns a `200 OK` status code with a JSON body containing a message indicating the registration was successful and any relevant data or identifiers related to the A2P brand registration.
+
+**\*Important\*\*** The Brand Registration can take several attempts and days to weeks to complete. This success only indicates we _submitted_ the registration correctly.
+
+```json
+{
+  "message": "A2P Brand registration successful.",
+  "data": {...}
+}
+```

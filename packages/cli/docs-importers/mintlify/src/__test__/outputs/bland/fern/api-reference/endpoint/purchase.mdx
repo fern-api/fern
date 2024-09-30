@@ -1,0 +1,56 @@
+---
+title: Purchase inbound number
+subtitle: >-
+  Purchase and configure a new inbound phone number. ($15/mo. subscription using
+  your stored payment method).
+slug: api-reference/endpoint/purchase
+---
+
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+### Body
+
+<ParamField body="area_code" default="415" type="string">
+  Choose a three-digit area code for your phone number. If set as a parameter, a number will only be purchased by exact
+  match if available.
+</ParamField>
+
+<ParamField body="prompt" type="string">
+  This defines how the AI will start the conversation, information available to it, and its behaviors. Matches how the
+  outbound `task` parameter functions.
+</ParamField>
+
+<ParamField body="webhook" type="string">
+  The webhook should be a http / https callback url. We will send the call_id and transcript to this URL after the call
+  completes. This can be useful if you want to have real time notifications when calls finish.
+</ParamField>
+
+<ParamField body="phone_number" type="string">
+  Specify an exact phone number you'd like to use. If provided, will override the `area_code` parameter and does not fallback to any other number.
+
+Example of the correct format (Note the `"+1"` is mandatory): `"+12223334444"`
+
+</ParamField>
+
+### Response
+
+<ResponseField name="phone_number" type="string">
+  The created phone number, will be in the following format: `+1XXXXXXXXXX`
+
+Example: `+18582814611`
+
+</ResponseField>
+
+<ResponseExample>
+
+```json Response
+{
+  "phone_number": "+18582814611"
+}
+```
+
+</ResponseExample>

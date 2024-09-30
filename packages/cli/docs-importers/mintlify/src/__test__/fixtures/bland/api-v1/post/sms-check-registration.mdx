@@ -1,0 +1,29 @@
+---
+title: "Check SMS A2P status"
+api: "POST https://api.bland.ai/v1/sms/register/status"
+description: "Check the status of an A2P registration."
+---
+
+### Headers
+
+<ParamField header="authorization" type="string" required>
+  Your API key for authentication.
+</ParamField>
+
+### Body
+
+<ParamField body="registration_id" type="string">
+  The `registration_id` for the a2p registration.
+</ParamField>
+
+<ResponseExample>
+
+```json Response
+{
+    status: "pending" || "approved" || "failed",
+    brandType: //string of the brand type,
+    failureReason: null || "reason here"
+}
+```
+
+</ResponseExample>

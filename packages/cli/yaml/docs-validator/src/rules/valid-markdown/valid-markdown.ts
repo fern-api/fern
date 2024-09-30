@@ -4,6 +4,7 @@ import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import { z } from "zod";
 import { Rule } from "../../Rule";
+import { parseMarkdownToTree } from "@fern-api/docs-markdown-utils";
 
 export const ValidMarkdownRule: Rule = {
     name: "valid-markdown",
@@ -64,6 +65,8 @@ export const FrontmatterSchema = z.object({
 
 async function parseMarkdown({ markdown }: { markdown: string }): Promise<MarkdownParseResult> {
     try {
+        parseMarkdownToTree(markdown);
+
         const parsed = await serialize(markdown, {
             scope: {},
             mdxOptions: {

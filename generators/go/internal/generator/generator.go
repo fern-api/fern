@@ -1547,3 +1547,12 @@ var pointerFunctionNames = map[string]struct{}{
 	"Uintptr":    struct{}{},
 	"Time":       struct{}{},
 }
+
+// valueOf dereferences the given value, or returns the zero value if nil.
+func valueOf[T any](value *T) T {
+	var result T
+	if value == nil {
+		return result
+	}
+	return *value
+}

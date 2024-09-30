@@ -26,3 +26,4 @@ export {
     convertToFernHostAbsoluteFilePath,
     convertToFernHostRelativeFilePath
 } from "./osPathConverter";
+export { getAllFilesInDirectory } from "./getAllFilesInDirectory";
