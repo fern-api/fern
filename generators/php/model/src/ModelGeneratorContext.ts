@@ -1,4 +1,3 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractPhpGeneratorContext, AsIsFiles, FileLocation } from "@fern-api/php-codegen";
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
 
@@ -18,5 +17,13 @@ export class ModelGeneratorContext extends AbstractPhpGeneratorContext<ModelCust
 
     public getCoreTestAsIsFiles(): string[] {
         return [...this.getCoreSerializationTestAsIsFiles()];
+    }
+
+    public getUtilAsIsFiles(): string[] {
+        return [AsIsFiles.File];
+    }
+
+    public getUtilTestAsIsFiles(): string[] {
+        return [];
     }
 }

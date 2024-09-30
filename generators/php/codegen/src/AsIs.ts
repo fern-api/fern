@@ -30,5 +30,9 @@ export enum AsIsFiles {
     JsonDeserializer = "JsonDeserializer.Template.php",
     JsonEncoder = "JsonEncoder.Template.php",
     JsonSerializer = "JsonSerializer.Template.php",
-    Utils = "Utils.Template.php"
+    MultipartApiRequest = "MultipartApiRequest.Template.php",
+    MultipartFormData = "MultipartFormData.Template.php",
+    MultipartFormDataPart = "MultipartFormDataPart.Template.php",
+    Utils = "Utils.Template.php",
+    File = "File.Template.php"
 }

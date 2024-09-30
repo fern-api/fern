@@ -19,7 +19,7 @@ import { PhpAttributeMapper } from "./PhpAttributeMapper";
 import { AsIsFiles } from "../AsIs";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { php } from "..";
-import { GLOBAL_NAMESPACE } from "../ast/core/Constant";
+import { GLOBAL_NAMESPACE, TESTS_ROOT_NAMESPACE } from "../ast/core/Constant";
 
 export interface FileLocation {
     namespace: string;
@@ -85,15 +85,23 @@ export abstract class AbstractPhpGeneratorContext<
     }
 
     public getTestsNamespace(): string {
-        return `${this.rootNamespace}\\Tests`;
+        return `${this.getRootNamespace()}\\Tests`;
     }
 
     public getCoreNamespace(): string {
-        return `${this.rootNamespace}\\Core`;
+        return `${this.getRootNamespace()}\\Core`;
+    }
+
+    public getUtilNamespace(): string {
+        return `${this.getRootNamespace()}\\Utils`;
     }
 
     public getCoreTestsNamespace(): string {
-        return `${this.rootNamespace}\\Tests\\Core`;
+        return `${this.getRootNamespace()}\\${TESTS_ROOT_NAMESPACE}\\Core`;
+    }
+
+    public getUtilTestsNamespace(): string {
+        return `${this.getRootNamespace()}\\${TESTS_ROOT_NAMESPACE}\\Utils`;
     }
 
     public getParameterName(name: Name): string {
@@ -267,6 +275,8 @@ export abstract class AbstractPhpGeneratorContext<
     public abstract getRawAsIsFiles(): string[];
     public abstract getCoreAsIsFiles(): string[];
     public abstract getCoreTestAsIsFiles(): string[];
+    public abstract getUtilAsIsFiles(): string[];
+    public abstract getUtilTestAsIsFiles(): string[];
 
     public getCoreSerializationAsIsFiles(): string[] {
         return [

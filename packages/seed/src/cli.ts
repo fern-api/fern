@@ -104,7 +104,6 @@ function addTestCommand(cli: Argv) {
             if (argv.generator != null) {
                 throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: argv.generator });
             }
-
             const taskContextFactory = new TaskContextFactory(argv["log-level"]);
             const lock = new Semaphore(argv.parallel);
             const tests: Promise<boolean>[] = [];

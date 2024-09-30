@@ -2,7 +2,7 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractProject, File } from "@fern-api/generator-commons";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { mkdir, readFile, writeFile } from "fs/promises";
-import { template } from "lodash-es";
+import { template, isEmpty } from "lodash-es";
 import path from "path";
 import { AsIsFiles } from "../AsIs";
 import { AbstractPhpGeneratorContext } from "../context/AbstractPhpGeneratorContext";
@@ -11,6 +11,7 @@ import { PhpFile } from "./PhpFile";
 
 const AS_IS_DIRECTORY = path.join(__dirname, "asIs");
 const CORE_DIRECTORY_NAME = "Core";
+const UTIL_DIRECTORY_NAME = "Utils";
 const SRC_DIRECTORY_NAME = "src";
 const TESTS_DIRECTORY_NAME = "tests";
 
@@ -24,7 +25,9 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
     private sourceFiles: PhpFile[] = [];
     private testFiles: PhpFile[] = [];
     private coreFiles: File[] = [];
+    private utilFiles: File[] = [];
     private coreTestFiles: File[] = [];
+    private utilTestFiles: File[] = [];
     public readonly filepaths: PhpProjectFilepaths;
 
     public constructor({
@@ -57,6 +60,12 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
         await this.createTestsDirectory();
         await this.createCoreDirectory();
         await this.createCoreTestsDirectory();
+        if (!isEmpty(this.context.getUtilAsIsFiles())) {
+            await this.createUtilDirectory();
+        }
+        if (!isEmpty(this.context.getUtilTestAsIsFiles())) {
+            await this.createUtilTestDirectory();
+        }
         await this.createGitHubWorkflowsDirectory();
         await this.createComposerJson();
     }
@@ -130,33 +139,64 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
     }
 
     private async createCoreDirectory(): Promise<AbsoluteFilePath> {
-        for (const filename of this.context.getCoreAsIsFiles()) {
-            this.coreFiles.push(
-                await this.createAsIsFile({
-                    filename,
-                    namespace: this.context.getCoreNamespace()
-                })
-            );
-        }
+        const files = await this.createAsIsFiles(this.context.getCoreAsIsFiles(), this.context.getCoreNamespace());
+
+        this.coreFiles = [...this.coreFiles, ...files];
+
         return await this.createPhpDirectory({
             absolutePathToDirectory: join(this.absolutePathToOutputDirectory, this.filepaths.getCoreDirectory()),
             files: this.coreFiles
         });
     }
 
+    private async createUtilDirectory(): Promise<AbsoluteFilePath> {
+        const files = await this.createAsIsFiles(this.context.getUtilAsIsFiles(), this.context.getUtilNamespace());
+
+        this.utilFiles = [...this.utilFiles, ...files];
+
+        return await this.createPhpDirectory({
+            absolutePathToDirectory: join(this.absolutePathToOutputDirectory, this.filepaths.getUtilDirectory()),
+            files: this.utilFiles
+        });
+    }
+
     private async createCoreTestsDirectory(): Promise<AbsoluteFilePath> {
-        for (const filename of this.context.getCoreTestAsIsFiles()) {
-            this.coreTestFiles.push(
-                await this.createAsIsFile({
-                    filename,
-                    namespace: this.context.getCoreTestsNamespace()
-                })
-            );
-        }
+        const files = await this.createAsIsFiles(
+            this.context.getCoreTestAsIsFiles(),
+            this.context.getCoreTestsNamespace()
+        );
+
+        this.coreTestFiles = [...this.coreTestFiles, ...files];
+
         return await this.createPhpDirectory({
             absolutePathToDirectory: join(this.absolutePathToOutputDirectory, this.filepaths.getCoreTestsDirectory()),
             files: this.coreTestFiles
         });
+    }
+
+    private async createUtilTestDirectory(): Promise<AbsoluteFilePath> {
+        const files = await this.createAsIsFiles(
+            this.context.getUtilTestAsIsFiles(),
+            this.context.getUtilTestsNamespace()
+        );
+
+        this.utilTestFiles = [...this.utilTestFiles, ...files];
+
+        return await this.createPhpDirectory({
+            absolutePathToDirectory: join(this.absolutePathToOutputDirectory, this.filepaths.getUtilTestsDirectory()),
+            files: this.utilTestFiles
+        });
+    }
+
+    private async createAsIsFiles(filenames: string[], namespace: string): Promise<File[]> {
+        return Promise.all(
+            filenames.map(async (filename) => {
+                return this.createAsIsFile({
+                    filename,
+                    namespace
+                });
+            })
+        );
     }
 
     private async createPhpDirectory({
@@ -209,8 +249,16 @@ class PhpProjectFilepaths {
         return join(this.getSourceDirectory(), RelativeFilePath.of(CORE_DIRECTORY_NAME));
     }
 
+    public getUtilDirectory(): RelativeFilePath {
+        return join(this.getSourceDirectory(), RelativeFilePath.of(UTIL_DIRECTORY_NAME));
+    }
+
     public getCoreTestsDirectory(): RelativeFilePath {
         return join(this.getTestsDirectory(), this.getProjectDirectory(), RelativeFilePath.of(CORE_DIRECTORY_NAME));
+    }
+
+    public getUtilTestsDirectory(): RelativeFilePath {
+        return join(this.getTestsDirectory(), this.getProjectDirectory(), RelativeFilePath.of(UTIL_DIRECTORY_NAME));
     }
 }
 
