@@ -1,1 +1,1 @@
-export { migrateFromMintlify } from "./migrateFromMintlify";
+export { MintlifyImporter } from "./MintlifyImporter";

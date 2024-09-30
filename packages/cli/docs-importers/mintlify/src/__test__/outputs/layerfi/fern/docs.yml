@@ -1,63 +1,102 @@
 instances: []
 title: Layer
+favicon: favicon.png
 logo:
   light: logo/layer_logo.svg
   dark: logo/layer_logo.svg
   href: http://layerfi.com
   height: 28
-favicon: favicon.png
 colors:
-  accent-primary:
-    dark: "#0c48e5"
-    light: "#7e9be5"
+  accentPrimary:
+    dark: '#0c48e5'
+    light: '#7e9be5'
   background:
-    dark: "#090014"
-navbar-links: []
+    dark: '#090014'
 tabs:
-  API Reference:
-    display-name: API Reference
+  api-reference:
     slug: api-reference
-layout:
-  tabs-placement: sidebar
-  searchbar-placement: header
+    displayName: API Reference
+  documentation:
+    displayName: Documentation
+    slug: documentation
 navigation:
-  - section: Get Started
-    contents: []
-  - section: Importing Financial Data
-    contents: []
-  - section: Offering Accounting
-    contents: []
-  - section: Embedded Components
-    contents: []
-  - section: Businesses
-    contents:
-      - section: Plaid Configuration
-        contents: []
-  - section: Financial Activities
-    contents:
-      - section: Transactions
-        contents: []
-      - section: Payouts
-        contents: []
-      - section: Accounts Receivable
+  - tab: api-reference
+    layout:
+      - section: Businesses
         contents:
-          - section: Invoices
+          - page: Business object
+            path: api-reference/business.mdx
+          - section: Plaid Configuration
             contents: []
-          - section: Payments
+      - section: Financial Activities
+        contents:
+          - section: Transactions
+            contents:
+              - page: Bank Transaction object
+                path: api-reference/bank-transaction.mdx
+          - section: Payouts
             contents: []
-          - section: Refunds
+          - section: Accounts Receivable
+            contents:
+              - section: Invoices
+                contents:
+                  - page: Invoice object
+                    path: api-reference/invoice.mdx
+              - section: Payments
+                contents:
+                  - page: Invoice Payment object
+                    path: api-reference/payments.mdx
+              - section: Refunds
+                contents:
+                  - page: Refunds object
+                    path: api-reference/refunds.mdx
+      - section: Reporting
+        contents:
+          - page: Profit and Loss object
+            path: api-reference/pnl.mdx
+      - section: General Ledger
+        contents:
+          - page: General Ledger objects
+            path: api-reference/ledger.mdx
+      - section: External Accounts
+        contents:
+          - section: Custom Accounts
             contents: []
-  - section: Reporting
-    contents: []
-  - section: General Ledger
-    contents: []
-  - section: External Accounts
-    contents:
-      - section: Custom Accounts
+      - section: Tags
         contents: []
-  - section: Tags
-    contents: []
-  - section: Client Admin
-    contents:
-      - section: Configuration
-        contents: []
+      - section: Client Admin
+        contents:
+          - section: Configuration
+            contents:
+              - page: Plaid Configuration object
+                path: api-reference/plaid.mdx
+  - tab: documentation
+    layout:
+      - section: Get Started
+        contents:
+          - page: Overview
+            path: introduction.mdx
+          - page: Authentication
+            path: authentication.mdx
+          - page: Onboarding a Business
+            path: guides/business-onboarding.mdx
+      - section: Importing Financial Data
+        contents:
+          - page: Overview
+            path: guides/importing-data-overview.mdx
+          - page: Invoices and Payments
+            path: guides/importing-invoices.mdx
+          - page: Bank Accounts and Credit Cards
+            path: guides/importing-bank-transactions.mdx
+      - section: Offering Accounting
+        contents:
+          - page: Overview
+            path: guides/offering-accounting-overview.mdx
+          - page: Transaction Categorization
+            path: guides/transaction-categorization.mdx
+          - page: Accounting Reports
+            path: guides/reporting.mdx
+      - section: Embedded Components
+        contents:
+          - page: Overview
+            path: guides/embedded-components.mdx
