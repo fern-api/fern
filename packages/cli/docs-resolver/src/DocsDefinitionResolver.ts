@@ -7,7 +7,7 @@ import {
     replaceReferencedMarkdown
 } from "@fern-api/docs-markdown-utils";
 import { APIV1Write, DocsV1Write, FernNavigation } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, listFiles, relative, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, listFiles, relative, RelativeFilePath, relativize, resolve } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
@@ -178,6 +178,25 @@ export class DocsDefinitionResolver {
 
                     if (stats.isDirectory()) {
                         const files = await listFiles(absoluteFilePath, "{js,ts,jsx,tsx}");
+
+                        files.forEach((file) => {
+                            jsFilePaths.add(file);
+                        });
+
+                        const mdFiles = await listFiles(absoluteFilePath, "{md,mdx}");
+                        await Promise.all(
+                            mdFiles.map(async (file) => {
+                                const absoluteFilePathToMarkdownFile = AbsoluteFilePath.of(file);
+                                const relativeFilePath = relativize(
+                                    this.docsWorkspace.absoluteFilePath,
+                                    absoluteFilePathToMarkdownFile
+                                );
+                                pages[relativeFilePath] = {
+                                    markdown: await readFile(AbsoluteFilePath.of(file), "utf-8"),
+                                    editThisPageUrl: createEditThisPageUrl(this.editThisPage, relativeFilePath)
+                                };
+                            })
+                        );
 
                         files.forEach((file) => {
                             jsFilePaths.add(file);
