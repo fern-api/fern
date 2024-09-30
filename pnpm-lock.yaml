@@ -292,7 +292,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -368,7 +368,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -435,7 +435,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -535,7 +535,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -601,7 +601,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -674,7 +674,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -830,7 +830,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -897,7 +897,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -943,7 +943,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -3229,7 +3229,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -3572,8 +3572,8 @@ importers:
         specifier: workspace:*
         version: link:../docs-resolver
       '@fern-api/fdr-sdk':
-        specifier: 0.108.0-dcb0f740c
-        version: 0.108.0-dcb0f740c(typescript@4.6.4)
+        specifier: 0.108.0-66103cf28
+        version: 0.108.0-66103cf28(typescript@4.6.4)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -3675,8 +3675,8 @@ importers:
         specifier: workspace:*
         version: link:../docs-markdown-utils
       '@fern-api/fdr-sdk':
-        specifier: 0.108.0-dcb0f740c
-        version: 0.108.0-dcb0f740c(typescript@4.6.4)
+        specifier: 0.108.0-66103cf28
+        version: 0.108.0-66103cf28(typescript@4.6.4)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -5970,7 +5970,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -7006,8 +7006,8 @@ packages:
   '@exodus/schemasafe@1.0.0':
     resolution: {integrity: sha512-2cyupPIZI69HQxEAPllLXBjQp4njDKkOjYRCYxvMZe3/LY9pp9fBM3Tb1wiFAdP6Emo4v3OEbCLGj6u73Q5KLw==}
 
-  '@fern-api/fdr-sdk@0.108.0-dcb0f740c':
-    resolution: {integrity: sha512-gqTfYDtwsgAcdmJYXS4+PA4kxjvgu5rClG2Tcv531UUM5Mia2fql82irSyFwOY1b8wGHJmDIHcsSiEyXVBc08Q==}
+  '@fern-api/fdr-sdk@0.108.0-66103cf28':
+    resolution: {integrity: sha512-wRUG2EGP5Y8xT4L1iJl+s6N3hkFd39BvRsN2j77soKluWksUl8czUPr1IOyrgCWZRZgmbJ77QgWN4JPj++j46w==}
 
   '@fern-api/sdk@0.12.3':
     resolution: {integrity: sha512-sexxpQEHBmsAXW3UHo5x7NW8Z9TrHWYLGo/J7eFqHYSH8Sq9LA3vRlR0ni9h4FNlKnPDu9Y55L0BhsQVXYqPKA==}
@@ -9001,8 +9001,8 @@ packages:
     resolution: {integrity: sha512-V0hjH4dGPh9Ao5p0MoRY6BVqtwCjhz6vI5LT8AJ55H+4g9/4vbHx1I54fS0XuclLhDHArPQCiMjDxjaL8fPxhw==}
     engines: {node: '>=0.12'}
 
-  env-cmd@https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b:
-    resolution: {tarball: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b}
+  env-cmd@git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b:
+    resolution: {commit: 8f35b71651f6a78710308ff38ab30896ea72ee8b, repo: git@github.com:toddbluhm/env-cmd.git, type: git}
     version: 10.1.0
     engines: {node: '>=8.0.0'}
     hasBin: true
@@ -14091,7 +14091,7 @@ snapshots:
 
   '@exodus/schemasafe@1.0.0': {}
 
-  '@fern-api/fdr-sdk@0.108.0-dcb0f740c(typescript@4.6.4)':
+  '@fern-api/fdr-sdk@0.108.0-66103cf28(typescript@4.6.4)':
     dependencies:
       dayjs: 1.11.11
       fast-deep-equal: 3.1.3
@@ -16461,7 +16461,7 @@ snapshots:
 
   entities@4.5.0: {}
 
-  env-cmd@https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b:
+  env-cmd@git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b:
     dependencies:
       commander: 5.1.0
       cross-spawn: 7.0.3
