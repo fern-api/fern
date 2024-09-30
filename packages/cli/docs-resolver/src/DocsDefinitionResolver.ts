@@ -177,31 +177,12 @@ export class DocsDefinitionResolver {
                     const stats = await stat(absoluteFilePath);
 
                     if (stats.isDirectory()) {
-                        const files = await listFiles(absoluteFilePath, "{js,ts,jsx,tsx}");
+                        const files = await listFiles(absoluteFilePath, "{js,ts,jsx,tsx,md,mdx}");
 
                         files.forEach((file) => {
                             jsFilePaths.add(file);
                         });
-
-                        const mdFiles = await listFiles(absoluteFilePath, "{md,mdx}");
-                        await Promise.all(
-                            mdFiles.map(async (file) => {
-                                const absoluteFilePathToMarkdownFile = AbsoluteFilePath.of(file);
-                                const relativeFilePath = relativize(
-                                    this.docsWorkspace.absoluteFilePath,
-                                    absoluteFilePathToMarkdownFile
-                                );
-                                pages[relativeFilePath] = {
-                                    markdown: await readFile(AbsoluteFilePath.of(file), "utf-8"),
-                                    editThisPageUrl: createEditThisPageUrl(this.editThisPage, relativeFilePath)
-                                };
-                            })
-                        );
-
-                        files.forEach((file) => {
-                            jsFilePaths.add(file);
-                        });
-                    } else if (absoluteFilePath.match(/\.(js|ts|jsx|tsx)$/) != null) {
+                    } else if (absoluteFilePath.match(/\.(js|ts|jsx|tsx|md|mdx)$/) != null) {
                         jsFilePaths.add(absoluteFilePath);
                     }
                 })
