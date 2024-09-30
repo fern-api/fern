@@ -91,7 +91,7 @@ export abstract class EndpointRequest {
             methodInvocation: php.invokeMethod({
                 on: this.context.getJsonSerializerClassReference(),
                 method: "serializeArray",
-                arguments_: [bodyArgument, this.context.phpAttributeMapper.getArrayTypeAttributeArgument(type)],
+                arguments_: [bodyArgument, this.context.phpAttributeMapper.getTypeAttributeArgument(type)],
                 static_: true
             }),
             isOptional

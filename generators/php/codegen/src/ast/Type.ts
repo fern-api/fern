@@ -176,14 +176,30 @@ export class Type extends AstNode {
                 writer.write("}");
                 break;
             }
-            case "union":
-                this.internalType.types.forEach((type, index) => {
+            case "union": {
+                let index = 0;
+                const typeStrings = new Set();
+                for (const type of this.internalType.types) {
+                    if (!comment) {
+                        const typeString = type.toString({
+                            namespace: writer.namespace,
+                            rootNamespace: writer.rootNamespace,
+                            customConfig: writer.customConfig
+                        });
+                        // handle potential duplicates, such as strings (due to enums) and arrays
+                        if (typeStrings.has(typeString)) {
+                            continue;
+                        }
+                        typeStrings.add(typeString);
+                    }
                     if (index > 0) {
                         writer.write("|");
                     }
-                    type.write(writer);
-                });
+                    type.write(writer, { comment });
+                    index++;
+                }
                 break;
+            }
             case "optional": {
                 const isUnion = this.internalType.value.internalType.type === "union";
                 if (!isUnion) {

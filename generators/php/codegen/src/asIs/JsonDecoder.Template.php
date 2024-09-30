@@ -15,7 +15,8 @@ class JsonDecoder
      * @return string The decoded string.
      * @throws JsonException If the decoded value is not a string.
      */
-    public static function decodeString(string $json): string {
+    public static function decodeString(string $json): string
+    {
         $decoded = self::decode($json);
         if (!is_string($decoded)) {
             throw new JsonException("Unexpected non-string json value: " . $json);
@@ -30,7 +31,8 @@ class JsonDecoder
      * @return bool The decoded boolean.
      * @throws JsonException If the decoded value is not a boolean.
      */
-    public static function decodeBool(string $json): bool {
+    public static function decodeBool(string $json): bool
+    {
         $decoded = self::decode($json);
         if (!is_bool($decoded)) {
             throw new JsonException("Unexpected non-boolean json value: " . $json);
@@ -45,7 +47,8 @@ class JsonDecoder
      * @return DateTime The decoded DateTime object.
      * @throws JsonException If the decoded value is not a valid datetime string.
      */
-    public static function decodeDateTime(string $json): DateTime {
+    public static function decodeDateTime(string $json): DateTime
+    {
         $decoded = self::decode($json);
         if (!is_string($decoded)) {
             throw new JsonException("Unexpected non-string json value for datetime: " . $json);
@@ -60,7 +63,8 @@ class JsonDecoder
      * @return DateTime The decoded DateTime object.
      * @throws JsonException If the decoded value is not a valid date string.
      */
-    public static function decodeDate(string $json): DateTime {
+    public static function decodeDate(string $json): DateTime
+    {
         $decoded = self::decode($json);
         if (!is_string($decoded)) {
             throw new JsonException("Unexpected non-string json value for date: " . $json);
@@ -75,7 +79,8 @@ class JsonDecoder
      * @return float The decoded float.
      * @throws JsonException If the decoded value is not a float.
      */
-    public static function decodeFloat(string $json): float {
+    public static function decodeFloat(string $json): float
+    {
         $decoded = self::decode($json);
         if (!is_float($decoded)) {
             throw new JsonException("Unexpected non-float json value: " . $json);
@@ -90,7 +95,8 @@ class JsonDecoder
      * @return int The decoded integer.
      * @throws JsonException If the decoded value is not an integer.
      */
-    public static function decodeInt(string $json): int {
+    public static function decodeInt(string $json): int
+    {
         $decoded = self::decode($json);
         if (!is_int($decoded)) {
             throw new JsonException("Unexpected non-integer json value: " . $json);
@@ -106,7 +112,8 @@ class JsonDecoder
      * @return mixed[]|array<string, mixed> The deserialized array.
      * @throws JsonException If the decoded value is not an array.
      */
-    public static function decodeArray(string $json, array $type): array {
+    public static function decodeArray(string $json, array $type): array
+    {
         $decoded = self::decode($json);
         if (!is_array($decoded)) {
             throw new JsonException("Unexpected non-array json value: " . $json);
@@ -115,13 +122,27 @@ class JsonDecoder
     }
 
     /**
+     * Decodes a JSON string and deserializes it based on the provided union type definition.
+     *
+     * @param string $json The JSON string to decode.
+     * @param Union $union The union type definition for deserialization.
+     * @return mixed The deserialized value.
+     * @throws JsonException If the deserialization for all types in the union fails.
+     */
+    public static function decodeUnion(string $json, Union $union): mixed
+    {
+        $decoded = self::decode($json);
+        return JsonDeserializer::deserializeUnion($decoded, $union);
+    }
+    /**
      * Decodes a JSON string and returns a mixed.
      *
      * @param string $json The JSON string to decode.
      * @return mixed The decoded mixed.
      * @throws JsonException If the decoded value is not an mixed.
      */
-    public static function decodeMixed(string $json): mixed {
+    public static function decodeMixed(string $json): mixed
+    {
         return self::decode($json);
     }
 
@@ -132,7 +153,8 @@ class JsonDecoder
      * @return mixed The decoded value.
      * @throws JsonException If an error occurs during JSON decoding.
      */
-    public static function decode(string $json): mixed {
+    public static function decode(string $json): mixed
+    {
         return json_decode($json, associative: true, flags: JSON_THROW_ON_ERROR);
     }
 }

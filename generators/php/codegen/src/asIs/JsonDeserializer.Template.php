@@ -66,18 +66,9 @@ class JsonDeserializer
     private static function deserializeValue(mixed $data, mixed $type): mixed
     {
         if ($type instanceof Union) {
-            foreach ($type->types as $unionType) {
-                try {
-                    return self::deserializeSingleValue($data, $unionType);
-                } catch (Exception) {
-                    continue;
-                }
-            }
-            $readableType = Utils::getReadableType($data);
-            throw new JsonException(
-                "Cannot deserialize value of type $readableType with any of the union types: " . $type
-            );
+            return self::deserializeUnion($data, $type);
         }
+
         if (is_array($type)) {
             return self::deserializeArray((array)$data, $type);
         }
@@ -85,7 +76,31 @@ class JsonDeserializer
         if (gettype($type) != "string") {
             throw new JsonException("Unexpected non-string type.");
         }
+
         return self::deserializeSingleValue($data, $type);
+    }
+
+    /**
+     * Deserializes a value based on the possible types in a union type definition.
+     *
+     * @param mixed $data The data to deserialize.
+     * @param Union $type The union type definition.
+     * @return mixed The deserialized value.
+     * @throws JsonException If none of the union types can successfully deserialize the value.
+     */
+    public static function deserializeUnion(mixed $data, Union $type): mixed
+    {
+        foreach ($type->types as $unionType) {
+            try {
+                return self::deserializeValue($data, $unionType);
+            } catch (Exception) {
+                continue;
+            }
+        }
+        $readableType = Utils::getReadableType($data);
+        throw new JsonException(
+            "Cannot deserialize value of type $readableType with any of the union types: " . $type
+        );
     }
 
     /**

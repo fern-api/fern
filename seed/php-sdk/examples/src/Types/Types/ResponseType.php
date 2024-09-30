@@ -3,19 +3,21 @@
 namespace Seed\Types\Types;
 
 use Seed\Core\SerializableType;
+use Seed\Types\BasicType;
+use Seed\Types\ComplexType;
 use Seed\Core\JsonProperty;
 
 class ResponseType extends SerializableType
 {
     /**
-     * @var mixed $type
+     * @var value-of<BasicType>|value-of<ComplexType> $type
      */
     #[JsonProperty('type')]
-    public mixed $type;
+    public string $type;
 
     /**
      * @param array{
-     *   type: mixed,
+     *   type: value-of<BasicType>|value-of<ComplexType>,
      * } $values
      */
     public function __construct(
