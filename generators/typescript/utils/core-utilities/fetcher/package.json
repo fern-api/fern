@@ -54,6 +54,6 @@
     "ts-jest": "^29.2.4",
     "ts-loader": "^9.3.1",
     "typescript": "4.6.4",
-    "webpack": "^5.94.0"
+    "webpack": "^5.95.0"
   }
 }
