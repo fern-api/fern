@@ -3,7 +3,7 @@ title: Memories
 subtitle: >-
   Memories are the central data structure in Zep's Memory Store. They contain a
   list of Messages and a Summary.
-slug: /chat-history-memory/memories
+slug: chat-history-memory/memories
 ---
 
 
@@ -15,7 +15,7 @@ slug: /chat-history-memory/memories
     created).
 
     The Memory and Summary are returned with UUIDs, token counts, timestamps, and other metadata.
-    Memories are associated with [Sessions](sessions.mdx) in a many-to-one relationship.
+    Memories are associated with [Sessions](sessions) in a many-to-one relationship.
 
 </Card>
 ## Persisting a Memory to a Session
@@ -31,7 +31,7 @@ Additionally, you can store custom metadata with each Message.
 Sessions are created automatically when adding Memories. If the `SessionID` is already exists, then the Memory is
 upserted into the Session.
 
-[Manually creating a session](sessions.mdx) can be useful if you want to associate it with a user or add metadata.
+[Manually creating a session](sessions) can be useful if you want to associate it with a user or add metadata.
 
 </Note>
 

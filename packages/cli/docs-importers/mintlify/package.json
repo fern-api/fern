@@ -28,9 +28,12 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-fern/docs-config": "^0.22.0",
+    "@fern-api/configuration": "workspace:*",
+    "@fern-api/docs-importer-commons": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
+    "@fern-api/task-context": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
+    "@fern-api/logger": "workspace:*",
     "@fern-fern/fdr-cjs-sdk": "0.111.0-51d403bce",
     "gray-matter": "^4.0.3",
     "js-yaml": "^4.1.0",

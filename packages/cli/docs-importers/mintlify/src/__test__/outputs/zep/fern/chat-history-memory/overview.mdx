@@ -3,11 +3,11 @@ title: Overview
 subtitle: >-
   With Zep's Chat History features you can ensure that your your assistant's
   responses are always relevant to the conversation at hand.
-slug: /chat-history-memory/overview
+slug: chat-history-memory/overview
 ---
 
 
-Zep's Memory API persists your users' chat history and metadata to a [Session](sessions.mdx), enriches the memory, and
+Zep's Memory API persists your users' chat history and metadata to a [Session](sessions), enriches the memory, and
 enables vector similarity search over historical chat messages and dialog summaries.
 
 Zep offers several approaches to populating prompts with context from historical conversations.
@@ -25,7 +25,7 @@ We've found that including the combination of the Fact Table, summary, and the m
 context and nuance to the LLM.
 
 <Frame>
-  <img alt="Perpetual Memory" src="../images/fact-table.png" />
+  <img alt="Perpetual Memory" src="images/fact-table.png" />
 </Frame>
 
 ## Summary Retriever Memory
@@ -61,7 +61,7 @@ This is ongoing, ensuring that the entire conversation is incrementally summariz
 These summaries are also embedded, enabling vector similarity search over the entire series of conversation summaries.
 
 <Frame>
-  <img alt="Summary Retriever Flow Chart" src="../images/perpetual_memory.png" />
+  <img alt="Summary Retriever Flow Chart" src="images/perpetual_memory.png" />
 </Frame>
 
 Every time you call the Memory API to get a Memory, Zep uses a proprietary, low-latency language model to generate a

@@ -3,7 +3,7 @@ title: Conversational Pathways
 subtitle: >-
   Gain greater control over your AI agent and the conversational flow. [Create a
   Pathway Now!](https://app.bland.ai/dashboard?page=convo-pathways)
-slug: /tutorials/pathways
+slug: tutorials/pathways
 ---
 
 
@@ -37,7 +37,7 @@ To understand how pathways work, let's first understand the terminologies.
 
 These blocks you see here are called Nodes.
 
-<img style={{ borderRadius: "0.5rem" }} src="node.png" />
+<img style={{ borderRadius: "0.5rem" }} src="tutorials/node.png" />
 
 ## Pathways
 
@@ -47,11 +47,11 @@ In order to create a pathway from a node, you would click on the purple circle a
 
 Upon doing so, you will now have a new dotted line connecting the two nodes, with a 'New Pathway' button in the middle of the line.
 
-<img style={{ borderRadius: "0.5rem" }} src="new_pathway.png" />
+<img style={{ borderRadius: "0.5rem" }} src="tutorials/new_pathway.png" />
 
 In order to instruct the agent when to take this pathway, you would click on the Edit icon on the 'New Pathway' button, and input the conditions for when the agent should take this pathway. In the above example, the agent would take this pathway if the user is not available to talk, so I labelled the pathway as 'not a good time to talk'.
 
-<img style={{ borderRadius: "0.5rem" }} src="final_pathway.png" />
+<img style={{ borderRadius: "0.5rem" }} src="tutorials/final_pathway.png" />
 
 And there you have it! You have now created a pathway from one node to another, and instructed the agent when to take this pathway. You can connect as many nodes as you want in this manner, and create as many pathways as you want. In order to create a new Node, press the 'Add new Node' button at the top-left of the screen.
 
@@ -61,7 +61,7 @@ The agent starts at the first node, and then moves to the next node based on the
 
 The agent will make decisions based on the labels you put in the pathways, when connecting one node to another, and the dialogue generated will be based on the instructions you set in the nodes.
 
-<img style={{ borderRadius: "0.5rem" }} src="pathway_label.png" />
+<img style={{ borderRadius: "0.5rem" }} src="tutorials/pathway_label.png" />
 
 For Example,
 
@@ -75,11 +75,11 @@ Using the same example above, I set the condition for the 'Ask for reservation i
 
 This helps you to ensure that the user provides the necessary information before moving on to the next node, and helps you to control the flow of the conversation.
 
-<img style={{ borderRadius: "0.5rem" }} src="condition_eg.png" />
+<img style={{ borderRadius: "0.5rem" }} src="tutorials/condition_eg.png" />
 
 ## Global Nodes
 
-<img style={{ borderRadius: "0.5rem" }} src="global_node.png" />
+<img style={{ borderRadius: "0.5rem" }} src="tutorials/global_node.png" />
 
 Global Nodes take precendence over the condition decisions made by the agent. You can treat a global node as a node, that every other node in the pathway has a pathway to, with the label as the 'Global Pathway Label'.
 
@@ -117,7 +117,7 @@ assistant: The clinic opens at 9am. So, do you want to schedule for tomorrow?
 
 </Accordion>
 
-<img style={{ borderRadius: "0.5rem" }} src="global_eg.png" />
+<img style={{ borderRadius: "0.5rem" }} src="tutorials/global_eg.png" />
 
 # Node Types
 
@@ -141,7 +141,7 @@ You can either:
 - Use the `Prompt` field to give instructions on what the agent should do at this point in the conversation. This is the recommended way to generate responses as it makes the conversation more human and natural.
 - Enable the 'Static Text' toggle to provide a fixed response, and the agent will always say the same thing at this point in the conversation.
 
-<img style={{ borderRadius: "0.5rem" }} src="default_node.png" />
+<img style={{ borderRadius: "0.5rem" }} src="tutorials/default_node.png" />
 
 ### Optional Decision Guide
 
@@ -163,7 +163,7 @@ After entering a Global Node, the agent will execute the instructions inside the
 
 In a Global Node, you can also forward the agent to another node, by toggling the 'Enable Forwarding', which will allow you to select the node you want to move the agent to. This is useful if you want to move the agent to a existing node for a certain scenario, which could happen at any point in the conversation.
 
-<img style={{ borderRadius: "0.5rem" }} src="global_node.png" />
+<img style={{ borderRadius: "0.5rem" }} src="tutorials/global_node.png" />
 
 ## Transfer Call Node
 
@@ -171,7 +171,7 @@ The transfer call node is used to transfer the call to another number when the n
 
 As such, you may have the agent say any final words before the call is transferred.
 
-<img style={{ borderRadius: "0.5rem" }} src="transfer_node.png" />
+<img style={{ borderRadius: "0.5rem" }} src="tutorials/transfer_node.png" />
 
 ## End Call Node
 
@@ -179,7 +179,7 @@ The end call node will end the call when the node is reached, and the dialogue a
 
 As such, you may have the agent say any final words before the call is ended.
 
-<img style={{ borderRadius: "0.5rem" }} src="end_node.png" />
+<img style={{ borderRadius: "0.5rem" }} src="tutorials/end_node.png" />
 
 ## Knowledge Base Node
 
@@ -189,7 +189,7 @@ Paste in any text in the 'Knowledge Base' field, and the agent will search throu
 
 Coming soon - PDF Upload/Vector Database Integrations...
 
-<img style={{ borderRadius: "0.5rem" }} src="kb_node.png" />
+<img style={{ borderRadius: "0.5rem" }} src="tutorials/kb_node.png" />
 
 ## Wait for Response Node
 
@@ -205,25 +205,25 @@ Similar to how the dialogue is handled in all other nodes, you can control the d
 
 Variables received from the webhook can be used in the dialogue as well, as shown in the example below.
 
-<img style={{ borderRadius: "0.5rem" }} src="webhook_node.png" />
+<img style={{ borderRadius: "0.5rem" }} src="tutorials/webhook_node.png" />
 
 # Global Prompt for all Nodes
 
 The 'Add Global Prompt to All Nodes' feature is to assist in providing context/instructions to the agent for all nodes, without having to manually input the same prompt for each node. One Example of a Global Prompt could be to provide the agent with instructions on how to handle the call, the tone of voice to use, or answering any questions the user might have.
 
-<img style={{ borderRadius: "0.5rem" }} src="add_global_prompt.png" />
+<img style={{ borderRadius: "0.5rem" }} src="tutorials/add_global_prompt.png" />
 
 # Live Call Logs
 
 The live call logs are a way to provide you with a live feed of the conversation between the agent and the user. This is useful for debugging purposes, and to see how the agent is responding to the user in real-time and the decisions the agent is making. On top of the transcript, we expose the updated node the agent took, the pathway that the agent took, as well as whether the condition was met or not.
 
-<img style={{ borderRadius: "0.5rem" }} src="live_call_logs.png" />
+<img style={{ borderRadius: "0.5rem" }} src="tutorials/live_call_logs.png" />
 
 # Testing the Pathway Agent via Chat
 
 You can test the responses from your pathway agent by clicking on the 'Chat with Pathway' button at the top right of the screen. This will open a chat window where you can test the agent by sending messages to the agent, and see how the agent responds. The live call logs will also be displayed on the right side of the screen, so you can see the decisions the agent is making in real-time.
 
-<img style={{ borderRadius: "0.5rem" }} src="pathway_chat.png" />
+<img style={{ borderRadius: "0.5rem" }} src="tutorials/pathway_chat.png" />
 
 # Variables Reference/ Extraction
 
@@ -250,7 +250,7 @@ Within the webhook node, the variable extraction happens before the webhook is e
 
 For Example, the image below shows how the Webhook Node is set up to extract the date, time, and number of guests for the reservation, and how the extracted variables are referenced in the webhook's request data.
 
-<img style={{ borderRadius: "0.5rem" }} src="extract_variables.png" />
+<img style={{ borderRadius: "0.5rem" }} src="tutorials/extract_variables.png" />
 
 # Fine Tuning the Pathway agent
 
@@ -262,20 +262,20 @@ Upon triggering and testing a call with your pathway using the 'Chat with Pathwa
 
 If you see a decision that the agent made that you do not agree with, or if the agent is hallucinating, you can fine-tune the decision the agent makes by clicking on the `Edit` button on the `PATHWAY DECISION INFO` block.
 
-<img style={{ borderRadius: "0.5rem" }} src="pathwaylog_finetune.png" />
+<img style={{ borderRadius: "0.5rem" }} src="tutorials/pathwaylog_finetune.png" />
 
 Upon doing so, you will be able to see the decisions the agent made for the condition, the pathway it took, and the dialogue it generated. You can then fine-tune the agent by changing the dialogue, the condition, or the pathway the agent took.
 
 Upon saving your changes, you will be able to see the fine-tuning data in the node where the decision was made. This training data is used to train the agent to make better decisions in the future, and to ensure that the agent does not make the same mistake again.
 
-<img style={{ borderRadius: "0.5rem" }} src="finetuned.png" />
+<img style={{ borderRadius: "0.5rem" }} src="tutorials/finetuned.png" />
 
 Do note that the decisions for the condition and pathway chosen is made by the node the agent is currently at, and the dialogue is generated by the node which the agent decides to take the pathway to.
 
 For Example,
 If the agent is at Node 1, and the agent decides that the condition is achieved, and decides to take the pathway to Node 2, the dialogue generated will be from Node 2, and the decisions for the condition and pathway chosen will be from Node 1. As such, the training data for the condition and pathway chosen will be stored in Node 1, and amendments to the dialogue generated will be stored in Node 2.
 
-<img style={{ borderRadius: "0.5rem" }} src="finetune.png" />
+<img style={{ borderRadius: "0.5rem" }} src="tutorials/finetune.png" />
 
 # Quick Start with Tutorial / Templates
 

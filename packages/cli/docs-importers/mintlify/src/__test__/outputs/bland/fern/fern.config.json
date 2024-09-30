@@ -1,4 +1,4 @@
 {
-    "organization": "bland",
-    "version": "0.22.0"
+    "version": "*",
+    "organization": "fern"
 }
