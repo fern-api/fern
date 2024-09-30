@@ -122,6 +122,19 @@ class JsonDecoder
     }
 
     /**
+     * Decodes a JSON string and deserializes it based on the provided union type definition.
+     *
+     * @param string $json The JSON string to decode.
+     * @param Union $union The union type definition for deserialization.
+     * @return mixed The deserialized value.
+     * @throws JsonException If the deserialization for all types in the union fails.
+     */
+    public static function decodeUnion(string $json, Union $union): mixed
+    {
+        $decoded = self::decode($json);
+        return JsonDeserializer::deserializeUnion($decoded, $union);
+    }
+    /**
      * Decodes a JSON string and returns a mixed.
      *
      * @param string $json The JSON string to decode.
