@@ -3419,9 +3419,6 @@ importers:
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../../configuration
-      '@fern-api/core-utils':
-        specifier: workspace:*
-        version: link:../../../commons/core-utils
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../commons/fs-utils
@@ -3489,16 +3486,7 @@ importers:
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
-      js-yaml:
-        specifier: ^4.1.0
-        version: 4.1.0
-      tmp-promise:
-        specifier: ^3.0.3
-        version: 3.0.3
     devDependencies:
-      '@types/js-yaml':
-        specifier: ^4.0.8
-        version: 4.0.8
       '@types/node':
         specifier: ^18.7.18
         version: 18.7.18

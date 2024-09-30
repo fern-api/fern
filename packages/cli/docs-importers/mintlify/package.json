@@ -35,12 +35,9 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-fern/fdr-cjs-sdk": "0.111.0-51d403bce",
-    "gray-matter": "^4.0.3",
-    "js-yaml": "^4.1.0",
-    "tmp-promise": "^3.0.3"
+    "gray-matter": "^4.0.3"
   },
   "devDependencies": {
-    "@types/js-yaml": "^4.0.8",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",

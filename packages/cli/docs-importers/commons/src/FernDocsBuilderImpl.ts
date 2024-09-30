@@ -58,14 +58,6 @@ export class FernDocsBuilderImpl extends FernDocsBuilder {
         this.assets[relativeFilePathFromDocsYml] = { absoluteFilePathToAsset };
     }
 
-    public getNavigationBuilder(): FernDocsNavigationBuilder;
-    public getNavigationBuilder({
-        tabId,
-        tabConfig
-    }: {
-        tabId: string;
-        tabConfig: docsYml.RawSchemas.TabConfig;
-    }): FernDocsNavigationBuilder;
     public getNavigationBuilder(args?: {
         tabId: string;
         tabConfig: docsYml.RawSchemas.TabConfig;

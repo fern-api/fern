@@ -32,7 +32,7 @@ export async function convertMarkdown({
     const { data, content } = parseMintlifyFrontmatter(text);
     const slug = relativeFilepathFromRoot.replace(/\.(md|mdx)$/, "");
 
-    let transformedContent = markReferencedAssets({
+    const transformedContent = markReferencedAssets({
         absolutePathToMintJson,
         absoluteFilepathToMarkdown,
         content,

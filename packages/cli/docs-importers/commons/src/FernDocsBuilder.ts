@@ -34,11 +34,10 @@ export abstract class FernDocsBuilder {
         navigation: docsYml.RawSchemas.VersionFileConfig;
     }): void;
 
-    public abstract getNavigationBuilder(): FernDocsNavigationBuilder;
     public abstract getNavigationBuilder({
         tabId,
         tabConfig
-    }: {
+    }?: {
         tabId: docsYml.RawSchemas.TabId;
         tabConfig: docsYml.RawSchemas.TabConfig;
     }): FernDocsNavigationBuilder;
