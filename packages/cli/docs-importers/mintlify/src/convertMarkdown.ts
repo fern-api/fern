@@ -47,6 +47,7 @@ export async function convertMarkdown({
             title: data.title,
             subtitle: data.description,
             layout: data.mode != null ? "reference" : undefined,
+            // eslint-disable-next-line @typescript-eslint/
             image: data["og:image"] as any,
             slug
         },

@@ -1,12 +1,4 @@
 import { docsYml, DOCS_CONFIGURATION_FILENAME, FERN_DIRECTORY } from "@fern-api/configuration";
-import {
-    VersionConfig,
-    VersionFileConfig,
-    NavbarLink,
-    LogoConfiguration,
-    ColorsConfiguration,
-    LayoutConfig
-} from "@fern-api/configuration/lib/docs-yml/schemas";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernDocsBuilder, FernDocsNavigationBuilder } from "./FernDocsBuilder";
 import { mkdir, writeFile, cp } from "fs/promises";
@@ -77,13 +69,13 @@ export class FernDocsBuilderImpl extends FernDocsBuilder {
         versionConfig,
         navigation
     }: {
-        versionConfig: VersionConfig;
-        navigation: VersionFileConfig;
+        versionConfig: docsYml.RawSchemas.VersionConfig;
+        navigation: docsYml.RawSchemas.VersionFileConfig;
     }): void {
         throw new Error("Method not implemented.");
     }
 
-    public addNavbarLink({ link }: { link: NavbarLink }): void {
+    public addNavbarLink({ link }: { link: docsYml.RawSchemas.NavbarLink }): void {
         if (this.docsYml.navbarLinks == null) {
             this.docsYml.navbarLinks = [link];
         }
@@ -98,15 +90,15 @@ export class FernDocsBuilderImpl extends FernDocsBuilder {
         this.docsYml.favicon = favicon;
     }
 
-    public setLogo({ logo }: { logo: LogoConfiguration }): void {
+    public setLogo({ logo }: { logo: docsYml.RawSchemas.LogoConfiguration }): void {
         this.docsYml.logo = logo;
     }
 
-    public setColors({ colors }: { colors: ColorsConfiguration }): void {
+    public setColors({ colors }: { colors: docsYml.RawSchemas.ColorsConfiguration }): void {
         this.docsYml.colors = colors;
     }
 
-    public setLayout({ layout }: { layout: LayoutConfig }): void {
+    public setLayout({ layout }: { layout: docsYml.RawSchemas.LayoutConfig }): void {
         this.docsYml.layout = layout;
     }
 
