@@ -140,7 +140,16 @@ export class WrappedEndpointRequest extends EndpointRequest {
         if (maybeLiteral != null) {
             return php.codeblock(this.context.getLiteralAsString(maybeLiteral));
         }
-        return php.codeblock(`${parameter}`);
+        const type = this.context.phpTypeMapper.convert({ reference });
+        const underlyingInternalType = type.underlyingType().internalType;
+        if (underlyingInternalType.type === "union") {
+            return this.serializeJsonForUnion({
+                bodyArgument: php.codeblock(parameter),
+                types: underlyingInternalType.types,
+                isOptional: false
+            });
+        }
+        return php.codeblock(parameter);
     }
 
     public getRequestBodyCodeBlock(): RequestBodyCodeBlock | undefined {

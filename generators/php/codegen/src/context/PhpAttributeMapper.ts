@@ -126,7 +126,10 @@ export class PhpAttributeMapper {
                 const unionTypeParameters = this.getUnionTypeParameters(type.internalType.types);
                 // dedupe in getUnionTypeParameters could result in a single value
                 if (unionTypeParameters.length === 1) {
-                    return unionTypeParameters[0]!;
+                    if (unionTypeParameters[0] == null) {
+                        throw new Error("Unexpected empty union type parameters");
+                    }
+                    return unionTypeParameters[0];
                 }
                 return this.getUnionTypeClassRepresentation(unionTypeParameters);
             }

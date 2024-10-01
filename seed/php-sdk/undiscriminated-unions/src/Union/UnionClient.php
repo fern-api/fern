@@ -7,8 +7,9 @@ use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
-use Seed\Core\JsonDecoder;
+use Seed\Core\JsonSerializer;
 use Seed\Core\Union;
+use Seed\Core\JsonDecoder;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Union\Types\KeyType;
@@ -46,7 +47,7 @@ class UnionClient
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "",
                     method: HttpMethod::POST,
-                    body: $request,
+                    body: JsonSerializer::serializeUnion($request, new Union('string', ['string'], 'integer', ['integer'], [['integer']])),
                 ),
             );
             $statusCode = $response->getStatusCode();
