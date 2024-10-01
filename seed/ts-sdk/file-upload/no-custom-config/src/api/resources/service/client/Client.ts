@@ -54,7 +54,7 @@ export class Service {
         await _request.append("integer", request.integer.toString());
         await _request.appendFile("file", file);
         for (const _file of fileList) {
-            await _request.append("fileList", _file);
+            await _request.appendFile("fileList", _file);
         }
 
         if (maybeFile != null) {
@@ -63,7 +63,7 @@ export class Service {
 
         if (maybeFileList != null) {
             for (const _file of maybeFileList) {
-                await _request.append("maybeFileList", _file);
+                await _request.appendFile("maybeFileList", _file);
             }
         }
 
