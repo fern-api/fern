@@ -1,3 +1,9 @@
+- version: 0.0.2
+  createdAt: '2024-20-01'
+  changelogEntry:
+    - type: fix
+      summary: Make sure summary and code examples in XML code comments are XML encoded.
+  irVersion: 33
 - version: 0.0.1
   createdAt: '2024-03-31'
   changelogEntry:
