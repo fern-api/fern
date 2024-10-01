@@ -162,6 +162,13 @@ export abstract class AbstractPhpGeneratorContext<
         });
     }
 
+    public getUtilClassReference(name: string): php.ClassReference {
+        return php.classReference({
+            name,
+            namespace: this.getUtilNamespace()
+        });
+    }
+
     public isMixedArray(type: php.Type): boolean {
         return (
             type.internalType.type === "array" && type.internalType.value.underlyingType().internalType.type === "mixed"
