@@ -57,14 +57,7 @@ class JsonSerializer
     private static function serializeValue(mixed $data, mixed $type): mixed
     {
         if ($type instanceof Union) {
-            foreach ($type->types as $unionType) {
-                try {
-                    return self::serializeSingleValue($data, $unionType);
-                } catch (Exception) {
-                    continue;
-                }
-            }
-            throw new JsonException("Cannot serialize value with any of the union types.");
+            return self::serializeUnion($data, $type);
         }
 
         if (is_array($type)) {
@@ -76,6 +69,30 @@ class JsonSerializer
         }
 
         return self::serializeSingleValue($data, $type);
+    }
+
+    /**
+     * Serializes a value for a union type definition.
+     *
+     * @param mixed $data The value to serialize.
+     * @param Union $unionType The union type definition.
+     * @return mixed The serialized value.
+     * @throws JsonException If serialization fails for all union types.
+     */
+    public static function serializeUnion(mixed $data, Union $unionType): mixed
+    {
+        foreach ($unionType->types as $type) {
+            try {
+                return self::serializeValue($data, $type);
+            } catch (Exception) {
+                // Try the next type in the union
+                continue;
+            }
+        }
+        $readableType = Utils::getReadableType($data);
+        throw new JsonException(
+            "Cannot serialize value of type $readableType with any of the union types: " . $unionType
+        );
     }
 
     /**

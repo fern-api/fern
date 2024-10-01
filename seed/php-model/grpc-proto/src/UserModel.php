@@ -4,6 +4,7 @@ namespace Seed;
 
 use Seed\Core\SerializableType;
 use Seed\Core\JsonProperty;
+use Seed\Core\Union;
 
 class UserModel extends SerializableType
 {
@@ -32,10 +33,10 @@ class UserModel extends SerializableType
     public ?float $weight;
 
     /**
-     * @var mixed $metadata
+     * @var array<string, float|string|bool>|array<string, mixed>|null $metadata
      */
-    #[JsonProperty('metadata')]
-    public mixed $metadata;
+    #[JsonProperty('metadata'), Union(['string' => new Union('float', 'string', 'bool')], ['string' => 'mixed'])]
+    public array|null $metadata;
 
     /**
      * @param array{
@@ -43,16 +44,16 @@ class UserModel extends SerializableType
      *   email?: ?string,
      *   age?: ?int,
      *   weight?: ?float,
-     *   metadata: mixed,
+     *   metadata?: array<string, float|string|bool>|array<string, mixed>|null,
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->username = $values['username'] ?? null;
         $this->email = $values['email'] ?? null;
         $this->age = $values['age'] ?? null;
         $this->weight = $values['weight'] ?? null;
-        $this->metadata = $values['metadata'];
+        $this->metadata = $values['metadata'] ?? null;
     }
 }

@@ -4,6 +4,7 @@ namespace Seed\QueryParam\Requests;
 
 use Seed\Core\SerializableType;
 use Seed\Types\Operand;
+use Seed\Types\Color;
 
 class SendEnumListAsQueryParamRequest extends SerializableType
 {
@@ -18,12 +19,12 @@ class SendEnumListAsQueryParamRequest extends SerializableType
     public array $maybeOperand;
 
     /**
-     * @var array<mixed> $operandOrColor
+     * @var array<value-of<Color>|value-of<Operand>> $operandOrColor
      */
     public array $operandOrColor;
 
     /**
-     * @var array<mixed> $maybeOperandOrColor
+     * @var array<value-of<Color>|value-of<Operand>|null> $maybeOperandOrColor
      */
     public array $maybeOperandOrColor;
 
@@ -31,8 +32,8 @@ class SendEnumListAsQueryParamRequest extends SerializableType
      * @param array{
      *   operand: array<value-of<Operand>>,
      *   maybeOperand: array<?value-of<Operand>>,
-     *   operandOrColor: array<mixed>,
-     *   maybeOperandOrColor: array<mixed>,
+     *   operandOrColor: array<value-of<Color>|value-of<Operand>>,
+     *   maybeOperandOrColor: array<value-of<Color>|value-of<Operand>|null>,
      * } $values
      */
     public function __construct(

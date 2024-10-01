@@ -7,9 +7,12 @@ use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\JsonApiRequest;
 use Seed\Core\HttpMethod;
+use Seed\Core\JsonSerializer;
+use Seed\Core\Union;
 use Seed\Core\JsonDecoder;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
+use Seed\Union\Types\KeyType;
 
 class UnionClient
 {
@@ -28,15 +31,15 @@ class UnionClient
     }
 
     /**
-     * @param mixed $request
+     * @param string|array<string>|int|array<int>|array<array<int>> $request
      * @param ?array{
      *   baseUrl?: string,
      * } $options
-     * @return mixed
+     * @return string|array<string>|int|array<int>|array<array<int>>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function get(mixed $request, ?array $options = null): mixed
+    public function get(string|array|int $request, ?array $options = null): string|array|int
     {
         try {
             $response = $this->client->sendRequest(
@@ -44,13 +47,13 @@ class UnionClient
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "",
                     method: HttpMethod::POST,
-                    body: $request,
+                    body: JsonSerializer::serializeUnion($request, new Union('string', ['string'], 'integer', ['integer'], [['integer']])),
                 ),
             );
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
-                return JsonDecoder::decodeMixed($json);
+                return JsonDecoder::decodeUnion($json, new Union('string', ['string'], 'integer', ['integer'], [['integer']])); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -68,7 +71,7 @@ class UnionClient
      * @param ?array{
      *   baseUrl?: string,
      * } $options
-     * @return array<mixed, string>
+     * @return array<value-of<KeyType>|string, string>
      * @throws SeedException
      * @throws SeedApiException
      */
@@ -85,7 +88,7 @@ class UnionClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
-                return JsonDecoder::decodeArray($json, ['mixed' => 'string']); // @phpstan-ignore-line
+                return JsonDecoder::decodeArray($json, ['string' => 'string']); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);

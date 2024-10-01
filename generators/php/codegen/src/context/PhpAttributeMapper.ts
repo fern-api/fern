@@ -1,7 +1,11 @@
 import { assertNever } from "@fern-api/core-utils";
+import { Arguments, UnnamedArgument } from "@fern-api/generator-commons";
 import { ObjectProperty } from "@fern-fern/ir-sdk/api";
+import { isEqual, uniq, uniqWith } from "lodash-es";
 import { php } from "..";
+import { ClassInstantiation } from "../ast";
 import { BasePhpCustomConfigSchema } from "../custom-config/BasePhpCustomConfigSchema";
+import { parameter } from "../php";
 import { AbstractPhpGeneratorContext } from "./AbstractPhpGeneratorContext";
 
 export declare namespace PhpAttributeMapper {
@@ -41,14 +45,41 @@ export class PhpAttributeMapper {
             attributes.push(
                 php.attribute({
                     reference: this.context.getArrayTypeClassReference(),
-                    arguments: [this.getArrayTypeAttributeArgument(type.underlyingType())]
+                    arguments: [this.getTypeAttributeArgument(type.underlyingType())]
                 })
             );
+        }
+        if (underlyingInternalType.type === "union") {
+            const unionTypeParameters = this.getUnionTypeParameters(underlyingInternalType.types);
+            // only add the attribute if deduping in getUnionTypeParameters resulted in more than one type
+            if (unionTypeParameters.length > 1) {
+                attributes.push(
+                    php.attribute({
+                        reference: this.context.getUnionClassReference(),
+                        arguments: this.getUnionTypeParameters(underlyingInternalType.types)
+                    })
+                );
+            }
         }
         return attributes;
     }
 
-    public getArrayTypeAttributeArgument(type: php.Type): php.AstNode {
+    public getUnionTypeClassRepresentation(arguments_: php.AstNode[]): ClassInstantiation {
+        return php.instantiateClass({
+            classReference: this.context.getUnionClassReference(),
+            arguments_
+        });
+    }
+
+    public getUnionTypeParameters(types: php.Type[]): php.AstNode[] {
+        // remove duplicates, such as "string" and "string" if enums and strings are both in the union
+        return uniqWith(
+            types.map((type) => this.getTypeAttributeArgument(type)),
+            isEqual
+        );
+    }
+
+    public getTypeAttributeArgument(type: php.Type): php.AstNode {
         switch (type.internalType.type) {
             case "int":
                 return php.codeblock("'integer'");
@@ -69,14 +100,14 @@ export class PhpAttributeMapper {
                 return php.codeblock("'object'");
             case "array":
                 return php.array({
-                    entries: [this.getArrayTypeAttributeArgument(type.internalType.value)]
+                    entries: [this.getTypeAttributeArgument(type.internalType.value)]
                 });
             case "map": {
                 return php.map({
                     entries: [
                         {
-                            key: this.getArrayTypeAttributeArgument(type.internalType.keyType),
-                            value: this.getArrayTypeAttributeArgument(type.internalType.valueType)
+                            key: this.getTypeAttributeArgument(type.internalType.keyType),
+                            value: this.getTypeAttributeArgument(type.internalType.valueType)
                         }
                     ]
                 });
@@ -92,17 +123,19 @@ export class PhpAttributeMapper {
                 });
             }
             case "union": {
-                return php.instantiateClass({
-                    classReference: this.context.getUnionClassReference(),
-                    arguments_: type.internalType.types.map((unionType) =>
-                        this.getArrayTypeAttributeArgument(unionType)
-                    )
-                });
+                const unionTypeParameters = this.getUnionTypeParameters(type.internalType.types);
+                if (unionTypeParameters.length === 1) {
+                    if (unionTypeParameters[0] == null) {
+                        throw new Error("Unexpected empty union type parameters");
+                    }
+                    return unionTypeParameters[0];
+                }
+                return this.getUnionTypeClassRepresentation(unionTypeParameters);
             }
             case "optional":
                 return php.instantiateClass({
                     classReference: this.context.getUnionClassReference(),
-                    arguments_: [this.getArrayTypeAttributeArgument(type.internalType.value), php.codeblock("'null'")]
+                    arguments_: [this.getTypeAttributeArgument(type.internalType.value), php.codeblock("'null'")]
                 });
             case "reference": {
                 const reference = type.internalType.value;

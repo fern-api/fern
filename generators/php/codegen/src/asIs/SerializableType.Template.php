@@ -56,6 +56,13 @@ abstract class SerializableType implements \JsonSerializable
                     : JsonSerializer::serializeDateTime($value);
             }
 
+            // Handle Union annotations
+            $unionTypeAttr = $property->getAttributes(Union::class)[0] ?? null;
+            if ($unionTypeAttr) {
+                $unionType = $unionTypeAttr->newInstance();
+                $value = JsonSerializer::serializeUnion($value, $unionType);
+            }
+
             // Handle arrays with type annotations
             $arrayTypeAttr = $property->getAttributes(ArrayType::class)[0] ?? null;
             if ($arrayTypeAttr && is_array($value)) {
@@ -133,6 +140,13 @@ abstract class SerializableType implements \JsonSerializable
                 if (is_array($value) && $arrayTypeAttr) {
                     $arrayType = $arrayTypeAttr->newInstance()->type;
                     $value = JsonDeserializer::deserializeArray($value, $arrayType);
+                }
+
+                // Handle Union annotations
+                $unionTypeAttr = $property->getAttributes(Union::class)[0] ?? null;
+                if ($unionTypeAttr) {
+                    $unionType = $unionTypeAttr->newInstance();
+                    $value = JsonDeserializer::deserializeUnion($value, $unionType);
                 }
 
                 // Handle object
