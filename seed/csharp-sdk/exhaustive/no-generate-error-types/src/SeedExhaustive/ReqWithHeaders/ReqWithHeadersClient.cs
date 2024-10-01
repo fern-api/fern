@@ -21,9 +21,9 @@ public partial class ReqWithHeadersClient
     /// await client.ReqWithHeaders.GetWithCustomHeaderAsync(
     ///     new ReqWithHeaders
     ///     {
-    ///         XTestEndpointHeader = "string",
-    ///         XTestServiceHeader = "string",
-    ///         Body = "string",
+    ///         XTestEndpointHeader = &quot;string&quot;,
+    ///         XTestServiceHeader = &quot;string&quot;,
+    ///         Body = &quot;string&quot;,
     ///     }
     /// );
     /// </code>

@@ -11,6 +11,7 @@ import { Interface } from "./Interface";
 import { Method } from "./Method";
 import { MethodInvocation } from "./MethodInvocation";
 import { Parameter } from "./Parameter";
+import { escape } from "lodash-es";
 
 export declare namespace Class {
     interface Args {
@@ -169,9 +170,11 @@ export class Class extends AstNode {
 
         if (this.summary != null) {
             writer.writeLine("/// <summary>");
-            this.summary.split("\n").forEach((line) => {
-                writer.writeLine(`/// ${line}`);
-            });
+            escape(this.summary)
+                .split("\n")
+                .forEach((line) => {
+                    writer.writeLine(`/// ${line}`);
+                });
             writer.writeLine("/// </summary>");
         }
         if (this.annotations.length > 0) {

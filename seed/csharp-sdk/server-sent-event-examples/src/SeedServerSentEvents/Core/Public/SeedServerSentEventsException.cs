@@ -2,7 +2,7 @@ using System;
 
 #nullable enable
 
-namespace SeedServerSentEvents.Core;
+namespace SeedServerSentEvents;
 
 /// <summary>
 /// Base exception class for all exceptions thrown by the SDK.

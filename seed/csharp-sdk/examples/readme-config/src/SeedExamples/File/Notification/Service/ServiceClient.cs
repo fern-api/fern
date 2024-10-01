@@ -19,7 +19,7 @@ public partial class ServiceClient
 
     /// <example>
     /// <code>
-    /// await client.File.Notification.Service.GetExceptionAsync("notification-hsy129x");
+    /// await client.File.Notification.Service.GetExceptionAsync(&quot;notification-hsy129x&quot;);
     /// </code>
     /// </example>
     public async Task<object> GetExceptionAsync(

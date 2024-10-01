@@ -21,19 +21,19 @@ public partial class ReferenceClient
     /// await client.Reference.SendAsync(
     ///     new SendRequest
     ///     {
-    ///         Prompt = "You are a helpful assistant",
+    ///         Prompt = &quot;You are a helpful assistant&quot;,
     ///         Stream = false,
-    ///         Context = "You're super wise",
-    ///         Query = "What is the weather today",
+    ///         Context = &quot;You&#39;re super wise&quot;,
+    ///         Query = &quot;What is the weather today&quot;,
     ///         ContainerObject = new ContainerObject
     ///         {
-    ///             NestedObjects = new List<NestedObjectWithLiterals>()
+    ///             NestedObjects = new List&lt;NestedObjectWithLiterals&gt;()
     ///             {
     ///                 new NestedObjectWithLiterals
     ///                 {
-    ///                     Literal1 = "literal1",
-    ///                     Literal2 = "literal2",
-    ///                     StrProp = "strProp",
+    ///                     Literal1 = &quot;literal1&quot;,
+    ///                     Literal2 = &quot;literal2&quot;,
+    ///                     StrProp = &quot;strProp&quot;,
     ///                 },
     ///             },
     ///         },

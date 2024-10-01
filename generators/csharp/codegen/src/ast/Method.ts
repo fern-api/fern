@@ -6,6 +6,7 @@ import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { Parameter } from "./Parameter";
 import { Type } from "./Type";
+import { escape } from "lodash-es";
 
 export enum MethodType {
     INSTANCE,
@@ -91,20 +92,24 @@ export class Method extends AstNode {
     public write(writer: Writer): void {
         if (this.summary != null) {
             writer.writeLine("/// <summary>");
-            this.summary.split("\n").forEach((line) => {
-                writer.writeLine(`/// ${line}`);
-            });
+            escape(this.summary)
+                .split("\n")
+                .forEach((line) => {
+                    writer.writeLine(`/// ${line}`);
+                });
 
             writer.writeLine("/// </summary>");
         }
         if (this.codeExample != null) {
             writer.writeLine("/// <example>");
             writer.writeLine("/// <code>");
-            this.codeExample.split("\n").forEach((line) => {
-                if (line !== "") {
-                    writer.writeLine(`/// ${line}`);
-                }
-            });
+            escape(this.codeExample)
+                .split("\n")
+                .forEach((line) => {
+                    if (line !== "") {
+                        writer.writeLine(`/// ${line}`);
+                    }
+                });
             writer.writeLine("/// </code>");
             writer.writeLine("/// </example>");
         }

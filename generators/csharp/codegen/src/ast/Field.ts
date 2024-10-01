@@ -5,6 +5,7 @@ import { CodeBlock } from "./CodeBlock";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { Type } from "./Type";
+import { escape } from "lodash-es";
 
 export declare namespace Field {
     interface Args {
@@ -109,9 +110,11 @@ export class Field extends AstNode {
     public write(writer: Writer): void {
         if (this.summary != null) {
             writer.writeLine("/// <summary>");
-            this.summary.split("\n").forEach((line) => {
-                writer.writeLine(`/// ${line}`);
-            });
+            escape(this.summary)
+                .split("\n")
+                .forEach((line) => {
+                    writer.writeLine(`/// ${line}`);
+                });
             writer.writeLine("/// </summary>");
         }
 

@@ -108,7 +108,7 @@ public partial class ProblemClient
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.V2.Problem.GetLatestProblemAsync("string");
+    /// await client.V2.Problem.GetLatestProblemAsync(&quot;string&quot;);
     /// </code>
     /// </example>
     public async Task<ProblemInfoV2> GetLatestProblemAsync(
@@ -152,7 +152,7 @@ public partial class ProblemClient
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.V2.Problem.GetProblemVersionAsync("string", 1);
+    /// await client.V2.Problem.GetProblemVersionAsync(&quot;string&quot;, 1);
     /// </code>
     /// </example>
     public async Task<ProblemInfoV2> GetProblemVersionAsync(

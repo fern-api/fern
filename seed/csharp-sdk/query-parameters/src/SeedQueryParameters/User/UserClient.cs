@@ -22,49 +22,49 @@ public partial class UserClient
     ///     new GetUsersRequest
     ///     {
     ///         Limit = 1,
-    ///         Id = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///         Id = &quot;d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32&quot;,
     ///         Date = new DateOnly(2023, 1, 15),
     ///         Deadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-    ///         Bytes = "SGVsbG8gd29ybGQh",
+    ///         Bytes = &quot;SGVsbG8gd29ybGQh&quot;,
     ///         User = new User
     ///         {
-    ///             Name = "string",
-    ///             Tags = new List<string>() { "string" },
+    ///             Name = &quot;string&quot;,
+    ///             Tags = new List&lt;string&gt;() { &quot;string&quot; },
     ///         },
-    ///         UserList = new List<User>()
+    ///         UserList = new List&lt;User&gt;()
     ///         {
     ///             new User
     ///             {
-    ///                 Name = "string",
-    ///                 Tags = new List<string>() { "string" },
+    ///                 Name = &quot;string&quot;,
+    ///                 Tags = new List&lt;string&gt;() { &quot;string&quot; },
     ///             },
     ///         },
     ///         OptionalDeadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-    ///         KeyValue = new Dictionary<string, string>() { { "string", "string" } },
-    ///         OptionalString = "string",
+    ///         KeyValue = new Dictionary&lt;string, string&gt;() { { &quot;string&quot;, &quot;string&quot; } },
+    ///         OptionalString = &quot;string&quot;,
     ///         NestedUser = new NestedUser
     ///         {
-    ///             Name = "string",
+    ///             Name = &quot;string&quot;,
     ///             User = new User
     ///             {
-    ///                 Name = "string",
-    ///                 Tags = new List<string>() { "string" },
+    ///                 Name = &quot;string&quot;,
+    ///                 Tags = new List&lt;string&gt;() { &quot;string&quot; },
     ///             },
     ///         },
     ///         OptionalUser = new User
     ///         {
-    ///             Name = "string",
-    ///             Tags = new List<string>() { "string" },
+    ///             Name = &quot;string&quot;,
+    ///             Tags = new List&lt;string&gt;() { &quot;string&quot; },
     ///         },
     ///         ExcludeUser =
     ///         [
     ///             new User
     ///             {
-    ///                 Name = "string",
-    ///                 Tags = new List<string>() { "string" },
+    ///                 Name = &quot;string&quot;,
+    ///                 Tags = new List&lt;string&gt;() { &quot;string&quot; },
     ///             },
     ///         ],
-    ///         Filter = ["string"],
+    ///         Filter = [&quot;string&quot;],
     ///     }
     /// );
     /// </code>

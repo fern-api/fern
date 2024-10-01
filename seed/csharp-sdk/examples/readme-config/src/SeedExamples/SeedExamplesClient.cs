@@ -53,7 +53,7 @@ public partial class SeedExamplesClient
 
     /// <example>
     /// <code>
-    /// await client.EchoAsync("Hello world!\\n\\nwith\\n\\tnewlines");
+    /// await client.EchoAsync(&quot;Hello world!\\n\\nwith\\n\\tnewlines&quot;);
     /// </code>
     /// </example>
     public async Task<string> EchoAsync(

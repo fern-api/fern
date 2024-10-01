@@ -19,11 +19,11 @@ public partial class OptionalClient
     /// <example>
     /// <code>
     /// await client.Optional.SendOptionalBodyAsync(
-    ///     new Dictionary<string, object>()
+    ///     new Dictionary&lt;string, object&gt;()
     ///     {
     ///         {
-    ///             "string",
-    ///             new Dictionary<object, object?>() { { "key", "value" } }
+    ///             &quot;string&quot;,
+    ///             new Dictionary&lt;object, object?&gt;() { { &quot;key&quot;, &quot;value&quot; } }
     ///         },
     ///     }
     /// );

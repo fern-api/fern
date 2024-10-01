@@ -18,7 +18,7 @@ public partial class ServiceClient
 
     /// <example>
     /// <code>
-    /// await client.Service.GetMovieAsync("string");
+    /// await client.Service.GetMovieAsync(&quot;string&quot;);
     /// </code>
     /// </example>
     public async Task<Response> GetMovieAsync(
@@ -60,7 +60,7 @@ public partial class ServiceClient
 
     /// <example>
     /// <code>
-    /// await client.Service.GetMovieDocsAsync("string");
+    /// await client.Service.GetMovieDocsAsync(&quot;string&quot;);
     /// </code>
     /// </example>
     public async Task<Response> GetMovieDocsAsync(
@@ -102,7 +102,7 @@ public partial class ServiceClient
 
     /// <example>
     /// <code>
-    /// await client.Service.GetMovieNameAsync("string");
+    /// await client.Service.GetMovieNameAsync(&quot;string&quot;);
     /// </code>
     /// </example>
     public async Task<StringResponse> GetMovieNameAsync(
@@ -144,7 +144,7 @@ public partial class ServiceClient
 
     /// <example>
     /// <code>
-    /// await client.Service.GetMovieMetadataAsync("string");
+    /// await client.Service.GetMovieMetadataAsync(&quot;string&quot;);
     /// </code>
     /// </example>
     public async Task<Response> GetMovieMetadataAsync(
@@ -186,7 +186,7 @@ public partial class ServiceClient
 
     /// <example>
     /// <code>
-    /// await client.Service.GetOptionalMovieAsync("string");
+    /// await client.Service.GetOptionalMovieAsync(&quot;string&quot;);
     /// </code>
     /// </example>
     public async Task<Response?> GetOptionalMovieAsync(
@@ -228,7 +228,7 @@ public partial class ServiceClient
 
     /// <example>
     /// <code>
-    /// await client.Service.GetOptionalMovieDocsAsync("string");
+    /// await client.Service.GetOptionalMovieDocsAsync(&quot;string&quot;);
     /// </code>
     /// </example>
     public async Task<WithDocs?> GetOptionalMovieDocsAsync(
@@ -270,7 +270,7 @@ public partial class ServiceClient
 
     /// <example>
     /// <code>
-    /// await client.Service.GetOptionalMovieNameAsync("string");
+    /// await client.Service.GetOptionalMovieNameAsync(&quot;string&quot;);
     /// </code>
     /// </example>
     public async Task<StringResponse?> GetOptionalMovieNameAsync(

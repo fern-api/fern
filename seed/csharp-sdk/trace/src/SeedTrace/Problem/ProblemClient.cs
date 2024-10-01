@@ -25,40 +25,40 @@ public partial class ProblemClient
     /// await client.Problem.CreateProblemAsync(
     ///     new CreateProblemRequest
     ///     {
-    ///         ProblemName = "string",
-    ///         ProblemDescription = new ProblemDescription { Boards = new List<object>() { "string" } },
-    ///         Files = new Dictionary<Language, ProblemFiles>()
+    ///         ProblemName = &quot;string&quot;,
+    ///         ProblemDescription = new ProblemDescription { Boards = new List&lt;object&gt;() { &quot;string&quot; } },
+    ///         Files = new Dictionary&lt;Language, ProblemFiles&gt;()
     ///         {
     ///             {
     ///                 Language.Java,
     ///                 new ProblemFiles
     ///                 {
-    ///                     SolutionFile = new FileInfo { Filename = "string", Contents = "string" },
-    ///                     ReadOnlyFiles = new List<FileInfo>()
+    ///                     SolutionFile = new FileInfo { Filename = &quot;string&quot;, Contents = &quot;string&quot; },
+    ///                     ReadOnlyFiles = new List&lt;FileInfo&gt;()
     ///                     {
-    ///                         new FileInfo { Filename = "string", Contents = "string" },
+    ///                         new FileInfo { Filename = &quot;string&quot;, Contents = &quot;string&quot; },
     ///                     },
     ///                 }
     ///             },
     ///         },
-    ///         InputParams = new List<VariableTypeAndName>()
+    ///         InputParams = new List&lt;VariableTypeAndName&gt;()
     ///         {
-    ///             new VariableTypeAndName { VariableType = "no-properties-union", Name = "string" },
+    ///             new VariableTypeAndName { VariableType = &quot;no-properties-union&quot;, Name = &quot;string&quot; },
     ///         },
-    ///         OutputType = "no-properties-union",
-    ///         Testcases = new List<TestCaseWithExpectedResult>()
+    ///         OutputType = &quot;no-properties-union&quot;,
+    ///         Testcases = new List&lt;TestCaseWithExpectedResult&gt;()
     ///         {
     ///             new TestCaseWithExpectedResult
     ///             {
     ///                 TestCase = new TestCase
     ///                 {
-    ///                     Id = "string",
-    ///                     Params = new List<object>() { 1 },
+    ///                     Id = &quot;string&quot;,
+    ///                     Params = new List&lt;object&gt;() { 1 },
     ///                 },
     ///                 ExpectedResult = 1,
     ///             },
     ///         },
-    ///         MethodName = "string",
+    ///         MethodName = &quot;string&quot;,
     ///     }
     /// );
     /// </code>
@@ -106,43 +106,43 @@ public partial class ProblemClient
     /// <example>
     /// <code>
     /// await client.Problem.UpdateProblemAsync(
-    ///     "string",
+    ///     &quot;string&quot;,
     ///     new CreateProblemRequest
     ///     {
-    ///         ProblemName = "string",
-    ///         ProblemDescription = new ProblemDescription { Boards = new List<object>() { "string" } },
-    ///         Files = new Dictionary<Language, ProblemFiles>()
+    ///         ProblemName = &quot;string&quot;,
+    ///         ProblemDescription = new ProblemDescription { Boards = new List&lt;object&gt;() { &quot;string&quot; } },
+    ///         Files = new Dictionary&lt;Language, ProblemFiles&gt;()
     ///         {
     ///             {
     ///                 Language.Java,
     ///                 new ProblemFiles
     ///                 {
-    ///                     SolutionFile = new FileInfo { Filename = "string", Contents = "string" },
-    ///                     ReadOnlyFiles = new List<FileInfo>()
+    ///                     SolutionFile = new FileInfo { Filename = &quot;string&quot;, Contents = &quot;string&quot; },
+    ///                     ReadOnlyFiles = new List&lt;FileInfo&gt;()
     ///                     {
-    ///                         new FileInfo { Filename = "string", Contents = "string" },
+    ///                         new FileInfo { Filename = &quot;string&quot;, Contents = &quot;string&quot; },
     ///                     },
     ///                 }
     ///             },
     ///         },
-    ///         InputParams = new List<VariableTypeAndName>()
+    ///         InputParams = new List&lt;VariableTypeAndName&gt;()
     ///         {
-    ///             new VariableTypeAndName { VariableType = "no-properties-union", Name = "string" },
+    ///             new VariableTypeAndName { VariableType = &quot;no-properties-union&quot;, Name = &quot;string&quot; },
     ///         },
-    ///         OutputType = "no-properties-union",
-    ///         Testcases = new List<TestCaseWithExpectedResult>()
+    ///         OutputType = &quot;no-properties-union&quot;,
+    ///         Testcases = new List&lt;TestCaseWithExpectedResult&gt;()
     ///         {
     ///             new TestCaseWithExpectedResult
     ///             {
     ///                 TestCase = new TestCase
     ///                 {
-    ///                     Id = "string",
-    ///                     Params = new List<object>() { 1 },
+    ///                     Id = &quot;string&quot;,
+    ///                     Params = new List&lt;object&gt;() { 1 },
     ///                 },
     ///                 ExpectedResult = 1,
     ///             },
     ///         },
-    ///         MethodName = "string",
+    ///         MethodName = &quot;string&quot;,
     ///     }
     /// );
     /// </code>
@@ -190,7 +190,7 @@ public partial class ProblemClient
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.Problem.DeleteProblemAsync("string");
+    /// await client.Problem.DeleteProblemAsync(&quot;string&quot;);
     /// </code>
     /// </example>
     public async Task DeleteProblemAsync(
@@ -229,12 +229,12 @@ public partial class ProblemClient
     /// await client.Problem.GetDefaultStarterFilesAsync(
     ///     new GetDefaultStarterFilesRequest
     ///     {
-    ///         InputParams = new List<VariableTypeAndName>()
+    ///         InputParams = new List&lt;VariableTypeAndName&gt;()
     ///         {
-    ///             new VariableTypeAndName { VariableType = "no-properties-union", Name = "string" },
+    ///             new VariableTypeAndName { VariableType = &quot;no-properties-union&quot;, Name = &quot;string&quot; },
     ///         },
-    ///         OutputType = "no-properties-union",
-    ///         MethodName = "string",
+    ///         OutputType = &quot;no-properties-union&quot;,
+    ///         MethodName = &quot;string&quot;,
     ///     }
     /// );
     /// </code>

@@ -23,8 +23,8 @@ public partial class ServiceClient
     /// <example>
     /// <code>
     /// await client.File.Service.GetFileAsync(
-    ///     "file.txt",
-    ///     new GetFileRequest { XFileApiVersion = "0.0.2" }
+    ///     &quot;file.txt&quot;,
+    ///     new GetFileRequest { XFileApiVersion = &quot;0.0.2&quot; }
     /// );
     /// </code>
     /// </example>

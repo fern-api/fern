@@ -19,7 +19,7 @@ public partial class UnionClient
 
     /// <example>
     /// <code>
-    /// await client.Union.GetAsync("string");
+    /// await client.Union.GetAsync(&quot;string&quot;);
     /// </code>
     /// </example>
     public async Task<

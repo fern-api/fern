@@ -35,7 +35,7 @@ public partial class SeedAliasClient
 
     /// <example>
     /// <code>
-    /// await client.GetAsync("type-kaljhv87");
+    /// await client.GetAsync(&quot;type-kaljhv87&quot;);
     /// </code>
     /// </example>
     public async Task GetAsync(

@@ -30,8 +30,8 @@ public partial class PlaylistClient
     ///         OptionalDatetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
     ///         Body = new PlaylistCreateRequest
     ///         {
-    ///             Name = "string",
-    ///             Problems = new List<string>() { "string" },
+    ///             Name = &quot;string&quot;,
+    ///             Problems = new List&lt;string&gt;() { &quot;string&quot; },
     ///         },
     ///     }
     /// );
@@ -85,7 +85,7 @@ public partial class PlaylistClient
     }
 
     /// <summary>
-    /// Returns the user's playlists
+    /// Returns the user&#39;s playlists
     /// </summary>
     /// <example>
     /// <code>
@@ -94,10 +94,10 @@ public partial class PlaylistClient
     ///     new GetPlaylistsRequest
     ///     {
     ///         Limit = 1,
-    ///         OtherField = "string",
-    ///         MultiLineDocs = "string",
-    ///         OptionalMultipleField = ["string"],
-    ///         MultipleField = ["string"],
+    ///         OtherField = &quot;string&quot;,
+    ///         MultiLineDocs = &quot;string&quot;,
+    ///         OptionalMultipleField = [&quot;string&quot;],
+    ///         MultipleField = [&quot;string&quot;],
     ///     }
     /// );
     /// </code>
@@ -154,7 +154,7 @@ public partial class PlaylistClient
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.Playlist.GetPlaylistAsync(1, "string");
+    /// await client.Playlist.GetPlaylistAsync(1, &quot;string&quot;);
     /// </code>
     /// </example>
     public async Task<Playlist> GetPlaylistAsync(
@@ -201,11 +201,11 @@ public partial class PlaylistClient
     /// <code>
     /// await client.Playlist.UpdatePlaylistAsync(
     ///     1,
-    ///     "string",
+    ///     &quot;string&quot;,
     ///     new UpdatePlaylistRequest
     ///     {
-    ///         Name = "string",
-    ///         Problems = new List<string>() { "string" },
+    ///         Name = &quot;string&quot;,
+    ///         Problems = new List&lt;string&gt;() { &quot;string&quot; },
     ///     }
     /// );
     /// </code>
@@ -254,7 +254,7 @@ public partial class PlaylistClient
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.Playlist.DeletePlaylistAsync(1, "string");
+    /// await client.Playlist.DeletePlaylistAsync(1, &quot;string&quot;);
     /// </code>
     /// </example>
     public async Task DeletePlaylistAsync(

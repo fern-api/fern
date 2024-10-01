@@ -25,23 +25,23 @@ public partial class InlinedRequestsClient
     /// await client.InlinedRequests.PostWithObjectBodyandResponseAsync(
     ///     new PostWithObjectBody
     ///     {
-    ///         String = "string",
+    ///         String = &quot;string&quot;,
     ///         Integer = 1,
     ///         NestedObject = new ObjectWithOptionalField
     ///         {
-    ///             String = "string",
+    ///             String = &quot;string&quot;,
     ///             Integer = 1,
     ///             Long = 1000000,
     ///             Double = 1.1,
     ///             Bool = true,
     ///             Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
     ///             Date = new DateOnly(2023, 1, 15),
-    ///             Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ///             Base64 = "SGVsbG8gd29ybGQh",
-    ///             List = new List<string>() { "string" },
-    ///             Set = new HashSet<string>() { "string" },
-    ///             Map = new Dictionary<int, string>() { { 1, "string" } },
-    ///             Bigint = "123456789123456789",
+    ///             Uuid = &quot;d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32&quot;,
+    ///             Base64 = &quot;SGVsbG8gd29ybGQh&quot;,
+    ///             List = new List&lt;string&gt;() { &quot;string&quot; },
+    ///             Set = new HashSet&lt;string&gt;() { &quot;string&quot; },
+    ///             Map = new Dictionary&lt;int, string&gt;() { { 1, &quot;string&quot; } },
+    ///             Bigint = &quot;123456789123456789&quot;,
     ///         },
     ///     }
     /// );

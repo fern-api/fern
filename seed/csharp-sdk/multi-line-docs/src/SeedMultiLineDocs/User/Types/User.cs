@@ -11,7 +11,7 @@ public record User
     public required string Id { get; set; }
 
     /// <summary>
-    /// The user's name. This name is unique to each user. A few examples are included below:
+    /// The user&#39;s name. This name is unique to each user. A few examples are included below:
     ///
     /// - Alice
     /// - Bob
@@ -21,7 +21,7 @@ public record User
     public required string Name { get; set; }
 
     /// <summary>
-    /// The user's age.
+    /// The user&#39;s age.
     /// </summary>
     [JsonPropertyName("age")]
     public int? Age { get; set; }

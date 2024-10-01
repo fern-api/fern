@@ -27,9 +27,9 @@ public partial class DataserviceClient
     /// await client.Dataservice.UploadAsync(
     ///     new UploadRequest
     ///     {
-    ///         Columns = new List<Column>()
+    ///         Columns = new List&lt;Column&gt;()
     ///         {
-    ///             new Column { Id = "id", Values = new[] { 1.1f } },
+    ///             new Column { Id = &quot;id&quot;, Values = new[] { 1.1f } },
     ///         },
     ///     }
     /// );
@@ -248,7 +248,7 @@ public partial class DataserviceClient
 
     /// <example>
     /// <code>
-    /// await client.Dataservice.UpdateAsync(new UpdateRequest { Id = "id" });
+    /// await client.Dataservice.UpdateAsync(new UpdateRequest { Id = &quot;id&quot; });
     /// </code>
     /// </example>
     public async Task<UpdateResponse> UpdateAsync(

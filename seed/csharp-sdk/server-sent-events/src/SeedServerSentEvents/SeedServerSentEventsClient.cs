@@ -1,5 +1,3 @@
-using System;
-using SeedServerSentEvents;
 using SeedServerSentEvents.Core;
 
 #nullable enable
@@ -12,11 +10,24 @@ public partial class SeedServerSentEventsClient
 
     public SeedServerSentEventsClient(ClientOptions? clientOptions = null)
     {
-        _client = new RawClient(
-            new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
-            new Dictionary<string, Func<string>>() { },
-            clientOptions ?? new ClientOptions()
+        var defaultHeaders = new Headers(
+            new Dictionary<string, string>()
+            {
+                { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedServerSentEvents" },
+                { "X-Fern-SDK-Version", Version.Current },
+                { "User-Agent", "Fernserver-sent-events/0.0.1" },
+            }
         );
+        clientOptions ??= new ClientOptions();
+        foreach (var header in defaultHeaders)
+        {
+            if (!clientOptions.Headers.ContainsKey(header.Key))
+            {
+                clientOptions.Headers[header.Key] = header.Value;
+            }
+        }
+        _client = new RawClient(clientOptions);
         Completions = new CompletionsClient(_client);
     }
 

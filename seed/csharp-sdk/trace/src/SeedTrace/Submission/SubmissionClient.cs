@@ -62,11 +62,11 @@ public partial class SubmissionClient
     }
 
     /// <summary>
-    /// Returns execution server URL for session. Returns empty if session isn't registered.
+    /// Returns execution server URL for session. Returns empty if session isn&#39;t registered.
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.Submission.GetExecutionSessionAsync("string");
+    /// await client.Submission.GetExecutionSessionAsync(&quot;string&quot;);
     /// </code>
     /// </example>
     public async Task<ExecutionSessionResponse?> GetExecutionSessionAsync(
@@ -110,7 +110,7 @@ public partial class SubmissionClient
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.Submission.StopExecutionSessionAsync("string");
+    /// await client.Submission.StopExecutionSessionAsync(&quot;string&quot;);
     /// </code>
     /// </example>
     public async Task StopExecutionSessionAsync(

@@ -18,7 +18,7 @@ public partial class ServiceClient
 
     /// <example>
     /// <code>
-    /// await client.Service.GetResourceAsync("rsc-xyz");
+    /// await client.Service.GetResourceAsync(&quot;rsc-xyz&quot;);
     /// </code>
     /// </example>
     public async Task<object> GetResourceAsync(

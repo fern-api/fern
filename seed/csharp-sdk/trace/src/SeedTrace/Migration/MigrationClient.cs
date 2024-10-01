@@ -19,7 +19,7 @@ public partial class MigrationClient
     /// <example>
     /// <code>
     /// await client.Migration.GetAttemptedMigrationsAsync(
-    ///     new GetAttemptedMigrationsRequest { AdminKeyHeader = "string" }
+    ///     new GetAttemptedMigrationsRequest { AdminKeyHeader = &quot;string&quot; }
     /// );
     /// </code>
     /// </example>
