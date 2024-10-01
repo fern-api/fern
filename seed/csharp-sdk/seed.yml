@@ -4,6 +4,8 @@ image: fernapi/fern-csharp-sdk
 changelogLocation: ../../generators/csharp/sdk/versions.yml
 
 artifactMetadata:
+  preInstallScript:
+    - dotnet tool restore
   compileScript:
     - dotnet build src -c Release /p:ContinuousIntegrationBuild=true .
   testScript:
