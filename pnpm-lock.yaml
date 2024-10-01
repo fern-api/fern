@@ -4284,6 +4284,9 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../../commons/fs-utils
+      '@fern-api/logger':
+        specifier: workspace:*
+        version: link:../../../logger
       dockerode:
         specifier: ^4.0.2
         version: 4.0.2

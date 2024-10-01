@@ -1,3 +1,4 @@
+import { Logger } from "@fern-api/logger";
 import Docker from "dockerode";
 import { writeFile } from "fs/promises";
 import { Writable } from "stream";
@@ -5,6 +6,7 @@ import tmp from "tmp-promise";
 
 export declare namespace runDocker {
     export interface Args {
+        logger: Logger;
         imageName: string;
         args?: string[];
         binds?: string[];
@@ -18,6 +20,7 @@ export declare namespace runDocker {
 }
 
 export async function runDocker({
+    logger,
     imageName,
     args,
     binds,
@@ -25,7 +28,8 @@ export async function runDocker({
     removeAfterCompletion = false
 }: runDocker.Args): Promise<void> {
     const docker = new Docker();
-    const tryRun = () => tryRunDocker({ docker, imageName, args, binds, removeAfterCompletion, writeLogsToFile });
+    const tryRun = () =>
+        tryRunDocker({ logger, docker, imageName, args, binds, removeAfterCompletion, writeLogsToFile });
     try {
         await tryRun();
     } catch (e) {
@@ -41,6 +45,7 @@ export async function runDocker({
 
 // may throw a 404 if the image hasn't been downloaded
 async function tryRunDocker({
+    logger,
     docker,
     imageName,
     args,
@@ -48,6 +53,7 @@ async function tryRunDocker({
     removeAfterCompletion,
     writeLogsToFile
 }: {
+    logger: Logger;
     docker: Docker;
     imageName: string;
     args?: string[];
@@ -81,14 +87,14 @@ async function tryRunDocker({
         throw status.Error;
     }
 
+    if (writeLogsToFile) {
+        const tmpFile = await tmp.file();
+        await writeFile(tmpFile.path, logs);
+        logger.info(`Generator logs here: ${tmpFile.path}`);
+    }
+
     if (status.StatusCode !== 0) {
-        if (writeLogsToFile) {
-            const tmpFile = await tmp.file();
-            await writeFile(tmpFile.path, logs);
-            throw new Error(`Docker exited with a non-zero exit code. Logs here: ${tmpFile.path}`);
-        } else {
-            throw new Error("Docker exited with a non-zero exit code.");
-        }
+        throw new Error("Docker exited with a non-zero exit code.");
     }
 }
 
