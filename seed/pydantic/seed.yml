@@ -4,11 +4,8 @@ image: fernapi/fern-pydantic-model
 changelogLocation: ../../generators/python/pydantic/versions.yml
 
 artifactMetadata:
-  preInstallScript:
-    - pip install poetry
-    - poetry shell
-    - poetry env use 3.9
   installScript:
+    - poetry shell
     - poetry install
   compileScript:
     - poetry run mypy .

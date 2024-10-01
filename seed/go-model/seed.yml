@@ -4,11 +4,6 @@ image: fernapi/fern-go-model
 changelogLocation: ../../generators/go/model/versions.yml
 
 artifactMetadata:
-  preInstallScript:
-    - sudo yum -y install go
-    - mkdir /tmp/go
-    - echo "export GOPATH=\$HOME/go" >> ~/.bash_profile
-    - source ~/.bash_profile
   compileScript:
     - go build -v ./...
   testScript:

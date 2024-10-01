@@ -4,11 +4,8 @@ image: fernapi/fern-python-sdk
 changelogLocation: ../../generators/python/sdk/versions.yml
 
 artifactMetadata:
-  preInstallScript:
-    - pip install poetry
-    - poetry shell
-    - poetry env use 3.9
   installScript:
+    - poetry shell
     - poetry install
   compileScript:
     - poetry run mypy .
