@@ -2,6 +2,17 @@ irVersion: v53
 displayName: Pydantic Model
 image: fernapi/fern-pydantic-model
 changelogLocation: ../../generators/python/pydantic/versions.yml
+
+artifactMetadata:
+  preInstallScript:
+    - pip install poetry
+    - poetry shell
+    - poetry env use 3.9
+  installScript:
+    - poetry install
+  compileScript:
+    - poetry run mypy .
+
 publish:
   workingDirectory: generators/python
   preBuildCommands:

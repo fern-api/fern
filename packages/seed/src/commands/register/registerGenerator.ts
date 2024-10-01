@@ -25,7 +25,8 @@ export async function registerGenerator({
         displayName: generatorConfig.displayName,
         generatorType: convertGeneratorType(generatorConfig.generatorType),
         generatorLanguage: generatorConfig.language,
-        dockerImage: generatorConfig.image
+        dockerImage: generatorConfig.image,
+        scripts: generatorConfig.artifactMetadata
     });
 
     // Register generator versions

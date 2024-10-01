@@ -2,18 +2,23 @@ irVersion: v46
 displayName: Java Model
 changelogLocation: ../../generators/java/model/versions.yml
 image: fernapi/fern-java-model
+
+artifactMetadata:
+  compileScript:
+    - ./gradlew compileJava
+
 publish:
   workingDirectory: generators/java
   preBuildCommands:
     - ./gradlew :model:distTar
-  docker: 
+  docker:
     file: ./generators/java/model/Dockerfile
     image: fernapi/fern-java-model
     context: ./generators/java/model
 test:
   docker:
     image: fernapi/fern-java-model:latest
-    command: 
+    command:
       - cd generators/java
       - ./gradlew :model:distTar
       - docker build -f model/Dockerfile -t fernapi/fern-java-model:latest model/

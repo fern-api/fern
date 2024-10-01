@@ -2,6 +2,17 @@ irVersion: v53
 displayName: FastAPI
 image: fernapi/fern-fastapi-server
 changelogLocation: ../../generators/python/fastapi/versions.yml
+
+artifactMetadata:
+  preInstallScript:
+    - pip install poetry
+    - poetry shell
+    - poetry env use 3.9
+  installScript:
+    - poetry install
+  compileScript:
+    - poetry run mypy .
+
 publish:
   workingDirectory: generators/python
   preBuildCommands:

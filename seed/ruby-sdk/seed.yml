@@ -2,11 +2,18 @@ irVersion: v39
 displayName: Ruby SDK
 image: fernapi/fern-ruby-sdk
 changelogLocation: ../../generators/ruby/sdk/versions.yml
+
+artifactMetadata:
+  installScript:
+    - bundle install
+  testScript:
+    - bundle exec rake test
+
 publish:
   preBuildCommands:
     - ./.github/actions/install
     - pnpm --filter @fern-api/fern-ruby-sdk dist:cli
-  docker: 
+  docker:
     file: ./generators/ruby/sdk/Dockerfile
     image: fernapi/fern-ruby-sdk
     context: .
@@ -18,7 +25,7 @@ language: ruby
 generatorType: sdk
 defaultOutputMode: github
 fixtures:
-  exhaustive: 
+  exhaustive:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
