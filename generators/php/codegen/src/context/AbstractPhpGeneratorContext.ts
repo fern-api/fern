@@ -358,6 +358,7 @@ export abstract class AbstractPhpGeneratorContext<
             AsIsFiles.DateArrayTypeTest,
             AsIsFiles.EmptyArraysTest,
             AsIsFiles.InvalidTypesTest,
+            AsIsFiles.TraitTest,
             AsIsFiles.MixedDateArrayTypeTest,
             AsIsFiles.NestedUnionArrayTypeTest,
             AsIsFiles.NullableArrayTypeTest,
