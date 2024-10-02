@@ -209,6 +209,8 @@ navigation:
         contents:
           - page: Generate your First SDK
             path: ./pages/sdks/getting-started/generate-your-first-sdk.mdx
+          - page: Preview your SDK Locally
+            path: ./pages/sdks/getting-started/preview-your-sdk-locally.mdx
           - page: Publish a Public-Facing SDK
             path: ./pages/sdks/publish-sdk/publish-your-sdk.mdx
             hidden: true

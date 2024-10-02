@@ -1,6 +1,7 @@
 export { Array_ as Array } from "./Array";
 export { Attribute } from "./Attribute";
 export { Class } from "./Class";
+export { Trait } from "./Trait";
 export { ClassInstantiation } from "./ClassInstantiation";
 export { ClassReference } from "./ClassReference";
 export { CodeBlock } from "./CodeBlock";
