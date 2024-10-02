@@ -3,7 +3,7 @@
 namespace Seed\Health;
 
 use Seed\Health\Service\ServiceClient;
-use Seed\Core\RawClient;
+use Seed\Core\Client\RawClient;
 
 class HealthClient
 {

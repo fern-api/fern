@@ -2,12 +2,13 @@
 
 namespace Seed\PathParam;
 
-use Seed\Core\RawClient;
+use Seed\Core\Client\RawClient;
 use Seed\Types\Operand;
+use Seed\Types\Color;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
-use Seed\Core\JsonApiRequest;
-use Seed\Core\HttpMethod;
+use Seed\Core\Json\JsonApiRequest;
+use Seed\Core\Client\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class PathParamClient
@@ -29,15 +30,15 @@ class PathParamClient
     /**
      * @param value-of<Operand> $operand
      * @param ?value-of<Operand> $maybeOperand
-     * @param mixed $operandOrColor
-     * @param mixed $maybeOperandOrColor
+     * @param value-of<Color>|value-of<Operand> $operandOrColor
+     * @param value-of<Color>|value-of<Operand>|null $maybeOperandOrColor
      * @param ?array{
      *   baseUrl?: string,
      * } $options
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function send(string $operand, ?string $maybeOperand = null, mixed $operandOrColor, mixed $maybeOperandOrColor, ?array $options = null): void
+    public function send(string $operand, ?string $maybeOperand = null, string $operandOrColor, string|null $maybeOperandOrColor = null, ?array $options = null): void
     {
         try {
             $response = $this->client->sendRequest(

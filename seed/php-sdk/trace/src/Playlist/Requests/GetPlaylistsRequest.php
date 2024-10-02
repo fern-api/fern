@@ -2,7 +2,7 @@
 
 namespace Seed\Playlist\Requests;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\SerializableType;
 
 class GetPlaylistsRequest extends SerializableType
 {

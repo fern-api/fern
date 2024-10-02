@@ -2,9 +2,10 @@
 
 namespace Seed\Dataservice\Requests;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
+use Seed\Core\Types\Union;
 
 class DeleteRequest extends SerializableType
 {
@@ -27,25 +28,25 @@ class DeleteRequest extends SerializableType
     public ?string $namespace;
 
     /**
-     * @var mixed $filter
+     * @var array<string, float|string|bool>|array<string, mixed>|null $filter
      */
-    #[JsonProperty('filter')]
-    public mixed $filter;
+    #[JsonProperty('filter'), Union(['string' => new Union('float', 'string', 'bool')], ['string' => 'mixed'])]
+    public array|null $filter;
 
     /**
      * @param array{
      *   ids?: ?array<string>,
      *   deleteAll?: ?bool,
      *   namespace?: ?string,
-     *   filter: mixed,
+     *   filter?: array<string, float|string|bool>|array<string, mixed>|null,
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
         $this->ids = $values['ids'] ?? null;
         $this->deleteAll = $values['deleteAll'] ?? null;
         $this->namespace = $values['namespace'] ?? null;
-        $this->filter = $values['filter'];
+        $this->filter = $values['filter'] ?? null;
     }
 }

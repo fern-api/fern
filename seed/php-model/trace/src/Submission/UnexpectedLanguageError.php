@@ -2,9 +2,9 @@
 
 namespace Seed\Submission;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\SerializableType;
 use Seed\Commons\Language;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonProperty;
 
 class UnexpectedLanguageError extends SerializableType
 {

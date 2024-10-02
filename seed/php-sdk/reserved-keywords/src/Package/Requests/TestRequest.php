@@ -2,7 +2,7 @@
 
 namespace Seed\Package\Requests;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\SerializableType;
 
 class TestRequest extends SerializableType
 {

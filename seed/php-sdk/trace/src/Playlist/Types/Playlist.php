@@ -2,11 +2,14 @@
 
 namespace Seed\Playlist\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\SerializableType;
+use Seed\Playlist\Traits\PlaylistCreateRequest;
+use Seed\Core\Json\JsonProperty;
 
 class Playlist extends SerializableType
 {
+    use PlaylistCreateRequest;
+
     /**
      * @var string $playlistId
      */
@@ -23,6 +26,8 @@ class Playlist extends SerializableType
      * @param array{
      *   playlistId: string,
      *   ownerId: string,
+     *   name: string,
+     *   problems: array<string>,
      * } $values
      */
     public function __construct(
@@ -30,5 +35,7 @@ class Playlist extends SerializableType
     ) {
         $this->playlistId = $values['playlistId'];
         $this->ownerId = $values['ownerId'];
+        $this->name = $values['name'];
+        $this->problems = $values['problems'];
     }
 }

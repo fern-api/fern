@@ -2,8 +2,8 @@
 
 namespace Seed\FolderC\Common\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonProperty;
 
 class Foo extends SerializableType
 {

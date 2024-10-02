@@ -9,7 +9,7 @@ use Seed\Endpoints\Object\ObjectClient;
 use Seed\Endpoints\Params\ParamsClient;
 use Seed\Endpoints\Primitive\PrimitiveClient;
 use Seed\Endpoints\Union\UnionClient;
-use Seed\Core\RawClient;
+use Seed\Core\Client\RawClient;
 
 class EndpointsClient
 {
