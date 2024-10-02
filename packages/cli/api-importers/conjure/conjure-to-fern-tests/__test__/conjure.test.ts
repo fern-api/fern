@@ -33,6 +33,7 @@ describe("ir", () => {
                 if (!workspace.didSucceed) {
                     throw new Error(`Failed to convert conjure fixture ${fixture.name}\n${JSON.stringify(workspace.failures)}`);
                 }
+                // eslint-disable-next-line jest/no-standalone-expect
                 expect(await workspace.workspace.toFernWorkspace({ context})).toMatchSnapshot(); 
             },
             90_000

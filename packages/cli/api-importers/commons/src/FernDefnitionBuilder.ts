@@ -42,7 +42,15 @@ export interface FernDefinitionBuilder {
      * @param fileToImport the file to import
      * @param alias import the file with this alias
      */
-    addImport({ file, fileToImport, alias }: { file: RelativeFilePath; fileToImport: RelativeFilePath; alias?: string; }): string | undefined;
+    addImport({
+        file,
+        fileToImport,
+        alias
+    }: {
+        file: RelativeFilePath;
+        fileToImport: RelativeFilePath;
+        alias?: string;
+    }): string | undefined;
 
     addType(file: RelativeFilePath, { name, schema }: { name: string; schema: RawSchemas.TypeDeclarationSchema }): void;
 
@@ -58,7 +66,11 @@ export interface FernDefinitionBuilder {
 
     addEndpoint(
         file: RelativeFilePath,
-        { name, schema, source }: { name: string; schema: RawSchemas.HttpEndpointSchema; source: RawSchemas.SourceSchema | undefined }
+        {
+            name,
+            schema,
+            source
+        }: { name: string; schema: RawSchemas.HttpEndpointSchema; source: RawSchemas.SourceSchema | undefined }
     ): void;
 
     addWebhook(file: RelativeFilePath, { name, schema }: { name: string; schema: RawSchemas.WebhookSchema }): void;
@@ -102,8 +114,8 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
             }
         };
     }
-    
-    public setDisplayName({ displayName }: { displayName: string; }): void {
+
+    public setDisplayName({ displayName }: { displayName: string }): void {
         this.rootApiFile["display-name"] = displayName;
     }
 
@@ -222,7 +234,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     public addImport({
         file,
         fileToImport,
-        alias,
+        alias
     }: {
         file: RelativeFilePath;
         fileToImport: RelativeFilePath;
@@ -231,12 +243,14 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         if (file === fileToImport) {
             return undefined;
         }
-        const importPrefix = alias ?? camelCase(
-            (dirname(fileToImport) + "/" + basename(fileToImport, extname(fileToImport))).replaceAll(
-                "__package__",
-                "root"
-            )
-        );
+        const importPrefix =
+            alias ??
+            camelCase(
+                (dirname(fileToImport) + "/" + basename(fileToImport, extname(fileToImport))).replaceAll(
+                    "__package__",
+                    "root"
+                )
+            );
 
         if (file === RelativeFilePath.of(ROOT_API_FILENAME)) {
             if (this.rootApiFile.imports == null) {
@@ -336,7 +350,11 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
 
     public addEndpoint(
         file: RelativeFilePath,
-        { name, schema, source }: { name: string; schema: RawSchemas.HttpEndpointSchema; source: RawSchemas.SourceSchema | undefined }
+        {
+            name,
+            schema,
+            source
+        }: { name: string; schema: RawSchemas.HttpEndpointSchema; source: RawSchemas.SourceSchema | undefined }
     ): void {
         const fernFile = this.getOrCreateFile(file);
         if (fernFile.service == null) {

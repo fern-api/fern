@@ -84,7 +84,7 @@ export async function visitAllConjureDefinitionFiles(
     absolutePathToConjureFolder: AbsoluteFilePath,
     visitor: (filepath: RelativeFilePath, definitionFile: DefinitionFile) => void | Promise<void>
 ): Promise<void> {
-    for (const conjureFile of await listConjureFiles(absolutePathToConjureFolder, `{yml,yaml}`)) {
+    for (const conjureFile of await listConjureFiles(absolutePathToConjureFolder, "{yml,yaml}")) {
         await visitor(conjureFile.relativeFilepath, conjureFile.fileContents);
     }
 }
