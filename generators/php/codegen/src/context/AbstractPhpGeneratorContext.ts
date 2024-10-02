@@ -285,12 +285,8 @@ export abstract class AbstractPhpGeneratorContext<
         }
     }
 
-    public getUnderlyingObjectTypeDeclaration(typeReference: TypeReference): ObjectTypeDeclaration | undefined {
+    public getUnderlyingObjectTypeDeclaration(typeReference: TypeReference): ObjectTypeDeclaration {
         switch (typeReference.type) {
-            case "primitive":
-            case "unknown":
-            case "container":
-                return undefined;
             case "named": {
                 const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
                 if (declaration.shape.type === "alias") {
@@ -299,21 +295,23 @@ export abstract class AbstractPhpGeneratorContext<
                 if (declaration.shape.type === "object") {
                     return declaration.shape;
                 }
-                return undefined;
+                throw new Error("Type is not an object type");
             }
+            case "primitive":
+            case "unknown":
+            case "container":
         }
+        throw new Error("Type is not an object type");
     }
 
-    public getUnderlyingObjectTypeDeclarationFromTypeDeclaration(
-        typeDeclaration: TypeDeclaration
-    ): ObjectTypeDeclaration | undefined {
+    public getUnderlyingObjectTypeDeclarationOrThrow(typeDeclaration: TypeDeclaration): ObjectTypeDeclaration {
         if (typeDeclaration.shape.type === "alias") {
             return this.getUnderlyingObjectTypeDeclaration(typeDeclaration.shape.aliasOf);
         }
         if (typeDeclaration.shape.type === "object") {
             return typeDeclaration.shape;
         }
-        return undefined;
+        throw new Error("Type is not an object type");
     }
 
     public maybeLiteral(typeReference: TypeReference): Literal | undefined {

@@ -84,13 +84,13 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
             },
             inlinedRequestBody: (request) => {
                 for (const property of request.properties) {
-                    clazz.addField(this.toField({ property, inherited: false }));
+                    clazz.addField(this.toField({ property }));
                 }
                 for (const property of request.extendedProperties ?? []) {
                     clazz.addField(this.toField({ property, inherited: true }));
                 }
                 for (const declaredTypeName of request.extends) {
-                    clazz.addUsedTrait(this.context.phpTypeMapper.convertToTraitClassReference(declaredTypeName));
+                    clazz.addTrait(this.context.phpTypeMapper.convertToTraitClassReference(declaredTypeName));
                 }
             },
             fileUpload: () => undefined,
@@ -106,7 +106,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
         });
     }
 
-    private toField({ property, inherited }: { property: InlinedRequestBodyProperty; inherited: boolean }): php.Field {
+    private toField({ property, inherited }: { property: InlinedRequestBodyProperty; inherited?: boolean }): php.Field {
         const convertedType = this.context.phpTypeMapper.convert({ reference: property.valueType });
         return php.field({
             type: convertedType,

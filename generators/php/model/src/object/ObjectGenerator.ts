@@ -24,13 +24,13 @@ export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSch
             ...this.classReference,
             docs: this.typeDeclaration.docs,
             parentClassReference: this.context.getSerializableTypeClassReference(),
-            usedTraits: this.objectDeclaration.extends.map((declaredTypeName) =>
+            traits: this.objectDeclaration.extends.map((declaredTypeName) =>
                 this.context.phpTypeMapper.convertToTraitClassReference(declaredTypeName)
             )
         });
 
         for (const property of this.objectDeclaration.properties) {
-            clazz.addField(this.toField({ property, inherited: false }));
+            clazz.addField(this.toField({ property }));
         }
         for (const property of this.objectDeclaration.extendedProperties ?? []) {
             clazz.addField(this.toField({ property, inherited: true }));
@@ -44,7 +44,7 @@ export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSch
         });
     }
 
-    private toField({ property, inherited }: { property: ObjectProperty; inherited: boolean }): php.Field {
+    private toField({ property, inherited }: { property: ObjectProperty; inherited?: boolean }): php.Field {
         const convertedType = this.context.phpTypeMapper.convert({ reference: property.valueType });
         return php.field({
             type: convertedType,

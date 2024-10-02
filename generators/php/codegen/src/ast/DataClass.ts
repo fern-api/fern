@@ -23,11 +23,11 @@ export class DataClass extends AstNode {
     public readonly namespace: string;
     private class_: Class;
 
-    constructor({ name, namespace, abstract, docs, parentClassReference, usedTraits }: DataClass.Args) {
+    constructor({ name, namespace, abstract, docs, parentClassReference, traits }: DataClass.Args) {
         super();
         this.name = name;
         this.namespace = namespace;
-        this.class_ = new Class({ name, namespace, abstract, docs, parentClassReference, usedTraits });
+        this.class_ = new Class({ name, namespace, abstract, docs, parentClassReference, traits });
     }
 
     public addField(field: Field): void {
@@ -37,8 +37,8 @@ export class DataClass extends AstNode {
     public addMethod(method: Method): void {
         this.class_.addMethod(method);
     }
-    public addUsedTrait(traitClassRefeference: ClassReference): void {
-        this.class_.addUsedTrait(traitClassRefeference);
+    public addTrait(traitClassRefeference: ClassReference): void {
+        this.class_.addTrait(traitClassRefeference);
     }
 
     public write(writer: Writer): void {

@@ -15,7 +15,7 @@ export declare namespace Trait {
         /* Docs associated with the trait */
         docs?: string;
         /* The traits that this trait uses, if any */
-        usedTraits?: ClassReference[];
+        traits?: ClassReference[];
     }
 }
 
@@ -23,17 +23,17 @@ export class Trait extends AstNode {
     public readonly name: string;
     public readonly namespace: string;
     public readonly docs: string | undefined;
-    public readonly usedTraits: ClassReference[];
+    public readonly traits: ClassReference[];
 
     public readonly fields: Field[] = [];
     public readonly methods: Method[] = [];
 
-    constructor({ name, namespace, docs, usedTraits }: Trait.Args) {
+    constructor({ name, namespace, docs, traits }: Trait.Args) {
         super();
         this.name = name;
         this.namespace = namespace;
         this.docs = docs;
-        this.usedTraits = usedTraits ?? [];
+        this.traits = traits ?? [];
     }
 
     public addField(field: Field): void {
@@ -51,9 +51,9 @@ export class Trait extends AstNode {
         writer.writeLine("{");
         writer.indent();
 
-        if (this.usedTraits.length > 0) {
+        if (this.traits.length > 0) {
             writer.write("use ");
-            this.usedTraits.forEach((trait, index) => {
+            this.traits.forEach((trait, index) => {
                 if (index > 0) {
                     writer.write(",");
                 }

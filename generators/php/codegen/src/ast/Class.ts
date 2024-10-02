@@ -23,7 +23,7 @@ export declare namespace Class {
         /* The class to inherit from if any */
         parentClassReference?: AstNode;
         /* The traits that this class uses, if any */
-        usedTraits?: ClassReference[];
+        traits?: ClassReference[];
     }
 
     interface Constructor {
@@ -42,20 +42,20 @@ export class Class extends AstNode {
     public readonly abstract: boolean;
     public readonly docs: string | undefined;
     public readonly parentClassReference: AstNode | undefined;
-    public readonly usedTraits: ClassReference[];
+    public readonly traits: ClassReference[];
 
     public readonly fields: Field[] = [];
     public readonly methods: Method[] = [];
     private constructor_: Class.Constructor | undefined;
 
-    constructor({ name, namespace, abstract, docs, parentClassReference, usedTraits }: Class.Args) {
+    constructor({ name, namespace, abstract, docs, parentClassReference, traits }: Class.Args) {
         super();
         this.name = name;
         this.namespace = namespace;
         this.abstract = abstract ?? false;
         this.docs = docs;
         this.parentClassReference = parentClassReference;
-        this.usedTraits = usedTraits ?? [];
+        this.traits = traits ?? [];
     }
 
     public addConstructor(constructor: Class.Constructor): void {
@@ -70,8 +70,8 @@ export class Class extends AstNode {
         this.methods.push(method);
     }
 
-    public addUsedTrait(traitClassReference: ClassReference): void {
-        this.usedTraits.push(traitClassReference);
+    public addTrait(traitClassReference: ClassReference): void {
+        this.traits.push(traitClassReference);
     }
 
     public write(writer: Writer): void {
@@ -87,9 +87,9 @@ export class Class extends AstNode {
         writer.newLine();
         writer.writeLine("{");
         writer.indent();
-        if (this.usedTraits.length > 0) {
+        if (this.traits.length > 0) {
             writer.write("use ");
-            this.usedTraits.forEach((trait, index) => {
+            this.traits.forEach((trait, index) => {
                 if (index > 0) {
                     writer.write(",");
                 }

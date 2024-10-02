@@ -23,7 +23,7 @@ export class TraitGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         const clazz = php.trait({
             ...this.classReference,
             docs: this.typeDeclaration.docs,
-            usedTraits: this.objectDeclaration.extends.map((declaredTypeName) =>
+            traits: this.objectDeclaration.extends.map((declaredTypeName) =>
                 this.context.phpTypeMapper.convertToTraitClassReference(declaredTypeName)
             )
         });
