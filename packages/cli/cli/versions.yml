@@ -1,5 +1,15 @@
 - changelogEntry:
     - summary: |
+        The Fern CLI now supports parsing [Conjure](https://github.com/palantir/conjure), Palantir's 
+        home-grown API Definition format. 
+
+        If you know a company that is using Conjure that wants API Docs + SDKs, send them our way!
+      type: feat
+  irVersion: 53
+  version: 0.44.0-rc0
+
+- changelogEntry:
+    - summary: |
         Any markdown files that have custom components are also pushed up to the Fern Docs 
         platform.
       type: fix
