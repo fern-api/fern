@@ -7,14 +7,13 @@ const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("f
 const FIXTURES: Fixture[] = [
     {
         name: "trace"
-    },
+    }
 ];
 
 interface Fixture {
     name: string;
     only?: boolean;
 }
-
 
 describe("ir", () => {
     for (const fixture of FIXTURES) {
@@ -31,10 +30,12 @@ describe("ir", () => {
                     workspaceName: fixture.name
                 });
                 if (!workspace.didSucceed) {
-                    throw new Error(`Failed to convert conjure fixture ${fixture.name}\n${JSON.stringify(workspace.failures)}`);
+                    throw new Error(
+                        `Failed to convert conjure fixture ${fixture.name}\n${JSON.stringify(workspace.failures)}`
+                    );
                 }
                 // eslint-disable-next-line jest/no-standalone-expect
-                expect(await workspace.workspace.toFernWorkspace({ context})).toMatchSnapshot(); 
+                expect(await workspace.workspace.toFernWorkspace({ context })).toMatchSnapshot();
             },
             90_000
         );
