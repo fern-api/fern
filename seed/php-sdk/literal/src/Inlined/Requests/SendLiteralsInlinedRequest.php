@@ -2,11 +2,11 @@
 
 namespace Seed\Inlined\Requests;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use Seed\Inlined\Types\ATopLevelLiteral;
 
-class SendLiteralsInlinedRequest extends SerializableType
+class SendLiteralsInlinedRequest extends JsonSerializableType
 {
     /**
      * @var string $prompt

@@ -2,10 +2,10 @@
 
 namespace Seed\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 
-class Failure extends SerializableType
+class Failure extends JsonSerializableType
 {
     /**
      * @var string $status

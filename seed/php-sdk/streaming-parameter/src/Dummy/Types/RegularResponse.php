@@ -2,10 +2,10 @@
 
 namespace Seed\Dummy\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 
-class RegularResponse extends SerializableType
+class RegularResponse extends JsonSerializableType
 {
     /**
      * @var string $id

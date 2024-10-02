@@ -2,10 +2,10 @@
 
 namespace Seed\Service;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 
-class WithDocs extends SerializableType
+class WithDocs extends JsonSerializableType
 {
     /**
      * @var string $docs

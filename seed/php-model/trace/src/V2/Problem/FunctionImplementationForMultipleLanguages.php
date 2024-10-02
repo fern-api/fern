@@ -2,12 +2,12 @@
 
 namespace Seed\V2\Problem;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Commons\Language;
 use Seed\Core\Json\JsonProperty;
 use Seed\Core\Types\ArrayType;
 
-class FunctionImplementationForMultipleLanguages extends SerializableType
+class FunctionImplementationForMultipleLanguages extends JsonSerializableType
 {
     /**
      * @var array<value-of<Language>, FunctionImplementation> $codeByLanguage

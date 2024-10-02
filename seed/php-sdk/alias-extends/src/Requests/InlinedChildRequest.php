@@ -2,11 +2,11 @@
 
 namespace Seed\Requests;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Traits\AliasType;
 use Seed\Core\Json\JsonProperty;
 
-class InlinedChildRequest extends SerializableType
+class InlinedChildRequest extends JsonSerializableType
 {
     use AliasType;
 

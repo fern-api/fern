@@ -156,12 +156,12 @@ class JsonDeserializer
      *
      * @return object The deserialized object.
      *
-     * @throws JsonException If the type does not implement SerializableType.
+     * @throws JsonException If the type does not implement JsonSerializableType.
      */
     public static function deserializeObject(array $data, string $type): object
     {
-        if (!is_subclass_of($type, SerializableType::class)) {
-            throw new JsonException("$type is not a subclass of SerializableType.");
+        if (!is_subclass_of($type, JsonSerializableType::class)) {
+            throw new JsonException("$type is not a subclass of JsonSerializableType.");
         }
         return $type::jsonDeserialize($data);
     }

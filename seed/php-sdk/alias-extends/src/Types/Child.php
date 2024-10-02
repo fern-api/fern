@@ -2,11 +2,11 @@
 
 namespace Seed\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Traits\Parent_;
 use Seed\Core\Json\JsonProperty;
 
-class Child extends SerializableType
+class Child extends JsonSerializableType
 {
     use Parent_;
 

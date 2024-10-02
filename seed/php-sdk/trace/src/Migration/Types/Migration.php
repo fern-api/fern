@@ -2,10 +2,10 @@
 
 namespace Seed\Migration\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 
-class Migration extends SerializableType
+class Migration extends JsonSerializableType
 {
     /**
      * @var string $name

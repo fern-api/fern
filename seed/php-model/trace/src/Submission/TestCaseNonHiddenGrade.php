@@ -2,10 +2,10 @@
 
 namespace Seed\Submission;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 
-class TestCaseNonHiddenGrade extends SerializableType
+class TestCaseNonHiddenGrade extends JsonSerializableType
 {
     /**
      * @var bool $passed

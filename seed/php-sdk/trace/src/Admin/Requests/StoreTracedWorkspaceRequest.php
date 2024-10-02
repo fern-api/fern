@@ -2,13 +2,13 @@
 
 namespace Seed\Admin\Requests;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Submission\Types\WorkspaceRunDetails;
 use Seed\Core\Json\JsonProperty;
 use Seed\Submission\Types\TraceResponse;
 use Seed\Core\Types\ArrayType;
 
-class StoreTracedWorkspaceRequest extends SerializableType
+class StoreTracedWorkspaceRequest extends JsonSerializableType
 {
     /**
      * @var WorkspaceRunDetails $workspaceRunDetails

@@ -2,11 +2,11 @@
 
 namespace Seed\Types\Object\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use Seed\Core\Types\ArrayType;
 
-class ObjectWithMapOfMap extends SerializableType
+class ObjectWithMapOfMap extends JsonSerializableType
 {
     /**
      * @var array<string, array<string, string>> $map

@@ -2,11 +2,11 @@
 
 namespace Seed\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Traits\Docs;
 use Seed\Core\Json\JsonProperty;
 
-class Json extends SerializableType
+class Json extends JsonSerializableType
 {
     use Docs;
 

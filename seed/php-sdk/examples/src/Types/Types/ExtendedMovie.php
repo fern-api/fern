@@ -2,12 +2,12 @@
 
 namespace Seed\Types\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Types\Traits\Movie;
 use Seed\Core\Json\JsonProperty;
 use Seed\Core\Types\ArrayType;
 
-class ExtendedMovie extends SerializableType
+class ExtendedMovie extends JsonSerializableType
 {
     use Movie;
 

@@ -2,12 +2,12 @@
 
 namespace Seed\Types\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use DateTime;
-use Seed\Core\Types\DateType;
+use Seed\Core\Types\Date;
 
-class Moment extends SerializableType
+class Moment extends JsonSerializableType
 {
     /**
      * @var string $id
@@ -18,13 +18,13 @@ class Moment extends SerializableType
     /**
      * @var DateTime $date
      */
-    #[JsonProperty('date'), DateType(DateType::TYPE_DATE)]
+    #[JsonProperty('date'), Date(Date::TYPE_DATE)]
     public DateTime $date;
 
     /**
      * @var DateTime $datetime
      */
-    #[JsonProperty('datetime'), DateType(DateType::TYPE_DATETIME)]
+    #[JsonProperty('datetime'), Date(Date::TYPE_DATETIME)]
     public DateTime $datetime;
 
     /**

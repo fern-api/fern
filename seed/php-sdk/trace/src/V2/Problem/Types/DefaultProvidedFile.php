@@ -2,11 +2,11 @@
 
 namespace Seed\V2\Problem\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use Seed\Core\Types\ArrayType;
 
-class DefaultProvidedFile extends SerializableType
+class DefaultProvidedFile extends JsonSerializableType
 {
     /**
      * @var FileInfoV2 $file

@@ -2,10 +2,10 @@
 
 namespace Seed\Users\Requests;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Users\Types\Order;
 
-class ListUsersOffsetPaginationRequest extends SerializableType
+class ListUsersOffsetPaginationRequest extends JsonSerializableType
 {
     /**
      * @var ?int $page Defaults to first page

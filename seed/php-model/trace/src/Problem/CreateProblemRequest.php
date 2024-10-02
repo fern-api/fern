@@ -2,13 +2,13 @@
 
 namespace Seed\Problem;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use Seed\Commons\Language;
 use Seed\Core\Types\ArrayType;
 use Seed\Commons\TestCaseWithExpectedResult;
 
-class CreateProblemRequest extends SerializableType
+class CreateProblemRequest extends JsonSerializableType
 {
     /**
      * @var string $problemName

@@ -2,10 +2,10 @@
 
 namespace Seed\Commons\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 
-class DebugKeyValuePairs extends SerializableType
+class DebugKeyValuePairs extends JsonSerializableType
 {
     /**
      * @var mixed $key

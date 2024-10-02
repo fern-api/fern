@@ -2,12 +2,12 @@
 
 namespace Seed;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use Seed\Core\Types\ArrayType;
 use Seed\Core\Types\Union;
 
-class BaseResource extends SerializableType
+class BaseResource extends JsonSerializableType
 {
     /**
      * @var string $id

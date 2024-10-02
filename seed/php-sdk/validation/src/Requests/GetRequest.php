@@ -2,9 +2,9 @@
 
 namespace Seed\Requests;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 
-class GetRequest extends SerializableType
+class GetRequest extends JsonSerializableType
 {
     /**
      * @var float $decimal

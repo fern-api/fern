@@ -2,10 +2,10 @@
 
 namespace Seed\Types\Object;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 
-class NestedObjectWithOptionalField extends SerializableType
+class NestedObjectWithOptionalField extends JsonSerializableType
 {
     /**
      * @var ?string $string

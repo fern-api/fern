@@ -2,9 +2,9 @@
 
 namespace Seed\Users\Requests;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 
-class ListWithGlobalConfigRequest extends SerializableType
+class ListWithGlobalConfigRequest extends JsonSerializableType
 {
     /**
      * @var ?int $offset
