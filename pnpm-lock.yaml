@@ -5039,6 +5039,9 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
+      '@fern-api/importer-commons':
+        specifier: workspace:*
+        version: link:../api-importers/commons
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../logger
