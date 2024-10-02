@@ -25,6 +25,7 @@ export enum AsIsFiles {
     DateArrayTypeTest = "Json/DateArrayTypeTest.Template.php",
     EmptyArraysTest = "Json/EmptyArraysTest.Template.php",
     EnumTest = "Json/EnumTest.Template.php",
+    TraitTest = "Json/TraitTest.Template.php",
     InvalidTypesTest = "Json/InvalidTypesTest.Template.php",
     MixedDateArrayTypeTest = "Json/MixedDateArrayTypeTest.Template.php",
     NestedUnionArrayTypeTest = "Json/NestedUnionArrayTypeTest.Template.php",

@@ -58,6 +58,13 @@ export class PhpTypeMapper {
         });
     }
 
+    public convertToTraitClassReference(declaredTypeName: { typeId: TypeId; name: Name }): ClassReference {
+        return new php.ClassReference({
+            name: this.context.getClassName(declaredTypeName.name),
+            namespace: this.context.getTraitLocationForTypeId(declaredTypeName.typeId).namespace
+        });
+    }
+
     private convertContainer({ container, preserveEnums }: { container: ContainerType; preserveEnums: boolean }): Type {
         switch (container.type) {
             case "list":

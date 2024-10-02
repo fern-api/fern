@@ -1,3 +1,8 @@
+- version: 0.1.6
+  changelogEntry:
+    - type: feat
+      summary: >-
+        Support inheritance for types and inlined requests.
 - version: 0.1.5
   changelogEntry:
     - type: feat

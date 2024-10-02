@@ -3,10 +3,13 @@
 namespace Seed\Users;
 
 use Seed\Core\Json\SerializableType;
+use Seed\Users\Traits\UserPage;
 use Seed\Core\Json\JsonProperty;
 
 class ListUsersExtendedResponse extends SerializableType
 {
+    use UserPage;
+
     /**
      * @var int $totalCount The totall number of /users
      */
@@ -16,11 +19,15 @@ class ListUsersExtendedResponse extends SerializableType
     /**
      * @param array{
      *   totalCount: int,
+     *   data: UserListContainer,
+     *   next?: ?string,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
         $this->totalCount = $values['totalCount'];
+        $this->data = $values['data'];
+        $this->next = $values['next'] ?? null;
     }
 }
