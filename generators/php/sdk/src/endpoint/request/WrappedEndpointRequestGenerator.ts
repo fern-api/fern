@@ -85,22 +85,20 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
             },
             inlinedRequestBody: (request) => {
                 for (const property of request.properties) {
-                    for (const property of request.properties) {
-                        clazz.addField(this.toField({ property }));
-                    }
-                    for (const property of request.extendedProperties ?? []) {
-                        clazz.addField(this.toField({ property, inherited: true }));
-                    }
-                    for (const declaredTypeName of request.extends) {
-                        clazz.addTrait(this.context.phpTypeMapper.convertToTraitClassReference(declaredTypeName));
-                    }
+                    clazz.addField(this.toField({ property }));
+                }
+                for (const property of request.extendedProperties ?? []) {
+                    clazz.addField(this.toField({ property, inherited: true }));
+                }
+                for (const declaredTypeName of request.extends) {
+                    clazz.addTrait(this.context.phpTypeMapper.convertToTraitClassReference(declaredTypeName));
                 }
             },
             fileUpload: (request) => {
                 for (const property of request.properties) {
                     const field = property._visit<php.Field | undefined>({
                         file: (fp) => this.generateFieldFromFile(fp),
-                        bodyProperty: (bp) => this.generateFieldFromBodyProperty(bp),
+                        bodyProperty: (bp) => this.toField({ property: bp }),
                         _other: () => undefined
                     });
                     if (field) {
