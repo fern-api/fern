@@ -1,0 +1,43 @@
+imports: 
+  commons: commons.yml
+  types: types.yml
+
+types:  
+  ConjureService: 
+    extends: 
+      - commons.WithDocs
+    properties: 
+      name: optional<string>
+      package: optional<string>
+      base-path: optional<string>
+      endpoints: optional<map<string, ConjureEndpoint>>
+  
+  ConjureEndpoint: 
+    extends: 
+      - commons.WithDocs
+    properties: 
+      http: 
+        type: string
+        docs: The method and path (e.g. GET /users)
+      args: 
+        type: optional<map<string, ConjureArgument>>
+      returns: optional<types.ConjureTypeReference>
+  
+  ConjureArgument: 
+    discriminated: false
+    union: 
+      - types.ConjureTypeReference
+      - ConjureArgumentWithParamType
+  
+  ConjureArgumentWithParamType: 
+    extends: 
+      - commons.WithDocs
+    properties: 
+      param-type: ConjureParamType
+      type: types.ConjureTypeReference
+  
+  ConjureParamType: 
+    enum: 
+      - path
+      - query
+      - body

@@ -1,6 +1,6 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { FernDefinitionDirectory } from "../FernDefinitionDirectory";
+import { FernDefinitionDirectory } from "../utils/FernDefinitionDirectory";
 
 interface TestCase {
     description: string;

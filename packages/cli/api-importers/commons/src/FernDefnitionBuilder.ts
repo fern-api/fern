@@ -1,13 +1,13 @@
 import { FERN_PACKAGE_MARKER_FILENAME, ROOT_API_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, dirname, relative, RelativeFilePath } from "@fern-api/fs-utils";
-import { OpenApiIntermediateRepresentation, Source } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas, RootApiFileSchema, visitRawEnvironmentDeclaration } from "@fern-api/fern-definition-schema";
 import { camelCase, isEqual } from "lodash-es";
 import path, { basename, extname } from "path";
-import { convertToSourceSchema } from "./utils/convertToSourceSchema";
-import { FernDefinitionDirectory } from "./FernDefinitionDirectory";
+import { FernDefinitionDirectory } from "./utils/FernDefinitionDirectory";
 
 export interface FernDefinitionBuilder {
+    setDisplayName({ displayName }: { displayName: string }): void;
+
     addNavigation({ navigation }: { navigation: string[] }): void;
 
     addAuthScheme({ name, schema }: { name: string; schema: RawSchemas.AuthSchemeDeclarationSchema }): void;
@@ -40,8 +40,17 @@ export interface FernDefinitionBuilder {
      * Adds an import and returns the prefix for the import. Returns undefined if no prefix.
      * @param file the file to add the import to
      * @param fileToImport the file to import
+     * @param alias import the file with this alias
      */
-    addImport({ file, fileToImport }: { file: RelativeFilePath; fileToImport: RelativeFilePath }): string | undefined;
+    addImport({
+        file,
+        fileToImport,
+        alias
+    }: {
+        file: RelativeFilePath;
+        fileToImport: RelativeFilePath;
+        alias?: string;
+    }): string | undefined;
 
     addType(file: RelativeFilePath, { name, schema }: { name: string; schema: RawSchemas.TypeDeclarationSchema }): void;
 
@@ -57,7 +66,11 @@ export interface FernDefinitionBuilder {
 
     addEndpoint(
         file: RelativeFilePath,
-        { name, schema, source }: { name: string; schema: RawSchemas.HttpEndpointSchema; source: Source | undefined }
+        {
+            name,
+            schema,
+            source
+        }: { name: string; schema: RawSchemas.HttpEndpointSchema; source: RawSchemas.SourceSchema | undefined }
     ): void;
 
     addWebhook(file: RelativeFilePath, { name, schema }: { name: string; schema: RawSchemas.WebhookSchema }): void;
@@ -92,11 +105,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     private packageMarkerFile: RawSchemas.PackageMarkerFileSchema = {};
     private basePath: string | undefined = undefined;
 
-    public constructor(
-        ir: OpenApiIntermediateRepresentation,
-        private readonly modifyBasePaths: boolean,
-        public readonly enableUniqueErrorsPerEndpoint: boolean
-    ) {
+    public constructor(public readonly enableUniqueErrorsPerEndpoint: boolean) {
         this.root = new FernDefinitionDirectory();
         this.rootApiFile = {
             name: "api",
@@ -104,16 +113,17 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
                 strategy: "status-code"
             }
         };
-        if (ir.title != null) {
-            this.rootApiFile["display-name"] = ir.title;
-        }
+    }
+
+    public setDisplayName({ displayName }: { displayName: string }): void {
+        this.rootApiFile["display-name"] = displayName;
     }
 
     public addNavigation({ navigation }: { navigation: string[] }): void {
         this.packageMarkerFile.navigation = navigation;
     }
 
-    setServiceInfo(
+    public setServiceInfo(
         file: RelativeFilePath,
         { displayName, docs }: { displayName?: string | undefined; docs?: string | undefined }
     ): void {
@@ -223,20 +233,24 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
 
     public addImport({
         file,
-        fileToImport
+        fileToImport,
+        alias
     }: {
         file: RelativeFilePath;
         fileToImport: RelativeFilePath;
+        alias?: string;
     }): string | undefined {
         if (file === fileToImport) {
             return undefined;
         }
-        const importPrefix = camelCase(
-            (dirname(fileToImport) + "/" + basename(fileToImport, extname(fileToImport))).replaceAll(
-                "__package__",
-                "root"
-            )
-        );
+        const importPrefix =
+            alias ??
+            camelCase(
+                (dirname(fileToImport) + "/" + basename(fileToImport, extname(fileToImport))).replaceAll(
+                    "__package__",
+                    "root"
+                )
+            );
 
         if (file === RelativeFilePath.of(ROOT_API_FILENAME)) {
             if (this.rootApiFile.imports == null) {
@@ -336,7 +350,11 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
 
     public addEndpoint(
         file: RelativeFilePath,
-        { name, schema, source }: { name: string; schema: RawSchemas.HttpEndpointSchema; source: Source | undefined }
+        {
+            name,
+            schema,
+            source
+        }: { name: string; schema: RawSchemas.HttpEndpointSchema; source: RawSchemas.SourceSchema | undefined }
     ): void {
         const fernFile = this.getOrCreateFile(file);
         if (fernFile.service == null) {
@@ -347,7 +365,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
             };
         }
         if (source != null) {
-            fernFile.service.source = convertToSourceSchema(source);
+            fernFile.service.source = source;
         }
         fernFile.service.endpoints[name] = schema;
     }
@@ -412,78 +430,6 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
 
     public build(): FernDefinition {
         const definitionFiles = this.root.getAllFiles();
-        if (this.modifyBasePaths) {
-            const basePath = getSharedEnvironmentBasePath(this.rootApiFile);
-
-            // substitute package marker file
-            if (this.packageMarkerFile.service != null) {
-                this.packageMarkerFile.service = {
-                    ...this.packageMarkerFile.service,
-                    endpoints: Object.fromEntries(
-                        Object.entries(this.packageMarkerFile.service.endpoints).map(([id, endpoint]) => {
-                            return [
-                                id,
-                                {
-                                    ...endpoint,
-                                    path: `${basePath}${endpoint.path}`
-                                }
-                            ];
-                        })
-                    )
-                };
-            }
-
-            // subsitute definition files
-            for (const file of Object.values(definitionFiles)) {
-                if (file.service != null) {
-                    file.service = {
-                        ...file.service,
-                        endpoints: Object.fromEntries(
-                            Object.entries(file.service.endpoints).map(([id, endpoint]) => {
-                                return [
-                                    id,
-                                    {
-                                        ...endpoint,
-                                        path: `${basePath}${endpoint.path}`
-                                    }
-                                ];
-                            })
-                        )
-                    };
-                }
-            }
-
-            if (this.rootApiFile.environments != null) {
-                this.rootApiFile.environments = {
-                    ...Object.fromEntries(
-                        Object.entries(this.rootApiFile.environments).map(([env, url]) => {
-                            if (typeof url === "string") {
-                                return [env, url.substring(0, url.length - basePath.length)];
-                            } else if (isSingleBaseUrl(url)) {
-                                return [
-                                    env,
-                                    {
-                                        url: url.url.substring(0, url.url.length - basePath.length)
-                                    }
-                                ];
-                            } else {
-                                return [
-                                    env,
-                                    {
-                                        urls: Object.fromEntries(
-                                            Object.entries(url.urls).map(([name, url]) => {
-                                                return [name, url.substring(0, url.length - basePath.length)];
-                                            })
-                                        )
-                                    }
-                                ];
-                            }
-                        })
-                    )
-                };
-            }
-        }
-
         const basePath = this.basePath;
         if (basePath != null) {
             // substitute package marker file

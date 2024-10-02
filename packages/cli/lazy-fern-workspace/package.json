@@ -40,6 +40,7 @@
     "@fern-api/semver-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/fern-definition-schema": "workspace:*",
+    "@fern-api/conjure-to-fern": "workspace:*",
     "@fern-fern/fiddle-sdk": "0.0.584",
     "@types/uuid": "^9.0.8",
     "axios": "^0.28.0",
