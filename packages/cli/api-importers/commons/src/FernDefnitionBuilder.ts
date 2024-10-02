@@ -6,7 +6,7 @@ import path, { basename, extname } from "path";
 import { FernDefinitionDirectory } from "./utils/FernDefinitionDirectory";
 
 export interface FernDefinitionBuilder {
-    setAPIDisplayName({ displayName }: { displayName: string }): void;
+    setDisplayName({ displayName }: { displayName: string }): void;
 
     addNavigation({ navigation }: { navigation: string[] }): void;
 
@@ -102,8 +102,8 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         };
     }
     
-    public setAPIDisplayName({ displayName }: { displayName: string; }): void {
-        this.rootApiFile.name = displayName;
+    public setDisplayName({ displayName }: { displayName: string; }): void {
+        this.rootApiFile["display-name"] = displayName;
     }
 
     public addNavigation({ navigation }: { navigation: string[] }): void {

@@ -1,5 +1,6 @@
 import { DefinitionFileSchema, PackageMarkerFileSchema, RootApiFileSchema } from "@fern-api/fern-definition-schema";
 import { RelativeFilePath } from "@fern-api/fs-utils";
+import { TaskContext } from "@fern-api/task-context";
 
 export declare namespace APIDefinitionImporter {
 
@@ -12,6 +13,8 @@ export declare namespace APIDefinitionImporter {
 
 export abstract class APIDefinitionImporter<T> {
 
-    public abstract import(input: T): APIDefinitionImporter.Return;
+    public constructor (protected readonly context?: TaskContext) {}
+
+    public abstract import(input: T): Promise<APIDefinitionImporter.Return>;
 
 }

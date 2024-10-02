@@ -52,7 +52,7 @@ export class OpenApiIrConverterContext {
         this.ir = ir;
         this.builder = new FernDefinitionBuilderImpl(enableUniqueErrorsPerEndpoint);
         if (ir.title != null) {
-            this.builder.setAPIDisplayName({ displayName: ir.title });
+            this.builder.setDisplayName({ displayName: ir.title });
         }
         this.detectGlobalHeaders = detectGlobalHeaders;
         this.environmentOverrides = environmentOverrides;

@@ -1,6 +1,10 @@
 import { AbstractAPIWorkspace, FernDefinition, FernWorkspace } from "@fern-api/api-workspace-commons";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
+import { ConjureImporter } from "@fern-api/conjure-to-fern";
+import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
+import yaml from "js-yaml";
+import { mapValues } from "./utils/mapValues";
 
 export declare namespace ConjureWorkspace {
     export interface Args extends AbstractAPIWorkspace.Args {
@@ -12,28 +16,65 @@ export declare namespace ConjureWorkspace {
 }
 
 export class ConjureWorkspace extends AbstractAPIWorkspace<ConjureWorkspace.Settings> {
-    private absolutePathToConjureDefinition: AbsoluteFilePath;
+    private absolutePathToConjureFolder: AbsoluteFilePath;
 
     constructor({ relativePathToConjureDirectory, ...superArgs }: ConjureWorkspace.Args) {
         super(superArgs);
-        this.absolutePathToConjureDefinition = join(superArgs.absoluteFilePath, relativePathToConjureDirectory);
+        this.absolutePathToConjureFolder = join(superArgs.absoluteFilePath, relativePathToConjureDirectory);
     }
 
-    public toFernWorkspace(
+    public async toFernWorkspace(
         { context }: { context: TaskContext },
         settings?: ConjureWorkspace.Settings
     ): Promise<FernWorkspace> {
-        throw new Error("Method not implemented.");
+        const definition = await this.getDefinition({ context }, settings);
+        return new FernWorkspace({
+            absoluteFilePath: this.absoluteFilePath,
+            workspaceName: this.workspaceName,
+            generatorsConfiguration: this.generatorsConfiguration,
+            dependenciesConfiguration: {
+                dependencies: {}
+            },
+            definition,
+            cliVersion: this.cliVersion,
+            sources: undefined
+        });
     }
 
-    public getDefinition(
+    public async getDefinition(
         { context }: { context?: TaskContext | undefined },
         settings?: ConjureWorkspace.Settings
     ): Promise<FernDefinition> {
-        throw new Error("Method not implemented.");
+        const conjure = new ConjureImporter(context);
+        const definition = await conjure.import({ absolutePathToConjureFolder: this.absolutePathToConjureFolder });
+        return {
+            // these files doesn't live on disk, so there's no absolute filepath
+            absoluteFilePath: AbsoluteFilePath.of("/DUMMY_PATH"),
+            rootApiFile: {
+                defaultUrl: definition.rootApiFile["default-url"],
+                contents: definition.rootApiFile,
+                rawContents: yaml.dump(definition.rootApiFile)
+            },
+            namedDefinitionFiles: {
+                ...mapValues(definition.definitionFiles, (definitionFile) => ({
+                    // these files doesn't live on disk, so there's no absolute filepath
+                    absoluteFilepath: AbsoluteFilePath.of("/DUMMY_PATH"),
+                    rawContents: yaml.dump(definitionFile),
+                    contents: definitionFile
+                })),
+                [RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME)]: {
+                    // these files doesn't live on disk, so there's no absolute filepath
+                    absoluteFilepath: AbsoluteFilePath.of("/DUMMY_PATH"),
+                    rawContents: yaml.dump(definition.packageMarkerFile),
+                    contents: definition.packageMarkerFile
+                }
+            },
+            packageMarkers: {},
+            importedDefinitions: {}
+        };
     }
 
     public getAbsoluteFilePaths(): AbsoluteFilePath[] {
-        throw new Error("Method not implemented.");
+        return [this.absolutePathToConjureFolder];
     }
 }

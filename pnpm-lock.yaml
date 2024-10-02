@@ -3067,7 +3067,13 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../../task-context
+      js-yaml:
+        specifier: ^4.1.0
+        version: 4.1.0
     devDependencies:
+      '@types/js-yaml':
+        specifier: ^4.0.8
+        version: 4.0.8
       '@types/node':
         specifier: ^18.7.18
         version: 18.7.18
@@ -4799,6 +4805,9 @@ importers:
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../configuration
+      '@fern-api/conjure-to-fern':
+        specifier: workspace:*
+        version: link:../api-importers/conjure/conjure-to-fern
       '@fern-api/core':
         specifier: workspace:*
         version: link:../../core
