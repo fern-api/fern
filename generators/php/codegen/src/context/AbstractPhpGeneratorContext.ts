@@ -106,6 +106,10 @@ export abstract class AbstractPhpGeneratorContext<
         return `${this.getCoreNamespace()}\\Multipart`;
     }
 
+    public getUtilMultipartNamespace(): string {
+        return `${this.getRootNamespace()}\\Utils\\Multipart`;
+    }
+
     public getCoreJsonNamespace(): string {
         return `${this.getCoreNamespace()}\\Json`;
     }
@@ -195,7 +199,7 @@ export abstract class AbstractPhpGeneratorContext<
     public getCoreMultipartClassReference(name: string): php.ClassReference {
         return php.classReference({
             name,
-            namespace: this.getCoreClientNamespace()
+            namespace: this.getCoreMultipartNamespace()
         });
     }
 
@@ -213,10 +217,10 @@ export abstract class AbstractPhpGeneratorContext<
         });
     }
 
-    public getUtilClassReference(name: string): php.ClassReference {
+    public getUtilMultipartClassReference(name: string): php.ClassReference {
         return php.classReference({
             name,
-            namespace: this.getUtilNamespace()
+            namespace: this.getUtilMultipartNamespace()
         });
     }
 

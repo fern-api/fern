@@ -1,6 +1,9 @@
 <?php
 
-namespace Seed\Core;
+namespace Seed\Core\Multipart;
+
+use Seed\Core\Client\BaseApiRequest;
+use Seed\Core\Client\HttpMethod;
 
 class MultipartApiRequest extends BaseApiRequest
 {

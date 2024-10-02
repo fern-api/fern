@@ -1,6 +1,6 @@
 <?php
 
-namespace Seed\Core;
+namespace Seed\Core\Multipart;
 
 use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\StreamInterface;

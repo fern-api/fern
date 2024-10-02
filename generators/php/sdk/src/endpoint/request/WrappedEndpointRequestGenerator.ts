@@ -119,7 +119,10 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
     }
 
     private toField({ property, inherited }: { property: InlinedRequestBodyProperty; inherited?: boolean }): php.Field {
-        const convertedType = this.context.phpTypeMapper.convert({ reference: property.valueType });
+        const convertedType = this.context.phpTypeMapper.convert({
+            reference: property.valueType,
+            preserveEnums: true
+        });
         return php.field({
             type: convertedType,
             name: this.context.getPropertyName(property.name.name),
@@ -142,7 +145,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
     }
 
     private generateFieldFromFile(property: FernIr.FileProperty): php.Field | undefined {
-        let fileType = php.Type.reference(this.context.getUtilClassReference("File"));
+        let fileType = php.Type.reference(this.context.getUtilMultipartClassReference("File"));
 
         return property._visit<php.Field | undefined>({
             file: (f: FernIr.FilePropertySingle) => {

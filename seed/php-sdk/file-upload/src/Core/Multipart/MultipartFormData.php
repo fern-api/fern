@@ -1,6 +1,6 @@
 <?php
 
-namespace Seed\Core;
+namespace Seed\Core\Multipart;
 
 use Psr\Http\Message\StreamInterface;
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace Seed\Utils;
+namespace <%= namespace%>;
 
 use Exception;
 use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\StreamInterface;
-use Seed\Core\MultipartFormDataPart;
+use Seed\Core\Multipart\MultipartFormDataPart;
 
 /**
  * File is a utility class used to transfer files as multipart form data.

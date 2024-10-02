@@ -2,6 +2,9 @@
 
 namespace <%= namespace%>;
 
+use <%= coreNamespace%>\Client\BaseApiRequest;
+use <%= coreNamespace%>\Client\HttpMethod;
+
 class MultipartApiRequest extends BaseApiRequest
 {
     /**
