@@ -11,7 +11,6 @@ import { Interface } from "./Interface";
 import { Method } from "./Method";
 import { MethodInvocation } from "./MethodInvocation";
 import { Parameter } from "./Parameter";
-import { escape } from "lodash-es";
 
 export declare namespace Class {
     interface Args {

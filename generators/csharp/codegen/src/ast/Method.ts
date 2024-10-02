@@ -6,7 +6,6 @@ import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { Parameter } from "./Parameter";
 import { Type } from "./Type";
-import { escape } from "lodash-es";
 
 export enum MethodType {
     INSTANCE,

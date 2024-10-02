@@ -5,7 +5,6 @@ import { CodeBlock } from "./CodeBlock";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { Type } from "./Type";
-import { escape } from "lodash-es";
 
 export declare namespace Field {
     interface Args {
