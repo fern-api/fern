@@ -4,7 +4,7 @@ namespace Seed\A;
 
 use Seed\A\B\BClient;
 use Seed\A\C\CClient;
-use Seed\Core\RawClient;
+use Seed\Core\Client\RawClient;
 
 class AClient
 {

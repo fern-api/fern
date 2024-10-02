@@ -4,7 +4,7 @@ namespace Seed;
 
 use Seed\BasicAuth\BasicAuthClient;
 use GuzzleHttp\ClientInterface;
-use Seed\Core\RawClient;
+use Seed\Core\Client\RawClient;
 use Exception;
 
 class SeedClient

@@ -2,19 +2,19 @@
 
 namespace Seed\Endpoints\Object;
 
-use Seed\Core\RawClient;
+use Seed\Core\Client\RawClient;
 use Seed\Types\Object\Types\ObjectWithOptionalField;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
-use Seed\Core\JsonApiRequest;
-use Seed\Core\HttpMethod;
+use Seed\Core\Json\JsonApiRequest;
+use Seed\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Types\Object\Types\ObjectWithRequiredField;
 use Seed\Types\Object\Types\ObjectWithMapOfMap;
 use Seed\Types\Object\Types\NestedObjectWithOptionalField;
 use Seed\Types\Object\Types\NestedObjectWithRequiredField;
-use Seed\Core\JsonSerializer;
+use Seed\Core\Json\JsonSerializer;
 
 class ObjectClient
 {

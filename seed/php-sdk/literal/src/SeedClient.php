@@ -8,7 +8,7 @@ use Seed\Path\PathClient;
 use Seed\Query\QueryClient;
 use Seed\Reference\ReferenceClient;
 use GuzzleHttp\ClientInterface;
-use Seed\Core\RawClient;
+use Seed\Core\Client\RawClient;
 
 class SeedClient
 {

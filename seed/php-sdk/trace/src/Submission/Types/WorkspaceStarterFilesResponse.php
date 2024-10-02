@@ -2,10 +2,10 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\SerializableType;
 use Seed\Commons\Types\Language;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
 class WorkspaceStarterFilesResponse extends SerializableType
 {

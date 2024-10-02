@@ -2,7 +2,7 @@
 
 namespace Seed\Traits;
 
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonProperty;
 
 trait ExampleType
 {

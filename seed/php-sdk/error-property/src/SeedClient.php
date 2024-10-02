@@ -4,7 +4,7 @@ namespace Seed;
 
 use Seed\PropertyBasedError\PropertyBasedErrorClient;
 use GuzzleHttp\ClientInterface;
-use Seed\Core\RawClient;
+use Seed\Core\Client\RawClient;
 
 class SeedClient
 {

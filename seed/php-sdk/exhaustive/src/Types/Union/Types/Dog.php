@@ -2,8 +2,8 @@
 
 namespace Seed\Types\Union\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonProperty;
 
 class Dog extends SerializableType
 {

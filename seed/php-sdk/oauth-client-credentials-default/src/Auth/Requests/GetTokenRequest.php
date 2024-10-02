@@ -2,8 +2,8 @@
 
 namespace Seed\Auth\Requests;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonProperty;
 
 class GetTokenRequest extends SerializableType
 {

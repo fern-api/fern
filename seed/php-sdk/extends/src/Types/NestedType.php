@@ -2,9 +2,9 @@
 
 namespace Seed\Types;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\SerializableType;
 use Seed\Traits\Json;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonProperty;
 
 class NestedType extends SerializableType
 {

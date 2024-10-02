@@ -2,10 +2,10 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\SerializableType;
 use DateTime;
-use Seed\Core\JsonProperty;
-use Seed\Core\DateType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\DateType;
 
 class TestSubmissionUpdate extends SerializableType
 {

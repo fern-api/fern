@@ -2,18 +2,18 @@
 
 namespace Seed\Admin;
 
-use Seed\Core\RawClient;
+use Seed\Core\Client\RawClient;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
-use Seed\Core\JsonApiRequest;
+use Seed\Core\Json\JsonApiRequest;
 use Seed\Environments;
-use Seed\Core\HttpMethod;
+use Seed\Core\Client\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Submission\Types\TestSubmissionUpdate;
 use Seed\Submission\Types\WorkspaceSubmissionUpdate;
 use Seed\Admin\Requests\StoreTracedTestCaseRequest;
 use Seed\Submission\Types\TraceResponseV2;
-use Seed\Core\JsonSerializer;
+use Seed\Core\Json\JsonSerializer;
 use Seed\Admin\Requests\StoreTracedWorkspaceRequest;
 
 class AdminClient

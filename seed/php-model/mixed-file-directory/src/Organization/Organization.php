@@ -2,10 +2,10 @@
 
 namespace Seed\Organization;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonProperty;
 use Seed\User\User;
-use Seed\Core\ArrayType;
+use Seed\Core\Types\ArrayType;
 
 class Organization extends SerializableType
 {

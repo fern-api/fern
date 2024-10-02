@@ -2,7 +2,7 @@
 
 namespace Seed\Service\Requests;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\SerializableType;
 use DateTime;
 
 class ListResourcesRequest extends SerializableType

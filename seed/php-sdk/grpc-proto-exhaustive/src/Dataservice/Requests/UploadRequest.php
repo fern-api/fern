@@ -2,10 +2,10 @@
 
 namespace Seed\Dataservice\Requests;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\SerializableType;
 use Seed\Types\Column;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
 class UploadRequest extends SerializableType
 {

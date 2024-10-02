@@ -94,8 +94,32 @@ export abstract class AbstractPhpGeneratorContext<
         return `${this.rootNamespace}\\Core`;
     }
 
+    public getCoreClientNamespace(): string {
+        return `${this.getCoreNamespace()}\\Client`;
+    }
+
+    public getCoreJsonNamespace(): string {
+        return `${this.getCoreNamespace()}\\Json`;
+    }
+
+    public getCoreTypesNamespace(): string {
+        return `${this.getCoreNamespace()}\\Types`;
+    }
+
     public getCoreTestsNamespace(): string {
         return `${this.rootNamespace}\\Tests\\Core`;
+    }
+
+    public getCoreClientTestsNamespace(): string {
+        return `${this.getCoreTestsNamespace()}\\Client`;
+    }
+
+    public getCoreJsonTestsNamespace(): string {
+        return `${this.getCoreTestsNamespace()}\\Json`;
+    }
+
+    public getCoreTypesTestsNamespace(): string {
+        return `${this.getCoreTestsNamespace()}\\Types`;
     }
 
     public getParameterName(name: Name): string {
@@ -126,33 +150,47 @@ export abstract class AbstractPhpGeneratorContext<
     }
 
     public getDateTypeAttributeClassReference(): php.ClassReference {
-        return this.getCoreClassReference("DateType");
+        return this.getCoreTypesClassReference("DateType");
     }
 
     public getConstantClassReference(): php.ClassReference {
-        return this.getCoreClassReference("Constant");
+        return this.getCoreTypesClassReference("Constant");
     }
 
     public getJsonPropertyAttributeClassReference(): php.ClassReference {
-        return this.getCoreClassReference("JsonProperty");
+        return this.getCoreJsonClassReference("JsonProperty");
     }
 
     public getSerializableTypeClassReference(): php.ClassReference {
-        return this.getCoreClassReference("SerializableType");
+        return this.getCoreJsonClassReference("SerializableType");
     }
 
     public getUnionClassReference(): php.ClassReference {
-        return this.getCoreClassReference("Union");
+        return this.getCoreTypesClassReference("Union");
     }
 
     public getArrayTypeClassReference(): php.ClassReference {
-        return this.getCoreClassReference("ArrayType");
+        return this.getCoreTypesClassReference("ArrayType");
     }
 
-    public getCoreClassReference(name: string): php.ClassReference {
+    public getCoreClientClassReference(name: string): php.ClassReference {
         return php.classReference({
             name,
-            namespace: this.getCoreNamespace()
+            namespace: this.getCoreClientNamespace()
+        });
+    }
+
+    public getCoreJsonClassReference(name: string): php.ClassReference {
+        return php.classReference({
+            name,
+            namespace: this.getCoreJsonNamespace()
+        });
+    }
+
+    public getCoreTypesClassReference(name: string): php.ClassReference {
+        return php.classReference({
+            name,
+            namespace: this.getCoreTypesNamespace()
         });
     }
 

@@ -2,7 +2,7 @@
 
 namespace Seed\Endpoints\Params\Requests;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\SerializableType;
 
 class GetWithMultipleQuery extends SerializableType
 {

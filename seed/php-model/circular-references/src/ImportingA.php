@@ -2,9 +2,9 @@
 
 namespace Seed;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\SerializableType;
 use Seed\A\A;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonProperty;
 
 class ImportingA extends SerializableType
 {

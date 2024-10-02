@@ -4,7 +4,7 @@ namespace Seed;
 
 use Seed\Payment\PaymentClient;
 use GuzzleHttp\ClientInterface;
-use Seed\Core\RawClient;
+use Seed\Core\Client\RawClient;
 
 class SeedClient
 {

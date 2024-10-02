@@ -2,8 +2,8 @@
 
 namespace Seed\Errors\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonProperty;
 
 class UnauthorizedRequestErrorBody extends SerializableType
 {

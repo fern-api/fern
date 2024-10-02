@@ -3,7 +3,7 @@
 namespace Seed\File\Notification;
 
 use Seed\File\Notification\Service\ServiceClient;
-use Seed\Core\RawClient;
+use Seed\Core\Client\RawClient;
 
 class NotificationClient
 {

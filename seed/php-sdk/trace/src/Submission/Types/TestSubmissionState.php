@@ -2,10 +2,10 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonProperty;
 use Seed\Commons\Types\TestCase;
-use Seed\Core\ArrayType;
+use Seed\Core\Types\ArrayType;
 
 class TestSubmissionState extends SerializableType
 {
