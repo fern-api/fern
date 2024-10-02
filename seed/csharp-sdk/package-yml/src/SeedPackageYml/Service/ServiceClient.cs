@@ -18,7 +18,7 @@ public partial class ServiceClient
 
     /// <example>
     /// <code>
-    /// await client.Service.NopAsync(&quot;id-a2ijs82&quot;, &quot;id-219xca8&quot;);
+    /// await client.Service.NopAsync("id-a2ijs82", "id-219xca8");
     /// </code>
     /// </example>
     public async Task NopAsync(

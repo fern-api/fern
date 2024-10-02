@@ -3,6 +3,7 @@ import { ClassReference } from "..";
 import { csharp } from "../..";
 import { BaseCsharpCustomConfigSchema } from "../../custom-config";
 import { AstNode } from "./AstNode";
+import { DocXmlWriter } from "./DocXmlWriter";
 
 type Alias = string;
 type Namespace = string;
@@ -94,13 +95,21 @@ export class Writer extends AbstractWriter {
         return this.customConfig["simplify-object-dictionaries"] ?? true;
     }
 
+    public writeDocXml(write?: (writer: DocXmlWriter) => void): DocXmlWriter {
+        const writer = new DocXmlWriter(this);
+        if (write) {
+            write(writer);
+        }
+        return writer;
+    }
+
     public toString(skipImports = false): string {
         if (!skipImports) {
             const imports = this.stringifyImports();
             if (imports.length > 0) {
                 return `${imports}
     #nullable enable
-    
+
     ${this.buffer}`;
             }
         }

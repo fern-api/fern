@@ -21,7 +21,6 @@ public record GetDefaultStarterFilesRequest
     ///   - Less Than `&lt;``
     ///   - Equals `=`
     ///   - Period `.`
-    ///
     /// </summary>
     [JsonPropertyName("methodName")]
     public required string MethodName { get; set; }

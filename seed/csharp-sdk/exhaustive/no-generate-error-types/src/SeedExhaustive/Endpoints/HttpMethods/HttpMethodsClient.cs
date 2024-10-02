@@ -20,7 +20,7 @@ public partial class HttpMethodsClient
 
     /// <example>
     /// <code>
-    /// await client.Endpoints.HttpMethods.TestGetAsync(&quot;string&quot;);
+    /// await client.Endpoints.HttpMethods.TestGetAsync("string");
     /// </code>
     /// </example>
     public async Task<string> TestGetAsync(
@@ -61,7 +61,7 @@ public partial class HttpMethodsClient
 
     /// <example>
     /// <code>
-    /// await client.Endpoints.HttpMethods.TestPostAsync(new ObjectWithRequiredField { String = &quot;string&quot; });
+    /// await client.Endpoints.HttpMethods.TestPostAsync(new ObjectWithRequiredField { String = "string" });
     /// </code>
     /// </example>
     public async Task<ObjectWithOptionalField> TestPostAsync(
@@ -104,8 +104,8 @@ public partial class HttpMethodsClient
     /// <example>
     /// <code>
     /// await client.Endpoints.HttpMethods.TestPutAsync(
-    ///     &quot;string&quot;,
-    ///     new ObjectWithRequiredField { String = &quot;string&quot; }
+    ///     "string",
+    ///     new ObjectWithRequiredField { String = "string" }
     /// );
     /// </code>
     /// </example>
@@ -150,22 +150,22 @@ public partial class HttpMethodsClient
     /// <example>
     /// <code>
     /// await client.Endpoints.HttpMethods.TestPatchAsync(
-    ///     &quot;string&quot;,
+    ///     "string",
     ///     new ObjectWithOptionalField
     ///     {
-    ///         String = &quot;string&quot;,
+    ///         String = "string",
     ///         Integer = 1,
     ///         Long = 1000000,
     ///         Double = 1.1,
     ///         Bool = true,
     ///         Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
     ///         Date = new DateOnly(2023, 1, 15),
-    ///         Uuid = &quot;d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32&quot;,
-    ///         Base64 = &quot;SGVsbG8gd29ybGQh&quot;,
-    ///         List = new List&lt;string&gt;() { &quot;string&quot; },
-    ///         Set = new HashSet&lt;string&gt;() { &quot;string&quot; },
-    ///         Map = new Dictionary&lt;int, string&gt;() { { 1, &quot;string&quot; } },
-    ///         Bigint = &quot;123456789123456789&quot;,
+    ///         Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///         Base64 = "SGVsbG8gd29ybGQh",
+    ///         List = new List&lt;string&gt;() { "string" },
+    ///         Set = new HashSet&lt;string&gt;() { "string" },
+    ///         Map = new Dictionary&lt;int, string&gt;() { { 1, "string" } },
+    ///         Bigint = "123456789123456789",
     ///     }
     /// );
     /// </code>
@@ -210,7 +210,7 @@ public partial class HttpMethodsClient
 
     /// <example>
     /// <code>
-    /// await client.Endpoints.HttpMethods.TestDeleteAsync(&quot;string&quot;);
+    /// await client.Endpoints.HttpMethods.TestDeleteAsync("string");
     /// </code>
     /// </example>
     public async Task<bool> TestDeleteAsync(

@@ -18,7 +18,7 @@ public partial class PathClient
 
     /// <example>
     /// <code>
-    /// await client.Path.SendAsync(&quot;123&quot;);
+    /// await client.Path.SendAsync("123");
     /// </code>
     /// </example>
     public async Task<SendResponse> SendAsync(

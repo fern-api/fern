@@ -18,7 +18,7 @@ public partial class UnionClient
 
     /// <example>
     /// <code>
-    /// await client.Union.GetAsync(&quot;string&quot;);
+    /// await client.Union.GetAsync("string");
     /// </code>
     /// </example>
     public async Task<object> GetAsync(
@@ -59,7 +59,7 @@ public partial class UnionClient
 
     /// <example>
     /// <code>
-    /// await client.Union.UpdateAsync(new Circle { Id = &quot;string&quot;, Radius = 1.1 });
+    /// await client.Union.UpdateAsync(new Circle { Id = "string", Radius = 1.1 });
     /// </code>
     /// </example>
     public async Task<bool> UpdateAsync(

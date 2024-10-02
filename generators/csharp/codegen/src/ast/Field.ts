@@ -109,13 +109,7 @@ export class Field extends AstNode {
 
     public write(writer: Writer): void {
         if (this.summary != null) {
-            writer.writeLine("/// <summary>");
-            escape(this.summary)
-                .split("\n")
-                .forEach((line) => {
-                    writer.writeLine(`/// ${line}`);
-                });
-            writer.writeLine("/// </summary>");
+            writer.writeDocXml().writeNodeWithEscaping("summary", this.summary);
         }
 
         if (this.annotations.length > 0) {

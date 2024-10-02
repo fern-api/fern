@@ -18,7 +18,7 @@ public partial class ServiceClient
 
     /// <example>
     /// <code>
-    /// await client.Service.GetMovieAsync(&quot;movie-c06a4ad7&quot;);
+    /// await client.Service.GetMovieAsync("movie-c06a4ad7");
     /// </code>
     /// </example>
     public async Task<Movie> GetMovieAsync(
@@ -62,23 +62,23 @@ public partial class ServiceClient
     /// await client.Service.CreateMovieAsync(
     ///     new Movie
     ///     {
-    ///         Id = &quot;movie-c06a4ad7&quot;,
-    ///         Prequel = &quot;movie-cv9b914f&quot;,
-    ///         Title = &quot;The Boy and the Heron&quot;,
-    ///         From = &quot;Hayao Miyazaki&quot;,
+    ///         Id = "movie-c06a4ad7",
+    ///         Prequel = "movie-cv9b914f",
+    ///         Title = "The Boy and the Heron",
+    ///         From = "Hayao Miyazaki",
     ///         Rating = 8,
-    ///         Type = &quot;movie&quot;,
-    ///         Tag = &quot;tag-wf9as23d&quot;,
+    ///         Type = "movie",
+    ///         Tag = "tag-wf9as23d",
     ///         Metadata = new Dictionary&lt;string, object&gt;()
     ///         {
     ///             {
-    ///                 &quot;actors&quot;,
-    ///                 new List&lt;object?&gt;() { &quot;Christian Bale&quot;, &quot;Florence Pugh&quot;, &quot;Willem Dafoe&quot; }
+    ///                 "actors",
+    ///                 new List&lt;object?&gt;() { "Christian Bale", "Florence Pugh", "Willem Dafoe" }
     ///             },
-    ///             { &quot;releaseDate&quot;, &quot;2023-12-08&quot; },
+    ///             { "releaseDate", "2023-12-08" },
     ///             {
-    ///                 &quot;ratings&quot;,
-    ///                 new Dictionary&lt;object, object?&gt;() { { &quot;imdb&quot;, 7.6 }, { &quot;rottenTomatoes&quot;, 97 } }
+    ///                 "ratings",
+    ///                 new Dictionary&lt;object, object?&gt;() { { "imdb", 7.6 }, { "rottenTomatoes", 97 } }
     ///             },
     ///         },
     ///         Revenue = 1000000,
@@ -129,8 +129,8 @@ public partial class ServiceClient
     ///     new GetMetadataRequest
     ///     {
     ///         Shallow = false,
-    ///         Tag = [&quot;development&quot;],
-    ///         XApiVersion = &quot;0.0.1&quot;,
+    ///         Tag = ["development"],
+    ///         XApiVersion = "0.0.1",
     ///     }
     /// );
     /// </code>

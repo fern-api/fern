@@ -169,13 +169,7 @@ export class Class extends AstNode {
         }
 
         if (this.summary != null) {
-            writer.writeLine("/// <summary>");
-            escape(this.summary)
-                .split("\n")
-                .forEach((line) => {
-                    writer.writeLine(`/// ${line}`);
-                });
-            writer.writeLine("/// </summary>");
+            writer.writeDocXml().writeNodeWithEscaping("summary", this.summary);
         }
         if (this.annotations.length > 0) {
             writer.write("[");

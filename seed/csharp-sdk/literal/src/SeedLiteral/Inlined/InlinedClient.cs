@@ -22,16 +22,16 @@ public partial class InlinedClient
     ///     new SendLiteralsInlinedRequest
     ///     {
     ///         Temperature = 10.1,
-    ///         Prompt = &quot;You are a helpful assistant&quot;,
-    ///         Context = &quot;You&#39;re super wise&quot;,
-    ///         AliasedContext = &quot;You&#39;re super wise&quot;,
-    ///         MaybeContext = &quot;You&#39;re super wise&quot;,
+    ///         Prompt = "You are a helpful assistant",
+    ///         Context = "You're super wise",
+    ///         AliasedContext = "You're super wise",
+    ///         MaybeContext = "You're super wise",
     ///         ObjectWithLiteral = new ATopLevelLiteral
     ///         {
-    ///             NestedLiteral = new ANestedLiteral { MyLiteral = &quot;How super cool&quot; },
+    ///             NestedLiteral = new ANestedLiteral { MyLiteral = "How super cool" },
     ///         },
     ///         Stream = false,
-    ///         Query = &quot;What is the weather today&quot;,
+    ///         Query = "What is the weather today",
     ///     }
     /// );
     /// </code>

@@ -18,7 +18,7 @@ public partial class ServiceClient
 
     /// <example>
     /// <code>
-    /// await client.Service.PostAsync(&quot;string&quot;, &quot;string&quot;, &quot;string&quot;, 1);
+    /// await client.Service.PostAsync("string", "string", "string", 1);
     /// </code>
     /// </example>
     public async Task PostAsync(

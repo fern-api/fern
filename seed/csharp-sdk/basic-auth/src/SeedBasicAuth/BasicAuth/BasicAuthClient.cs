@@ -79,7 +79,7 @@ public partial class BasicAuthClient
     /// <example>
     /// <code>
     /// await client.BasicAuth.PostWithBasicAuthAsync(
-    ///     new Dictionary&lt;object, object?&gt;() { { &quot;key&quot;, &quot;value&quot; } }
+    ///     new Dictionary&lt;object, object?&gt;() { { "key", "value" } }
     /// );
     /// </code>
     /// </example>

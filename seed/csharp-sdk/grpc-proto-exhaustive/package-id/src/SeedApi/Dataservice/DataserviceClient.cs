@@ -31,7 +31,7 @@ public partial class DataserviceClient
     ///         {
     ///             new Column
     ///             {
-    ///                 Id = &quot;id&quot;,
+    ///                 Id = "id",
     ///                 Values = new List&lt;float&gt;() { 1.1f },
     ///             },
     ///         },
@@ -252,7 +252,7 @@ public partial class DataserviceClient
 
     /// <example>
     /// <code>
-    /// await client.Dataservice.UpdateAsync(new UpdateRequest { Id = &quot;id&quot; });
+    /// await client.Dataservice.UpdateAsync(new UpdateRequest { Id = "id" });
     /// </code>
     /// </example>
     public async Task<UpdateResponse> UpdateAsync(

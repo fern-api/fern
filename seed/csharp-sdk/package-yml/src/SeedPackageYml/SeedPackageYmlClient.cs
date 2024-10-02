@@ -38,7 +38,7 @@ public partial class SeedPackageYmlClient
 
     /// <example>
     /// <code>
-    /// await client.EchoAsync(&quot;id-ksfd9c1&quot;, new EchoRequest { Name = &quot;Hello world!&quot;, Size = 20 });
+    /// await client.EchoAsync("id-ksfd9c1", new EchoRequest { Name = "Hello world!", Size = 20 });
     /// </code>
     /// </example>
     public async Task<string> EchoAsync(

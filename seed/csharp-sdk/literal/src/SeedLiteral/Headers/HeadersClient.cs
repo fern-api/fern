@@ -21,9 +21,9 @@ public partial class HeadersClient
     /// await client.Headers.SendAsync(
     ///     new SendLiteralsInHeadersRequest
     ///     {
-    ///         EndpointVersion = &quot;02-12-2024&quot;,
+    ///         EndpointVersion = "02-12-2024",
     ///         Async = true,
-    ///         Query = &quot;What is the weather today&quot;,
+    ///         Query = "What is the weather today",
     ///     }
     /// );
     /// </code>

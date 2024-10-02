@@ -21,9 +21,9 @@ public partial class QueryClient
     /// await client.Query.SendAsync(
     ///     new SendLiteralsInQueryRequest
     ///     {
-    ///         Prompt = &quot;You are a helpful assistant&quot;,
+    ///         Prompt = "You are a helpful assistant",
     ///         Stream = false,
-    ///         Query = &quot;What is the weather today&quot;,
+    ///         Query = "What is the weather today",
     ///     }
     /// );
     /// </code>

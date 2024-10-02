@@ -36,7 +36,7 @@ public partial class SeedAliasExtendsClient
     /// <example>
     /// <code>
     /// await client.ExtendedInlineRequestBodyAsync(
-    ///     new InlinedChildRequest { Child = &quot;string&quot;, Parent = &quot;string&quot; }
+    ///     new InlinedChildRequest { Child = "string", Parent = "string" }
     /// );
     /// </code>
     /// </example>

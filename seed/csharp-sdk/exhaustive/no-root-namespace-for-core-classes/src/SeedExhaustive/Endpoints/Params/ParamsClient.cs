@@ -22,7 +22,7 @@ public partial class ParamsClient
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.Endpoints.Params.GetWithPathAsync(&quot;string&quot;);
+    /// await client.Endpoints.Params.GetWithPathAsync("string");
     /// </code>
     /// </example>
     public async Task<string> GetWithPathAsync(
@@ -66,7 +66,7 @@ public partial class ParamsClient
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.Endpoints.Params.GetWithQueryAsync(new GetWithQuery { Query = &quot;string&quot;, Number = 1 });
+    /// await client.Endpoints.Params.GetWithQueryAsync(new GetWithQuery { Query = "string", Number = 1 });
     /// </code>
     /// </example>
     public async Task GetWithQueryAsync(
@@ -107,7 +107,7 @@ public partial class ParamsClient
     /// <example>
     /// <code>
     /// await client.Endpoints.Params.GetWithAllowMultipleQueryAsync(
-    ///     new GetWithMultipleQuery { Query = [&quot;string&quot;], Numer = [1] }
+    ///     new GetWithMultipleQuery { Query = ["string"], Numer = [1] }
     /// );
     /// </code>
     /// </example>
@@ -149,8 +149,8 @@ public partial class ParamsClient
     /// <example>
     /// <code>
     /// await client.Endpoints.Params.GetWithPathAndQueryAsync(
-    ///     &quot;string&quot;,
-    ///     new GetWithPathAndQuery { Query = &quot;string&quot; }
+    ///     "string",
+    ///     new GetWithPathAndQuery { Query = "string" }
     /// );
     /// </code>
     /// </example>
@@ -191,7 +191,7 @@ public partial class ParamsClient
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.Endpoints.Params.ModifyWithPathAsync(&quot;string&quot;, &quot;string&quot;);
+    /// await client.Endpoints.Params.ModifyWithPathAsync("string", "string");
     /// </code>
     /// </example>
     public async Task<string> ModifyWithPathAsync(

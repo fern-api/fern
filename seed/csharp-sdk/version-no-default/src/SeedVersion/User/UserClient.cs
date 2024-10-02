@@ -18,7 +18,7 @@ public partial class UserClient
 
     /// <example>
     /// <code>
-    /// await client.User.GetUserAsync(&quot;string&quot;);
+    /// await client.User.GetUserAsync("string");
     /// </code>
     /// </example>
     public async Task<User> GetUserAsync(

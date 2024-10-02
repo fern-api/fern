@@ -21,11 +21,11 @@ public partial class AuthClient
     /// await client.Auth.GetTokenWithClientCredentialsAsync(
     ///     new GetTokenRequest
     ///     {
-    ///         ClientId = &quot;string&quot;,
-    ///         ClientSecret = &quot;string&quot;,
-    ///         Audience = &quot;https://api.example.com&quot;,
-    ///         GrantType = &quot;client_credentials&quot;,
-    ///         Scope = &quot;string&quot;,
+    ///         ClientId = "string",
+    ///         ClientSecret = "string",
+    ///         Audience = "https://api.example.com",
+    ///         GrantType = "client_credentials",
+    ///         Scope = "string",
     ///     }
     /// );
     /// </code>
@@ -72,12 +72,12 @@ public partial class AuthClient
     /// await client.Auth.RefreshTokenAsync(
     ///     new RefreshTokenRequest
     ///     {
-    ///         ClientId = &quot;string&quot;,
-    ///         ClientSecret = &quot;string&quot;,
-    ///         RefreshToken = &quot;string&quot;,
-    ///         Audience = &quot;https://api.example.com&quot;,
-    ///         GrantType = &quot;refresh_token&quot;,
-    ///         Scope = &quot;string&quot;,
+    ///         ClientId = "string",
+    ///         ClientSecret = "string",
+    ///         RefreshToken = "string",
+    ///         Audience = "https://api.example.com",
+    ///         GrantType = "refresh_token",
+    ///         Scope = "string",
     ///     }
     /// );
     /// </code>

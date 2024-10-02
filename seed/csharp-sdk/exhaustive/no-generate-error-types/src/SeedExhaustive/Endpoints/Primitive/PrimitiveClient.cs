@@ -19,7 +19,7 @@ public partial class PrimitiveClient
 
     /// <example>
     /// <code>
-    /// await client.Endpoints.Primitive.GetAndReturnStringAsync(&quot;string&quot;);
+    /// await client.Endpoints.Primitive.GetAndReturnStringAsync("string");
     /// </code>
     /// </example>
     public async Task<string> GetAndReturnStringAsync(
@@ -315,7 +315,7 @@ public partial class PrimitiveClient
 
     /// <example>
     /// <code>
-    /// await client.Endpoints.Primitive.GetAndReturnUuidAsync(&quot;d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32&quot;);
+    /// await client.Endpoints.Primitive.GetAndReturnUuidAsync("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
     /// </code>
     /// </example>
     public async Task<string> GetAndReturnUuidAsync(
@@ -357,7 +357,7 @@ public partial class PrimitiveClient
 
     /// <example>
     /// <code>
-    /// await client.Endpoints.Primitive.GetAndReturnBase64Async(&quot;SGVsbG8gd29ybGQh&quot;);
+    /// await client.Endpoints.Primitive.GetAndReturnBase64Async("SGVsbG8gd29ybGQh");
     /// </code>
     /// </example>
     public async Task<string> GetAndReturnBase64Async(

@@ -24,7 +24,7 @@ public partial class UsersClient
     ///         Page = 1,
     ///         PerPage = 1,
     ///         Order = Order.Asc,
-    ///         StartingAfter = &quot;string&quot;,
+    ///         StartingAfter = "string",
     ///     }
     /// );
     /// </code>
@@ -86,7 +86,7 @@ public partial class UsersClient
     /// <example>
     /// <code>
     /// await client.Users.ListWithBodyCursorPaginationAsync(
-    ///     new ListUsersBodyCursorPaginationRequest { Pagination = new WithCursor { Cursor = &quot;string&quot; } }
+    ///     new ListUsersBodyCursorPaginationRequest { Pagination = new WithCursor { Cursor = "string" } }
     /// );
     /// </code>
     /// </example>
@@ -135,7 +135,7 @@ public partial class UsersClient
     ///         Page = 1,
     ///         PerPage = 1,
     ///         Order = Order.Asc,
-    ///         StartingAfter = &quot;string&quot;,
+    ///         StartingAfter = "string",
     ///     }
     /// );
     /// </code>
@@ -365,7 +365,7 @@ public partial class UsersClient
     /// <example>
     /// <code>
     /// await client.Users.ListWithExtendedResultsAsync(
-    ///     new ListUsersExtendedRequest { Cursor = &quot;d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32&quot; }
+    ///     new ListUsersExtendedRequest { Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32" }
     /// );
     /// </code>
     /// </example>
@@ -414,7 +414,7 @@ public partial class UsersClient
     /// <example>
     /// <code>
     /// await client.Users.ListWithExtendedResultsAndOptionalDataAsync(
-    ///     new ListUsersExtendedRequestForOptionalData { Cursor = &quot;d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32&quot; }
+    ///     new ListUsersExtendedRequestForOptionalData { Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32" }
     /// );
     /// </code>
     /// </example>
@@ -462,7 +462,7 @@ public partial class UsersClient
 
     /// <example>
     /// <code>
-    /// await client.Users.ListUsernamesAsync(new ListUsernamesRequest { StartingAfter = &quot;string&quot; });
+    /// await client.Users.ListUsernamesAsync(new ListUsernamesRequest { StartingAfter = "string" });
     /// </code>
     /// </example>
     public async Task<UsernameCursor> ListUsernamesAsync(

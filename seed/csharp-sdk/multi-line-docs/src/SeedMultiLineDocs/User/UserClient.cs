@@ -23,7 +23,7 @@ public partial class UserClient
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.User.GetUserAsync(&quot;string&quot;);
+    /// await client.User.GetUserAsync("string");
     /// </code>
     /// </example>
     public async Task GetUserAsync(
@@ -60,7 +60,7 @@ public partial class UserClient
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.User.CreateUserAsync(new CreateUserRequest { Name = &quot;string&quot;, Age = 1 });
+    /// await client.User.CreateUserAsync(new CreateUserRequest { Name = "string", Age = 1 });
     /// </code>
     /// </example>
     public async Task<User> CreateUserAsync(

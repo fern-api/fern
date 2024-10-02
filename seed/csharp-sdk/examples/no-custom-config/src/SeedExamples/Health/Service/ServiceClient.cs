@@ -23,7 +23,7 @@ public partial class ServiceClient
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.Health.Service.CheckAsync(&quot;id-2sdx82h&quot;);
+    /// await client.Health.Service.CheckAsync("id-2sdx82h");
     /// </code>
     /// </example>
     public async Task CheckAsync(

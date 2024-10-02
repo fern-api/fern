@@ -20,7 +20,7 @@ public partial class UnionClient
     /// <example>
     /// <code>
     /// await client.Endpoints.Union.GetAndReturnUnionAsync(
-    ///     new Dog { Name = &quot;string&quot;, LikesToWoof = true }
+    ///     new Dog { Name = "string", LikesToWoof = true }
     /// );
     /// </code>
     /// </example>

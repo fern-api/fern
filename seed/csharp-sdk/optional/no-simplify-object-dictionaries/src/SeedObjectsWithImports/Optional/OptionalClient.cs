@@ -22,8 +22,8 @@ public partial class OptionalClient
     ///     new Dictionary&lt;string, object&gt;()
     ///     {
     ///         {
-    ///             &quot;string&quot;,
-    ///             new Dictionary&lt;object, object?&gt;() { { &quot;key&quot;, &quot;value&quot; } }
+    ///             "string",
+    ///             new Dictionary&lt;object, object?&gt;() { { "key", "value" } }
     ///         },
     ///     }
     /// );

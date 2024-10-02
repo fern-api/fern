@@ -38,9 +38,9 @@ public partial class SeedExtendsClient
     /// await client.ExtendedInlineRequestBodyAsync(
     ///     new Inlined
     ///     {
-    ///         Unique = &quot;string&quot;,
-    ///         Name = &quot;string&quot;,
-    ///         Docs = &quot;string&quot;,
+    ///         Unique = "string",
+    ///         Name = "string",
+    ///         Docs = "string",
     ///     }
     /// );
     /// </code>

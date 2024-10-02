@@ -40,7 +40,7 @@ public partial class SeedValidationClient
     ///     {
     ///         Decimal = 1.1,
     ///         Even = 1,
-    ///         Name = &quot;string&quot;,
+    ///         Name = "string",
     ///         Shape = Shape.Square,
     ///     }
     /// );
@@ -90,7 +90,7 @@ public partial class SeedValidationClient
     ///     {
     ///         Decimal = 1.1,
     ///         Even = 1,
-    ///         Name = &quot;string&quot;,
+    ///         Name = "string",
     ///     }
     /// );
     /// </code>

@@ -21,8 +21,8 @@ public partial class FooClient
     /// await client.Foo.FindAsync(
     ///     new FindRequest
     ///     {
-    ///         OptionalString = &quot;string&quot;,
-    ///         PublicProperty = &quot;string&quot;,
+    ///         OptionalString = "string",
+    ///         PublicProperty = "string",
     ///         PrivateProperty = 1,
     ///     }
     /// );

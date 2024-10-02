@@ -91,27 +91,16 @@ export class Method extends AstNode {
 
     public write(writer: Writer): void {
         if (this.summary != null) {
-            writer.writeLine("/// <summary>");
-            escape(this.summary)
-                .split("\n")
-                .forEach((line) => {
-                    writer.writeLine(`/// ${line}`);
-                });
-
-            writer.writeLine("/// </summary>");
+            writer.writeDocXml().writeNodeWithEscaping("summary", this.summary);
         }
         if (this.codeExample != null) {
-            writer.writeLine("/// <example>");
-            writer.writeLine("/// <code>");
-            escape(this.codeExample)
-                .split("\n")
-                .forEach((line) => {
-                    if (line !== "") {
-                        writer.writeLine(`/// ${line}`);
-                    }
-                });
-            writer.writeLine("/// </code>");
-            writer.writeLine("/// </example>");
+            writer
+                .writeDocXml()
+                .writeOpenNode("example")
+                .writeOpenNode("code")
+                .writeMultilineWithEscaping(this.codeExample)
+                .writeCloseNode("code")
+                .writeCloseNode("example");
         }
 
         if (this.annotations.length > 0) {

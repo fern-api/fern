@@ -18,7 +18,7 @@ public partial class UnknownClient
 
     /// <example>
     /// <code>
-    /// await client.Unknown.PostAsync(new Dictionary&lt;object, object?&gt;() { { &quot;key&quot;, &quot;value&quot; } });
+    /// await client.Unknown.PostAsync(new Dictionary&lt;object, object?&gt;() { { "key", "value" } });
     /// </code>
     /// </example>
     public async Task<IEnumerable<object>> PostAsync(
@@ -63,7 +63,7 @@ public partial class UnknownClient
     /// await client.Unknown.PostObjectAsync(
     ///     new MyObject
     ///     {
-    ///         Unknown = new Dictionary&lt;object, object?&gt;() { { &quot;boolVal&quot;, true }, { &quot;strVal&quot;, &quot;string&quot; } },
+    ///         Unknown = new Dictionary&lt;object, object?&gt;() { { "boolVal", true }, { "strVal", "string" } },
     ///     }
     /// );
     /// </code>

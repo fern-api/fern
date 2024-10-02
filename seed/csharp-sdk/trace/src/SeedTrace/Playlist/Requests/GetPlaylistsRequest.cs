@@ -9,12 +9,12 @@ public record GetPlaylistsRequest
     public int? Limit { get; set; }
 
     /// <summary>
-    /// i&#39;m another field
+    /// i'm another field
     /// </summary>
     public required string OtherField { get; set; }
 
     /// <summary>
-    /// I&#39;m a multiline
+    /// I'm a multiline
     /// description
     /// </summary>
     public required string MultiLineDocs { get; set; }

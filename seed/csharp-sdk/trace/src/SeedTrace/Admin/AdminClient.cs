@@ -19,8 +19,8 @@ public partial class AdminClient
     /// <example>
     /// <code>
     /// await client.Admin.UpdateTestSubmissionStatusAsync(
-    ///     &quot;d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32&quot;,
-    ///     &quot;no-properties-union&quot;
+    ///     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///     "no-properties-union"
     /// );
     /// </code>
     /// </example>
@@ -57,7 +57,7 @@ public partial class AdminClient
     /// <example>
     /// <code>
     /// await client.Admin.SendTestSubmissionUpdateAsync(
-    ///     &quot;d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32&quot;,
+    ///     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///     new TestSubmissionUpdate
     ///     {
     ///         UpdateTime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
@@ -99,8 +99,8 @@ public partial class AdminClient
     /// <example>
     /// <code>
     /// await client.Admin.UpdateWorkspaceSubmissionStatusAsync(
-    ///     &quot;d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32&quot;,
-    ///     &quot;no-properties-union&quot;
+    ///     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///     "no-properties-union"
     /// );
     /// </code>
     /// </example>
@@ -137,7 +137,7 @@ public partial class AdminClient
     /// <example>
     /// <code>
     /// await client.Admin.SendWorkspaceSubmissionUpdateAsync(
-    ///     &quot;d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32&quot;,
+    ///     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///     new WorkspaceSubmissionUpdate
     ///     {
     ///         UpdateTime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
@@ -179,8 +179,8 @@ public partial class AdminClient
     /// <example>
     /// <code>
     /// await client.Admin.StoreTracedTestCaseAsync(
-    ///     &quot;d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32&quot;,
-    ///     &quot;string&quot;,
+    ///     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///     "string",
     ///     new StoreTracedTestCaseRequest
     ///     {
     ///         Result = new TestCaseResultWithStdout
@@ -188,16 +188,16 @@ public partial class AdminClient
     ///             Result = new TestCaseResult
     ///             {
     ///                 ExpectedResult = 1,
-    ///                 ActualResult = new Dictionary&lt;object, object?&gt;() { { &quot;key&quot;, &quot;value&quot; } },
+    ///                 ActualResult = new Dictionary&lt;object, object?&gt;() { { "key", "value" } },
     ///                 Passed = true,
     ///             },
-    ///             Stdout = &quot;string&quot;,
+    ///             Stdout = "string",
     ///         },
     ///         TraceResponses = new List&lt;TraceResponse&gt;()
     ///         {
     ///             new TraceResponse
     ///             {
-    ///                 SubmissionId = &quot;d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32&quot;,
+    ///                 SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///                 LineNumber = 1,
     ///                 ReturnValue = 1,
     ///                 ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
@@ -206,7 +206,7 @@ public partial class AdminClient
     ///                     NumStackFrames = 1,
     ///                     TopStackFrame = new StackFrame
     ///                     {
-    ///                         MethodName = &quot;string&quot;,
+    ///                         MethodName = "string",
     ///                         LineNumber = 1,
     ///                         Scopes = new List&lt;Scope&gt;()
     ///                         {
@@ -214,7 +214,7 @@ public partial class AdminClient
     ///                         },
     ///                     },
     ///                 },
-    ///                 Stdout = &quot;string&quot;,
+    ///                 Stdout = "string",
     ///             },
     ///         },
     ///     }
@@ -255,15 +255,15 @@ public partial class AdminClient
     /// <example>
     /// <code>
     /// await client.Admin.StoreTracedTestCaseV2Async(
-    ///     &quot;d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32&quot;,
-    ///     &quot;string&quot;,
+    ///     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///     "string",
     ///     new List&lt;TraceResponseV2&gt;()
     ///     {
     ///         new TraceResponseV2
     ///         {
-    ///             SubmissionId = &quot;d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32&quot;,
+    ///             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///             LineNumber = 1,
-    ///             File = new TracedFile { Filename = &quot;string&quot;, Directory = &quot;string&quot; },
+    ///             File = new TracedFile { Filename = "string", Directory = "string" },
     ///             ReturnValue = 1,
     ///             ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
     ///             Stack = new StackInformation
@@ -271,7 +271,7 @@ public partial class AdminClient
     ///                 NumStackFrames = 1,
     ///                 TopStackFrame = new StackFrame
     ///                 {
-    ///                     MethodName = &quot;string&quot;,
+    ///                     MethodName = "string",
     ///                     LineNumber = 1,
     ///                     Scopes = new List&lt;Scope&gt;()
     ///                     {
@@ -279,7 +279,7 @@ public partial class AdminClient
     ///                     },
     ///                 },
     ///             },
-    ///             Stdout = &quot;string&quot;,
+    ///             Stdout = "string",
     ///         },
     ///     }
     /// );
@@ -320,30 +320,30 @@ public partial class AdminClient
     /// <example>
     /// <code>
     /// await client.Admin.StoreTracedWorkspaceAsync(
-    ///     &quot;d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32&quot;,
+    ///     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///     new StoreTracedWorkspaceRequest
     ///     {
     ///         WorkspaceRunDetails = new WorkspaceRunDetails
     ///         {
     ///             ExceptionV2 = new ExceptionInfo
     ///             {
-    ///                 ExceptionType = &quot;string&quot;,
-    ///                 ExceptionMessage = &quot;string&quot;,
-    ///                 ExceptionStacktrace = &quot;string&quot;,
+    ///                 ExceptionType = "string",
+    ///                 ExceptionMessage = "string",
+    ///                 ExceptionStacktrace = "string",
     ///             },
     ///             Exception = new ExceptionInfo
     ///             {
-    ///                 ExceptionType = &quot;string&quot;,
-    ///                 ExceptionMessage = &quot;string&quot;,
-    ///                 ExceptionStacktrace = &quot;string&quot;,
+    ///                 ExceptionType = "string",
+    ///                 ExceptionMessage = "string",
+    ///                 ExceptionStacktrace = "string",
     ///             },
-    ///             Stdout = &quot;string&quot;,
+    ///             Stdout = "string",
     ///         },
     ///         TraceResponses = new List&lt;TraceResponse&gt;()
     ///         {
     ///             new TraceResponse
     ///             {
-    ///                 SubmissionId = &quot;d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32&quot;,
+    ///                 SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///                 LineNumber = 1,
     ///                 ReturnValue = 1,
     ///                 ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
@@ -352,7 +352,7 @@ public partial class AdminClient
     ///                     NumStackFrames = 1,
     ///                     TopStackFrame = new StackFrame
     ///                     {
-    ///                         MethodName = &quot;string&quot;,
+    ///                         MethodName = "string",
     ///                         LineNumber = 1,
     ///                         Scopes = new List&lt;Scope&gt;()
     ///                         {
@@ -360,7 +360,7 @@ public partial class AdminClient
     ///                         },
     ///                     },
     ///                 },
-    ///                 Stdout = &quot;string&quot;,
+    ///                 Stdout = "string",
     ///             },
     ///         },
     ///     }
@@ -400,14 +400,14 @@ public partial class AdminClient
     /// <example>
     /// <code>
     /// await client.Admin.StoreTracedWorkspaceV2Async(
-    ///     &quot;d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32&quot;,
+    ///     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///     new List&lt;TraceResponseV2&gt;()
     ///     {
     ///         new TraceResponseV2
     ///         {
-    ///             SubmissionId = &quot;d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32&quot;,
+    ///             SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///             LineNumber = 1,
-    ///             File = new TracedFile { Filename = &quot;string&quot;, Directory = &quot;string&quot; },
+    ///             File = new TracedFile { Filename = "string", Directory = "string" },
     ///             ReturnValue = 1,
     ///             ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
     ///             Stack = new StackInformation
@@ -415,7 +415,7 @@ public partial class AdminClient
     ///                 NumStackFrames = 1,
     ///                 TopStackFrame = new StackFrame
     ///                 {
-    ///                     MethodName = &quot;string&quot;,
+    ///                     MethodName = "string",
     ///                     LineNumber = 1,
     ///                     Scopes = new List&lt;Scope&gt;()
     ///                     {
@@ -423,7 +423,7 @@ public partial class AdminClient
     ///                     },
     ///                 },
     ///             },
-    ///             Stdout = &quot;string&quot;,
+    ///             Stdout = "string",
     ///         },
     ///     }
     /// );

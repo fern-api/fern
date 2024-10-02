@@ -35,7 +35,7 @@ public partial class SeedApiClient
 
     /// <example>
     /// <code>
-    /// await client.GetAccountAsync(&quot;string&quot;);
+    /// await client.GetAccountAsync("string");
     /// </code>
     /// </example>
     public async Task<Account> GetAccountAsync(
