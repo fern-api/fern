@@ -23,6 +23,7 @@ export enum AsIsFiles {
     RawGrpcClient = "RawGrpcClient.Template.cs",
     StringEnum = "StringEnum.Template.cs",
     EnumSerializer = "EnumSerializer.cs",
+    EnumSerializerTests = "EnumSerializerTests.Template.cs",
     StringEnumSerializer = "StringEnumSerializer.cs",
     StringEnumSerializerTests = "StringEnumSerializerTests.Template.cs",
     TemplateCsProj = "Template.csproj",

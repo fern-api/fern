@@ -145,6 +145,8 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         const files = [AsIsFiles.RawClientTests];
         if (this.customConfig["enable-forward-compatible-enums"] ?? false) {
             files.push(AsIsFiles.StringEnumSerializerTests);
+        } else {
+            files.push(AsIsFiles.EnumSerializerTests);
         }
         return files;
     }

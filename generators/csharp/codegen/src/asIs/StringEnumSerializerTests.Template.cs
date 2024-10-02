@@ -41,7 +41,7 @@ public class StringEnumSerializerTests
 
 
     [Test]
-    public void ShouldParseNewEnum()
+    public void ShouldParseUnknownEnum()
     {
         var obj = JsonSerializer.Deserialize<DummyObject>(JsonWithUnknownEnum, JsonOptions);
         Assert.That(obj, Is.Not.Null);
@@ -49,7 +49,7 @@ public class StringEnumSerializerTests
     }
 
     [Test]
-    public void ShouldSerializeExistingEnum()
+    public void ShouldSerializeKnownEnumValue2()
     {
         var json = JsonSerializer.SerializeToElement(new DummyObject { EnumProperty = KnownEnumValue2 },
             JsonOptions);
