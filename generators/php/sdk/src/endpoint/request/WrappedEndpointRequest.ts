@@ -251,7 +251,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                             requestVarName,
                             formVarName,
                             propWireName: filePropSingle.key.wireValue,
-                            propSnakeName: filePropSingle.key.name.snakeCase.unsafeName,
+                            propSnakeName: this.context.getPropertyName(filePropSingle.key.name),
                             //contentType: filePropSingle.contentType,
                             isSequence: false,
                             isOptional: filePropSingle.isOptional
@@ -262,7 +262,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                             requestVarName,
                             formVarName,
                             propWireName: filePropArray.key.wireValue,
-                            propSnakeName: filePropArray.key.name.snakeCase.unsafeName,
+                            propSnakeName: this.context.getPropertyName(filePropArray.key.name),
                             //contentType: filePropArray.contentType,
                             isSequence: true,
                             isOptional: filePropArray.isOptional
@@ -357,10 +357,11 @@ export class WrappedEndpointRequest extends EndpointRequest {
             return undefined;
         }
 
+        const propName = this.context.getPropertyName(bodyProp.name.name);
         const isOptional = this.context.isOptional(bodyProp.valueType);
         const isSequence = this.context.isSequence(bodyProp.valueType);
 
-        let valueBlock = isSequence ? "$item" : `${requestVarName}->${bodyProp.name.wireValue}`;
+        let valueBlock = isSequence ? "$item" : `${requestVarName}->${propName}`;
         if (this.context.isEnum(bodyProp.valueType)) {
             valueBlock += "->value";
         } else if (this.context.isObject(bodyProp.valueType)) {
@@ -389,11 +390,11 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
         return php.codeblock((writer) => {
             if (isOptional) {
-                writer.controlFlow("if", php.codeblock(`${requestVarName}->${bodyProp.name.wireValue} != null`));
+                writer.controlFlow("if", php.codeblock(`${requestVarName}->${propName} != null`));
             }
 
             if (isSequence) {
-                writer.controlFlow("foreach", php.codeblock(`${requestVarName}->${bodyProp.name.wireValue} as $item`));
+                writer.controlFlow("foreach", php.codeblock(`${requestVarName}->${propName} as $item`));
             }
 
             writer.writeNodeStatement(
