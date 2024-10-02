@@ -3,7 +3,7 @@ displayName: Go SDK
 image: fernapi/fern-go-sdk
 changelogLocation: ../../generators/go/sdk/versions.yml
 
-artifactMetadata:
+buildScripts:
   compileScript:
     - go build -v ./...
   testScript:

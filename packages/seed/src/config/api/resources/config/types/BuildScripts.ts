@@ -5,9 +5,9 @@
 import * as FernSeedConfig from "../../..";
 
 /**
- * Metadata relating to the artifact produced by this generator
+ * Scripts pertaining to the artifact produced by this generator and how to build them (e.g. yarn install && yarn build for the TS SDK)
  */
-export interface ArtifactMetadata {
+export interface BuildScripts {
     preInstallScript?: FernSeedConfig.Script;
     installScript?: FernSeedConfig.Script;
     compileScript?: FernSeedConfig.Script;

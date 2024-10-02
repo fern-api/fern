@@ -28,7 +28,7 @@ types:
       defaultOutputMode: OutputMode
       generatorType: GeneratorType
 
-      artifactMetadata: optional<ArtifactMetadata>
+      buildScripts: optional<BuildScripts>
 
       customFixtureConfig:
         type: optional<FixtureConfigurations>
@@ -108,8 +108,8 @@ types:
         docs: |
           Environment variables to set when running the generator locally.
 
-  ArtifactMetadata:
-    docs: Metadata relating to the artifact produced by this generator
+  BuildScripts:
+    docs: Scripts pertaining to the artifact produced by this generator and how to build them (e.g. yarn install && yarn build for the TS SDK)
     properties:
       preInstallScript: optional<Script>
       installScript: optional<Script>

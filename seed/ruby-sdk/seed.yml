@@ -3,7 +3,7 @@ displayName: Ruby SDK
 image: fernapi/fern-ruby-sdk
 changelogLocation: ../../generators/ruby/sdk/versions.yml
 
-artifactMetadata:
+buildScripts:
   installScript:
     - bundle install
   testScript:

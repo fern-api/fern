@@ -3,7 +3,7 @@ displayName: Pydantic Model
 image: fernapi/fern-pydantic-model
 changelogLocation: ../../generators/python/pydantic/versions.yml
 
-artifactMetadata:
+buildScripts:
   installScript:
     - poetry shell
     - poetry install

@@ -7,7 +7,7 @@ export * from "./PublishConfiguration";
 export * from "./TestDockerConfiguration";
 export * from "./TestConfiguration";
 export * from "./LocalBuildInfo";
-export * from "./ArtifactMetadata";
+export * from "./BuildScripts";
 export * from "./DockerCommand";
 export * from "./Script";
 export * from "./DockerScriptConfig";

@@ -3,7 +3,7 @@ displayName: TypeScript Express
 changelogLocation: ../../generators/typescript/express/versions.yml
 image: fernapi/fern-typescript-express
 
-artifactMetadata:
+buildScripts:
   installScript:
     - yarn install
   compileScript:

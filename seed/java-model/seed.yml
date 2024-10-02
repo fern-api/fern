@@ -3,7 +3,7 @@ displayName: Java Model
 changelogLocation: ../../generators/java/model/versions.yml
 image: fernapi/fern-java-model
 
-artifactMetadata:
+buildScripts:
   compileScript:
     - ./gradlew compileJava
 

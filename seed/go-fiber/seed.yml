@@ -3,7 +3,7 @@ displayName: Fiber
 image: fernapi/fern-go-fiber
 changelogLocation: ../../generators/go/fiber/versions.yml
 
-artifactMetadata:
+buildScripts:
   compileScript:
     - go build -v ./...
   testScript:

@@ -3,7 +3,7 @@ displayName: FastAPI
 image: fernapi/fern-fastapi-server
 changelogLocation: ../../generators/python/fastapi/versions.yml
 
-artifactMetadata:
+buildScripts:
   installScript:
     - poetry shell
     - poetry install

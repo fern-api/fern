@@ -3,7 +3,7 @@ displayName: C# Model
 image: fernapi/fern-csharp-model
 changelogLocation: ../../generators/csharp/model/versions.yml
 
-artifactMetadata:
+buildScripts:
   compileScript:
     - dotnet build src -c Release /p:ContinuousIntegrationBuild=true .
 
