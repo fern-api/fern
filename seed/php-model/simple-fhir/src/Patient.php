@@ -3,11 +3,14 @@
 namespace Seed;
 
 use Seed\Core\Json\SerializableType;
+use Seed\Traits\BaseResource;
 use Seed\Core\Json\JsonProperty;
 use Seed\Core\Types\ArrayType;
 
 class Patient extends SerializableType
 {
+    use BaseResource;
+
     /**
      * @var string $resourceType
      */
@@ -31,6 +34,9 @@ class Patient extends SerializableType
      *   resourceType: string,
      *   name: string,
      *   scripts: array<Script>,
+     *   id: string,
+     *   relatedResources: array<Account|Patient|Practitioner|Script>,
+     *   memo: Memo,
      * } $values
      */
     public function __construct(
@@ -39,5 +45,8 @@ class Patient extends SerializableType
         $this->resourceType = $values['resourceType'];
         $this->name = $values['name'];
         $this->scripts = $values['scripts'];
+        $this->id = $values['id'];
+        $this->relatedResources = $values['relatedResources'];
+        $this->memo = $values['memo'];
     }
 }
