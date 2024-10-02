@@ -34,7 +34,7 @@ export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelC
             AsIsFiles.JsonConfiguration,
             AsIsFiles.OneOfSerializer
         ];
-        if (this.customConfig["enable-forward-compatible-enums"] ?? true) {
+        if (this.customConfig["enable-forward-compatible-enums"] ?? false) {
             files.push(AsIsFiles.StringEnum);
             files.push(AsIsFiles.StringEnumSerializer);
         } else {
