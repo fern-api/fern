@@ -67,6 +67,7 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                         schema: {
                             auth: true,
                             path,
+                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
                             method: method as any,
                             response: endpointDeclaration.returns
                         },

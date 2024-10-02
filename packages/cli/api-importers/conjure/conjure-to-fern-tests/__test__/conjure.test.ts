@@ -31,7 +31,7 @@ describe("ir", () => {
                     workspaceName: fixture.name
                 });
                 if (!workspace.didSucceed) {
-                    throw new Error(`Failed to convert conjure fixture ${fixture.name}\n${JSON.stringify(workspace.failures)}`)
+                    throw new Error(`Failed to convert conjure fixture ${fixture.name}\n${JSON.stringify(workspace.failures)}`);
                 }
                 expect(await workspace.workspace.toFernWorkspace({ context})).toMatchSnapshot(); 
             },
