@@ -1,0 +1,287 @@
+types:
+  conjure-imports:
+    commons: commons.yml
+    problem: problem.yml
+  definitions:
+    default-package: com.birch.trace.v2problems
+    objects:
+      TestCaseTemplateId:
+        alias: string
+      TestCaseId:
+        alias: string
+      ParameterId:
+        alias: string
+      ProblemInfoV2:
+        fields:
+          problemId: commons.ProblemId
+          problemDescription: problem.ProblemDescription
+          problemName: string
+          problemVersion: integer
+          supportedLanguages: set<commons.Language>
+          customFiles: CustomFiles
+          generatedFiles: GeneratedFiles
+          customTestCaseTemplates: list<TestCaseTemplate>
+          testcases: list<TestCaseV2>
+          isPublic: boolean
+      LightweightProblemInfoV2:
+        fields:
+          problemId: commons.ProblemId
+          problemName: string
+          problemVersion: integer
+          variableTypes: set<commons.VariableType>
+      CreateProblemRequestV2:
+        fields:
+          problemName: string
+          problemDescription: problem.ProblemDescription
+          customFiles: CustomFiles
+          customTestCaseTemplates: list<TestCaseTemplate>
+          testcases: list<TestCaseV2>
+          supportedLanguages: set<commons.Language>
+          isPublic: boolean
+      TestCaseV2:
+        fields:
+          metadata: TestCaseMetadata
+          implementation: TestCaseImplementationReference
+          arguments: map<ParameterId, commons.VariableValue>
+          expects: optional<TestCaseExpects>
+      TestCaseExpects:
+        fields:
+          expectedStdout: optional<string>
+      TestCaseImplementationReference:
+        union:
+          templateId: TestCaseTemplateId
+          implementation: TestCaseImplementation
+      BasicTestCaseTemplate:
+        fields:
+          templateId: TestCaseTemplateId
+          name: string
+          description: TestCaseImplementationDescription
+          expectedValueParameterId: ParameterId
+      TestCaseTemplate:
+        fields:
+          templateId: TestCaseTemplateId
+          name: string
+          implementation: TestCaseImplementation
+      TestCaseImplementation:
+        fields:
+          description: TestCaseImplementationDescription
+          function: TestCaseFunction
+      TestCaseFunction:
+        union:
+          withActualResult: TestCaseWithActualResultImplementation
+          custom: VoidFunctionDefinition
+      TestCaseWithActualResultImplementation:
+        fields:
+          getActualResult: NonVoidFunctionDefinition
+          assertCorrectnessCheck: AssertCorrectnessCheck
+      VoidFunctionDefinition:
+        fields:
+          parameters: list<Parameter>
+          code: FunctionImplementationForMultipleLanguages
+      Parameter:
+        fields:
+          parameterId: ParameterId
+          name: string
+          variableType: commons.VariableType
+      NonVoidFunctionDefinition:
+        fields:
+          signature: NonVoidFunctionSignature
+          code: FunctionImplementationForMultipleLanguages
+      VoidFunctionSignature:
+        fields:
+          parameters: list<Parameter>
+      NonVoidFunctionSignature:
+        fields:
+          parameters: list<Parameter>
+          returnType: commons.VariableType
+      VoidFunctionSignatureThatTakesActualResult:
+        fields:
+          parameters: list<Parameter>
+          actualResultType: commons.VariableType
+      AssertCorrectnessCheck:
+        union:
+          deepEquality: DeepEqualityCorrectnessCheck
+          custom: VoidFunctionDefinitionThatTakesActualResult
+      DeepEqualityCorrectnessCheck:
+        fields:
+          expectedValueParameterId: ParameterId
+      VoidFunctionDefinitionThatTakesActualResult:
+        docs: The generated signature will include an additional param, actualResult
+        fields:
+          additionalParameters: list<Parameter>
+          code: FunctionImplementationForMultipleLanguages
+      TestCaseImplementationDescription:
+        fields:
+          boards: list<TestCaseImplementationDescriptionBoard>
+      TestCaseImplementationDescriptionBoard:
+        union:
+          html: string
+          paramId: ParameterId
+      TestCaseMetadata:
+         fields:
+           id: TestCaseId
+           name: string
+           hidden: boolean
+      FunctionImplementationForMultipleLanguages:
+        fields:
+          codeByLanguage: map<commons.Language, FunctionImplementation>
+      FunctionImplementation:
+        fields:
+          impl: string;
+          imports: optional<string>;
+      GeneratedFiles:
+        fields:
+          generatedTestCaseFiles: map<commons.Language, Files>
+          generatedTemplateFiles: map<commons.Language, Files>
+          other: map<commons.Language, Files>
+      CustomFiles:
+        union:
+          basic: BasicCustomFiles
+          custom: map<commons.Language, Files>
+      BasicCustomFiles:
+        fields:
+          methodName: string
+          signature: NonVoidFunctionSignature
+          additionalFiles: map<commons.Language, Files>
+          basicTestCaseTemplate: BasicTestCaseTemplate
+      Files:
+        fields:
+          files: list<FileInfoV2>
+      FileInfoV2:
+        fields:
+          filename: string
+          directory: string
+          contents: string
+          editable: boolean
+      DefaultProvidedFile:
+        fields:
+          file: FileInfoV2
+          relatedTypes: list<commons.VariableType>
+      GetBasicSolutionFileRequest:
+        fields:
+          methodName: string
+          signature: NonVoidFunctionSignature
+      GetBasicSolutionFileResponse:
+        fields:
+          solutionFileByLanguage: map<commons.Language, FileInfoV2>
+      GetFunctionSignatureRequest:
+        fields:
+          functionSignature: FunctionSignature
+      FunctionSignature:
+        union:
+          void: VoidFunctionSignature
+          nonVoid: NonVoidFunctionSignature
+          voidThatTakesActualResult:
+            type: VoidFunctionSignatureThatTakesActualResult
+            docs: Useful when specifying custom grading for a testcase where actualResult is defined.
+      GetFunctionSignatureResponse:
+        fields:
+          functionByLanguage: map<commons.Language, string>
+      GetDefaultProvidedFilesResponse:
+        fields:
+          filesByLanguage: map<commons.Language, list<DefaultProvidedFile>>
+
+      GetGeneratedTestCaseFileRequest:
+        fields:
+          template: optional<TestCaseTemplate>
+          testCase: TestCaseV2
+        docs: Supply template if the test case relies on it
+
+      GetGeneratedTestCaseTemplateFileRequest:
+        fields:
+          template: TestCaseTemplate
+
+
+services:
+  ProblemInfoServicV2:
+    name: Problem Info Service V2
+    package: com.birch.trace.problems
+    base-path: /problems-v2
+    endpoints:
+
+      getLightweightProblems:
+        docs: Returns lightweight versions of all problems
+        http: GET /lightweight-problem-info
+        args: {}
+        returns: list<LightweightProblemInfoV2>
+
+      getProblems:
+        docs: Returns latest versions of all problems
+        http: GET /problem-info
+        args: { }
+        returns: list<ProblemInfoV2>
+
+      getLatestProblem:
+        docs: Returns latest version of a problem
+        http: GET /problem-info/{problemId}
+        args:
+          problemId: commons.ProblemId
+        returns: ProblemInfoV2
+
+      getProblemVersion:
+        docs: Returns requested version of a problem
+        http: GET /problem-info/{problemId}/version/{problemVersion}
+        args:
+          problemId: commons.ProblemId
+          problemVersion: integer
+        returns: ProblemInfoV2
+
+  ProblemCrudServiceV2:
+    name: V2 Problem Creation Service
+    package: com.birch.trace.v2problems
+    base-path: /problem-crud-v2
+    endpoints:
+
+      createProblem:
+        docs: Creates a problem
+        http: POST /create
+        args:
+          request: CreateProblemRequestV2
+        returns: problem.CreateProblemResponse
+
+      updateProblem:
+        docs: Updates a problem
+        http: POST /update/{problemId}
+        args:
+          problemId: commons.ProblemId
+          request: CreateProblemRequestV2
+        returns: problem.UpdateProblemResponse
+
+      deleteProblem:
+        docs: Soft deletes a problem
+        http: DELETE /delete/{problemId}
+        args:
+          problemId: commons.ProblemId
+
+      getFunctionSignature:
+        docs: Get the generated function signature in every language
+        http: POST /function-signature
+        args:
+          request: GetFunctionSignatureRequest
+        returns: GetFunctionSignatureResponse
+
+      getBasicSolutionFile:
+        docs: Returns solution file for basic starter files
+        http: POST /basic-solution-file
+        args:
+          request: GetBasicSolutionFileRequest
+        returns: GetBasicSolutionFileResponse
+
+      getDefaultDirectoryForProblemFiles:
+        docs: Returns the default directory where a problem's files should live
+        http: GET /default-problem-files-directory
+        returns: map<commons.Language, string>
+
+      getGeneratedTestCaseFile:
+        docs: Returns the default directory where a problem's files should live
+        http: POST /generated-test-case-file
+        args:
+          request: GetGeneratedTestCaseFileRequest
+        returns: map<commons.Language, FileInfoV2>
+
+      getGeneratedTestCaseTemplateFile:
+        docs: Returns the default directory where a problem's files should live
+        http: POST /generated-test-case-template-file
+        args:
+          request: GetGeneratedTestCaseTemplateFileRequest
+        returns: map<commons.Language, FileInfoV2>
