@@ -1,0 +1,101 @@
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
+import { Field } from "./Field";
+import { Method } from "./Method";
+import { Comment } from "./Comment";
+import { orderByAccess } from "./utils/orderByAccess";
+import { ClassReference } from "./ClassReference";
+
+export declare namespace Trait {
+    interface Args {
+        /* The name of the PHP trait */
+        name: string;
+        /* The namespace of the PHP trait */
+        namespace: string;
+        /* Docs associated with the trait */
+        docs?: string;
+        /* The traits that this trait uses, if any */
+        usedTraits?: ClassReference[];
+    }
+}
+
+export class Trait extends AstNode {
+    public readonly name: string;
+    public readonly namespace: string;
+    public readonly docs: string | undefined;
+    public readonly usedTraits: ClassReference[];
+
+    public readonly fields: Field[] = [];
+    public readonly methods: Method[] = [];
+
+    constructor({ name, namespace, docs, usedTraits }: Trait.Args) {
+        super();
+        this.name = name;
+        this.namespace = namespace;
+        this.docs = docs;
+        this.usedTraits = usedTraits ?? [];
+    }
+
+    public addField(field: Field): void {
+        this.fields.push(field);
+    }
+
+    public addMethod(method: Method): void {
+        this.methods.push(method);
+    }
+
+    public write(writer: Writer): void {
+        this.writeComment(writer);
+        writer.write(`trait ${this.name} `);
+        writer.newLine();
+        writer.writeLine("{");
+        writer.indent();
+
+        if (this.usedTraits.length > 0) {
+            writer.write("use ");
+            this.usedTraits.forEach((trait, index) => {
+                if (index > 0) {
+                    writer.write(",");
+                }
+                writer.writeNode(trait);
+            });
+            writer.writeTextStatement("");
+            writer.newLine();
+        }
+
+        this.writeFields({ writer, fields: orderByAccess(this.fields) });
+        this.writeMethods({ writer, methods: orderByAccess(this.methods) });
+
+        writer.dedent();
+        writer.writeLine("}");
+        return;
+    }
+
+    private writeComment(writer: Writer): void {
+        if (this.docs == null) {
+            return undefined;
+        }
+        const comment = new Comment({ docs: this.docs });
+        comment.write(writer);
+    }
+
+    private writeFields({ writer, fields }: { writer: Writer; fields: Field[] }): void {
+        fields.forEach((field, index) => {
+            if (index > 0) {
+                writer.newLine();
+            }
+            field.write(writer);
+            writer.writeNewLineIfLastLineNot();
+        });
+    }
+
+    private writeMethods({ writer, methods }: { writer: Writer; methods: Method[] }): void {
+        methods.forEach((method, index) => {
+            if (index > 0) {
+                writer.newLine();
+            }
+            method.write(writer);
+            writer.writeNewLineIfLastLineNot();
+        });
+    }
+}

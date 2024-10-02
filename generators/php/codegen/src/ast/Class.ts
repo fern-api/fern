@@ -7,6 +7,8 @@ import { Field } from "./Field";
 import { Method } from "./Method";
 import { Comment } from "./Comment";
 import { orderByAccess } from "./utils/orderByAccess";
+import { ClassReference } from "./ClassReference";
+import { Trait } from "./Trait";
 
 export declare namespace Class {
     interface Args {
@@ -20,6 +22,8 @@ export declare namespace Class {
         docs?: string;
         /* The class to inherit from if any */
         parentClassReference?: AstNode;
+        /* The traits that this class uses, if any */
+        usedTraits?: ClassReference[];
     }
 
     interface Constructor {
@@ -38,18 +42,20 @@ export class Class extends AstNode {
     public readonly abstract: boolean;
     public readonly docs: string | undefined;
     public readonly parentClassReference: AstNode | undefined;
+    public readonly usedTraits: ClassReference[];
 
     public readonly fields: Field[] = [];
     public readonly methods: Method[] = [];
     private constructor_: Class.Constructor | undefined;
 
-    constructor({ name, namespace, abstract, docs, parentClassReference }: Class.Args) {
+    constructor({ name, namespace, abstract, docs, parentClassReference, usedTraits }: Class.Args) {
         super();
         this.name = name;
         this.namespace = namespace;
         this.abstract = abstract ?? false;
         this.docs = docs;
         this.parentClassReference = parentClassReference;
+        this.usedTraits = usedTraits ?? [];
     }
 
     public addConstructor(constructor: Class.Constructor): void {
@@ -62,6 +68,10 @@ export class Class extends AstNode {
 
     public addMethod(method: Method): void {
         this.methods.push(method);
+    }
+
+    public addUsedTrait(traitClassReference: ClassReference): void {
+        this.usedTraits.push(traitClassReference);
     }
 
     public write(writer: Writer): void {
@@ -77,6 +87,17 @@ export class Class extends AstNode {
         writer.newLine();
         writer.writeLine("{");
         writer.indent();
+        if (this.usedTraits.length > 0) {
+            writer.write("use ");
+            this.usedTraits.forEach((trait, index) => {
+                if (index > 0) {
+                    writer.write(",");
+                }
+                writer.writeNode(trait);
+            });
+            writer.writeTextStatement("");
+            writer.newLine();
+        }
 
         this.writeFields({ writer, fields: orderByAccess(this.fields) });
         if (this.constructor != null || this.methods.length > 0) {
@@ -141,13 +162,15 @@ export class Class extends AstNode {
     }
 
     private writeFields({ writer, fields }: { writer: Writer; fields: Field[] }): void {
-        fields.forEach((field, index) => {
-            if (index > 0) {
-                writer.newLine();
-            }
-            field.write(writer);
-            writer.writeNewLineIfLastLineNot();
-        });
+        fields
+            .filter((field) => !field.inherited)
+            .forEach((field, index) => {
+                if (index > 0) {
+                    writer.newLine();
+                }
+                field.write(writer);
+                writer.writeNewLineIfLastLineNot();
+            });
     }
 
     private writeMethods({ writer, methods }: { writer: Writer; methods: Method[] }): void {

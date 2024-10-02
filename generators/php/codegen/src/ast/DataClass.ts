@@ -9,6 +9,8 @@ import { Type } from "./Type";
 import { orderByAccess } from "./utils/orderByAccess";
 import { php } from "..";
 import { convertFromPhpVariableName } from "./utils/convertFromPhpVariableName";
+import { Trait } from "./Trait";
+import { ClassReference } from "../php";
 
 const CONSTRUCTOR_PARAMETER_NAME = "values";
 
@@ -21,11 +23,11 @@ export class DataClass extends AstNode {
     public readonly namespace: string;
     private class_: Class;
 
-    constructor({ name, namespace, abstract, docs, parentClassReference }: DataClass.Args) {
+    constructor({ name, namespace, abstract, docs, parentClassReference, usedTraits }: DataClass.Args) {
         super();
         this.name = name;
         this.namespace = namespace;
-        this.class_ = new Class({ name, namespace, abstract, docs, parentClassReference });
+        this.class_ = new Class({ name, namespace, abstract, docs, parentClassReference, usedTraits });
     }
 
     public addField(field: Field): void {
@@ -34,6 +36,9 @@ export class DataClass extends AstNode {
 
     public addMethod(method: Method): void {
         this.class_.addMethod(method);
+    }
+    public addUsedTrait(traitClassRefeference: ClassReference): void {
+        this.class_.addUsedTrait(traitClassRefeference);
     }
 
     public write(writer: Writer): void {

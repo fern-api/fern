@@ -4,7 +4,7 @@ import path from "path";
 import { BasePhpCustomConfigSchema } from "../custom-config/BasePhpCustomConfigSchema";
 import { File } from "@fern-api/generator-commons";
 import { Class } from "../ast/Class";
-import { Enum } from "../ast";
+import { Enum, Trait } from "../ast";
 import { DataClass } from "../ast/DataClass";
 
 export type Namespace = string;
@@ -12,7 +12,7 @@ export type Namespace = string;
 export declare namespace PhpFile {
     interface Args {
         /* The class to be written to the PHP File */
-        clazz: Class | DataClass | Enum;
+        clazz: Class | DataClass | Trait | Enum;
         /* Directory of the filepath */
         directory: RelativeFilePath;
         /* The root namespace of the project. Can be pulled directly from context. */
@@ -49,7 +49,7 @@ function phpFileContent({
     rootNamespace,
     customConfig
 }: {
-    clazz: Class | DataClass | Enum;
+    clazz: Class | DataClass | Trait | Enum;
     rootNamespace: string;
     customConfig: BasePhpCustomConfigSchema;
 }): string {

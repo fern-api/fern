@@ -1,6 +1,12 @@
 import { php, PhpFile, FileGenerator, FileLocation } from "@fern-api/php-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { HttpEndpoint, SdkRequestWrapper, ServiceId } from "@fern-fern/ir-sdk/api";
+import {
+    HttpEndpoint,
+    InlinedRequestBodyProperty,
+    ObjectProperty,
+    SdkRequestWrapper,
+    ServiceId
+} from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "../../SdkCustomConfig";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 
@@ -78,16 +84,13 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
             },
             inlinedRequestBody: (request) => {
                 for (const property of request.properties) {
-                    const type = this.context.phpTypeMapper.convert({ reference: property.valueType });
-                    clazz.addField(
-                        php.field({
-                            name: this.context.getPropertyName(property.name.name),
-                            type,
-                            access: "public",
-                            docs: property.docs,
-                            attributes: this.context.phpAttributeMapper.convert({ type, property })
-                        })
-                    );
+                    clazz.addField(this.toField({ property, inherited: false }));
+                }
+                for (const property of request.extendedProperties ?? []) {
+                    clazz.addField(this.toField({ property, inherited: true }));
+                }
+                for (const declaredTypeName of request.extends) {
+                    clazz.addUsedTrait(this.context.phpTypeMapper.convertToTraitClassReference(declaredTypeName));
                 }
             },
             fileUpload: () => undefined,
@@ -100,6 +103,21 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
             directory: this.location.directory,
             rootNamespace: this.context.getRootNamespace(),
             customConfig: this.context.customConfig
+        });
+    }
+
+    private toField({ property, inherited }: { property: InlinedRequestBodyProperty; inherited: boolean }): php.Field {
+        const convertedType = this.context.phpTypeMapper.convert({ reference: property.valueType });
+        return php.field({
+            type: convertedType,
+            name: this.context.getPropertyName(property.name.name),
+            access: "public",
+            docs: property.docs,
+            attributes: this.context.phpAttributeMapper.convert({
+                type: convertedType,
+                property
+            }),
+            inherited
         });
     }
 
