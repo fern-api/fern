@@ -18,14 +18,29 @@ export declare namespace Field {
         const_?: boolean;
         /* Whether the the field should use the new keyword */
         new_?: boolean;
-        /* Whether the field has a getter method */
-        get?: boolean;
-        /* Whether the field has an init method. Cannot be used with a set method. */
-        init?: boolean;
-        /* Whether the field has an set method. Cannot be used with an init method. */
-        set?: boolean;
+        /*
+        The access modifier for the get, no get is generated if false.
+        If true, get is added without an access modifier.
+        Defaults to false. */
+        get?: Access | boolean;
+        /*
+        The access modifier for the init, no init is generated if false.
+        If true, init is added without an access modifier.
+        Cannot be used with a set method.
+        Defaults to false.
+        */
+        init?: Access | boolean;
+        /*
+        The access modifier for the set, no get is generated if false.
+        If true, set is added without an access modifier.
+        Cannot be used with an init method.
+        Defaults to false.
+        */
+        set?: Access | boolean;
         /* Whether the field is static */
         static_?: boolean;
+        /* Whether the field is readonly */
+        readonly?: boolean;
         /* Field annotations */
         annotations?: Annotation[];
         /* The initializer for the field */
@@ -47,14 +62,15 @@ export class Field extends AstNode {
     private type: Type;
     private const_: boolean;
     private new_: boolean;
-    private get: boolean;
-    private init: boolean;
-    private set: boolean;
+    private get: Access | boolean;
+    private init: Access | boolean;
+    private set: Access | boolean;
     private annotations: Annotation[];
-    private initializer: CodeBlock | undefined;
-    private summary: string | undefined;
-    private jsonPropertyName: string | undefined;
-    private static_: boolean | undefined;
+    private initializer?: CodeBlock;
+    private summary?: string;
+    private jsonPropertyName?: string;
+    private readonly?: boolean;
+    private static_?: boolean;
     private useRequired: boolean;
     private skipDefaultInitializer: boolean;
 
@@ -71,6 +87,7 @@ export class Field extends AstNode {
         initializer,
         summary,
         jsonPropertyName,
+        readonly,
         static_,
         useRequired,
         skipDefaultInitializer
@@ -80,14 +97,15 @@ export class Field extends AstNode {
         this.type = type;
         this.const_ = const_ ?? false;
         this.new_ = new_ ?? false;
-        this.get = get ?? false;
-        this.init = init ?? false;
-        this.set = set ?? false;
         this.access = access;
+        this.get = get ?? false;
+        this.set = set ?? false;
+        this.init = init ?? false;
         this.annotations = annotations ?? [];
         this.initializer = initializer;
         this.summary = summary;
         this.jsonPropertyName = jsonPropertyName;
+        this.readonly = readonly;
         this.static_ = static_;
         this.useRequired = useRequired ?? false;
         this.skipDefaultInitializer = skipDefaultInitializer ?? false;
@@ -139,6 +157,9 @@ export class Field extends AstNode {
         if (this.static_) {
             writer.write("static ");
         }
+        if (this.readonly) {
+            writer.write("readonly ");
+        }
         writer.writeNode(this.type);
         writer.write(` ${this.name}`);
 
@@ -146,12 +167,21 @@ export class Field extends AstNode {
         if ((this.get || this.init || this.set) && !useExpressionBodiedPropertySyntax) {
             writer.write(" { ");
             if (this.get) {
+                if (this.get !== true && this.access !== this.get) {
+                    writer.write(`${this.get} `);
+                }
                 writer.write("get; ");
             }
             if (this.init) {
+                if (this.init !== true && this.access !== this.init) {
+                    writer.write(`${this.init} `);
+                }
                 writer.write("init; ");
             }
             if (this.set) {
+                if (this.set !== true && this.access !== this.set) {
+                    writer.write(`${this.set} `);
+                }
                 writer.write("set; ");
             }
             writer.write("}");

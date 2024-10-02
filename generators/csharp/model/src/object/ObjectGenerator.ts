@@ -31,7 +31,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
             ...this.classReference,
             partial: false,
             access: "public",
-            record: true
+            type: "record"
         });
         const flattenedProperties = [
             ...this.objectDeclaration.properties,

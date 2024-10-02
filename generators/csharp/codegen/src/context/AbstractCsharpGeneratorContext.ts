@@ -19,7 +19,8 @@ import {
     DATETIME_SERIALIZER_CLASS_NAME,
     JSON_UTILS_CLASS_NAME,
     ONE_OF_SERIALIZER_CLASS_NAME,
-    STRING_ENUM_SERIALIZER_CLASS_NAME
+    STRING_ENUM_SERIALIZER_CLASS_NAME,
+    ENUM_SERIALIZER_CLASS_NAME
 } from "../AsIs";
 import { Type } from "../ast";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
@@ -159,6 +160,13 @@ export abstract class AbstractCsharpGeneratorContext<
         return csharp.classReference({
             namespace: this.getCoreNamespace(),
             name: STRING_ENUM_SERIALIZER_CLASS_NAME
+        });
+    }
+
+    public getEnumSerializerClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: this.getCoreNamespace(),
+            name: ENUM_SERIALIZER_CLASS_NAME
         });
     }
 

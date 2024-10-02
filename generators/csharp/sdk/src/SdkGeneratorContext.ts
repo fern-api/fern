@@ -133,6 +133,12 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         if (this.hasGrpcEndpoints()) {
             files.push(AsIsFiles.RawGrpcClient);
         }
+        if (this.customConfig["enable-forward-compatible-enums"] ?? true) {
+            files.push(AsIsFiles.StringEnum);
+            files.push(AsIsFiles.StringEnumSerializer);
+        } else {
+            files.push(AsIsFiles.EnumSerializer);
+        }
         return files;
     }
 

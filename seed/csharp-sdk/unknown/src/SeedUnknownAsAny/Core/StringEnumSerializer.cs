@@ -4,50 +4,23 @@ using System.Text.Json.Serialization;
 
 namespace SeedUnknownAsAny.Core;
 
-internal class StringEnumSerializer<TEnum> : JsonConverter<TEnum>
-    where TEnum : struct, System.Enum
+internal class StringEnumSerializer<T> : JsonConverter<T>
+    where T : IStringEnum
 {
-    private readonly Dictionary<TEnum, string> _enumToString = new();
-    private readonly Dictionary<string, TEnum> _stringToEnum = new();
-
-    public StringEnumSerializer()
-    {
-        var type = typeof(TEnum);
-        var values = Enum.GetValues(type);
-
-        foreach (var value in values)
-        {
-            var enumValue = (TEnum)value;
-            var enumMember = type.GetMember(enumValue.ToString())[0];
-            var attr = enumMember
-                .GetCustomAttributes(typeof(EnumMemberAttribute), false)
-                .Cast<EnumMemberAttribute>()
-                .FirstOrDefault();
-
-            var stringValue =
-                attr?.Value
-                ?? value.ToString()
-                ?? throw new Exception("Unexpected null enum toString value");
-
-            _enumToString.Add(enumValue, stringValue);
-            _stringToEnum.Add(stringValue, enumValue);
-        }
-    }
-
-    public override TEnum Read(
+    public override T? Read(
         ref Utf8JsonReader reader,
-        System.Type typeToConvert,
+        Type typeToConvert,
         JsonSerializerOptions options
     )
     {
         var stringValue =
             reader.GetString()
             ?? throw new Exception("The JSON value could not be read as a string.");
-        return _stringToEnum.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
+        return (T)Activator.CreateInstance(typeToConvert, stringValue);
     }
 
-    public override void Write(Utf8JsonWriter writer, TEnum value, JsonSerializerOptions options)
+    public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
     {
-        writer.WriteStringValue(_enumToString[value]);
+        writer.WriteStringValue(value.Value);
     }
 }

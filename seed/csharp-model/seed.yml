@@ -6,7 +6,7 @@ publish:
   preBuildCommands:
     - ./.github/actions/install
     - pnpm --filter @fern-api/fern-csharp-model dist:cli
-  docker: 
+  docker:
     file: ./generators/csharp/model/Dockerfile
     image: fernapi/fern-csharp-model
     context: .
@@ -31,6 +31,13 @@ fixtures:
         read-only-memory-types:
           - float
       outputFolder: read-only-memory
+  enum:
+    - customConfig:
+        enable-forward-compatible-enums: true
+      outputFolder: forward-compatible-enums
+    - customConfig:
+        enable-forward-compatible-enums: false
+      outputFolder: plain-enums
 scripts:
   - docker: bitnami/dotnet-sdk:8
     commands:

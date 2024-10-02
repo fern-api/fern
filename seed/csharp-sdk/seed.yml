@@ -5,7 +5,7 @@ changelogLocation: ../../generators/csharp/sdk/versions.yml
 publish:
   preBuildCommands:
     - pnpm --filter @fern-api/fern-csharp-sdk dist:cli
-  docker: 
+  docker:
     file: ./generators/csharp/sdk/Dockerfile
     image: fernapi/fern-csharp-sdk
     context: .
@@ -13,9 +13,9 @@ test:
   docker:
     image: fernapi/fern-csharp-sdk:latest
     command: pnpm --filter @fern-api/fern-csharp-sdk dockerTagLatest
-  local: 
+  local:
     workingDirectory: generators/csharp
-    buildCommand: 
+    buildCommand:
       - pnpm --filter @fern-api/fern-csharp-sdk dist:cli
     runCommand: node sdk/dist/bundle.cjs
 
@@ -31,7 +31,7 @@ scripts:
       - dotnet test src --filter "FullyQualifiedName~SeedApi.Test.Core"
       # - dotnet test src
 
-fixtures: 
+fixtures:
   examples:
     - customConfig: null
       outputFolder: no-custom-config
@@ -86,6 +86,13 @@ fixtures:
         read-only-memory-types:
           - float
       outputFolder: read-only-memory
+  enum:
+    - customConfig:
+        enable-forward-compatible-enums: true
+      outputFolder: forward-compatible-enums
+    - customConfig:
+        enable-forward-compatible-enums: false
+      outputFolder: plain-enums
 allowedFailures:
   ## COMPILE FAILURES
   - objects-with-imports
