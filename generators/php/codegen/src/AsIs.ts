@@ -40,5 +40,13 @@ export enum AsIsFiles {
     ArrayType = "Types/ArrayType.Template.php",
     Constant = "Types/Constant.Template.php",
     DateType = "Types/DateType.Template.php",
-    Union = "Types/Union.Template.php"
+    Union = "Types/Union.Template.php",
+
+    // Core/Multipart
+    MultipartApiRequest = "Multipart/MultipartApiRequest.Template.php",
+    MultipartFormData = "Multipart/MultipartFormData.Template.php",
+    MultipartFormDataPart = "Multipart/MultipartFormDataPart.Template.php",
+
+    // Utils
+    File = "Multipart/File.Template.php"
 }

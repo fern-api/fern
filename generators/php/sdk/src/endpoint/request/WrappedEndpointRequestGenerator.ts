@@ -9,6 +9,7 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "../../SdkCustomConfig";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
 
 export declare namespace WrappedEndpointRequestGenerator {
     export interface Args {
@@ -93,7 +94,18 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
                     clazz.addTrait(this.context.phpTypeMapper.convertToTraitClassReference(declaredTypeName));
                 }
             },
-            fileUpload: () => undefined,
+            fileUpload: (request) => {
+                for (const property of request.properties) {
+                    const field = property._visit<php.Field | undefined>({
+                        file: (fp) => this.generateFieldFromFile(fp),
+                        bodyProperty: (bp) => this.toField({ property: bp }),
+                        _other: () => undefined
+                    });
+                    if (field) {
+                        clazz.addField(field);
+                    }
+                }
+            },
             bytes: () => undefined,
             _other: () => undefined
         });
@@ -107,7 +119,10 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
     }
 
     private toField({ property, inherited }: { property: InlinedRequestBodyProperty; inherited?: boolean }): php.Field {
-        const convertedType = this.context.phpTypeMapper.convert({ reference: property.valueType });
+        const convertedType = this.context.phpTypeMapper.convert({
+            reference: property.valueType,
+            preserveEnums: true
+        });
         return php.field({
             type: convertedType,
             name: this.context.getPropertyName(property.name.name),
@@ -127,5 +142,30 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
             this.location.directory,
             RelativeFilePath.of(this.classReference.name + ".php")
         );
+    }
+
+    private generateFieldFromFile(property: FernIr.FileProperty): php.Field | undefined {
+        let fileType = php.Type.reference(this.context.getUtilMultipartClassReference("File"));
+
+        return property._visit<php.Field | undefined>({
+            file: (f: FernIr.FilePropertySingle) => {
+                fileType = property.isOptional ? php.Type.optional(fileType) : fileType;
+                return php.field({
+                    name: this.context.getPropertyName(f.key.name),
+                    type: fileType,
+                    access: "public"
+                });
+            },
+            fileArray: (fs) => {
+                fileType = php.Type.array(fileType);
+                fileType = property.isOptional ? php.Type.optional(fileType) : fileType;
+                return php.field({
+                    name: this.context.getPropertyName(fs.key.name),
+                    type: fileType,
+                    access: "public"
+                });
+            },
+            _other: () => undefined
+        });
     }
 }

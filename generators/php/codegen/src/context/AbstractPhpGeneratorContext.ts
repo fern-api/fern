@@ -20,7 +20,7 @@ import { PhpAttributeMapper } from "./PhpAttributeMapper";
 import { AsIsFiles } from "../AsIs";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { php } from "..";
-import { GLOBAL_NAMESPACE } from "../ast/core/Constant";
+import { GLOBAL_NAMESPACE, TESTS_ROOT_NAMESPACE } from "../ast/core/Constant";
 import { TRAITS_DIRECTORY } from "../constants";
 
 export interface FileLocation {
@@ -87,15 +87,27 @@ export abstract class AbstractPhpGeneratorContext<
     }
 
     public getTestsNamespace(): string {
-        return `${this.rootNamespace}\\Tests`;
+        return `${this.getRootNamespace()}\\Tests`;
     }
 
     public getCoreNamespace(): string {
-        return `${this.rootNamespace}\\Core`;
+        return `${this.getRootNamespace()}\\Core`;
+    }
+
+    public getUtilNamespace(): string {
+        return `${this.getRootNamespace()}\\Utils`;
     }
 
     public getCoreClientNamespace(): string {
         return `${this.getCoreNamespace()}\\Client`;
+    }
+
+    public getCoreMultipartNamespace(): string {
+        return `${this.getCoreNamespace()}\\Multipart`;
+    }
+
+    public getUtilMultipartNamespace(): string {
+        return `${this.getRootNamespace()}\\Utils\\Multipart`;
     }
 
     public getCoreJsonNamespace(): string {
@@ -107,7 +119,11 @@ export abstract class AbstractPhpGeneratorContext<
     }
 
     public getCoreTestsNamespace(): string {
-        return `${this.rootNamespace}\\Tests\\Core`;
+        return `${this.getRootNamespace()}\\${TESTS_ROOT_NAMESPACE}\\Core`;
+    }
+
+    public getUtilTestsNamespace(): string {
+        return `${this.getRootNamespace()}\\${TESTS_ROOT_NAMESPACE}\\Utils`;
     }
 
     public getCoreClientTestsNamespace(): string {
@@ -180,6 +196,13 @@ export abstract class AbstractPhpGeneratorContext<
         });
     }
 
+    public getCoreMultipartClassReference(name: string): php.ClassReference {
+        return php.classReference({
+            name,
+            namespace: this.getCoreMultipartNamespace()
+        });
+    }
+
     public getCoreJsonClassReference(name: string): php.ClassReference {
         return php.classReference({
             name,
@@ -194,10 +217,59 @@ export abstract class AbstractPhpGeneratorContext<
         });
     }
 
+    public getUtilMultipartClassReference(name: string): php.ClassReference {
+        return php.classReference({
+            name,
+            namespace: this.getUtilMultipartNamespace()
+        });
+    }
+
     public isMixedArray(type: php.Type): boolean {
         return (
             type.internalType.type === "array" && type.internalType.value.underlyingType().internalType.type === "mixed"
         );
+    }
+
+    public isSequence(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "container":
+                if (typeReference.container.type === "optional") {
+                    return this.isSequence(typeReference.container.optional);
+                }
+                return ["list", "set"].includes(typeReference.container.type);
+            case "named": {
+                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.isSequence(typeDeclaration.shape.aliasOf);
+                }
+                return false;
+            }
+            case "unknown":
+                return false;
+            case "primitive":
+                return false;
+        }
+    }
+
+    public isMap(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "container":
+                if (typeReference.container.type === "optional") {
+                    return this.isMap(typeReference.container.optional);
+                }
+                return typeReference.container.type === "map";
+            case "named": {
+                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.isMap(typeDeclaration.shape.aliasOf);
+                }
+                return false;
+            }
+            case "unknown":
+                return false;
+            case "primitive":
+                return false;
+        }
     }
 
     public isOptional(typeReference: TypeReference): boolean {
@@ -238,11 +310,69 @@ export abstract class AbstractPhpGeneratorContext<
         }
     }
 
+    public isObject(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "container":
+                if (typeReference.container.type === "optional") {
+                    return this.isObject(typeReference.container.optional);
+                }
+                if (typeReference.container.type === "list") {
+                    return this.isObject(typeReference.container.list);
+                }
+                if (typeReference.container.type === "set") {
+                    return this.isObject(typeReference.container.set);
+                }
+                return false;
+            case "named": {
+                const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                return this.typeDeclarationIsObject(declaration);
+            }
+            case "primitive": {
+                return false;
+            }
+            case "unknown": {
+                return false;
+            }
+        }
+    }
+
+    public isUnknown(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "container":
+                if (typeReference.container.type === "optional") {
+                    return this.isUnknown(typeReference.container.optional);
+                }
+                if (typeReference.container.type === "list") {
+                    return this.isUnknown(typeReference.container.list);
+                }
+                if (typeReference.container.type === "set") {
+                    return this.isUnknown(typeReference.container.set);
+                }
+                return false;
+            case "named": {
+                return false;
+            }
+            case "primitive": {
+                return false;
+            }
+            case "unknown": {
+                return true;
+            }
+        }
+    }
+
     public typeDeclarationIsEnum(declaration: TypeDeclaration): boolean {
         if (declaration.shape.type === "alias") {
             return this.isEnum(declaration.shape.aliasOf);
         }
         return declaration.shape.type === "enum";
+    }
+
+    public typeDeclarationIsObject(declaration: TypeDeclaration): boolean {
+        if (declaration.shape.type === "alias") {
+            return this.isObject(declaration.shape.aliasOf);
+        }
+        return declaration.shape.type === "object";
     }
 
     public isDate(typeReference: TypeReference): boolean {
@@ -336,6 +466,8 @@ export abstract class AbstractPhpGeneratorContext<
     public abstract getRawAsIsFiles(): string[];
     public abstract getCoreAsIsFiles(): string[];
     public abstract getCoreTestAsIsFiles(): string[];
+    public abstract getUtilAsIsFiles(): string[];
+    public abstract getUtilTestAsIsFiles(): string[];
 
     public getCoreSerializationAsIsFiles(): string[] {
         return [
