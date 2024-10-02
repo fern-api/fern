@@ -1,6 +1,12 @@
 import { php, PhpFile, FileGenerator, FileLocation } from "@fern-api/php-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { HttpEndpoint, SdkRequestWrapper, ServiceId } from "@fern-fern/ir-sdk/api";
+import {
+    HttpEndpoint,
+    InlinedRequestBodyProperty,
+    ObjectProperty,
+    SdkRequestWrapper,
+    ServiceId
+} from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "../../SdkCustomConfig";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -79,9 +85,14 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
             },
             inlinedRequestBody: (request) => {
                 for (const property of request.properties) {
-                    const field = this.generateFieldFromBodyProperty(property);
-                    if (field) {
-                        clazz.addField(field);
+                    for (const property of request.properties) {
+                        clazz.addField(this.toField({ property }));
+                    }
+                    for (const property of request.extendedProperties ?? []) {
+                        clazz.addField(this.toField({ property, inherited: true }));
+                    }
+                    for (const declaredTypeName of request.extends) {
+                        clazz.addTrait(this.context.phpTypeMapper.convertToTraitClassReference(declaredTypeName));
                     }
                 }
             },
@@ -109,23 +120,27 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
         });
     }
 
+    private toField({ property, inherited }: { property: InlinedRequestBodyProperty; inherited?: boolean }): php.Field {
+        const convertedType = this.context.phpTypeMapper.convert({ reference: property.valueType });
+        return php.field({
+            type: convertedType,
+            name: this.context.getPropertyName(property.name.name),
+            access: "public",
+            docs: property.docs,
+            attributes: this.context.phpAttributeMapper.convert({
+                type: convertedType,
+                property
+            }),
+            inherited
+        });
+    }
+
     protected getFilepath(): RelativeFilePath {
         return join(
             this.context.project.filepaths.getSourceDirectory(),
             this.location.directory,
             RelativeFilePath.of(this.classReference.name + ".php")
         );
-    }
-
-    private generateFieldFromBodyProperty(property: FernIr.InlinedRequestBodyProperty): php.Field | undefined {
-        const type = this.context.phpTypeMapper.convert({ reference: property.valueType, preserveEnums: true });
-        return php.field({
-            name: this.context.getPropertyName(property.name.name),
-            type,
-            access: "public",
-            docs: property.docs,
-            attributes: this.context.phpAttributeMapper.convert({ type, property })
-        });
     }
 
     private generateFieldFromFile(property: FernIr.FileProperty): php.Field | undefined {

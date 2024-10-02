@@ -176,14 +176,17 @@ export class Type extends AstNode {
                 writer.write("}");
                 break;
             }
-            case "union":
-                this.internalType.types.forEach((type, index) => {
+            case "union": {
+                const types = this.getUniqueTypes({ types: this.internalType.types, comment, writer });
+                types.forEach((type, index) => {
                     if (index > 0) {
                         writer.write("|");
                     }
-                    type.write(writer);
+                    type.write(writer, { comment });
+                    index++;
                 });
                 break;
+            }
             case "optional": {
                 const isUnion = this.internalType.value.internalType.type === "union";
                 if (!isUnion) {
@@ -357,6 +360,34 @@ export class Type extends AstNode {
         }
         writer.write(": ");
         entry.valueType.write(writer, { comment });
+    }
+
+    private getUniqueTypes({
+        writer,
+        types,
+        comment
+    }: {
+        writer: Writer;
+        types: Type[];
+        comment: boolean | undefined;
+    }): Type[] {
+        const typeStrings = new Set();
+        return types.filter((type) => {
+            if (comment) {
+                return true;
+            }
+            const typeString = type.toString({
+                namespace: writer.namespace,
+                rootNamespace: writer.rootNamespace,
+                customConfig: writer.customConfig
+            });
+            // handle potential duplicates, such as strings (due to enums) and arrays
+            if (typeStrings.has(typeString)) {
+                return false;
+            }
+            typeStrings.add(typeString);
+            return true;
+        });
     }
 }
 

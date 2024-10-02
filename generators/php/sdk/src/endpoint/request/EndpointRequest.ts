@@ -39,8 +39,23 @@ export abstract class EndpointRequest {
 
     protected serializeJsonRequest({ bodyArgument }: { bodyArgument: php.CodeBlock }): php.CodeBlock {
         const requestParameterType = this.getRequestParameterType();
-        const isOptional = requestParameterType.isOptional();
-        const underlyingType = this.getRequestParameterType().underlyingType();
+        return this.serializeJsonType({
+            type: requestParameterType,
+            bodyArgument,
+            isOptional: requestParameterType.isOptional()
+        });
+    }
+
+    protected serializeJsonType({
+        type,
+        bodyArgument,
+        isOptional
+    }: {
+        type: php.Type;
+        bodyArgument: php.CodeBlock;
+        isOptional: boolean;
+    }): php.CodeBlock {
+        const underlyingType = type.underlyingType();
         const internalType = underlyingType.internalType;
         switch (internalType.type) {
             case "array":
@@ -62,6 +77,12 @@ export abstract class EndpointRequest {
                     variant: "DateTime",
                     isOptional
                 });
+            case "union":
+                return this.serializeJsonForUnion({
+                    bodyArgument,
+                    types: internalType.types,
+                    isOptional
+                });
             case "reference":
             case "int":
             case "float":
@@ -72,7 +93,6 @@ export abstract class EndpointRequest {
             case "optional":
             case "typeDict":
             case "enumString":
-            case "union":
                 return bodyArgument;
         }
     }
@@ -91,7 +111,39 @@ export abstract class EndpointRequest {
             methodInvocation: php.invokeMethod({
                 on: this.context.getJsonSerializerClassReference(),
                 method: "serializeArray",
-                arguments_: [bodyArgument, this.context.phpAttributeMapper.getArrayTypeAttributeArgument(type)],
+                arguments_: [bodyArgument, this.context.phpAttributeMapper.getTypeAttributeArgument(type)],
+                static_: true
+            }),
+            isOptional
+        });
+    }
+
+    protected serializeJsonForUnion({
+        bodyArgument,
+        types,
+        isOptional
+    }: {
+        bodyArgument: php.CodeBlock;
+        types: php.Type[];
+        isOptional: boolean;
+    }): php.CodeBlock {
+        const unionTypeParameters = this.context.phpAttributeMapper.getUnionTypeParameters(types);
+        // if deduping in getUnionTypeParameters results in one type, treat it like just that type
+        if (unionTypeParameters.length === 1) {
+            if (types[0] == null) {
+                throw new Error("Unexpected empty types");
+            }
+            return this.serializeJsonType({ type: types[0], bodyArgument, isOptional });
+        }
+        return this.serializeJsonRequestMethod({
+            bodyArgument,
+            methodInvocation: php.invokeMethod({
+                on: this.context.getJsonSerializerClassReference(),
+                method: "serializeUnion",
+                arguments_: [
+                    bodyArgument,
+                    this.context.phpAttributeMapper.getUnionTypeClassRepresentation(unionTypeParameters)
+                ],
                 static_: true
             }),
             isOptional

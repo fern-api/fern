@@ -9,7 +9,8 @@ import {
     Subpackage,
     SubpackageId,
     FernFilepath,
-    PrimitiveTypeV1
+    PrimitiveTypeV1,
+    ObjectTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 import { BasePhpCustomConfigSchema } from "../custom-config/BasePhpCustomConfigSchema";
 import { PhpProject } from "../project";
@@ -20,6 +21,7 @@ import { AsIsFiles } from "../AsIs";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { php } from "..";
 import { GLOBAL_NAMESPACE, TESTS_ROOT_NAMESPACE } from "../ast/core/Constant";
+import { TRAITS_DIRECTORY } from "../constants";
 
 export interface FileLocation {
     namespace: string;
@@ -96,12 +98,40 @@ export abstract class AbstractPhpGeneratorContext<
         return `${this.getRootNamespace()}\\Utils`;
     }
 
+    public getCoreClientNamespace(): string {
+        return `${this.getCoreNamespace()}\\Client`;
+    }
+
+    public getCoreMultipartNamespace(): string {
+        return `${this.getCoreNamespace()}\\Multipart`;
+    }
+
+    public getCoreJsonNamespace(): string {
+        return `${this.getCoreNamespace()}\\Json`;
+    }
+
+    public getCoreTypesNamespace(): string {
+        return `${this.getCoreNamespace()}\\Types`;
+    }
+
     public getCoreTestsNamespace(): string {
         return `${this.getRootNamespace()}\\${TESTS_ROOT_NAMESPACE}\\Core`;
     }
 
     public getUtilTestsNamespace(): string {
         return `${this.getRootNamespace()}\\${TESTS_ROOT_NAMESPACE}\\Utils`;
+    }
+
+    public getCoreClientTestsNamespace(): string {
+        return `${this.getCoreTestsNamespace()}\\Client`;
+    }
+
+    public getCoreJsonTestsNamespace(): string {
+        return `${this.getCoreTestsNamespace()}\\Json`;
+    }
+
+    public getCoreTypesTestsNamespace(): string {
+        return `${this.getCoreTestsNamespace()}\\Types`;
     }
 
     public getParameterName(name: Name): string {
@@ -132,33 +162,54 @@ export abstract class AbstractPhpGeneratorContext<
     }
 
     public getDateTypeAttributeClassReference(): php.ClassReference {
-        return this.getCoreClassReference("DateType");
+        return this.getCoreTypesClassReference("DateType");
     }
 
     public getConstantClassReference(): php.ClassReference {
-        return this.getCoreClassReference("Constant");
+        return this.getCoreTypesClassReference("Constant");
     }
 
     public getJsonPropertyAttributeClassReference(): php.ClassReference {
-        return this.getCoreClassReference("JsonProperty");
+        return this.getCoreJsonClassReference("JsonProperty");
     }
 
     public getSerializableTypeClassReference(): php.ClassReference {
-        return this.getCoreClassReference("SerializableType");
+        return this.getCoreJsonClassReference("SerializableType");
     }
 
     public getUnionClassReference(): php.ClassReference {
-        return this.getCoreClassReference("Union");
+        return this.getCoreTypesClassReference("Union");
     }
 
     public getArrayTypeClassReference(): php.ClassReference {
-        return this.getCoreClassReference("ArrayType");
+        return this.getCoreTypesClassReference("ArrayType");
     }
 
-    public getCoreClassReference(name: string): php.ClassReference {
+    public getCoreClientClassReference(name: string): php.ClassReference {
         return php.classReference({
             name,
-            namespace: this.getCoreNamespace()
+            namespace: this.getCoreClientNamespace()
+        });
+    }
+
+    public getCoreMultipartClassReference(name: string): php.ClassReference {
+        return php.classReference({
+            name,
+            namespace: this.getCoreClientNamespace()
+        });
+    }
+
+    public getCoreJsonClassReference(name: string): php.ClassReference {
+        return php.classReference({
+            name,
+            namespace: this.getCoreJsonNamespace()
+        });
+    }
+
+    public getCoreTypesClassReference(name: string): php.ClassReference {
+        return php.classReference({
+            name,
+            namespace: this.getCoreTypesNamespace()
         });
     }
 
@@ -360,6 +411,35 @@ export abstract class AbstractPhpGeneratorContext<
         }
     }
 
+    public getUnderlyingObjectTypeDeclaration(typeReference: TypeReference): ObjectTypeDeclaration {
+        switch (typeReference.type) {
+            case "named": {
+                const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (declaration.shape.type === "alias") {
+                    return this.getUnderlyingObjectTypeDeclaration(declaration.shape.aliasOf);
+                }
+                if (declaration.shape.type === "object") {
+                    return declaration.shape;
+                }
+                throw new Error("Type is not an object type");
+            }
+            case "primitive":
+            case "unknown":
+            case "container":
+        }
+        throw new Error("Type is not an object type");
+    }
+
+    public getUnderlyingObjectTypeDeclarationOrThrow(typeDeclaration: TypeDeclaration): ObjectTypeDeclaration {
+        if (typeDeclaration.shape.type === "alias") {
+            return this.getUnderlyingObjectTypeDeclaration(typeDeclaration.shape.aliasOf);
+        }
+        if (typeDeclaration.shape.type === "object") {
+            return typeDeclaration.shape;
+        }
+        throw new Error("Type is not an object type");
+    }
+
     public maybeLiteral(typeReference: TypeReference): Literal | undefined {
         if (typeReference.type === "container" && typeReference.container.type === "literal") {
             return typeReference.container.literal;
@@ -406,6 +486,7 @@ export abstract class AbstractPhpGeneratorContext<
             AsIsFiles.DateArrayTypeTest,
             AsIsFiles.EmptyArraysTest,
             AsIsFiles.InvalidTypesTest,
+            AsIsFiles.TraitTest,
             AsIsFiles.MixedDateArrayTypeTest,
             AsIsFiles.NestedUnionArrayTypeTest,
             AsIsFiles.NullableArrayTypeTest,
@@ -413,11 +494,17 @@ export abstract class AbstractPhpGeneratorContext<
             AsIsFiles.ScalarTypesTest,
             AsIsFiles.TestTypeTest,
             AsIsFiles.UnionArrayTypeTest,
-            AsIsFiles.EnumTest
+            AsIsFiles.EnumTest,
+            AsIsFiles.UnionPropertyTypeTest
         ];
     }
 
     public abstract getLocationForTypeId(typeId: TypeId): FileLocation;
+
+    public getTraitLocationForTypeId(typeId: TypeId): FileLocation {
+        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
+        return this.getFileLocation(typeDeclaration.name.fernFilepath, TRAITS_DIRECTORY);
+    }
 
     protected getFileLocation(filepath: FernFilepath, suffix?: string): FileLocation {
         let parts = filepath.allParts.map((path) => path.pascalCase.safeName);

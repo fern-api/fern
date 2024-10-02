@@ -128,15 +128,15 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     public getJsonApiRequestClassReference(): php.ClassReference {
-        return this.getCoreClassReference("JsonApiRequest");
+        return this.getCoreJsonClassReference("JsonApiRequest");
     }
 
     public getJsonDecoderClassReference(): php.ClassReference {
-        return this.getCoreClassReference("JsonDecoder");
+        return this.getCoreJsonClassReference("JsonDecoder");
     }
 
     public getJsonSerializerClassReference(): php.ClassReference {
-        return this.getCoreClassReference("JsonSerializer");
+        return this.getCoreJsonClassReference("JsonSerializer");
     }
 
     public getRequestWrapperReference(serviceId: ServiceId, requestName: Name): php.ClassReference {
@@ -147,7 +147,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     public getHttpMethodClassReference(): php.ClassReference {
-        return this.getCoreClassReference("HttpMethod");
+        return this.getCoreClientClassReference("HttpMethod");
     }
 
     public getHttpMethod(method: HttpMethod): php.CodeBlock {

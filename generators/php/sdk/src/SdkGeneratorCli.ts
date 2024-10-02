@@ -4,7 +4,7 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
-import { generateModels } from "@fern-api/php-model";
+import { generateModels, generateTraits } from "@fern-api/php-model";
 import { RootClientGenerator } from "./root-client/RootClientGenerator";
 import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
 import { WrappedEndpointRequestGenerator } from "./endpoint/request/WrappedEndpointRequestGenerator";
@@ -49,6 +49,7 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
         generateModels(context);
+        generateTraits(context);
         this.generateRootClient(context);
         this.generateSubpackages(context);
         this.generateEnvironment(context);

@@ -3,6 +3,7 @@ import {
     Array as Array_,
     Attribute,
     Class,
+    Trait,
     ClassInstantiation,
     ClassReference,
     CodeBlock,
@@ -25,6 +26,10 @@ export function attribute(args: Attribute.Args): Attribute {
 
 export function class_(args: Class.Args): Class {
     return new Class(args);
+}
+
+export function trait(args: Trait.Args): Trait {
+    return new Trait(args);
 }
 
 export function classReference(args: ClassReference.Args): ClassReference {
@@ -76,6 +81,7 @@ export {
     Array,
     Attribute,
     Class,
+    Trait,
     ClassInstantiation,
     ClassReference,
     CodeBlock,
