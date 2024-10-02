@@ -2,7 +2,7 @@
 
 namespace Seed\Query\Requests;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\SerializableType;
 
 class SendLiteralsInQueryRequest extends SerializableType
 {

@@ -2,7 +2,7 @@
 
 namespace Seed\File\Service\Requests;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\SerializableType;
 
 class GetFileRequest extends SerializableType
 {

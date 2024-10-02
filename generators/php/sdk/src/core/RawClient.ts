@@ -39,7 +39,7 @@ export class RawClient {
     public getClassReference(): php.ClassReference {
         return php.classReference({
             name: RawClient.CLASS_NAME,
-            namespace: this.context.getCoreNamespace()
+            namespace: this.context.getCoreClientNamespace()
         });
     }
 

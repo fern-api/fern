@@ -2,10 +2,10 @@
 
 namespace Seed\Types\Types;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\SerializableType;
 use Seed\Types\BasicType;
 use Seed\Types\ComplexType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonProperty;
 
 class ResponseType extends SerializableType
 {

@@ -2,7 +2,7 @@
 
 namespace Seed\A\Types;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\SerializableType;
 
 class A extends SerializableType
 {

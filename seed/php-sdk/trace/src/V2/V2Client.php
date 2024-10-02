@@ -4,12 +4,12 @@ namespace Seed\V2;
 
 use Seed\V2\Problem\ProblemClient;
 use Seed\V2\V3\V3Client;
-use Seed\Core\RawClient;
+use Seed\Core\Client\RawClient;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
-use Seed\Core\JsonApiRequest;
+use Seed\Core\Json\JsonApiRequest;
 use Seed\Environments;
-use Seed\Core\HttpMethod;
+use Seed\Core\Client\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class V2Client

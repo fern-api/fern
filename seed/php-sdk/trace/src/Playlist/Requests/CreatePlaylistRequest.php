@@ -2,7 +2,7 @@
 
 namespace Seed\Playlist\Requests;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\SerializableType;
 use DateTime;
 use Seed\Playlist\Types\PlaylistCreateRequest;
 

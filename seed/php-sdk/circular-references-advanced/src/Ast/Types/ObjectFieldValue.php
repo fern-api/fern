@@ -2,8 +2,8 @@
 
 namespace Seed\Ast\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonProperty;
 
 /**
  * This type allows us to test a circular reference with a union type (see FieldValue).

@@ -2,7 +2,7 @@
 
 namespace Seed\User\Events\Requests;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\SerializableType;
 
 class ListUserEventsRequest extends SerializableType
 {
