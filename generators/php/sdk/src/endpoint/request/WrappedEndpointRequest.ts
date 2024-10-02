@@ -2,7 +2,6 @@ import { php } from "@fern-api/php-codegen";
 import {
     HttpEndpoint,
     HttpHeader,
-    HttpService,
     Name,
     QueryParameter,
     SdkRequest,
@@ -17,6 +16,10 @@ import {
     QueryParameterCodeBlock,
     RequestBodyCodeBlock
 } from "./EndpointRequest";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { throwNewBaseException } from "../utils/generate";
+import { tryCatch } from "../utils/writer";
+import { Arguments } from "@fern-api/generator-commons";
 
 export declare namespace WrappedEndpointRequest {
     interface Args {
@@ -144,20 +147,30 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }
 
     public getRequestBodyCodeBlock(): RequestBodyCodeBlock | undefined {
+        if (this.endpoint.requestBody == null) {
+            return undefined;
+        }
+
         const bodyArgument = this.getRequestBodyArgument();
-        return bodyArgument != null
-            ? {
-                  requestBodyReference: this.serializeJsonRequest({
-                      bodyArgument
-                  })
-              }
-            : undefined;
+        const requestBodyRef = bodyArgument ? this.serializeJsonRequest({ bodyArgument }) : undefined;
+
+        if (!requestBodyRef) {
+            return undefined;
+        }
+
+        const code = this.getRequestBodyCodeBlockHelp();
+
+        return {
+            code,
+            requestBodyReference: requestBodyRef
+        };
     }
 
     private getRequestBodyArgument(): php.CodeBlock | undefined {
         if (this.endpoint.requestBody == null) {
             return undefined;
         }
+
         return this.endpoint.requestBody._visit({
             reference: () => {
                 return php.codeblock(
@@ -167,9 +180,228 @@ export class WrappedEndpointRequest extends EndpointRequest {
             inlinedRequestBody: (_inlinedRequestBody) => {
                 return php.codeblock(`${this.getRequestParameterName()}`);
             },
-            fileUpload: () => undefined,
+            fileUpload: (_uploadRequestBody) => {
+                return php.codeblock(`${this.getRequestParameterName()}`);
+            },
             bytes: () => undefined,
             _other: () => undefined
+        });
+    }
+
+    private getRequestBodyCodeBlockHelp(): php.CodeBlock | undefined {
+        return this.endpoint.requestBody?._visit({
+            reference: () => undefined,
+            inlinedRequestBody: () => undefined,
+            fileUpload: (request: FernIr.FileUploadRequest) => {
+                const tryBlock = this.genRequestToMultipartFormBody(request);
+                const catchBlock = throwNewBaseException({
+                    context: this.context,
+                    message: php.codeblock("$e->getMessage()")
+                });
+                return tryCatch(tryBlock, catchBlock, this.context.getBaseExceptionClassReference());
+            },
+            bytes: () => undefined,
+            _other: () => undefined
+        });
+    }
+
+    private genRequestToMultipartFormBody(request: FernIr.FileUploadRequest): php.CodeBlock {
+        const requestParamName = this.getRequestParameterName();
+
+        const formVarName = "$body";
+        const dataParts = request.properties
+            .map((prop) => this.genDataPartFromProperty(requestParamName, formVarName, prop))
+            .filter((maybeAst) => maybeAst)
+            .map((ast) => ast as php.AstNode);
+
+        return php.codeblock((writer) => {
+            writer.write("$body = ");
+            writer.writeNodeStatement(
+                php.instantiateClass({
+                    classReference: this.context.getCoreClassReference("MultipartFormData"),
+                    arguments_: []
+                })
+            );
+
+            dataParts.forEach((dataPart) => {
+                writer.writeNode(dataPart);
+            });
+        });
+    }
+
+    private genDataPartFromProperty(
+        requestVarName: string,
+        formVarName: string,
+        property: FernIr.FileUploadRequestProperty
+    ): php.CodeBlock | undefined {
+        return property._visit<php.CodeBlock | undefined>({
+            file: (fileProp) => {
+                return fileProp._visit<php.CodeBlock | undefined>({
+                    file: (filePropSingle: FernIr.FilePropertySingle) => {
+                        return this.genDataPartFromFileProperty({
+                            requestVarName,
+                            formVarName,
+                            propWireName: filePropSingle.key.wireValue,
+                            propSnakeName: filePropSingle.key.name.snakeCase.unsafeName,
+                            //contentType: filePropSingle.contentType,
+                            isSequence: false,
+                            isOptional: filePropSingle.isOptional
+                        });
+                    },
+                    fileArray: (filePropArray: FernIr.FilePropertyArray) => {
+                        return this.genDataPartFromFileProperty({
+                            requestVarName,
+                            formVarName,
+                            propWireName: filePropArray.key.wireValue,
+                            propSnakeName: filePropArray.key.name.snakeCase.unsafeName,
+                            //contentType: filePropArray.contentType,
+                            isSequence: true,
+                            isOptional: filePropArray.isOptional
+                        });
+                    },
+                    _other: () => undefined
+                });
+            },
+            bodyProperty: (bodyProp: FernIr.InlinedRequestBodyProperty) => {
+                return this.genDataPartFromBodyProperty({
+                    bodyProp,
+                    requestVarName,
+                    formVarName
+                });
+            },
+            _other: () => undefined
+        });
+    }
+
+    private genDataPartFromFileProperty({
+        requestVarName,
+        formVarName,
+        propWireName,
+        propSnakeName,
+        contentType,
+        isSequence = false,
+        isOptional = false
+    }: {
+        requestVarName: string;
+        formVarName: string;
+        propWireName: string;
+        propSnakeName: string;
+        contentType?: string;
+        isSequence?: boolean;
+        isOptional?: boolean;
+    }): php.CodeBlock {
+        return php.codeblock((writer) => {
+            const toMultipartArgs: Arguments = [
+                {
+                    name: "name",
+                    assignment: php.codeblock(`'${propWireName}'`)
+                }
+            ];
+
+            if (contentType) {
+                toMultipartArgs.push({
+                    name: "contentType",
+                    assignment: php.codeblock("TODO")
+                });
+            }
+
+            if (isOptional) {
+                writer.controlFlow("if", php.codeblock(`${requestVarName}->${propWireName} != null`));
+            }
+            if (isSequence) {
+                writer.controlFlow("foreach", php.codeblock(`${requestVarName}->${propWireName} as $file`));
+            }
+            writer.writeNodeStatement(
+                php.invokeMethod({
+                    method: "addPart",
+                    on: php.codeblock(formVarName),
+                    multiline: true,
+                    arguments_: [
+                        php.invokeMethod({
+                            method: "toMultipartFormDataPart",
+                            on: php.codeblock(isSequence ? "$file" : `${requestVarName}->${propWireName}`),
+                            arguments_: toMultipartArgs
+                        })
+                    ]
+                })
+            );
+            if (isSequence) {
+                writer.endControlFlow();
+            }
+            if (isOptional) {
+                writer.endControlFlow();
+            }
+        });
+    }
+
+    private genDataPartFromBodyProperty({
+        bodyProp,
+        requestVarName,
+        formVarName
+    }: {
+        bodyProp: FernIr.InlinedRequestBodyProperty;
+        requestVarName: string;
+        formVarName: string;
+    }): php.CodeBlock | undefined {
+        // TODO: Define how maps should be encoded in multi-part form uploads (prob wrap in json_encode(...))
+        if (this.context.isMap(bodyProp.valueType)) {
+            return undefined;
+        }
+
+        const isOptional = this.context.isOptional(bodyProp.valueType);
+        const isSequence = this.context.isSequence(bodyProp.valueType);
+
+        let valueBlock = isSequence ? "$item" : `${requestVarName}->${bodyProp.name.wireValue}`;
+        if (this.context.isEnum(bodyProp.valueType)) {
+            valueBlock += "->value";
+        } else if (this.context.isObject(bodyProp.valueType)) {
+            valueBlock += "->toJson()";
+        } else if (this.context.isUnknown(bodyProp.valueType)) {
+            valueBlock = `json_encode(${valueBlock})`;
+        }
+
+        const addArgs: Arguments = [
+            {
+                name: "name",
+                assignment: php.codeblock(`'${bodyProp.name.wireValue}'`)
+            },
+            {
+                name: "value",
+                assignment: php.codeblock(valueBlock)
+            }
+        ];
+
+        // if (bodyProp.contentType) {
+        //     addArgs.push({
+        //         name: "contentType",
+        //         assignment: php.codeblock(contentType)
+        //     });
+        // }
+
+        return php.codeblock((writer) => {
+            if (isOptional) {
+                writer.controlFlow("if", php.codeblock(`${requestVarName}->${bodyProp.name.wireValue} != null`));
+            }
+
+            if (isSequence) {
+                writer.controlFlow("foreach", php.codeblock(`${requestVarName}->${bodyProp.name.wireValue} as $item`));
+            }
+
+            writer.writeNodeStatement(
+                php.invokeMethod({
+                    method: "add",
+                    on: php.codeblock(formVarName),
+                    arguments_: addArgs
+                })
+            );
+
+            if (isSequence) {
+                writer.endControlFlow();
+            }
+
+            if (isOptional) {
+                writer.endControlFlow();
+            }
         });
     }
 }

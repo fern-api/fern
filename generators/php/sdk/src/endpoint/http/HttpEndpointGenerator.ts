@@ -5,6 +5,7 @@ import { getEndpointReturnType } from "../utils/getEndpointReturnType";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
 import { Arguments, UnnamedArgument } from "@fern-api/generator-commons";
 import { upperFirst } from "lodash-es";
+import { throwNewBaseException } from "../utils/generate";
 
 export declare namespace EndpointGenerator {
     export interface Args {
@@ -82,7 +83,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 writer.writeLine(" $e) {");
                 writer.indent();
                 writer.writeNodeStatement(
-                    this.throwNewBaseException({
+                    throwNewBaseException({
+                        context: this.context,
                         message: php.codeblock("$e->getMessage()")
                     })
                 );
@@ -166,7 +168,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeLine(" $e) {");
                     writer.indent();
                     writer.writeNodeStatement(
-                        this.throwNewBaseException({
+                        throwNewBaseException({
+                            context: this.context,
                             message: php.codeblock('"Failed to deserialize response: {$e->getMessage()}"')
                         })
                     );
@@ -294,27 +297,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     private getResponseBodyContent(): php.CodeBlock {
         return php.codeblock((writer) => {
             writer.write(`${JSON_VARIABLE_NAME} = ${RESPONSE_VARIABLE_NAME}->getBody()->getContents()`);
-        });
-    }
-
-    private throwNewBaseException({ message }: { message: php.CodeBlock }): php.CodeBlock {
-        return php.codeblock((writer) => {
-            writer.write("throw ");
-            writer.writeNode(
-                php.instantiateClass({
-                    classReference: this.context.getBaseExceptionClassReference(),
-                    arguments_: [
-                        {
-                            name: "message",
-                            assignment: message
-                        },
-                        {
-                            name: "previous",
-                            assignment: php.codeblock("$e")
-                        }
-                    ]
-                })
-            );
         });
     }
 

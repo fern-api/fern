@@ -2,6 +2,18 @@ service:
   auth: false
   base-path: /
   endpoints:
+    noFile:
+      path: /no-file
+      method: POST
+      request:
+        name: NoFileRequest
+        body:
+          properties:
+            maybeString: optional<string>
+            integer: integer
+            maybeInteger: optional<integer>
+            optionalListOfStrings: optional<list<string>>
+
     post:
       path: ""
       method: POST

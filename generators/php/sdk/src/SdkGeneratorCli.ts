@@ -53,6 +53,7 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
         this.generateSubpackages(context);
         this.generateEnvironment(context);
         this.generateErrors(context);
+        //throw new Error("bad");
         await context.project.persist();
     }
 

@@ -12,6 +12,7 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { serve } from "esbuild";
 
 interface ConstructorParameters {
     all: ConstructorParameter[];
