@@ -7,7 +7,8 @@ import {
     OSSWorkspace,
     LazyFernWorkspace,
     WorkspaceLoader,
-    WorkspaceLoaderFailureType
+    WorkspaceLoaderFailureType,
+    ConjureWorkspace
 } from "@fern-api/lazy-fern-workspace";
 
 export async function loadSingleNamespaceAPIWorkspace({
@@ -141,6 +142,21 @@ export async function loadAPIWorkspace({
     try {
         changelog = await loadAPIChangelog({ absolutePathToWorkspace });
     } catch (err) {}
+
+    if (generatorsConfiguration?.api != null && generatorsConfiguration?.api.type === "conjure") {
+        return {
+            didSucceed: true,
+            workspace: new ConjureWorkspace({
+                workspaceName,
+                absoluteFilePath: absolutePathToWorkspace,
+                generatorsConfiguration,
+                changelog,
+                cliVersion,
+                context,
+                relativePathToConjureDirectory: RelativeFilePath.of(generatorsConfiguration.api.pathToConjureDefinition),
+            })
+        };
+    }
 
     if (
         generatorsConfiguration?.api != null &&

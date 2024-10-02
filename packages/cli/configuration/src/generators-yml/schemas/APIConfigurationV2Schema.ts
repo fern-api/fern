@@ -37,14 +37,29 @@ export const AsyncAPISchema = z.strictObject({
 
 export type AsyncAPISchema = z.infer<typeof AsyncAPISchema>;
 
-export const SpecSchema = z.union([OpenAPISpecSchema, AsyncAPISchema]);
+/*********** Conjure Spec ***********/
 
-export type SpecSchema = z.infer<typeof SpecSchema>;
+export const ConjureSettingsSchema = z.strictObject({});
+
+export type ConjureSettingsSchema = z.infer<typeof AsyncAPISettingsSchema>;
+
+export const ConjureSchema = z.strictObject({
+    conjure: z.string()
+});
+
+export type ConjureSchema = z.infer<typeof ConjureSchema>;
+
+/*********** Global Schemas ***********/
+
+export const AsyncAPIOrOpenAPISpecSchema = z.union([OpenAPISpecSchema, AsyncAPISchema]);
+
+export type AsyncAPIOrOpenAPISpecSchema = z.infer<typeof AsyncAPIOrOpenAPISpecSchema>;
 
 export const APIConfigurationV2Schema = z
     .object({
         auth: z.optional(RawSchemas.ApiAuthSchema),
-        specs: z.array(SpecSchema)
+        // You can't union Conjure specs with OpenAPI and AsyncAPI (drastically inreases complexity)
+        specs: z.union([z.array(AsyncAPIOrOpenAPISpecSchema), ConjureSchema])
     })
     .extend(RawSchemas.WithHeadersSchema.shape)
     .extend(RawSchemas.WithEnvironmentsSchema.shape);

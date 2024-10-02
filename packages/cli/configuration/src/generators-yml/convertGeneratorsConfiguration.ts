@@ -1,4 +1,4 @@
-import { assertNever, isNonNullish, isPlainObject } from "@fern-api/core-utils";
+import { assertNever, isPlainObject } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { GithubPullRequestReviewer, OutputMetadata, PublishingMetadata, PypiMetadata } from "@fern-fern/fiddle-sdk/api";
@@ -17,7 +17,7 @@ import { APIConfigurationSchemaInternal, APIConfigurationV2Schema } from "./sche
 import { GeneratorGroupSchema } from "./schemas/GeneratorGroupSchema";
 import { GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
 import { GeneratorOutputSchema } from "./schemas/GeneratorOutputSchema";
-import { isApiConfigurationV2Schema, isOpenAPISchema } from "./schemas/utils";
+import { isApiConfigurationV2Schema, isConjureSchema, isOpenAPISchema } from "./schemas/utils";
 import {
     API_ORIGIN_LOCATION_KEY,
     API_SETTINGS_KEY,
@@ -256,10 +256,17 @@ async function parseApiConfigurationV2Schema({
     apiConfiguration: APIConfigurationV2Schema;
     rawConfiguration: GeneratorsConfigurationSchema;
 }): Promise<APIDefinition> {
+    if (isConjureSchema(apiConfiguration.specs)) {
+        return {
+            type: "conjure",
+            pathToConjureDefinition: apiConfiguration.specs.conjure
+        };
+    }
+
     const rootDefinitions: APIDefinitionLocation[] = [];
     const namespacedDefinitions: Record<string, APIDefinitionLocation[]> = {};
 
-    for (const spec of apiConfiguration.specs) {
+    for (const spec of apiConfiguration.specs ?? []) {
         if (isOpenAPISchema(spec)) {
             const definitionLocation: APIDefinitionLocation = {
                 schema: {

@@ -19,7 +19,7 @@ export interface GeneratorsConfiguration {
     absolutePathToConfiguration: AbsoluteFilePath;
 }
 
-export type APIDefinition = SingleNamespaceAPIDefinition | MultiNamespaceAPIDefinition;
+export type APIDefinition = SingleNamespaceAPIDefinition | MultiNamespaceAPIDefinition | ConjureAPIDefinition;
 
 export interface SingleNamespaceAPIDefinition
     extends RawSchemas.WithEnvironmentsSchema,
@@ -36,6 +36,14 @@ export interface MultiNamespaceAPIDefinition
     type: "multiNamespace";
     rootDefinitions: APIDefinitionLocation[] | undefined;
     definitions: Record<string, APIDefinitionLocation[]>;
+}
+
+export interface ConjureAPIDefinition
+    extends RawSchemas.WithEnvironmentsSchema,
+        RawSchemas.WithAuthSchema,
+        RawSchemas.WithHeadersSchema {
+    type: "conjure";
+    pathToConjureDefinition: string;
 }
 
 export interface APIDefinitionSettings {
