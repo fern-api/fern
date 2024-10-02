@@ -24,6 +24,7 @@ export enum AsIsFiles {
     StringEnum = "StringEnum.Template.cs",
     EnumSerializer = "EnumSerializer.cs",
     StringEnumSerializer = "StringEnumSerializer.cs",
+    StringEnumSerializerTests = "StringEnumSerializerTests.Template.cs",
     TemplateCsProj = "Template.csproj",
     TemplateTestCsProj = "Template.Test.csproj",
     TemplateTestClientCs = "TemplateTestClient.cs",
