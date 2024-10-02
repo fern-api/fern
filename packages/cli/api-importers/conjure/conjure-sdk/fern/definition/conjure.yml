@@ -8,6 +8,6 @@ types:
 
   DefinitionFile: 
     properties:
-      imports: map<string, string>
+      imports: optional<map<string, string>>
       types: optional<types.ConjureTypes>
       services: optional<map<ConjureServiceName, services.ConjureService>>

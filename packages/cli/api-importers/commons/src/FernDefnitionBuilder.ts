@@ -40,8 +40,9 @@ export interface FernDefinitionBuilder {
      * Adds an import and returns the prefix for the import. Returns undefined if no prefix.
      * @param file the file to add the import to
      * @param fileToImport the file to import
+     * @param alias import the file with this alias
      */
-    addImport({ file, fileToImport }: { file: RelativeFilePath; fileToImport: RelativeFilePath }): string | undefined;
+    addImport({ file, fileToImport, alias }: { file: RelativeFilePath; fileToImport: RelativeFilePath; alias?: string; }): string | undefined;
 
     addType(file: RelativeFilePath, { name, schema }: { name: string; schema: RawSchemas.TypeDeclarationSchema }): void;
 
@@ -220,15 +221,17 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
 
     public addImport({
         file,
-        fileToImport
+        fileToImport,
+        alias,
     }: {
         file: RelativeFilePath;
         fileToImport: RelativeFilePath;
+        alias?: string;
     }): string | undefined {
         if (file === fileToImport) {
             return undefined;
         }
-        const importPrefix = camelCase(
+        const importPrefix = alias ?? camelCase(
             (dirname(fileToImport) + "/" + basename(fileToImport, extname(fileToImport))).replaceAll(
                 "__package__",
                 "root"

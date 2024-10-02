@@ -20,6 +20,14 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
 
     public async import({ absolutePathToConjureFolder }: ConjureImporter.Args): Promise<APIDefinitionImporter.Return> {
         await visitAllConjureDefinitionFiles(absolutePathToConjureFolder, (filepath, definition) => {
+            for (const [import_, importedFilepath] of Object.entries(definition.imports ?? {})) {
+                this.fernDefinitionBuilder.addImport({
+                    file: filepath,
+                    fileToImport: RelativeFilePath.of(importedFilepath),
+                    alias: import_
+                });
+            }
+
             for (const [typeName, typeDeclaration] of Object.entries(definition.types?.definitions?.objects ?? {})) {
                 if (isAlias(typeDeclaration)) {
                     this.fernDefinitionBuilder.addType(filepath, {
