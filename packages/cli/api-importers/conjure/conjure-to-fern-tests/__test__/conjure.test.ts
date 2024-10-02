@@ -22,16 +22,16 @@ describe("ir", () => {
         (only ? it.only : it)(
             `${JSON.stringify(fixture)}`,
             async () => {
-                const fixturePath = join(FIXTURES_DIR, RelativeFilePath.of(fixture.name));
+                const fixturePath = join(FIXTURES_DIR, RelativeFilePath.of(fixture.name), RelativeFilePath.of("fern"));
                 const context = createMockTaskContext();
                 const workspace = await loadAPIWorkspace({
                     absolutePathToWorkspace: fixturePath,
                     context,
                     cliVersion: "0.0.0",
-                    workspaceName: undefined
+                    workspaceName: fixture.name
                 });
                 if (!workspace.didSucceed) {
-                    throw new Error(`Failed to convert conjure fixture ${fixture.name}`)
+                    throw new Error(`Failed to convert conjure fixture ${fixture.name}\n${JSON.stringify(workspace.failures)}`)
                 }
                 expect(await workspace.workspace.toFernWorkspace({ context})).toMatchSnapshot(); 
             },

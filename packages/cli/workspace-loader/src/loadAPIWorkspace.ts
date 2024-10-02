@@ -153,7 +153,7 @@ export async function loadAPIWorkspace({
                 changelog,
                 cliVersion,
                 context,
-                relativePathToConjureDirectory: RelativeFilePath.of(generatorsConfiguration.api.pathToConjureDefinition),
+                relativePathToConjureDirectory: RelativeFilePath.of(generatorsConfiguration.api.pathToConjureDefinition)
             })
         };
     }
