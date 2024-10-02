@@ -2,9 +2,9 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 use Seed\V2\Problem\Types\ProblemInfoV2;
 
 class TestSubmissionStatusV2 extends SerializableType

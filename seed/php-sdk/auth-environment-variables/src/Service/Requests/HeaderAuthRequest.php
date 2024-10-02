@@ -2,7 +2,7 @@
 
 namespace Seed\Service\Requests;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\SerializableType;
 
 class HeaderAuthRequest extends SerializableType
 {

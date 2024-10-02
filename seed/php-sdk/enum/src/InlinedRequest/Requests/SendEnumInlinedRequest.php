@@ -2,9 +2,9 @@
 
 namespace Seed\InlinedRequest\Requests;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\SerializableType;
 use Seed\Types\Operand;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonProperty;
 use Seed\Types\Color;
 
 class SendEnumInlinedRequest extends SerializableType

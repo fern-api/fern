@@ -2,9 +2,9 @@
 
 namespace Seed\Userservice\Requests;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\Union;
+use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\Union;
 
 class CreateRequest extends SerializableType
 {

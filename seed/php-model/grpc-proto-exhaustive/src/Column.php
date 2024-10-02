@@ -2,10 +2,10 @@
 
 namespace Seed;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
-use Seed\Core\Union;
+use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
+use Seed\Core\Types\Union;
 
 class Column extends SerializableType
 {

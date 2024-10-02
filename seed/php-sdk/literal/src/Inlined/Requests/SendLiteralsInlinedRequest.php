@@ -2,8 +2,8 @@
 
 namespace Seed\Inlined\Requests;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonProperty;
 use Seed\Inlined\Types\ATopLevelLiteral;
 
 class SendLiteralsInlinedRequest extends SerializableType

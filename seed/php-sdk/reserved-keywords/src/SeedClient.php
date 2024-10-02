@@ -4,7 +4,7 @@ namespace Seed;
 
 use Seed\Package\PackageClient;
 use GuzzleHttp\ClientInterface;
-use Seed\Core\RawClient;
+use Seed\Core\Client\RawClient;
 
 class SeedClient
 {

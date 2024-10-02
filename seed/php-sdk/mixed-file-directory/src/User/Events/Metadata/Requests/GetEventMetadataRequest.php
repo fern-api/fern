@@ -2,7 +2,7 @@
 
 namespace Seed\User\Events\Metadata\Requests;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\SerializableType;
 
 class GetEventMetadataRequest extends SerializableType
 {

@@ -2,13 +2,13 @@
 
 namespace Seed\Headers;
 
-use Seed\Core\RawClient;
+use Seed\Core\Client\RawClient;
 use Seed\Headers\Requests\SendLiteralsInHeadersRequest;
 use Seed\Types\SendResponse;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
-use Seed\Core\JsonApiRequest;
-use Seed\Core\HttpMethod;
+use Seed\Core\Json\JsonApiRequest;
+use Seed\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 

@@ -2,10 +2,10 @@
 
 namespace Seed\V2\V3\Problem;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonProperty;
 use Seed\Problem\ProblemDescription;
-use Seed\Core\ArrayType;
+use Seed\Core\Types\ArrayType;
 use Seed\Commons\Language;
 
 class CreateProblemRequestV2 extends SerializableType

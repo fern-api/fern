@@ -2,7 +2,7 @@
 
 namespace Seed\Types;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\SerializableType;
 
 class UpdateResponse extends SerializableType
 {

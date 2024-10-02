@@ -2,7 +2,7 @@
 
 namespace Seed\QueryParam\Requests;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\SerializableType;
 use Seed\Types\Operand;
 use Seed\Types\Color;
 

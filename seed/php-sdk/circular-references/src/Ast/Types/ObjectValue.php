@@ -2,7 +2,7 @@
 
 namespace Seed\Ast\Types;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\SerializableType;
 
 class ObjectValue extends SerializableType
 {

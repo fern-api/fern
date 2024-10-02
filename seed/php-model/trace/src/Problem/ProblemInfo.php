@@ -2,10 +2,10 @@
 
 namespace Seed\Problem;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonProperty;
 use Seed\Commons\Language;
-use Seed\Core\ArrayType;
+use Seed\Core\Types\ArrayType;
 use Seed\Commons\TestCaseWithExpectedResult;
 
 class ProblemInfo extends SerializableType

@@ -2,9 +2,9 @@
 
 namespace Seed\Users\Requests;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\SerializableType;
 use Seed\Users\Types\WithCursor;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonProperty;
 
 class ListUsersBodyCursorPaginationRequest extends SerializableType
 {

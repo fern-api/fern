@@ -2,11 +2,11 @@
 
 namespace Seed\Dataservice\Requests;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\Union;
+use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\Union;
 use Seed\Types\QueryColumn;
-use Seed\Core\ArrayType;
+use Seed\Core\Types\ArrayType;
 use Seed\Types\IndexedData;
 
 class QueryRequest extends SerializableType

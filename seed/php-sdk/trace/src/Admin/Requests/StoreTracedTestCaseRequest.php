@@ -2,11 +2,11 @@
 
 namespace Seed\Admin\Requests;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\SerializableType;
 use Seed\Submission\Types\TestCaseResultWithStdout;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonProperty;
 use Seed\Submission\Types\TraceResponse;
-use Seed\Core\ArrayType;
+use Seed\Core\Types\ArrayType;
 
 class StoreTracedTestCaseRequest extends SerializableType
 {

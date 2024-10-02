@@ -2,7 +2,7 @@
 
 namespace Seed\Users\Requests;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\SerializableType;
 use Seed\Users\Types\Order;
 
 class ListUsersCursorPaginationRequest extends SerializableType

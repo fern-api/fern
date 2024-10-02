@@ -2,7 +2,7 @@
 
 namespace Seed\User\Requests;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\SerializableType;
 
 class ListUsersRequest extends SerializableType
 {
