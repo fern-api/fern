@@ -35,7 +35,7 @@ describe("ir", () => {
                     );
                 }
                 // eslint-disable-next-line jest/no-standalone-expect
-                expect(await workspace.workspace.toFernWorkspace({ context })).toMatchSnapshot();
+                expect(await workspace.workspace.getDefinition({ context })).toMatchSnapshot();
             },
             90_000
         );
