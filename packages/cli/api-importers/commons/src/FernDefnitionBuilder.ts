@@ -1,13 +1,13 @@
 import { FERN_PACKAGE_MARKER_FILENAME, ROOT_API_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, dirname, relative, RelativeFilePath } from "@fern-api/fs-utils";
-import { OpenApiIntermediateRepresentation, Source } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas, RootApiFileSchema, visitRawEnvironmentDeclaration } from "@fern-api/fern-definition-schema";
 import { camelCase, isEqual } from "lodash-es";
 import path, { basename, extname } from "path";
-import { convertToSourceSchema } from "./utils/convertToSourceSchema";
-import { FernDefinitionDirectory } from "./FernDefinitionDirectory";
+import { FernDefinitionDirectory } from "./utils/FernDefinitionDirectory";
 
 export interface FernDefinitionBuilder {
+    setAPIDisplayName({ displayName }: { displayName: string }): void;
+
     addNavigation({ navigation }: { navigation: string[] }): void;
 
     addAuthScheme({ name, schema }: { name: string; schema: RawSchemas.AuthSchemeDeclarationSchema }): void;
@@ -57,7 +57,7 @@ export interface FernDefinitionBuilder {
 
     addEndpoint(
         file: RelativeFilePath,
-        { name, schema, source }: { name: string; schema: RawSchemas.HttpEndpointSchema; source: Source | undefined }
+        { name, schema, source }: { name: string; schema: RawSchemas.HttpEndpointSchema; source: RawSchemas.SourceSchema | undefined }
     ): void;
 
     addWebhook(file: RelativeFilePath, { name, schema }: { name: string; schema: RawSchemas.WebhookSchema }): void;
@@ -92,7 +92,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     private packageMarkerFile: RawSchemas.PackageMarkerFileSchema = {};
     private basePath: string | undefined = undefined;
 
-    public constructor(ir: OpenApiIntermediateRepresentation, public readonly enableUniqueErrorsPerEndpoint: boolean) {
+    public constructor(public readonly enableUniqueErrorsPerEndpoint: boolean) {
         this.root = new FernDefinitionDirectory();
         this.rootApiFile = {
             name: "api",
@@ -100,16 +100,17 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
                 strategy: "status-code"
             }
         };
-        if (ir.title != null) {
-            this.rootApiFile["display-name"] = ir.title;
-        }
+    }
+    
+    public setAPIDisplayName({ displayName }: { displayName: string; }): void {
+        this.rootApiFile.name = displayName;
     }
 
     public addNavigation({ navigation }: { navigation: string[] }): void {
         this.packageMarkerFile.navigation = navigation;
     }
 
-    setServiceInfo(
+    public setServiceInfo(
         file: RelativeFilePath,
         { displayName, docs }: { displayName?: string | undefined; docs?: string | undefined }
     ): void {
@@ -332,7 +333,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
 
     public addEndpoint(
         file: RelativeFilePath,
-        { name, schema, source }: { name: string; schema: RawSchemas.HttpEndpointSchema; source: Source | undefined }
+        { name, schema, source }: { name: string; schema: RawSchemas.HttpEndpointSchema; source: RawSchemas.SourceSchema | undefined }
     ): void {
         const fernFile = this.getOrCreateFile(file);
         if (fernFile.service == null) {
@@ -343,7 +344,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
             };
         }
         if (source != null) {
-            fernFile.service.source = convertToSourceSchema(source);
+            fernFile.service.source = source;
         }
         fernFile.service.endpoints[name] = schema;
     }

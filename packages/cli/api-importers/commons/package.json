@@ -28,7 +28,9 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/yaml-schema": "workspace:*",
+    "@fern-api/fern-definition-schema": "workspace:*",
+    "@fern-api/configuration": "workspace:*",
+    "@fern-api/task-context": "workspace:*",
     "@fern-api/fs-utils": "workspace:*"
   },
   "devDependencies": {

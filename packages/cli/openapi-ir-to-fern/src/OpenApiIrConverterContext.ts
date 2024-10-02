@@ -50,7 +50,7 @@ export class OpenApiIrConverterContext {
         this.logger = taskContext.logger;
         this.taskContext = taskContext;
         this.ir = ir;
-        this.builder = new FernDefinitionBuilderImpl(ir, false, enableUniqueErrorsPerEndpoint);
+        this.builder = new FernDefinitionBuilderImpl(ir, enableUniqueErrorsPerEndpoint);
         this.detectGlobalHeaders = detectGlobalHeaders;
         this.environmentOverrides = environmentOverrides;
         this.authOverrides = authOverrides;

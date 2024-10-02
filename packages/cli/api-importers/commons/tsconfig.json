@@ -3,7 +3,9 @@
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src/**/*"],
   "references": [
-    { "path": "../../../cli/yaml/yaml-schema" },
+    { "path": "../../../cli/fern-definition/schema" },
+    { "path": "../../../commons/core-utils" }, 
+    { "path": "../../task-context" },
     { "path": "../../../commons/fs-utils" },
   ]
 }

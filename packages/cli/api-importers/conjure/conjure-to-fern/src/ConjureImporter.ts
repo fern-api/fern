@@ -3,7 +3,7 @@ import { APIDefinitionImporter } from "@fern-api/importer-commons";
 
 export declare namespace ConjureImporter {
     interface Args {
-        absolutePathToConjureDefinition: AbsoluteFilePath;
+        absolutePathToConjureFolder: AbsoluteFilePath;
     }
 }
 
