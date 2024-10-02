@@ -2,7 +2,7 @@
 
 namespace Seed\Migration\Requests;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\SerializableType;
 
 class GetAttemptedMigrationsRequest extends SerializableType
 {

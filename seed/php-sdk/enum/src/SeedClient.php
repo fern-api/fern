@@ -6,7 +6,7 @@ use Seed\InlinedRequest\InlinedRequestClient;
 use Seed\PathParam\PathParamClient;
 use Seed\QueryParam\QueryParamClient;
 use GuzzleHttp\ClientInterface;
-use Seed\Core\RawClient;
+use Seed\Core\Client\RawClient;
 
 class SeedClient
 {

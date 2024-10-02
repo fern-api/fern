@@ -2,9 +2,9 @@
 
 namespace Seed\FolderD\Service\Types;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\SerializableType;
 use Seed\FolderB\Common\Types\Foo;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonProperty;
 
 class Response extends SerializableType
 {

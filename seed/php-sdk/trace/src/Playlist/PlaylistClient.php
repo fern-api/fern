@@ -2,19 +2,19 @@
 
 namespace Seed\Playlist;
 
-use Seed\Core\RawClient;
+use Seed\Core\Client\RawClient;
 use Seed\Playlist\Requests\CreatePlaylistRequest;
 use Seed\Playlist\Types\Playlist;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
-use Seed\Core\Constant;
-use Seed\Core\JsonApiRequest;
+use Seed\Core\Types\Constant;
+use Seed\Core\Json\JsonApiRequest;
 use Seed\Environments;
-use Seed\Core\HttpMethod;
+use Seed\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Playlist\Requests\GetPlaylistsRequest;
-use Seed\Core\JsonDecoder;
+use Seed\Core\Json\JsonDecoder;
 use Seed\Playlist\Types\UpdatePlaylistRequest;
 
 class PlaylistClient

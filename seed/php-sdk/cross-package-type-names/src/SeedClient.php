@@ -6,7 +6,7 @@ use Seed\FolderA\FolderAClient;
 use Seed\FolderD\FolderDClient;
 use Seed\Foo\FooClient;
 use GuzzleHttp\ClientInterface;
-use Seed\Core\RawClient;
+use Seed\Core\Client\RawClient;
 
 class SeedClient
 {

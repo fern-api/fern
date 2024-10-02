@@ -4,7 +4,7 @@ namespace Seed\File;
 
 use Seed\File\Notification\NotificationClient;
 use Seed\File\Service\ServiceClient;
-use Seed\Core\RawClient;
+use Seed\Core\Client\RawClient;
 
 class FileClient
 {

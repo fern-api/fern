@@ -2,9 +2,10 @@
 
 namespace Seed;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
+use Seed\Core\Types\Union;
 
 class Column extends SerializableType
 {
@@ -21,10 +22,10 @@ class Column extends SerializableType
     public array $values;
 
     /**
-     * @var mixed $metadata
+     * @var array<string, float|string|bool>|array<string, mixed>|null $metadata
      */
-    #[JsonProperty('metadata')]
-    public mixed $metadata;
+    #[JsonProperty('metadata'), Union(['string' => new Union('float', 'string', 'bool')], ['string' => 'mixed'])]
+    public array|null $metadata;
 
     /**
      * @var ?IndexedData $indexedData
@@ -36,7 +37,7 @@ class Column extends SerializableType
      * @param array{
      *   id: string,
      *   values: array<float>,
-     *   metadata: mixed,
+     *   metadata?: array<string, float|string|bool>|array<string, mixed>|null,
      *   indexedData?: ?IndexedData,
      * } $values
      */
@@ -45,7 +46,7 @@ class Column extends SerializableType
     ) {
         $this->id = $values['id'];
         $this->values = $values['values'];
-        $this->metadata = $values['metadata'];
+        $this->metadata = $values['metadata'] ?? null;
         $this->indexedData = $values['indexedData'] ?? null;
     }
 }

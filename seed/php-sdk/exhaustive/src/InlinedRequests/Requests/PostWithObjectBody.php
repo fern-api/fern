@@ -2,8 +2,8 @@
 
 namespace Seed\InlinedRequests\Requests;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonProperty;
 use Seed\Types\Object\Types\ObjectWithOptionalField;
 
 class PostWithObjectBody extends SerializableType

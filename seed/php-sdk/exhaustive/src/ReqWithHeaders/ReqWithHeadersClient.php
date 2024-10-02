@@ -2,12 +2,12 @@
 
 namespace Seed\ReqWithHeaders;
 
-use Seed\Core\RawClient;
+use Seed\Core\Client\RawClient;
 use Seed\ReqWithHeaders\Requests\ReqWithHeaders;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
-use Seed\Core\JsonApiRequest;
-use Seed\Core\HttpMethod;
+use Seed\Core\Json\JsonApiRequest;
+use Seed\Core\Client\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class ReqWithHeadersClient

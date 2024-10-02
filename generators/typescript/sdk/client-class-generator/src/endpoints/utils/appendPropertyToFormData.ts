@@ -60,7 +60,7 @@ export function appendPropertyToFormData({
                     ),
                     ts.factory.createBlock(
                         [
-                            context.coreUtilities.formDataUtils.append({
+                            context.coreUtilities.formDataUtils.appendFile({
                                 referencetoFormData: referenceToFormData,
                                 key: property.key.wireValue,
                                 value: ts.factory.createIdentifier(FOR_LOOP_ITEM_VARIABLE_NAME)

@@ -2,11 +2,11 @@
 
 namespace Seed\Types\Object;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonProperty;
 use DateTime;
-use Seed\Core\DateType;
-use Seed\Core\ArrayType;
+use Seed\Core\Types\DateType;
+use Seed\Core\Types\ArrayType;
 
 class ObjectWithOptionalField extends SerializableType
 {

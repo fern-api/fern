@@ -2,7 +2,7 @@
 
 namespace Seed\Dataservice\Requests;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\SerializableType;
 
 class FetchRequest extends SerializableType
 {

@@ -2,11 +2,11 @@
 
 namespace Seed\V2\Problem\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonProperty;
 use Seed\Problem\Types\ProblemDescription;
 use Seed\Commons\Types\Language;
-use Seed\Core\ArrayType;
+use Seed\Core\Types\ArrayType;
 
 class ProblemInfoV2 extends SerializableType
 {
