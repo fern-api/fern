@@ -14,6 +14,7 @@ import com.seed.serverSentEvents.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = StreamCompletionRequest.Builder.class)
@@ -62,7 +63,7 @@ public final class StreamCompletionRequest {
     }
 
     public interface QueryStage {
-        _FinalStage query(String query);
+        _FinalStage query(@NotNull String query);
 
         Builder from(StreamCompletionRequest other);
     }
@@ -88,8 +89,8 @@ public final class StreamCompletionRequest {
 
         @java.lang.Override
         @JsonSetter("query")
-        public _FinalStage query(String query) {
-            this.query = query;
+        public _FinalStage query(@NotNull String query) {
+            this.query = Objects.requireNonNull(query, "query must not be null");
             return this;
         }
 

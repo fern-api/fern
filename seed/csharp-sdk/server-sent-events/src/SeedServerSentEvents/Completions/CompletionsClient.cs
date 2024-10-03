@@ -1,21 +1,31 @@
 using System.Net.Http;
-using SeedServerSentEvents;
+using System.Threading;
+using System.Threading.Tasks;
 using SeedServerSentEvents.Core;
 
 #nullable enable
 
 namespace SeedServerSentEvents;
 
-public class CompletionsClient
+public partial class CompletionsClient
 {
     private RawClient _client;
 
-    public CompletionsClient(RawClient client)
+    internal CompletionsClient(RawClient client)
     {
         _client = client;
     }
 
-    public async Task StreamAsync(StreamCompletionRequest request, RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Completions.StreamAsync(new StreamCompletionRequest { Query = "string" });
+    /// </code>
+    /// </example>
+    public async Task StreamAsync(
+        StreamCompletionRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -24,14 +34,15 @@ public class CompletionsClient
                 Method = HttpMethod.Post,
                 Path = "stream",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         throw new SeedServerSentEventsApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }
