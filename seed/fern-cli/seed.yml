@@ -1,4 +1,10 @@
 changelogLocation: ../../packages/cli/cli/versions.yml
+
+allowedTags:
+  - OpenAPI
+  - Fern Definition
+  - AsyncAPI
+
 publishGa:
   workingDirectory: packages/cli/cli
   versionSubstitution: $VERSION

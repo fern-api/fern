@@ -3,6 +3,7 @@ imports:
 types:
   CliSeedWorkspaceConfiguration:
     properties:
+      allowedTags: list<string>
       publishGa: PublishCommand
       publishRc: PublishCommand
       publishDev: PublishCommand
@@ -14,6 +15,7 @@ types:
   SeedWorkspaceConfiguration:
     properties:
       image: string
+      allowedTags: optional<list<string>>
       displayName: string
       irVersion: string
       test: TestConfiguration
