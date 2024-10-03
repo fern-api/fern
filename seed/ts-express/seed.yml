@@ -85,5 +85,6 @@ allowedFailures:
   - streaming
   - streaming-parameter
   - server-sent-events
+  - server-sent-event-examples
 
 

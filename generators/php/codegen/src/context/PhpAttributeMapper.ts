@@ -74,13 +74,7 @@ export class PhpAttributeMapper {
         });
     }
 
-    public getUnionTypeParameters({
-        types,
-        isOptional = false
-    }: {
-        types: php.Type[];
-        isOptional?: boolean;
-    }): php.AstNode[] {
+    public getUnionTypeParameters({ types, isOptional }: { types: php.Type[]; isOptional?: boolean }): php.AstNode[] {
         const typeAttributeArguments = types.map((type) => this.getTypeAttributeArgument(type));
         // remove duplicates, such as "string" and "string" if enums and strings are both in the union
         return uniqWith([...typeAttributeArguments, ...(isOptional ? [php.codeblock("'null'")] : [])], isEqual);

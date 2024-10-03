@@ -30,7 +30,7 @@ class DeleteRequest extends JsonSerializableType
     /**
      * @var array<string, float|string|bool>|array<string, mixed>|null $filter
      */
-    #[JsonProperty('filter'), Union(['string' => new Union('float', 'string', 'bool')], ['string' => 'mixed'])]
+    #[JsonProperty('filter'), Union(['string' => new Union('float', 'string', 'bool')], ['string' => 'mixed'], 'null')]
     public array|null $filter;
 
     /**

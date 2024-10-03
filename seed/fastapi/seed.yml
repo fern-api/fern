@@ -67,6 +67,7 @@ allowedFailures:
   - websocket
   - enum
   - server-sent-events
+  - server-sent-event-examples
   - streaming-parameter
   - any-auth
   # Complex circular refs

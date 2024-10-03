@@ -78,7 +78,7 @@ export class UndiciStreamWrapper<ReadFormat extends Uint8Array | Uint16Array | U
         return this.pipe(dest);
     }
 
-    public unpipe(dest: UndiciStreamWrapper<ReadFormat> | WritableStream<any>): void {
+    public unpipe(dest: UndiciStreamWrapper<ReadFormat> | WritableStream): void {
         this.off("data", (chunk) => {
             if (dest instanceof UndiciStreamWrapper) {
                 dest._write(chunk);

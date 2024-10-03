@@ -1,8 +1,4 @@
-using SeedServerSentEvents.Core;
-
-#nullable enable
-
-namespace SeedServerSentEvents.Core;
+namespace SeedServerSentEvents;
 
 /// <summary>
 /// This exception type will be thrown for any non-2XX API responses.
@@ -19,9 +15,4 @@ public class SeedServerSentEventsApiException(string message, int statusCode, ob
     /// The body of the response that triggered the exception.
     /// </summary>
     public object Body => body;
-
-    public override string ToString()
-    {
-        return $"SeedServerSentEventsApiException {{ message: {Message}, statusCode: {StatusCode}, body: {Body} }}";
-    }
 }
