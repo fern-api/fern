@@ -1,5 +1,5 @@
 {
-  "name": "@fern-api/openapi-ir-to-fern-tests",
+  "name": "@fern-api/openapi-ir-to-fern",
   "version": "0.0.0",
   "repository": {
     "type": "git",
@@ -18,8 +18,8 @@
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
-    "test": "vitest --run",
-    "test:update": "vitest --run -u",
+    "test": "vitest --passWithNoTests --run",
+    "test:update": "vitest --passWithNoTests --run -u",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
@@ -29,20 +29,18 @@
   },
   "dependencies": {
     "@fern-api/configuration": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
-    "@fern-api/openapi-parser": "workspace:*",
-    "@fern-api/openapi-ir-to-fern": "workspace:*",
+    "@fern-api/openapi-ir": "workspace:*",
+    "@fern-api/openapi-ir-parser": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/fern-definition-schema": "workspace:*",
-    "@fern-api/fern-definition-validator": "workspace:*",
-    "@fern-api/api-workspace-commons": "workspace:*",
-    "js-yaml": "^4.1.0",
+    "@fern-api/importer-commons": "workspace:*",
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {
     "@types/lodash-es": "^4.17.12",
-    "@types/js-yaml": "^4.0.8",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",

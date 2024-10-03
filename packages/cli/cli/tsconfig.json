@@ -21,7 +21,7 @@
     { "path": "../mock" },
     { "path": "../openapi-ir-sdk" },
     { "path": "../openapi-ir-to-fern" },
-    { "path": "../openapi-parser" },
+    { "path": "../api-importers/openapi/openapi-ir-parser" },
     { "path": "../posthog-manager" },
     { "path": "../project-loader" },
     { "path": "../register" },
