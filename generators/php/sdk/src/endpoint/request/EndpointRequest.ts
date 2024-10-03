@@ -127,7 +127,7 @@ export abstract class EndpointRequest {
         types: php.Type[];
         isOptional: boolean;
     }): php.CodeBlock {
-        const unionTypeParameters = this.context.phpAttributeMapper.getUnionTypeParameters(types);
+        const unionTypeParameters = this.context.phpAttributeMapper.getUnionTypeParameters({ types, isOptional });
         // if deduping in getUnionTypeParameters results in one type, treat it like just that type
         if (unionTypeParameters.length === 1) {
             if (types[0] == null) {

@@ -302,7 +302,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         arguments_: UnnamedArgument[];
         types: php.Type[];
     }): php.CodeBlock {
-        const unionTypeParameters = this.context.phpAttributeMapper.getUnionTypeParameters(types);
+        const unionTypeParameters = this.context.phpAttributeMapper.getUnionTypeParameters({
+            types,
+            isOptional: false
+        });
         // if deduping in getUnionTypeParameters results in one type, treat it like just that type
         if (unionTypeParameters.length === 1) {
             return this.decodeJsonResponse(types[0]);
