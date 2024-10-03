@@ -6,6 +6,7 @@ use Seed\Core\Json\JsonSerializableType;
 use Seed\Types\Operand;
 use Seed\Core\Json\JsonProperty;
 use Seed\Types\Color;
+use Seed\Core\Types\Union;
 
 class SendEnumInlinedRequest extends JsonSerializableType
 {
@@ -30,7 +31,7 @@ class SendEnumInlinedRequest extends JsonSerializableType
     /**
      * @var value-of<Color>|value-of<Operand>|null $maybeOperandOrColor
      */
-    #[JsonProperty('maybeOperandOrColor')]
+    #[JsonProperty('maybeOperandOrColor'), Union('string', 'null')]
     public string|null $maybeOperandOrColor;
 
     /**

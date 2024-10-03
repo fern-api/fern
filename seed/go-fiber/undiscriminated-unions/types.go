@@ -5,6 +5,7 @@ package undiscriminatedunions
 import (
 	json "encoding/json"
 	fmt "fmt"
+	core "github.com/undiscriminated-unions/fern/core"
 )
 
 type Key struct {
@@ -86,4 +87,38 @@ func NewKeyTypeFromString(s string) (KeyType, error) {
 
 func (k KeyType) Ptr() *KeyType {
 	return &k
+}
+
+type TypeWithOptionalUnion struct {
+	MyUnion *MyUnion `json:"myUnion,omitempty" url:"myUnion,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (t *TypeWithOptionalUnion) GetExtraProperties() map[string]interface{} {
+	return t.extraProperties
+}
+
+func (t *TypeWithOptionalUnion) UnmarshalJSON(data []byte) error {
+	type unmarshaler TypeWithOptionalUnion
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = TypeWithOptionalUnion(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+
+	return nil
+}
+
+func (t *TypeWithOptionalUnion) String() string {
+	if value, err := core.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
 }
