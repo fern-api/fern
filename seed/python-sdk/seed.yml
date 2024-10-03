@@ -10,8 +10,8 @@ buildScripts:
   compileScript:
     - poetry run mypy .
   testScript:
-    # TODO: we need to delineate between snippet testing and regular testing, e.g. just poetry run pytest -rP .
-    - fern test "poetry run pytest -rP ."
+    # TODO: we need to acttually run the mock server tests as well
+    - poetry run pytest -rP ./tests/utils
 
 publish:
   workingDirectory: generators/python
