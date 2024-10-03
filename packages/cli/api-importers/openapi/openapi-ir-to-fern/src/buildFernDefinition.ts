@@ -15,7 +15,7 @@ import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { getDeclarationFileForSchema } from "./utils/getDeclarationFileForSchema";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 import { convertSdkGroupNameToFile } from "./utils/convertSdkGroupName";
-import { Schema } from "@fern-api/openapi-ir-sdk";
+import { Schema } from "@fern-api/openapi-ir";
 
 export const ROOT_PREFIX = "root";
 export const EXTERNAL_AUDIENCE = "external";

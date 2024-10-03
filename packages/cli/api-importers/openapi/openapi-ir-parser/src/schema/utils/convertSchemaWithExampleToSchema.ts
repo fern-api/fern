@@ -8,7 +8,7 @@ import {
     PrimitiveSchemaValueWithExample,
     Schema,
     SchemaWithExample
-} from "@fern-api/openapi-ir-sdk";
+} from "@fern-api/openapi-ir";
 
 export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Schema {
     switch (schema.type) {

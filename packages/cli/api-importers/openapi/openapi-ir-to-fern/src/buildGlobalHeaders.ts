@@ -1,6 +1,6 @@
 import { ROOT_API_FILENAME } from "@fern-api/configuration";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { GlobalHeader } from "@fern-api/openapi-ir-sdk";
+import { GlobalHeader } from "@fern-api/openapi-ir";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { buildHeader } from "./buildHeader";
 import { buildTypeReference } from "./buildTypeReference";

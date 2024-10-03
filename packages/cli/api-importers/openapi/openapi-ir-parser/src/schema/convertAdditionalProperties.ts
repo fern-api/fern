@@ -6,7 +6,7 @@ import {
     SchemaWithExample,
     SdkGroupName,
     Source
-} from "@fern-api/openapi-ir-sdk";
+} from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
 import { convertSchema } from "./convertSchemas";
 import { SchemaParserContext } from "./SchemaParserContext";

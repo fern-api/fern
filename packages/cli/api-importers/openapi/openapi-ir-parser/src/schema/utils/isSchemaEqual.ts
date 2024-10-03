@@ -5,7 +5,7 @@ import {
     PrimitiveSchemaValue,
     Schema,
     SchemaWithExample
-} from "@fern-api/openapi-ir-sdk";
+} from "@fern-api/openapi-ir";
 import { isEqual } from "lodash-es";
 import { convertSchemaWithExampleToSchema } from "./convertSchemaWithExampleToSchema";
 

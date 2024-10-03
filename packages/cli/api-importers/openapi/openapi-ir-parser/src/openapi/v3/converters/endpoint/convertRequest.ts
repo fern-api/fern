@@ -1,5 +1,5 @@
 import { MediaType } from "@fern-api/core-utils";
-import { MultipartRequestProperty, MultipartSchema, RequestWithExample, Source } from "@fern-api/openapi-ir-sdk";
+import { MultipartRequestProperty, MultipartSchema, RequestWithExample, Source } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
 import { isAdditionalPropertiesAny } from "../../../../schema/convertAdditionalProperties";
 import { convertSchema, getSchemaIdFromReference, SCHEMA_REFERENCE_PREFIX } from "../../../../schema/convertSchemas";

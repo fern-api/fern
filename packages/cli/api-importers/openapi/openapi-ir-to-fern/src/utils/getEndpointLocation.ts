@@ -1,6 +1,6 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { Endpoint, HttpMethod } from "@fern-api/openapi-ir-sdk";
+import { Endpoint, HttpMethod } from "@fern-api/openapi-ir";
 import { camelCase, compact, isEqual } from "lodash-es";
 import { convertEndpointSdkNameToFileWithoutExtension } from "./convertSdkGroupName";
 

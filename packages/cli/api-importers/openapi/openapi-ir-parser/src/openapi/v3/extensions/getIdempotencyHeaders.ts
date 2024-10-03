@@ -1,4 +1,4 @@
-import { IdempotencyHeader } from "@fern-api/openapi-ir-sdk";
+import { IdempotencyHeader } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../getExtension";
 import { FernOpenAPIExtension } from "./fernExtensions";

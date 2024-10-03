@@ -1,7 +1,7 @@
 import { FERN_PACKAGE_MARKER_FILENAME_NO_EXTENSION } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { EndpointSdkName, SdkGroupName } from "@fern-api/openapi-ir-sdk";
+import { EndpointSdkName, SdkGroupName } from "@fern-api/openapi-ir";
 import { camelCase } from "lodash-es";
 
 function cleanSdkGroupName(groupName: SdkGroupName): SdkGroupName {

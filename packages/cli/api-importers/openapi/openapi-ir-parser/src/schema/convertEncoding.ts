@@ -1,4 +1,4 @@
-import { Encoding } from "@fern-api/openapi-ir-sdk";
+import { Encoding } from "@fern-api/openapi-ir";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 
 export function convertEncoding(encodingSchema: RawSchemas.EncodingSchema): Encoding | undefined {

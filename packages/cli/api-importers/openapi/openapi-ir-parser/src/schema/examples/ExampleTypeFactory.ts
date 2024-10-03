@@ -10,7 +10,7 @@ import {
     PrimitiveSchemaValueWithExample,
     SchemaId,
     SchemaWithExample
-} from "@fern-api/openapi-ir-sdk";
+} from "@fern-api/openapi-ir";
 import { convertToFullExample } from "./convertToFullExample";
 import { getFullExampleAsArray, getFullExampleAsObject } from "./getFullExample";
 

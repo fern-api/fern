@@ -14,7 +14,7 @@ import {
     ResponseWithExample,
     SchemaWithExample,
     SupportedSdkLanguage
-} from "@fern-api/openapi-ir-sdk";
+} from "@fern-api/openapi-ir";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { ExampleTypeFactory } from "../../../schema/examples/ExampleTypeFactory";
 import { convertSchemaToSchemaWithExample } from "../../../schema/utils/convertSchemaToSchemaWithExample";

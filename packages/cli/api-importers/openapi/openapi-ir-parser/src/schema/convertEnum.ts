@@ -1,4 +1,4 @@
-import { Availability, EnumValue, SchemaWithExample, SdkGroupName, Source } from "@fern-api/openapi-ir-sdk";
+import { Availability, EnumValue, SchemaWithExample, SdkGroupName, Source } from "@fern-api/openapi-ir";
 import { camelCase, upperFirst } from "lodash-es";
 import { FernEnumConfig } from "../openapi/v3/extensions/getFernEnum";
 import { SchemaParserContext } from "./SchemaParserContext";

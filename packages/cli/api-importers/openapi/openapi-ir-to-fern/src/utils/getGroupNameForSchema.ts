@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { Schema, SdkGroupName } from "@fern-api/openapi-ir-sdk";
+import { Schema, SdkGroupName } from "@fern-api/openapi-ir";
 
 export function getGroupNameForSchema(schema: Schema): SdkGroupName | undefined {
     switch (schema.type) {

@@ -1,6 +1,6 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { Webhook } from "@fern-api/openapi-ir-sdk";
+import { Webhook } from "@fern-api/openapi-ir";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { camelCase, isEqual } from "lodash-es";
 import { buildHeader } from "./buildHeader";

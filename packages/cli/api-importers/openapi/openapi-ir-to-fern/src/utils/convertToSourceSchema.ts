@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { Source } from "@fern-api/openapi-ir-sdk";
+import { Source } from "@fern-api/openapi-ir";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 
 export function convertToSourceSchema(source: Source): RawSchemas.SourceSchema {

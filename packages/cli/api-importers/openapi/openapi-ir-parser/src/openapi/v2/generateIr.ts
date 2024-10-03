@@ -1,4 +1,4 @@
-import { OpenApiIntermediateRepresentation, Source } from "@fern-api/openapi-ir-sdk";
+import { OpenApiIntermediateRepresentation, Source } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV2 } from "openapi-types";
 import { convertObj } from "swagger2openapi";

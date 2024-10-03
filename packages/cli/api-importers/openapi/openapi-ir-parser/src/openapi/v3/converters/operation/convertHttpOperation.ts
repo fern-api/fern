@@ -1,4 +1,4 @@
-import { EndpointWithExample, Source } from "@fern-api/openapi-ir-sdk";
+import { EndpointWithExample, Source } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../../getExtension";
 import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName";

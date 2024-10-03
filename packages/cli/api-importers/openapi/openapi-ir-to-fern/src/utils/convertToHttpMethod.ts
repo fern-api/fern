@@ -1,4 +1,4 @@
-import { HttpMethod } from "@fern-api/openapi-ir-sdk";
+import { HttpMethod } from "@fern-api/openapi-ir";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 
 export function convertToHttpMethod(httpMethod: HttpMethod): RawSchemas.HttpMethodSchema {

@@ -7,7 +7,7 @@ import {
     WebsocketHandshakeWithExample,
     WebsocketMessageExample,
     WebsocketSessionExample
-} from "@fern-api/openapi-ir-sdk";
+} from "@fern-api/openapi-ir";
 import { isExamplePrimitive } from "../openapi/v3/converters/ExampleEndpointFactory";
 import { convertSchema } from "../schema/convertSchemas";
 import { ExampleTypeFactory } from "../schema/examples/ExampleTypeFactory";

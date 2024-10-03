@@ -1,5 +1,5 @@
 import { dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { Schema } from "@fern-api/openapi-ir-sdk";
+import { Schema } from "@fern-api/openapi-ir";
 import { getEndpointLocation } from "@fern-api/openapi-ir-to-fern";
 import { parse } from "@fern-api/openapi-parser";
 import { Project } from "@fern-api/project-loader";

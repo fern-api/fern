@@ -1,4 +1,4 @@
-import { EndpointSdkName, HttpMethod, Pagination } from "@fern-api/openapi-ir-sdk";
+import { EndpointSdkName, HttpMethod, Pagination } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
 
 export interface OpenAPIDocumentContext {

@@ -17,7 +17,7 @@ import {
     Schema,
     SdkGroupName,
     StringSchema
-} from "@fern-api/openapi-ir-sdk";
+} from "@fern-api/openapi-ir";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { camelCase } from "lodash-es";
 import {

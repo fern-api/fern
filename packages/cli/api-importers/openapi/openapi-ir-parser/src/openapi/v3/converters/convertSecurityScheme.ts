@@ -1,4 +1,4 @@
-import { EnumSchema, SecurityScheme, Source } from "@fern-api/openapi-ir-sdk";
+import { EnumSchema, SecurityScheme, Source } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../getExtension";
 import { convertEnum } from "../../../schema/convertEnum";

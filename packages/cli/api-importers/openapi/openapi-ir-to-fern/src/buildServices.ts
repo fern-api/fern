@@ -1,4 +1,4 @@
-import { FernOpenapiIr } from "@fern-api/openapi-ir-sdk";
+import { FernOpenapiIr } from "@fern-api/openapi-ir";
 import { buildEndpoint } from "./buildEndpoint";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema";

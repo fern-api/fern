@@ -7,7 +7,7 @@ import {
     QueryParameterWithExample,
     SchemaWithExample,
     Source
-} from "@fern-api/openapi-ir-sdk";
+} from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
 import { convertAvailability } from "../../../../schema/convertAvailability";
 import { convertSchema } from "../../../../schema/convertSchemas";

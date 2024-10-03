@@ -14,7 +14,7 @@ import {
     ReferencedSchema,
     Schema,
     SchemaId
-} from "@fern-api/openapi-ir-sdk";
+} from "@fern-api/openapi-ir";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     buildArrayTypeReference,

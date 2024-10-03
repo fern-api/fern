@@ -1,5 +1,5 @@
 import { Logger } from "@fern-api/logger";
-import { SchemaId, SdkGroupName } from "@fern-api/openapi-ir-sdk";
+import { SchemaId, SdkGroupName } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
 import { ParseOpenAPIOptions } from "../options";
 

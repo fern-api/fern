@@ -1,6 +1,6 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
-import { serialization } from "@fern-api/openapi-ir-sdk";
+import { serialization } from "@fern-api/openapi-ir";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { parse, Spec, SpecImportSettings } from "../parse";
 

@@ -1,4 +1,4 @@
-import { FullExample, KeyValuePair, PrimitiveExample } from "@fern-api/openapi-ir-sdk";
+import { FullExample, KeyValuePair, PrimitiveExample } from "@fern-api/openapi-ir";
 
 export function convertToFullExample(value: unknown): FullExample | undefined {
     if (typeof value === "string") {

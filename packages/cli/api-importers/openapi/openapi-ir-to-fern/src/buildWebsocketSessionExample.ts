@@ -6,7 +6,7 @@ import {
     LiteralExample,
     PrimitiveExample,
     WebsocketSessionExample
-} from "@fern-api/openapi-ir-sdk";
+} from "@fern-api/openapi-ir";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 

@@ -4,7 +4,7 @@ import {
     LiteralSchemaValue,
     PrimitiveSchemaValueWithExample,
     SchemaWithExample
-} from "@fern-api/openapi-ir-sdk";
+} from "@fern-api/openapi-ir";
 import { recursivelyVisitRawTypeReference } from "@fern-api/fern-definition-schema";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../getExtension";

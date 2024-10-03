@@ -1,5 +1,5 @@
 import { isNonNullish } from "@fern-api/core-utils";
-import { EndpointExample, FullExample, PathParameterExample } from "@fern-api/openapi-ir-sdk";
+import { EndpointExample, FullExample, PathParameterExample } from "@fern-api/openapi-ir";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertFullExample } from "./utils/convertFullExample";

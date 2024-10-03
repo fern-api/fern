@@ -1,4 +1,4 @@
-import { EndpointExample } from "@fern-api/openapi-ir-sdk";
+import { EndpointExample } from "@fern-api/openapi-ir";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtensionAndValidate } from "../../../getExtension";

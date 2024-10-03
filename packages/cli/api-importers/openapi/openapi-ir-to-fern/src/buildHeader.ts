@@ -1,5 +1,5 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { Header } from "@fern-api/openapi-ir-sdk";
+import { Header } from "@fern-api/openapi-ir";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { camelCase } from "lodash-es";
 import { buildTypeReference } from "./buildTypeReference";

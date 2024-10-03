@@ -1,4 +1,4 @@
-import { NamespaceId, Schema, Schemas } from "@fern-api/openapi-ir-sdk";
+import { NamespaceId, Schema, Schemas } from "@fern-api/openapi-ir";
 
 export function getSchemas(namespace: string | undefined, schemas: Record<string, Schema>): Schemas {
     let rootSchemas: Record<string, Schema> = {};

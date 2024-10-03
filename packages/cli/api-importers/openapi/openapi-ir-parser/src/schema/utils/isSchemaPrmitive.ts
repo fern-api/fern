@@ -1,4 +1,4 @@
-import { Schema } from "@fern-api/openapi-ir-sdk";
+import { Schema } from "@fern-api/openapi-ir";
 
 export function isSchemaPrimitive(schema: Schema): boolean {
     if (schema.type === "primitive") {

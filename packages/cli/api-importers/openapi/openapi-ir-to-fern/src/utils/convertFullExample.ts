@@ -5,7 +5,7 @@ import {
     KeyValuePair,
     LiteralExample,
     PrimitiveExample
-} from "@fern-api/openapi-ir-sdk";
+} from "@fern-api/openapi-ir";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 
 export function convertFullExample(fullExample: FullExample): RawSchemas.ExampleTypeReferenceSchema {

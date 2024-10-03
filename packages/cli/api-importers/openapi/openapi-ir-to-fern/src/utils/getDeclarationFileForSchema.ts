@@ -1,7 +1,7 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { Schema, SdkGroupName } from "@fern-api/openapi-ir-sdk";
+import { Schema, SdkGroupName } from "@fern-api/openapi-ir";
 import { camelCase } from "lodash-es";
 import { convertSdkGroupNameToFile } from "./convertSdkGroupName";
 

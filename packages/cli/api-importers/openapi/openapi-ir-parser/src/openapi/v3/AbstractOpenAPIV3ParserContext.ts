@@ -1,5 +1,5 @@
 import { Logger } from "@fern-api/logger";
-import { Namespace, SchemaId, SdkGroup, SdkGroupName, Source } from "@fern-api/openapi-ir-sdk";
+import { Namespace, SchemaId, SdkGroup, SdkGroupName, Source } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
 import { ParseOpenAPIOptions } from "../../options";

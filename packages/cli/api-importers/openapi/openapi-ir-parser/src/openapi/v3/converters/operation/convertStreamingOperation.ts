@@ -1,5 +1,5 @@
 import { assertNever, MediaType } from "@fern-api/core-utils";
-import { EndpointExample, EndpointWithExample } from "@fern-api/openapi-ir-sdk";
+import { EndpointExample, EndpointWithExample } from "@fern-api/openapi-ir";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { OpenAPIV3 } from "openapi-types";
 import { getSchemaIdFromReference } from "../../../../schema/convertSchemas";
