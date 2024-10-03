@@ -2,10 +2,10 @@
 
 namespace Seed\Reference;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class SendRequest extends SerializableType
+class SendRequest extends JsonSerializableType
 {
     /**
      * @var string $prompt

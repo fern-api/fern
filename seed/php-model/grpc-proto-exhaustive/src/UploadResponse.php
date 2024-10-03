@@ -2,10 +2,10 @@
 
 namespace Seed;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class UploadResponse extends SerializableType
+class UploadResponse extends JsonSerializableType
 {
     /**
      * @var ?int $count

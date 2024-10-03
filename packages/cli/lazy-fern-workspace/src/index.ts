@@ -2,3 +2,4 @@ export { type AsyncAPISource, type OpenAPISource, type ProtobufSource, type Sour
 export * from "./utils";
 export * from "./LazyFernWorkspace";
 export * from "./OSSWorkspace";
+export * from "./ConjureWorkspace";

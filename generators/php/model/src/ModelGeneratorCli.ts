@@ -4,6 +4,7 @@ import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
 import { generateModels } from "./generateModels";
+import { generateTraits } from "./generateTraits";
 
 export class ModelGeneratorCLI extends AbstractPhpGeneratorCli<ModelCustomConfigSchema, ModelGeneratorContext> {
     protected constructContext({
@@ -38,6 +39,7 @@ export class ModelGeneratorCLI extends AbstractPhpGeneratorCli<ModelCustomConfig
 
     protected async generate(context: ModelGeneratorContext): Promise<void> {
         generateModels(context);
+        generateTraits(context);
         await context.project.persist();
     }
 }

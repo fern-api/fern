@@ -2,12 +2,13 @@
 
 namespace Seed\Dataservice\Requests;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
+use Seed\Core\Types\Union;
 use Seed\Types\IndexedData;
 
-class UpdateRequest extends SerializableType
+class UpdateRequest extends JsonSerializableType
 {
     /**
      * @var string $id
@@ -22,10 +23,10 @@ class UpdateRequest extends SerializableType
     public ?array $values;
 
     /**
-     * @var mixed $setMetadata
+     * @var array<string, float|string|bool>|array<string, mixed>|null $setMetadata
      */
-    #[JsonProperty('setMetadata')]
-    public mixed $setMetadata;
+    #[JsonProperty('setMetadata'), Union(['string' => new Union('float', 'string', 'bool')], ['string' => 'mixed'], 'null')]
+    public array|null $setMetadata;
 
     /**
      * @var ?string $namespace
@@ -43,7 +44,7 @@ class UpdateRequest extends SerializableType
      * @param array{
      *   id: string,
      *   values?: ?array<float>,
-     *   setMetadata: mixed,
+     *   setMetadata?: array<string, float|string|bool>|array<string, mixed>|null,
      *   namespace?: ?string,
      *   indexedData?: ?IndexedData,
      * } $values
@@ -53,7 +54,7 @@ class UpdateRequest extends SerializableType
     ) {
         $this->id = $values['id'];
         $this->values = $values['values'] ?? null;
-        $this->setMetadata = $values['setMetadata'];
+        $this->setMetadata = $values['setMetadata'] ?? null;
         $this->namespace = $values['namespace'] ?? null;
         $this->indexedData = $values['indexedData'] ?? null;
     }

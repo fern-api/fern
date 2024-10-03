@@ -2,10 +2,10 @@
 
 namespace Seed\User\Events\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class Event extends SerializableType
+class Event extends JsonSerializableType
 {
     /**
      * @var string $id

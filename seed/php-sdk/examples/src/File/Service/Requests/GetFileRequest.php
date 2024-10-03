@@ -2,9 +2,9 @@
 
 namespace Seed\File\Service\Requests;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 
-class GetFileRequest extends SerializableType
+class GetFileRequest extends JsonSerializableType
 {
     /**
      * @var string $xFileApiVersion

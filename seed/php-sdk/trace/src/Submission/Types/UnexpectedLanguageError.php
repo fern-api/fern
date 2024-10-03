@@ -2,11 +2,11 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Commons\Types\Language;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonProperty;
 
-class UnexpectedLanguageError extends SerializableType
+class UnexpectedLanguageError extends JsonSerializableType
 {
     /**
      * @var value-of<Language> $expectedLanguage

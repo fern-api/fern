@@ -19,6 +19,8 @@ on:
       - "generators/python/sdk/versions.yml"
       - "generators/ruby/model/versions.yml"
       - "generators/ruby/sdk/versions.yml"
+      - "generators/php/sdk/versions.yml"
+      - "generators/php/model/versions.yml"
       - "generators/typescript/express/versions.yml"
       # This file
       - ".github/workflows/write-changelogs.yml"

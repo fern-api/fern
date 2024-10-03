@@ -9,6 +9,7 @@ import {
     TypeId,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
+import { isEqual, uniqWith } from "lodash-es";
 import { php } from "../";
 import { ClassReference, Type } from "../ast";
 import { BasePhpCustomConfigSchema } from "../custom-config/BasePhpCustomConfigSchema";
@@ -54,6 +55,13 @@ export class PhpTypeMapper {
         return new php.ClassReference({
             name: this.context.getClassName(declaredTypeName.name),
             namespace: this.context.getLocationForTypeId(declaredTypeName.typeId).namespace
+        });
+    }
+
+    public convertToTraitClassReference(declaredTypeName: { typeId: TypeId; name: Name }): ClassReference {
+        return new php.ClassReference({
+            name: this.context.getClassName(declaredTypeName.name),
+            namespace: this.context.getTraitLocationForTypeId(declaredTypeName.typeId).namespace
         });
     }
 
@@ -118,7 +126,15 @@ export class PhpTypeMapper {
             case "union":
                 return php.Type.mixed();
             case "undiscriminatedUnion": {
-                return php.Type.mixed();
+                return php.Type.union(
+                    // need to dedupe because lists and sets are both represented as array
+                    uniqWith(
+                        typeDeclaration.shape.members.map((member) =>
+                            this.convert({ reference: member.type, preserveEnums })
+                        ),
+                        isEqual
+                    )
+                );
             }
             default:
                 assertNever(typeDeclaration.shape);

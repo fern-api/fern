@@ -2,9 +2,9 @@
 
 namespace Seed\Dataservice\Requests;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 
-class FetchRequest extends SerializableType
+class FetchRequest extends JsonSerializableType
 {
     /**
      * @var array<?string> $ids

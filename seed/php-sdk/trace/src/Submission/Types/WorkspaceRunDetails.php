@@ -2,10 +2,10 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class WorkspaceRunDetails extends SerializableType
+class WorkspaceRunDetails extends JsonSerializableType
 {
     /**
      * @var mixed $exceptionV2

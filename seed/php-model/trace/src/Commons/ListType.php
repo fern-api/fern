@@ -2,10 +2,10 @@
 
 namespace Seed\Commons;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class ListType extends SerializableType
+class ListType extends JsonSerializableType
 {
     /**
      * @var mixed $valueType

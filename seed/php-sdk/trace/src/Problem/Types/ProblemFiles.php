@@ -2,12 +2,12 @@
 
 namespace Seed\Problem\Types;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Commons\Types\FileInfo;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class ProblemFiles extends SerializableType
+class ProblemFiles extends JsonSerializableType
 {
     /**
      * @var FileInfo $solutionFile

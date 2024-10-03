@@ -12,6 +12,7 @@
     { "path": "../openapi-parser" },
     { "path": "../task-context" },
     { "path": "../workspace-commons" },
+    { "path": "../api-importers/commons" },
     { "path": "../fern-definition/schema" },
   ]
 }

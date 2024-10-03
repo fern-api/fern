@@ -2,10 +2,10 @@
 
 namespace Seed\User\Events\Metadata;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class Metadata extends SerializableType
+class Metadata extends JsonSerializableType
 {
     /**
      * @var string $id

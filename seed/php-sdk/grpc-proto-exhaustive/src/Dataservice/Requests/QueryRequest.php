@@ -2,13 +2,14 @@
 
 namespace Seed\Dataservice\Requests;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\Union;
 use Seed\Types\QueryColumn;
-use Seed\Core\ArrayType;
+use Seed\Core\Types\ArrayType;
 use Seed\Types\IndexedData;
 
-class QueryRequest extends SerializableType
+class QueryRequest extends JsonSerializableType
 {
     /**
      * @var ?string $namespace
@@ -23,10 +24,10 @@ class QueryRequest extends SerializableType
     public int $topK;
 
     /**
-     * @var mixed $filter
+     * @var array<string, float|string|bool>|array<string, mixed>|null $filter
      */
-    #[JsonProperty('filter')]
-    public mixed $filter;
+    #[JsonProperty('filter'), Union(['string' => new Union('float', 'string', 'bool')], ['string' => 'mixed'], 'null')]
+    public array|null $filter;
 
     /**
      * @var ?bool $includeValues
@@ -68,7 +69,7 @@ class QueryRequest extends SerializableType
      * @param array{
      *   namespace?: ?string,
      *   topK: int,
-     *   filter: mixed,
+     *   filter?: array<string, float|string|bool>|array<string, mixed>|null,
      *   includeValues?: ?bool,
      *   includeMetadata?: ?bool,
      *   queries?: ?array<QueryColumn>,
@@ -82,7 +83,7 @@ class QueryRequest extends SerializableType
     ) {
         $this->namespace = $values['namespace'] ?? null;
         $this->topK = $values['topK'];
-        $this->filter = $values['filter'];
+        $this->filter = $values['filter'] ?? null;
         $this->includeValues = $values['includeValues'] ?? null;
         $this->includeMetadata = $values['includeMetadata'] ?? null;
         $this->queries = $values['queries'] ?? null;

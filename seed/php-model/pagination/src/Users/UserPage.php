@@ -2,10 +2,10 @@
 
 namespace Seed\Users;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class UserPage extends SerializableType
+class UserPage extends JsonSerializableType
 {
     /**
      * @var UserListContainer $data

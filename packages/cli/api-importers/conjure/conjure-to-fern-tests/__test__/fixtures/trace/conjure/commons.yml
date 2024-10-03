@@ -1,0 +1,188 @@
+types:
+  definitions:
+    default-package: com.birch.trace.commons
+    objects:
+      EmptyObject:
+        fields: {}
+      ProblemId:
+        alias: string
+      NodeId:
+        alias: string
+      VariableType:
+        union:
+          integerType: EmptyObject
+          doubleType: EmptyObject
+          booleanType: EmptyObject
+          stringType: EmptyObject
+          charType: EmptyObject
+          listType: ListType
+          mapType: MapType
+          binaryTreeType: EmptyObject
+          singlyLinkedListType: EmptyObject
+          doublyLinkedListType: EmptyObject
+      ListType:
+        fields:
+          valueType: VariableType
+          isFixedLength:
+            docs: Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.
+            type: optional<boolean>
+      MapType:
+        fields:
+          keyType: VariableType
+          valueType: VariableType
+      VariableValue:
+        union:
+          integerValue: integer
+          booleanValue: boolean
+          doubleValue: double
+          stringValue: string
+          charValue: string
+          mapValue: MapValue
+          listValue: list<VariableValue>
+          binaryTreeValue: BinaryTreeValue
+          singlyLinkedListValue: SinglyLinkedListValue
+          doublyLinkedListValue: DoublyLinkedListValue
+          nullValue: EmptyObject
+      FrontendVariableValue:
+        union:
+          integerValue: integer
+          booleanValue: boolean
+          doubleValue: double
+          stringValue: string
+          charValue: string
+          mapValue: FrontendMapValue
+          listValue: list<FrontendVariableValue>
+          binaryTreeValue: FrontendBinaryTreeValue
+          singlyLinkedListValue: FrontendSinglyLinkedListValue
+          doublyLinkedListValue: FrontendDoublyLinkedListValue
+          nullValue: EmptyObject
+      DebugVariableValue:
+        union:
+          integerValue: integer
+          booleanValue: boolean
+          doubleValue: double
+          stringValue: string
+          charValue: string
+          mapValue: DebugMapValue
+          listValue: list<DebugVariableValue>
+          binaryTreeNodeValue: BinaryTreeNodeAndTreeValue
+          singlyLinkedListNodeValue: SinglyLinkedListNodeAndListValue
+          doublyLinkedListNodeValue: DoublyLinkedListNodeAndListValue
+          undefinedValue: EmptyObject
+          nullValue: EmptyObject
+          genericValue: GenericValue
+      GenericValue:
+        fields:
+          stringifiedType: optional<string>
+          stringifiedValue: string
+      MapValue:
+        fields:
+          keyValuePairs: list<KeyValuePair>
+      KeyValuePair:
+        fields:
+          key: VariableValue
+          value: VariableValue
+      BinaryTreeValue:
+        fields:
+          root: optional<NodeId>
+          nodes: map<NodeId, BinaryTreeNodeValue>
+      BinaryTreeNodeValue:
+        fields:
+          nodeId: NodeId
+          val: double
+          right: optional<NodeId>
+          left: optional<NodeId>
+      BinaryTreeNodeAndTreeValue:
+        fields:
+          nodeId: NodeId
+          fullTree: BinaryTreeValue
+      SinglyLinkedListValue:
+        fields:
+          head: optional<NodeId>
+          nodes: map<NodeId, SinglyLinkedListNodeValue>
+      SinglyLinkedListNodeValue:
+        fields:
+          nodeId: NodeId
+          val: double
+          next: optional<NodeId>
+      SinglyLinkedListNodeAndListValue:
+        fields:
+          nodeId: NodeId
+          fullList: SinglyLinkedListValue
+      DoublyLinkedListValue:
+        fields:
+          head: optional<NodeId>
+          nodes: map<NodeId, DoublyLinkedListNodeValue>
+      DoublyLinkedListNodeValue:
+        fields:
+          nodeId: NodeId
+          val: double
+          next: optional<NodeId>
+          prev: optional<NodeId>
+      DoublyLinkedListNodeAndListValue:
+        fields:
+          nodeId: NodeId
+          fullList: DoublyLinkedListValue
+      FrontendMapValue:
+        fields:
+          keyValuePairs: list<FrontendKeyValuePair>
+      FrontendKeyValuePair:
+        fields:
+          key: FrontendVariableValue
+          value: FrontendVariableValue
+      FrontendBinaryTreeValue:
+        fields:
+          root: NodeId
+          nodes: map<NodeId, FrontendBinaryTreeNodeValue>
+      FrontendBinaryTreeNodeValue:
+        fields:
+          nodeId: NodeId
+          val: optional<double>
+          right: optional<NodeId>
+          left: optional<NodeId>
+      FrontendSinglyLinkedListValue:
+        fields:
+          head: NodeId
+          nodes: map<NodeId, FrontendSinglyLinkedListNodeValue>
+      FrontendSinglyLinkedListNodeValue:
+        fields:
+          nodeId: NodeId
+          val: optional<double>
+          next: optional<NodeId>
+      FrontendDoublyLinkedListValue:
+        fields:
+          head: NodeId
+          nodes: map<NodeId, FrontendDoublyLinkedListNodeValue>
+      FrontendDoublyLinkedListNodeValue:
+        fields:
+          nodeId: NodeId
+          val: optional<double>
+          next: optional<NodeId>
+          prev: optional<NodeId>
+      DebugMapValue:
+        fields:
+          keyValuePairs: list<DebugKeyValuePairs>
+      DebugKeyValuePairs:
+        fields:
+          key: DebugVariableValue
+          value: DebugVariableValue
+      TestCase:
+        fields:
+          id: string
+          params: list<VariableValue>
+      TestCaseWithExpectedResult:
+        fields:
+          testCase: TestCase
+          expectedResult: VariableValue
+      FileInfo:
+        fields:
+          filename: string
+          contents: string
+      Language:
+        values:
+          - JAVA
+          - JAVASCRIPT
+          - PYTHON
+
+      UserId:
+        alias: string

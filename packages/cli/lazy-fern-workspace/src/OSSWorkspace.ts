@@ -5,7 +5,6 @@ import { convert } from "@fern-api/openapi-ir-to-fern";
 import { parse, ParseOpenAPIOptions } from "@fern-api/openapi-parser";
 import { TaskContext } from "@fern-api/task-context";
 import yaml from "js-yaml";
-import { mapValues as mapValuesLodash } from "lodash-es";
 import { v4 as uuidv4 } from "uuid";
 import { getAllOpenAPISpecs } from "./utils/getAllOpenAPISpecs";
 import {
@@ -14,6 +13,7 @@ import {
     FernDefinition,
     IdentifiableSource
 } from "@fern-api/api-workspace-commons";
+import { mapValues } from "./utils/mapValues";
 
 export type Spec = OpenAPISpec | ProtobufSpec;
 
@@ -254,8 +254,4 @@ function getOptionsOverridesFromSettings(settings?: OSSWorkspace.Settings): Part
         result.optionalAdditionalProperties = true;
     }
     return result;
-}
-
-function mapValues<T extends object, U>(items: T, mapper: (item: T[keyof T]) => U): Record<keyof T, U> {
-    return mapValuesLodash(items, mapper) as Record<keyof T, U>;
 }

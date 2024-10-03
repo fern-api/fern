@@ -2,10 +2,10 @@
 
 namespace Seed\Auth\Requests;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class RefreshTokenRequest extends SerializableType
+class RefreshTokenRequest extends JsonSerializableType
 {
     /**
      * @var string $clientId

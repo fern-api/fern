@@ -2,10 +2,10 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class FinishedResponse extends SerializableType
+class FinishedResponse extends JsonSerializableType
 {
     /**
      * @var string $submissionId

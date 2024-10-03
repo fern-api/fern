@@ -2,10 +2,10 @@
 
 namespace Seed\Submission;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class RecordedTestCaseUpdate extends SerializableType
+class RecordedTestCaseUpdate extends JsonSerializableType
 {
     /**
      * @var string $testCaseId

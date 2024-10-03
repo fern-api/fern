@@ -2,11 +2,11 @@
 
 namespace Seed;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class WithMetadata extends SerializableType
+class WithMetadata extends JsonSerializableType
 {
     /**
      * @var array<string, string> $metadata

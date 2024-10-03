@@ -2,13 +2,13 @@
 
 namespace Seed\Auth;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
 /**
  * An OAuth token response.
  */
-class TokenResponse extends SerializableType
+class TokenResponse extends JsonSerializableType
 {
     /**
      * @var string $accessToken

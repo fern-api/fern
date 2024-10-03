@@ -2,11 +2,11 @@
 
 namespace Seed\V2\Problem;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class TestCaseImplementationDescription extends SerializableType
+class TestCaseImplementationDescription extends JsonSerializableType
 {
     /**
      * @var array<mixed> $boards

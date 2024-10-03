@@ -2,10 +2,10 @@
 
 namespace Seed\Reference\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class NestedObjectWithLiterals extends SerializableType
+class NestedObjectWithLiterals extends JsonSerializableType
 {
     /**
      * @var string $literal1

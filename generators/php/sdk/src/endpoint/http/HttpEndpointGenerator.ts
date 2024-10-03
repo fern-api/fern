@@ -221,6 +221,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     methodSuffix: "String"
                 });
             case "union":
+                return this.decodeJsonResponseForUnion({
+                    arguments_,
+                    types: internalType.types
+                });
             case "object":
             case "optional":
             case "typeDict":
@@ -259,7 +263,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 php.invokeMethod({
                     on: this.context.getJsonDecoderClassReference(),
                     method: "decodeArray",
-                    arguments_: [...arguments_, this.context.phpAttributeMapper.getArrayTypeAttributeArgument(type)],
+                    arguments_: [...arguments_, this.context.phpAttributeMapper.getTypeAttributeArgument(type)],
                     static_: true
                 })
             );
@@ -288,6 +292,34 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     static_: true
                 })
             );
+        });
+    }
+
+    private decodeJsonResponseForUnion({
+        arguments_,
+        types
+    }: {
+        arguments_: UnnamedArgument[];
+        types: php.Type[];
+    }): php.CodeBlock {
+        const unionTypeParameters = this.context.phpAttributeMapper.getUnionTypeParameters({ types });
+        // if deduping in getUnionTypeParameters results in one type, treat it like just that type
+        if (unionTypeParameters.length === 1) {
+            return this.decodeJsonResponse(types[0]);
+        }
+        return php.codeblock((writer) => {
+            writer.writeNode(
+                php.invokeMethod({
+                    on: this.context.getJsonDecoderClassReference(),
+                    method: "decodeUnion",
+                    arguments_: [
+                        ...arguments_,
+                        this.context.phpAttributeMapper.getUnionTypeClassRepresentation(unionTypeParameters)
+                    ],
+                    static_: true
+                })
+            );
+            writer.writeLine("; // @phpstan-ignore-line");
         });
     }
 

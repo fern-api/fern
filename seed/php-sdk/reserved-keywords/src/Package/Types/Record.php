@@ -2,11 +2,11 @@
 
 namespace Seed\Package\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class Record extends SerializableType
+class Record extends JsonSerializableType
 {
     /**
      * @var array<string, string> $foo

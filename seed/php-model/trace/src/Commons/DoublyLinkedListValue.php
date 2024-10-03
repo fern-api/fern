@@ -2,11 +2,11 @@
 
 namespace Seed\Commons;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class DoublyLinkedListValue extends SerializableType
+class DoublyLinkedListValue extends JsonSerializableType
 {
     /**
      * @var ?string $head

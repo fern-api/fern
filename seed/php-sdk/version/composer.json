@@ -35,6 +35,6 @@
       "@php -l tests"
     ],
     "test": "phpunit",
-    "analyze": "phpstan analyze src"
+    "analyze": "phpstan analyze src tests"
   }
 }

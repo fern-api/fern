@@ -2,10 +2,10 @@
 
 namespace Seed\Inlined\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class ANestedLiteral extends SerializableType
+class ANestedLiteral extends JsonSerializableType
 {
     /**
      * @var string $myLiteral

@@ -3,7 +3,7 @@
 namespace Seed\FolderD;
 
 use Seed\FolderD\Service\ServiceClient;
-use Seed\Core\RawClient;
+use Seed\Core\Client\RawClient;
 
 class FolderDClient
 {

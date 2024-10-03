@@ -2,11 +2,11 @@
 
 namespace Seed\Users\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class UserOptionalListContainer extends SerializableType
+class UserOptionalListContainer extends JsonSerializableType
 {
     /**
      * @var ?array<User> $users

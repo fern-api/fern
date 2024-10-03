@@ -2,10 +2,10 @@
 
 namespace Seed\V2\V3\Problem\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class FunctionImplementation extends SerializableType
+class FunctionImplementation extends JsonSerializableType
 {
     /**
      * @var string $impl

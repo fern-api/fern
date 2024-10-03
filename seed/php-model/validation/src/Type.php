@@ -2,13 +2,13 @@
 
 namespace Seed;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
 /**
  * Defines properties with default values and validation rules.
  */
-class Type extends SerializableType
+class Type extends JsonSerializableType
 {
     /**
      * @var float $decimal

@@ -2,10 +2,10 @@
 
 namespace Seed\Service\Requests;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use DateTime;
 
-class ListResourcesRequest extends SerializableType
+class ListResourcesRequest extends JsonSerializableType
 {
     /**
      * @var int $pageLimit

@@ -2,10 +2,10 @@
 
 namespace Seed\Errors\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class PropertyBasedErrorTestBody extends SerializableType
+class PropertyBasedErrorTestBody extends JsonSerializableType
 {
     /**
      * @var string $message

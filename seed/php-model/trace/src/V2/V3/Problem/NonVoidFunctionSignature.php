@@ -2,11 +2,11 @@
 
 namespace Seed\V2\V3\Problem;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class NonVoidFunctionSignature extends SerializableType
+class NonVoidFunctionSignature extends JsonSerializableType
 {
     /**
      * @var array<Parameter> $parameters

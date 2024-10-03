@@ -7,6 +7,7 @@ generated
 bundle.c?js
 .pnp*
 packages/ir-sdk/**
+packages/cli/api-importers/conjure/conjure-sdk/**
 packages/docs-config/**
 packages/cli/openapi-ir-sdk/**
 packages/cli/configuration/src/docs-yml/schemas/**

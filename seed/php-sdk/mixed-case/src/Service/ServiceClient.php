@@ -2,16 +2,16 @@
 
 namespace Seed\Service;
 
-use Seed\Core\RawClient;
+use Seed\Core\Client\RawClient;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
-use Seed\Core\JsonApiRequest;
-use Seed\Core\HttpMethod;
-use Seed\Core\JsonDecoder;
+use Seed\Core\Json\JsonApiRequest;
+use Seed\Core\Client\HttpMethod;
+use Seed\Core\Json\JsonDecoder;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Service\Requests\ListResourcesRequest;
-use Seed\Core\Constant;
+use Seed\Core\Types\Constant;
 
 class ServiceClient
 {

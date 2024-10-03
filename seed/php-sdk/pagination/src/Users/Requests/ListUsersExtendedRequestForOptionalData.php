@@ -2,9 +2,9 @@
 
 namespace Seed\Users\Requests;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 
-class ListUsersExtendedRequestForOptionalData extends SerializableType
+class ListUsersExtendedRequestForOptionalData extends JsonSerializableType
 {
     /**
      * @var ?string $cursor

@@ -94,12 +94,13 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
 
     private async createAsIsFile({ filename, namespace }: { filename: string; namespace: string }): Promise<File> {
         const contents = (await readFile(getAsIsFilepath(filename))).toString();
+
         return new File(
             filename.replace(".Template", ""),
             RelativeFilePath.of(""),
             this.replaceTemplate({
                 contents,
-                namespace
+                namespace: this.getNestedNamespace({ namespace, filename })
             })
         );
     }
@@ -157,6 +158,14 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
             absolutePathToDirectory: join(this.absolutePathToOutputDirectory, this.filepaths.getCoreTestsDirectory()),
             files: this.coreTestFiles
         });
+    }
+
+    private getNestedNamespace({ namespace, filename }: { namespace: string; filename: string }): string {
+        const parts = filename.split("/");
+        if (parts.length <= 1) {
+            return filename;
+        }
+        return [namespace, ...parts.slice(0, -1)].join("\\");
     }
 
     private async createPhpDirectory({
@@ -272,7 +281,7 @@ class ComposerJson {
       "@php -l ${TESTS_DIRECTORY_NAME}"
     ],
     "test": "phpunit",
-    "analyze": "phpstan analyze src"
+    "analyze": "phpstan analyze src tests"
   }
 }
 `;

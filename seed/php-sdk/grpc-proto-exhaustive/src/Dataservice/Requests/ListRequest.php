@@ -2,9 +2,9 @@
 
 namespace Seed\Dataservice\Requests;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 
-class ListRequest extends SerializableType
+class ListRequest extends JsonSerializableType
 {
     /**
      * @var ?string $prefix

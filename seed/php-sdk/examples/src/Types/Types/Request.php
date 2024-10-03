@@ -2,10 +2,10 @@
 
 namespace Seed\Types\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class Request extends SerializableType
+class Request extends JsonSerializableType
 {
     /**
      * @var mixed $request

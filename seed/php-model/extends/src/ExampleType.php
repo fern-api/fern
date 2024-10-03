@@ -2,11 +2,14 @@
 
 namespace Seed;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Traits\Docs;
+use Seed\Core\Json\JsonProperty;
 
-class ExampleType extends SerializableType
+class ExampleType extends JsonSerializableType
 {
+    use Docs;
+
     /**
      * @var string $name
      */
@@ -16,11 +19,13 @@ class ExampleType extends SerializableType
     /**
      * @param array{
      *   name: string,
+     *   docs: string,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
         $this->name = $values['name'];
+        $this->docs = $values['docs'];
     }
 }

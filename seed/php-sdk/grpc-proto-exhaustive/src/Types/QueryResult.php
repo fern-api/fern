@@ -2,11 +2,11 @@
 
 namespace Seed\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class QueryResult extends SerializableType
+class QueryResult extends JsonSerializableType
 {
     /**
      * @var ?array<ScoredColumn> $matches

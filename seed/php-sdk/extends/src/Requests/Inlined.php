@@ -2,11 +2,14 @@
 
 namespace Seed\Requests;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Traits\ExampleType;
+use Seed\Core\Json\JsonProperty;
 
-class Inlined extends SerializableType
+class Inlined extends JsonSerializableType
 {
+    use ExampleType;
+
     /**
      * @var string $unique
      */
@@ -16,11 +19,15 @@ class Inlined extends SerializableType
     /**
      * @param array{
      *   unique: string,
+     *   name: string,
+     *   docs: string,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
         $this->unique = $values['unique'];
+        $this->name = $values['name'];
+        $this->docs = $values['docs'];
     }
 }

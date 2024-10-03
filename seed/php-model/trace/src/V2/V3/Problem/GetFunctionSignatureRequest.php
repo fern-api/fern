@@ -2,10 +2,10 @@
 
 namespace Seed\V2\V3\Problem;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class GetFunctionSignatureRequest extends SerializableType
+class GetFunctionSignatureRequest extends JsonSerializableType
 {
     /**
      * @var mixed $functionSignature

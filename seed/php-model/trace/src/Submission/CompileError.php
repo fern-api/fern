@@ -2,10 +2,10 @@
 
 namespace Seed\Submission;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class CompileError extends SerializableType
+class CompileError extends JsonSerializableType
 {
     /**
      * @var string $message

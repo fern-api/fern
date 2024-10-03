@@ -2,10 +2,10 @@
 
 namespace Seed\Types\Union;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class Cat extends SerializableType
+class Cat extends JsonSerializableType
 {
     /**
      * @var string $name

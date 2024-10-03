@@ -2,12 +2,12 @@
 
 namespace Seed\Submission;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 use Seed\V2\Problem\ProblemInfoV2;
 
-class TestSubmissionStatusV2 extends SerializableType
+class TestSubmissionStatusV2 extends JsonSerializableType
 {
     /**
      * @var array<TestSubmissionUpdate> $updates

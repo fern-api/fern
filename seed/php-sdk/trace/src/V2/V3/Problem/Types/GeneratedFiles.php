@@ -2,12 +2,12 @@
 
 namespace Seed\V2\V3\Problem\Types;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Commons\Types\Language;
-use Seed\Core\JsonProperty;
-use Seed\Core\ArrayType;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\ArrayType;
 
-class GeneratedFiles extends SerializableType
+class GeneratedFiles extends JsonSerializableType
 {
     /**
      * @var array<value-of<Language>, Files> $generatedTestCaseFiles

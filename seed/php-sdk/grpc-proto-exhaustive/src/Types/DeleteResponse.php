@@ -2,8 +2,8 @@
 
 namespace Seed\Types;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 
-class DeleteResponse extends SerializableType
+class DeleteResponse extends JsonSerializableType
 {
 }

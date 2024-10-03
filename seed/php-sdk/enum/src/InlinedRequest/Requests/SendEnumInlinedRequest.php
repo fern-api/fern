@@ -2,11 +2,13 @@
 
 namespace Seed\InlinedRequest\Requests;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Types\Operand;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonProperty;
+use Seed\Types\Color;
+use Seed\Core\Types\Union;
 
-class SendEnumInlinedRequest extends SerializableType
+class SendEnumInlinedRequest extends JsonSerializableType
 {
     /**
      * @var value-of<Operand> $operand
@@ -21,23 +23,23 @@ class SendEnumInlinedRequest extends SerializableType
     public ?string $maybeOperand;
 
     /**
-     * @var mixed $operandOrColor
+     * @var value-of<Color>|value-of<Operand> $operandOrColor
      */
     #[JsonProperty('operandOrColor')]
-    public mixed $operandOrColor;
+    public string $operandOrColor;
 
     /**
-     * @var mixed $maybeOperandOrColor
+     * @var value-of<Color>|value-of<Operand>|null $maybeOperandOrColor
      */
-    #[JsonProperty('maybeOperandOrColor')]
-    public mixed $maybeOperandOrColor;
+    #[JsonProperty('maybeOperandOrColor'), Union('string', 'null')]
+    public string|null $maybeOperandOrColor;
 
     /**
      * @param array{
      *   operand: value-of<Operand>,
      *   maybeOperand?: ?value-of<Operand>,
-     *   operandOrColor: mixed,
-     *   maybeOperandOrColor: mixed,
+     *   operandOrColor: value-of<Color>|value-of<Operand>,
+     *   maybeOperandOrColor?: value-of<Color>|value-of<Operand>|null,
      * } $values
      */
     public function __construct(
@@ -46,6 +48,6 @@ class SendEnumInlinedRequest extends SerializableType
         $this->operand = $values['operand'];
         $this->maybeOperand = $values['maybeOperand'] ?? null;
         $this->operandOrColor = $values['operandOrColor'];
-        $this->maybeOperandOrColor = $values['maybeOperandOrColor'];
+        $this->maybeOperandOrColor = $values['maybeOperandOrColor'] ?? null;
     }
 }

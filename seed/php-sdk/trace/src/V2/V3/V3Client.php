@@ -3,7 +3,7 @@
 namespace Seed\V2\V3;
 
 use Seed\V2\V3\Problem\ProblemClient;
-use Seed\Core\RawClient;
+use Seed\Core\Client\RawClient;
 
 class V3Client
 {

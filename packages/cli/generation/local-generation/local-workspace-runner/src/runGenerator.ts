@@ -193,6 +193,7 @@ export async function runGenerator({
     absolutePathToIr,
     absolutePathToWriteConfigJson,
     keepDocker,
+    context,
     generatorInvocation,
     writeUnitTests,
     generateOauthClients,
@@ -238,6 +239,7 @@ export async function runGenerator({
     }
 
     await runDocker({
+        logger: context.logger,
         imageName,
         args: [DOCKER_GENERATOR_CONFIG_PATH],
         binds,

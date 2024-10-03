@@ -2,10 +2,10 @@
 
 namespace Seed\Problem\Types;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 
-class UpdateProblemResponse extends SerializableType
+class UpdateProblemResponse extends JsonSerializableType
 {
     /**
      * @var int $problemVersion

@@ -2,11 +2,11 @@
 
 namespace Seed\Payment\Requests;
 
-use Seed\Core\SerializableType;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonSerializableType;
+use Seed\Core\Json\JsonProperty;
 use Seed\Payment\Types\Currency;
 
-class CreatePaymentRequest extends SerializableType
+class CreatePaymentRequest extends JsonSerializableType
 {
     /**
      * @var int $amount

@@ -31,8 +31,7 @@ jobs:
   generator-validate:
     strategy:
       matrix:
-        generator:
-          [
+        generator: [
             fastapi,
             pydantic,
             python-sdk,
@@ -46,6 +45,8 @@ jobs:
             ts-express,
             csharp-sdk,
             csharp-model
+            php-sdk,
+            php-model
           ]
 
     runs-on: ubuntu-latest

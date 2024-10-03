@@ -2,11 +2,11 @@
 
 namespace Seed\Users\Requests;
 
-use Seed\Core\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Users\Types\WithPage;
-use Seed\Core\JsonProperty;
+use Seed\Core\Json\JsonProperty;
 
-class ListUsersBodyOffsetPaginationRequest extends SerializableType
+class ListUsersBodyOffsetPaginationRequest extends JsonSerializableType
 {
     /**
      * @var ?WithPage $pagination The object that contains the offset used for pagination
