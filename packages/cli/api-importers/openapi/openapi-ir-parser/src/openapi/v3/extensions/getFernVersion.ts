@@ -1,6 +1,6 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { OpenAPIV3 } from "openapi-types";
-import { getExtensionAndValidate } from "../../../getExtension";
+import { getExtension, getExtensionAndValidate } from "../../../getExtension";
 import { OpenAPIV3ParserContext } from "../OpenAPIV3ParserContext";
 import { FernOpenAPIExtension } from "./fernExtensions";
 
@@ -11,12 +11,5 @@ export function getFernVersion({
     context: OpenAPIV3ParserContext;
     document: OpenAPIV3.Document;
 }): RawSchemas.VersionDeclarationSchema | undefined {
-    return (
-        getExtensionAndValidate(
-            document,
-            FernOpenAPIExtension.FERN_VERSION,
-            RawSchemas.VersionDeclarationSchema,
-            context.logger
-        ) ?? undefined
-    );
+    return getExtension(document, FernOpenAPIExtension.FERN_VERSION) ?? undefined;
 }

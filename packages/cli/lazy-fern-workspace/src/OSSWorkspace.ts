@@ -2,7 +2,7 @@ import { FERN_PACKAGE_MARKER_FILENAME, generatorsYml } from "@fern-api/configura
 import { isNonNullish } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { convert } from "@fern-api/openapi-ir-to-fern";
-import { parse, ParseOpenAPIOptions } from "@fern-api/openapi-parser";
+import { parse, ParseOpenAPIOptions } from "@fern-api/openapi-ir-parser";
 import { TaskContext } from "@fern-api/task-context";
 import yaml from "js-yaml";
 import { v4 as uuidv4 } from "uuid";

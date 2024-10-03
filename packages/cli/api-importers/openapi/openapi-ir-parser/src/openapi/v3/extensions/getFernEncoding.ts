@@ -1,7 +1,7 @@
 import { Logger } from "@fern-api/logger";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { OpenAPIV3 } from "openapi-types";
-import { getExtensionAndValidate } from "../../../getExtension";
+import { getExtension } from "../../../getExtension";
 import { FernOpenAPIExtension } from "./fernExtensions";
 
 export function getFernEncoding({
@@ -11,7 +11,5 @@ export function getFernEncoding({
     schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject;
     logger: Logger;
 }): RawSchemas.EncodingSchema | undefined {
-    return (
-        getExtensionAndValidate(schema, FernOpenAPIExtension.ENCODING, RawSchemas.EncodingSchema, logger) ?? undefined
-    );
+    return getExtension(schema, FernOpenAPIExtension.ENCODING) ?? undefined;
 }

@@ -1,7 +1,7 @@
 import { EndpointExample } from "@fern-api/openapi-ir";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { OpenAPIV3 } from "openapi-types";
-import { getExtensionAndValidate } from "../../../getExtension";
+import { getExtension, getExtensionAndValidate } from "../../../getExtension";
 import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
 import { OperationContext } from "../converters/contexts";
 import { RedoclyCodeSampleArraySchema, RedoclyCodeSampleSchema } from "../schemas/RedoclyCodeSampleSchema";
@@ -15,12 +15,12 @@ export function getExamplesFromExtension(
     context: AbstractOpenAPIV3ParserContext
 ): EndpointExample[] {
     const exampleEndpointCalls: RawSchemas.ExampleEndpointCallArraySchema =
-        getExtensionAndValidate(
+        getExtension(
             operationObject,
-            FernOpenAPIExtension.EXAMPLES,
-            RawSchemas.ExampleEndpointCallArraySchema,
-            context.logger,
-            [...operationContext.baseBreadcrumbs, `${operationContext.method} ${operationContext.path}`]
+            FernOpenAPIExtension.EXAMPLES
+            // RawSchemas.ExampleEndpointCallArraySchema,
+            // context.logger,
+            // [...operationContext.baseBreadcrumbs, `${operationContext.method} ${operationContext.path}`]
         ) ?? [];
 
     const redoclyCodeSamplesKebabCase =
