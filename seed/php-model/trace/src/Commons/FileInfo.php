@@ -2,10 +2,10 @@
 
 namespace Seed\Commons;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 
-class FileInfo extends SerializableType
+class FileInfo extends JsonSerializableType
 {
     /**
      * @var string $filename

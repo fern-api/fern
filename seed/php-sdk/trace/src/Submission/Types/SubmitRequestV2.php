@@ -2,12 +2,12 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use Seed\Commons\Types\Language;
 use Seed\Core\Types\ArrayType;
 
-class SubmitRequestV2 extends SerializableType
+class SubmitRequestV2 extends JsonSerializableType
 {
     /**
      * @var string $submissionId

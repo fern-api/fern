@@ -2,10 +2,10 @@
 
 namespace Seed;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 
-class NamespaceSummary extends SerializableType
+class NamespaceSummary extends JsonSerializableType
 {
     /**
      * @var ?int $count

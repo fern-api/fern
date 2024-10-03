@@ -2,11 +2,11 @@
 
 namespace Seed\Submission;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use Seed\Commons\Language;
 
-class ExecutionSessionState extends SerializableType
+class ExecutionSessionState extends JsonSerializableType
 {
     /**
      * @var ?string $lastTimeContacted

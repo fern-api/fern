@@ -23,7 +23,7 @@ export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSch
         const clazz = php.dataClass({
             ...this.classReference,
             docs: this.typeDeclaration.docs,
-            parentClassReference: this.context.getSerializableTypeClassReference(),
+            parentClassReference: this.context.getJsonSerializableTypeClassReference(),
             traits: this.objectDeclaration.extends.map((declaredTypeName) =>
                 this.context.phpTypeMapper.convertToTraitClassReference(declaredTypeName)
             )

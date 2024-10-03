@@ -2,10 +2,10 @@
 
 namespace Seed\Problem\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 
-class VariableTypeAndName extends SerializableType
+class VariableTypeAndName extends JsonSerializableType
 {
     /**
      * @var mixed $variableType

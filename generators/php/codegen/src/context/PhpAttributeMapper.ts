@@ -36,8 +36,8 @@ export class PhpAttributeMapper {
         if (underlyingInternalType.type === "date" || underlyingInternalType.type === "dateTime") {
             attributes.push(
                 php.attribute({
-                    reference: this.context.getDateTypeAttributeClassReference(),
-                    arguments: [`DateType::TYPE_${underlyingInternalType.type.toUpperCase()}`]
+                    reference: this.context.getDateAttributeClassReference(),
+                    arguments: [`Date::TYPE_${underlyingInternalType.type.toUpperCase()}`]
                 })
             );
         }

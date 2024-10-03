@@ -2,11 +2,11 @@
 
 namespace Seed\Playlist\Requests;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use DateTime;
 use Seed\Playlist\Types\PlaylistCreateRequest;
 
-class CreatePlaylistRequest extends SerializableType
+class CreatePlaylistRequest extends JsonSerializableType
 {
     /**
      * @var DateTime $datetime

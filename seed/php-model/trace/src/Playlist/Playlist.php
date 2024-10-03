@@ -2,11 +2,11 @@
 
 namespace Seed\Playlist;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Playlist\Traits\PlaylistCreateRequest;
 use Seed\Core\Json\JsonProperty;
 
-class Playlist extends SerializableType
+class Playlist extends JsonSerializableType
 {
     use PlaylistCreateRequest;
 

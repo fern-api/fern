@@ -2,14 +2,14 @@
 
 namespace Seed\Dataservice\Requests;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use Seed\Core\Types\Union;
 use Seed\Types\QueryColumn;
 use Seed\Core\Types\ArrayType;
 use Seed\Types\IndexedData;
 
-class QueryRequest extends SerializableType
+class QueryRequest extends JsonSerializableType
 {
     /**
      * @var ?string $namespace

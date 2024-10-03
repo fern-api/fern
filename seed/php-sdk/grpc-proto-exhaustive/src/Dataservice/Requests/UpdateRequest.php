@@ -2,13 +2,13 @@
 
 namespace Seed\Dataservice\Requests;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use Seed\Core\Types\ArrayType;
 use Seed\Core\Types\Union;
 use Seed\Types\IndexedData;
 
-class UpdateRequest extends SerializableType
+class UpdateRequest extends JsonSerializableType
 {
     /**
      * @var string $id

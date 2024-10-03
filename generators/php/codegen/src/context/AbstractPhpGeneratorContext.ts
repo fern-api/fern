@@ -149,8 +149,8 @@ export abstract class AbstractPhpGeneratorContext<
         });
     }
 
-    public getDateTypeAttributeClassReference(): php.ClassReference {
-        return this.getCoreTypesClassReference("DateType");
+    public getDateAttributeClassReference(): php.ClassReference {
+        return this.getCoreTypesClassReference("Date");
     }
 
     public getConstantClassReference(): php.ClassReference {
@@ -161,8 +161,8 @@ export abstract class AbstractPhpGeneratorContext<
         return this.getCoreJsonClassReference("JsonProperty");
     }
 
-    public getSerializableTypeClassReference(): php.ClassReference {
-        return this.getCoreJsonClassReference("SerializableType");
+    public getJsonSerializableTypeClassReference(): php.ClassReference {
+        return this.getCoreJsonClassReference("JsonSerializableType");
     }
 
     public getUnionClassReference(): php.ClassReference {
@@ -341,9 +341,9 @@ export abstract class AbstractPhpGeneratorContext<
         return [
             AsIsFiles.ArrayType,
             AsIsFiles.Constant,
-            AsIsFiles.DateType,
+            AsIsFiles.Date,
             AsIsFiles.JsonProperty,
-            AsIsFiles.SerializableType,
+            AsIsFiles.JsonSerializableType,
             AsIsFiles.Union,
             AsIsFiles.JsonDecoder,
             AsIsFiles.JsonEncoder,
@@ -355,19 +355,18 @@ export abstract class AbstractPhpGeneratorContext<
 
     public getCoreSerializationTestAsIsFiles(): string[] {
         return [
-            AsIsFiles.DateArrayTypeTest,
-            AsIsFiles.EmptyArraysTest,
-            AsIsFiles.InvalidTypesTest,
-            AsIsFiles.TraitTest,
-            AsIsFiles.MixedDateArrayTypeTest,
-            AsIsFiles.NestedUnionArrayTypeTest,
-            AsIsFiles.NullableArrayTypeTest,
-            AsIsFiles.NullPropertyTypeTest,
-            AsIsFiles.ScalarTypesTest,
-            AsIsFiles.TestTypeTest,
-            AsIsFiles.UnionArrayTypeTest,
+            AsIsFiles.DateArrayTest,
+            AsIsFiles.EmptyArrayTest,
             AsIsFiles.EnumTest,
-            AsIsFiles.UnionPropertyTypeTest
+            AsIsFiles.ExhaustiveTest,
+            AsIsFiles.InvalidTest,
+            AsIsFiles.NestedUnionArrayTest,
+            AsIsFiles.NullableArrayTest,
+            AsIsFiles.NullPropertyTest,
+            AsIsFiles.ScalarTypesTest,
+            AsIsFiles.TraitTest,
+            AsIsFiles.UnionArrayTest,
+            AsIsFiles.UnionPropertyTest
         ];
     }
 

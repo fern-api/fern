@@ -2,12 +2,12 @@
 
 namespace Seed\InlinedRequest\Requests;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Types\Operand;
 use Seed\Core\Json\JsonProperty;
 use Seed\Types\Color;
 
-class SendEnumInlinedRequest extends SerializableType
+class SendEnumInlinedRequest extends JsonSerializableType
 {
     /**
      * @var value-of<Operand> $operand

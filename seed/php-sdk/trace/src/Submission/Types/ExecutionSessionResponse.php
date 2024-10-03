@@ -2,11 +2,11 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use Seed\Commons\Types\Language;
 
-class ExecutionSessionResponse extends SerializableType
+class ExecutionSessionResponse extends JsonSerializableType
 {
     /**
      * @var string $sessionId

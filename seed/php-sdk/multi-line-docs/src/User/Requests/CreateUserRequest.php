@@ -2,10 +2,10 @@
 
 namespace Seed\User\Requests;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 
-class CreateUserRequest extends SerializableType
+class CreateUserRequest extends JsonSerializableType
 {
     /**
      * @var string $name The name of the user to create.

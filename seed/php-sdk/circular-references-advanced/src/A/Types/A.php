@@ -2,10 +2,10 @@
 
 namespace Seed\A\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Traits\RootType;
 
-class A extends SerializableType
+class A extends JsonSerializableType
 {
     use RootType;
 

@@ -2,10 +2,10 @@
 
 namespace Seed\Completions\Requests;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 
-class StreamCompletionRequest extends SerializableType
+class StreamCompletionRequest extends JsonSerializableType
 {
     /**
      * @var string $query

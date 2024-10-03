@@ -2,10 +2,10 @@
 
 namespace Seed\Users\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 
-class Page extends SerializableType
+class Page extends JsonSerializableType
 {
     /**
      * @var int $page The current page

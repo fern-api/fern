@@ -2,12 +2,12 @@
 
 namespace Seed\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Traits\BaseResource;
 use Seed\Core\Json\JsonProperty;
 use Seed\Core\Types\ArrayType;
 
-class Patient extends SerializableType
+class Patient extends JsonSerializableType
 {
     use BaseResource;
 

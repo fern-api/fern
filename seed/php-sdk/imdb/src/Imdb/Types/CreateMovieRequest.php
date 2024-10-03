@@ -2,10 +2,10 @@
 
 namespace Seed\Imdb\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 
-class CreateMovieRequest extends SerializableType
+class CreateMovieRequest extends JsonSerializableType
 {
     /**
      * @var string $title

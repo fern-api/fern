@@ -2,11 +2,11 @@
 
 namespace Seed\Users\Requests;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Users\Types\WithCursor;
 use Seed\Core\Json\JsonProperty;
 
-class ListUsersBodyCursorPaginationRequest extends SerializableType
+class ListUsersBodyCursorPaginationRequest extends JsonSerializableType
 {
     /**
      * @var ?WithCursor $pagination The object that contains the cursor used for pagination

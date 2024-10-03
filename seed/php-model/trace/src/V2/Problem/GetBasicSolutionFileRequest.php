@@ -2,10 +2,10 @@
 
 namespace Seed\V2\Problem;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 
-class GetBasicSolutionFileRequest extends SerializableType
+class GetBasicSolutionFileRequest extends JsonSerializableType
 {
     /**
      * @var string $methodName

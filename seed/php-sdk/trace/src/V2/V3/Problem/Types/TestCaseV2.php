@@ -2,11 +2,11 @@
 
 namespace Seed\V2\V3\Problem\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use Seed\Core\Types\ArrayType;
 
-class TestCaseV2 extends SerializableType
+class TestCaseV2 extends JsonSerializableType
 {
     /**
      * @var TestCaseMetadata $metadata

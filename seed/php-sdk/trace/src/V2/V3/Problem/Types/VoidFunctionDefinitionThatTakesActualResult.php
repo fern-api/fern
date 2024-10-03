@@ -2,14 +2,14 @@
 
 namespace Seed\V2\V3\Problem\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use Seed\Core\Types\ArrayType;
 
 /**
  * The generated signature will include an additional param, actualResult
  */
-class VoidFunctionDefinitionThatTakesActualResult extends SerializableType
+class VoidFunctionDefinitionThatTakesActualResult extends JsonSerializableType
 {
     /**
      * @var array<Parameter> $additionalParameters

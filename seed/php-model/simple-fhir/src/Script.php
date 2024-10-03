@@ -2,11 +2,11 @@
 
 namespace Seed;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Traits\BaseResource;
 use Seed\Core\Json\JsonProperty;
 
-class Script extends SerializableType
+class Script extends JsonSerializableType
 {
     use BaseResource;
 
