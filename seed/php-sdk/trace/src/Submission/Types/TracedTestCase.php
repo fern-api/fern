@@ -2,10 +2,10 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 
-class TracedTestCase extends SerializableType
+class TracedTestCase extends JsonSerializableType
 {
     /**
      * @var TestCaseResultWithStdout $result

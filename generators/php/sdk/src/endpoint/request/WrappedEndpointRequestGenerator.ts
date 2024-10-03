@@ -42,7 +42,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
     protected doGenerate(): PhpFile {
         const clazz = php.dataClass({
             ...this.classReference,
-            parentClassReference: this.context.getSerializableTypeClassReference()
+            parentClassReference: this.context.getJsonSerializableTypeClassReference()
         });
 
         const service = this.context.getHttpServiceOrThrow(this.serviceId);

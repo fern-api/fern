@@ -2,12 +2,12 @@
 
 namespace Seed\File\Directory;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use Seed\File\File;
 use Seed\Core\Types\ArrayType;
 
-class Directory extends SerializableType
+class Directory extends JsonSerializableType
 {
     /**
      * @var string $name

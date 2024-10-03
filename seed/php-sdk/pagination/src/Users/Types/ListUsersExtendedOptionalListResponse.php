@@ -2,11 +2,11 @@
 
 namespace Seed\Users\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Users\Traits\UserOptionalListPage;
 use Seed\Core\Json\JsonProperty;
 
-class ListUsersExtendedOptionalListResponse extends SerializableType
+class ListUsersExtendedOptionalListResponse extends JsonSerializableType
 {
     use UserOptionalListPage;
 

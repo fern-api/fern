@@ -2,10 +2,10 @@
 
 namespace Seed\LangServer\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 
-class LangServerResponse extends SerializableType
+class LangServerResponse extends JsonSerializableType
 {
     /**
      * @var mixed $response

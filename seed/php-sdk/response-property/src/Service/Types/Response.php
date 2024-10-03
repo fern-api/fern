@@ -2,12 +2,12 @@
 
 namespace Seed\Service\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Traits\WithMetadata;
 use Seed\Service\Traits\WithDocs;
 use Seed\Core\Json\JsonProperty;
 
-class Response extends SerializableType
+class Response extends JsonSerializableType
 {
     use WithMetadata;
     use WithDocs;

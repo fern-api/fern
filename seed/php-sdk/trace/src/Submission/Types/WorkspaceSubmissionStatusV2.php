@@ -2,11 +2,11 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use Seed\Core\Types\ArrayType;
 
-class WorkspaceSubmissionStatusV2 extends SerializableType
+class WorkspaceSubmissionStatusV2 extends JsonSerializableType
 {
     /**
      * @var array<WorkspaceSubmissionUpdate> $updates

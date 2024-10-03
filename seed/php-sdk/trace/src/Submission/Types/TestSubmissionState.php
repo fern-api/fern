@@ -2,12 +2,12 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use Seed\Commons\Types\TestCase;
 use Seed\Core\Types\ArrayType;
 
-class TestSubmissionState extends SerializableType
+class TestSubmissionState extends JsonSerializableType
 {
     /**
      * @var string $problemId

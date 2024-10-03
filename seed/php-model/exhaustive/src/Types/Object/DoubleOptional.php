@@ -2,10 +2,10 @@
 
 namespace Seed\Types\Object;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 
-class DoubleOptional extends SerializableType
+class DoubleOptional extends JsonSerializableType
 {
     /**
      * @var ?string $optionalAlias

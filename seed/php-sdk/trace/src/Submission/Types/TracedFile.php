@@ -2,10 +2,10 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 
-class TracedFile extends SerializableType
+class TracedFile extends JsonSerializableType
 {
     /**
      * @var string $filename

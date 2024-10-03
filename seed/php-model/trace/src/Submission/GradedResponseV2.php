@@ -2,11 +2,11 @@
 
 namespace Seed\Submission;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use Seed\Core\Types\ArrayType;
 
-class GradedResponseV2 extends SerializableType
+class GradedResponseV2 extends JsonSerializableType
 {
     /**
      * @var string $submissionId

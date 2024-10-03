@@ -2,10 +2,10 @@
 
 namespace Seed\V2\V3\Problem\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 
-class BasicTestCaseTemplate extends SerializableType
+class BasicTestCaseTemplate extends JsonSerializableType
 {
     /**
      * @var string $templateId

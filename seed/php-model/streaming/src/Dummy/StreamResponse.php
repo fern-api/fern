@@ -2,10 +2,10 @@
 
 namespace Seed\Dummy;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 
-class StreamResponse extends SerializableType
+class StreamResponse extends JsonSerializableType
 {
     /**
      * @var string $id

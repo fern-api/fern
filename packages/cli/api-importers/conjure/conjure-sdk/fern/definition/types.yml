@@ -1,0 +1,62 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types: 
+  ConjureTypes: 
+    properties: 
+      "conjure-imports": optional<map<string, string>>
+      "definitions": optional<ConjureDefinitions>
+  
+  ConjureDefinitions: 
+    properties: 
+      objects: optional<map<string, ConjureTypeDeclaration>>
+  
+  ConjureTypeDeclaration: 
+    discriminated: false
+    union: 
+      - ConjureAliasDeclaration
+      - ConjureUnionDeclaration
+      - ConjureObjectDeclaration
+      - ConjureEnumDeclaration
+  
+  ConjureAliasDeclaration: 
+    properties: 
+      alias: ConjureType
+      docs: optional<string>
+  
+  ConjureUnionDeclaration: 
+    properties: 
+      union: map<string, ConjureTypeReference>
+  
+  ConjureObjectDeclaration: 
+    properties: 
+      fields: map<string, ConjureTypeReference>
+
+  ConjureEnumDeclaration: 
+    properties: 
+      values: list<string>
+
+  ConjureTypeReference: 
+    discriminated: false
+    union: 
+      - ConjureType
+      - ConjureTypeWithDocs
+  
+  ConjureType: 
+    discriminated: false
+    union: 
+      - ConjurePrimitive
+      - string
+  
+  ConjureTypeWithDocs: 
+    properties: 
+      type: ConjureType
+      docs: optional<string>
+    
+  ConjurePrimitive: 
+    enum: 
+      - rid
+      - string
+      - safelong
+      - integer
+      - double
+      - boolean

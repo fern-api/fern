@@ -2,11 +2,11 @@
 
 namespace Seed\Commons\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use Seed\Core\Types\ArrayType;
 
-class DebugMapValue extends SerializableType
+class DebugMapValue extends JsonSerializableType
 {
     /**
      * @var array<DebugKeyValuePairs> $keyValuePairs

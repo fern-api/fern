@@ -2,10 +2,10 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 
-class InternalError extends SerializableType
+class InternalError extends JsonSerializableType
 {
     /**
      * @var ExceptionInfo $exceptionInfo

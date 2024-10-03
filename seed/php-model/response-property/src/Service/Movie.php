@@ -2,10 +2,10 @@
 
 namespace Seed\Service;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 
-class Movie extends SerializableType
+class Movie extends JsonSerializableType
 {
     /**
      * @var string $id

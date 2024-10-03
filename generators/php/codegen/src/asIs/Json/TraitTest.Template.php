@@ -2,9 +2,9 @@
 
 namespace <%= namespace%>;
 
-use <%= coreNamespace%>\Json\SerializableType;
-use <%= coreNamespace%>\Json\JsonProperty;
 use PHPUnit\Framework\TestCase;
+use <%= coreNamespace%>\Json\JsonProperty;
+use <%= coreNamespace%>\Json\JsonSerializableType;
 
 trait IntegerPropertyTrait
 {
@@ -15,7 +15,7 @@ trait IntegerPropertyTrait
     public int $integerProperty;
 }
 
-class TypeWithTrait extends SerializableType
+class TypeWithTrait extends JsonSerializableType
 {
     use IntegerPropertyTrait;
 
@@ -42,20 +42,19 @@ class TraitTest extends TestCase
 {
     public function testTraitPropertyAndString(): void
     {
-        $data = [
-            'integer_property' => 42,
-            'string_property' => 'Hello, World!',
-        ];
+        $expectedJson = json_encode(
+            [
+                'integer_property' => 42,
+                'string_property' => 'Hello, World!',
+            ],
+            JSON_THROW_ON_ERROR
+        );
 
-        $json = json_encode($data, JSON_THROW_ON_ERROR);
-
-        $object = TypeWithTrait::fromJson($json);
-
-        $serializedJson = $object->toJson();
-
-        $this->assertJsonStringEqualsJsonString($json, $serializedJson, 'Serialized JSON does not match original JSON for ScalarTypesTestWithTrait.');
-
+        $object = TypeWithTrait::fromJson($expectedJson);
         $this->assertEquals(42, $object->integerProperty, 'integer_property should be 42.');
         $this->assertEquals('Hello, World!', $object->stringProperty, 'string_property should be "Hello, World!".');
+        
+        $actualJson = $object->toJson();
+        $this->assertJsonStringEqualsJsonString($expectedJson, $actualJson, 'Serialized JSON does not match original JSON for ScalarTypesTestWithTrait.');
     }
 }

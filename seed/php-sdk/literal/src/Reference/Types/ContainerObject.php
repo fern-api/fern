@@ -2,11 +2,11 @@
 
 namespace Seed\Reference\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use Seed\Core\Types\ArrayType;
 
-class ContainerObject extends SerializableType
+class ContainerObject extends JsonSerializableType
 {
     /**
      * @var array<NestedObjectWithLiterals> $nestedObjects

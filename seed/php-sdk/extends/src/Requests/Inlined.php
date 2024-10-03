@@ -2,11 +2,11 @@
 
 namespace Seed\Requests;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Traits\ExampleType;
 use Seed\Core\Json\JsonProperty;
 
-class Inlined extends SerializableType
+class Inlined extends JsonSerializableType
 {
     use ExampleType;
 

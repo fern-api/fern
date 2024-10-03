@@ -2,11 +2,11 @@
 
 namespace Seed\V2\V3\Problem\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use Seed\Core\Types\ArrayType;
 
-class VoidFunctionSignature extends SerializableType
+class VoidFunctionSignature extends JsonSerializableType
 {
     /**
      * @var array<Parameter> $parameters

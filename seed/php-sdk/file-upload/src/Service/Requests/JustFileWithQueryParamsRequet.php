@@ -2,9 +2,9 @@
 
 namespace Seed\Service\Requests;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 
-class JustFileWithQueryParamsRequet extends SerializableType
+class JustFileWithQueryParamsRequet extends JsonSerializableType
 {
     /**
      * @var ?string $maybeString

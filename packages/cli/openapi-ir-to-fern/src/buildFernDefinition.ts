@@ -10,7 +10,7 @@ import { buildServices } from "./buildServices";
 import { buildTypeDeclaration } from "./buildTypeDeclaration";
 import { buildVariables } from "./buildVariables";
 import { buildWebhooks } from "./buildWebhooks";
-import { FernDefinition } from "./FernDefnitionBuilder";
+import { FernDefinition } from "@fern-api/importer-commons";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { getDeclarationFileForSchema } from "./utils/getDeclarationFileForSchema";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";

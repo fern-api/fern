@@ -281,7 +281,7 @@ class ComposerJson {
       "@php -l ${TESTS_DIRECTORY_NAME}"
     ],
     "test": "phpunit",
-    "analyze": "phpstan analyze src"
+    "analyze": "phpstan analyze src tests"
   }
 }
 `;

@@ -2,12 +2,12 @@
 
 namespace Seed\Submission;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Commons\FileInfo;
 use Seed\Core\Json\JsonProperty;
 use Seed\Core\Types\ArrayType;
 
-class WorkspaceFiles extends SerializableType
+class WorkspaceFiles extends JsonSerializableType
 {
     /**
      * @var FileInfo $mainFile

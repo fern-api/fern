@@ -2,12 +2,12 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Commons\Types\Language;
 use Seed\Core\Json\JsonProperty;
 use Seed\Core\Types\ArrayType;
 
-class WorkspaceStarterFilesResponse extends SerializableType
+class WorkspaceStarterFilesResponse extends JsonSerializableType
 {
     /**
      * @var array<value-of<Language>, WorkspaceFiles> $files

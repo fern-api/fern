@@ -2,8 +2,8 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 
-class TerminatedResponse extends SerializableType
+class TerminatedResponse extends JsonSerializableType
 {
 }

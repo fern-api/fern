@@ -2,11 +2,11 @@
 
 namespace Seed\QueryParam\Requests;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Types\Operand;
 use Seed\Types\Color;
 
-class SendEnumAsQueryParamRequest extends SerializableType
+class SendEnumAsQueryParamRequest extends JsonSerializableType
 {
     /**
      * @var value-of<Operand> $operand

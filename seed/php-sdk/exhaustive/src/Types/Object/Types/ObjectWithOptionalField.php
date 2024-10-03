@@ -2,13 +2,13 @@
 
 namespace Seed\Types\Object\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use DateTime;
-use Seed\Core\Types\DateType;
+use Seed\Core\Types\Date;
 use Seed\Core\Types\ArrayType;
 
-class ObjectWithOptionalField extends SerializableType
+class ObjectWithOptionalField extends JsonSerializableType
 {
     /**
      * @var ?string $string This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
@@ -43,13 +43,13 @@ class ObjectWithOptionalField extends SerializableType
     /**
      * @var ?DateTime $datetime
      */
-    #[JsonProperty('datetime'), DateType(DateType::TYPE_DATETIME)]
+    #[JsonProperty('datetime'), Date(Date::TYPE_DATETIME)]
     public ?DateTime $datetime;
 
     /**
      * @var ?DateTime $date
      */
-    #[JsonProperty('date'), DateType(DateType::TYPE_DATE)]
+    #[JsonProperty('date'), Date(Date::TYPE_DATE)]
     public ?DateTime $date;
 
     /**

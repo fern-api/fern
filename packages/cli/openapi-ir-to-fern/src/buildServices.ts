@@ -1,6 +1,7 @@
 import { FernOpenapiIr } from "@fern-api/openapi-ir-sdk";
 import { buildEndpoint } from "./buildEndpoint";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { convertToSourceSchema } from "./utils/convertToSourceSchema";
 import { getEndpointLocation } from "./utils/getEndpointLocation";
 
 export function buildServices(context: OpenApiIrConverterContext): {
@@ -40,7 +41,7 @@ export function buildServices(context: OpenApiIrConverterContext): {
         context.builder.addEndpoint(file, {
             name: endpointId,
             schema: convertedEndpoint.value,
-            source: endpoint.source
+            source: endpoint.source != null ? convertToSourceSchema(endpoint.source) : undefined
         });
         if (irTag?.id != null || irTag?.description != null) {
             context.builder.setServiceInfo(file, {

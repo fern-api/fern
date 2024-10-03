@@ -2,10 +2,10 @@
 
 namespace Seed\Submission;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 
-class SubmissionIdNotFound extends SerializableType
+class SubmissionIdNotFound extends JsonSerializableType
 {
     /**
      * @var string $missingSubmissionId
