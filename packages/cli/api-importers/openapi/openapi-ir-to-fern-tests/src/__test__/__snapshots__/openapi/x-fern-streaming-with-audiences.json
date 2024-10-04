@@ -1,0 +1,235 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "types": {
+          "StreamUser": {
+            "docs": undefined,
+            "properties": {
+              "id": {
+                "type": "optional<string>",
+                "validation": {
+                  "format": "uuid",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+              "streamed": "optional<literal<true>>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "User": {
+            "docs": undefined,
+            "properties": {
+              "id": {
+                "type": "optional<string>",
+                "validation": {
+                  "format": "uuid",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+              "streamed": "optional<literal<false>>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  User:
+    properties:
+      id:
+        type: optional<string>
+        validation:
+          format: uuid
+      streamed: optional<literal<false>>
+    source:
+      openapi: ../openapi.yml
+  StreamUser:
+    properties:
+      id:
+        type: optional<string>
+        validation:
+          format: uuid
+      streamed: optional<literal<true>>
+    source:
+      openapi: ../openapi.yml
+",
+    },
+    "user.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "imports": {
+          "root": "__package__.yml",
+        },
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "get": {
+              "auth": false,
+              "docs": undefined,
+              "examples": [
+                {
+                  "path-parameters": {
+                    "userId": "userId",
+                  },
+                  "request": {
+                    "stream": false,
+                  },
+                  "response": {
+                    "body": {
+                      "id": "id",
+                      "streamed": false,
+                    },
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/user/{userId}",
+              "path-parameters": {
+                "userId": "string",
+              },
+              "request": {
+                "body": {
+                  "properties": {
+                    "stream": {
+                      "audiences": [
+                        "public",
+                      ],
+                      "docs": undefined,
+                      "type": "literal<false>",
+                    },
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "UserGetRequest",
+                "query-parameters": undefined,
+              },
+              "response": {
+                "docs": "",
+                "type": "root.User",
+              },
+            },
+            "get_stream": {
+              "auth": false,
+              "docs": undefined,
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/user/{userId}",
+              "path-parameters": {
+                "userId": "string",
+              },
+              "request": {
+                "body": {
+                  "properties": {
+                    "stream": {
+                      "audiences": [
+                        "public",
+                      ],
+                      "docs": undefined,
+                      "type": "literal<true>",
+                    },
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "UserGetStreamRequest",
+                "query-parameters": undefined,
+              },
+              "response-stream": {
+                "docs": "",
+                "format": "json",
+                "type": "root.StreamUser",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+      },
+      "rawContents": "imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    get_stream:
+      path: /user/{userId}
+      method: GET
+      auth: false
+      path-parameters:
+        userId: string
+      request:
+        name: UserGetStreamRequest
+        body:
+          properties:
+            stream:
+              type: literal<true>
+              audiences: &ref_0
+                - public
+        content-type: application/json
+      response-stream:
+        docs: ''
+        type: root.StreamUser
+        format: json
+    get:
+      path: /user/{userId}
+      method: GET
+      auth: false
+      path-parameters:
+        userId: string
+      request:
+        name: UserGetRequest
+        body:
+          properties:
+            stream:
+              type: literal<false>
+              audiences: *ref_0
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.User
+      examples:
+        - path-parameters:
+            userId: userId
+          request:
+            stream: false
+          response:
+            body:
+              id: id
+              streamed: false
+  source:
+    openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Test extension `x-fern-audiences` alongside `x-fern-streaming`.",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Test extension `x-fern-audiences` alongside `x-fern-streaming`.
+",
+  },
+}

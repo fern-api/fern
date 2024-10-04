@@ -32,7 +32,7 @@ describe("openapi-ir-to-fern docs", async () => {
                     { enableUniqueErrorsPerEndpoint: true }
                 );
                 // eslint-disable-next-line jest/no-standalone-expect
-                expect(definition).toMatchSnapshot();
+                expect(definition).toMatchFileSnapshot(`./__snapshots__/openapi-docs/${fixture.name}.json`);
             },
             90_000
         );

@@ -12,6 +12,7 @@
     { "path": "../logger" },
     { "path": "../api-importers/openapi/openapi-ir-to-fern" },
     { "path": "../api-importers/openapi/openapi-ir-parser" },
+    { "path": "../api-importers/openapi/openapi-ir" },
     { "path": "../semver-utils" },
     { "path": "../task-context" },
     { "path": "../workspace-commons" },

@@ -29,7 +29,7 @@ describe("openapi-ir-to-fern", async () => {
                 }
                 const definition = await workspace.workspace.getDefinition({ context });
                 // eslint-disable-next-line jest/no-standalone-expect
-                expect(definition).toMatchSnapshot();
+                expect(definition).toMatchFileSnapshot(`./__snapshots__/openapi/${fixture.name}.json`);
             },
             90_000
         );
