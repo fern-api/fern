@@ -5,9 +5,11 @@ changelogLocation: ../../generators/ruby/sdk/versions.yml
 
 buildScripts:
   installScript:
-    - bundle install
+    commands:
+      - bundle install
   testScript:
-    - bundle exec rake test
+    commands:
+      - bundle exec rake test
 
 publish:
   preBuildCommands:

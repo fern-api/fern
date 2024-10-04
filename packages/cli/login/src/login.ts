@@ -6,9 +6,9 @@ import { doAuth0DeviceAuthorizationFlow } from "./auth0-login/doAuth0DeviceAutho
 import { doAuth0LoginFlow } from "./auth0-login/doAuth0LoginFlow";
 
 // these are client-side safe values
-const AUTH0_DOMAIN = process.env.AUTH0_DOMAIN ?? "fern-prod.us.auth0.com";
-const AUTH0_CLIENT_ID = process.env.AUTH0_CLIENT_ID ?? "syaWnk6SjNoo5xBf1omfvziU3q7085lh";
-const VENUS_AUDIENCE = process.env.VENUS_AUDIENCE ?? "venus-prod";
+const AUTH0_DOMAIN = process.env.AUTH0_DOMAIN ?? "fern-dev.us.auth0.com";
+const AUTH0_CLIENT_ID = process.env.AUTH0_CLIENT_ID ?? "4QiMvRvRUYpnycrVDK2M59hhJ6kcHYFQ";
+const VENUS_AUDIENCE = process.env.VENUS_AUDIENCE ?? "venus-dev";
 
 export async function login(
     context: TaskContext,

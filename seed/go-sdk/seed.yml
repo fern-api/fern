@@ -5,9 +5,11 @@ changelogLocation: ../../generators/go/sdk/versions.yml
 
 buildScripts:
   compileScript:
-    - go build -v ./...
+    commands:
+      - go build -v ./...
   testScript:
-    - go test -v ./...
+    commands:
+      - go test -v ./...
 
 publish:
   workingDirectory: generators/go
