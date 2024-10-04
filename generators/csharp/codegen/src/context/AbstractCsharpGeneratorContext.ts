@@ -156,10 +156,11 @@ export abstract class AbstractCsharpGeneratorContext<
         return [this.getNamespace(), ...this.getChildNamespaceSegments(fernFilepath)];
     }
 
-    public getStringEnumSerializerClassReference(): csharp.ClassReference {
+    public getStringEnumSerializerClassReference(enumClassReference: csharp.ClassReference): csharp.ClassReference {
         return csharp.classReference({
             namespace: this.getCoreNamespace(),
-            name: STRING_ENUM_SERIALIZER_CLASS_NAME
+            name: STRING_ENUM_SERIALIZER_CLASS_NAME,
+            generics: [csharp.Type.reference(enumClassReference)]
         });
     }
 

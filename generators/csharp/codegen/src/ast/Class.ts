@@ -32,9 +32,7 @@ export declare namespace Class {
         /* Defaults to false */
         readonly?: boolean;
         /* Defaults to class */
-        type?: "class" | "record" | "struct";
-        /* Defaults to false */
-        struct?: boolean;
+        type?: "class" | "record" | "struct" | "record struct";
         /* Summary for the method */
         summary?: string;
         /* The class to inherit from if any */
@@ -92,7 +90,7 @@ export class Class extends AstNode {
     public readonly parentClassReference: AstNode | undefined;
     public readonly interfaceReferences: ClassReference[];
     public readonly isNestedClass: boolean;
-    public readonly type: "class" | "record" | "struct";
+    public readonly type: "class" | "record" | "struct" | "record struct";
     public readonly summary: string | undefined;
     public readonly annotations: Annotation[] = [];
     public readonly primaryConstructor: Class.PrimaryConstructor | undefined;

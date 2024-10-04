@@ -24,10 +24,9 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
             }),
             argument: csharp.codeblock((writer) => {
                 writer.write("typeof(");
-                writer.writeNode(csharp.classReference(this.context.getStringEnumSerializerClassReference()));
-                writer.write("<");
-                writer.writeNode(this.classReference);
-                writer.write(">");
+                writer.writeNode(
+                    csharp.classReference(this.context.getStringEnumSerializerClassReference(this.classReference))
+                );
                 writer.write(")");
             })
         });
@@ -38,16 +37,11 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
                 csharp.classReference({
                     name: "IStringEnum",
                     namespace: this.context.getCoreNamespace()
-                }),
-                csharp.classReference({
-                    name: "IEquatable",
-                    generics: [csharp.Type.reference(this.classReference)],
-                    namespace: "System"
                 })
             ],
             annotations: [serializerAnnotation],
             access: "public",
-            type: "struct",
+            type: "record struct",
             readonly: true
         });
 
@@ -61,7 +55,7 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
                 })
             ],
             body: csharp.codeblock((writer) => {
-                writer.write("Value = value;");
+                writer.writeTextStatement("Value = value");
             })
         });
 
@@ -137,11 +131,13 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
                 type: csharp.MethodType.STATIC,
                 classReference: csharp.classReference(this.classReference),
                 body: csharp.codeblock((writer) => {
-                    writer.write("return new ");
-                    writer.writeNode(csharp.classReference(this.classReference));
-                    writer.write("(");
-                    writer.write("value");
-                    writer.write(");");
+                    writer.write("return ");
+                    writer.writeNodeStatement(
+                        csharp.instantiateClass({
+                            classReference: this.classReference,
+                            arguments_: [csharp.codeblock("value")]
+                        })
+                    );
                 })
             })
         );
@@ -198,27 +194,6 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
         stringEnum.addMethod(
             csharp.method({
                 access: "public",
-                name: "Equals",
-                override: true,
-                parameters: [
-                    csharp.parameter({
-                        name: "obj",
-                        type: csharp.Type.optional(csharp.Type.object())
-                    })
-                ],
-                return_: csharp.Type.boolean(),
-                body: csharp.codeblock((writer) => {
-                    writer.write("if (obj is null) return false;");
-                    writer.write("if (obj is string stringObj) return Value.Equals(stringObj);");
-                    writer.write("if (obj.GetType() != GetType()) return false;");
-                    writer.write(`return Equals((${this.classReference.name})obj);`);
-                })
-            })
-        );
-
-        stringEnum.addMethod(
-            csharp.method({
-                access: "public",
                 name: "GetHashCode",
                 override: true,
                 return_: csharp.Type.integer(),
@@ -228,32 +203,6 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
                 })
             })
         );
-
-        stringEnum.addOperator({
-            type: "==",
-            parameters: [
-                csharp.parameter({ name: "value1", type: csharp.Type.reference(this.classReference) }),
-                csharp.parameter({ name: "value2", type: csharp.Type.reference(this.classReference) })
-            ],
-            return: csharp.Type.boolean(),
-            body: csharp.codeblock((writer) => {
-                writer.write("value1.Equals(value2)");
-            }),
-            useExpressionBody: true
-        });
-
-        stringEnum.addOperator({
-            type: "!=",
-            parameters: [
-                csharp.parameter({ name: "value1", type: csharp.Type.reference(this.classReference) }),
-                csharp.parameter({ name: "value2", type: csharp.Type.reference(this.classReference) })
-            ],
-            return: csharp.Type.boolean(),
-            body: csharp.codeblock((writer) => {
-                writer.write("!(value1 == value2)");
-            }),
-            useExpressionBody: true
-        });
 
         stringEnum.addOperator({
             type: "==",
