@@ -6,9 +6,8 @@ export class DocXmlWriter {
         this.writer = writer;
     }
 
-    public writeLine(text?: string): this {
+    public writeLine(text?: string): void {
         this.writer.writeLine(`/// ${text}`);
-        return this;
     }
 
     public writePrefix(): this {
@@ -16,43 +15,37 @@ export class DocXmlWriter {
         return this;
     }
 
-    public writeOpenNode(nodeName: string): this {
+    public writeOpenNode(nodeName: string): void {
         this.writeLine(`<${nodeName}>`);
-        return this;
     }
 
-    public writeCloseNode(nodeName: string): this {
+    public writeCloseNode(nodeName: string): void {
         this.writeLine(`</${nodeName}>`);
-        return this;
     }
 
-    public writeNode(nodeName: string, text: string): this {
+    public writeNode(nodeName: string, text: string): void {
         this.writeOpenNode(nodeName);
         this.writeMultiline(text);
         this.writeCloseNode(nodeName);
-        return this;
     }
 
-    public writeNodeWithEscaping(nodeName: string, text: string): this {
+    public writeNodeWithEscaping(nodeName: string, text: string): void {
         this.writeOpenNode(nodeName);
         this.writeMultilineWithEscaping(text);
         this.writeCloseNode(nodeName);
-        return this;
     }
 
-    public writeMultiline(text: string): this {
+    public writeMultiline(text: string): void {
         text.trim()
             .split("\n")
             .forEach((line) => {
                 this.writeLine(line);
             });
-        return this;
     }
 
-    public writeMultilineWithEscaping(text: string): this {
+    public writeMultilineWithEscaping(text: string): void {
         text = this.escapeXmlDocContent(text);
         this.writeMultiline(text);
-        return this;
     }
 
     private escapeXmlDocContent(text: string): string {

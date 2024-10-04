@@ -5,6 +5,7 @@ import { ClassInstantiation } from "./ClassInstantiation";
 import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
 import { AstNode } from "./core/AstNode";
+import { DocXmlWriter } from "./core/DocXmlWriter";
 import { Writer } from "./core/Writer";
 import { Field } from "./Field";
 import { Interface } from "./Interface";
@@ -168,7 +169,8 @@ export class Class extends AstNode {
         }
 
         if (this.summary != null) {
-            writer.writeDocXml().writeNodeWithEscaping("summary", this.summary);
+            const docXmlWriter = new DocXmlWriter(writer);
+            docXmlWriter.writeNodeWithEscaping("summary", this.summary);
         }
         if (this.annotations.length > 0) {
             writer.write("[");

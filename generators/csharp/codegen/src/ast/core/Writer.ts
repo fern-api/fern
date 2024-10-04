@@ -95,14 +95,6 @@ export class Writer extends AbstractWriter {
         return this.customConfig["simplify-object-dictionaries"] ?? true;
     }
 
-    public writeDocXml(write?: (writer: DocXmlWriter) => void): DocXmlWriter {
-        const writer = new DocXmlWriter(this);
-        if (write) {
-            write(writer);
-        }
-        return writer;
-    }
-
     public toString(skipImports = false): string {
         if (!skipImports) {
             const imports = this.stringifyImports();

@@ -3,6 +3,7 @@ import { Annotation } from "./Annotation";
 import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
 import { AstNode } from "./core/AstNode";
+import { DocXmlWriter } from "./core/DocXmlWriter";
 import { Writer } from "./core/Writer";
 import { Type } from "./Type";
 
@@ -108,7 +109,8 @@ export class Field extends AstNode {
 
     public write(writer: Writer): void {
         if (this.summary != null) {
-            writer.writeDocXml().writeNodeWithEscaping("summary", this.summary);
+            const docXmlWriter = new DocXmlWriter(writer);
+            docXmlWriter.writeNodeWithEscaping("summary", this.summary);
         }
 
         if (this.annotations.length > 0) {
