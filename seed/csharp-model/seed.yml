@@ -5,7 +5,8 @@ changelogLocation: ../../generators/csharp/model/versions.yml
 
 buildScripts:
   compileScript:
-    - dotnet build src -c Release /p:ContinuousIntegrationBuild=true .
+    commands:
+      - dotnet build src -c Release /p:ContinuousIntegrationBuild=true .
 
 publish:
   preBuildCommands:

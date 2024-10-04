@@ -5,11 +5,14 @@ changelogLocation: ../../generators/csharp/sdk/versions.yml
 
 buildScripts:
   preInstallScript:
-    - dotnet tool restore
+    commands:
+      - dotnet tool restore
   compileScript:
-    - dotnet build src -c Release /p:ContinuousIntegrationBuild=true .
+    commands:
+      - dotnet build src -c Release /p:ContinuousIntegrationBuild=true .
   testScript:
-    - dotnet test src
+    commands:
+      - dotnet test src
 
 publish:
   preBuildCommands:
