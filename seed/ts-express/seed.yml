@@ -8,7 +8,8 @@ buildScripts:
     commands:
       - yarn install
   compileScript:
-    - yarn build
+    commands:
+      - yarn build
 
 publish:
   versionSubstitution: "$VERSION"
