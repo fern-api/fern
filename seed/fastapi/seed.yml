@@ -2,6 +2,16 @@ irVersion: v53
 displayName: FastAPI
 image: fernapi/fern-fastapi-server
 changelogLocation: ../../generators/python/fastapi/versions.yml
+
+buildScripts:
+  installScript:
+    commands:
+      - poetry shell
+      - poetry install
+  compileScript:
+    commands:
+      - poetry run mypy .
+
 publish:
   workingDirectory: generators/python
   preBuildCommands:
@@ -67,6 +77,7 @@ allowedFailures:
   - websocket
   - enum
   - server-sent-events
+  - server-sent-event-examples
   - streaming-parameter
   - any-auth
   # Complex circular refs

@@ -2,6 +2,12 @@ irVersion: v53
 displayName: C# Model
 image: fernapi/fern-csharp-model
 changelogLocation: ../../generators/csharp/model/versions.yml
+
+buildScripts:
+  compileScript:
+    commands:
+      - dotnet build src -c Release /p:ContinuousIntegrationBuild=true .
+
 publish:
   preBuildCommands:
     - ./.github/actions/install

@@ -35,7 +35,7 @@ class CreateRequest extends JsonSerializableType
     /**
      * @var array<string, float|string|bool>|array<string, mixed>|null $metadata
      */
-    #[JsonProperty('metadata'), Union(['string' => new Union('float', 'string', 'bool')], ['string' => 'mixed'])]
+    #[JsonProperty('metadata'), Union(['string' => new Union('float', 'string', 'bool')], ['string' => 'mixed'], 'null')]
     public array|null $metadata;
 
     /**

@@ -91,7 +91,7 @@ public final class StreamedCompletion {
         @java.lang.Override
         @JsonSetter("delta")
         public _FinalStage delta(String delta) {
-            this.delta = delta;
+            this.delta = Objects.requireNonNull(delta, "delta must not be null");
             return this;
         }
 

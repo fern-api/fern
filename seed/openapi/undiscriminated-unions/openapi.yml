@@ -43,6 +43,13 @@ paths:
                     default: exampleDefault
 components:
   schemas:
+    TypeWithOptionalUnion:
+      title: TypeWithOptionalUnion
+      type: object
+      properties:
+        myUnion:
+          $ref: '#/components/schemas/MyUnion'
+          nullable: true
     MyUnion:
       title: MyUnion
       oneOf:

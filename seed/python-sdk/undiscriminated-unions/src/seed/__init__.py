@@ -2,7 +2,7 @@
 
 from . import union
 from .client import AsyncSeedUndiscriminatedUnions, SeedUndiscriminatedUnions
-from .union import Key, KeyType, Metadata, MyUnion
+from .union import Key, KeyType, Metadata, MyUnion, TypeWithOptionalUnion
 from .version import __version__
 
 __all__ = [
@@ -12,6 +12,7 @@ __all__ = [
     "Metadata",
     "MyUnion",
     "SeedUndiscriminatedUnions",
+    "TypeWithOptionalUnion",
     "__version__",
     "union",
 ]

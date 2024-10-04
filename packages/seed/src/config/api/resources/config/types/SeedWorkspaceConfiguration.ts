@@ -16,10 +16,11 @@ export interface SeedWorkspaceConfiguration {
     defaultCustomConfig?: Record<string, unknown>;
     defaultOutputMode: FernSeedConfig.OutputMode;
     generatorType: FernSeedConfig.GeneratorType;
+    buildScripts?: FernSeedConfig.BuildScripts;
     /** Configuration that will be used for any custom fixture specified by --custom-fixture */
     customFixtureConfig?: FernSeedConfig.FixtureConfigurations;
     fixtures?: Record<string, FernSeedConfig.FixtureConfigurations[]>;
-    scripts?: FernSeedConfig.ScriptConfig[];
+    scripts?: FernSeedConfig.DockerScriptConfig[];
     /**
      * List any fixtures that are okay to fail. For normal fixtures
      * just list the fixture name. For configured fixture list {fixture}:{outputFolder}.

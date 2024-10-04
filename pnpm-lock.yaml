@@ -3281,8 +3281,8 @@ importers:
         specifier: 0.0.584
         version: 0.0.584
       '@fern-fern/generators-sdk':
-        specifier: 0.109.0-21be2e5be
-        version: 0.109.0-21be2e5be
+        specifier: 0.114.0-5745f9e74
+        version: 0.114.0-5745f9e74
       '@types/get-port':
         specifier: ^4.2.0
         version: 4.2.0
@@ -3500,8 +3500,8 @@ importers:
         specifier: 0.0.584
         version: 0.0.584
       '@fern-fern/generators-sdk':
-        specifier: 0.109.0-21be2e5be
-        version: 0.109.0-21be2e5be
+        specifier: 0.114.0-5745f9e74
+        version: 0.114.0-5745f9e74
       find-up:
         specifier: ^6.3.0
         version: 6.3.0
@@ -5896,8 +5896,8 @@ importers:
         specifier: 0.0.584
         version: 0.0.584
       '@fern-fern/generators-sdk':
-        specifier: 0.107.0-00fe26566
-        version: 0.107.0-00fe26566
+        specifier: 0.114.0-5745f9e74
+        version: 0.114.0-5745f9e74
     devDependencies:
       '@types/jest':
         specifier: ^29.5.12
@@ -6065,8 +6065,8 @@ importers:
         specifier: ^0.0.898
         version: 0.0.898
       '@fern-fern/generators-sdk':
-        specifier: 0.109.0-21be2e5be
-        version: 0.109.0-21be2e5be
+        specifier: 0.114.0-5745f9e74
+        version: 0.114.0-5745f9e74
       '@types/pretty-ms':
         specifier: ^5.0.1
         version: 5.0.1
@@ -7199,11 +7199,8 @@ packages:
   '@fern-fern/generator-exec-sdk@0.0.898':
     resolution: {integrity: sha512-VQYn32CkAd437deesaGk4LKikbVptxrWINAwUwiAUWOy77LelX1zWNKihjU2XDgIPv3VXK07aJwoPR5BDYD46Q==}
 
-  '@fern-fern/generators-sdk@0.107.0-00fe26566':
-    resolution: {integrity: sha512-fwk1xrv3wTO/6kJztIwO8Zz/thkRxIMLjYCtHelfbtbYNH9ZZr+yWDiCZGFBOOu7m8tuEZjaoOYOR3wiqmeivQ==}
-
-  '@fern-fern/generators-sdk@0.109.0-21be2e5be':
-    resolution: {integrity: sha512-McFSFWNqfZBC7E0gUQfhj45tTl8Eu+6bahqD6FHf0fQm+TXI/oQf8mhPJw/TVqzAGxP/2kOzSYNqkDg1DwkIFQ==}
+  '@fern-fern/generators-sdk@0.114.0-5745f9e74':
+    resolution: {integrity: sha512-FG7SU7ul1Q6EELAPsixGvbq8VP4Xjl42cd1VmLBlYXds5EtYxG/SZCu2QLsGgPMrkCFJ6V6VQgzXFTU3RoYR9A==}
 
   '@fern-fern/ir-sdk@39.0.0':
     resolution: {integrity: sha512-cx8g0hX3gS/JveQPKanSWAyhM8SGhVOiQEcovqmcF/j9wvpjO8FXXNNI1+ZR1Wdmkcggx9UIqXDbS7jzefh6Rw==}
@@ -14354,24 +14351,14 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@fern-fern/generators-sdk@0.107.0-00fe26566':
+  '@fern-fern/generators-sdk@0.114.0-5745f9e74':
     dependencies:
       form-data: 4.0.0
       formdata-node: 6.0.3
       js-base64: 3.7.2
       node-fetch: 2.7.0
       qs: 6.11.2
-      url-join: 4.0.1
-    transitivePeerDependencies:
-      - encoding
-
-  '@fern-fern/generators-sdk@0.109.0-21be2e5be':
-    dependencies:
-      form-data: 4.0.0
-      formdata-node: 6.0.3
-      js-base64: 3.7.2
-      node-fetch: 2.7.0
-      qs: 6.11.2
+      readable-stream: 4.5.2
       url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
