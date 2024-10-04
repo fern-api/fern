@@ -702,7 +702,7 @@ function throwIfGeneratorDoesNotExist({
 // Dummy clone of the function from @fern-api/core
 // because we're using different SDKs for these packages
 function createFdrService({
-    environment = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry-dev2.buildwithfern.com",
+    environment = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com",
     token
 }: {
     environment?: string;
