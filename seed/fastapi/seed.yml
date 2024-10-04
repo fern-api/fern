@@ -2,6 +2,14 @@ irVersion: v53
 displayName: FastAPI
 image: fernapi/fern-fastapi-server
 changelogLocation: ../../generators/python/fastapi/versions.yml
+
+buildScripts:
+  installScript:
+    - poetry shell
+    - poetry install
+  compileScript:
+    - poetry run mypy .
+
 publish:
   workingDirectory: generators/python
   preBuildCommands:

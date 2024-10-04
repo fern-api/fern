@@ -2,6 +2,13 @@ irVersion: v40
 displayName: Go Model
 image: fernapi/fern-go-model
 changelogLocation: ../../generators/go/model/versions.yml
+
+buildScripts:
+  compileScript:
+    - go build -v ./...
+  testScript:
+    - go test -v ./...
+
 publish:
   workingDirectory: generators/go
   preBuildCommands:
@@ -37,7 +44,7 @@ scripts:
   - docker: golang:1.18-alpine
     commands:
       - CGO_ENABLED=0 go test ./...
-allowedFailures: 
+allowedFailures:
   - exhaustive
   - reserved-keywords
   - trace

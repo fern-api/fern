@@ -6,9 +6,9 @@ types:
       publishGa: PublishCommand
       publishRc: PublishCommand
       publishDev: PublishCommand
-      changelogLocation: 
+      changelogLocation:
         type: optional<string>
-        docs: | 
+        docs: |
           The location of the changelog file, the schema of which must follow FDR's `GeneratorReleaseRequest` object.
 
   SeedWorkspaceConfiguration:
@@ -18,9 +18,9 @@ types:
       irVersion: string
       test: TestConfiguration
       publish: PublishConfiguration
-      changelogLocation: 
+      changelogLocation:
         type: optional<string>
-        docs: | 
+        docs: |
           The location of the changelog file, the schema of which must follow FDR's `GeneratorReleaseRequest` object.
 
       language: optional<Language>
@@ -28,20 +28,22 @@ types:
       defaultOutputMode: OutputMode
       generatorType: GeneratorType
 
-      customFixtureConfig: 
+      buildScripts: optional<BuildScripts>
+
+      customFixtureConfig:
         type: optional<FixtureConfigurations>
         docs: |
           Configuration that will be used for any custom fixture specified by --custom-fixture
       fixtures:
         type: optional<map<string, list<FixtureConfigurations>>>
-      scripts: optional<list<ScriptConfig>>
-      allowedFailures: 
+      scripts: optional<list<DockerScriptConfig>>
+      allowedFailures:
         type: optional<list<string>>
-        docs: | 
-          List any fixtures that are okay to fail. For normal fixtures 
+        docs: |
+          List any fixtures that are okay to fail. For normal fixtures
           just list the fixture name. For configured fixture list {fixture}:{outputFolder}.
       features: optional<features.GeneratorFeatures>
-  
+
   PublishDockerConfiguration:
     properties:
       context: string
@@ -63,18 +65,18 @@ types:
       Commands can be multi-line, we'll run them all!
     properties:
       workingDirectory: optional<string>
-      versionSubstitution: 
+      versionSubstitution:
         type: optional<string>
-        docs: | 
+        docs: |
           The string to substitute for the version in the command. ex. `"$VERSION"`
       command: DockerCommand
 
   PublishConfiguration:
     discriminated: false
-    union: 
+    union:
       - PublishDocker
       - PublishCommand
-  
+
   TestDockerConfiguration:
     properties:
       image: string
@@ -85,37 +87,49 @@ types:
       docker: TestDockerConfiguration
       local: optional<LocalBuildInfo>
 
-  LocalBuildInfo: 
-    properties: 
-      workingDirectory: 
+  LocalBuildInfo:
+    properties:
+      workingDirectory:
         type: string
-        docs: | 
-          The working directory for the generator. 
-      buildCommand: 
+        docs: |
+          The working directory for the generator.
+      buildCommand:
         type: list<string>
-        docs: | 
-          The command to build the generator locally. 
-          `yarn workspace @fern-api/openapi-generator build` for example. 
+        docs: |
+          The command to build the generator locally.
+          `yarn workspace @fern-api/openapi-generator build` for example.
       runCommand:
         type: string
-        docs: | 
-          The command to run the generator locally. 
+        docs: |
+          The command to run the generator locally.
           `node generators/openapi/dist/cli.cjs` for example.
-      env: 
+      env:
         type: optional<map<string, string>>
-        docs: | 
+        docs: |
           Environment variables to set when running the generator locally.
 
-  DockerCommand: 
+  BuildScripts:
+    docs: Scripts pertaining to the artifact produced by this generator and how to build them (e.g. yarn install && yarn build for the TS SDK)
+    properties:
+      preInstallScript: optional<Script>
+      installScript: optional<Script>
+      compileScript: optional<Script>
+      testScript: optional<Script>
+
+  DockerCommand:
     discriminated: false
-    union: 
+    union:
       - string
       - list<string>
 
-  ScriptConfig:
+  Script:
+    properties:
+      commands: list<string>
+
+  DockerScriptConfig:
+    extends: Script
     properties:
       docker: string
-      commands: list<string>
 
   Language:
     enum:
@@ -144,7 +158,7 @@ types:
       audiences: optional<list<string>>
       outputFolder: string
       outputVersion: optional<string>
-      outputMode: 
+      outputMode:
         type: optional<OutputMode>
         docs: Overrides the default output mode
 
@@ -157,7 +171,7 @@ types:
 
   ReadmeEndpoint:
     discriminated: false
-    union: 
+    union:
       - string
       - ReadmeEndpointObject
 
@@ -166,9 +180,9 @@ types:
       method: string
       path: string
       stream: optional<boolean>
-  
-  OutputMode: 
-    enum: 
+
+  OutputMode:
+    enum:
       - github
       - local_files
       - publish

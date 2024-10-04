@@ -3,7 +3,7 @@ import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 import { writeFile } from "fs/promises";
 import tmp from "tmp-promise";
-import { ScriptConfig } from "../../config/api";
+import { DockerScriptConfig } from "../../config/api";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
 import { Semaphore } from "../../Semaphore";
 
@@ -26,7 +26,7 @@ export declare namespace ScriptRunner {
     }
 }
 
-interface RunningScriptConfig extends ScriptConfig {
+interface RunningScriptConfig extends DockerScriptConfig {
     containerId: string;
 }
 
@@ -78,7 +78,7 @@ export class ScriptRunner {
         outputDir: AbsoluteFilePath;
         taskContext: TaskContext;
         containerId: string;
-        script: ScriptConfig;
+        script: DockerScriptConfig;
     }): Promise<ScriptRunner.RunResponse> {
         taskContext.logger.info(`Running script ${script.commands[0] ?? ""} on ${id}`);
 
