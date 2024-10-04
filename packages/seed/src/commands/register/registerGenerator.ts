@@ -25,7 +25,29 @@ export async function registerGenerator({
         displayName: generatorConfig.displayName,
         generatorType: convertGeneratorType(generatorConfig.generatorType),
         generatorLanguage: generatorConfig.language,
-        dockerImage: generatorConfig.image
+        dockerImage: generatorConfig.image,
+        scripts: {
+            preInstallScript: generatorConfig.buildScripts?.preInstallScript
+                ? {
+                      steps: generatorConfig.buildScripts.preInstallScript.commands
+                  }
+                : undefined,
+            installScript: generatorConfig.buildScripts?.installScript
+                ? {
+                      steps: generatorConfig.buildScripts.installScript.commands
+                  }
+                : undefined,
+            compileScript: generatorConfig.buildScripts?.compileScript
+                ? {
+                      steps: generatorConfig.buildScripts.compileScript.commands
+                  }
+                : undefined,
+            testScript: generatorConfig.buildScripts?.testScript
+                ? {
+                      steps: generatorConfig.buildScripts.testScript.commands
+                  }
+                : undefined
+        }
     });
 
     // Register generator versions

@@ -2,13 +2,13 @@
 
 namespace Seed\Dataservice\Requests;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use Seed\Core\Types\ArrayType;
 use Seed\Core\Types\Union;
 use Seed\Types\IndexedData;
 
-class UpdateRequest extends SerializableType
+class UpdateRequest extends JsonSerializableType
 {
     /**
      * @var string $id
@@ -25,7 +25,7 @@ class UpdateRequest extends SerializableType
     /**
      * @var array<string, float|string|bool>|array<string, mixed>|null $setMetadata
      */
-    #[JsonProperty('setMetadata'), Union(['string' => new Union('float', 'string', 'bool')], ['string' => 'mixed'])]
+    #[JsonProperty('setMetadata'), Union(['string' => new Union('float', 'string', 'bool')], ['string' => 'mixed'], 'null')]
     public array|null $setMetadata;
 
     /**

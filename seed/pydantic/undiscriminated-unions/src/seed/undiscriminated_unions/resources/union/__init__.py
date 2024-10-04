@@ -4,5 +4,6 @@ from .key import Key
 from .key_type import KeyType
 from .metadata import Metadata
 from .my_union import MyUnion
+from .type_with_optional_union import TypeWithOptionalUnion
 
-__all__ = ["Key", "KeyType", "Metadata", "MyUnion"]
+__all__ = ["Key", "KeyType", "Metadata", "MyUnion", "TypeWithOptionalUnion"]

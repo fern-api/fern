@@ -2,9 +2,9 @@
 
 namespace Seed\Package\Requests;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 
-class TestRequest extends SerializableType
+class TestRequest extends JsonSerializableType
 {
     /**
      * @var string $for

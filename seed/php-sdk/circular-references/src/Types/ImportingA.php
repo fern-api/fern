@@ -2,11 +2,11 @@
 
 namespace Seed\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\A\Types\A;
 use Seed\Core\Json\JsonProperty;
 
-class ImportingA extends SerializableType
+class ImportingA extends JsonSerializableType
 {
     /**
      * @var ?A $a

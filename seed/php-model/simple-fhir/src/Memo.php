@@ -2,10 +2,10 @@
 
 namespace Seed;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 
-class Memo extends SerializableType
+class Memo extends JsonSerializableType
 {
     /**
      * @var string $description

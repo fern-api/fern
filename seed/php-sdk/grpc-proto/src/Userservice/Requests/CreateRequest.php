@@ -2,11 +2,11 @@
 
 namespace Seed\Userservice\Requests;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use Seed\Core\Types\Union;
 
-class CreateRequest extends SerializableType
+class CreateRequest extends JsonSerializableType
 {
     /**
      * @var ?string $username
@@ -35,7 +35,7 @@ class CreateRequest extends SerializableType
     /**
      * @var array<string, float|string|bool>|array<string, mixed>|null $metadata
      */
-    #[JsonProperty('metadata'), Union(['string' => new Union('float', 'string', 'bool')], ['string' => 'mixed'])]
+    #[JsonProperty('metadata'), Union(['string' => new Union('float', 'string', 'bool')], ['string' => 'mixed'], 'null')]
     public array|null $metadata;
 
     /**

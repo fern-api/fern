@@ -2,7 +2,7 @@ import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { PhpFile } from "@fern-api/php-codegen";
 import { FileGenerator } from "@fern-api/php-codegen";
 import { php } from "@fern-api/php-codegen";
-import { ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { ObjectProperty, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
@@ -23,24 +23,17 @@ export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSch
         const clazz = php.dataClass({
             ...this.classReference,
             docs: this.typeDeclaration.docs,
-            parentClassReference: this.context.getSerializableTypeClassReference()
+            parentClassReference: this.context.getJsonSerializableTypeClassReference(),
+            traits: this.objectDeclaration.extends.map((declaredTypeName) =>
+                this.context.phpTypeMapper.convertToTraitClassReference(declaredTypeName)
+            )
         });
 
-        // TODO: handle extended properties
         for (const property of this.objectDeclaration.properties) {
-            const convertedType = this.context.phpTypeMapper.convert({ reference: property.valueType });
-            clazz.addField(
-                php.field({
-                    type: convertedType,
-                    name: this.context.getPropertyName(property.name.name),
-                    access: "public",
-                    docs: property.docs,
-                    attributes: this.context.phpAttributeMapper.convert({
-                        type: convertedType,
-                        property
-                    })
-                })
-            );
+            clazz.addField(this.toField({ property }));
+        }
+        for (const property of this.objectDeclaration.extendedProperties ?? []) {
+            clazz.addField(this.toField({ property, inherited: true }));
         }
 
         return new PhpFile({
@@ -48,6 +41,21 @@ export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSch
             rootNamespace: this.context.getRootNamespace(),
             directory: this.context.getLocationForTypeId(this.typeDeclaration.name.typeId).directory,
             customConfig: this.context.customConfig
+        });
+    }
+
+    private toField({ property, inherited }: { property: ObjectProperty; inherited?: boolean }): php.Field {
+        const convertedType = this.context.phpTypeMapper.convert({ reference: property.valueType });
+        return php.field({
+            type: convertedType,
+            name: this.context.getPropertyName(property.name.name),
+            access: "public",
+            docs: property.docs,
+            attributes: this.context.phpAttributeMapper.convert({
+                type: convertedType,
+                property
+            }),
+            inherited
         });
     }
 

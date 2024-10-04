@@ -2,10 +2,10 @@
 
 namespace Seed;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 
-class RootType extends SerializableType
+class RootType extends JsonSerializableType
 {
     /**
      * @var string $s

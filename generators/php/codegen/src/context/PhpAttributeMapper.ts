@@ -36,8 +36,8 @@ export class PhpAttributeMapper {
         if (underlyingInternalType.type === "date" || underlyingInternalType.type === "dateTime") {
             attributes.push(
                 php.attribute({
-                    reference: this.context.getDateTypeAttributeClassReference(),
-                    arguments: [`DateType::TYPE_${underlyingInternalType.type.toUpperCase()}`]
+                    reference: this.context.getDateAttributeClassReference(),
+                    arguments: [`Date::TYPE_${underlyingInternalType.type.toUpperCase()}`]
                 })
             );
         }
@@ -50,13 +50,16 @@ export class PhpAttributeMapper {
             );
         }
         if (underlyingInternalType.type === "union") {
-            const unionTypeParameters = this.getUnionTypeParameters(underlyingInternalType.types);
+            const unionTypeParameters = this.getUnionTypeParameters({
+                types: underlyingInternalType.types,
+                isOptional: type.isOptional()
+            });
             // only add the attribute if deduping in getUnionTypeParameters resulted in more than one type
             if (unionTypeParameters.length > 1) {
                 attributes.push(
                     php.attribute({
                         reference: this.context.getUnionClassReference(),
-                        arguments: this.getUnionTypeParameters(underlyingInternalType.types)
+                        arguments: unionTypeParameters
                     })
                 );
             }
@@ -71,12 +74,10 @@ export class PhpAttributeMapper {
         });
     }
 
-    public getUnionTypeParameters(types: php.Type[]): php.AstNode[] {
+    public getUnionTypeParameters({ types, isOptional }: { types: php.Type[]; isOptional?: boolean }): php.AstNode[] {
+        const typeAttributeArguments = types.map((type) => this.getTypeAttributeArgument(type));
         // remove duplicates, such as "string" and "string" if enums and strings are both in the union
-        return uniqWith(
-            types.map((type) => this.getTypeAttributeArgument(type)),
-            isEqual
-        );
+        return uniqWith([...typeAttributeArguments, ...(isOptional ? [php.codeblock("'null'")] : [])], isEqual);
     }
 
     public getTypeAttributeArgument(type: php.Type): php.AstNode {
@@ -123,7 +124,7 @@ export class PhpAttributeMapper {
                 });
             }
             case "union": {
-                const unionTypeParameters = this.getUnionTypeParameters(type.internalType.types);
+                const unionTypeParameters = this.getUnionTypeParameters({ types: type.internalType.types });
                 if (unionTypeParameters.length === 1) {
                     if (unionTypeParameters[0] == null) {
                         throw new Error("Unexpected empty union type parameters");

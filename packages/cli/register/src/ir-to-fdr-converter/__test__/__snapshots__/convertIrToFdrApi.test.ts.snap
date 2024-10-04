@@ -35976,6 +35976,7 @@ exports[`fdr test definitions > undiscriminated-unions 1`] = `
       "subpackageId": "subpackage_union",
       "subpackages": [],
       "types": [
+        "type_union:TypeWithOptionalUnion",
         "type_union:MyUnion",
         "type_union:Metadata",
         "type_union:Key",
@@ -36167,6 +36168,29 @@ as long as all of their values are valid keys
             "typeName": undefined,
           },
         ],
+      },
+    },
+    "type_union:TypeWithOptionalUnion": {
+      "availability": undefined,
+      "description": undefined,
+      "name": "TypeWithOptionalUnion",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "myUnion",
+            "valueType": {
+              "itemType": {
+                "type": "id",
+                "value": "type_union:MyUnion",
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
       },
     },
   },

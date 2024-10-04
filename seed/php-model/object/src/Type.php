@@ -2,17 +2,17 @@
 
 namespace Seed;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use DateTime;
-use Seed\Core\Types\DateType;
+use Seed\Core\Types\Date;
 use Seed\Core\Types\ArrayType;
 use Seed\Core\Types\Union;
 
 /**
  * Exercises all of the built-in types.
  */
-class Type extends SerializableType
+class Type extends JsonSerializableType
 {
     /**
      * @var int $one
@@ -47,13 +47,13 @@ class Type extends SerializableType
     /**
      * @var DateTime $six
      */
-    #[JsonProperty('six'), DateType(DateType::TYPE_DATETIME)]
+    #[JsonProperty('six'), Date(Date::TYPE_DATETIME)]
     public DateTime $six;
 
     /**
      * @var DateTime $seven
      */
-    #[JsonProperty('seven'), DateType(DateType::TYPE_DATE)]
+    #[JsonProperty('seven'), Date(Date::TYPE_DATE)]
     public DateTime $seven;
 
     /**

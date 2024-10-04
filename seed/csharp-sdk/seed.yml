@@ -2,10 +2,22 @@ displayName: C# SDK
 irVersion: v53
 image: fernapi/fern-csharp-sdk
 changelogLocation: ../../generators/csharp/sdk/versions.yml
+
+buildScripts:
+  preInstallScript:
+    commands:
+      - dotnet tool restore
+  compileScript:
+    commands:
+      - dotnet build src -c Release /p:ContinuousIntegrationBuild=true .
+  testScript:
+    commands:
+      - dotnet test src
+
 publish:
   preBuildCommands:
     - pnpm --filter @fern-api/fern-csharp-sdk dist:cli
-  docker: 
+  docker:
     file: ./generators/csharp/sdk/Dockerfile
     image: fernapi/fern-csharp-sdk
     context: .
@@ -13,9 +25,9 @@ test:
   docker:
     image: fernapi/fern-csharp-sdk:latest
     command: pnpm --filter @fern-api/fern-csharp-sdk dockerTagLatest
-  local: 
+  local:
     workingDirectory: generators/csharp
-    buildCommand: 
+    buildCommand:
       - pnpm --filter @fern-api/fern-csharp-sdk dist:cli
     runCommand: node sdk/dist/bundle.cjs
 
@@ -31,7 +43,7 @@ scripts:
       - dotnet test src --filter "FullyQualifiedName~SeedApi.Test.Core"
       # - dotnet test src
 
-fixtures: 
+fixtures:
   examples:
     - customConfig: null
       outputFolder: no-custom-config

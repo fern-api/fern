@@ -2,10 +2,10 @@
 
 namespace Seed\Users\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 
-class WithCursor extends SerializableType
+class WithCursor extends JsonSerializableType
 {
     /**
      * @var ?string $cursor

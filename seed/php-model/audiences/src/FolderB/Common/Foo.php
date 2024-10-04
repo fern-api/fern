@@ -2,11 +2,11 @@
 
 namespace Seed\FolderB\Common;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\FolderC\Common\FolderCFoo;
 use Seed\Core\Json\JsonProperty;
 
-class Foo extends SerializableType
+class Foo extends JsonSerializableType
 {
     /**
      * @var ?FolderCFoo $foo

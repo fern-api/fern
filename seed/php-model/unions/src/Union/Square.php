@@ -2,10 +2,10 @@
 
 namespace Seed\Union;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 
-class Square extends SerializableType
+class Square extends JsonSerializableType
 {
     /**
      * @var float $length

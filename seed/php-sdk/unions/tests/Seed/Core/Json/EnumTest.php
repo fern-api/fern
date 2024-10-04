@@ -5,7 +5,7 @@ namespace Seed\Tests\Core\Json;
 use JsonSerializable;
 use PHPUnit\Framework\TestCase;
 use Seed\Core\Json\JsonProperty;
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Types\ArrayType;
 
 enum Shape: string implements JsonSerializable
@@ -23,7 +23,7 @@ enum Shape: string implements JsonSerializable
     }
 }
 
-class ShapeType extends SerializableType
+class ShapeType extends JsonSerializableType
 {
     /**
      * @var Shape $shape
@@ -53,7 +53,7 @@ class ShapeType extends SerializableType
 
 class EnumTest extends TestCase
 {
-    public function testShapeEnumSerialization(): void
+    public function testEnumSerialization(): void
     {
         $object = new ShapeType(
             Shape::Circle,
@@ -65,11 +65,11 @@ class EnumTest extends TestCase
             'shapes' => ['SQUARE', 'CIRCLE', 'TRIANGLE']
         ], JSON_THROW_ON_ERROR);
 
-        $serializedJson = $object->toJson();
+        $actualJson = $object->toJson();
 
         $this->assertJsonStringEqualsJsonString(
             $expectedJson,
-            $serializedJson,
+            $actualJson,
             'Serialized JSON does not match expected JSON for shape and shapes properties.'
         );
     }

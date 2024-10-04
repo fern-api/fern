@@ -2,10 +2,10 @@
 
 namespace Seed\FolderD\Service;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 
-class Response extends SerializableType
+class Response extends JsonSerializableType
 {
     /**
      * @var string $foo

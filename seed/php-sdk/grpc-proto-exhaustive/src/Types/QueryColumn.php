@@ -2,12 +2,12 @@
 
 namespace Seed\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use Seed\Core\Types\ArrayType;
 use Seed\Core\Types\Union;
 
-class QueryColumn extends SerializableType
+class QueryColumn extends JsonSerializableType
 {
     /**
      * @var array<float> $values
@@ -30,7 +30,7 @@ class QueryColumn extends SerializableType
     /**
      * @var array<string, float|string|bool>|array<string, mixed>|null $filter
      */
-    #[JsonProperty('filter'), Union(['string' => new Union('float', 'string', 'bool')], ['string' => 'mixed'])]
+    #[JsonProperty('filter'), Union(['string' => new Union('float', 'string', 'bool')], ['string' => 'mixed'], 'null')]
     public array|null $filter;
 
     /**

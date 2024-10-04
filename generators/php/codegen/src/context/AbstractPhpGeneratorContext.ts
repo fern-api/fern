@@ -9,7 +9,8 @@ import {
     Subpackage,
     SubpackageId,
     FernFilepath,
-    PrimitiveTypeV1
+    PrimitiveTypeV1,
+    ObjectTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 import { BasePhpCustomConfigSchema } from "../custom-config/BasePhpCustomConfigSchema";
 import { PhpProject } from "../project";
@@ -20,6 +21,7 @@ import { AsIsFiles } from "../AsIs";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { php } from "..";
 import { GLOBAL_NAMESPACE } from "../ast/core/Constant";
+import { TRAITS_DIRECTORY } from "../constants";
 
 export interface FileLocation {
     namespace: string;
@@ -147,8 +149,8 @@ export abstract class AbstractPhpGeneratorContext<
         });
     }
 
-    public getDateTypeAttributeClassReference(): php.ClassReference {
-        return this.getCoreTypesClassReference("DateType");
+    public getDateAttributeClassReference(): php.ClassReference {
+        return this.getCoreTypesClassReference("Date");
     }
 
     public getConstantClassReference(): php.ClassReference {
@@ -159,8 +161,8 @@ export abstract class AbstractPhpGeneratorContext<
         return this.getCoreJsonClassReference("JsonProperty");
     }
 
-    public getSerializableTypeClassReference(): php.ClassReference {
-        return this.getCoreJsonClassReference("SerializableType");
+    public getJsonSerializableTypeClassReference(): php.ClassReference {
+        return this.getCoreJsonClassReference("JsonSerializableType");
     }
 
     public getUnionClassReference(): php.ClassReference {
@@ -283,6 +285,35 @@ export abstract class AbstractPhpGeneratorContext<
         }
     }
 
+    public getUnderlyingObjectTypeDeclaration(typeReference: TypeReference): ObjectTypeDeclaration {
+        switch (typeReference.type) {
+            case "named": {
+                const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (declaration.shape.type === "alias") {
+                    return this.getUnderlyingObjectTypeDeclaration(declaration.shape.aliasOf);
+                }
+                if (declaration.shape.type === "object") {
+                    return declaration.shape;
+                }
+                throw new Error("Type is not an object type");
+            }
+            case "primitive":
+            case "unknown":
+            case "container":
+        }
+        throw new Error("Type is not an object type");
+    }
+
+    public getUnderlyingObjectTypeDeclarationOrThrow(typeDeclaration: TypeDeclaration): ObjectTypeDeclaration {
+        if (typeDeclaration.shape.type === "alias") {
+            return this.getUnderlyingObjectTypeDeclaration(typeDeclaration.shape.aliasOf);
+        }
+        if (typeDeclaration.shape.type === "object") {
+            return typeDeclaration.shape;
+        }
+        throw new Error("Type is not an object type");
+    }
+
     public maybeLiteral(typeReference: TypeReference): Literal | undefined {
         if (typeReference.type === "container" && typeReference.container.type === "literal") {
             return typeReference.container.literal;
@@ -310,9 +341,9 @@ export abstract class AbstractPhpGeneratorContext<
         return [
             AsIsFiles.ArrayType,
             AsIsFiles.Constant,
-            AsIsFiles.DateType,
+            AsIsFiles.Date,
             AsIsFiles.JsonProperty,
-            AsIsFiles.SerializableType,
+            AsIsFiles.JsonSerializableType,
             AsIsFiles.Union,
             AsIsFiles.JsonDecoder,
             AsIsFiles.JsonEncoder,
@@ -324,22 +355,27 @@ export abstract class AbstractPhpGeneratorContext<
 
     public getCoreSerializationTestAsIsFiles(): string[] {
         return [
-            AsIsFiles.DateArrayTypeTest,
-            AsIsFiles.EmptyArraysTest,
-            AsIsFiles.InvalidTypesTest,
-            AsIsFiles.MixedDateArrayTypeTest,
-            AsIsFiles.NestedUnionArrayTypeTest,
-            AsIsFiles.NullableArrayTypeTest,
-            AsIsFiles.NullPropertyTypeTest,
-            AsIsFiles.ScalarTypesTest,
-            AsIsFiles.TestTypeTest,
-            AsIsFiles.UnionArrayTypeTest,
+            AsIsFiles.DateArrayTest,
+            AsIsFiles.EmptyArrayTest,
             AsIsFiles.EnumTest,
-            AsIsFiles.UnionPropertyTypeTest
+            AsIsFiles.ExhaustiveTest,
+            AsIsFiles.InvalidTest,
+            AsIsFiles.NestedUnionArrayTest,
+            AsIsFiles.NullableArrayTest,
+            AsIsFiles.NullPropertyTest,
+            AsIsFiles.ScalarTypesTest,
+            AsIsFiles.TraitTest,
+            AsIsFiles.UnionArrayTest,
+            AsIsFiles.UnionPropertyTest
         ];
     }
 
     public abstract getLocationForTypeId(typeId: TypeId): FileLocation;
+
+    public getTraitLocationForTypeId(typeId: TypeId): FileLocation {
+        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
+        return this.getFileLocation(typeDeclaration.name.fernFilepath, TRAITS_DIRECTORY);
+    }
 
     protected getFileLocation(filepath: FernFilepath, suffix?: string): FileLocation {
         let parts = filepath.allParts.map((path) => path.pascalCase.safeName);

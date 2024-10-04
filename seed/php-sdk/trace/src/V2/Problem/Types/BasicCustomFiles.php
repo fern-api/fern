@@ -2,12 +2,12 @@
 
 namespace Seed\V2\Problem\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use Seed\Commons\Types\Language;
 use Seed\Core\Types\ArrayType;
 
-class BasicCustomFiles extends SerializableType
+class BasicCustomFiles extends JsonSerializableType
 {
     /**
      * @var string $methodName

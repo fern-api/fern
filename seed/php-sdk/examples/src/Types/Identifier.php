@@ -2,10 +2,10 @@
 
 namespace Seed\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 
-class Identifier extends SerializableType
+class Identifier extends JsonSerializableType
 {
     /**
      * @var value-of<BasicType>|value-of<ComplexType> $type

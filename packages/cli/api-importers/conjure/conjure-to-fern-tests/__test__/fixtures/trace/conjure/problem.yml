@@ -1,0 +1,139 @@
+types:
+  conjure-imports:
+    commons: commons.yml
+  definitions:
+    default-package: com.birch.trace.problems
+    objects:
+      ProblemInfo:
+        fields:
+          problemId: commons.ProblemId
+          problemDescription: ProblemDescription
+          problemName: string
+          problemVersion: integer
+          files: map<commons.Language, ProblemFiles>
+          inputParams: list<VariableTypeAndName>
+          outputType: commons.VariableType
+          testcases: list<commons.TestCaseWithExpectedResult>
+          methodName: string
+          supportsCustomTestCases: boolean
+      ProblemDescription:
+        fields:
+          boards: list<ProblemDescriptionBoard>
+      ProblemDescriptionBoard:
+        union:
+          html: string
+          variable: commons.VariableValue
+          testCaseId: string
+      ProblemFiles:
+        fields:
+          solutionFile: commons.FileInfo
+          readOnlyFiles: list<commons.FileInfo>
+      VariableTypeAndName:
+        fields:
+          variableType: commons.VariableType
+          name: string
+
+      CreateProblemRequest:
+        fields:
+          problemName: string
+          problemDescription: ProblemDescription
+          files: map<commons.Language, ProblemFiles>
+          inputParams: list<VariableTypeAndName>
+          outputType: commons.VariableType
+          testcases: list<commons.TestCaseWithExpectedResult>
+          methodName: string
+      CreateProblemResponse:
+        union:
+          success: commons.ProblemId
+          error: CreateProblemError
+      CreateProblemError:
+        union:
+          generic: GenericCreateProblemError
+      GenericCreateProblemError:
+        fields:
+          message: string
+          type: string
+          stacktrace: string
+
+      UpdateProblemResponse:
+        fields:
+          problemVersion: integer
+
+      GetDefaultStarterFilesRequest:
+        fields:
+          inputParams: list<VariableTypeAndName>
+          outputType: commons.VariableType
+          methodName: string
+      GetDefaultStarterFilesResponse:
+        fields:
+          files: map<commons.Language, ProblemFiles>
+
+services:
+  ProblemInfoService:
+    name: Information about different problems
+    package: com.birch.trace.problems
+    base-path: /problems
+    endpoints:
+
+      getProblems:
+        docs: Returns latest versions of all problems
+        http: GET /problem-info
+        args: {}
+        returns: list<ProblemInfo>
+
+      getLatestProblem:
+        docs: Returns latest version of a problem
+        http: GET /problem-info/{problemId}
+        args:
+          problemId: commons.ProblemId
+        returns: ProblemInfo
+
+      getProblemVersion:
+        docs: Returns requested version of a problem
+        http: GET /problem-info/{problemId}/version/{problemVersion}
+        args:
+          problemId: commons.ProblemId
+          problemVersion: integer
+        returns: ProblemInfo
+
+      getExpectedResult:
+        docs: Returns test case answer
+        http: POST /expected-result/{problemId}
+        args:
+          problemId: commons.ProblemId
+          testCase: commons.TestCase
+        returns: commons.TestCaseWithExpectedResult
+
+  ProblemCrudService:
+    name: Problem Creation Service
+    package: com.birch.trace.problems
+    base-path: /problem-crud
+    endpoints:
+
+      createProblem:
+        docs: Creates a problem
+        http: POST /create
+        args:
+          request: CreateProblemRequest
+        returns: CreateProblemResponse
+
+      updateProblem:
+        docs: Updates a problem
+        http: POST /update/{problemId}
+        args:
+          problemId: commons.ProblemId
+          request: CreateProblemRequest
+        returns: UpdateProblemResponse
+
+      deleteProblem:
+        docs: Soft deletes a problem
+        http: DELETE /delete/{problemId}
+        args:
+          problemId: commons.ProblemId
+
+      getDefaultStarterFiles:
+        docs: Returns default starter files for problem
+        http: POST /default-starter-files
+        args:
+          request: GetDefaultStarterFilesRequest
+        returns: GetDefaultStarterFilesResponse

@@ -2,7 +2,7 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { Logger } from "@fern-api/logger";
 import { OpenApiIntermediateRepresentation, Schema, SchemaId } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
-import { FernDefinitionBuilder, FernDefinitionBuilderImpl } from "./FernDefnitionBuilder";
+import { FernDefinitionBuilder, FernDefinitionBuilderImpl } from "@fern-api/importer-commons";
 
 export interface OpenApiIrConverterContextOpts {
     taskContext: TaskContext;
@@ -50,7 +50,10 @@ export class OpenApiIrConverterContext {
         this.logger = taskContext.logger;
         this.taskContext = taskContext;
         this.ir = ir;
-        this.builder = new FernDefinitionBuilderImpl(ir, false, enableUniqueErrorsPerEndpoint);
+        this.builder = new FernDefinitionBuilderImpl(enableUniqueErrorsPerEndpoint);
+        if (ir.title != null) {
+            this.builder.setDisplayName({ displayName: ir.title });
+        }
         this.detectGlobalHeaders = detectGlobalHeaders;
         this.environmentOverrides = environmentOverrides;
         this.authOverrides = authOverrides;

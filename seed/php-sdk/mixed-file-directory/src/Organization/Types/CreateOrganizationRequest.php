@@ -2,10 +2,10 @@
 
 namespace Seed\Organization\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 
-class CreateOrganizationRequest extends SerializableType
+class CreateOrganizationRequest extends JsonSerializableType
 {
     /**
      * @var string $name

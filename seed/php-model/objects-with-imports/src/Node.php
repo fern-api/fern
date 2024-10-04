@@ -2,11 +2,11 @@
 
 namespace Seed;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use Seed\Commons\Metadata\Metadata;
 
-class Node extends SerializableType
+class Node extends JsonSerializableType
 {
     /**
      * @var string $id

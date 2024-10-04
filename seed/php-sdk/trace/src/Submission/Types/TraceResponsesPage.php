@@ -2,11 +2,11 @@
 
 namespace Seed\Submission\Types;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use Seed\Core\Types\ArrayType;
 
-class TraceResponsesPage extends SerializableType
+class TraceResponsesPage extends JsonSerializableType
 {
     /**
      * @var ?int $offset If present, use this to load subseqent pages.

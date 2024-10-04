@@ -1,0 +1,25 @@
+types:
+  definitions:
+    default-package: com.birch.trace.migration
+    objects:
+      MigrationStatus:
+        values:
+          - RUNNING
+          - FAILED
+          - FINISHED
+      Migration:
+        fields:
+          name: string
+          status: MigrationStatus
+
+services:
+  MigrationInfoService:
+    name: Migration Info Service
+    package: com.birch.trace.migration
+    base-path: /migration-info
+    endpoints:
+
+      getAttemptedMigrations:
+        http: GET /all
+        args:
+        returns: list<Migration>

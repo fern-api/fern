@@ -2,13 +2,13 @@
 
 namespace Seed\Ast;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 
 /**
  * This type allows us to test a circular reference with a union type (see FieldValue).
  */
-class ObjectFieldValue extends SerializableType
+class ObjectFieldValue extends JsonSerializableType
 {
     /**
      * @var string $name

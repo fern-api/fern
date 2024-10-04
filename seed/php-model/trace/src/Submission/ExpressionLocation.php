@@ -2,10 +2,10 @@
 
 namespace Seed\Submission;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 
-class ExpressionLocation extends SerializableType
+class ExpressionLocation extends JsonSerializableType
 {
     /**
      * @var int $start

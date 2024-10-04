@@ -1,0 +1,72 @@
+types:
+  conjure-imports:
+    submission: submission.yml
+    problemV2: problemV2.yml
+  definitions:
+    default-package: com.birch.trace.admin
+    objects:
+      StoreTracedTestCaseRequest:
+        fields:
+          result: submission.TestCaseResultWithStdout
+          traceResponses: list<submission.TraceResponse>
+      StoreTracedWorkspaceRequest:
+        fields:
+          workspaceRunDetails: submission.WorkspaceRunDetails
+          traceResponses: list<submission.TraceResponse>
+
+services:
+  AdminService:
+    name: Admin Service
+    package: com.birch.trace.admin
+    base-path: /admin
+    endpoints:
+
+      updateTestSubmissionStatus:
+        http: POST /store-test-submission-status/{submissionId}
+        args:
+          submissionId: submission.SubmissionId
+          request: submission.TestSubmissionStatus
+
+      sendTestSubmissionUpdate:
+        http: POST /store-test-submission-status-v2/{submissionId}
+        args:
+          submissionId: submission.SubmissionId
+          request: submission.TestSubmissionUpdate
+
+      updateWorkspaceSubmissionStatus:
+        http: POST /store-workspace-submission-status/{submissionId}
+        args:
+          submissionId: submission.SubmissionId
+          request: submission.WorkspaceSubmissionStatus
+
+      sendWorkspaceSubmissionUpdate:
+        http: POST /store-workspace-submission-status-v2/{submissionId}
+        args:
+          submissionId: submission.SubmissionId
+          request: submission.WorkspaceSubmissionUpdate
+
+      storeTracedTestCase:
+        http: POST /store-test-trace/submission/{submissionId}/testCase/{testCaseId}
+        args:
+          submissionId: submission.SubmissionId
+          testCaseId: string
+          request: StoreTracedTestCaseRequest
+
+      storeTracedTestCaseV2:
+        http: POST /store-test-trace-v2/submission/{submissionId}/testCase/{testCaseId}
+        args:
+          submissionId: submission.SubmissionId
+          testCaseId: problemV2.TestCaseId
+          request: list<submission.TraceResponseV2>
+
+      storeTracedWorkspace:
+        http: POST /store-workspace-trace/submission/{submissionId}
+        args:
+          submissionId: submission.SubmissionId
+          request: StoreTracedWorkspaceRequest
+
+      storeTracedWorkspaceV2:
+        http: POST /store-workspace-trace-v2/submission/{submissionId}
+        args:
+          submissionId: submission.SubmissionId
+          request: list<submission.TraceResponseV2>

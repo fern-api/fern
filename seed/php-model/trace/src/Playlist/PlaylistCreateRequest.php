@@ -2,11 +2,11 @@
 
 namespace Seed\Playlist;
 
-use Seed\Core\Json\SerializableType;
+use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use Seed\Core\Types\ArrayType;
 
-class PlaylistCreateRequest extends SerializableType
+class PlaylistCreateRequest extends JsonSerializableType
 {
     /**
      * @var string $name
