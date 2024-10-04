@@ -56,7 +56,7 @@
     "sass": "^1.72.0",
     "stylelint": "^16.2.1",
     "typescript": "4.6.4",
-    "vite": "^5.2.8",
+    "vite": "^5.2.14",
     "vite-plugin-checker": "^0.6.4",
     "vitest": "^2.0.5"
   }
