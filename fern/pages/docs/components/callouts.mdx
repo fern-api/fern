@@ -1,8 +1,38 @@
 ---
 title: 'Callouts'
-description: 'A built-in component to show important information to the reader'
+subtitle: 'A built-in component to show important information to the reader'
 icon: 'circle-exclamation'
 ---
+
+## Callout properties
+
+Customize your Callouts using the `title` and `icon` properties. 
+
+<ParamField path="title" type="string" required={false}>
+The title of your Callout
+</ParamField>
+<ParamField path="icon" type="string | element" required={false}>
+The icon of your Callout. Can be a [Font Awesome](https://fontawesome.com/icons) icon name or an HTML element. 
+</ParamField>
+
+<br />
+
+<Tabs>
+<Tab title="Callout">
+<Tip title="Example Callout" icon="leaf">
+This Callout uses a title and a custom icon. 
+</Tip>
+</Tab>
+<Tab title="Markdown">
+```markdown
+<Tip title="Example Callout" icon="leaf">
+This Callout uses a title and a custom icon. 
+</Tip>
+```
+</Tab>
+</Tabs>
+
+## Callout varieties
 
 ### Note callouts
 
