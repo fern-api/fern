@@ -11,7 +11,3 @@ class JsonProperty
     {
     }
 }
-
-class Bloop {
-
-}
