@@ -5,6 +5,7 @@ namespace Seed\Types;
 use Seed\Core\Json\JsonSerializableType;
 use Seed\Traits\Docs;
 use Seed\Core\Json\JsonProperty;
+use Seed\Core\Json;
 
 class ExampleType extends JsonSerializableType
 {

@@ -3,20 +3,19 @@
 namespace Seed\FolderB\Common\Types;
 
 use Seed\Core\Json\JsonSerializableType;
-use Seed\FolderC\Common\Types\Foo;
 use Seed\Core\Json\JsonProperty;
 
 class Foo extends JsonSerializableType
 {
     /**
-     * @var ?Foo $foo
+     * @var ?\Seed\FolderC\Common\Types\Foo $foo
      */
     #[JsonProperty('foo')]
-    public ?Foo $foo;
+    public ?\Seed\FolderC\Common\Types\Foo $foo;
 
     /**
      * @param array{
-     *   foo?: ?Foo,
+     *   foo?: ?\Seed\FolderC\Common\Types\Foo,
      * } $values
      */
     public function __construct(
