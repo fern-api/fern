@@ -60,19 +60,9 @@ public readonly record struct Operand : IStringEnum
         return Value;
     }
 
-    public bool Equals(Operand other)
-    {
-        return Value == other.Value;
-    }
-
     public bool Equals(string? other)
     {
         return Value.Equals(other);
-    }
-
-    public override int GetHashCode()
-    {
-        return Value.GetHashCode();
     }
 
     public static bool operator ==(Operand value1, string value2) => value1.Value.Equals(value2);

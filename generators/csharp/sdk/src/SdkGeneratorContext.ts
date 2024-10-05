@@ -134,6 +134,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         }
         if (this.customConfig["enable-forward-compatible-enums"] ?? false) {
             files.push(AsIsFiles.StringEnum);
+            files.push(AsIsFiles.StringEnumExtensions);
             files.push(AsIsFiles.StringEnumSerializer);
         } else {
             files.push(AsIsFiles.EnumSerializer);

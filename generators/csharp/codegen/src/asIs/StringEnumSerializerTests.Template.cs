@@ -78,7 +78,7 @@ public class DummyObject
 }
 
 [JsonConverter(typeof(StringEnumSerializer<DummyEnum>))]
-public readonly struct DummyEnum : IStringEnum, IEquatable<DummyEnum>
+public readonly record struct DummyEnum : IStringEnum
 {
     public DummyEnum(string value)
     {
@@ -120,35 +120,15 @@ public readonly struct DummyEnum : IStringEnum, IEquatable<DummyEnum>
         return Value;
     }
 
-    public bool Equals(DummyEnum other)
-    {
-        return Value == other.Value;
-    }
-
     public bool Equals(string? other)
     {
         return Value.Equals(other);
-    }
-
-    public override bool Equals(object? obj)
-    {
-        if (obj is null)
-            return false;
-        if (obj is string stringObj)
-            return Value.Equals(stringObj);
-        if (obj.GetType() != GetType())
-            return false;
-        return Equals((DummyEnum)obj);
     }
 
     public override int GetHashCode()
     {
         return Value.GetHashCode();
     }
-
-    public static bool operator ==(DummyEnum value1, DummyEnum value2) => value1.Equals(value2);
-
-    public static bool operator !=(DummyEnum value1, DummyEnum value2) => !(value1 == value2);
 
     public static bool operator ==(DummyEnum value1, string value2) => value1.Value.Equals(value2);
 

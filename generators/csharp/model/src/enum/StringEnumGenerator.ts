@@ -152,24 +152,7 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
                 summary: "Returns the string value of the enum.",
                 type: csharp.MethodType.INSTANCE,
                 body: csharp.codeblock((writer) => {
-                    writer.write("return Value;");
-                })
-            })
-        );
-
-        stringEnum.addMethod(
-            csharp.method({
-                access: "public",
-                name: "Equals",
-                parameters: [
-                    csharp.parameter({
-                        name: "other",
-                        type: csharp.Type.reference(this.classReference)
-                    })
-                ],
-                return_: csharp.Type.boolean(),
-                body: csharp.codeblock((writer) => {
-                    writer.write("return Value == other.Value;");
+                    writer.writeTextStatement("return Value");
                 })
             })
         );
@@ -186,20 +169,7 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
                 ],
                 return_: csharp.Type.boolean(),
                 body: csharp.codeblock((writer) => {
-                    writer.write("return Value.Equals(other);");
-                })
-            })
-        );
-
-        stringEnum.addMethod(
-            csharp.method({
-                access: "public",
-                name: "GetHashCode",
-                override: true,
-                return_: csharp.Type.integer(),
-                parameters: [],
-                body: csharp.codeblock((writer) => {
-                    writer.write("return Value.GetHashCode();");
+                    writer.writeTextStatement("return Value.Equals(other)");
                 })
             })
         );

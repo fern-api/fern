@@ -48,19 +48,9 @@ public readonly record struct Color : IStringEnum
         return Value;
     }
 
-    public bool Equals(Color other)
-    {
-        return Value == other.Value;
-    }
-
     public bool Equals(string? other)
     {
         return Value.Equals(other);
-    }
-
-    public override int GetHashCode()
-    {
-        return Value.GetHashCode();
     }
 
     public static bool operator ==(Color value1, string value2) => value1.Value.Equals(value2);
