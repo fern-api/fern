@@ -65,6 +65,7 @@ export interface SpecImportSettings {
     shouldUseUndiscriminatedUnionsWithLiterals: boolean;
     optionalAdditionalProperties: boolean;
     asyncApiNaming?: "v1" | "v2";
+    cooerceEnumsToLiterals: boolean;
 }
 
 export interface OpenAPIFile {

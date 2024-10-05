@@ -32,6 +32,7 @@ export interface SpecImportSettings {
     shouldUseUndiscriminatedUnionsWithLiterals: boolean;
     asyncApiNaming?: "v1" | "v2";
     optionalAdditionalProperties: boolean;
+    cooerceEnumsToLiterals: boolean;
 }
 
 export type Source = AsyncAPISource | OpenAPISource | ProtobufSource;
@@ -190,7 +191,11 @@ function getParseOptions({
         optionalAdditionalProperties:
             overrides?.optionalAdditionalProperties ??
             specSettings?.optionalAdditionalProperties ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.optionalAdditionalProperties
+            DEFAULT_PARSE_OPENAPI_SETTINGS.optionalAdditionalProperties,
+        cooerceEnumsToLiterals:
+            overrides?.cooerceEnumsToLiterals ??
+            specSettings?.cooerceEnumsToLiterals ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.cooerceEnumsToLiterals
     };
 }
 
