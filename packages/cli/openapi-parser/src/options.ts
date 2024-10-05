@@ -11,6 +11,8 @@ export interface ParseOpenAPIOptions {
     audiences: string[] | undefined;
     /* Whether or not to make additional property values optional */
     optionalAdditionalProperties: boolean;
+    /* Whether or not to cooerce enums as literals */
+    cooerceEnumsToLiterals: boolean;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -18,5 +20,6 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     discriminatedUnionV2: false,
     useTitlesAsName: true,
     audiences: undefined,
-    optionalAdditionalProperties: true
+    optionalAdditionalProperties: true,
+    cooerceEnumsToLiterals: true
 };

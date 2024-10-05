@@ -62,6 +62,7 @@ export interface SpecImportSettings {
     shouldUseUndiscriminatedUnionsWithLiterals: boolean;
     optionalAdditionalProperties: boolean;
     asyncApiNaming?: "v1" | "v2";
+    cooerceEnumsToLiterals: boolean;
 }
 
 export declare namespace OSSWorkspace {
@@ -93,6 +94,10 @@ export declare namespace OSSWorkspace {
          * optional.
          */
         optionalAdditionalProperties?: boolean;
+        /*
+         * Whether or not to cooerce enums to undiscriminated union literals.
+         */
+        cooerceEnumsToLiterals?: boolean;
     }
 }
 
@@ -252,6 +257,9 @@ function getOptionsOverridesFromSettings(settings?: OSSWorkspace.Settings): Part
     }
     if (settings.optionalAdditionalProperties) {
         result.optionalAdditionalProperties = true;
+    }
+    if (settings.cooerceEnumsToLiterals) {
+        result.cooerceEnumsToLiterals = true;
     }
     return result;
 }

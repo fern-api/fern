@@ -5,6 +5,7 @@ describe("open api parser", () => {
         audiences: [],
         shouldUseTitleAsName: false,
         shouldUseUndiscriminatedUnionsWithLiterals: false,
-        optionalAdditionalProperties: true
+        optionalAdditionalProperties: true,
+        cooerceEnumsToLiterals: true
     });
 });

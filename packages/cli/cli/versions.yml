@@ -1,5 +1,24 @@
 - changelogEntry:
     - summary: |
+        The OpenAPI importer used to try and coerce all enums into a literals. 
+        In some cases this is not desirable, so we now expose an option called 
+        `coerce-enums-to-literals` in your generators.yml. 
+
+        ```yml generators.yml 
+        api:
+          specs: 
+            - openapi: ../openapi.json
+              overrides: ../openapi-overrides.yml
+              settings:
+                title-as-schema-name: false
+                coerce-enums-to-literals: false        
+        ```
+      type: feat
+  irVersion: 53
+  version: 0.44.1
+
+- changelogEntry:
+    - summary: |
         The Fern CLI now supports parsing [Conjure](https://github.com/palantir/conjure), Palantir's 
         home-grown API Definition format. 
 

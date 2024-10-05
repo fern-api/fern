@@ -51,6 +51,7 @@ export interface APIDefinitionSettings {
     shouldUseUndiscriminatedUnionsWithLiterals: boolean | undefined;
     asyncApiMessageNaming: "v1" | "v2" | undefined;
     shouldUseOptionalAdditionalProperties: boolean | undefined;
+    coerceEnumsToLiterals: boolean | undefined;
 }
 
 export interface APIDefinitionLocation {

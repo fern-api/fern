@@ -5,7 +5,8 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 
 export const OpenAPISettingsSchema = z.strictObject({
     "title-as-schema-name": z.optional(z.boolean()),
-    "optional-additional-properties": z.optional(z.boolean())
+    "optional-additional-properties": z.optional(z.boolean()),
+    "coerce-enums-to-literals": z.optional(z.boolean())
 });
 
 export type OpenAPISettingsSchema = z.infer<typeof OpenAPISettingsSchema>;
@@ -23,7 +24,8 @@ export type OpenAPISpecSchema = z.infer<typeof OpenAPISpecSchema>;
 
 export const AsyncAPISettingsSchema = z.strictObject({
     "title-as-schema-name": z.optional(z.boolean()),
-    "optional-additional-properties": z.optional(z.boolean())
+    "optional-additional-properties": z.optional(z.boolean()),
+    "coerce-enums-to-literals": z.optional(z.boolean())
 });
 
 export type AsyncAPISettingsSchema = z.infer<typeof AsyncAPISettingsSchema>;

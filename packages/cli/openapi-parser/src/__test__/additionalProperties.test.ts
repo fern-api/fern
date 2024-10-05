@@ -5,6 +5,7 @@ describe("anyOf", () => {
         audiences: [],
         shouldUseTitleAsName: true,
         shouldUseUndiscriminatedUnionsWithLiterals: true,
-        optionalAdditionalProperties: false
+        optionalAdditionalProperties: false,
+        cooerceEnumsToLiterals: true
     });
 });
