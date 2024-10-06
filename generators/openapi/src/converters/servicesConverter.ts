@@ -601,9 +601,11 @@ function convertPathParameter({
 
     const openapiExamples: OpenAPIV3.ParameterObject["examples"] = {};
     for (const example of examples) {
-        const pathParameterExample = [...example.servicePathParameters, ...example.endpointPathParameters].find(
-            (param) => param.name.originalName === pathParameter.name.originalName
-        );
+        const pathParameterExample = [
+            ...example.rootPathParameters,
+            ...example.servicePathParameters,
+            ...example.endpointPathParameters
+        ].find((param) => param.name.originalName === pathParameter.name.originalName);
         if (pathParameterExample != null) {
             if (example.name && example.name.originalName !== "") {
                 openapiExamples[example.name.originalName] = {
