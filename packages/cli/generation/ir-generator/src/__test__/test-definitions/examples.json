@@ -20782,7 +20782,43 @@
                         ]
                     },
                     "pathParameters": [],
-                    "allPathParameters": [],
+                    "allPathParameters": [
+                        {
+                            "name": {
+                                "originalName": "notificationId",
+                                "camelCase": {
+                                    "unsafeName": "notificationID",
+                                    "safeName": "notificationID"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "notification_id",
+                                    "safeName": "notification_id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "NOTIFICATION_ID",
+                                    "safeName": "NOTIFICATION_ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "NotificationID",
+                                    "safeName": "NotificationID"
+                                }
+                            },
+                            "valueType": {
+                                "_type": "primitive",
+                                "primitive": {
+                                    "v1": "STRING",
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": null
+                                    }
+                                }
+                            },
+                            "location": "SERVICE",
+                            "variable": null,
+                            "docs": null
+                        }
+                    ],
                     "queryParameters": [],
                     "headers": [],
                     "requestBody": null,
