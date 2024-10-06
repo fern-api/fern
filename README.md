@@ -18,7 +18,11 @@
 Fern is a toolkit that allows you to input your API Definition and output SDKs and API documentation. Fern is compatible with the OpenAPI specification (formerly Swagger).
 
 <div align="center">
-    <img src="/fern/images/overview.png" width="700" alt="Overview Diagram">
+    <picture>
+        <source srcset="/fern/images/overview-dark.png" media="(prefers-color-scheme: dark)">
+        <source srcset="/fern/images/overview-light.png" media="(prefers-color-scheme: light)">
+        <img src="/fern/images/overview-light.png" width="700" alt="Overview Diagram">
+    </picture>
 </div>
 
 ## 🌿 SDKs
