@@ -17,7 +17,7 @@ export const PrimitiveSchema: core.serialization.ObjectSchema<
     FernOpenapiIr.PrimitiveSchema
 > = core.serialization
     .objectWithoutOptionalProperties({
-        schema: PrimitiveSchemaValue,
+        schema: PrimitiveSchemaValue
     })
     .extend(WithDescription)
     .extend(WithName)

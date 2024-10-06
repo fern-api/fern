@@ -11,7 +11,7 @@ export const QueryParameterExample: core.serialization.ObjectSchema<
     FernOpenapiIr.QueryParameterExample
 > = core.serialization.objectWithoutOptionalProperties({
     name: core.serialization.string(),
-    value: core.serialization.lazy(() => serializers.FullExample),
+    value: core.serialization.lazy(() => serializers.FullExample)
 });
 
 export declare namespace QueryParameterExample {

@@ -7,7 +7,233 @@
       "contents": {
         "errors": {
           "BadRequestError": {
+            "docs": "Bad Request",
             "examples": [
+              {
+                "docs": undefined,
+                "name": "Bad Request",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "parameter_not_found",
+                      "message": "author_id must be in the main body or default locale translated_content object",
+                    },
+                  ],
+                  "request_id": "e0ea220d-8030-4e0c-9fa9-6b40e9ed4fbd",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Bad Request",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "parameter_not_found",
+                      "message": "Name is a required parameter.",
+                    },
+                  ],
+                  "request_id": "1f4fd741-8681-4c21-911a-47d7bb39d080",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Bad Request",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "bad_request",
+                      "message": "bad 'test' parameter",
+                    },
+                  ],
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Bad Request",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "parameter_not_found",
+                      "message": "company not specified",
+                    },
+                  ],
+                  "request_id": "9297dcfc-1896-43a3-a3f9-131238422ed2",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Bad request",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "parameter_invalid",
+                      "message": "Ticket type is not a customer ticket type",
+                    },
+                  ],
+                  "request_id": "74656c1a-0a17-4c80-a7b9-66fa45c6d71b",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Same name already exists",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "parameter_invalid",
+                      "message": "You already have 'The One Ring' in your company data. To save this as new people data, use a different name.",
+                    },
+                  ],
+                  "request_id": "bcd93885-3f01-4b92-9918-c96a3f4492e8",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Invalid name",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "parameter_invalid",
+                      "message": "Your name for this attribute must only contain alphanumeric characters, currency symbols, and hyphens",
+                    },
+                  ],
+                  "request_id": "7420c5e3-22c3-46be-8a23-72fef8f8ec0e",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Attribute already exists",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "parameter_invalid",
+                      "message": "You already have 'The One Ring' in your company data. To save this as new company data, use a different name.",
+                    },
+                  ],
+                  "request_id": "c844551a-05d3-4f8c-931a-32e96bf3a508",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Invalid Data Type",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "parameter_invalid",
+                      "message": "Data Type isn't an option",
+                    },
+                  ],
+                  "request_id": "b8c58b81-8445-473d-8fe3-7880c04f9547",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Too few options for list",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "parameter_invalid",
+                      "message": "The Data Attribute model field must be either contact or company",
+                    },
+                  ],
+                  "request_id": "119e3822-3a45-48cf-b5ab-037f27a948c8",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Too few options in list",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "parameter_invalid",
+                      "message": "Options isn't an array",
+                    },
+                  ],
+                  "request_id": "6615f20c-01df-443c-9ea1-c954ba6b09d6",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "No body supplied for message",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "parameter_invalid",
+                      "message": "Body is required",
+                    },
+                  ],
+                  "request_id": "4a52a34f-c7e2-4e70-adf2-ea7f41beb2a1",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "No body supplied for email message",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "parameter_invalid",
+                      "message": "Body is required",
+                    },
+                  ],
+                  "request_id": "7d54191b-c0fc-4860-a01c-9da6b4e45b7f",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "bad request - exception sending sms",
+                "value": {
+                  "error_key": "sms_failed",
+                  "message": "SMS was not sent due to an unknown error",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "bad request - invalid number",
+                "value": {
+                  "error_key": "invalid_phone_number",
+                  "message": "Invalid phone number",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Invalid parameters",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "parameter_invalid",
+                      "message": "invalid tag parameters",
+                    },
+                  ],
+                  "request_id": "a7afe3c5-be52-4b69-9268-50ef1d917a1b",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Tag has dependent objects",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "tag_has_dependent_objects",
+                      "message": "Unable to delete Tag with dependent objects. Segments: Seg 1.",
+                    },
+                  ],
+                  "request_id": "41086388-9b3b-4e07-9633-502b9b10c926",
+                  "type": "error.list",
+                },
+              },
               {
                 "docs": undefined,
                 "name": "User reply",
@@ -174,7 +400,904 @@
             "type": "Error",
           },
           "NotFoundError": {
+            "docs": "Admin not found",
             "examples": [
+              {
+                "docs": undefined,
+                "name": "Admin not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "admin_not_found",
+                      "message": "Admin for admin_id not found",
+                    },
+                  ],
+                  "request_id": "9818bd03-9cc6-4ab8-8e7c-20a45ac58e97",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Admin not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "admin_not_found",
+                      "message": "Admin not found",
+                    },
+                  ],
+                  "request_id": "989bdb0b-1e8c-46cc-8953-9733dad40562",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Article not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "Resource Not Found",
+                    },
+                  ],
+                  "request_id": "99c73902-e8ea-4872-b412-1d55ce4582fb",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Article Not Found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "Resource Not Found",
+                    },
+                  ],
+                  "request_id": "891b6ff4-181f-4b98-861b-d34ef16bfc4b",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Article Not Found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "Resource Not Found",
+                    },
+                  ],
+                  "request_id": "60da5f23-613c-4f84-84bd-e9dbd3d67187",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Collection not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "Resource Not Found",
+                    },
+                  ],
+                  "request_id": "2970f0f3-7020-4382-8892-eac24818ca88",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Collection Not Found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "Resource Not Found",
+                    },
+                  ],
+                  "request_id": "35e7f185-f547-4ae1-a23d-afc9027fc5a6",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "collection Not Found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "Resource Not Found",
+                    },
+                  ],
+                  "request_id": "a35712b4-90b6-47fb-843d-757d9fdd81e6",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Collection not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "Resource Not Found",
+                    },
+                  ],
+                  "request_id": "c6e7d3f6-8a46-460e-8264-e07c2e7302aa",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Company Not Found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "company_not_found",
+                      "message": "Company Not Found",
+                    },
+                  ],
+                  "request_id": "c97dd75f-a434-4c83-a8e8-c4d1887d6c48",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Company Not Found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "company_not_found",
+                      "message": "Company Not Found",
+                    },
+                  ],
+                  "request_id": "b49593ed-49a6-4497-8fb7-220ff74527f6",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Company Not Found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "company_not_found",
+                      "message": "Company Not Found",
+                    },
+                  ],
+                  "request_id": "b1ce72df-630f-4925-b212-fca6e833eb8d",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Company Not Found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "company_not_found",
+                      "message": "Company Not Found",
+                    },
+                  ],
+                  "request_id": "35a9b551-331e-499e-a63f-20396bfd29f5",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Company Not Found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "company_not_found",
+                      "message": "Company Not Found",
+                    },
+                  ],
+                  "request_id": "a6381081-a166-4e8e-952d-38bb2cd1c2b4",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Company Not Found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "company_not_found",
+                      "message": "Company Not Found",
+                    },
+                  ],
+                  "request_id": "22add598-fd33-4c34-971f-cf215117aab3",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Contact not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "User Not Found",
+                    },
+                  ],
+                  "request_id": "b9d7374d-1780-4668-bb62-0e1ff9cdab45",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Company Not Found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "company_not_found",
+                      "message": "Company Not Found",
+                    },
+                  ],
+                  "request_id": "32d121d8-fcbf-4c59-9c60-204f7d602f36",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Company Not Found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "company_not_found",
+                      "message": "Company Not Found",
+                    },
+                  ],
+                  "request_id": "cd4f1648-724c-45f0-b6e1-72a1bc6479ee",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Contact Not Found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "User Not Found",
+                    },
+                  ],
+                  "request_id": "d316defc-0a2f-49e7-b8ff-4cb6ccf46c90",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Contact not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "User Not Found",
+                    },
+                  ],
+                  "request_id": "e93f90a6-4c85-4dbf-b063-96b649318371",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Admin not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "Resource Not Found",
+                    },
+                  ],
+                  "request_id": "d7c69ce6-3195-46be-b2cb-0dce355d2919",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Contact not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "User Not Found",
+                    },
+                  ],
+                  "request_id": "2e3bd274-9ac6-43c3-a419-bcc8e6a03a1d",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Contact not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "User Not Found",
+                    },
+                  ],
+                  "request_id": "7d4ab1a9-5990-4338-b5d9-0f3f55f1acb7",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Contact not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "User Not Found",
+                    },
+                  ],
+                  "request_id": "3f481052-cf49-4b95-a492-734223865981",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Contact not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "User Not Found",
+                    },
+                  ],
+                  "request_id": "cf0f6fd6-7c5e-492b-909d-f60b35eea1c4",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Resource not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "Resource Not Found",
+                    },
+                  ],
+                  "request_id": "3f852f45-1a80-4ade-9bc6-72b377d2bbd8",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Contact not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "User Not Found",
+                    },
+                  ],
+                  "request_id": "7bc429e4-e887-4f53-b69c-94e6e55d2125",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Resource not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "Resource Not Found",
+                    },
+                  ],
+                  "request_id": "66ebc1f5-5e02-4584-8028-f2559a41e8df",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Contact not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "User Not Found",
+                    },
+                  ],
+                  "request_id": "2b513026-b78c-4c67-b073-da0266f62cc7",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Contact not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "User Not Found",
+                    },
+                  ],
+                  "request_id": "1bbd7e4b-718e-46f4-b682-a429aea78f01",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Tag not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "Resource Not Found",
+                    },
+                  ],
+                  "request_id": "a1a28017-728a-423b-adc0-2705d375f533",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Contact not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "User Not Found",
+                    },
+                  ],
+                  "request_id": "6f735483-c309-4e94-b9ab-143aedc0c691",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Tag not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "Resource Not Found",
+                    },
+                  ],
+                  "request_id": "9e780671-29b3-4913-b4be-15234ea0bc6a",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Conversation not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "Conversation not found",
+                    },
+                  ],
+                  "request_id": "840d35aa-2414-402a-b3c6-763a410e0d16",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Conversation not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "Conversation not found",
+                    },
+                  ],
+                  "request_id": "f78f63ba-911d-47b8-a389-b33e3ccbe77e",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Tag not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "tag_not_found",
+                      "message": "Tag not found",
+                    },
+                  ],
+                  "request_id": "0d00d069-2cf1-496f-b887-a4db74ee320d",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Contact Not Found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "User Not Found",
+                    },
+                  ],
+                  "request_id": "ed0ab0c5-57b8-4413-a7a9-bbc134b40876",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "Resource Not Found",
+                    },
+                  ],
+                  "request_id": "978c1e65-1eba-4995-9acb-ff8f33b283e3",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "Resource Not Found",
+                    },
+                  ],
+                  "request_id": "e4c692dd-cccd-46bf-834a-cda7a3a9029c",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "Resource Not Found",
+                    },
+                  ],
+                  "request_id": "8193a639-aba8-4b0e-9fdd-ee48807e3ee7",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "Resource Not Found",
+                    },
+                  ],
+                  "request_id": "1bfc14e1-07ef-4999-9448-f029b112cf1b",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "Resource Not Found",
+                    },
+                  ],
+                  "request_id": "9d88a5a7-6df9-42ff-b324-2387db7be984",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "Resource Not Found",
+                    },
+                  ],
+                  "request_id": "1fd64942-5bf0-4a51-a6cb-db4a778bb1f4",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Conversation not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "Resource Not Found",
+                    },
+                  ],
+                  "request_id": "579f0f7a-d773-41d6-9d36-8cc0b3fbcc41",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Contact not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "User Not Found",
+                    },
+                  ],
+                  "request_id": "44531412-2973-4b92-b14d-80abac5c1b4d",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "conversation_part_or_message_not_found",
+                      "message": "Conversation part or message not found",
+                    },
+                  ],
+                  "request_id": "0c016386-49f4-431f-92dc-7e739cbf98e1",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Attribute Not Found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "field_not_found",
+                      "message": "We couldn't find that data attribute to update",
+                    },
+                  ],
+                  "request_id": "2680a225-4f79-4098-8438-8db993c639fe",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "News Item Not Found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "Resource Not Found",
+                    },
+                  ],
+                  "request_id": "0f4b439e-9b57-4019-886e-15cc08582914",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "News Item Not Found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "Resource Not Found",
+                    },
+                  ],
+                  "request_id": "fe6e217d-70bc-4090-b33a-b32ec0e6a391",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "News Item Not Found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "Resource Not Found",
+                    },
+                  ],
+                  "request_id": "a191b999-6f71-4676-a8db-1a79ccc4f114",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Note not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "Resource Not Found",
+                    },
+                  ],
+                  "request_id": "7e37eb4e-9f1e-47fa-a393-8d9b2c20983a",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Segment not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "Resource Not Found",
+                    },
+                  ],
+                  "request_id": "fe79fa5e-c8eb-40a6-be76-d618833c2840",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Company not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "company_not_found",
+                      "message": "Company Not Found",
+                    },
+                  ],
+                  "request_id": "f0f84d9b-3c51-4904-9c21-34faba76ebf5",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "User  not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "User Not Found",
+                    },
+                  ],
+                  "request_id": "786848c6-5b9f-4e9b-aa78-2bdec45a09f5",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Tag not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "Resource Not Found",
+                    },
+                  ],
+                  "request_id": "20b89fb6-f224-4f81-98ca-4cb4b36df959",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Resource not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "Resource Not Found",
+                    },
+                  ],
+                  "request_id": "111586bb-ad78-43b9-b0a0-bf864d9a3744",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Team not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "team_not_found",
+                      "message": "Team not found",
+                    },
+                  ],
+                  "request_id": "4745dfce-7275-4864-abfd-44e0d84bf52a",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "Resource Not Found",
+                    },
+                  ],
+                  "request_id": "c23e8dab-6102-483c-bb1b-c62923be35ab",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Ticket not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "ticket_not_found",
+                      "message": "Ticket not found",
+                    },
+                  ],
+                  "request_id": "e11d8f55-82fe-4c0d-b4c6-6f22c6a694e9",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Ticket not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "ticket_not_found",
+                      "message": "Ticket not found",
+                    },
+                  ],
+                  "request_id": "ffa08bb4-3994-4132-b9e3-14837e0723e8",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Tag not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "tag_not_found",
+                      "message": "Tag not found",
+                    },
+                  ],
+                  "request_id": "d2385995-502c-4c03-bf4b-93ef3d24037b",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Admin not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "assignee_not_found",
+                      "message": "Assignee not found",
+                    },
+                  ],
+                  "request_id": "809aceaa-c073-4e2a-96c3-a25e15576946",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Assignee not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "assignee_not_found",
+                      "message": "Assignee not found",
+                    },
+                  ],
+                  "request_id": "639b5b51-1eb9-4c06-8de4-d9b0e30fff05",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Visitor not found",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "not_found",
+                      "message": "Visitor Not Found",
+                    },
+                  ],
+                  "request_id": "7359afef-98f5-4b22-9de7-902f7a214729",
+                  "type": "error.list",
+                },
+              },
               {
                 "docs": undefined,
                 "name": "visitor Not Found",
@@ -1545,7 +2668,50 @@
             "type": "Error",
           },
           "UnprocessableEntityError": {
+            "docs": "Last customer",
             "examples": [
+              {
+                "docs": undefined,
+                "name": "Last customer",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "parameter_invalid",
+                      "message": "Removing the last customer is not allowed",
+                    },
+                  ],
+                  "request_id": "35a0444f-8a1e-40e9-a5fc-dd1ae2df8bc6",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "Has Dependant Object",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "data_invalid",
+                      "message": "The Data Attribute you are trying to archive has a dependant object",
+                    },
+                  ],
+                  "request_id": "fbc508f1-9cbf-4134-90ea-baa1065760d2",
+                  "type": "error.list",
+                },
+              },
+              {
+                "docs": undefined,
+                "name": "No subject supplied for email message",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "parameter_not_found",
+                      "message": "No subject supplied for email message",
+                    },
+                  ],
+                  "request_id": "f54ba906-3255-4fc6-a660-0dab0043ff2b",
+                  "type": "error.list",
+                },
+              },
               {
                 "docs": undefined,
                 "name": "unprocessable entity",
@@ -6359,7 +7525,456 @@ You can copy the `icon` property for your ticket type from [Twemoji Cheatsheet](
   NotFoundError:
     status-code: 404
     type: unknown
+    docs: Admin not found
     examples:
+      - value:
+          type: error.list
+          request_id: 9818bd03-9cc6-4ab8-8e7c-20a45ac58e97
+          errors:
+            - code: admin_not_found
+              message: Admin for admin_id not found
+        name: Admin not found
+      - value:
+          type: error.list
+          request_id: 989bdb0b-1e8c-46cc-8953-9733dad40562
+          errors:
+            - code: admin_not_found
+              message: Admin not found
+        name: Admin not found
+      - value:
+          type: error.list
+          request_id: 99c73902-e8ea-4872-b412-1d55ce4582fb
+          errors:
+            - code: not_found
+              message: Resource Not Found
+        name: Article not found
+      - value:
+          type: error.list
+          request_id: 891b6ff4-181f-4b98-861b-d34ef16bfc4b
+          errors:
+            - code: not_found
+              message: Resource Not Found
+        name: Article Not Found
+      - value:
+          type: error.list
+          request_id: 60da5f23-613c-4f84-84bd-e9dbd3d67187
+          errors:
+            - code: not_found
+              message: Resource Not Found
+        name: Article Not Found
+      - value:
+          type: error.list
+          request_id: 2970f0f3-7020-4382-8892-eac24818ca88
+          errors:
+            - code: not_found
+              message: Resource Not Found
+        name: Collection not found
+      - value:
+          type: error.list
+          request_id: 35e7f185-f547-4ae1-a23d-afc9027fc5a6
+          errors:
+            - code: not_found
+              message: Resource Not Found
+        name: Collection Not Found
+      - value:
+          type: error.list
+          request_id: a35712b4-90b6-47fb-843d-757d9fdd81e6
+          errors:
+            - code: not_found
+              message: Resource Not Found
+        name: collection Not Found
+      - value:
+          type: error.list
+          request_id: c6e7d3f6-8a46-460e-8264-e07c2e7302aa
+          errors:
+            - code: not_found
+              message: Resource Not Found
+        name: Collection not found
+      - value:
+          type: error.list
+          request_id: c97dd75f-a434-4c83-a8e8-c4d1887d6c48
+          errors:
+            - code: company_not_found
+              message: Company Not Found
+        name: Company Not Found
+      - value:
+          type: error.list
+          request_id: b49593ed-49a6-4497-8fb7-220ff74527f6
+          errors:
+            - code: company_not_found
+              message: Company Not Found
+        name: Company Not Found
+      - value:
+          type: error.list
+          request_id: b1ce72df-630f-4925-b212-fca6e833eb8d
+          errors:
+            - code: company_not_found
+              message: Company Not Found
+        name: Company Not Found
+      - value:
+          type: error.list
+          request_id: 35a9b551-331e-499e-a63f-20396bfd29f5
+          errors:
+            - code: company_not_found
+              message: Company Not Found
+        name: Company Not Found
+      - value:
+          type: error.list
+          request_id: a6381081-a166-4e8e-952d-38bb2cd1c2b4
+          errors:
+            - code: company_not_found
+              message: Company Not Found
+        name: Company Not Found
+      - value:
+          type: error.list
+          request_id: 22add598-fd33-4c34-971f-cf215117aab3
+          errors:
+            - code: company_not_found
+              message: Company Not Found
+        name: Company Not Found
+      - value:
+          type: error.list
+          request_id: b9d7374d-1780-4668-bb62-0e1ff9cdab45
+          errors:
+            - code: not_found
+              message: User Not Found
+        name: Contact not found
+      - value:
+          type: error.list
+          request_id: 32d121d8-fcbf-4c59-9c60-204f7d602f36
+          errors:
+            - code: company_not_found
+              message: Company Not Found
+        name: Company Not Found
+      - value:
+          type: error.list
+          request_id: cd4f1648-724c-45f0-b6e1-72a1bc6479ee
+          errors:
+            - code: company_not_found
+              message: Company Not Found
+        name: Company Not Found
+      - value:
+          type: error.list
+          request_id: d316defc-0a2f-49e7-b8ff-4cb6ccf46c90
+          errors:
+            - code: not_found
+              message: User Not Found
+        name: Contact Not Found
+      - value:
+          type: error.list
+          request_id: e93f90a6-4c85-4dbf-b063-96b649318371
+          errors:
+            - code: not_found
+              message: User Not Found
+        name: Contact not found
+      - value:
+          type: error.list
+          request_id: d7c69ce6-3195-46be-b2cb-0dce355d2919
+          errors:
+            - code: not_found
+              message: Resource Not Found
+        name: Admin not found
+      - value:
+          type: error.list
+          request_id: 2e3bd274-9ac6-43c3-a419-bcc8e6a03a1d
+          errors:
+            - code: not_found
+              message: User Not Found
+        name: Contact not found
+      - value:
+          type: error.list
+          request_id: 7d4ab1a9-5990-4338-b5d9-0f3f55f1acb7
+          errors:
+            - code: not_found
+              message: User Not Found
+        name: Contact not found
+      - value:
+          type: error.list
+          request_id: 3f481052-cf49-4b95-a492-734223865981
+          errors:
+            - code: not_found
+              message: User Not Found
+        name: Contact not found
+      - value:
+          type: error.list
+          request_id: cf0f6fd6-7c5e-492b-909d-f60b35eea1c4
+          errors:
+            - code: not_found
+              message: User Not Found
+        name: Contact not found
+      - value:
+          type: error.list
+          request_id: 3f852f45-1a80-4ade-9bc6-72b377d2bbd8
+          errors:
+            - code: not_found
+              message: Resource Not Found
+        name: Resource not found
+      - value:
+          type: error.list
+          request_id: 7bc429e4-e887-4f53-b69c-94e6e55d2125
+          errors:
+            - code: not_found
+              message: User Not Found
+        name: Contact not found
+      - value:
+          type: error.list
+          request_id: 66ebc1f5-5e02-4584-8028-f2559a41e8df
+          errors:
+            - code: not_found
+              message: Resource Not Found
+        name: Resource not found
+      - value:
+          type: error.list
+          request_id: 2b513026-b78c-4c67-b073-da0266f62cc7
+          errors:
+            - code: not_found
+              message: User Not Found
+        name: Contact not found
+      - value:
+          type: error.list
+          request_id: 1bbd7e4b-718e-46f4-b682-a429aea78f01
+          errors:
+            - code: not_found
+              message: User Not Found
+        name: Contact not found
+      - value:
+          type: error.list
+          request_id: a1a28017-728a-423b-adc0-2705d375f533
+          errors:
+            - code: not_found
+              message: Resource Not Found
+        name: Tag not found
+      - value:
+          type: error.list
+          request_id: 6f735483-c309-4e94-b9ab-143aedc0c691
+          errors:
+            - code: not_found
+              message: User Not Found
+        name: Contact not found
+      - value:
+          type: error.list
+          request_id: 9e780671-29b3-4913-b4be-15234ea0bc6a
+          errors:
+            - code: not_found
+              message: Resource Not Found
+        name: Tag not found
+      - value:
+          type: error.list
+          request_id: 840d35aa-2414-402a-b3c6-763a410e0d16
+          errors:
+            - code: not_found
+              message: Conversation not found
+        name: Conversation not found
+      - value:
+          type: error.list
+          request_id: f78f63ba-911d-47b8-a389-b33e3ccbe77e
+          errors:
+            - code: not_found
+              message: Conversation not found
+        name: Conversation not found
+      - value:
+          type: error.list
+          request_id: 0d00d069-2cf1-496f-b887-a4db74ee320d
+          errors:
+            - code: tag_not_found
+              message: Tag not found
+        name: Tag not found
+      - value:
+          type: error.list
+          request_id: ed0ab0c5-57b8-4413-a7a9-bbc134b40876
+          errors:
+            - code: not_found
+              message: User Not Found
+        name: Contact Not Found
+      - value:
+          type: error.list
+          request_id: 978c1e65-1eba-4995-9acb-ff8f33b283e3
+          errors:
+            - code: not_found
+              message: Resource Not Found
+        name: Not found
+      - value:
+          type: error.list
+          request_id: e4c692dd-cccd-46bf-834a-cda7a3a9029c
+          errors:
+            - code: not_found
+              message: Resource Not Found
+        name: Not found
+      - value:
+          type: error.list
+          request_id: 8193a639-aba8-4b0e-9fdd-ee48807e3ee7
+          errors:
+            - code: not_found
+              message: Resource Not Found
+        name: Not found
+      - value:
+          type: error.list
+          request_id: 1bfc14e1-07ef-4999-9448-f029b112cf1b
+          errors:
+            - code: not_found
+              message: Resource Not Found
+        name: Not found
+      - value:
+          type: error.list
+          request_id: 9d88a5a7-6df9-42ff-b324-2387db7be984
+          errors:
+            - code: not_found
+              message: Resource Not Found
+        name: Not found
+      - value:
+          type: error.list
+          request_id: 1fd64942-5bf0-4a51-a6cb-db4a778bb1f4
+          errors:
+            - code: not_found
+              message: Resource Not Found
+        name: Not found
+      - value:
+          type: error.list
+          request_id: 579f0f7a-d773-41d6-9d36-8cc0b3fbcc41
+          errors:
+            - code: not_found
+              message: Resource Not Found
+        name: Conversation not found
+      - value:
+          type: error.list
+          request_id: 44531412-2973-4b92-b14d-80abac5c1b4d
+          errors:
+            - code: not_found
+              message: User Not Found
+        name: Contact not found
+      - value:
+          type: error.list
+          request_id: 0c016386-49f4-431f-92dc-7e739cbf98e1
+          errors:
+            - code: conversation_part_or_message_not_found
+              message: Conversation part or message not found
+        name: Not found
+      - value:
+          type: error.list
+          request_id: 2680a225-4f79-4098-8438-8db993c639fe
+          errors:
+            - code: field_not_found
+              message: We couldn't find that data attribute to update
+        name: Attribute Not Found
+      - value:
+          type: error.list
+          request_id: 0f4b439e-9b57-4019-886e-15cc08582914
+          errors:
+            - code: not_found
+              message: Resource Not Found
+        name: News Item Not Found
+      - value:
+          type: error.list
+          request_id: fe6e217d-70bc-4090-b33a-b32ec0e6a391
+          errors:
+            - code: not_found
+              message: Resource Not Found
+        name: News Item Not Found
+      - value:
+          type: error.list
+          request_id: a191b999-6f71-4676-a8db-1a79ccc4f114
+          errors:
+            - code: not_found
+              message: Resource Not Found
+        name: News Item Not Found
+      - value:
+          type: error.list
+          request_id: 7e37eb4e-9f1e-47fa-a393-8d9b2c20983a
+          errors:
+            - code: not_found
+              message: Resource Not Found
+        name: Note not found
+      - value:
+          type: error.list
+          request_id: fe79fa5e-c8eb-40a6-be76-d618833c2840
+          errors:
+            - code: not_found
+              message: Resource Not Found
+        name: Segment not found
+      - value:
+          type: error.list
+          request_id: f0f84d9b-3c51-4904-9c21-34faba76ebf5
+          errors:
+            - code: company_not_found
+              message: Company Not Found
+        name: Company not found
+      - value:
+          type: error.list
+          request_id: 786848c6-5b9f-4e9b-aa78-2bdec45a09f5
+          errors:
+            - code: not_found
+              message: User Not Found
+        name: User  not found
+      - value:
+          type: error.list
+          request_id: 20b89fb6-f224-4f81-98ca-4cb4b36df959
+          errors:
+            - code: not_found
+              message: Resource Not Found
+        name: Tag not found
+      - value:
+          type: error.list
+          request_id: 111586bb-ad78-43b9-b0a0-bf864d9a3744
+          errors:
+            - code: not_found
+              message: Resource Not Found
+        name: Resource not found
+      - value:
+          type: error.list
+          request_id: 4745dfce-7275-4864-abfd-44e0d84bf52a
+          errors:
+            - code: team_not_found
+              message: Team not found
+        name: Team not found
+      - value:
+          type: error.list
+          request_id: c23e8dab-6102-483c-bb1b-c62923be35ab
+          errors:
+            - code: not_found
+              message: Resource Not Found
+        name: Not found
+      - value:
+          type: error.list
+          request_id: e11d8f55-82fe-4c0d-b4c6-6f22c6a694e9
+          errors:
+            - code: ticket_not_found
+              message: Ticket not found
+        name: Ticket not found
+      - value:
+          type: error.list
+          request_id: ffa08bb4-3994-4132-b9e3-14837e0723e8
+          errors:
+            - code: ticket_not_found
+              message: Ticket not found
+        name: Ticket not found
+      - value:
+          type: error.list
+          request_id: d2385995-502c-4c03-bf4b-93ef3d24037b
+          errors:
+            - code: tag_not_found
+              message: Tag not found
+        name: Tag not found
+      - value:
+          type: error.list
+          request_id: 809aceaa-c073-4e2a-96c3-a25e15576946
+          errors:
+            - code: assignee_not_found
+              message: Assignee not found
+        name: Admin not found
+      - value:
+          type: error.list
+          request_id: 639b5b51-1eb9-4c06-8de4-d9b0e30fff05
+          errors:
+            - code: assignee_not_found
+              message: Assignee not found
+        name: Assignee not found
+      - value:
+          type: error.list
+          request_id: 7359afef-98f5-4b22-9de7-902f7a214729
+          errors:
+            - code: not_found
+              message: Visitor Not Found
+        name: Visitor not found
       - value:
           type: error.list
           request_id: 1f35dc86-17d2-4bfe-8cb1-9afa74adc24c
@@ -6370,7 +7985,128 @@ You can copy the `icon` property for your ticket type from [Twemoji Cheatsheet](
   BadRequestError:
     status-code: 400
     type: unknown
+    docs: Bad Request
     examples:
+      - value:
+          type: error.list
+          request_id: e0ea220d-8030-4e0c-9fa9-6b40e9ed4fbd
+          errors:
+            - code: parameter_not_found
+              message: >-
+                author_id must be in the main body or default locale
+                translated_content object
+        name: Bad Request
+      - value:
+          type: error.list
+          request_id: 1f4fd741-8681-4c21-911a-47d7bb39d080
+          errors:
+            - code: parameter_not_found
+              message: Name is a required parameter.
+        name: Bad Request
+      - value:
+          type: error.list
+          errors:
+            - code: bad_request
+              message: bad 'test' parameter
+        name: Bad Request
+      - value:
+          type: error.list
+          request_id: 9297dcfc-1896-43a3-a3f9-131238422ed2
+          errors:
+            - code: parameter_not_found
+              message: company not specified
+        name: Bad Request
+      - value:
+          type: error.list
+          request_id: 74656c1a-0a17-4c80-a7b9-66fa45c6d71b
+          errors:
+            - code: parameter_invalid
+              message: Ticket type is not a customer ticket type
+        name: Bad request
+      - value:
+          type: error.list
+          request_id: bcd93885-3f01-4b92-9918-c96a3f4492e8
+          errors:
+            - code: parameter_invalid
+              message: >-
+                You already have 'The One Ring' in your company data. To save
+                this as new people data, use a different name.
+        name: Same name already exists
+      - value:
+          type: error.list
+          request_id: 7420c5e3-22c3-46be-8a23-72fef8f8ec0e
+          errors:
+            - code: parameter_invalid
+              message: >-
+                Your name for this attribute must only contain alphanumeric
+                characters, currency symbols, and hyphens
+        name: Invalid name
+      - value:
+          type: error.list
+          request_id: c844551a-05d3-4f8c-931a-32e96bf3a508
+          errors:
+            - code: parameter_invalid
+              message: >-
+                You already have 'The One Ring' in your company data. To save
+                this as new company data, use a different name.
+        name: Attribute already exists
+      - value:
+          type: error.list
+          request_id: b8c58b81-8445-473d-8fe3-7880c04f9547
+          errors:
+            - code: parameter_invalid
+              message: Data Type isn't an option
+        name: Invalid Data Type
+      - value:
+          type: error.list
+          request_id: 119e3822-3a45-48cf-b5ab-037f27a948c8
+          errors:
+            - code: parameter_invalid
+              message: The Data Attribute model field must be either contact or company
+        name: Too few options for list
+      - value:
+          type: error.list
+          request_id: 6615f20c-01df-443c-9ea1-c954ba6b09d6
+          errors:
+            - code: parameter_invalid
+              message: Options isn't an array
+        name: Too few options in list
+      - value:
+          type: error.list
+          request_id: 4a52a34f-c7e2-4e70-adf2-ea7f41beb2a1
+          errors:
+            - code: parameter_invalid
+              message: Body is required
+        name: No body supplied for message
+      - value:
+          type: error.list
+          request_id: 7d54191b-c0fc-4860-a01c-9da6b4e45b7f
+          errors:
+            - code: parameter_invalid
+              message: Body is required
+        name: No body supplied for email message
+      - value:
+          error_key: sms_failed
+          message: SMS was not sent due to an unknown error
+        name: bad request - exception sending sms
+      - value:
+          error_key: invalid_phone_number
+          message: Invalid phone number
+        name: bad request - invalid number
+      - value:
+          type: error.list
+          request_id: a7afe3c5-be52-4b69-9268-50ef1d917a1b
+          errors:
+            - code: parameter_invalid
+              message: invalid tag parameters
+        name: Invalid parameters
+      - value:
+          type: error.list
+          request_id: 41086388-9b3b-4e07-9633-502b9b10c926
+          errors:
+            - code: tag_has_dependent_objects
+              message: 'Unable to delete Tag with dependent objects. Segments: Seg 1.'
+        name: Tag has dependent objects
       - value:
           type: error.list
           request_id: b8b42c55-347c-4704-b4c1-92220c01f4ac
@@ -6456,7 +8192,31 @@ You can copy the `icon` property for your ticket type from [Twemoji Cheatsheet](
   UnprocessableEntityError:
     status-code: 422
     type: unknown
+    docs: Last customer
     examples:
+      - value:
+          type: error.list
+          request_id: 35a0444f-8a1e-40e9-a5fc-dd1ae2df8bc6
+          errors:
+            - code: parameter_invalid
+              message: Removing the last customer is not allowed
+        name: Last customer
+      - value:
+          type: error.list
+          request_id: fbc508f1-9cbf-4134-90ea-baa1065760d2
+          errors:
+            - code: data_invalid
+              message: >-
+                The Data Attribute you are trying to archive has a dependant
+                object
+        name: Has Dependant Object
+      - value:
+          type: error.list
+          request_id: f54ba906-3255-4fc6-a660-0dab0043ff2b
+          errors:
+            - code: parameter_not_found
+              message: No subject supplied for email message
+        name: No subject supplied for email message
       - value:
           error_key: some_error
         name: unprocessable entity

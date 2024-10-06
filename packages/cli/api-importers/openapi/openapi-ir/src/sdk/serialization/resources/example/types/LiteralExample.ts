@@ -10,11 +10,11 @@ export const LiteralExample: core.serialization.Schema<serializers.LiteralExampl
     core.serialization
         .union("type", {
             boolean: core.serialization.object({
-                value: core.serialization.boolean(),
+                value: core.serialization.boolean()
             }),
             string: core.serialization.object({
-                value: core.serialization.string(),
-            }),
+                value: core.serialization.string()
+            })
         })
         .transform<FernOpenapiIr.LiteralExample>({
             transform: (value) => {
@@ -27,7 +27,7 @@ export const LiteralExample: core.serialization.Schema<serializers.LiteralExampl
                         return value as FernOpenapiIr.LiteralExample;
                 }
             },
-            untransform: ({ _visit, ...value }) => value as any,
+            untransform: ({ _visit, ...value }) => value as any
         });
 
 export declare namespace LiteralExample {

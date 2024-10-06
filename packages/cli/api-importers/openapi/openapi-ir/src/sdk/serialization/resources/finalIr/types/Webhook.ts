@@ -25,7 +25,7 @@ export const Webhook: core.serialization.ObjectSchema<serializers.Webhook.Raw, F
             headers: core.serialization.list(Header),
             generatedPayloadName: core.serialization.string(),
             payload: core.serialization.lazy(() => serializers.Schema),
-            examples: core.serialization.list(WebhookExampleCall),
+            examples: core.serialization.list(WebhookExampleCall)
         })
         .extend(WithDescription)
         .extend(WithSource)

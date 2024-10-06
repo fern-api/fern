@@ -12,7 +12,7 @@ export const StringSchema: core.serialization.ObjectSchema<serializers.StringSch
         pattern: core.serialization.string().optional(),
         format: core.serialization.string().optional(),
         minLength: core.serialization.number().optional(),
-        maxLength: core.serialization.number().optional(),
+        maxLength: core.serialization.number().optional()
     });
 
 export declare namespace StringSchema {

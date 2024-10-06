@@ -11,7 +11,7 @@ import { ProtobufSource } from "./ProtobufSource";
 export const Source: core.serialization.Schema<serializers.Source.Raw, FernOpenapiIr.Source> = core.serialization
     .union("type", {
         openapi: OpenApiSource,
-        protobuf: ProtobufSource,
+        protobuf: ProtobufSource
     })
     .transform<FernOpenapiIr.Source>({
         transform: (value) => {
@@ -24,7 +24,7 @@ export const Source: core.serialization.Schema<serializers.Source.Raw, FernOpena
                     return value as FernOpenapiIr.Source;
             }
         },
-        untransform: ({ _visit, ...value }) => value as any,
+        untransform: ({ _visit, ...value }) => value as any
     });
 
 export declare namespace Source {

@@ -13,7 +13,7 @@ export const IntSchema: core.serialization.ObjectSchema<serializers.IntSchema.Ra
         maximum: core.serialization.number().optional(),
         exclusiveMinimum: core.serialization.boolean().optional(),
         exclusiveMaximum: core.serialization.boolean().optional(),
-        multipleOf: core.serialization.number().optional(),
+        multipleOf: core.serialization.number().optional()
     });
 
 export declare namespace IntSchema {

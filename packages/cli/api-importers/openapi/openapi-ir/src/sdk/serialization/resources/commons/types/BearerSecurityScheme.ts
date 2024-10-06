@@ -11,7 +11,7 @@ export const BearerSecurityScheme: core.serialization.ObjectSchema<
     FernOpenapiIr.BearerSecurityScheme
 > = core.serialization.objectWithoutOptionalProperties({
     tokenVariableName: core.serialization.string().optional(),
-    tokenEnvVar: core.serialization.string().optional(),
+    tokenEnvVar: core.serialization.string().optional()
 });
 
 export declare namespace BearerSecurityScheme {

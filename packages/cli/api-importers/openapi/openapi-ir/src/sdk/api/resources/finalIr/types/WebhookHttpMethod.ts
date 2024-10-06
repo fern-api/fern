@@ -16,7 +16,7 @@ export const WebhookHttpMethod = {
             default:
                 return visitor._other();
         }
-    },
+    }
 } as const;
 
 export declare namespace WebhookHttpMethod {

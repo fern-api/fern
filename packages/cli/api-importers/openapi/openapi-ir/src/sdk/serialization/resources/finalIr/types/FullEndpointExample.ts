@@ -22,7 +22,7 @@ export const FullEndpointExample: core.serialization.ObjectSchema<
         headers: core.serialization.list(HeaderExample).optional(),
         request: core.serialization.lazy(() => serializers.FullExample).optional(),
         response: core.serialization.lazy(() => serializers.FullExample).optional(),
-        codeSamples: core.serialization.list(CustomCodeSample),
+        codeSamples: core.serialization.list(CustomCodeSample)
     })
     .extend(WithDescription);
 

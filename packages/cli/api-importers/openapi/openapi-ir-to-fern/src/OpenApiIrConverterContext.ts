@@ -1,9 +1,9 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { Logger } from "@fern-api/logger";
-import { OpenApiIntermediateRepresentation, Schema, SchemaId, SchemaWithExample} from "@fern-api/openapi-ir";
+import { OpenApiIntermediateRepresentation, Schema, SchemaId, SchemaWithExample } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
 import { FernDefinitionBuilder, FernDefinitionBuilderImpl } from "@fern-api/importer-commons";
-import { isSchemaEqual } from "@fern-api/openapi-parser";
+import { isSchemaEqual } from "@fern-api/openapi-ir-parser";
 
 export interface OpenApiIrConverterContextOpts {
     taskContext: TaskContext;

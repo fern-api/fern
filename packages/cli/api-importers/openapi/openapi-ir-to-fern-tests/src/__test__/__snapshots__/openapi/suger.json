@@ -7,6 +7,7 @@
       "contents": {
         "errors": {
           "BadRequestError": {
+            "docs": "Bad Request",
             "status-code": 400,
             "type": "unknown",
           },
@@ -16,6 +17,7 @@
             "type": "string",
           },
           "InternalServerError": {
+            "docs": "Internal Server Error",
             "status-code": 500,
             "type": "unknown",
           },
@@ -3826,9 +3828,11 @@ the same customer, dimension, and time, but a different quantity.",
   InternalServerError:
     status-code: 500
     type: unknown
+    docs: Internal Server Error
   BadRequestError:
     status-code: 400
     type: unknown
+    docs: Bad Request
   ConflictError:
     status-code: 409
     type: string

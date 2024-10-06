@@ -9,7 +9,7 @@ import * as core from "../../../../core";
 export const FileSchema: core.serialization.ObjectSchema<serializers.FileSchema.Raw, FernOpenapiIr.FileSchema> =
     core.serialization.objectWithoutOptionalProperties({
         isOptional: core.serialization.boolean(),
-        isArray: core.serialization.boolean(),
+        isArray: core.serialization.boolean()
     });
 
 export declare namespace FileSchema {

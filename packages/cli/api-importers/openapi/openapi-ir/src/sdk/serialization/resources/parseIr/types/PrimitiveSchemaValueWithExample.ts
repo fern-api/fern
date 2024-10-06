@@ -32,7 +32,7 @@ export const PrimitiveSchemaValueWithExample: core.serialization.Schema<
         datetime: DatetimeWithExample,
         date: DateWithExample,
         base64: Base64WithExample,
-        boolean: BooleanWithExample,
+        boolean: BooleanWithExample
     })
     .transform<FernOpenapiIr.PrimitiveSchemaValueWithExample>({
         transform: (value) => {
@@ -63,7 +63,7 @@ export const PrimitiveSchemaValueWithExample: core.serialization.Schema<
                     return value as FernOpenapiIr.PrimitiveSchemaValueWithExample;
             }
         },
-        untransform: ({ _visit, ...value }) => value as any,
+        untransform: ({ _visit, ...value }) => value as any
     });
 
 export declare namespace PrimitiveSchemaValueWithExample {

@@ -9,7 +9,7 @@
           "BadRequestError": {
             "docs": "Default Response",
             "status-code": 400,
-            "type": "BadRequestErrorBody",
+            "type": "unknown",
           },
           "InternalServerError": {
             "docs": "Default Response",
@@ -17,6 +17,7 @@
             "type": "InternalServerErrorBody",
           },
           "NotFoundError": {
+            "docs": "The val was not found",
             "status-code": 404,
             "type": "unknown",
           },
@@ -869,7 +870,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
 errors:
   BadRequestError:
     status-code: 400
-    type: BadRequestErrorBody
+    type: unknown
     docs: Default Response
   InternalServerError:
     status-code: 500
@@ -878,6 +879,7 @@ errors:
   NotFoundError:
     status-code: 404
     type: unknown
+    docs: The val was not found
 navigation:
   - vals
   - alias

@@ -36,7 +36,7 @@ export const Source = {
                 visitor: FernOpenapiIr.Source._Visitor<_Result>
             ) {
                 return FernOpenapiIr.Source._visit(this, visitor);
-            },
+            }
         };
     },
 
@@ -49,7 +49,7 @@ export const Source = {
                 visitor: FernOpenapiIr.Source._Visitor<_Result>
             ) {
                 return FernOpenapiIr.Source._visit(this, visitor);
-            },
+            }
         };
     },
 
@@ -62,5 +62,5 @@ export const Source = {
             default:
                 return visitor._other(value as any);
         }
-    },
+    }
 } as const;

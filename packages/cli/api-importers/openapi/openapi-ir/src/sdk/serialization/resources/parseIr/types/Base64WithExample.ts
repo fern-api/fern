@@ -10,7 +10,7 @@ export const Base64WithExample: core.serialization.ObjectSchema<
     serializers.Base64WithExample.Raw,
     FernOpenapiIr.Base64WithExample
 > = core.serialization.objectWithoutOptionalProperties({
-    example: core.serialization.string().optional(),
+    example: core.serialization.string().optional()
 });
 
 export declare namespace Base64WithExample {

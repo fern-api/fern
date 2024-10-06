@@ -18,7 +18,7 @@ export const WebsocketSessionExample: core.serialization.ObjectSchema<
         name: core.serialization.string().optional(),
         queryParameters: core.serialization.list(QueryParameterExample).optional(),
         headers: core.serialization.list(HeaderExample).optional(),
-        messages: core.serialization.list(WebsocketMessageExample),
+        messages: core.serialization.list(WebsocketMessageExample)
     })
     .extend(WithDescription);
 

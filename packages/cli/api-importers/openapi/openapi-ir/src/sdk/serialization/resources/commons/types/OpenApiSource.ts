@@ -10,7 +10,7 @@ export const OpenApiSource: core.serialization.ObjectSchema<
     serializers.OpenApiSource.Raw,
     FernOpenapiIr.OpenApiSource
 > = core.serialization.objectWithoutOptionalProperties({
-    file: core.serialization.string(),
+    file: core.serialization.string()
 });
 
 export declare namespace OpenApiSource {

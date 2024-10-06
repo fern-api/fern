@@ -12,7 +12,7 @@ export const CursorPagination: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({
     cursor: core.serialization.string(),
     nextCursor: core.serialization.property("next_cursor", core.serialization.string()),
-    results: core.serialization.string(),
+    results: core.serialization.string()
 });
 
 export declare namespace CursorPagination {

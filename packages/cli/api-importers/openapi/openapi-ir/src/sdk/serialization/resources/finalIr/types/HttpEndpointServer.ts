@@ -12,7 +12,7 @@ export const HttpEndpointServer: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({
     name: core.serialization.string().optional(),
     url: core.serialization.string().optional(),
-    audiences: core.serialization.list(core.serialization.string()).optional(),
+    audiences: core.serialization.list(core.serialization.string()).optional()
 });
 
 export declare namespace HttpEndpointServer {

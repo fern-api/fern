@@ -17,7 +17,7 @@ export const PrimitiveSchemaWithExample: core.serialization.ObjectSchema<
     FernOpenapiIr.PrimitiveSchemaWithExample
 > = core.serialization
     .objectWithoutOptionalProperties({
-        schema: PrimitiveSchemaValueWithExample,
+        schema: PrimitiveSchemaValueWithExample
     })
     .extend(WithDescription)
     .extend(WithName)

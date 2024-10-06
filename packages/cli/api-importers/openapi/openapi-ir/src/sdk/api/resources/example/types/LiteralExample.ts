@@ -38,7 +38,7 @@ export const LiteralExample = {
                 visitor: FernOpenapiIr.LiteralExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.LiteralExample._visit(this, visitor);
-            },
+            }
         };
     },
 
@@ -51,7 +51,7 @@ export const LiteralExample = {
                 visitor: FernOpenapiIr.LiteralExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.LiteralExample._visit(this, visitor);
-            },
+            }
         };
     },
 
@@ -67,5 +67,5 @@ export const LiteralExample = {
             default:
                 return visitor._other(value as any);
         }
-    },
+    }
 } as const;

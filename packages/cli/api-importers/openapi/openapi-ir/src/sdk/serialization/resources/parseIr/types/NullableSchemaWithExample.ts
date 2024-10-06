@@ -16,7 +16,7 @@ export const NullableSchemaWithExample: core.serialization.ObjectSchema<
     FernOpenapiIr.NullableSchemaWithExample
 > = core.serialization
     .objectWithoutOptionalProperties({
-        value: core.serialization.lazy(() => serializers.SchemaWithExample),
+        value: core.serialization.lazy(() => serializers.SchemaWithExample)
     })
     .extend(WithSdkGroupName)
     .extend(WithName)

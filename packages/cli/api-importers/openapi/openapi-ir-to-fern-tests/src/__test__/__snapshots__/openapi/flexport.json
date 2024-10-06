@@ -9,7 +9,7 @@
           "BadRequestError": {
             "docs": "error",
             "status-code": 400,
-            "type": "BadRequestErrorBody",
+            "type": "unknown",
           },
         },
         "types": {
@@ -7514,7 +7514,7 @@
 errors:
   BadRequestError:
     status-code: 400
-    type: BadRequestErrorBody
+    type: unknown
     docs: error
 ",
     },

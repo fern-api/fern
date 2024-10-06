@@ -16,7 +16,7 @@ export const RequestWithExample: core.serialization.Schema<
     .union("type", {
         octetStream: OctetStreamRequest,
         multipart: MultipartRequest,
-        json: JsonRequestWithExample,
+        json: JsonRequestWithExample
     })
     .transform<FernOpenapiIr.RequestWithExample>({
         transform: (value) => {
@@ -31,7 +31,7 @@ export const RequestWithExample: core.serialization.Schema<
                     return value as FernOpenapiIr.RequestWithExample;
             }
         },
-        untransform: ({ _visit, ...value }) => value as any,
+        untransform: ({ _visit, ...value }) => value as any
     });
 
 export declare namespace RequestWithExample {

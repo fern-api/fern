@@ -64,7 +64,7 @@ export const ResponseWithExample = {
                 visitor: FernOpenapiIr.ResponseWithExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.ResponseWithExample._visit(this, visitor);
-            },
+            }
         };
     },
 
@@ -77,7 +77,7 @@ export const ResponseWithExample = {
                 visitor: FernOpenapiIr.ResponseWithExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.ResponseWithExample._visit(this, visitor);
-            },
+            }
         };
     },
 
@@ -90,7 +90,7 @@ export const ResponseWithExample = {
                 visitor: FernOpenapiIr.ResponseWithExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.ResponseWithExample._visit(this, visitor);
-            },
+            }
         };
     },
 
@@ -103,7 +103,7 @@ export const ResponseWithExample = {
                 visitor: FernOpenapiIr.ResponseWithExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.ResponseWithExample._visit(this, visitor);
-            },
+            }
         };
     },
 
@@ -116,7 +116,7 @@ export const ResponseWithExample = {
                 visitor: FernOpenapiIr.ResponseWithExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.ResponseWithExample._visit(this, visitor);
-            },
+            }
         };
     },
 
@@ -129,7 +129,7 @@ export const ResponseWithExample = {
                 visitor: FernOpenapiIr.ResponseWithExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.ResponseWithExample._visit(this, visitor);
-            },
+            }
         };
     },
 
@@ -153,5 +153,5 @@ export const ResponseWithExample = {
             default:
                 return visitor._other(value as any);
         }
-    },
+    }
 } as const;

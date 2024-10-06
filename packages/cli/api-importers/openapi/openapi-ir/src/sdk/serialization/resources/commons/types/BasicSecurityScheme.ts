@@ -13,7 +13,7 @@ export const BasicSecurityScheme: core.serialization.ObjectSchema<
     usernameVariableName: core.serialization.string().optional(),
     usernameEnvVar: core.serialization.string().optional(),
     passwordVariableName: core.serialization.string().optional(),
-    passwordEnvVar: core.serialization.string().optional(),
+    passwordEnvVar: core.serialization.string().optional()
 });
 
 export declare namespace BasicSecurityScheme {

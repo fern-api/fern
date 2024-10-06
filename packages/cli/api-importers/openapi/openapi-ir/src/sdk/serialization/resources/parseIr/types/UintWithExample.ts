@@ -11,7 +11,7 @@ export const UintWithExample: core.serialization.ObjectSchema<
     FernOpenapiIr.UintWithExample
 > = core.serialization.objectWithoutOptionalProperties({
     default: core.serialization.number().optional(),
-    example: core.serialization.number().optional(),
+    example: core.serialization.number().optional()
 });
 
 export declare namespace UintWithExample {

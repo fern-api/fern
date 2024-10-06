@@ -18,7 +18,7 @@ export const UnDiscriminatedOneOfSchema: core.serialization.ObjectSchema<
     FernOpenapiIr.UnDiscriminatedOneOfSchema
 > = core.serialization
     .objectWithoutOptionalProperties({
-        schemas: core.serialization.list(core.serialization.lazy(() => serializers.Schema)),
+        schemas: core.serialization.list(core.serialization.lazy(() => serializers.Schema))
     })
     .extend(WithDescription)
     .extend(WithName)

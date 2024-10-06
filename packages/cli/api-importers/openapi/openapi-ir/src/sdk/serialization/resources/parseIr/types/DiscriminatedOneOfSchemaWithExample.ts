@@ -25,7 +25,7 @@ export const DiscriminatedOneOfSchemaWithExample: core.serialization.ObjectSchem
         schemas: core.serialization.record(
             core.serialization.string(),
             core.serialization.lazy(() => serializers.SchemaWithExample)
-        ),
+        )
     })
     .extend(WithDescription)
     .extend(WithName)

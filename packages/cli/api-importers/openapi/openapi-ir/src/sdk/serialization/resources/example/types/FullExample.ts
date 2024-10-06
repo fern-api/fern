@@ -12,27 +12,27 @@ export const FullExample: core.serialization.Schema<serializers.FullExample.Raw,
     core.serialization
         .union("type", {
             primitive: core.serialization.object({
-                value: PrimitiveExample,
+                value: PrimitiveExample
             }),
             object: core.serialization.lazyObject(() => serializers.FullObjectExample),
             array: core.serialization.object({
-                value: core.serialization.list(core.serialization.lazy(() => serializers.FullExample)),
+                value: core.serialization.list(core.serialization.lazy(() => serializers.FullExample))
             }),
             map: core.serialization.object({
-                value: core.serialization.list(core.serialization.lazyObject(() => serializers.KeyValuePair)),
+                value: core.serialization.list(core.serialization.lazyObject(() => serializers.KeyValuePair))
             }),
             enum: core.serialization.object({
-                value: core.serialization.string(),
+                value: core.serialization.string()
             }),
             literal: core.serialization.object({
-                value: LiteralExample,
+                value: LiteralExample
             }),
             oneOf: core.serialization.object({
-                value: core.serialization.lazy(() => serializers.FullOneOfExample),
+                value: core.serialization.lazy(() => serializers.FullOneOfExample)
             }),
             unknown: core.serialization.object({
-                value: core.serialization.lazy(() => serializers.FullExample),
-            }),
+                value: core.serialization.lazy(() => serializers.FullExample)
+            })
         })
         .transform<FernOpenapiIr.FullExample>({
             transform: (value) => {
@@ -57,7 +57,7 @@ export const FullExample: core.serialization.Schema<serializers.FullExample.Raw,
                         return value as FernOpenapiIr.FullExample;
                 }
             },
-            untransform: ({ _visit, ...value }) => value as any,
+            untransform: ({ _visit, ...value }) => value as any
         });
 
 export declare namespace FullExample {

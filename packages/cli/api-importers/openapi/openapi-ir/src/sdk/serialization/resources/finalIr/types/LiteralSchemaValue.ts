@@ -12,11 +12,11 @@ export const LiteralSchemaValue: core.serialization.Schema<
 > = core.serialization
     .union("type", {
         boolean: core.serialization.object({
-            value: core.serialization.boolean(),
+            value: core.serialization.boolean()
         }),
         string: core.serialization.object({
-            value: core.serialization.string(),
-        }),
+            value: core.serialization.string()
+        })
     })
     .transform<FernOpenapiIr.LiteralSchemaValue>({
         transform: (value) => {
@@ -29,7 +29,7 @@ export const LiteralSchemaValue: core.serialization.Schema<
                     return value as FernOpenapiIr.LiteralSchemaValue;
             }
         },
-        untransform: ({ _visit, ...value }) => value as any,
+        untransform: ({ _visit, ...value }) => value as any
     });
 
 export declare namespace LiteralSchemaValue {

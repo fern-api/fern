@@ -9,7 +9,7 @@ import * as core from "../../../../core";
 export const Namespace: core.serialization.ObjectSchema<serializers.Namespace.Raw, FernOpenapiIr.Namespace> =
     core.serialization.objectWithoutOptionalProperties({
         type: core.serialization.stringLiteral("namespace"),
-        name: core.serialization.string(),
+        name: core.serialization.string()
     });
 
 export declare namespace Namespace {

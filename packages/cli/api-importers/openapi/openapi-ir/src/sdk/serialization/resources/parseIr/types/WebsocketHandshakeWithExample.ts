@@ -13,7 +13,7 @@ export const WebsocketHandshakeWithExample: core.serialization.ObjectSchema<
     FernOpenapiIr.WebsocketHandshakeWithExample
 > = core.serialization.objectWithoutOptionalProperties({
     queryParameters: core.serialization.list(QueryParameterWithExample),
-    headers: core.serialization.list(HeaderWithExample),
+    headers: core.serialization.list(HeaderWithExample)
 });
 
 export declare namespace WebsocketHandshakeWithExample {

@@ -10,7 +10,7 @@ export const OneOfSchema: core.serialization.Schema<serializers.OneOfSchema.Raw,
     core.serialization
         .union("type", {
             discriminated: core.serialization.lazyObject(() => serializers.DiscriminatedOneOfSchema),
-            undisciminated: core.serialization.lazyObject(() => serializers.UnDiscriminatedOneOfSchema),
+            undisciminated: core.serialization.lazyObject(() => serializers.UnDiscriminatedOneOfSchema)
         })
         .transform<FernOpenapiIr.OneOfSchema>({
             transform: (value) => {
@@ -23,7 +23,7 @@ export const OneOfSchema: core.serialization.Schema<serializers.OneOfSchema.Raw,
                         return value as FernOpenapiIr.OneOfSchema;
                 }
             },
-            untransform: ({ _visit, ...value }) => value as any,
+            untransform: ({ _visit, ...value }) => value as any
         });
 
 export declare namespace OneOfSchema {

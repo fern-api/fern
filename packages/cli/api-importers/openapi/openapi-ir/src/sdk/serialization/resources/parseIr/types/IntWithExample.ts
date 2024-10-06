@@ -16,7 +16,7 @@ export const IntWithExample: core.serialization.ObjectSchema<
     exclusiveMinimum: core.serialization.boolean().optional(),
     exclusiveMaximum: core.serialization.boolean().optional(),
     multipleOf: core.serialization.number().optional(),
-    example: core.serialization.number().optional(),
+    example: core.serialization.number().optional()
 });
 
 export declare namespace IntWithExample {

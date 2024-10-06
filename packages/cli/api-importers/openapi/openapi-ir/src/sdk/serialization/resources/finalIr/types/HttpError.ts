@@ -14,7 +14,7 @@ export const HttpError: core.serialization.ObjectSchema<serializers.HttpError.Ra
     core.serialization
         .objectWithoutOptionalProperties({
             schema: core.serialization.lazy(() => serializers.Schema).optional(),
-            examples: core.serialization.list(ErrorExample).optional(),
+            examples: core.serialization.list(ErrorExample).optional()
         })
         .extend(WithDescription)
         .extend(WithName)

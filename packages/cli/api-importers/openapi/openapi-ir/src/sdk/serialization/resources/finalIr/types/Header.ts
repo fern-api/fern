@@ -14,7 +14,7 @@ export const Header: core.serialization.ObjectSchema<serializers.Header.Raw, Fer
         name: core.serialization.string(),
         schema: core.serialization.lazy(() => serializers.Schema),
         env: core.serialization.string().optional(),
-        parameterNameOverride: core.serialization.string().optional(),
+        parameterNameOverride: core.serialization.string().optional()
     })
     .extend(WithDescription)
     .extend(WithAvailability)

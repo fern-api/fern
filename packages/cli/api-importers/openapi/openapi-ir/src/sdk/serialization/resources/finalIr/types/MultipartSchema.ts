@@ -14,8 +14,8 @@ export const MultipartSchema: core.serialization.Schema<
     .union("type", {
         file: FileSchema,
         json: core.serialization.object({
-            value: core.serialization.lazy(() => serializers.Schema),
-        }),
+            value: core.serialization.lazy(() => serializers.Schema)
+        })
     })
     .transform<FernOpenapiIr.MultipartSchema>({
         transform: (value) => {
@@ -28,7 +28,7 @@ export const MultipartSchema: core.serialization.Schema<
                     return value as FernOpenapiIr.MultipartSchema;
             }
         },
-        untransform: ({ _visit, ...value }) => value as any,
+        untransform: ({ _visit, ...value }) => value as any
     });
 
 export declare namespace MultipartSchema {

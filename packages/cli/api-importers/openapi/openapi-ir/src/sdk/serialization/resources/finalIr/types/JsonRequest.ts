@@ -13,7 +13,7 @@ export const JsonRequest: core.serialization.ObjectSchema<serializers.JsonReques
         .objectWithoutOptionalProperties({
             schema: core.serialization.lazy(() => serializers.Schema),
             contentType: core.serialization.string().optional(),
-            additionalProperties: core.serialization.boolean(),
+            additionalProperties: core.serialization.boolean()
         })
         .extend(WithDescription)
         .extend(WithSource);

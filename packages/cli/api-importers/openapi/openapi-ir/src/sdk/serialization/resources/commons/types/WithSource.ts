@@ -9,7 +9,7 @@ import { Source } from "./Source";
 
 export const WithSource: core.serialization.ObjectSchema<serializers.WithSource.Raw, FernOpenapiIr.WithSource> =
     core.serialization.objectWithoutOptionalProperties({
-        source: Source.optional(),
+        source: Source.optional()
     });
 
 export declare namespace WithSource {

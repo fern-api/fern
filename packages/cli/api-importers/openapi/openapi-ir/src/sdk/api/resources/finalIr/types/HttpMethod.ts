@@ -34,7 +34,7 @@ export const HttpMethod = {
             default:
                 return visitor._other();
         }
-    },
+    }
 } as const;
 
 export declare namespace HttpMethod {

@@ -10,7 +10,7 @@ export const FloatWithExample: core.serialization.ObjectSchema<
     serializers.FloatWithExample.Raw,
     FernOpenapiIr.FloatWithExample
 > = core.serialization.objectWithoutOptionalProperties({
-    example: core.serialization.number().optional(),
+    example: core.serialization.number().optional()
 });
 
 export declare namespace FloatWithExample {

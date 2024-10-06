@@ -15,7 +15,7 @@ export const WebsocketHandshake: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({
     queryParameters: core.serialization.list(QueryParameter),
     headers: core.serialization.list(Header),
-    pathParameters: core.serialization.list(PathParameter),
+    pathParameters: core.serialization.list(PathParameter)
 });
 
 export declare namespace WebsocketHandshake {

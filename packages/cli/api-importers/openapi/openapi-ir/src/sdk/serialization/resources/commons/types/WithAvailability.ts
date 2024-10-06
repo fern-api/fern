@@ -11,7 +11,7 @@ export const WithAvailability: core.serialization.ObjectSchema<
     serializers.WithAvailability.Raw,
     FernOpenapiIr.WithAvailability
 > = core.serialization.objectWithoutOptionalProperties({
-    availability: Availability.optional(),
+    availability: Availability.optional()
 });
 
 export declare namespace WithAvailability {

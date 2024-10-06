@@ -10,7 +10,7 @@ export const ObjectPropertyConflictInfo: core.serialization.ObjectSchema<
     serializers.ObjectPropertyConflictInfo.Raw,
     FernOpenapiIr.ObjectPropertyConflictInfo
 > = core.serialization.objectWithoutOptionalProperties({
-    differentSchema: core.serialization.boolean(),
+    differentSchema: core.serialization.boolean()
 });
 
 export declare namespace ObjectPropertyConflictInfo {

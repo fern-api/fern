@@ -10,7 +10,7 @@ export const QuerySecurityScheme: core.serialization.ObjectSchema<
     serializers.QuerySecurityScheme.Raw,
     FernOpenapiIr.QuerySecurityScheme
 > = core.serialization.objectWithoutOptionalProperties({
-    queryParameterName: core.serialization.string(),
+    queryParameterName: core.serialization.string()
 });
 
 export declare namespace QuerySecurityScheme {

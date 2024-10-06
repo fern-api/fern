@@ -19,7 +19,7 @@ export const Availability = {
             default:
                 return visitor._other();
         }
-    },
+    }
 } as const;
 
 export declare namespace Availability {

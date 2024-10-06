@@ -70,7 +70,7 @@ export const SupportedSdkLanguage = {
             default:
                 return visitor._other();
         }
-    },
+    }
 } as const;
 
 export declare namespace SupportedSdkLanguage {

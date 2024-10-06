@@ -11,7 +11,7 @@ export const CommonProperty: core.serialization.ObjectSchema<
     FernOpenapiIr.CommonProperty
 > = core.serialization.objectWithoutOptionalProperties({
     key: core.serialization.string(),
-    schema: core.serialization.lazy(() => serializers.Schema),
+    schema: core.serialization.lazy(() => serializers.Schema)
 });
 
 export declare namespace CommonProperty {

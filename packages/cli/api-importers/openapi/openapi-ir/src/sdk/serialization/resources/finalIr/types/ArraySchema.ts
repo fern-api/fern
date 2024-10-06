@@ -14,7 +14,7 @@ import { WithTitle } from "../../commons/types/WithTitle";
 export const ArraySchema: core.serialization.ObjectSchema<serializers.ArraySchema.Raw, FernOpenapiIr.ArraySchema> =
     core.serialization
         .objectWithoutOptionalProperties({
-            value: core.serialization.lazy(() => serializers.Schema),
+            value: core.serialization.lazy(() => serializers.Schema)
         })
         .extend(WithDescription)
         .extend(WithName)

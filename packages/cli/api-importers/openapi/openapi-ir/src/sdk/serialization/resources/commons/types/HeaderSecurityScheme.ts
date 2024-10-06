@@ -13,7 +13,7 @@ export const HeaderSecurityScheme: core.serialization.ObjectSchema<
     headerName: core.serialization.string(),
     prefix: core.serialization.string().optional(),
     headerVariableName: core.serialization.string().optional(),
-    headerEnvVar: core.serialization.string().optional(),
+    headerEnvVar: core.serialization.string().optional()
 });
 
 export declare namespace HeaderSecurityScheme {

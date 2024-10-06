@@ -14,7 +14,7 @@ export const CustomCodeSample: core.serialization.Schema<
 > = core.serialization
     .union("type", {
         language: CustomCodeSampleLanguage,
-        sdk: CustomCodeSampleSdk,
+        sdk: CustomCodeSampleSdk
     })
     .transform<FernOpenapiIr.CustomCodeSample>({
         transform: (value) => {
@@ -27,7 +27,7 @@ export const CustomCodeSample: core.serialization.Schema<
                     return value as FernOpenapiIr.CustomCodeSample;
             }
         },
-        untransform: ({ _visit, ...value }) => value as any,
+        untransform: ({ _visit, ...value }) => value as any
     });
 
 export declare namespace CustomCodeSample {

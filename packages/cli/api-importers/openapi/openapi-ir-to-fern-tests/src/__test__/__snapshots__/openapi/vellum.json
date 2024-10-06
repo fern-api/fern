@@ -7,6 +7,7 @@
       "contents": {
         "errors": {
           "BadRequestError": {
+            "docs": "",
             "status-code": 400,
             "type": "unknown",
           },
@@ -21,10 +22,12 @@
             "type": "GenerateErrorResponse",
           },
           "InternalServerError": {
+            "docs": "",
             "status-code": 500,
             "type": "unknown",
           },
           "NotFoundError": {
+            "docs": "",
             "status-code": 404,
             "type": "unknown",
           },
@@ -2614,6 +2617,7 @@ errors:
   BadRequestError:
     status-code: 400
     type: unknown
+    docs: ''
   ForbiddenError:
     status-code: 403
     type: GenerateErrorResponse
@@ -2621,9 +2625,11 @@ errors:
   NotFoundError:
     status-code: 404
     type: unknown
+    docs: ''
   InternalServerError:
     status-code: 500
     type: unknown
+    docs: ''
   ConflictError:
     status-code: 409
     type: RegisterPromptErrorResponse

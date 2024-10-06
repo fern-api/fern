@@ -10,7 +10,7 @@ export const WithDescription: core.serialization.ObjectSchema<
     serializers.WithDescription.Raw,
     FernOpenapiIr.WithDescription
 > = core.serialization.objectWithoutOptionalProperties({
-    description: core.serialization.string().optional(),
+    description: core.serialization.string().optional()
 });
 
 export declare namespace WithDescription {

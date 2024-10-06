@@ -13,7 +13,7 @@ export const OffsetPagination: core.serialization.ObjectSchema<
     offset: core.serialization.string(),
     results: core.serialization.string(),
     step: core.serialization.string().optional(),
-    hasNextPage: core.serialization.string().optional(),
+    hasNextPage: core.serialization.string().optional()
 });
 
 export declare namespace OffsetPagination {

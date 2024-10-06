@@ -18,7 +18,7 @@ export const ReferencedSchema: core.serialization.ObjectSchema<
     FernOpenapiIr.ReferencedSchema
 > = core.serialization
     .objectWithoutOptionalProperties({
-        schema: SchemaId,
+        schema: SchemaId
     })
     .extend(WithDescription)
     .extend(WithName)

@@ -19,7 +19,7 @@ export const ObjectPropertyWithExample: core.serialization.ObjectSchema<
         audiences: core.serialization.list(core.serialization.string()),
         conflict: core.serialization.record(SchemaId, ObjectPropertyConflictInfo),
         nameOverride: core.serialization.string().optional(),
-        generatedName: core.serialization.string(),
+        generatedName: core.serialization.string()
     })
     .extend(WithAvailability);
 

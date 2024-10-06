@@ -7,6 +7,7 @@
       "contents": {
         "errors": {
           "BadRequestError": {
+            "docs": "Bad Request",
             "status-code": 400,
             "type": "unknown",
           },
@@ -2519,6 +2520,7 @@ errors:
   BadRequestError:
     status-code: 400
     type: unknown
+    docs: Bad Request
   ForbiddenError:
     status-code: 403
     type: ForbiddenErrorBody

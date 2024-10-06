@@ -46,7 +46,7 @@ export const Endpoint: core.serialization.ObjectSchema<serializers.Endpoint.Raw,
             errors: core.serialization.record(StatusCode, HttpError),
             server: core.serialization.list(HttpEndpointServer),
             examples: core.serialization.list(EndpointExample),
-            pagination: Pagination.optional(),
+            pagination: Pagination.optional()
         })
         .extend(WithDescription)
         .extend(WithAvailability)

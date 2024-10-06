@@ -13,7 +13,7 @@ export const WebhookExampleCall: core.serialization.ObjectSchema<
 > = core.serialization
     .objectWithoutOptionalProperties({
         name: core.serialization.string().optional(),
-        payload: core.serialization.lazy(() => serializers.FullExample),
+        payload: core.serialization.lazy(() => serializers.FullExample)
     })
     .extend(WithDescription);
 

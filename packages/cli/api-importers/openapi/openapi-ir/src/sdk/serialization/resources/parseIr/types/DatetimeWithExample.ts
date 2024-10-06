@@ -10,7 +10,7 @@ export const DatetimeWithExample: core.serialization.ObjectSchema<
     serializers.DatetimeWithExample.Raw,
     FernOpenapiIr.DatetimeWithExample
 > = core.serialization.objectWithoutOptionalProperties({
-    example: core.serialization.string().optional(),
+    example: core.serialization.string().optional()
 });
 
 export declare namespace DatetimeWithExample {

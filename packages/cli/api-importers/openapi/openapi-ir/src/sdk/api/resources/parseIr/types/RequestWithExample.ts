@@ -44,7 +44,7 @@ export const RequestWithExample = {
                 visitor: FernOpenapiIr.RequestWithExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.RequestWithExample._visit(this, visitor);
-            },
+            }
         };
     },
 
@@ -57,7 +57,7 @@ export const RequestWithExample = {
                 visitor: FernOpenapiIr.RequestWithExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.RequestWithExample._visit(this, visitor);
-            },
+            }
         };
     },
 
@@ -70,7 +70,7 @@ export const RequestWithExample = {
                 visitor: FernOpenapiIr.RequestWithExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.RequestWithExample._visit(this, visitor);
-            },
+            }
         };
     },
 
@@ -88,5 +88,5 @@ export const RequestWithExample = {
             default:
                 return visitor._other(value as any);
         }
-    },
+    }
 } as const;
