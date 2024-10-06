@@ -31,6 +31,22 @@ path-parameters:
 ```
 </CodeBlock>
 
+### Overriding the base path
+
+It's possible that you may have certain endpoints that do not live at the configured `base-path`. To account 
+for this, you can simply override the `base-path` at the endpoint level. 
+
+```yml imdb.yml
+service: 
+  endpoints: 
+    getMovie: 
+      method: POST
+      base-path: "override/{arg}"
+      path: "movies/{movieId}"
+      path-parameters: 
+        arg: string
+```
+
 ## Global query parameters
 
 You cannot yet specify query parameters that are meant to be included on every request.
