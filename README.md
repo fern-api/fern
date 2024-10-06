@@ -18,12 +18,50 @@
 Fern is a toolkit that allows you to input your API Definition and output SDKs and API documentation. Fern is compatible with the OpenAPI specification (formerly Swagger).
 
 <div align="center">
-    <picture>
-        <source srcset="/fern/images/overview-dark.png" media="(prefers-color-scheme: dark)">
-        <source srcset="/fern/images/overview-light.png" media="(prefers-color-scheme: light)">
-        <img src="/fern/images/overview-light.png" width="700" alt="Overview Diagram">
-    </picture>
+    <a href="#lightbox" id="lightbox-trigger">
+        <picture>
+            <source srcset="/fern/images/overview-dark.png" media="(prefers-color-scheme: dark)">
+            <source srcset="/fern/images/overview-light.png" media="(prefers-color-scheme: light)">
+            <img src="/fern/images/overview-light.png" width="700" alt="Overview Diagram">
+        </picture>
+    </a>
 </div>
+
+<!-- Lightbox Section -->
+<div id="lightbox" style="display:none;">
+    <a href="#" class="close"></a>
+    <div class="lightbox-content" align="center">
+        <picture>
+            <source srcset="/fern/images/overview-dark.png" media="(prefers-color-scheme: dark)">
+            <source srcset="/fern/images/overview-light.png" media="(prefers-color-scheme: light)">
+            <img src="/fern/images/overview-light.png" width="900" alt="Overview Diagram">
+        </picture>
+    </div>
+</div>
+
+<style>
+  #lightbox:target {
+    display: block;
+    position: fixed;
+    top: 0; left: 0; 
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 9999;
+  }
+  
+  #lightbox .lightbox-content {
+    margin: 50px auto;
+    width: fit-content;
+  }
+
+  #lightbox .close {
+    position: absolute;
+    top: 20px; right: 20px;
+    font-size: 30px;
+    text-decoration: none;
+    color: white;
+  }
+</style>
 
 ## 🌿 SDKs
 
