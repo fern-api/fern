@@ -3,6 +3,7 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import chalk from "chalk";
 import capitalize from "lodash-es/capitalize";
 import { Rule, RuleViolation } from "../../Rule";
+import urlJoin from "url-join";
 
 export const NoUndefinedPathParametersRule: Rule = {
     name: "no-undefined-path-parameters",
@@ -30,7 +31,10 @@ export const NoUndefinedPathParametersRule: Rule = {
                 },
                 httpEndpoint: ({ endpoint }) => {
                     return getPathParameterRuleViolations({
-                        path: endpoint.path,
+                        path:
+                            endpoint["base-path"] != null
+                                ? urlJoin(endpoint["base-path"], endpoint.path)
+                                : endpoint.path,
                         pathParameters: endpoint["path-parameters"] != null ? endpoint["path-parameters"] : {},
                         pathType: "endpoint"
                     });

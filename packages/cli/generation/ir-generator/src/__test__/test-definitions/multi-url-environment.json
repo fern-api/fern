@@ -145,6 +145,7 @@
                     "idempotent": false,
                     "baseUrl": "ec2",
                     "method": "POST",
+                    "basePath": null,
                     "path": {
                         "head": "/boot",
                         "parts": []
@@ -453,6 +454,7 @@
                     "idempotent": false,
                     "baseUrl": "s3",
                     "method": "POST",
+                    "basePath": null,
                     "path": {
                         "head": "/presigned-url",
                         "parts": []

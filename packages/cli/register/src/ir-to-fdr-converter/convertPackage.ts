@@ -78,20 +78,36 @@ function convertService(
             id: irEndpoint.name.originalName,
             originalEndpointId: irEndpoint.id,
             name: irEndpoint.displayName ?? startCase(irEndpoint.name.originalName),
-            path: {
-                pathParameters: [...ir.pathParameters, ...irService.pathParameters, ...irEndpoint.pathParameters].map(
-                    (pathParameter): FdrCjsSdk.api.v1.register.PathParameter => ({
-                        description: pathParameter.docs ?? undefined,
-                        key: pathParameter.name.originalName,
-                        type: convertTypeReference(pathParameter.valueType)
-                    })
-                ),
-                parts: [
-                    ...(ir.basePath != null ? convertHttpPath(ir.basePath) : []),
-                    ...convertHttpPath(irService.basePath),
-                    ...convertHttpPath(irEndpoint.path)
-                ]
-            },
+            path:
+                irEndpoint.basePath != null
+                    ? {
+                          pathParameters: irEndpoint.pathParameters.map(
+                              (pathParameter): FdrCjsSdk.api.v1.register.PathParameter => ({
+                                  description: pathParameter.docs ?? undefined,
+                                  key: pathParameter.name.originalName,
+                                  type: convertTypeReference(pathParameter.valueType)
+                              })
+                          ),
+                          parts: [...convertHttpPath(irEndpoint.basePath), ...convertHttpPath(irEndpoint.path)]
+                      }
+                    : {
+                          pathParameters: [
+                              ...ir.pathParameters,
+                              ...irService.pathParameters,
+                              ...irEndpoint.pathParameters
+                          ].map(
+                              (pathParameter): FdrCjsSdk.api.v1.register.PathParameter => ({
+                                  description: pathParameter.docs ?? undefined,
+                                  key: pathParameter.name.originalName,
+                                  type: convertTypeReference(pathParameter.valueType)
+                              })
+                          ),
+                          parts: [
+                              ...(ir.basePath != null ? convertHttpPath(ir.basePath) : []),
+                              ...convertHttpPath(irService.basePath),
+                              ...convertHttpPath(irEndpoint.path)
+                          ]
+                      },
             queryParameters: irEndpoint.queryParameters.map(
                 (queryParameter): FdrCjsSdk.api.v1.register.QueryParameter => ({
                     description: queryParameter.docs ?? undefined,

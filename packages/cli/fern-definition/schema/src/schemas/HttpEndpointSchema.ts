@@ -15,6 +15,7 @@ export type HttpMethodSchema = z.infer<typeof HttpMethodSchema>;
 
 export const HttpEndpointSchema = DeclarationSchema.extend({
     method: z.optional(HttpMethodSchema),
+    "base-path": z.optional(z.string()),
     path: z.string(),
     url: z.optional(z.string()),
     ["path-parameters"]: z.optional(z.record(HttpPathParameterSchema)),

@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    doThing:
+      base-path: /{d}/{e}
+      path-parameters:
+        d: string
+        e: string
+      path: /test
+      method: POST
+      request:
+        name: RequestObject
+        body: 
+          properties:
+            random:
+              type: string
+              availability: pre-release
+      response: string

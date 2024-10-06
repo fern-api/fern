@@ -473,6 +473,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
                     "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
+                    "basePath": null,
                     "path": {
                         "head": "",
                         "parts": []
@@ -872,4 +873,4 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies > file dependencies 1`] = `3141590`;
+exports[`dependencies > file dependencies 1`] = `3141932`;

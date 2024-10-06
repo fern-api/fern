@@ -78,6 +78,7 @@ async function visitEndpoint({
         docs: createDocsVisitor(visitor, nodePathForEndpoint),
         "display-name": noop,
         availability: noop,
+        "base-path": noop,
         path: noop,
         idempotent: noop,
         url: async (baseUrl) => {

@@ -1,5 +1,23 @@
 - changelogEntry:
     - summary: |
+        The Fern Definition now supports overriding `base-path` at the endpoint level. 
+        This is useful if you have subset of endpoints that do not live at the
+        configured base-path.  
+
+        ```yml imdb.yml
+        service: 
+          endpoints: 
+            getMovie: 
+              method: POST
+              base-path: "latest/" # overrides the base-path configured in api.yml
+              path: "movies/{movieId}"
+        ```
+      type: feat
+  irVersion: 53
+  version: 0.44.5
+
+- changelogEntry:
+    - summary: |
         Fern's OpenAPI importer will now handle generating examples for declared 
         errors so that they show up in the generated documentation. 
       type: fix
