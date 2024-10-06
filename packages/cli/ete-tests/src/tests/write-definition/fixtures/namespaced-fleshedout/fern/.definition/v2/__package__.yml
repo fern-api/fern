@@ -64,6 +64,8 @@ errors:
         - JSON is invalid
         - The request is missing required fields
         - The request contains an invalid combination of fields
+    examples:
+      - value: {}
   UnauthorizedError:
     status-code: 401
     type: unknown
@@ -72,6 +74,8 @@ errors:
       allowed. This could be because:
         - The api token is invalid
         - The user does not have the necessary permissions
+    examples:
+      - value: {}
   ForbiddenError:
     status-code: 403
     type: unknown
@@ -80,6 +84,8 @@ errors:
       allowed. This could be because:
         - The api token is invalid
         - The user does not have the necessary permissions
+    examples:
+      - value: {}
   NotFoundError:
     status-code: 404
     type: unknown
@@ -88,6 +94,8 @@ errors:
       because:
         - The endpoint does not exist
         - The resource does not exist eg model id, dataset id
+    examples:
+      - value: {}
   UnprocessableEntityError:
     status-code: 422
     type: unknown
@@ -97,25 +105,35 @@ errors:
         - JSON is invalid
         - The request is missing required fields
         - The request contains an invalid combination of fields
+    examples:
+      - value: {}
   TooManyRequestsError:
     status-code: 429
     type: unknown
     docs: Too many requests
+    examples:
+      - value: {}
   ClientClosedRequestError:
     status-code: 499
     type: unknown
     docs: |
       This error is returned when a request is cancelled by the user.
+    examples:
+      - value: {}
   InternalServerError:
     status-code: 500
     type: unknown
     docs: |
       This error is returned when an uncategorised internal server error occurs.
+    examples:
+      - value: {}
   NotImplementedError:
     status-code: 501
     type: unknown
     docs: |
       This error is returned when the requested feature is not implemented.
+    examples:
+      - value: {}
   ServiceUnavailableError:
     status-code: 503
     type: unknown
@@ -123,6 +141,8 @@ errors:
       This error is returned when the service is unavailable. This could be due
       to:
         - Too many users trying to access the service at the same time
+    examples:
+      - value: {}
   GatewayTimeoutError:
     status-code: 504
     type: unknown
@@ -130,3 +150,5 @@ errors:
       This error is returned when a request to the server times out. This could
       be due to:
         - An internal services taking too long to respond
+    examples:
+      - value: {}
