@@ -10,7 +10,7 @@ export const ProtobufSource: core.serialization.ObjectSchema<
     serializers.ProtobufSource.Raw,
     FernOpenapiIr.ProtobufSource
 > = core.serialization.objectWithoutOptionalProperties({
-    file: core.serialization.string()
+    file: core.serialization.string(),
 });
 
 export declare namespace ProtobufSource {

@@ -12,7 +12,7 @@ export const GlobalHeader: core.serialization.ObjectSchema<serializers.GlobalHea
         name: core.serialization.string().optional(),
         optional: core.serialization.boolean().optional(),
         env: core.serialization.string().optional(),
-        schema: core.serialization.lazy(() => serializers.Schema).optional()
+        schema: core.serialization.lazy(() => serializers.Schema).optional(),
     });
 
 export declare namespace GlobalHeader {

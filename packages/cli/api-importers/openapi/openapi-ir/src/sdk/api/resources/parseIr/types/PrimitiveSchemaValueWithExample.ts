@@ -92,7 +92,7 @@ export const PrimitiveSchemaValueWithExample = {
                 visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.PrimitiveSchemaValueWithExample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -105,7 +105,7 @@ export const PrimitiveSchemaValueWithExample = {
                 visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.PrimitiveSchemaValueWithExample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -118,7 +118,7 @@ export const PrimitiveSchemaValueWithExample = {
                 visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.PrimitiveSchemaValueWithExample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -131,7 +131,7 @@ export const PrimitiveSchemaValueWithExample = {
                 visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.PrimitiveSchemaValueWithExample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -144,7 +144,7 @@ export const PrimitiveSchemaValueWithExample = {
                 visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.PrimitiveSchemaValueWithExample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -157,7 +157,7 @@ export const PrimitiveSchemaValueWithExample = {
                 visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.PrimitiveSchemaValueWithExample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -170,7 +170,7 @@ export const PrimitiveSchemaValueWithExample = {
                 visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.PrimitiveSchemaValueWithExample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -183,7 +183,7 @@ export const PrimitiveSchemaValueWithExample = {
                 visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.PrimitiveSchemaValueWithExample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -196,7 +196,7 @@ export const PrimitiveSchemaValueWithExample = {
                 visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.PrimitiveSchemaValueWithExample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -209,7 +209,7 @@ export const PrimitiveSchemaValueWithExample = {
                 visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.PrimitiveSchemaValueWithExample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -222,7 +222,7 @@ export const PrimitiveSchemaValueWithExample = {
                 visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.PrimitiveSchemaValueWithExample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -256,5 +256,5 @@ export const PrimitiveSchemaValueWithExample = {
             default:
                 return visitor._other(value as any);
         }
-    }
+    },
 } as const;

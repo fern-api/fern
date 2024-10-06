@@ -16,7 +16,7 @@ export const OptionalSchema: core.serialization.ObjectSchema<
     FernOpenapiIr.OptionalSchema
 > = core.serialization
     .objectWithoutOptionalProperties({
-        value: core.serialization.lazy(() => serializers.Schema)
+        value: core.serialization.lazy(() => serializers.Schema),
     })
     .extend(WithDescription)
     .extend(WithName)

@@ -36,7 +36,7 @@ export const Pagination = {
                 visitor: FernOpenapiIr.Pagination._Visitor<_Result>
             ) {
                 return FernOpenapiIr.Pagination._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -49,7 +49,7 @@ export const Pagination = {
                 visitor: FernOpenapiIr.Pagination._Visitor<_Result>
             ) {
                 return FernOpenapiIr.Pagination._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -65,5 +65,5 @@ export const Pagination = {
             default:
                 return visitor._other(value as any);
         }
-    }
+    },
 } as const;

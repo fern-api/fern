@@ -10,7 +10,7 @@ export const ErrorExample: core.serialization.ObjectSchema<serializers.ErrorExam
     core.serialization.objectWithoutOptionalProperties({
         name: core.serialization.string().optional(),
         description: core.serialization.string().optional(),
-        example: core.serialization.lazy(() => serializers.FullExample)
+        example: core.serialization.lazy(() => serializers.FullExample),
     });
 
 export declare namespace ErrorExample {

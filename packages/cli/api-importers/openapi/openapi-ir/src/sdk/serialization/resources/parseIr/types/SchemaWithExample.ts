@@ -25,10 +25,10 @@ export const SchemaWithExample: core.serialization.Schema<
         reference: ReferencedSchema,
         literal: LiteralSchema,
         oneOf: core.serialization.object({
-            value: core.serialization.lazy(() => serializers.OneOfSchemaWithExample)
+            value: core.serialization.lazy(() => serializers.OneOfSchemaWithExample),
         }),
         nullable: core.serialization.lazyObject(() => serializers.NullableSchemaWithExample),
-        unknown: UnknownSchemaWithExample
+        unknown: UnknownSchemaWithExample,
     })
     .transform<FernOpenapiIr.SchemaWithExample>({
         transform: (value) => {
@@ -59,7 +59,7 @@ export const SchemaWithExample: core.serialization.Schema<
                     return value as FernOpenapiIr.SchemaWithExample;
             }
         },
-        untransform: ({ _visit, ...value }) => value as any
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace SchemaWithExample {

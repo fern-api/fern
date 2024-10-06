@@ -18,7 +18,7 @@ export const HttpErrorWithExample: core.serialization.ObjectSchema<
     .objectWithoutOptionalProperties({
         statusCode: StatusCode,
         schema: core.serialization.lazy(() => serializers.SchemaWithExample),
-        fullExamples: core.serialization.list(NamedFullExample).optional()
+        fullExamples: core.serialization.list(NamedFullExample).optional(),
     })
     .extend(WithDescription)
     .extend(WithName)

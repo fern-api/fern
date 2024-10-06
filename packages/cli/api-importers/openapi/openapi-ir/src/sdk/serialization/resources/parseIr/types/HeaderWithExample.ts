@@ -17,7 +17,7 @@ export const HeaderWithExample: core.serialization.ObjectSchema<
         name: core.serialization.string(),
         schema: core.serialization.lazy(() => serializers.SchemaWithExample),
         env: core.serialization.string().optional(),
-        parameterNameOverride: core.serialization.string().optional()
+        parameterNameOverride: core.serialization.string().optional(),
     })
     .extend(WithDescription)
     .extend(WithAvailability)

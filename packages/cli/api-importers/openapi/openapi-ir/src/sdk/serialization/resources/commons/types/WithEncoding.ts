@@ -9,7 +9,7 @@ import { Encoding } from "./Encoding";
 
 export const WithEncoding: core.serialization.ObjectSchema<serializers.WithEncoding.Raw, FernOpenapiIr.WithEncoding> =
     core.serialization.objectWithoutOptionalProperties({
-        encoding: Encoding.optional()
+        encoding: Encoding.optional(),
     });
 
 export declare namespace WithEncoding {

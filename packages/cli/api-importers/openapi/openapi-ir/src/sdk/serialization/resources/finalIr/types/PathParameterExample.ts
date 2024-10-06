@@ -12,7 +12,7 @@ export const PathParameterExample: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({
     name: core.serialization.string(),
     parameterNameOverride: core.serialization.string().optional(),
-    value: core.serialization.lazy(() => serializers.FullExample)
+    value: core.serialization.lazy(() => serializers.FullExample),
 });
 
 export declare namespace PathParameterExample {

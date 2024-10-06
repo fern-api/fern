@@ -17,7 +17,7 @@ export const EnumSchema: core.serialization.ObjectSchema<serializers.EnumSchema.
     core.serialization
         .objectWithoutOptionalProperties({
             default: EnumValue.optional(),
-            values: core.serialization.list(EnumValue)
+            values: core.serialization.list(EnumValue),
         })
         .extend(WithDescription)
         .extend(WithName)

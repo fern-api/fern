@@ -20,7 +20,7 @@ export const MapSchemaWithExample: core.serialization.ObjectSchema<
     .objectWithoutOptionalProperties({
         key: PrimitiveSchemaWithExample,
         value: core.serialization.lazy(() => serializers.SchemaWithExample),
-        example: core.serialization.unknown().optional()
+        example: core.serialization.unknown().optional(),
     })
     .extend(WithSdkGroupName)
     .extend(WithName)

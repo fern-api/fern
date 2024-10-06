@@ -41,7 +41,7 @@ export const Request = {
                 visitor: FernOpenapiIr.Request._Visitor<_Result>
             ) {
                 return FernOpenapiIr.Request._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -54,7 +54,7 @@ export const Request = {
                 visitor: FernOpenapiIr.Request._Visitor<_Result>
             ) {
                 return FernOpenapiIr.Request._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -67,7 +67,7 @@ export const Request = {
                 visitor: FernOpenapiIr.Request._Visitor<_Result>
             ) {
                 return FernOpenapiIr.Request._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -82,5 +82,5 @@ export const Request = {
             default:
                 return visitor._other(value as any);
         }
-    }
+    },
 } as const;

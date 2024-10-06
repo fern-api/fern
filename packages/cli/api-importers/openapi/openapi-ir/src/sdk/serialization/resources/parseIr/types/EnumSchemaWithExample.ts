@@ -20,7 +20,7 @@ export const EnumSchemaWithExample: core.serialization.ObjectSchema<
     .objectWithoutOptionalProperties({
         default: EnumValue.optional(),
         values: core.serialization.list(EnumValue),
-        example: core.serialization.string().optional()
+        example: core.serialization.string().optional(),
     })
     .extend(WithDescription)
     .extend(WithName)

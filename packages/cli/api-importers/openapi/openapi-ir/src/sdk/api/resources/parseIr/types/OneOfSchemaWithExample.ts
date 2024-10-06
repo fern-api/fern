@@ -40,7 +40,7 @@ export const OneOfSchemaWithExample = {
                 visitor: FernOpenapiIr.OneOfSchemaWithExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.OneOfSchemaWithExample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -55,7 +55,7 @@ export const OneOfSchemaWithExample = {
                 visitor: FernOpenapiIr.OneOfSchemaWithExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.OneOfSchemaWithExample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -71,5 +71,5 @@ export const OneOfSchemaWithExample = {
             default:
                 return visitor._other(value as any);
         }
-    }
+    },
 } as const;

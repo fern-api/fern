@@ -10,7 +10,7 @@ export const WithNamespace: core.serialization.ObjectSchema<
     serializers.WithNamespace.Raw,
     FernOpenapiIr.WithNamespace
 > = core.serialization.objectWithoutOptionalProperties({
-    namespace: core.serialization.string().optional()
+    namespace: core.serialization.string().optional(),
 });
 
 export declare namespace WithNamespace {

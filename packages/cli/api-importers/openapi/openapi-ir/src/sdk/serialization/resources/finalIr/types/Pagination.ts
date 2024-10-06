@@ -12,7 +12,7 @@ export const Pagination: core.serialization.Schema<serializers.Pagination.Raw, F
     core.serialization
         .union("type", {
             cursor: CursorPagination,
-            offset: OffsetPagination
+            offset: OffsetPagination,
         })
         .transform<FernOpenapiIr.Pagination>({
             transform: (value) => {
@@ -25,7 +25,7 @@ export const Pagination: core.serialization.Schema<serializers.Pagination.Raw, F
                         return value as FernOpenapiIr.Pagination;
                 }
             },
-            untransform: ({ _visit, ...value }) => value as any
+            untransform: ({ _visit, ...value }) => value as any,
         });
 
 export declare namespace Pagination {

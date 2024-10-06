@@ -15,7 +15,7 @@ export const MultipartRequestProperty: core.serialization.ObjectSchema<
     .objectWithoutOptionalProperties({
         key: core.serialization.string(),
         schema: MultipartSchema,
-        contentType: core.serialization.string().optional()
+        contentType: core.serialization.string().optional(),
     })
     .extend(WithDescription);
 

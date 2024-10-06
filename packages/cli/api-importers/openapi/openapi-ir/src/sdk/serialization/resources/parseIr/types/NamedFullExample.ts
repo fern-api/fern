@@ -13,7 +13,7 @@ export const NamedFullExample: core.serialization.ObjectSchema<
 > = core.serialization
     .objectWithoutOptionalProperties({
         name: core.serialization.string().optional(),
-        value: core.serialization.unknown()
+        value: core.serialization.unknown(),
     })
     .extend(WithDescription);
 

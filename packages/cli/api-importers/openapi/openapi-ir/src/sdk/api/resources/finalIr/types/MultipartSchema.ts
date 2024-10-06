@@ -37,7 +37,7 @@ export const MultipartSchema = {
                 visitor: FernOpenapiIr.MultipartSchema._Visitor<_Result>
             ) {
                 return FernOpenapiIr.MultipartSchema._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -50,7 +50,7 @@ export const MultipartSchema = {
                 visitor: FernOpenapiIr.MultipartSchema._Visitor<_Result>
             ) {
                 return FernOpenapiIr.MultipartSchema._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -66,5 +66,5 @@ export const MultipartSchema = {
             default:
                 return visitor._other(value as any);
         }
-    }
+    },
 } as const;

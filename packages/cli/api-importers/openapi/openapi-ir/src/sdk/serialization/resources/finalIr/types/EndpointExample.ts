@@ -14,9 +14,9 @@ export const EndpointExample: core.serialization.Schema<
 > = core.serialization
     .union("type", {
         unknown: core.serialization.object({
-            value: FernExample
+            value: FernExample,
         }),
-        full: FullEndpointExample
+        full: FullEndpointExample,
     })
     .transform<FernOpenapiIr.EndpointExample>({
         transform: (value) => {
@@ -29,7 +29,7 @@ export const EndpointExample: core.serialization.Schema<
                     return value as FernOpenapiIr.EndpointExample;
             }
         },
-        untransform: ({ _visit, ...value }) => value as any
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace EndpointExample {

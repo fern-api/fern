@@ -12462,10 +12462,6 @@ docs: Simple messaging
                       "docs": "Message identifier",
                       "type": "optional<string>",
                     },
-                    "@type": {
-                      "docs": "Message type",
-                      "type": "optional<string>",
-                    },
                     "did": {
                       "docs": "DID for connection invitation",
                       "type": "optional<string>",
@@ -12976,9 +12972,6 @@ service:
             '@id':
               type: optional<string>
               docs: Message identifier
-            '@type':
-              type: optional<string>
-              docs: Message type
             did:
               type: optional<string>
               docs: DID for connection invitation
@@ -14835,10 +14828,6 @@ docs: Holder credential management
                       "docs": "Message identifier",
                       "type": "optional<string>",
                     },
-                    "@type": {
-                      "docs": "Message type",
-                      "type": "optional<string>",
-                    },
                     "did": {
                       "docs": "DID of exchange",
                       "type": "optional<string>",
@@ -14976,9 +14965,6 @@ service:
             '@id':
               type: optional<string>
               docs: Message identifier
-            '@type':
-              type: optional<string>
-              docs: Message type
             did:
               type: optional<string>
               docs: DID of exchange

@@ -16,7 +16,7 @@ export const QueryParameter: core.serialization.ObjectSchema<
     .objectWithoutOptionalProperties({
         name: core.serialization.string(),
         schema: core.serialization.lazy(() => serializers.Schema),
-        parameterNameOverride: core.serialization.string().optional()
+        parameterNameOverride: core.serialization.string().optional(),
     })
     .extend(WithDescription)
     .extend(WithAvailability)

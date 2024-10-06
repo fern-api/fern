@@ -23,7 +23,7 @@ export const WebsocketChannel: core.serialization.ObjectSchema<
         handshake: WebsocketHandshake,
         publish: core.serialization.lazy(() => serializers.Schema).optional(),
         subscribe: core.serialization.lazy(() => serializers.Schema).optional(),
-        examples: core.serialization.list(WebsocketSessionExample)
+        examples: core.serialization.list(WebsocketSessionExample),
     })
     .extend(WithDescription)
     .extend(WithSource);

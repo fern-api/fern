@@ -9,7 +9,7 @@ import * as core from "../../../../core";
 export const SdkGroupInfo: core.serialization.ObjectSchema<serializers.SdkGroupInfo.Raw, FernOpenapiIr.SdkGroupInfo> =
     core.serialization.objectWithoutOptionalProperties({
         summary: core.serialization.string().optional(),
-        description: core.serialization.string().optional()
+        description: core.serialization.string().optional(),
     });
 
 export declare namespace SdkGroupInfo {

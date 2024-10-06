@@ -13,7 +13,7 @@ export const WebsocketMessageExample: core.serialization.ObjectSchema<
 > = core.serialization
     .objectWithoutOptionalProperties({
         messageType: core.serialization.string(),
-        payload: core.serialization.lazy(() => serializers.FullExample)
+        payload: core.serialization.lazy(() => serializers.FullExample),
     })
     .extend(WithDescription);
 

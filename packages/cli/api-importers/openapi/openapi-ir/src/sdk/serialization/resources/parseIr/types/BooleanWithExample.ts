@@ -11,7 +11,7 @@ export const BooleanWithExample: core.serialization.ObjectSchema<
     FernOpenapiIr.BooleanWithExample
 > = core.serialization.objectWithoutOptionalProperties({
     default: core.serialization.boolean().optional(),
-    example: core.serialization.boolean().optional()
+    example: core.serialization.boolean().optional(),
 });
 
 export declare namespace BooleanWithExample {

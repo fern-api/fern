@@ -24,7 +24,7 @@ export const SupportedSdkLanguage: core.serialization.Schema<
     "nodets",
     "golang",
     "dotnet",
-    "jvm"
+    "jvm",
 ]);
 
 export declare namespace SupportedSdkLanguage {

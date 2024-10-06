@@ -318,6 +318,7 @@ function convertToObjectProperty(objectProperty: ObjectProperty): ObjectProperty
         schema: convertSchemaToSchemaWithExample(objectProperty.schema),
         audiences: objectProperty.audiences,
         nameOverride: objectProperty.nameOverride,
-        availability: objectProperty.availability
+        availability: objectProperty.availability,
+        readonly: objectProperty.readonly,
     };
 }

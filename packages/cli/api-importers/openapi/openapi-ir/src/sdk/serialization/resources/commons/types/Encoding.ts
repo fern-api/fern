@@ -9,7 +9,7 @@ import { ProtobufEncoding } from "./ProtobufEncoding";
 
 export const Encoding: core.serialization.Schema<serializers.Encoding.Raw, FernOpenapiIr.Encoding> = core.serialization
     .union("type", {
-        protobuf: ProtobufEncoding
+        protobuf: ProtobufEncoding,
     })
     .transform<FernOpenapiIr.Encoding>({
         transform: (value) => {
@@ -20,7 +20,7 @@ export const Encoding: core.serialization.Schema<serializers.Encoding.Raw, FernO
                     return value as FernOpenapiIr.Encoding;
             }
         },
-        untransform: ({ _visit, ...value }) => value as any
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace Encoding {

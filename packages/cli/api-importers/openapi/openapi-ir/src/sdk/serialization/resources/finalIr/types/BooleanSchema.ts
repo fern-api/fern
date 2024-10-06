@@ -10,7 +10,7 @@ export const BooleanSchema: core.serialization.ObjectSchema<
     serializers.BooleanSchema.Raw,
     FernOpenapiIr.BooleanSchema
 > = core.serialization.objectWithoutOptionalProperties({
-    default: core.serialization.boolean().optional()
+    default: core.serialization.boolean().optional(),
 });
 
 export declare namespace BooleanSchema {

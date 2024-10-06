@@ -32192,7 +32192,8 @@
               "groupName": [],
               "type": "optional"
             },
-            "audiences": []
+            "audiences": [],
+            "readonly": false
           },
           {
             "conflict": {},
@@ -33855,7 +33856,8 @@
               },
               "type": "reference"
             },
-            "audiences": []
+            "audiences": [],
+            "readonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -34899,7 +34901,8 @@
               "groupName": [],
               "type": "optional"
             },
-            "audiences": []
+            "audiences": [],
+            "readonly": false
           },
           {
             "conflict": {},
@@ -36126,7 +36129,8 @@
               },
               "type": "reference"
             },
-            "audiences": []
+            "audiences": [],
+            "readonly": false
           },
           {
             "conflict": {},
@@ -36141,7 +36145,8 @@
               },
               "type": "reference"
             },
-            "audiences": []
+            "audiences": [],
+            "readonly": false
           },
           {
             "conflict": {},

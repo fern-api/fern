@@ -15,7 +15,7 @@ export const CustomCodeSampleSdk: core.serialization.ObjectSchema<
     .objectWithoutOptionalProperties({
         name: core.serialization.string().optional(),
         sdk: SupportedSdkLanguage,
-        code: core.serialization.string()
+        code: core.serialization.string(),
     })
     .extend(WithDescription);
 

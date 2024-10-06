@@ -9,7 +9,7 @@ import * as core from "../../../../core";
 export const WithName: core.serialization.ObjectSchema<serializers.WithName.Raw, FernOpenapiIr.WithName> =
     core.serialization.objectWithoutOptionalProperties({
         nameOverride: core.serialization.string().optional(),
-        generatedName: core.serialization.string()
+        generatedName: core.serialization.string(),
     });
 
 export declare namespace WithName {

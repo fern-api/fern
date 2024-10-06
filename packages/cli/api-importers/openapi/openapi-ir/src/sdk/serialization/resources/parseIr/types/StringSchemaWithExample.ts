@@ -15,7 +15,7 @@ export const StringSchemaWithExample: core.serialization.ObjectSchema<
     format: core.serialization.string().optional(),
     minLength: core.serialization.number().optional(),
     maxLength: core.serialization.number().optional(),
-    example: core.serialization.string().optional()
+    example: core.serialization.string().optional(),
 });
 
 export declare namespace StringSchemaWithExample {

@@ -17,7 +17,7 @@ export const ArraySchemaWithExample: core.serialization.ObjectSchema<
 > = core.serialization
     .objectWithoutOptionalProperties({
         value: core.serialization.lazy(() => serializers.SchemaWithExample),
-        example: core.serialization.list(core.serialization.unknown()).optional()
+        example: core.serialization.list(core.serialization.unknown()).optional(),
     })
     .extend(WithSdkGroupName)
     .extend(WithName)

@@ -13,7 +13,7 @@ export const AllOfPropertyConflict: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({
     propertyKey: core.serialization.string(),
     allOfSchemaIds: core.serialization.list(SchemaId),
-    conflictingTypeSignatures: core.serialization.boolean()
+    conflictingTypeSignatures: core.serialization.boolean(),
 });
 
 export declare namespace AllOfPropertyConflict {

@@ -15,7 +15,7 @@ export const EnumValue: core.serialization.ObjectSchema<serializers.EnumValue.Ra
             nameOverride: core.serialization.string().optional(),
             generatedName: core.serialization.string(),
             value: core.serialization.string(),
-            casing: CasingOverrides.optional()
+            casing: CasingOverrides.optional(),
         })
         .extend(WithDescription)
         .extend(WithAvailability);

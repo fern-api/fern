@@ -52,6 +52,7 @@ export class ExampleEndpointFactory {
 
             if (requestSchemaIdResponse.examples.length === 0) {
                 const example = this.exampleTypeFactory.buildExample({
+                    skipReadonly: endpoint.method === "POST" || endpoint.method === "PUT",
                     schema: requestSchemaIdResponse.schema,
                     exampleId: undefined,
                     example: undefined,
@@ -66,6 +67,7 @@ export class ExampleEndpointFactory {
             } else {
                 for (const { name: exampleId, value: rawExample } of requestSchemaIdResponse.examples) {
                     const example = this.exampleTypeFactory.buildExample({
+                        skipReadonly: endpoint.method === "POST" || endpoint.method === "PUT",
                         schema: requestSchemaIdResponse.schema,
                         exampleId,
                         example: rawExample,
@@ -94,6 +96,7 @@ export class ExampleEndpointFactory {
 
             if (responseSchemaIdResponse.examples.length === 0) {
                 const example = this.exampleTypeFactory.buildExample({
+                    skipReadonly: false,
                     schema: responseSchemaIdResponse.schema,
                     exampleId: undefined,
                     example: undefined,
@@ -109,6 +112,7 @@ export class ExampleEndpointFactory {
             } else {
                 for (const { name: exampleId, value: rawExample } of responseSchemaIdResponse.examples) {
                     const example = this.exampleTypeFactory.buildExample({
+                        skipReadonly: false,
                         schema: responseSchemaIdResponse.schema,
                         exampleId,
                         example: rawExample,
@@ -557,7 +561,8 @@ function convertMultipartRequestToSchema(request: RequestWithExample.Multipart):
                     conflict: {},
                     generatedName: property.key,
                     nameOverride: undefined,
-                    availability: undefined
+                    availability: undefined,
+                    readonly: undefined
                 };
             })
             .filter(isNonNullish),

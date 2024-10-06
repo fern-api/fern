@@ -16,7 +16,7 @@ export const UnknownSchemaWithExample: core.serialization.ObjectSchema<
     FernOpenapiIr.UnknownSchemaWithExample
 > = core.serialization
     .objectWithoutOptionalProperties({
-        example: core.serialization.unknown()
+        example: core.serialization.unknown(),
     })
     .extend(WithSdkGroupName)
     .extend(WithName)

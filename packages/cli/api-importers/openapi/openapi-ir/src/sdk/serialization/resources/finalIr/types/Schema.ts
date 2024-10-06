@@ -22,10 +22,10 @@ export const Schema: core.serialization.Schema<serializers.Schema.Raw, FernOpena
         reference: ReferencedSchema,
         literal: LiteralSchema,
         oneOf: core.serialization.object({
-            value: core.serialization.lazy(() => serializers.OneOfSchema)
+            value: core.serialization.lazy(() => serializers.OneOfSchema),
         }),
         nullable: core.serialization.lazyObject(() => serializers.NullableSchema),
-        unknown: WithName
+        unknown: WithName,
     })
     .transform<FernOpenapiIr.Schema>({
         transform: (value) => {
@@ -56,7 +56,7 @@ export const Schema: core.serialization.Schema<serializers.Schema.Raw, FernOpena
                     return value as FernOpenapiIr.Schema;
             }
         },
-        untransform: ({ _visit, ...value }) => value as any
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace Schema {

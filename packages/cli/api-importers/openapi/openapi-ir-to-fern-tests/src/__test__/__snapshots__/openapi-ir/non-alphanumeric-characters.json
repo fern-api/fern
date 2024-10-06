@@ -108,7 +108,8 @@
               "groupName": [],
               "type": "optional"
             },
-            "audiences": []
+            "audiences": [],
+            "readonly": false
           }
         ],
         "allOfPropertyConflicts": [],
