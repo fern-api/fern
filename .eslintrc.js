@@ -88,6 +88,8 @@ module.exports = {
             }
         ],
         "jest/unbound-method": ["error"],
+        "jest/valid-describe-callback": "off",
+        "jest/valid-title": "off",
         "object-shorthand": ["error"],
         "@typescript-eslint/no-invalid-void-type": "off",
         "no-unused-vars": "off",
@@ -120,7 +122,8 @@ module.exports = {
         "@typescript-eslint/no-empty-interface": "off",
         "@typescript-eslint/no-unnecessary-condition": "off",
         "eslint-comments/no-unused-disable": "off",
-        "jest/expect-expect": "off"
+        "jest/expect-expect": "off",
+        "jest/no-conditional-expect": "off"
     },
     overrides: [
         {

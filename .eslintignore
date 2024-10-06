@@ -9,7 +9,7 @@ bundle.c?js
 packages/ir-sdk/**
 packages/cli/api-importers/conjure/conjure-sdk/**
 packages/docs-config/**
-packages/cli/openapi-ir-sdk/**
+packages/cli/api-importers/openapi/openapi-ir/src/sdk/**
 packages/cli/configuration/src/docs-yml/schemas/**
 packages/seed/**
 generators/typescript/utils/core-utilities/**

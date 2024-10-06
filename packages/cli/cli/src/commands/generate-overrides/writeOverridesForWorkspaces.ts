@@ -1,7 +1,7 @@
 import { dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { Schema } from "@fern-api/openapi-ir-sdk";
+import { Schema } from "@fern-api/openapi-ir";
 import { getEndpointLocation } from "@fern-api/openapi-ir-to-fern";
-import { parse } from "@fern-api/openapi-parser";
+import { parse } from "@fern-api/openapi-ir-parser";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
 import { getAllOpenAPISpecs, OSSWorkspace } from "@fern-api/lazy-fern-workspace";

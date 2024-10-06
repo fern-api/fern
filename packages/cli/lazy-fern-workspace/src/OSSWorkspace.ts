@@ -2,7 +2,7 @@ import { FERN_PACKAGE_MARKER_FILENAME, generatorsYml } from "@fern-api/configura
 import { isNonNullish } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { convert } from "@fern-api/openapi-ir-to-fern";
-import { parse, ParseOpenAPIOptions } from "@fern-api/openapi-parser";
+import { parse, ParseOpenAPIOptions } from "@fern-api/openapi-ir-parser";
 import { TaskContext } from "@fern-api/task-context";
 import yaml from "js-yaml";
 import { v4 as uuidv4 } from "uuid";
@@ -14,6 +14,7 @@ import {
     IdentifiableSource
 } from "@fern-api/api-workspace-commons";
 import { mapValues } from "./utils/mapValues";
+import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 
 export type Spec = OpenAPISpec | ProtobufSpec;
 
@@ -62,6 +63,7 @@ export interface SpecImportSettings {
     shouldUseUndiscriminatedUnionsWithLiterals: boolean;
     optionalAdditionalProperties: boolean;
     asyncApiNaming?: "v1" | "v2";
+    cooerceEnumsToLiterals: boolean;
 }
 
 export declare namespace OSSWorkspace {
@@ -93,6 +95,10 @@ export declare namespace OSSWorkspace {
          * optional.
          */
         optionalAdditionalProperties?: boolean;
+        /*
+         * Whether or not to cooerce enums to undiscriminated union literals.
+         */
+        cooerceEnumsToLiterals?: boolean;
     }
 }
 
@@ -106,6 +112,25 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
         this.sources = this.convertSpecsToIdentifiableSources(specs);
     }
 
+    public async getOpenAPIIr(
+        {
+            context,
+            relativePathToDependency
+        }: {
+            context: TaskContext;
+            relativePathToDependency?: RelativeFilePath;
+        },
+        settings?: OSSWorkspace.Settings
+    ): Promise<OpenApiIntermediateRepresentation> {
+        const openApiSpecs = await getAllOpenAPISpecs({ context, specs: this.specs, relativePathToDependency });
+        return await parse({
+            absoluteFilePathToWorkspace: this.absoluteFilePath,
+            specs: openApiSpecs,
+            taskContext: context,
+            optionOverrides: getOptionsOverridesFromSettings(settings)
+        });
+    }
+
     public async getDefinition(
         {
             context,
@@ -116,13 +141,7 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
         },
         settings?: OSSWorkspace.Settings
     ): Promise<FernDefinition> {
-        const openApiSpecs = await getAllOpenAPISpecs({ context, specs: this.specs, relativePathToDependency });
-        const openApiIr = await parse({
-            absoluteFilePathToWorkspace: this.absoluteFilePath,
-            specs: openApiSpecs,
-            taskContext: context,
-            optionOverrides: getOptionsOverridesFromSettings(settings)
-        });
+        const openApiIr = await this.getOpenAPIIr({ context, relativePathToDependency }, settings);
 
         // Ideally you are still at the individual spec level here, so you can still modify the fern definition
         // file paths with the inputted namespace, however given auth and other shared settings I think we have to
@@ -252,6 +271,9 @@ function getOptionsOverridesFromSettings(settings?: OSSWorkspace.Settings): Part
     }
     if (settings.optionalAdditionalProperties) {
         result.optionalAdditionalProperties = true;
+    }
+    if (settings.cooerceEnumsToLiterals) {
+        result.cooerceEnumsToLiterals = true;
     }
     return result;
 }
