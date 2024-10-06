@@ -41,7 +41,9 @@ import {
     TypeReference,
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration,
-    ExampleQueryParameter
+    ExampleQueryParameter,
+    ExampleInlinedRequestBody,
+    ExampleInlinedRequestBodyProperty
 } from "@fern-api/ir-sdk";
 import hash from "object-hash";
 
@@ -449,17 +451,28 @@ export class ExampleGenerator {
         );
     }
 
-    private generateInlinedRequestBodyExample(requestBody: InlinedRequestBody): ExampleRequestBody {
-        const exampleProperties = [
-            ...new Set([
-                ...requestBody.properties.map((prop) => ({
-                    name: prop.name,
-                    value: this.generateExampleTypeReference(prop.valueType, 0),
-                    originalTypeDeclaration: undefined
-                })),
-                ...requestBody.extends.flatMap((eo) => this.flattenedProperties.get(eo.typeId) ?? [])
-            ])
-        ];
+    private generateInlinedRequestBodyExample(requestBody: InlinedRequestBody): ExampleRequestBody | undefined {
+        const exampleProperties: ExampleInlinedRequestBodyProperty[] = [];
+
+        for (const property of requestBody.properties) {
+            const value = this.generateExampleTypeReference(property.valueType, 0);
+            if (value == null) {
+                return undefined;
+            }
+            exampleProperties.push({
+                name: property.name,
+                value,
+                originalTypeDeclaration: undefined
+            });
+        }
+
+        for (const extended of requestBody.extends) {
+            const value = this.flattenedProperties.get(extended.typeId); 
+            if (value == null) {
+                return undefined;
+            }
+            exampleProperties.push(...value);
+        }
 
         const jsonExample: Record<string, unknown> = {};
         exampleProperties.forEach((prop) => (jsonExample[prop.name.wireValue] = prop.value.jsonExample));
@@ -512,26 +525,25 @@ export class ExampleGenerator {
 
         const maybeGeneratedExample = response._visit<ExampleEndpointSuccessResponse | undefined>({
             json: (jsonResponse) => {
-                const maybeExampleBody = jsonResponse._visit<ExampleEndpointSuccessResponse | undefined | undefined>({
-                    response: (jsonResponseBody) => {
-                        const example = this.generateExampleTypeReference(jsonResponseBody.responseBodyType, 0);
-                        return example;
-                    },
-                    nestedPropertyAsResponse: (jsonResponseBody) => {
-                        const example =
-                            jsonResponseBody.responseProperty != null
-                                ? this.generateExampleTypeReference(jsonResponseBody.responseProperty.valueType, 0)
-                                : this.generateExampleTypeReference(jsonResponseBody.responseBodyType, 0);
-                        return example;
-                    },
-                    _other: () => {
-                        return undefined;
+                switch (jsonResponse.type) {
+                    case "response": {
+                        const example = this.generateExampleTypeReference(jsonResponse.responseBodyType, 0);
+                        if (example == null) {
+                            return undefined;
+                        }
+                        return ExampleEndpointSuccessResponse.body(example);
                     }
-                });
-                if (maybeExampleBody != null) {
-                    return ExampleEndpointSuccessResponse.body(maybeExampleBody);
+                    case "nestedPropertyAsResponse": {
+                        const example =
+                            jsonResponse.responseProperty != null
+                                ? this.generateExampleTypeReference(jsonResponse.responseProperty.valueType, 0)
+                                : this.generateExampleTypeReference(jsonResponse.responseBodyType, 0);
+                        if (example == null) {
+                            return undefined;
+                        }
+                        return ExampleEndpointSuccessResponse.body(example);
+                    }
                 }
-                return undefined;
             },
             fileDownload: () =>
                 ExampleEndpointSuccessResponse.body(
@@ -542,7 +554,7 @@ export class ExampleGenerator {
                     this.generateExamplePrimitive({ primitiveType: PrimitiveTypeV1.String })
                 ),
             streaming: (streamingResponse) =>
-                streamingResponse._visit<ExampleEndpointSuccessResponse>({
+                streamingResponse._visit<ExampleEndpointSuccessResponse | undefined>({
                     sse: (sse) => {
                         const example = this.generateExampleTypeReference(sse.payload, 0);
                         if (example == null) {
@@ -580,12 +592,14 @@ export class ExampleGenerator {
                     response: nonStreamResponse,
                     maybeResponse: undefined
                 });
-                if (example.type === "error") {
-                    throw new Error("Unexpected: received error example");
+                if (example != null && example.type === "error") {
+                    return undefined;
                 }
-                return example.value;
+                return example;
             },
-            _other: () => ExampleEndpointSuccessResponse.body(this.generateExampleUnknown())
+            _other: () => {
+                return undefined;
+            }
         });
         if (maybeGeneratedExample == null) {
             return undefined;
@@ -628,6 +642,9 @@ export class ExampleGenerator {
         depth: number
     ): ExampleType | undefined {
         const exampleTypeReference = this.generateExampleTypeReference(aliasDeclaration.aliasOf, depth);
+        if (exampleTypeReference == null) {
+            return undefined;
+        }
         return this.newNamelessExampleType({
             jsonExample: exampleTypeReference.jsonExample,
             shape: ExampleTypeShape.alias({
@@ -677,29 +694,36 @@ export class ExampleGenerator {
         containerProperties: ExampleObjectProperty[],
         type: SingleUnionType,
         depth: number
-    ): ExampleSingleUnionType {
+    ): ExampleSingleUnionType | undefined {
+        const shape = type.shape._visit<ExampleSingleUnionTypeProperties | undefined>({
+            samePropertiesAsObject: (dtn: DeclaredTypeName) => {
+                const objectDeclaration = this.types.get(dtn.typeId);
+                if (objectDeclaration === undefined || objectDeclaration.shape.type !== "object") {
+                    return ExampleSingleUnionTypeProperties.noProperties();
+                }
+                return ExampleSingleUnionTypeProperties.samePropertiesAsObject({
+                    typeId: dtn.typeId,
+                    object: {
+                        properties: [...containerProperties, ...(this.flattenedProperties.get(dtn.typeId) ?? [])]
+                    }
+                });
+            },
+            singleProperty: (sutp: SingleUnionTypeProperty) => {
+                const value = this.generateExampleTypeReference(sutp.type, depth + 1);
+                if (value == null) {
+                    return undefined;
+                }
+                return ExampleSingleUnionTypeProperties.singleProperty(value);
+            },
+            noProperties: () => ExampleSingleUnionTypeProperties.noProperties(),
+            _other: () => ExampleSingleUnionTypeProperties.noProperties()
+        });
+        if (shape == null) {
+            return undefined;
+        }
         return {
             wireDiscriminantValue: type.discriminantValue,
-            shape: type.shape._visit<ExampleSingleUnionTypeProperties>({
-                samePropertiesAsObject: (dtn: DeclaredTypeName) => {
-                    const objectDeclaration = this.types.get(dtn.typeId);
-                    if (objectDeclaration === undefined || objectDeclaration.shape.type !== "object") {
-                        return ExampleSingleUnionTypeProperties.noProperties();
-                    }
-                    return ExampleSingleUnionTypeProperties.samePropertiesAsObject({
-                        typeId: dtn.typeId,
-                        object: {
-                            properties: [...containerProperties, ...(this.flattenedProperties.get(dtn.typeId) ?? [])]
-                        }
-                    });
-                },
-                singleProperty: (sutp: SingleUnionTypeProperty) =>
-                    ExampleSingleUnionTypeProperties.singleProperty(
-                        this.generateExampleTypeReference(sutp.type, depth + 1)
-                    ),
-                noProperties: () => ExampleSingleUnionTypeProperties.noProperties(),
-                _other: () => ExampleSingleUnionTypeProperties.noProperties()
-            })
+            shape
         };
     }
 
@@ -712,6 +736,9 @@ export class ExampleGenerator {
             try {
                 const containerProperties = this.flattenedProperties.get(typeId) ?? [];
                 const singleUnionType = this.generateSingleUnionType(containerProperties, member, depth);
+                if (singleUnionType == null) {
+                    continue;
+                }
 
                 const jsonExample: Record<string, unknown> = {};
                 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -756,6 +783,9 @@ export class ExampleGenerator {
         let index = 0;
         for (const member of undiscriminatedUnionDeclaration.members) {
             const memberExample = this.generateExampleTypeReference(member.type, depth);
+            if (memberExample == null) {
+                continue;
+            }
             try {
                 return this.newNamelessExampleType({
                     jsonExample: memberExample.jsonExample,
@@ -860,7 +890,7 @@ export class ExampleGenerator {
         }
     }
 
-    private generateExampleContainer(containerType: ContainerType, depth: number): ExampleTypeReference {
+    private generateExampleContainer(containerType: ContainerType, depth: number): ExampleTypeReference | undefined {
         const newDepth = depth + 1;
 
         if (this.exceedsMaxDepth(newDepth)) {
@@ -883,21 +913,28 @@ export class ExampleGenerator {
         }
     }
 
-    private generateExampleTypeReferenceOptional(typeReference: TypeReference, depth: number): ExampleTypeReference {
+    private generateExampleTypeReferenceOptional(
+        typeReference: TypeReference,
+        depth: number
+    ): ExampleTypeReference | undefined {
         const exampleTypeReference = this.generateExampleTypeReference(typeReference, depth);
+        if (exampleTypeReference == null) {
+            return undefined;
+        }
         return {
             jsonExample: exampleTypeReference.jsonExample,
-            shape: ExampleTypeReferenceShape.container(
-                ExampleContainer.optional({
-                    optional: exampleTypeReference,
-                    valueType: typeReference
-                })
-            )
+            shape: exampleTypeReference.shape
         };
     }
 
-    private generateExampleTypeReferenceList(typeReference: TypeReference, depth: number): ExampleTypeReference {
+    private generateExampleTypeReferenceList(
+        typeReference: TypeReference,
+        depth: number
+    ): ExampleTypeReference | undefined {
         const exampleTypeReference = this.generateExampleTypeReference(typeReference, depth);
+        if (exampleTypeReference == null) {
+            return undefined;
+        }
         return {
             jsonExample: [exampleTypeReference.jsonExample],
             shape: ExampleTypeReferenceShape.container(
@@ -909,11 +946,14 @@ export class ExampleGenerator {
         };
     }
 
-    private generateExampleTypeReferenceMap(mapType: MapType, depth: number): ExampleTypeReference {
+    private generateExampleTypeReferenceMap(mapType: MapType, depth: number): ExampleTypeReference | undefined {
         const exampleTypeReferenceKey = this.generateExampleTypeReference(mapType.keyType, depth, {
             unknownAsPrimitive: true
         });
         const exampleTypeReferenceValue = this.generateExampleTypeReference(mapType.valueType, depth);
+        if (exampleTypeReferenceKey == null || exampleTypeReferenceValue == null) {
+            return undefined;
+        }
         const jsonExampleMapKey = this.jsonExampleToMapKey(exampleTypeReferenceKey.jsonExample);
         return {
             jsonExample: {
@@ -943,8 +983,14 @@ export class ExampleGenerator {
         return "string";
     }
 
-    private generateExampleTypeReferenceSet(typeReference: TypeReference, depth: number): ExampleTypeReference {
+    private generateExampleTypeReferenceSet(
+        typeReference: TypeReference,
+        depth: number
+    ): ExampleTypeReference | undefined {
         const exampleTypeReference = this.generateExampleTypeReference(typeReference, depth);
+        if (exampleTypeReference == null) {
+            return undefined;
+        }        
         return {
             // NOTE: you will have to manage this within the generator to ensure this list becomes a set,
             // as you can't represent a set in JSON.
