@@ -1,0 +1,13 @@
+service:
+  auth: false
+  base-path: "/servicePath"
+  endpoints:
+    get:
+      method: GET
+      base-path: "/latest"
+      path: /{endpointPathParam}
+      path-parameters:
+        endpointPathParam: string
+      examples:
+        - path-parameters:
+            endpointPathParam: hello

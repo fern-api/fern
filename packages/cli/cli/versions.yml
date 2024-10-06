@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Endpoint level base-path overrides are now respected when validating examples.
+      type: fix
+  irVersion: 53
+  version: 0.44.6
+
+- changelogEntry:
+    - summary: |
         The Fern Definition now supports overriding `base-path` at the endpoint level. 
         This is useful if you have subset of endpoints that do not live at the
         configured base-path.  
