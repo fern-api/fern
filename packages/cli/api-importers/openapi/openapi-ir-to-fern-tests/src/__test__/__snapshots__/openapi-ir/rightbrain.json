@@ -45849,7 +45849,8 @@
               },
               "type": "reference"
             },
-            "audiences": []
+            "audiences": [],
+            "readonly": false
           },
           {
             "conflict": {},
@@ -45864,7 +45865,8 @@
               },
               "type": "reference"
             },
-            "audiences": []
+            "audiences": [],
+            "readonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -45958,7 +45960,8 @@
               },
               "type": "reference"
             },
-            "audiences": []
+            "audiences": [],
+            "readonly": false
           },
           {
             "conflict": {},
@@ -45973,7 +45976,8 @@
               },
               "type": "reference"
             },
-            "audiences": []
+            "audiences": [],
+            "readonly": false
           },
           {
             "conflict": {},
@@ -45988,7 +45992,8 @@
               },
               "type": "reference"
             },
-            "audiences": []
+            "audiences": [],
+            "readonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -46018,7 +46023,8 @@
               },
               "type": "reference"
             },
-            "audiences": []
+            "audiences": [],
+            "readonly": false
           },
           {
             "conflict": {},
@@ -46033,7 +46039,8 @@
               },
               "type": "reference"
             },
-            "audiences": []
+            "audiences": [],
+            "readonly": false
           },
           {
             "conflict": {},
@@ -46048,7 +46055,8 @@
               },
               "type": "reference"
             },
-            "audiences": []
+            "audiences": [],
+            "readonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -49925,7 +49933,8 @@
               },
               "type": "reference"
             },
-            "audiences": []
+            "audiences": [],
+            "readonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -50667,7 +50676,8 @@
               },
               "type": "reference"
             },
-            "audiences": []
+            "audiences": [],
+            "readonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -50713,7 +50723,8 @@
               },
               "type": "reference"
             },
-            "audiences": []
+            "audiences": [],
+            "readonly": false
           }
         ],
         "allOfPropertyConflicts": [],

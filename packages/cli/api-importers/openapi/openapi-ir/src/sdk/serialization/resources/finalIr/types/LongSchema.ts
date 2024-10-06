@@ -8,7 +8,7 @@ import * as core from "../../../../core";
 
 export const LongSchema: core.serialization.ObjectSchema<serializers.LongSchema.Raw, FernOpenapiIr.LongSchema> =
     core.serialization.objectWithoutOptionalProperties({
-        default: core.serialization.number().optional()
+        default: core.serialization.number().optional(),
     });
 
 export declare namespace LongSchema {

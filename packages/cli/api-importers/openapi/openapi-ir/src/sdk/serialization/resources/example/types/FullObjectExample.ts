@@ -14,7 +14,7 @@ export const FullObjectExample: core.serialization.ObjectSchema<
     properties: core.serialization.record(
         PropertyKey,
         core.serialization.lazy(() => serializers.FullExample)
-    )
+    ),
 });
 
 export declare namespace FullObjectExample {

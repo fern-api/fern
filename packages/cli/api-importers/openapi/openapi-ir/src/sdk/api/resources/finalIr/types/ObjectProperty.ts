@@ -7,6 +7,7 @@ import * as FernOpenapiIr from "../../../index";
 export interface ObjectProperty extends FernOpenapiIr.WithAvailability {
     key: string;
     schema: FernOpenapiIr.Schema;
+    readonly: boolean | undefined;
     /** The schemas that conflict with this property */
     conflict: Record<FernOpenapiIr.SchemaId, FernOpenapiIr.ObjectPropertyConflictInfo>;
     /** A unique name for the property. */

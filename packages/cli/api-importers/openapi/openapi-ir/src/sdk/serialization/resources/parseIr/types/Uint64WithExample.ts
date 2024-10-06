@@ -11,7 +11,7 @@ export const Uint64WithExample: core.serialization.ObjectSchema<
     FernOpenapiIr.Uint64WithExample
 > = core.serialization.objectWithoutOptionalProperties({
     default: core.serialization.number().optional(),
-    example: core.serialization.number().optional()
+    example: core.serialization.number().optional(),
 });
 
 export declare namespace Uint64WithExample {

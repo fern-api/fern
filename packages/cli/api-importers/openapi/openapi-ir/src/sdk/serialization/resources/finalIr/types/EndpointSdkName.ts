@@ -13,7 +13,7 @@ export const EndpointSdkName: core.serialization.ObjectSchema<
     FernOpenapiIr.EndpointSdkName
 > = core.serialization.objectWithoutOptionalProperties({
     groupName: SdkGroupName,
-    methodName: core.serialization.string()
+    methodName: core.serialization.string(),
 });
 
 export declare namespace EndpointSdkName {

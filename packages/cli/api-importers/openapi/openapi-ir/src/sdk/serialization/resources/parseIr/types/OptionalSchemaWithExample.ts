@@ -16,7 +16,7 @@ export const OptionalSchemaWithExample: core.serialization.ObjectSchema<
     FernOpenapiIr.OptionalSchemaWithExample
 > = core.serialization
     .objectWithoutOptionalProperties({
-        value: core.serialization.lazy(() => serializers.SchemaWithExample)
+        value: core.serialization.lazy(() => serializers.SchemaWithExample),
     })
     .extend(WithSdkGroupName)
     .extend(WithName)

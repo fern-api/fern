@@ -8,7 +8,7 @@ import * as core from "../../../../core";
 
 export const WithTitle: core.serialization.ObjectSchema<serializers.WithTitle.Raw, FernOpenapiIr.WithTitle> =
     core.serialization.objectWithoutOptionalProperties({
-        title: core.serialization.string().optional()
+        title: core.serialization.string().optional(),
     });
 
 export declare namespace WithTitle {

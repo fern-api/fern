@@ -31,7 +31,7 @@ export const Encoding = {
                 visitor: FernOpenapiIr.Encoding._Visitor<_Result>
             ) {
                 return FernOpenapiIr.Encoding._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -42,5 +42,5 @@ export const Encoding = {
             default:
                 return visitor._other(value as any);
         }
-    }
+    },
 } as const;

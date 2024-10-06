@@ -36,7 +36,7 @@ export const OneOfSchema = {
                 visitor: FernOpenapiIr.OneOfSchema._Visitor<_Result>
             ) {
                 return FernOpenapiIr.OneOfSchema._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -49,7 +49,7 @@ export const OneOfSchema = {
                 visitor: FernOpenapiIr.OneOfSchema._Visitor<_Result>
             ) {
                 return FernOpenapiIr.OneOfSchema._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -65,5 +65,5 @@ export const OneOfSchema = {
             default:
                 return visitor._other(value as any);
         }
-    }
+    },
 } as const;

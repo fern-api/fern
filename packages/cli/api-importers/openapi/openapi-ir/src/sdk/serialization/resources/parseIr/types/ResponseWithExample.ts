@@ -20,7 +20,7 @@ export const ResponseWithExample: core.serialization.Schema<
         text: TextResponse,
         streamingSse: JsonResponse,
         streamingText: TextResponse,
-        streamingJson: JsonResponse
+        streamingJson: JsonResponse,
     })
     .transform<FernOpenapiIr.ResponseWithExample>({
         transform: (value) => {
@@ -41,7 +41,7 @@ export const ResponseWithExample: core.serialization.Schema<
                     return value as FernOpenapiIr.ResponseWithExample;
             }
         },
-        untransform: ({ _visit, ...value }) => value as any
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace ResponseWithExample {

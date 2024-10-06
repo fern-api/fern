@@ -12,7 +12,7 @@ export const OneOfSchemaWithExample: core.serialization.Schema<
 > = core.serialization
     .union("type", {
         discriminated: core.serialization.lazyObject(() => serializers.DiscriminatedOneOfSchemaWithExample),
-        undisciminated: core.serialization.lazyObject(() => serializers.UnDiscriminatedOneOfSchemaWithExample)
+        undisciminated: core.serialization.lazyObject(() => serializers.UnDiscriminatedOneOfSchemaWithExample),
     })
     .transform<FernOpenapiIr.OneOfSchemaWithExample>({
         transform: (value) => {
@@ -25,7 +25,7 @@ export const OneOfSchemaWithExample: core.serialization.Schema<
                     return value as FernOpenapiIr.OneOfSchemaWithExample;
             }
         },
-        untransform: ({ _visit, ...value }) => value as any
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace OneOfSchemaWithExample {

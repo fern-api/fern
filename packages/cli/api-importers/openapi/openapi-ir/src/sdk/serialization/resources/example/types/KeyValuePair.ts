@@ -10,7 +10,7 @@ import { PrimitiveExample } from "./PrimitiveExample";
 export const KeyValuePair: core.serialization.ObjectSchema<serializers.KeyValuePair.Raw, FernOpenapiIr.KeyValuePair> =
     core.serialization.objectWithoutOptionalProperties({
         key: PrimitiveExample,
-        value: core.serialization.lazy(() => serializers.FullExample)
+        value: core.serialization.lazy(() => serializers.FullExample),
     });
 
 export declare namespace KeyValuePair {

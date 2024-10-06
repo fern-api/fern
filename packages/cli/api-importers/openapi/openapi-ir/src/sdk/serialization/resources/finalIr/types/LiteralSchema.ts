@@ -17,7 +17,7 @@ export const LiteralSchema: core.serialization.ObjectSchema<
     FernOpenapiIr.LiteralSchema
 > = core.serialization
     .objectWithoutOptionalProperties({
-        value: LiteralSchemaValue
+        value: LiteralSchemaValue,
     })
     .extend(WithDescription)
     .extend(WithName)

@@ -38,7 +38,7 @@ export const LiteralSchemaValue = {
                 visitor: FernOpenapiIr.LiteralSchemaValue._Visitor<_Result>
             ) {
                 return FernOpenapiIr.LiteralSchemaValue._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -51,7 +51,7 @@ export const LiteralSchemaValue = {
                 visitor: FernOpenapiIr.LiteralSchemaValue._Visitor<_Result>
             ) {
                 return FernOpenapiIr.LiteralSchemaValue._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -67,5 +67,5 @@ export const LiteralSchemaValue = {
             default:
                 return visitor._other(value as any);
         }
-    }
+    },
 } as const;

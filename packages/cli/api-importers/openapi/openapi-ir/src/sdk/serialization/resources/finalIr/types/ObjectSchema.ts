@@ -20,7 +20,7 @@ export const ObjectSchema: core.serialization.ObjectSchema<serializers.ObjectSch
             allOf: core.serialization.list(ReferencedSchema),
             properties: core.serialization.list(core.serialization.lazyObject(() => serializers.ObjectProperty)),
             allOfPropertyConflicts: core.serialization.list(AllOfPropertyConflict),
-            additionalProperties: core.serialization.boolean()
+            additionalProperties: core.serialization.boolean(),
         })
         .extend(WithDescription)
         .extend(WithName)

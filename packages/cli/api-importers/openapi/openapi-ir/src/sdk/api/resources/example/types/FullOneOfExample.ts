@@ -42,7 +42,7 @@ export const FullOneOfExample = {
                 visitor: FernOpenapiIr.FullOneOfExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.FullOneOfExample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -55,7 +55,7 @@ export const FullOneOfExample = {
                 visitor: FernOpenapiIr.FullOneOfExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.FullOneOfExample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -71,5 +71,5 @@ export const FullOneOfExample = {
             default:
                 return visitor._other(value as any);
         }
-    }
+    },
 } as const;

@@ -58,7 +58,7 @@ export const SecurityScheme = {
                 visitor: FernOpenapiIr.SecurityScheme._Visitor<_Result>
             ) {
                 return FernOpenapiIr.SecurityScheme._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -71,7 +71,7 @@ export const SecurityScheme = {
                 visitor: FernOpenapiIr.SecurityScheme._Visitor<_Result>
             ) {
                 return FernOpenapiIr.SecurityScheme._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -84,7 +84,7 @@ export const SecurityScheme = {
                 visitor: FernOpenapiIr.SecurityScheme._Visitor<_Result>
             ) {
                 return FernOpenapiIr.SecurityScheme._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -97,7 +97,7 @@ export const SecurityScheme = {
                 visitor: FernOpenapiIr.SecurityScheme._Visitor<_Result>
             ) {
                 return FernOpenapiIr.SecurityScheme._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -110,7 +110,7 @@ export const SecurityScheme = {
                 visitor: FernOpenapiIr.SecurityScheme._Visitor<_Result>
             ) {
                 return FernOpenapiIr.SecurityScheme._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -132,5 +132,5 @@ export const SecurityScheme = {
             default:
                 return visitor._other(value as any);
         }
-    }
+    },
 } as const;

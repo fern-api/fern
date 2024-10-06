@@ -20,7 +20,7 @@ export const Schemas: core.serialization.ObjectSchema<serializers.Schemas.Raw, F
                 SchemaId,
                 core.serialization.lazy(() => serializers.Schema)
             )
-        )
+        ),
     });
 
 export declare namespace Schemas {

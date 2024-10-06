@@ -16,10 +16,11 @@ export const ObjectProperty: core.serialization.ObjectSchema<
     .objectWithoutOptionalProperties({
         key: core.serialization.string(),
         schema: core.serialization.lazy(() => serializers.Schema),
+        readonly: core.serialization.boolean().optional(),
         conflict: core.serialization.record(SchemaId, ObjectPropertyConflictInfo),
         generatedName: core.serialization.string(),
         nameOverride: core.serialization.string().optional(),
-        audiences: core.serialization.list(core.serialization.string())
+        audiences: core.serialization.list(core.serialization.string()),
     })
     .extend(WithAvailability);
 
@@ -27,6 +28,7 @@ export declare namespace ObjectProperty {
     interface Raw extends WithAvailability.Raw {
         key: string;
         schema: serializers.Schema.Raw;
+        readonly?: boolean | null;
         conflict: Record<SchemaId.Raw, ObjectPropertyConflictInfo.Raw>;
         generatedName: string;
         nameOverride?: string | null;

@@ -36,7 +36,7 @@ export const CustomCodeSample = {
                 visitor: FernOpenapiIr.CustomCodeSample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.CustomCodeSample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -49,7 +49,7 @@ export const CustomCodeSample = {
                 visitor: FernOpenapiIr.CustomCodeSample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.CustomCodeSample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -65,5 +65,5 @@ export const CustomCodeSample = {
             default:
                 return visitor._other(value as any);
         }
-    }
+    },
 } as const;

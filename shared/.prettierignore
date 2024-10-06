@@ -1,4 +1,5 @@
 ../packages/cli/api-importers/conjure/conjure-sdk/**
+../packages/cli/api-importers/openapi/openapi-ir/**
 ../packages/ir-sdk/**
 ../packages/cli/configuration/src/docs-yml/schemas/**
 ../packages/cli/openapi-ir-sdk/**

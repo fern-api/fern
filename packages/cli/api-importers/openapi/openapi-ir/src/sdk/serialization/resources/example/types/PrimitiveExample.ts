@@ -12,38 +12,38 @@ export const PrimitiveExample: core.serialization.Schema<
 > = core.serialization
     .union("type", {
         int: core.serialization.object({
-            value: core.serialization.number()
+            value: core.serialization.number(),
         }),
         int64: core.serialization.object({
-            value: core.serialization.number()
+            value: core.serialization.number(),
         }),
         uint: core.serialization.object({
-            value: core.serialization.number()
+            value: core.serialization.number(),
         }),
         uint64: core.serialization.object({
-            value: core.serialization.number()
+            value: core.serialization.number(),
         }),
         float: core.serialization.object({
-            value: core.serialization.number()
+            value: core.serialization.number(),
         }),
         double: core.serialization.object({
-            value: core.serialization.number()
+            value: core.serialization.number(),
         }),
         string: core.serialization.object({
-            value: core.serialization.string()
+            value: core.serialization.string(),
         }),
         datetime: core.serialization.object({
-            value: core.serialization.string()
+            value: core.serialization.string(),
         }),
         date: core.serialization.object({
-            value: core.serialization.string()
+            value: core.serialization.string(),
         }),
         base64: core.serialization.object({
-            value: core.serialization.string()
+            value: core.serialization.string(),
         }),
         boolean: core.serialization.object({
-            value: core.serialization.boolean()
-        })
+            value: core.serialization.boolean(),
+        }),
     })
     .transform<FernOpenapiIr.PrimitiveExample>({
         transform: (value) => {
@@ -74,7 +74,7 @@ export const PrimitiveExample: core.serialization.Schema<
                     return value as FernOpenapiIr.PrimitiveExample;
             }
         },
-        untransform: ({ _visit, ...value }) => value as any
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace PrimitiveExample {

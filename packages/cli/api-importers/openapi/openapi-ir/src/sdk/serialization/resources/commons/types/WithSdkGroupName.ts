@@ -12,7 +12,7 @@ export const WithSdkGroupName: core.serialization.ObjectSchema<
     serializers.WithSdkGroupName.Raw,
     FernOpenapiIr.WithSdkGroupName
 > = core.serialization.objectWithoutOptionalProperties({
-    groupName: SdkGroupName.optional()
+    groupName: SdkGroupName.optional(),
 });
 
 export declare namespace WithSdkGroupName {

@@ -15,7 +15,7 @@ export const CustomCodeSampleLanguage: core.serialization.ObjectSchema<
         name: core.serialization.string().optional(),
         language: core.serialization.string(),
         code: core.serialization.string(),
-        install: core.serialization.string().optional()
+        install: core.serialization.string().optional(),
     })
     .extend(WithDescription);
 

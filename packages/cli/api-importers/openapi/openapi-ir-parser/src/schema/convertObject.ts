@@ -173,6 +173,8 @@ export function convertObject({
             const audiences = getExtension<string[]>(propertySchema, FernOpenAPIExtension.AUDIENCES) ?? [];
             const availability = convertAvailability(propertySchema);
 
+            const readonly = isReferenceObject(propertySchema) ? false : propertySchema.readOnly;
+
             const propertyNameOverride = getExtension<string | undefined>(
                 propertySchema,
                 FernOpenAPIExtension.FERN_PROPERTY_NAME
@@ -208,7 +210,8 @@ export function convertObject({
                 audiences,
                 conflict: conflicts,
                 generatedName: getGeneratedPropertyName([...breadcrumbs, propertyName]),
-                availability
+                availability,
+                readonly
             };
         }
     );

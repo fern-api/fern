@@ -18,7 +18,7 @@ export const SecurityScheme: core.serialization.Schema<serializers.SecuritySchem
             bearer: BearerSecurityScheme,
             header: HeaderSecurityScheme,
             query: QuerySecurityScheme,
-            oauth: OauthSecurityScheme
+            oauth: OauthSecurityScheme,
         })
         .transform<FernOpenapiIr.SecurityScheme>({
             transform: (value) => {
@@ -37,7 +37,7 @@ export const SecurityScheme: core.serialization.Schema<serializers.SecuritySchem
                         return value as FernOpenapiIr.SecurityScheme;
                 }
             },
-            untransform: ({ _visit, ...value }) => value as any
+            untransform: ({ _visit, ...value }) => value as any,
         });
 
 export declare namespace SecurityScheme {

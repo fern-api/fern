@@ -39,7 +39,7 @@ export const OpenApiIntermediateRepresentation: core.serialization.ObjectSchema<
     nonRequestReferencedSchemas: core.serialization.set(SchemaId),
     securitySchemes: core.serialization.record(SecuritySchemeId, SecurityScheme),
     globalHeaders: core.serialization.list(GlobalHeader).optional(),
-    idempotencyHeaders: core.serialization.list(IdempotencyHeader).optional()
+    idempotencyHeaders: core.serialization.list(IdempotencyHeader).optional(),
 });
 
 export declare namespace OpenApiIntermediateRepresentation {

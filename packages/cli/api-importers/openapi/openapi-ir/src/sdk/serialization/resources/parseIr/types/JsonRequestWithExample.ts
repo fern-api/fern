@@ -17,7 +17,7 @@ export const JsonRequestWithExample: core.serialization.ObjectSchema<
         schema: core.serialization.lazy(() => serializers.SchemaWithExample),
         contentType: core.serialization.string().optional(),
         fullExamples: core.serialization.list(NamedFullExample).optional(),
-        additionalProperties: core.serialization.boolean()
+        additionalProperties: core.serialization.boolean(),
     })
     .extend(WithDescription)
     .extend(WithSource);

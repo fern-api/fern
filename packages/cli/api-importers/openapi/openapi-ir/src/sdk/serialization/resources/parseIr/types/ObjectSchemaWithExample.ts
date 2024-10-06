@@ -24,7 +24,7 @@ export const ObjectSchemaWithExample: core.serialization.ObjectSchema<
         properties: core.serialization.list(core.serialization.lazyObject(() => serializers.ObjectPropertyWithExample)),
         allOfPropertyConflicts: core.serialization.list(AllOfPropertyConflict),
         fullExamples: core.serialization.list(NamedFullExample).optional(),
-        additionalProperties: core.serialization.boolean()
+        additionalProperties: core.serialization.boolean(),
     })
     .extend(WithDescription)
     .extend(WithName)

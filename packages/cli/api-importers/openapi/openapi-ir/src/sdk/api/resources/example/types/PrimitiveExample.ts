@@ -103,7 +103,7 @@ export const PrimitiveExample = {
                 visitor: FernOpenapiIr.PrimitiveExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.PrimitiveExample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -116,7 +116,7 @@ export const PrimitiveExample = {
                 visitor: FernOpenapiIr.PrimitiveExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.PrimitiveExample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -129,7 +129,7 @@ export const PrimitiveExample = {
                 visitor: FernOpenapiIr.PrimitiveExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.PrimitiveExample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -142,7 +142,7 @@ export const PrimitiveExample = {
                 visitor: FernOpenapiIr.PrimitiveExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.PrimitiveExample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -155,7 +155,7 @@ export const PrimitiveExample = {
                 visitor: FernOpenapiIr.PrimitiveExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.PrimitiveExample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -168,7 +168,7 @@ export const PrimitiveExample = {
                 visitor: FernOpenapiIr.PrimitiveExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.PrimitiveExample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -181,7 +181,7 @@ export const PrimitiveExample = {
                 visitor: FernOpenapiIr.PrimitiveExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.PrimitiveExample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -194,7 +194,7 @@ export const PrimitiveExample = {
                 visitor: FernOpenapiIr.PrimitiveExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.PrimitiveExample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -207,7 +207,7 @@ export const PrimitiveExample = {
                 visitor: FernOpenapiIr.PrimitiveExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.PrimitiveExample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -220,7 +220,7 @@ export const PrimitiveExample = {
                 visitor: FernOpenapiIr.PrimitiveExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.PrimitiveExample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -233,7 +233,7 @@ export const PrimitiveExample = {
                 visitor: FernOpenapiIr.PrimitiveExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.PrimitiveExample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -267,5 +267,5 @@ export const PrimitiveExample = {
             default:
                 return visitor._other(value as any);
         }
-    }
+    },
 } as const;

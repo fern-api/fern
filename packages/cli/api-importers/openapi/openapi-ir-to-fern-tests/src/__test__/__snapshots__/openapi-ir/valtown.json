@@ -160,7 +160,8 @@
                 },
                 "type": "reference"
               },
-              "audiences": []
+              "audiences": [],
+              "readonly": false
             }
           ],
           "allOfPropertyConflicts": [],
@@ -1500,7 +1501,8 @@
                 },
                 "type": "reference"
               },
-              "audiences": []
+              "audiences": [],
+              "readonly": false
             }
           ],
           "allOfPropertyConflicts": [],
@@ -2127,7 +2129,8 @@
                 },
                 "type": "reference"
               },
-              "audiences": []
+              "audiences": [],
+              "readonly": false
             }
           ],
           "allOfPropertyConflicts": [],
@@ -2634,7 +2637,8 @@
                 },
                 "type": "reference"
               },
-              "audiences": []
+              "audiences": [],
+              "readonly": false
             }
           ],
           "allOfPropertyConflicts": [],
@@ -3391,7 +3395,8 @@
                 },
                 "type": "reference"
               },
-              "audiences": []
+              "audiences": [],
+              "readonly": false
             }
           ],
           "allOfPropertyConflicts": [],
@@ -7602,7 +7607,8 @@
                 },
                 "type": "reference"
               },
-              "audiences": []
+              "audiences": [],
+              "readonly": false
             }
           ],
           "allOfPropertyConflicts": [],

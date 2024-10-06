@@ -11,7 +11,7 @@ export const HeaderExample: core.serialization.ObjectSchema<
     FernOpenapiIr.HeaderExample
 > = core.serialization.objectWithoutOptionalProperties({
     name: core.serialization.string(),
-    value: core.serialization.lazy(() => serializers.FullExample)
+    value: core.serialization.lazy(() => serializers.FullExample),
 });
 
 export declare namespace HeaderExample {

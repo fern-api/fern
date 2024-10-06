@@ -10,7 +10,7 @@ export const ProtobufEncoding: core.serialization.ObjectSchema<
     serializers.ProtobufEncoding.Raw,
     FernOpenapiIr.ProtobufEncoding
 > = core.serialization.objectWithoutOptionalProperties({
-    typeName: core.serialization.string()
+    typeName: core.serialization.string(),
 });
 
 export declare namespace ProtobufEncoding {

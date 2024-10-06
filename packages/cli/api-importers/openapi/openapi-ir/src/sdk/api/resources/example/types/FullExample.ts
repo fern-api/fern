@@ -81,7 +81,7 @@ export const FullExample = {
                 visitor: FernOpenapiIr.FullExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.FullExample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -94,7 +94,7 @@ export const FullExample = {
                 visitor: FernOpenapiIr.FullExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.FullExample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -107,7 +107,7 @@ export const FullExample = {
                 visitor: FernOpenapiIr.FullExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.FullExample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -120,7 +120,7 @@ export const FullExample = {
                 visitor: FernOpenapiIr.FullExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.FullExample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -133,7 +133,7 @@ export const FullExample = {
                 visitor: FernOpenapiIr.FullExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.FullExample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -146,7 +146,7 @@ export const FullExample = {
                 visitor: FernOpenapiIr.FullExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.FullExample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -159,7 +159,7 @@ export const FullExample = {
                 visitor: FernOpenapiIr.FullExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.FullExample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -172,7 +172,7 @@ export const FullExample = {
                 visitor: FernOpenapiIr.FullExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.FullExample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -200,5 +200,5 @@ export const FullExample = {
             default:
                 return visitor._other(value as any);
         }
-    }
+    },
 } as const;

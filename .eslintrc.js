@@ -122,7 +122,8 @@ module.exports = {
         "@typescript-eslint/no-empty-interface": "off",
         "@typescript-eslint/no-unnecessary-condition": "off",
         "eslint-comments/no-unused-disable": "off",
-        "jest/expect-expect": "off"
+        "jest/expect-expect": "off",
+        "jest/no-conditional-expect": "off"
     },
     overrides: [
         {

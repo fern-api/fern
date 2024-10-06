@@ -123,6 +123,7 @@ export function buildEndpoint({
 
     if (endpoint.request != null) {
         const convertedRequest = getRequest({
+            endpoint,
             context,
             declarationFile,
             request: endpoint.request,
@@ -357,6 +358,7 @@ interface ConvertedRequest {
 }
 
 function getRequest({
+    endpoint,
     declarationFile,
     context,
     request,
@@ -368,6 +370,7 @@ function getRequest({
     usedNames,
     namespace
 }: {
+    endpoint: Endpoint;
     declarationFile: RelativeFilePath;
     context: OpenApiIrConverterContext;
     request: Request;
@@ -422,63 +425,74 @@ function getRequest({
             return convertedRequest;
         }
         const properties = Object.fromEntries(
-            resolvedSchema.properties.map((property) => {
-                const propertyTypeReference = buildTypeReference({
-                    schema: property.schema,
-                    fileContainingReference: declarationFile,
-                    context,
-                    namespace
-                });
+            resolvedSchema.properties
+                .filter((property) => {
+                    if (property.readonly == null) {
+                        return true;
+                    }
+                    const writeEndpoint = endpoint.method === "POST" || endpoint.method === "PUT";
+                    if (writeEndpoint && property.readonly) {
+                        return false;
+                    }
+                    return true;
+                })
+                .map((property) => {
+                    const propertyTypeReference = buildTypeReference({
+                        schema: property.schema,
+                        fileContainingReference: declarationFile,
+                        context,
+                        namespace
+                    });
 
-                // TODO: clean up conditional logic
-                const name = property.nameOverride ?? property.key;
-                const availability = convertAvailability(property.availability);
-                if (!usedNames.has(name) && property.audiences.length <= 0) {
-                    usedNames.add(name);
-                    if (property.nameOverride != null) {
+                    // TODO: clean up conditional logic
+                    const name = property.nameOverride ?? property.key;
+                    const availability = convertAvailability(property.availability);
+                    if (!usedNames.has(name) && property.audiences.length <= 0) {
+                        usedNames.add(name);
+                        if (property.nameOverride != null) {
+                            return [
+                                property.key,
+                                {
+                                    type: getTypeFromTypeReference(propertyTypeReference),
+                                    docs: getDocsFromTypeReference(propertyTypeReference),
+                                    name: property.nameOverride,
+                                    availability
+                                }
+                            ];
+                        }
                         return [
                             property.key,
-                            {
-                                type: getTypeFromTypeReference(propertyTypeReference),
-                                docs: getDocsFromTypeReference(propertyTypeReference),
-                                name: property.nameOverride,
-                                availability
-                            }
+                            availability
+                                ? {
+                                      ...(typeof propertyTypeReference === "string"
+                                          ? { type: propertyTypeReference }
+                                          : propertyTypeReference),
+                                      availability
+                                  }
+                                : propertyTypeReference
                         ];
                     }
-                    return [
-                        property.key,
-                        availability
-                            ? {
-                                  ...(typeof propertyTypeReference === "string"
-                                      ? { type: propertyTypeReference }
-                                      : propertyTypeReference),
-                                  availability
-                              }
-                            : propertyTypeReference
-                    ];
-                }
 
-                const typeReference: RawSchemas.ObjectPropertySchema = {
-                    type: getTypeFromTypeReference(propertyTypeReference),
-                    docs: getDocsFromTypeReference(propertyTypeReference)
-                };
+                    const typeReference: RawSchemas.ObjectPropertySchema = {
+                        type: getTypeFromTypeReference(propertyTypeReference),
+                        docs: getDocsFromTypeReference(propertyTypeReference)
+                    };
 
-                if (usedNames.has(name)) {
-                    typeReference.name = property.generatedName;
-                }
+                    if (usedNames.has(name)) {
+                        typeReference.name = property.generatedName;
+                    }
 
-                if (property.audiences.length > 0) {
-                    typeReference.audiences = property.audiences;
-                }
+                    if (property.audiences.length > 0) {
+                        typeReference.audiences = property.audiences;
+                    }
 
-                if (availability != null) {
-                    typeReference.availability = availability;
-                }
+                    if (availability != null) {
+                        typeReference.availability = availability;
+                    }
 
-                usedNames.add(name);
-                return [property.key, typeReference];
-            })
+                    usedNames.add(name);
+                    return [property.key, typeReference];
+                })
         );
         const extendedSchemas: string[] = resolvedSchema.allOf.map((referencedSchema) => {
             const allOfTypeReference = buildTypeReference({

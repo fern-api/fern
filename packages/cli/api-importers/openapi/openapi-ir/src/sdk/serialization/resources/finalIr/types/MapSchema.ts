@@ -17,7 +17,7 @@ export const MapSchema: core.serialization.ObjectSchema<serializers.MapSchema.Ra
     core.serialization
         .objectWithoutOptionalProperties({
             key: PrimitiveSchema,
-            value: core.serialization.lazy(() => serializers.Schema)
+            value: core.serialization.lazy(() => serializers.Schema),
         })
         .extend(WithDescription)
         .extend(WithName)

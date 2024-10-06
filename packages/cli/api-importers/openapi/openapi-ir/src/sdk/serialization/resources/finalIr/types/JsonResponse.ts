@@ -12,7 +12,7 @@ export const JsonResponse: core.serialization.ObjectSchema<serializers.JsonRespo
     core.serialization
         .objectWithoutOptionalProperties({
             schema: core.serialization.lazy(() => serializers.Schema),
-            responseProperty: core.serialization.string().optional()
+            responseProperty: core.serialization.string().optional(),
         })
         .extend(WithDescription)
         .extend(WithSource);

@@ -11,7 +11,7 @@ import { Tag } from "../../commons/types/Tag";
 export const Tags: core.serialization.ObjectSchema<serializers.Tags.Raw, FernOpenapiIr.Tags> =
     core.serialization.objectWithoutOptionalProperties({
         tagsById: core.serialization.record(TagId, Tag),
-        orderedTagIds: core.serialization.list(TagId).optional()
+        orderedTagIds: core.serialization.list(TagId).optional(),
     });
 
 export declare namespace Tags {

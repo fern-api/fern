@@ -37,7 +37,7 @@ export const EndpointExample = {
                 visitor: FernOpenapiIr.EndpointExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.EndpointExample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -50,7 +50,7 @@ export const EndpointExample = {
                 visitor: FernOpenapiIr.EndpointExample._Visitor<_Result>
             ) {
                 return FernOpenapiIr.EndpointExample._visit(this, visitor);
-            }
+            },
         };
     },
 
@@ -66,5 +66,5 @@ export const EndpointExample = {
             default:
                 return visitor._other(value as any);
         }
-    }
+    },
 } as const;

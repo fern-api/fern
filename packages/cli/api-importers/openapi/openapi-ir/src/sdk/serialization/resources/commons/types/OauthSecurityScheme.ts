@@ -11,7 +11,7 @@ export const OauthSecurityScheme: core.serialization.ObjectSchema<
     serializers.OauthSecurityScheme.Raw,
     FernOpenapiIr.OauthSecurityScheme
 > = core.serialization.objectWithoutOptionalProperties({
-    scopesEnum: EnumSchema.optional()
+    scopesEnum: EnumSchema.optional(),
 });
 
 export declare namespace OauthSecurityScheme {

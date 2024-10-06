@@ -13,7 +13,7 @@ export const Request: core.serialization.Schema<serializers.Request.Raw, FernOpe
     .union("type", {
         octetStream: OctetStreamRequest,
         multipart: MultipartRequest,
-        json: JsonRequest
+        json: JsonRequest,
     })
     .transform<FernOpenapiIr.Request>({
         transform: (value) => {
@@ -28,7 +28,7 @@ export const Request: core.serialization.Schema<serializers.Request.Raw, FernOpe
                     return value as FernOpenapiIr.Request;
             }
         },
-        untransform: ({ _visit, ...value }) => value as any
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace Request {

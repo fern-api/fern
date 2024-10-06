@@ -13,7 +13,7 @@ export const IdempotencyHeader: core.serialization.ObjectSchema<
     header: core.serialization.string(),
     name: core.serialization.string().optional(),
     env: core.serialization.string().optional(),
-    schema: core.serialization.lazy(() => serializers.Schema).optional()
+    schema: core.serialization.lazy(() => serializers.Schema).optional(),
 });
 
 export declare namespace IdempotencyHeader {

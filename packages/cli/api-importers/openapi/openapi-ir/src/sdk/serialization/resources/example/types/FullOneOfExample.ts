@@ -16,11 +16,11 @@ export const FullOneOfExample: core.serialization.Schema<
             value: core.serialization.record(
                 PropertyKey,
                 core.serialization.lazy(() => serializers.FullExample)
-            )
+            ),
         }),
         undisciminated: core.serialization.object({
-            value: core.serialization.lazy(() => serializers.FullExample)
-        })
+            value: core.serialization.lazy(() => serializers.FullExample),
+        }),
     })
     .transform<FernOpenapiIr.FullOneOfExample>({
         transform: (value) => {
@@ -33,7 +33,7 @@ export const FullOneOfExample: core.serialization.Schema<
                     return value as FernOpenapiIr.FullOneOfExample;
             }
         },
-        untransform: ({ _visit, ...value }) => value as any
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace FullOneOfExample {

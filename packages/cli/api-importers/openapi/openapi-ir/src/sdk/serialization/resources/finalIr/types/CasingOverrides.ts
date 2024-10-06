@@ -13,7 +13,7 @@ export const CasingOverrides: core.serialization.ObjectSchema<
     snake: core.serialization.string().optional(),
     camel: core.serialization.string().optional(),
     screamingSnake: core.serialization.string().optional(),
-    pascal: core.serialization.string().optional()
+    pascal: core.serialization.string().optional(),
 });
 
 export declare namespace CasingOverrides {

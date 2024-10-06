@@ -3193,7 +3193,8 @@
               "groupName": [],
               "type": "optional"
             },
-            "audiences": []
+            "audiences": [],
+            "readonly": true
           },
           {
             "conflict": {},
@@ -3260,7 +3261,8 @@
               "groupName": [],
               "type": "optional"
             },
-            "audiences": []
+            "audiences": [],
+            "readonly": true
           },
           {
             "conflict": {},
@@ -3279,7 +3281,8 @@
               "groupName": [],
               "type": "optional"
             },
-            "audiences": []
+            "audiences": [],
+            "readonly": true
           },
           {
             "conflict": {},
@@ -3298,7 +3301,8 @@
               "groupName": [],
               "type": "optional"
             },
-            "audiences": []
+            "audiences": [],
+            "readonly": true
           },
           {
             "conflict": {},
@@ -3366,7 +3370,8 @@
               "groupName": [],
               "type": "optional"
             },
-            "audiences": []
+            "audiences": [],
+            "readonly": true
           },
           {
             "conflict": {},
@@ -3385,7 +3390,8 @@
               "groupName": [],
               "type": "optional"
             },
-            "audiences": []
+            "audiences": [],
+            "readonly": true
           },
           {
             "conflict": {},
@@ -3404,7 +3410,8 @@
               "groupName": [],
               "type": "optional"
             },
-            "audiences": []
+            "audiences": [],
+            "readonly": true
           },
           {
             "conflict": {},
@@ -3433,7 +3440,8 @@
                         "groupName": [],
                         "type": "optional"
                       },
-                      "audiences": []
+                      "audiences": [],
+                      "readonly": true
                     },
                     {
                       "conflict": {},
@@ -3467,7 +3475,8 @@
                         "groupName": [],
                         "type": "optional"
                       },
-                      "audiences": []
+                      "audiences": [],
+                      "readonly": true
                     },
                     {
                       "conflict": {},
@@ -3486,7 +3495,8 @@
                         "groupName": [],
                         "type": "optional"
                       },
-                      "audiences": []
+                      "audiences": [],
+                      "readonly": true
                     }
                   ],
                   "allOfPropertyConflicts": [],
@@ -3506,7 +3516,8 @@
               "groupName": [],
               "type": "optional"
             },
-            "audiences": []
+            "audiences": [],
+            "readonly": true
           },
           {
             "conflict": {},
@@ -3547,7 +3558,8 @@
                       "groupName": [],
                       "type": "optional"
                     },
-                    "audiences": []
+                    "audiences": [],
+                    "readonly": true
                   },
                   {
                     "conflict": {},
@@ -3749,7 +3761,8 @@
               "groupName": [],
               "type": "optional"
             },
-            "audiences": []
+            "audiences": [],
+            "readonly": true
           },
           {
             "conflict": {},
@@ -3768,7 +3781,8 @@
               "groupName": [],
               "type": "optional"
             },
-            "audiences": []
+            "audiences": [],
+            "readonly": true
           },
           {
             "conflict": {},
@@ -3787,7 +3801,8 @@
               "groupName": [],
               "type": "optional"
             },
-            "audiences": []
+            "audiences": [],
+            "readonly": true
           },
           {
             "conflict": {},
@@ -3874,7 +3889,8 @@
               "groupName": [],
               "type": "optional"
             },
-            "audiences": []
+            "audiences": [],
+            "readonly": true
           },
           {
             "conflict": {},
@@ -3903,7 +3919,8 @@
                         "groupName": [],
                         "type": "optional"
                       },
-                      "audiences": []
+                      "audiences": [],
+                      "readonly": true
                     },
                     {
                       "conflict": {},
@@ -3922,7 +3939,8 @@
                         "groupName": [],
                         "type": "optional"
                       },
-                      "audiences": []
+                      "audiences": [],
+                      "readonly": true
                     },
                     {
                       "conflict": {},
@@ -3941,7 +3959,8 @@
                         "groupName": [],
                         "type": "optional"
                       },
-                      "audiences": []
+                      "audiences": [],
+                      "readonly": true
                     },
                     {
                       "conflict": {},
@@ -4009,7 +4028,8 @@
                         "groupName": [],
                         "type": "optional"
                       },
-                      "audiences": []
+                      "audiences": [],
+                      "readonly": true
                     },
                     {
                       "conflict": {},
@@ -4028,7 +4048,8 @@
                         "groupName": [],
                         "type": "optional"
                       },
-                      "audiences": []
+                      "audiences": [],
+                      "readonly": true
                     },
                     {
                       "conflict": {},
@@ -4069,7 +4090,8 @@
                                 "groupName": [],
                                 "type": "optional"
                               },
-                              "audiences": []
+                              "audiences": [],
+                              "readonly": true
                             },
                             {
                               "conflict": {},
@@ -4258,7 +4280,8 @@
               "groupName": [],
               "type": "optional"
             },
-            "audiences": []
+            "audiences": [],
+            "readonly": true
           },
           {
             "conflict": {},
@@ -4285,7 +4308,8 @@
                       "groupName": [],
                       "type": "optional"
                     },
-                    "audiences": []
+                    "audiences": [],
+                    "readonly": true
                   },
                   {
                     "conflict": {},
@@ -4304,7 +4328,8 @@
                       "groupName": [],
                       "type": "optional"
                     },
-                    "audiences": []
+                    "audiences": [],
+                    "readonly": true
                   },
                   {
                     "conflict": {},
@@ -4323,7 +4348,8 @@
                       "groupName": [],
                       "type": "optional"
                     },
-                    "audiences": []
+                    "audiences": [],
+                    "readonly": true
                   },
                   {
                     "conflict": {},
@@ -4433,7 +4459,8 @@
                               "groupName": [],
                               "type": "optional"
                             },
-                            "audiences": []
+                            "audiences": [],
+                            "readonly": true
                           },
                           {
                             "conflict": {},
@@ -4511,7 +4538,8 @@
                       "groupName": [],
                       "type": "optional"
                     },
-                    "audiences": []
+                    "audiences": [],
+                    "readonly": true
                   }
                 ],
                 "allOfPropertyConflicts": [],
@@ -4557,7 +4585,8 @@
                         "groupName": [],
                         "type": "optional"
                       },
-                      "audiences": []
+                      "audiences": [],
+                      "readonly": true
                     },
                     {
                       "conflict": {},
@@ -4576,7 +4605,8 @@
                         "groupName": [],
                         "type": "optional"
                       },
-                      "audiences": []
+                      "audiences": [],
+                      "readonly": true
                     },
                     {
                       "conflict": {},
@@ -4610,7 +4640,8 @@
                         "groupName": [],
                         "type": "optional"
                       },
-                      "audiences": []
+                      "audiences": [],
+                      "readonly": true
                     },
                     {
                       "conflict": {},
@@ -4629,7 +4660,8 @@
                         "groupName": [],
                         "type": "optional"
                       },
-                      "audiences": []
+                      "audiences": [],
+                      "readonly": true
                     }
                   ],
                   "allOfPropertyConflicts": [],
@@ -4649,7 +4681,8 @@
               "groupName": [],
               "type": "optional"
             },
-            "audiences": []
+            "audiences": [],
+            "readonly": true
           }
         ],
         "allOfPropertyConflicts": [],
@@ -4682,7 +4715,8 @@
               "groupName": [],
               "type": "optional"
             },
-            "audiences": []
+            "audiences": [],
+            "readonly": true
           },
           {
             "conflict": {},
@@ -4701,7 +4735,8 @@
               "groupName": [],
               "type": "optional"
             },
-            "audiences": []
+            "audiences": [],
+            "readonly": true
           },
           {
             "conflict": {},
@@ -4720,7 +4755,8 @@
               "groupName": [],
               "type": "optional"
             },
-            "audiences": []
+            "audiences": [],
+            "readonly": true
           },
           {
             "conflict": {},
@@ -4830,7 +4866,8 @@
                       "groupName": [],
                       "type": "optional"
                     },
-                    "audiences": []
+                    "audiences": [],
+                    "readonly": true
                   },
                   {
                     "conflict": {},
@@ -4908,7 +4945,8 @@
               "groupName": [],
               "type": "optional"
             },
-            "audiences": []
+            "audiences": [],
+            "readonly": true
           }
         ],
         "allOfPropertyConflicts": [],
@@ -4941,7 +4979,8 @@
               "groupName": [],
               "type": "optional"
             },
-            "audiences": []
+            "audiences": [],
+            "readonly": true
           },
           {
             "conflict": {},
@@ -4960,7 +4999,8 @@
               "groupName": [],
               "type": "optional"
             },
-            "audiences": []
+            "audiences": [],
+            "readonly": true
           },
           {
             "conflict": {},
@@ -5002,7 +5042,8 @@
                       "groupName": [],
                       "type": "optional"
                     },
-                    "audiences": []
+                    "audiences": [],
+                    "readonly": true
                   },
                   {
                     "conflict": {},
@@ -5021,7 +5062,8 @@
                       "groupName": [],
                       "type": "optional"
                     },
-                    "audiences": []
+                    "audiences": [],
+                    "readonly": true
                   },
                   {
                     "conflict": {},
@@ -5040,7 +5082,8 @@
                       "groupName": [],
                       "type": "optional"
                     },
-                    "audiences": []
+                    "audiences": [],
+                    "readonly": true
                   },
                   {
                     "conflict": {},
@@ -5074,7 +5117,8 @@
                       "groupName": [],
                       "type": "optional"
                     },
-                    "audiences": []
+                    "audiences": [],
+                    "readonly": true
                   },
                   {
                     "conflict": {},
@@ -5093,7 +5137,8 @@
                       "groupName": [],
                       "type": "optional"
                     },
-                    "audiences": []
+                    "audiences": [],
+                    "readonly": true
                   }
                 ],
                 "allOfPropertyConflicts": [],

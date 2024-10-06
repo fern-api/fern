@@ -23,7 +23,7 @@ export const DiscriminatedOneOfSchema: core.serialization.ObjectSchema<
         schemas: core.serialization.record(
             core.serialization.string(),
             core.serialization.lazy(() => serializers.Schema)
-        )
+        ),
     })
     .extend(WithDescription)
     .extend(WithName)

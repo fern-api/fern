@@ -10,7 +10,7 @@ import { WithDescription } from "./WithDescription";
 
 export const Tag: core.serialization.ObjectSchema<serializers.Tag.Raw, FernOpenapiIr.Tag> = core.serialization
     .objectWithoutOptionalProperties({
-        id: TagId
+        id: TagId,
     })
     .extend(WithDescription);
 

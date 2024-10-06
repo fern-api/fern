@@ -16,7 +16,7 @@ export const Response: core.serialization.Schema<serializers.Response.Raw, FernO
         text: TextResponse,
         streamingSse: JsonResponse,
         streamingText: TextResponse,
-        streamingJson: JsonResponse
+        streamingJson: JsonResponse,
     })
     .transform<FernOpenapiIr.Response>({
         transform: (value) => {
@@ -37,7 +37,7 @@ export const Response: core.serialization.Schema<serializers.Response.Raw, FernO
                     return value as FernOpenapiIr.Response;
             }
         },
-        untransform: ({ _visit, ...value }) => value as any
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace Response {
